@@ -2,45 +2,46 @@ classdef MeasurePF_NxPP_Node < PanelProp
 	%MeasurePF_NxPP_Node plots the panel to select a node.
 	% It is a subclass of <a href="matlab:help PanelProp">PanelProp</a>.
 	%
-	% MeasurePF_NxPP_Node plots the panel to select a node from a drop-down list.
+	% A Node Prop Panel (MeasurePF_NxPP_Node) plots the panel to select a node from a drop-down list.
 	% It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.
 	%
 	% The list of MeasurePF_NxPP_Node properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property node.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property node.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property node.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>35</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown of the node.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the node prop panel.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the node prop panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the node prop panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the node prop panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the node prop panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the node prop panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the node prop panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown of the node.
 	%
 	% MeasurePF_NxPP_Node methods (constructor):
 	%  MeasurePF_NxPP_Node - constructor
@@ -60,33 +61,33 @@ classdef MeasurePF_NxPP_Node < PanelProp
 	%  unchecked - sets a property to NOT checked
 	%
 	% MeasurePF_NxPP_Node methods (display):
-	%  tostring - string with information about the panel property node
-	%  disp - displays information about the panel property node
-	%  tree - displays the tree of the panel property node
+	%  tostring - string with information about the node prop panel
+	%  disp - displays information about the node prop panel
+	%  tree - displays the tree of the node prop panel
 	%
 	% MeasurePF_NxPP_Node methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel property node are equal (values, locked)
+	%  isequal - determines whether two node prop panel are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel property node
+	%  copy - copies the node prop panel
 	%
 	% MeasurePF_NxPP_Node methods (save/load, Static):
-	%  save - saves BRAPH2 panel property node as b2 file
-	%  load - loads a BRAPH2 panel property node from a b2 file
+	%  save - saves BRAPH2 node prop panel as b2 file
+	%  load - loads a BRAPH2 node prop panel from a b2 file
 	%
 	% MeasurePF_NxPP_Node method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel property node
+	%  encodeJSON - returns a JSON string encoding the node prop panel
 	%
 	% MeasurePF_NxPP_Node method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel property node
+	%   decodeJSON - returns a JSON string encoding the node prop panel
 	%
 	% MeasurePF_NxPP_Node methods (inspection, Static):
-	%  getClass - returns the class of the panel property node
+	%  getClass - returns the class of the node prop panel
 	%  getSubclasses - returns all subclasses of MeasurePF_NxPP_Node
-	%  getProps - returns the property list of the panel property node
-	%  getPropNumber - returns the property number of the panel property node
+	%  getProps - returns the property list of the node prop panel
+	%  getPropNumber - returns the property number of the node prop panel
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -131,14 +132,14 @@ classdef MeasurePF_NxPP_Node < PanelProp
 	% See also uidropdown, GUI, MeasurePF_NU, MeasurePF_NS, MeasurePF_NB.
 	
 	properties (Constant) % properties
-		DROPDOWN = 35; %CET: Computational Efficiency Trick
+		DROPDOWN = 36; %CET: Computational Efficiency Trick
 		DROPDOWN_TAG = 'DROPDOWN';
 		DROPDOWN_CATEGORY = 7;
 		DROPDOWN_FORMAT = 18;
 	end
 	methods % constructor
 		function pr = MeasurePF_NxPP_Node(varargin)
-			%MeasurePF_NxPP_Node() creates a panel property node.
+			%MeasurePF_NxPP_Node() creates a node prop panel.
 			%
 			% MeasurePF_NxPP_Node(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -148,41 +149,42 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MeasurePF_NxPP_Node properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property node.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property node.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property node.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>35</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown of the node.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the node prop panel.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the node prop panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the node prop panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the node prop panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the node prop panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the node prop panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the node prop panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown of the node.
 			%
 			% See also Category, Format.
 			
@@ -191,12 +193,12 @@ classdef MeasurePF_NxPP_Node < PanelProp
 	end
 	methods (Static) % inspection
 		function pr_class = getClass()
-			%GETCLASS returns the class of the panel property node.
+			%GETCLASS returns the class of the node prop panel.
 			%
 			% CLASS = MeasurePF_NxPP_Node.GETCLASS() returns the class 'MeasurePF_NxPP_Node'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PR.GETCLASS() returns the class of the panel property node PR.
+			%  CLASS = PR.GETCLASS() returns the class of the node prop panel PR.
 			%  CLASS = Element.GETCLASS(PR) returns the class of 'PR'.
 			%  CLASS = Element.GETCLASS('MeasurePF_NxPP_Node') returns 'MeasurePF_NxPP_Node'.
 			%
@@ -206,12 +208,12 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			pr_class = 'MeasurePF_NxPP_Node';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel property node.
+			%GETSUBCLASSES returns all subclasses of the node prop panel.
 			%
 			% LIST = MeasurePF_NxPP_Node.GETSUBCLASSES() returns all subclasses of 'MeasurePF_NxPP_Node'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the panel property node PR.
+			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the node prop panel PR.
 			%  LIST = Element.GETSUBCLASSES(PR) returns all subclasses of 'PR'.
 			%  LIST = Element.GETSUBCLASSES('MeasurePF_NxPP_Node') returns all subclasses of 'MeasurePF_NxPP_Node'.
 			%
@@ -223,16 +225,16 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			subclass_list = { 'MeasurePF_NxPP_Node' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel property node.
+			%GETPROPS returns the property list of node prop panel.
 			%
-			% PROPS = MeasurePF_NxPP_Node.GETPROPS() returns the property list of panel property node
+			% PROPS = MeasurePF_NxPP_Node.GETPROPS() returns the property list of node prop panel
 			%  as a row vector.
 			%
 			% PROPS = MeasurePF_NxPP_Node.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the panel property node PR.
+			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the node prop panel PR.
 			%  PROPS = Element.GETPROPS(PR[, CATEGORY]) returns the property list of 'PR'.
 			%  PROPS = Element.GETPROPS('MeasurePF_NxPP_Node'[, CATEGORY]) returns the property list of 'MeasurePF_NxPP_Node'.
 			%
@@ -244,41 +246,41 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 22 23 28];
+					prop_list = [5 23 24 29];
 				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18 19 20 21];
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
 				case 7 % Category.EVANESCENT
-					prop_list = [9 14 26 27 29 30 31 32 33 34 35];
+					prop_list = [10 15 27 28 30 31 32 33 34 35 36];
 				case 8 % Category.FIGURE
-					prop_list = 13;
+					prop_list = 14;
 				case 9 % Category.GUI
-					prop_list = [8 12 24 25];
+					prop_list = [9 13 25 26];
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel property node.
+			%GETPROPNUMBER returns the property number of node prop panel.
 			%
-			% N = MeasurePF_NxPP_Node.GETPROPNUMBER() returns the property number of panel property node.
+			% N = MeasurePF_NxPP_Node.GETPROPNUMBER() returns the property number of node prop panel.
 			%
-			% N = MeasurePF_NxPP_Node.GETPROPNUMBER(CATEGORY) returns the property number of panel property node
+			% N = MeasurePF_NxPP_Node.GETPROPNUMBER(CATEGORY) returns the property number of node prop panel
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the panel property node PR.
+			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the node prop panel PR.
 			%  N = Element.GETPROPNUMBER(PR) returns the property number of 'PR'.
 			%  N = Element.GETPROPNUMBER('MeasurePF_NxPP_Node') returns the property number of 'MeasurePF_NxPP_Node'.
 			%
@@ -290,13 +292,13 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 35;
+				prop_number = 36;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -316,7 +318,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel property node/error.
+			%EXISTSPROP checks whether property exists in node prop panel/error.
 			%
 			% CHECK = MeasurePF_NxPP_Node.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -341,7 +343,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 35 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 36 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +356,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel property node/error.
+			%EXISTSTAG checks whether tag exists in node prop panel/error.
 			%
 			% CHECK = MeasurePF_NxPP_Node.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -379,7 +381,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -412,7 +414,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -441,7 +443,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measurepf_nxpp_node_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' };
+				measurepf_nxpp_node_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' };
 				tag = measurepf_nxpp_node_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -468,7 +470,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_nxpp_node_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7 };
+			measurepf_nxpp_node_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7 };
 			prop_category = measurepf_nxpp_node_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -494,7 +496,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_nxpp_node_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18 };
+			measurepf_nxpp_node_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18 };
 			prop_format = measurepf_nxpp_node_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -520,7 +522,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_nxpp_node_description_list = { 'NAME (constant, string) is the name of the panel property node.'  'DESCRIPTION (constant, string) is the description of the panel property node.'  'TEMPLATE (parameter, item) is the template of the panel property node.'  'ID (data, string) is a few-letter code for the panel property node.'  'LABEL (metadata, string) is an extended label of the panel property node.'  'NOTES (metadata, string) are some specific notes about the panel property node.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN (evanescent, handle) is the dropdown of the node.' };
+			measurepf_nxpp_node_description_list = { 'ELCLASS (constant, string) is the class of the node prop panel.'  'NAME (constant, string) is the name of the node prop panel.'  'DESCRIPTION (constant, string) is the description of the node prop panel.'  'TEMPLATE (parameter, item) is the template of the node prop panel.'  'ID (data, string) is a few-letter code for the node prop panel.'  'LABEL (metadata, string) is an extended label of the node prop panel.'  'NOTES (metadata, string) are some specific notes about the node prop panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN (evanescent, handle) is the dropdown of the node.' };
 			prop_description = measurepf_nxpp_node_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -546,9 +548,9 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 35 % MeasurePF_NxPP_Node.DROPDOWN
+				case 36 % MeasurePF_NxPP_Node.DROPDOWN
 					prop_settings = Format.getFormatSettings(18);
-				case 3 % MeasurePF_NxPP_Node.TEMPLATE
+				case 4 % MeasurePF_NxPP_Node.TEMPLATE
 					prop_settings = 'MeasurePF_NxPP_Node';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -577,25 +579,27 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 35 % MeasurePF_NxPP_Node.DROPDOWN
+				case 36 % MeasurePF_NxPP_Node.DROPDOWN
 					prop_default = Format.getFormatDefault(18, MeasurePF_NxPP_Node.getPropSettings(prop));
-				case 1 % MeasurePF_NxPP_Node.NAME
+				case 1 % MeasurePF_NxPP_Node.ELCLASS
 					prop_default = 'MeasurePF_NxPP_Node';
-				case 2 % MeasurePF_NxPP_Node.DESCRIPTION
-					prop_default = 'MeasurePF_NxPP_Node plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.';
-				case 3 % MeasurePF_NxPP_Node.TEMPLATE
+				case 2 % MeasurePF_NxPP_Node.NAME
+					prop_default = 'Node Prop Panel';
+				case 3 % MeasurePF_NxPP_Node.DESCRIPTION
+					prop_default = 'A Node Prop Panel (MeasurePF_NxPP_Node) plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of MeasurePF_NU, MeasurePF_NS, or MeasurePF_NB.';
+				case 4 % MeasurePF_NxPP_Node.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MeasurePF_NxPP_Node.getPropSettings(prop));
-				case 4 % MeasurePF_NxPP_Node.ID
+				case 5 % MeasurePF_NxPP_Node.ID
 					prop_default = 'MeasurePF_NxPP_Node ID';
-				case 5 % MeasurePF_NxPP_Node.LABEL
+				case 6 % MeasurePF_NxPP_Node.LABEL
 					prop_default = 'MeasurePF_NxPP_Node label';
-				case 6 % MeasurePF_NxPP_Node.NOTES
+				case 7 % MeasurePF_NxPP_Node.NOTES
 					prop_default = 'MeasurePF_NxPP_Node notes';
-				case 22 % MeasurePF_NxPP_Node.EL
+				case 23 % MeasurePF_NxPP_Node.EL
 					prop_default = MeasurePF_NU();
-				case 23 % MeasurePF_NxPP_Node.PROP
-					prop_default = 39;
-				case 24 % MeasurePF_NxPP_Node.HEIGHT
+				case 24 % MeasurePF_NxPP_Node.PROP
+					prop_default = 40;
+				case 25 % MeasurePF_NxPP_Node.HEIGHT
 					prop_default = 48;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
@@ -661,12 +665,12 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			prop = MeasurePF_NxPP_Node.getPropProp(pointer);
 			
 			switch prop
-				case 35 % MeasurePF_NxPP_Node.DROPDOWN
+				case 36 % MeasurePF_NxPP_Node.DROPDOWN
 					check = Format.checkFormat(18, value, MeasurePF_NxPP_Node.getPropSettings(prop));
-				case 3 % MeasurePF_NxPP_Node.TEMPLATE
+				case 4 % MeasurePF_NxPP_Node.TEMPLATE
 					check = Format.checkFormat(8, value, MeasurePF_NxPP_Node.getPropSettings(prop));
 				otherwise
-					if prop <= 34
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -699,7 +703,7 @@ classdef MeasurePF_NxPP_Node < PanelProp
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 35 % MeasurePF_NxPP_Node.DROPDOWN
+				case 36 % MeasurePF_NxPP_Node.DROPDOWN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -713,14 +717,14 @@ classdef MeasurePF_NxPP_Node < PanelProp
 					
 					value = dropdown;
 					
-				case 19 % MeasurePF_NxPP_Node.X_DRAW
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % MeasurePF_NxPP_Node.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('DROPDOWN')
 					end
 					
-				case 20 % MeasurePF_NxPP_Node.UPDATE
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % MeasurePF_NxPP_Node.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    pf = pr.get('EL');
 					    NODE = pr.get('PROP');
@@ -739,22 +743,22 @@ classdef MeasurePF_NxPP_Node < PanelProp
 					    end
 					end
 					
-				case 21 % MeasurePF_NxPP_Node.REDRAW
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case 22 % MeasurePF_NxPP_Node.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
 					    set(pr.get('DROPDOWN'), 'Position', [4 4 .70*w_p 21])
 					end
 					
-				case 17 % MeasurePF_NxPP_Node.DELETE
-					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
+				case 18 % MeasurePF_NxPP_Node.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('DROPDOWN', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 34
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

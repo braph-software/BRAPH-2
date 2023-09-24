@@ -6,24 +6,25 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	% NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).
 	%
 	% The list of NNRegressorMLP_Evaluator properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
-	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
-	%  <strong>10</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
-	%  <strong>11</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
-	%  <strong>12</strong> <strong>DET</strong> 	DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
-	%  <strong>13</strong> <strong>MAE</strong> 	MAE (result, rvector) provides the metric of the mean absolute error.
-	%  <strong>14</strong> <strong>MSE</strong> 	MSE (result, rvector) provides the metric of the mean squared error.
-	%  <strong>15</strong> <strong>RMSE</strong> 	RMSE (result, rvector) provides the metric of the root mean squared error.
-	%  <strong>16</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-	%  <strong>17</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-	%  <strong>18</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
+	%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
+	%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
+	%  <strong>12</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
+	%  <strong>13</strong> <strong>DET</strong> 	DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
+	%  <strong>14</strong> <strong>MAE</strong> 	MAE (result, rvector) provides the metric of the mean absolute error.
+	%  <strong>15</strong> <strong>MSE</strong> 	MSE (result, rvector) provides the metric of the mean squared error.
+	%  <strong>16</strong> <strong>RMSE</strong> 	RMSE (result, rvector) provides the metric of the root mean squared error.
+	%  <strong>17</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+	%  <strong>18</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+	%  <strong>19</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
 	%
 	% NNRegressorMLP_Evaluator methods (constructor):
 	%  NNRegressorMLP_Evaluator - constructor
@@ -114,47 +115,47 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	% See also NNDataPoint_CON_REG, NNRegressorMLP.
 	
 	properties (Constant) % properties
-		GROUND_TRUTH = 10; %CET: Computational Efficiency Trick
+		GROUND_TRUTH = 11; %CET: Computational Efficiency Trick
 		GROUND_TRUTH_TAG = 'GROUND_TRUTH';
 		GROUND_TRUTH_CATEGORY = 6;
 		GROUND_TRUTH_FORMAT = 14;
 		
-		CORR = 11; %CET: Computational Efficiency Trick
+		CORR = 12; %CET: Computational Efficiency Trick
 		CORR_TAG = 'CORR';
 		CORR_CATEGORY = 5;
 		CORR_FORMAT = 12;
 		
-		DET = 12; %CET: Computational Efficiency Trick
+		DET = 13; %CET: Computational Efficiency Trick
 		DET_TAG = 'DET';
 		DET_CATEGORY = 5;
 		DET_FORMAT = 12;
 		
-		MAE = 13; %CET: Computational Efficiency Trick
+		MAE = 14; %CET: Computational Efficiency Trick
 		MAE_TAG = 'MAE';
 		MAE_CATEGORY = 5;
 		MAE_FORMAT = 12;
 		
-		MSE = 14; %CET: Computational Efficiency Trick
+		MSE = 15; %CET: Computational Efficiency Trick
 		MSE_TAG = 'MSE';
 		MSE_CATEGORY = 5;
 		MSE_FORMAT = 12;
 		
-		RMSE = 15; %CET: Computational Efficiency Trick
+		RMSE = 16; %CET: Computational Efficiency Trick
 		RMSE_TAG = 'RMSE';
 		RMSE_CATEGORY = 5;
 		RMSE_FORMAT = 12;
 		
-		P = 16; %CET: Computational Efficiency Trick
+		P = 17; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
 		P_CATEGORY = 3;
 		P_FORMAT = 11;
 		
-		PERM_SEEDS = 17; %CET: Computational Efficiency Trick
+		PERM_SEEDS = 18; %CET: Computational Efficiency Trick
 		PERM_SEEDS_TAG = 'PERM_SEEDS';
 		PERM_SEEDS_CATEGORY = 5;
 		PERM_SEEDS_FORMAT = 12;
 		
-		FEATURE_IMPORTANCE = 18; %CET: Computational Efficiency Trick
+		FEATURE_IMPORTANCE = 19; %CET: Computational Efficiency Trick
 		FEATURE_IMPORTANCE_TAG = 'FEATURE_IMPORTANCE';
 		FEATURE_IMPORTANCE_CATEGORY = 5;
 		FEATURE_IMPORTANCE_FORMAT = 16;
@@ -171,24 +172,25 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNRegressorMLP_Evaluator properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
-			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
-			%  <strong>10</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
-			%  <strong>11</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
-			%  <strong>12</strong> <strong>DET</strong> 	DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
-			%  <strong>13</strong> <strong>MAE</strong> 	MAE (result, rvector) provides the metric of the mean absolute error.
-			%  <strong>14</strong> <strong>MSE</strong> 	MSE (result, rvector) provides the metric of the mean squared error.
-			%  <strong>15</strong> <strong>RMSE</strong> 	RMSE (result, rvector) provides the metric of the root mean squared error.
-			%  <strong>16</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-			%  <strong>17</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-			%  <strong>18</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
+			%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
+			%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
+			%  <strong>12</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
+			%  <strong>13</strong> <strong>DET</strong> 	DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
+			%  <strong>14</strong> <strong>MAE</strong> 	MAE (result, rvector) provides the metric of the mean absolute error.
+			%  <strong>15</strong> <strong>MSE</strong> 	MSE (result, rvector) provides the metric of the mean squared error.
+			%  <strong>16</strong> <strong>RMSE</strong> 	RMSE (result, rvector) provides the metric of the root mean squared error.
+			%  <strong>17</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+			%  <strong>18</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+			%  <strong>19</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
 			%
 			% See also Category, Format.
 			
@@ -250,23 +252,23 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 16];
+					prop_list = [4 17];
 				case 4 % Category.DATA
-					prop_list = [4 8 9];
+					prop_list = [5 9 10];
 				case 5 % Category.RESULT
-					prop_list = [11 12 13 14 15 17 18];
+					prop_list = [12 13 14 15 16 18 19];
 				case 6 % Category.QUERY
-					prop_list = [7 10];
+					prop_list = [8 11];
 				otherwise
 					prop_list = [];
 			end
@@ -292,13 +294,13 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 18;
+				prop_number = 19;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -339,7 +341,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 18 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 19 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -377,7 +379,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -410,7 +412,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -439,7 +441,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnregressormlp_evaluator_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' };
+				nnregressormlp_evaluator_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'CORR'  'DET'  'MAE'  'MSE'  'RMSE'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' };
 				tag = nnregressormlp_evaluator_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -466,7 +468,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluator_category_list = { 1  1  3  4  2  2  6  4  4  6  5  5  5  5  5  3  5  5 };
+			nnregressormlp_evaluator_category_list = { 1  1  1  3  4  2  2  6  4  4  6  5  5  5  5  5  3  5  5 };
 			prop_category = nnregressormlp_evaluator_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -492,7 +494,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluator_format_list = { 2  2  8  2  2  2  2  8  8  14  12  12  12  12  12  11  12  16 };
+			nnregressormlp_evaluator_format_list = { 2  2  2  8  2  2  2  2  8  8  14  12  12  12  12  12  11  12  16 };
 			prop_format = nnregressormlp_evaluator_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -518,7 +520,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluator_description_list = { 'NAME (constant, string) is the name of the neural network evaluator for the regression task.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.'  'ID (data, string) is a few-letter code for the neural network evaluator for the regression task.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.'  'TOSTRING (query, string) returns a string that represents the object.'  'NN (data, item) contains a trained neural network regressor.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.'  'CORR (result, rvector) provides the metric of the correlation of coefficients.'  'DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'MAE (result, rvector) provides the metric of the mean absolute error.'  'MSE (result, rvector) provides the metric of the mean squared error.'  'RMSE (result, rvector) provides the metric of the root mean squared error.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.' };
+			nnregressormlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network evaluator for the regression task.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.'  'ID (data, string) is a few-letter code for the neural network evaluator for the regression task.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.'  'TOSTRING (query, string) returns a string that represents the object.'  'NN (data, item) contains a trained neural network regressor.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.'  'CORR (result, rvector) provides the metric of the correlation of coefficients.'  'DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'MAE (result, rvector) provides the metric of the mean absolute error.'  'MSE (result, rvector) provides the metric of the mean squared error.'  'RMSE (result, rvector) provides the metric of the root mean squared error.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.' };
 			prop_description = nnregressormlp_evaluator_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -544,27 +546,27 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % NNRegressorMLP_Evaluator.GROUND_TRUTH
+				case 11 % NNRegressorMLP_Evaluator.GROUND_TRUTH
 					prop_settings = Format.getFormatSettings(14);
-				case 11 % NNRegressorMLP_Evaluator.CORR
+				case 12 % NNRegressorMLP_Evaluator.CORR
 					prop_settings = Format.getFormatSettings(12);
-				case 12 % NNRegressorMLP_Evaluator.DET
+				case 13 % NNRegressorMLP_Evaluator.DET
 					prop_settings = Format.getFormatSettings(12);
-				case 13 % NNRegressorMLP_Evaluator.MAE
+				case 14 % NNRegressorMLP_Evaluator.MAE
 					prop_settings = Format.getFormatSettings(12);
-				case 14 % NNRegressorMLP_Evaluator.MSE
+				case 15 % NNRegressorMLP_Evaluator.MSE
 					prop_settings = Format.getFormatSettings(12);
-				case 15 % NNRegressorMLP_Evaluator.RMSE
+				case 16 % NNRegressorMLP_Evaluator.RMSE
 					prop_settings = Format.getFormatSettings(12);
-				case 16 % NNRegressorMLP_Evaluator.P
+				case 17 % NNRegressorMLP_Evaluator.P
 					prop_settings = Format.getFormatSettings(11);
-				case 17 % NNRegressorMLP_Evaluator.PERM_SEEDS
+				case 18 % NNRegressorMLP_Evaluator.PERM_SEEDS
 					prop_settings = Format.getFormatSettings(12);
-				case 18 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+				case 19 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(16);
-				case 3 % NNRegressorMLP_Evaluator.TEMPLATE
+				case 4 % NNRegressorMLP_Evaluator.TEMPLATE
 					prop_settings = 'NNRegressorMLP_Evaluator';
-				case 8 % NNRegressorMLP_Evaluator.NN
+				case 9 % NNRegressorMLP_Evaluator.NN
 					prop_settings = 'NNRegressorMLP';
 				otherwise
 					prop_settings = getPropSettings@NNEvaluator(prop);
@@ -593,37 +595,39 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % NNRegressorMLP_Evaluator.GROUND_TRUTH
+				case 11 % NNRegressorMLP_Evaluator.GROUND_TRUTH
 					prop_default = Format.getFormatDefault(14, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 11 % NNRegressorMLP_Evaluator.CORR
+				case 12 % NNRegressorMLP_Evaluator.CORR
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 12 % NNRegressorMLP_Evaluator.DET
+				case 13 % NNRegressorMLP_Evaluator.DET
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 13 % NNRegressorMLP_Evaluator.MAE
+				case 14 % NNRegressorMLP_Evaluator.MAE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 14 % NNRegressorMLP_Evaluator.MSE
+				case 15 % NNRegressorMLP_Evaluator.MSE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 15 % NNRegressorMLP_Evaluator.RMSE
+				case 16 % NNRegressorMLP_Evaluator.RMSE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 16 % NNRegressorMLP_Evaluator.P
+				case 17 % NNRegressorMLP_Evaluator.P
 					prop_default = 1e+2;
-				case 17 % NNRegressorMLP_Evaluator.PERM_SEEDS
+				case 18 % NNRegressorMLP_Evaluator.PERM_SEEDS
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 18 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+				case 19 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(16, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 1 % NNRegressorMLP_Evaluator.NAME
+				case 1 % NNRegressorMLP_Evaluator.ELCLASS
 					prop_default = 'NNRegressorMLP_Evaluator';
-				case 2 % NNRegressorMLP_Evaluator.DESCRIPTION
+				case 2 % NNRegressorMLP_Evaluator.NAME
+					prop_default = 'NNRegressorMLP_Evaluator';
+				case 3 % NNRegressorMLP_Evaluator.DESCRIPTION
 					prop_default = 'A neural network evaluator for regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset. NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).';
-				case 3 % NNRegressorMLP_Evaluator.TEMPLATE
+				case 4 % NNRegressorMLP_Evaluator.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 4 % NNRegressorMLP_Evaluator.ID
+				case 5 % NNRegressorMLP_Evaluator.ID
 					prop_default = 'NNRegressorMLP_Evaluator ID';
-				case 5 % NNRegressorMLP_Evaluator.LABEL
+				case 6 % NNRegressorMLP_Evaluator.LABEL
 					prop_default = 'NNRegressorMLP_Evaluator label';
-				case 6 % NNRegressorMLP_Evaluator.NOTES
+				case 7 % NNRegressorMLP_Evaluator.NOTES
 					prop_default = 'NNRegressorMLP_Evaluator notes';
-				case 8 % NNRegressorMLP_Evaluator.NN
+				case 9 % NNRegressorMLP_Evaluator.NN
 					prop_default = Format.getFormatDefault(8, NNRegressorMLP_Evaluator.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@NNEvaluator(prop);
@@ -689,33 +693,33 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			switch prop
-				case 10 % NNRegressorMLP_Evaluator.GROUND_TRUTH
+				case 11 % NNRegressorMLP_Evaluator.GROUND_TRUTH
 					check = Format.checkFormat(14, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 11 % NNRegressorMLP_Evaluator.CORR
+				case 12 % NNRegressorMLP_Evaluator.CORR
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 12 % NNRegressorMLP_Evaluator.DET
+				case 13 % NNRegressorMLP_Evaluator.DET
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 13 % NNRegressorMLP_Evaluator.MAE
+				case 14 % NNRegressorMLP_Evaluator.MAE
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 14 % NNRegressorMLP_Evaluator.MSE
+				case 15 % NNRegressorMLP_Evaluator.MSE
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 15 % NNRegressorMLP_Evaluator.RMSE
+				case 16 % NNRegressorMLP_Evaluator.RMSE
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 16 % NNRegressorMLP_Evaluator.P
+				case 17 % NNRegressorMLP_Evaluator.P
 					check = Format.checkFormat(11, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case 17 % NNRegressorMLP_Evaluator.PERM_SEEDS
+				case 18 % NNRegressorMLP_Evaluator.PERM_SEEDS
 					check = Format.checkFormat(12, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 18 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+				case 19 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
 					check = Format.checkFormat(16, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 3 % NNRegressorMLP_Evaluator.TEMPLATE
+				case 4 % NNRegressorMLP_Evaluator.TEMPLATE
 					check = Format.checkFormat(8, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
-				case 8 % NNRegressorMLP_Evaluator.NN
+				case 9 % NNRegressorMLP_Evaluator.NN
 					check = Format.checkFormat(8, value, NNRegressorMLP_Evaluator.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						check = checkProp@NNEvaluator(prop, value);
 					end
 			end
@@ -748,7 +752,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % NNRegressorMLP_Evaluator.GROUND_TRUTH
+				case 11 % NNRegressorMLP_Evaluator.GROUND_TRUTH
 					targets = nne.get('D').get('TARGETS');
 					if isempty(targets)
 					    value = [];
@@ -758,8 +762,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					    end
 					end
 					
-				case 11 % NNRegressorMLP_Evaluator.CORR
-					rng_settings_ = rng(); rng(nne.getPropSeed(11), 'twister')
+				case 12 % NNRegressorMLP_Evaluator.CORR
+					rng_settings_ = rng(); rng(nne.getPropSeed(12), 'twister')
 					
 					predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 					if isempty(predictions)
@@ -777,8 +781,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 12 % NNRegressorMLP_Evaluator.DET
-					rng_settings_ = rng(); rng(nne.getPropSeed(12), 'twister')
+				case 13 % NNRegressorMLP_Evaluator.DET
+					rng_settings_ = rng(); rng(nne.getPropSeed(13), 'twister')
 					
 					predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 					if isempty(predictions)
@@ -796,8 +800,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 13 % NNRegressorMLP_Evaluator.MAE
-					rng_settings_ = rng(); rng(nne.getPropSeed(13), 'twister')
+				case 14 % NNRegressorMLP_Evaluator.MAE
+					rng_settings_ = rng(); rng(nne.getPropSeed(14), 'twister')
 					
 					predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 					if isempty(predictions)
@@ -814,8 +818,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 14 % NNRegressorMLP_Evaluator.MSE
-					rng_settings_ = rng(); rng(nne.getPropSeed(14), 'twister')
+				case 15 % NNRegressorMLP_Evaluator.MSE
+					rng_settings_ = rng(); rng(nne.getPropSeed(15), 'twister')
 					
 					predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 					if isempty(predictions)
@@ -832,8 +836,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 15 % NNRegressorMLP_Evaluator.RMSE
-					rng_settings_ = rng(); rng(nne.getPropSeed(15), 'twister')
+				case 16 % NNRegressorMLP_Evaluator.RMSE
+					rng_settings_ = rng(); rng(nne.getPropSeed(16), 'twister')
 					
 					predictions = nne.get('NN').get('PREDICT', nne.get('D'));
 					if isempty(predictions)
@@ -850,15 +854,15 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 17 % NNRegressorMLP_Evaluator.PERM_SEEDS
-					rng_settings_ = rng(); rng(nne.getPropSeed(17), 'twister')
+				case 18 % NNRegressorMLP_Evaluator.PERM_SEEDS
+					rng_settings_ = rng(); rng(nne.getPropSeed(18), 'twister')
 					
 					value = randi(intmax('uint32'), 1, nne.get('P'));
 					
 					rng(rng_settings_)
 					
-				case 18 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
-					rng_settings_ = rng(); rng(nne.getPropSeed(18), 'twister')
+				case 19 % NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nne.getPropSeed(19), 'twister')
 					
 					all_fi = nne.get('NN').get('FEATURE_IMPORTANCE', nne.get('D'), nne.get('P'), nne.get('PERM_SEEDS'));
 					if isempty(cell2mat(all_fi))
@@ -876,7 +880,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						value = calculateValue@NNEvaluator(nne, prop, varargin{:});
 					else
 						value = calculateValue@Element(nne, prop, varargin{:});

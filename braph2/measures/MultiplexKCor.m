@@ -6,21 +6,22 @@ classdef MultiplexKCor < Measure
 	% k is set by the user; the default value is equal to 1.
 	%
 	% The list of MultiplexKCor properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
-	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>15</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
 	%
 	% MultiplexKCor methods (constructor):
 	%  MultiplexKCor - constructor
@@ -109,7 +110,7 @@ classdef MultiplexKCor < Measure
 	%
 	
 	properties (Constant) % properties
-		MULTIPLEXKCORETHRESHOLD = 15; %CET: Computational Efficiency Trick
+		MULTIPLEXKCORETHRESHOLD = 16; %CET: Computational Efficiency Trick
 		MULTIPLEXKCORETHRESHOLD_TAG = 'MULTIPLEXKCORETHRESHOLD';
 		MULTIPLEXKCORETHRESHOLD_CATEGORY = 3;
 		MULTIPLEXKCORETHRESHOLD_FORMAT = 11;
@@ -126,21 +127,22 @@ classdef MultiplexKCor < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexKCor properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
-			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>15</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
 			%
 			% See also Category, Format.
 			
@@ -202,25 +204,25 @@ classdef MultiplexKCor < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 8 9 10 11];
+					prop_list = [1 2 3 9 10 11 12];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 15];
+					prop_list = [4 16];
 				case 4 % Category.DATA
-					prop_list = [4 12];
+					prop_list = [5 13];
 				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
 				otherwise
 					prop_list = [];
 			end
@@ -246,13 +248,13 @@ classdef MultiplexKCor < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 15;
+				prop_number = 16;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 6;
+					prop_number = 7;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -295,7 +297,7 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -333,7 +335,7 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -366,7 +368,7 @@ classdef MultiplexKCor < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -395,7 +397,7 @@ classdef MultiplexKCor < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				multiplexkcor_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' };
+				multiplexkcor_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' };
 				tag = multiplexkcor_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -422,7 +424,7 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexkcor_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			multiplexkcor_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
 			prop_category = multiplexkcor_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -448,7 +450,7 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexkcor_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  11 };
+			multiplexkcor_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11 };
 			prop_format = multiplexkcor_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -474,7 +476,7 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexkcor_description_list = { 'NAME (constant, string) is the name of the multiplex k-core.'  'DESCRIPTION (constant, string) is the description of the multiplex k-core.'  'TEMPLATE (parameter, item) is the template of the multiplex k-core.'  'ID (data, string) is a few-letter code of the multiplex k-core.'  'LABEL (metadata, string) is an extended label of the multiplex k-core.'  'NOTES (metadata, string) are some specific notes about the multiplex k-core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex k-core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold' };
+			multiplexkcor_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex k-core.'  'DESCRIPTION (constant, string) is the description of the multiplex k-core.'  'TEMPLATE (parameter, item) is the template of the multiplex k-core.'  'ID (data, string) is a few-letter code of the multiplex k-core.'  'LABEL (metadata, string) is an extended label of the multiplex k-core.'  'NOTES (metadata, string) are some specific notes about the multiplex k-core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex k-core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold' };
 			prop_description = multiplexkcor_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -500,9 +502,9 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
 					prop_settings = Format.getFormatSettings(11);
-				case 3 % MultiplexKCor.TEMPLATE
+				case 4 % MultiplexKCor.TEMPLATE
 					prop_settings = 'MultiplexKCor';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -531,27 +533,29 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
 					prop_default = 1;
-				case 1 % MultiplexKCor.NAME
+				case 1 % MultiplexKCor.ELCLASS
+					prop_default = 'MultiplexKCor';
+				case 2 % MultiplexKCor.NAME
 					prop_default = 'MultiplexKCore';
-				case 2 % MultiplexKCor.DESCRIPTION
+				case 3 % MultiplexKCor.DESCRIPTION
 					prop_default = 'The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.';
-				case 3 % MultiplexKCor.TEMPLATE
+				case 4 % MultiplexKCor.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexKCor.getPropSettings(prop));
-				case 4 % MultiplexKCor.ID
+				case 5 % MultiplexKCor.ID
 					prop_default = 'MultiplexKCor ID';
-				case 5 % MultiplexKCor.LABEL
+				case 6 % MultiplexKCor.LABEL
 					prop_default = 'MultiplexKCore label';
-				case 6 % MultiplexKCor.NOTES
+				case 7 % MultiplexKCor.NOTES
 					prop_default = 'MultiplexKCore notes';
-				case 8 % MultiplexKCor.SHAPE
+				case 9 % MultiplexKCor.SHAPE
 					prop_default = 3;
-				case 9 % MultiplexKCor.SCOPE
+				case 10 % MultiplexKCor.SCOPE
 					prop_default = 1;
-				case 10 % MultiplexKCor.PARAMETRICITY
+				case 11 % MultiplexKCor.PARAMETRICITY
 					prop_default = 2;
-				case 11 % MultiplexKCor.COMPATIBLE_GRAPHS
+				case 12 % MultiplexKCor.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -617,12 +621,12 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			switch prop
-				case 15 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
 					check = Format.checkFormat(11, value, MultiplexKCor.getPropSettings(prop));
-				case 3 % MultiplexKCor.TEMPLATE
+				case 4 % MultiplexKCor.TEMPLATE
 					check = Format.checkFormat(8, value, MultiplexKCor.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -655,8 +659,8 @@ classdef MultiplexKCor < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % MultiplexKCor.M
-					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
+				case 14 % MultiplexKCor.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -708,7 +712,7 @@ classdef MultiplexKCor < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

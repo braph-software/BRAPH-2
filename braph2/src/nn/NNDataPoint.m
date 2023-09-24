@@ -7,15 +7,16 @@ classdef NNDataPoint < ConcreteElement
 	% Its subclasses shall be specifically designed to cater to different use cases such as classification task, regression task, or data generation.
 	%
 	% The list of NNDataPoint properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for neural network analysis.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for neural network analysis.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for neural network analysis.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for neural network analysis.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for neural network analysis.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for neural network analysis.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 	%
 	% NNDataPoint methods (constructor):
 	%  NNDataPoint - constructor
@@ -106,12 +107,12 @@ classdef NNDataPoint < ConcreteElement
 	% See also NNData.
 	
 	properties (Constant) % properties
-		INPUT = 8; %CET: Computational Efficiency Trick
+		INPUT = 9; %CET: Computational Efficiency Trick
 		INPUT_TAG = 'INPUT';
 		INPUT_CATEGORY = 5;
 		INPUT_FORMAT = 16;
 		
-		TARGET = 9; %CET: Computational Efficiency Trick
+		TARGET = 10; %CET: Computational Efficiency Trick
 		TARGET_TAG = 'TARGET';
 		TARGET_CATEGORY = 5;
 		TARGET_FORMAT = 16;
@@ -128,15 +129,16 @@ classdef NNDataPoint < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDataPoint properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for neural network analysis.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for neural network analysis.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for neural network analysis.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for neural network analysis.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for neural network analysis.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for neural network analysis.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 			%
 			% See also Category, Format.
 			
@@ -198,23 +200,23 @@ classdef NNDataPoint < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
-				case 4 % Category.DATA
 					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
 				case 5 % Category.RESULT
-					prop_list = [8 9];
+					prop_list = [9 10];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -240,13 +242,13 @@ classdef NNDataPoint < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -287,7 +289,7 @@ classdef NNDataPoint < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -325,7 +327,7 @@ classdef NNDataPoint < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -358,7 +360,7 @@ classdef NNDataPoint < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -387,7 +389,7 @@ classdef NNDataPoint < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatapoint_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' };
+				nndatapoint_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET' };
 				tag = nndatapoint_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -414,7 +416,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_category_list = { 1  1  3  4  2  2  6  5  5 };
+			nndatapoint_category_list = { 1  1  1  3  4  2  2  6  5  5 };
 			prop_category = nndatapoint_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -440,7 +442,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_format_list = { 2  2  8  2  2  2  2  16  16 };
+			nndatapoint_format_list = { 2  2  2  8  2  2  2  2  16  16 };
 			prop_format = nndatapoint_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -466,7 +468,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_description_list = { 'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
+			nndatapoint_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
 			prop_description = nndatapoint_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -492,11 +494,11 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNDataPoint.INPUT
+				case 9 % NNDataPoint.INPUT
 					prop_settings = Format.getFormatSettings(16);
-				case 9 % NNDataPoint.TARGET
+				case 10 % NNDataPoint.TARGET
 					prop_settings = Format.getFormatSettings(16);
-				case 3 % NNDataPoint.TEMPLATE
+				case 4 % NNDataPoint.TEMPLATE
 					prop_settings = 'NNDataPoint';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -525,21 +527,23 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNDataPoint.INPUT
+				case 9 % NNDataPoint.INPUT
 					prop_default = Format.getFormatDefault(16, NNDataPoint.getPropSettings(prop));
-				case 9 % NNDataPoint.TARGET
+				case 10 % NNDataPoint.TARGET
 					prop_default = Format.getFormatDefault(16, NNDataPoint.getPropSettings(prop));
-				case 1 % NNDataPoint.NAME
+				case 1 % NNDataPoint.ELCLASS
 					prop_default = 'NNDataPoint';
-				case 2 % NNDataPoint.DESCRIPTION
+				case 2 % NNDataPoint.NAME
+					prop_default = 'NNDataPoint';
+				case 3 % NNDataPoint.DESCRIPTION
 					prop_default = 'A neural network data point (NNDataPoint) contains a data point with its inputs and targets for neural network analysis. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses shall be specifically designed to cater to different use cases such as classification task, regression task, or data generation.';
-				case 3 % NNDataPoint.TEMPLATE
+				case 4 % NNDataPoint.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNDataPoint.getPropSettings(prop));
-				case 4 % NNDataPoint.ID
+				case 5 % NNDataPoint.ID
 					prop_default = 'NNDataPoint ID';
-				case 5 % NNDataPoint.LABEL
+				case 6 % NNDataPoint.LABEL
 					prop_default = 'NNDataPoint label';
-				case 6 % NNDataPoint.NOTES
+				case 7 % NNDataPoint.NOTES
 					prop_default = 'NNDataPoint notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -605,14 +609,14 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			switch prop
-				case 8 % NNDataPoint.INPUT
+				case 9 % NNDataPoint.INPUT
 					check = Format.checkFormat(16, value, NNDataPoint.getPropSettings(prop));
-				case 9 % NNDataPoint.TARGET
+				case 10 % NNDataPoint.TARGET
 					check = Format.checkFormat(16, value, NNDataPoint.getPropSettings(prop));
-				case 3 % NNDataPoint.TEMPLATE
+				case 4 % NNDataPoint.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

@@ -2,51 +2,52 @@ classdef IndexedDictionary < ConcreteElement
 	%IndexedDictionary is an indexed dictionary.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% IndexedDictionary provides the methods necessary to handle data in an 
-	% indexed dictionary. It contains and manages an ordered list of couples 
-	% {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided 
-	% by a property of format STRING or CLASS and of category PARAMETER or DATA 
-	% and IT is an element of a class defined in the constructor using the 
-	% property IT_CLASS.
+	% An Indexed Dictionary (IndexedDictionary) provides the methods necessary 
+	%  to handle data in an indexed dictionary. It contains and manages an 
+	%  ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key 
+	%  (a string) provided by a property of format STRING or CLASS and of 
+	%  category PARAMETER or DATA, and IT is an element of a class defined in the 
+	%  constructor using the property IT_CLASS.
 	%
 	% The list of IndexedDictionary properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the indexed dictionary.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the indexed dictionary.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the indexed dictionary.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the indexed dictionary.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the indexed dictionary.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the indexed dictionary.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>IT_CLASS</strong> 	IT_CLASS (parameter, class) is the class of the item elements.
-	%  <strong>9</strong> <strong>IT_KEY</strong> 	IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).
-	%  <strong>10</strong> <strong>IT_LIST</strong> 	IT_LIST (data, itemlist) is the list containing the items.
-	%  <strong>11</strong> <strong>LENGTH</strong> 	LENGTH (query, scalar) returns the number of items in the indexed dictionary.
-	%  <strong>12</strong> <strong>CONTAINS</strong> 	CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.
-	%  <strong>13</strong> <strong>CONTAINS_INDEX</strong> 	CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.
-	%  <strong>14</strong> <strong>CONTAINS_KEY</strong> 	CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.
-	%  <strong>15</strong> <strong>CONTAINS_IT</strong> 	CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary
-	%  <strong>16</strong> <strong>INDEX</strong> 	INDEX (query, scalar) returns the index of a key or item.
-	%  <strong>17</strong> <strong>INDEX_FROM_KEY</strong> 	INDEX_FROM_KEY (query, scalar) returns the index of a key.
-	%  <strong>18</strong> <strong>INDEX_FROM_IT</strong> 	INDEX_FROM_IT (query, scalar) returns the index of a item.
-	%  <strong>19</strong> <strong>KEYS</strong> 	KEYS (query, stringlist) returns all the keys in the indexed dictionary.
-	%  <strong>20</strong> <strong>KEY</strong> 	KEY (query, string) returns the key of an index or item.
-	%  <strong>21</strong> <strong>KEY_FROM_INDEX</strong> 	KEY_FROM_INDEX (query, string) returns the key of an index
-	%  <strong>22</strong> <strong>KEY_FROM_IT</strong> 	KEY_FROM_IT (query, string) returns the key of a item.
-	%  <strong>23</strong> <strong>IT</strong> 	IT (query, item) returns the item of an index or key.
-	%  <strong>24</strong> <strong>IT_FROM_INDEX</strong> 	IT_FROM_INDEX (query, item) returns the item of an index.
-	%  <strong>25</strong> <strong>IT_FROM_KEY</strong> 	IT_FROM_KEY (query, item) returns the item of a key.
-	%  <strong>26</strong> <strong>ADD</strong> 	ADD (query, empty) adds an item and key to an indexed dictionary
-	%  <strong>27</strong> <strong>REMOVE</strong> 	REMOVE (query, empty) removes a key and item from an indexed dictionary.
-	%  <strong>28</strong> <strong>REPLACE</strong> 	REPLACE (query, empty) replaces an item and key in an indexed dictionary.
-	%  <strong>29</strong> <strong>REPLACE_KEY</strong> 	REPLACE_KEY (query, empty) replaces key in indexed dictionary.
-	%  <strong>30</strong> <strong>REPLACE_IT</strong> 	REPLACE_IT (query, empty) replaces item in indexed dictionary.
-	%  <strong>31</strong> <strong>INVERT</strong> 	INVERT (query, empty) inverts position of two items in indexed dictionary.
-	%  <strong>32</strong> <strong>MOVE_TO</strong> 	MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.
-	%  <strong>33</strong> <strong>REMOVE_ALL</strong> 	REMOVE_ALL (query, rvector) removes selected items.
-	%  <strong>34</strong> <strong>MOVE_UP</strong> 	MOVE_UP (query, rvector) moves up selected items.
-	%  <strong>35</strong> <strong>MOVE_DOWN</strong> 	MOVE_DOWN (query, rvector) moves down selected items.
-	%  <strong>36</strong> <strong>MOVE_TO_TOP</strong> 	MOVE_TO_TOP (query, empty) moves selected items to top.
-	%  <strong>37</strong> <strong>MOVE_TO_BOTTOM</strong> 	MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the indexed dictionary.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the indexed dictionary.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the indexed dictionary.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the indexed dictionary.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the indexed dictionary.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the indexed dictionary.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the indexed dictionary.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>IT_CLASS</strong> 	IT_CLASS (parameter, class) is the class of the item elements.
+	%  <strong>10</strong> <strong>IT_KEY</strong> 	IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).
+	%  <strong>11</strong> <strong>IT_LIST</strong> 	IT_LIST (data, itemlist) is the list containing the items.
+	%  <strong>12</strong> <strong>LENGTH</strong> 	LENGTH (query, scalar) returns the number of items in the indexed dictionary.
+	%  <strong>13</strong> <strong>CONTAINS</strong> 	CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.
+	%  <strong>14</strong> <strong>CONTAINS_INDEX</strong> 	CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.
+	%  <strong>15</strong> <strong>CONTAINS_KEY</strong> 	CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.
+	%  <strong>16</strong> <strong>CONTAINS_IT</strong> 	CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary
+	%  <strong>17</strong> <strong>INDEX</strong> 	INDEX (query, scalar) returns the index of a key or item.
+	%  <strong>18</strong> <strong>INDEX_FROM_KEY</strong> 	INDEX_FROM_KEY (query, scalar) returns the index of a key.
+	%  <strong>19</strong> <strong>INDEX_FROM_IT</strong> 	INDEX_FROM_IT (query, scalar) returns the index of a item.
+	%  <strong>20</strong> <strong>KEYS</strong> 	KEYS (query, stringlist) returns all the keys in the indexed dictionary.
+	%  <strong>21</strong> <strong>KEY</strong> 	KEY (query, string) returns the key of an index or item.
+	%  <strong>22</strong> <strong>KEY_FROM_INDEX</strong> 	KEY_FROM_INDEX (query, string) returns the key of an index
+	%  <strong>23</strong> <strong>KEY_FROM_IT</strong> 	KEY_FROM_IT (query, string) returns the key of a item.
+	%  <strong>24</strong> <strong>IT</strong> 	IT (query, item) returns the item of an index or key.
+	%  <strong>25</strong> <strong>IT_FROM_INDEX</strong> 	IT_FROM_INDEX (query, item) returns the item of an index.
+	%  <strong>26</strong> <strong>IT_FROM_KEY</strong> 	IT_FROM_KEY (query, item) returns the item of a key.
+	%  <strong>27</strong> <strong>ADD</strong> 	ADD (query, empty) adds an item and key to an indexed dictionary
+	%  <strong>28</strong> <strong>REMOVE</strong> 	REMOVE (query, empty) removes a key and item from an indexed dictionary.
+	%  <strong>29</strong> <strong>REPLACE</strong> 	REPLACE (query, empty) replaces an item and key in an indexed dictionary.
+	%  <strong>30</strong> <strong>REPLACE_KEY</strong> 	REPLACE_KEY (query, empty) replaces key in indexed dictionary.
+	%  <strong>31</strong> <strong>REPLACE_IT</strong> 	REPLACE_IT (query, empty) replaces item in indexed dictionary.
+	%  <strong>32</strong> <strong>INVERT</strong> 	INVERT (query, empty) inverts position of two items in indexed dictionary.
+	%  <strong>33</strong> <strong>MOVE_TO</strong> 	MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.
+	%  <strong>34</strong> <strong>REMOVE_ALL</strong> 	REMOVE_ALL (query, rvector) removes selected items.
+	%  <strong>35</strong> <strong>MOVE_UP</strong> 	MOVE_UP (query, rvector) moves up selected items.
+	%  <strong>36</strong> <strong>MOVE_DOWN</strong> 	MOVE_DOWN (query, rvector) moves down selected items.
+	%  <strong>37</strong> <strong>MOVE_TO_TOP</strong> 	MOVE_TO_TOP (query, empty) moves selected items to top.
+	%  <strong>38</strong> <strong>MOVE_TO_BOTTOM</strong> 	MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.
 	%
 	% IndexedDictionary methods (constructor):
 	%  IndexedDictionary - constructor
@@ -135,152 +136,152 @@ classdef IndexedDictionary < ConcreteElement
 	%
 	
 	properties (Constant) % properties
-		IT_CLASS = 8; %CET: Computational Efficiency Trick
+		IT_CLASS = 9; %CET: Computational Efficiency Trick
 		IT_CLASS_TAG = 'IT_CLASS';
 		IT_CLASS_CATEGORY = 3;
 		IT_CLASS_FORMAT = 6;
 		
-		IT_KEY = 9; %CET: Computational Efficiency Trick
+		IT_KEY = 10; %CET: Computational Efficiency Trick
 		IT_KEY_TAG = 'IT_KEY';
 		IT_KEY_CATEGORY = 3;
 		IT_KEY_FORMAT = 11;
 		
-		IT_LIST = 10; %CET: Computational Efficiency Trick
+		IT_LIST = 11; %CET: Computational Efficiency Trick
 		IT_LIST_TAG = 'IT_LIST';
 		IT_LIST_CATEGORY = 4;
 		IT_LIST_FORMAT = 9;
 		
-		LENGTH = 11; %CET: Computational Efficiency Trick
+		LENGTH = 12; %CET: Computational Efficiency Trick
 		LENGTH_TAG = 'LENGTH';
 		LENGTH_CATEGORY = 6;
 		LENGTH_FORMAT = 11;
 		
-		CONTAINS = 12; %CET: Computational Efficiency Trick
+		CONTAINS = 13; %CET: Computational Efficiency Trick
 		CONTAINS_TAG = 'CONTAINS';
 		CONTAINS_CATEGORY = 6;
 		CONTAINS_FORMAT = 4;
 		
-		CONTAINS_INDEX = 13; %CET: Computational Efficiency Trick
+		CONTAINS_INDEX = 14; %CET: Computational Efficiency Trick
 		CONTAINS_INDEX_TAG = 'CONTAINS_INDEX';
 		CONTAINS_INDEX_CATEGORY = 6;
 		CONTAINS_INDEX_FORMAT = 4;
 		
-		CONTAINS_KEY = 14; %CET: Computational Efficiency Trick
+		CONTAINS_KEY = 15; %CET: Computational Efficiency Trick
 		CONTAINS_KEY_TAG = 'CONTAINS_KEY';
 		CONTAINS_KEY_CATEGORY = 6;
 		CONTAINS_KEY_FORMAT = 4;
 		
-		CONTAINS_IT = 15; %CET: Computational Efficiency Trick
+		CONTAINS_IT = 16; %CET: Computational Efficiency Trick
 		CONTAINS_IT_TAG = 'CONTAINS_IT';
 		CONTAINS_IT_CATEGORY = 6;
 		CONTAINS_IT_FORMAT = 4;
 		
-		INDEX = 16; %CET: Computational Efficiency Trick
+		INDEX = 17; %CET: Computational Efficiency Trick
 		INDEX_TAG = 'INDEX';
 		INDEX_CATEGORY = 6;
 		INDEX_FORMAT = 11;
 		
-		INDEX_FROM_KEY = 17; %CET: Computational Efficiency Trick
+		INDEX_FROM_KEY = 18; %CET: Computational Efficiency Trick
 		INDEX_FROM_KEY_TAG = 'INDEX_FROM_KEY';
 		INDEX_FROM_KEY_CATEGORY = 6;
 		INDEX_FROM_KEY_FORMAT = 11;
 		
-		INDEX_FROM_IT = 18; %CET: Computational Efficiency Trick
+		INDEX_FROM_IT = 19; %CET: Computational Efficiency Trick
 		INDEX_FROM_IT_TAG = 'INDEX_FROM_IT';
 		INDEX_FROM_IT_CATEGORY = 6;
 		INDEX_FROM_IT_FORMAT = 11;
 		
-		KEYS = 19; %CET: Computational Efficiency Trick
+		KEYS = 20; %CET: Computational Efficiency Trick
 		KEYS_TAG = 'KEYS';
 		KEYS_CATEGORY = 6;
 		KEYS_FORMAT = 3;
 		
-		KEY = 20; %CET: Computational Efficiency Trick
+		KEY = 21; %CET: Computational Efficiency Trick
 		KEY_TAG = 'KEY';
 		KEY_CATEGORY = 6;
 		KEY_FORMAT = 2;
 		
-		KEY_FROM_INDEX = 21; %CET: Computational Efficiency Trick
+		KEY_FROM_INDEX = 22; %CET: Computational Efficiency Trick
 		KEY_FROM_INDEX_TAG = 'KEY_FROM_INDEX';
 		KEY_FROM_INDEX_CATEGORY = 6;
 		KEY_FROM_INDEX_FORMAT = 2;
 		
-		KEY_FROM_IT = 22; %CET: Computational Efficiency Trick
+		KEY_FROM_IT = 23; %CET: Computational Efficiency Trick
 		KEY_FROM_IT_TAG = 'KEY_FROM_IT';
 		KEY_FROM_IT_CATEGORY = 6;
 		KEY_FROM_IT_FORMAT = 2;
 		
-		IT = 23; %CET: Computational Efficiency Trick
+		IT = 24; %CET: Computational Efficiency Trick
 		IT_TAG = 'IT';
 		IT_CATEGORY = 6;
 		IT_FORMAT = 8;
 		
-		IT_FROM_INDEX = 24; %CET: Computational Efficiency Trick
+		IT_FROM_INDEX = 25; %CET: Computational Efficiency Trick
 		IT_FROM_INDEX_TAG = 'IT_FROM_INDEX';
 		IT_FROM_INDEX_CATEGORY = 6;
 		IT_FROM_INDEX_FORMAT = 8;
 		
-		IT_FROM_KEY = 25; %CET: Computational Efficiency Trick
+		IT_FROM_KEY = 26; %CET: Computational Efficiency Trick
 		IT_FROM_KEY_TAG = 'IT_FROM_KEY';
 		IT_FROM_KEY_CATEGORY = 6;
 		IT_FROM_KEY_FORMAT = 8;
 		
-		ADD = 26; %CET: Computational Efficiency Trick
+		ADD = 27; %CET: Computational Efficiency Trick
 		ADD_TAG = 'ADD';
 		ADD_CATEGORY = 6;
 		ADD_FORMAT = 1;
 		
-		REMOVE = 27; %CET: Computational Efficiency Trick
+		REMOVE = 28; %CET: Computational Efficiency Trick
 		REMOVE_TAG = 'REMOVE';
 		REMOVE_CATEGORY = 6;
 		REMOVE_FORMAT = 1;
 		
-		REPLACE = 28; %CET: Computational Efficiency Trick
+		REPLACE = 29; %CET: Computational Efficiency Trick
 		REPLACE_TAG = 'REPLACE';
 		REPLACE_CATEGORY = 6;
 		REPLACE_FORMAT = 1;
 		
-		REPLACE_KEY = 29; %CET: Computational Efficiency Trick
+		REPLACE_KEY = 30; %CET: Computational Efficiency Trick
 		REPLACE_KEY_TAG = 'REPLACE_KEY';
 		REPLACE_KEY_CATEGORY = 6;
 		REPLACE_KEY_FORMAT = 1;
 		
-		REPLACE_IT = 30; %CET: Computational Efficiency Trick
+		REPLACE_IT = 31; %CET: Computational Efficiency Trick
 		REPLACE_IT_TAG = 'REPLACE_IT';
 		REPLACE_IT_CATEGORY = 6;
 		REPLACE_IT_FORMAT = 1;
 		
-		INVERT = 31; %CET: Computational Efficiency Trick
+		INVERT = 32; %CET: Computational Efficiency Trick
 		INVERT_TAG = 'INVERT';
 		INVERT_CATEGORY = 6;
 		INVERT_FORMAT = 1;
 		
-		MOVE_TO = 32; %CET: Computational Efficiency Trick
+		MOVE_TO = 33; %CET: Computational Efficiency Trick
 		MOVE_TO_TAG = 'MOVE_TO';
 		MOVE_TO_CATEGORY = 6;
 		MOVE_TO_FORMAT = 1;
 		
-		REMOVE_ALL = 33; %CET: Computational Efficiency Trick
+		REMOVE_ALL = 34; %CET: Computational Efficiency Trick
 		REMOVE_ALL_TAG = 'REMOVE_ALL';
 		REMOVE_ALL_CATEGORY = 6;
 		REMOVE_ALL_FORMAT = 12;
 		
-		MOVE_UP = 34; %CET: Computational Efficiency Trick
+		MOVE_UP = 35; %CET: Computational Efficiency Trick
 		MOVE_UP_TAG = 'MOVE_UP';
 		MOVE_UP_CATEGORY = 6;
 		MOVE_UP_FORMAT = 12;
 		
-		MOVE_DOWN = 35; %CET: Computational Efficiency Trick
+		MOVE_DOWN = 36; %CET: Computational Efficiency Trick
 		MOVE_DOWN_TAG = 'MOVE_DOWN';
 		MOVE_DOWN_CATEGORY = 6;
 		MOVE_DOWN_FORMAT = 12;
 		
-		MOVE_TO_TOP = 36; %CET: Computational Efficiency Trick
+		MOVE_TO_TOP = 37; %CET: Computational Efficiency Trick
 		MOVE_TO_TOP_TAG = 'MOVE_TO_TOP';
 		MOVE_TO_TOP_CATEGORY = 6;
 		MOVE_TO_TOP_FORMAT = 1;
 		
-		MOVE_TO_BOTTOM = 37; %CET: Computational Efficiency Trick
+		MOVE_TO_BOTTOM = 38; %CET: Computational Efficiency Trick
 		MOVE_TO_BOTTOM_TAG = 'MOVE_TO_BOTTOM';
 		MOVE_TO_BOTTOM_CATEGORY = 6;
 		MOVE_TO_BOTTOM_FORMAT = 12;
@@ -297,43 +298,44 @@ classdef IndexedDictionary < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of IndexedDictionary properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the indexed dictionary.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the indexed dictionary.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the indexed dictionary.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the indexed dictionary.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the indexed dictionary.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the indexed dictionary.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>IT_CLASS</strong> 	IT_CLASS (parameter, class) is the class of the item elements.
-			%  <strong>9</strong> <strong>IT_KEY</strong> 	IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).
-			%  <strong>10</strong> <strong>IT_LIST</strong> 	IT_LIST (data, itemlist) is the list containing the items.
-			%  <strong>11</strong> <strong>LENGTH</strong> 	LENGTH (query, scalar) returns the number of items in the indexed dictionary.
-			%  <strong>12</strong> <strong>CONTAINS</strong> 	CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.
-			%  <strong>13</strong> <strong>CONTAINS_INDEX</strong> 	CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.
-			%  <strong>14</strong> <strong>CONTAINS_KEY</strong> 	CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.
-			%  <strong>15</strong> <strong>CONTAINS_IT</strong> 	CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary
-			%  <strong>16</strong> <strong>INDEX</strong> 	INDEX (query, scalar) returns the index of a key or item.
-			%  <strong>17</strong> <strong>INDEX_FROM_KEY</strong> 	INDEX_FROM_KEY (query, scalar) returns the index of a key.
-			%  <strong>18</strong> <strong>INDEX_FROM_IT</strong> 	INDEX_FROM_IT (query, scalar) returns the index of a item.
-			%  <strong>19</strong> <strong>KEYS</strong> 	KEYS (query, stringlist) returns all the keys in the indexed dictionary.
-			%  <strong>20</strong> <strong>KEY</strong> 	KEY (query, string) returns the key of an index or item.
-			%  <strong>21</strong> <strong>KEY_FROM_INDEX</strong> 	KEY_FROM_INDEX (query, string) returns the key of an index
-			%  <strong>22</strong> <strong>KEY_FROM_IT</strong> 	KEY_FROM_IT (query, string) returns the key of a item.
-			%  <strong>23</strong> <strong>IT</strong> 	IT (query, item) returns the item of an index or key.
-			%  <strong>24</strong> <strong>IT_FROM_INDEX</strong> 	IT_FROM_INDEX (query, item) returns the item of an index.
-			%  <strong>25</strong> <strong>IT_FROM_KEY</strong> 	IT_FROM_KEY (query, item) returns the item of a key.
-			%  <strong>26</strong> <strong>ADD</strong> 	ADD (query, empty) adds an item and key to an indexed dictionary
-			%  <strong>27</strong> <strong>REMOVE</strong> 	REMOVE (query, empty) removes a key and item from an indexed dictionary.
-			%  <strong>28</strong> <strong>REPLACE</strong> 	REPLACE (query, empty) replaces an item and key in an indexed dictionary.
-			%  <strong>29</strong> <strong>REPLACE_KEY</strong> 	REPLACE_KEY (query, empty) replaces key in indexed dictionary.
-			%  <strong>30</strong> <strong>REPLACE_IT</strong> 	REPLACE_IT (query, empty) replaces item in indexed dictionary.
-			%  <strong>31</strong> <strong>INVERT</strong> 	INVERT (query, empty) inverts position of two items in indexed dictionary.
-			%  <strong>32</strong> <strong>MOVE_TO</strong> 	MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.
-			%  <strong>33</strong> <strong>REMOVE_ALL</strong> 	REMOVE_ALL (query, rvector) removes selected items.
-			%  <strong>34</strong> <strong>MOVE_UP</strong> 	MOVE_UP (query, rvector) moves up selected items.
-			%  <strong>35</strong> <strong>MOVE_DOWN</strong> 	MOVE_DOWN (query, rvector) moves down selected items.
-			%  <strong>36</strong> <strong>MOVE_TO_TOP</strong> 	MOVE_TO_TOP (query, empty) moves selected items to top.
-			%  <strong>37</strong> <strong>MOVE_TO_BOTTOM</strong> 	MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the indexed dictionary.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the indexed dictionary.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the indexed dictionary.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the indexed dictionary.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the indexed dictionary.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the indexed dictionary.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the indexed dictionary.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>IT_CLASS</strong> 	IT_CLASS (parameter, class) is the class of the item elements.
+			%  <strong>10</strong> <strong>IT_KEY</strong> 	IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).
+			%  <strong>11</strong> <strong>IT_LIST</strong> 	IT_LIST (data, itemlist) is the list containing the items.
+			%  <strong>12</strong> <strong>LENGTH</strong> 	LENGTH (query, scalar) returns the number of items in the indexed dictionary.
+			%  <strong>13</strong> <strong>CONTAINS</strong> 	CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.
+			%  <strong>14</strong> <strong>CONTAINS_INDEX</strong> 	CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.
+			%  <strong>15</strong> <strong>CONTAINS_KEY</strong> 	CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.
+			%  <strong>16</strong> <strong>CONTAINS_IT</strong> 	CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary
+			%  <strong>17</strong> <strong>INDEX</strong> 	INDEX (query, scalar) returns the index of a key or item.
+			%  <strong>18</strong> <strong>INDEX_FROM_KEY</strong> 	INDEX_FROM_KEY (query, scalar) returns the index of a key.
+			%  <strong>19</strong> <strong>INDEX_FROM_IT</strong> 	INDEX_FROM_IT (query, scalar) returns the index of a item.
+			%  <strong>20</strong> <strong>KEYS</strong> 	KEYS (query, stringlist) returns all the keys in the indexed dictionary.
+			%  <strong>21</strong> <strong>KEY</strong> 	KEY (query, string) returns the key of an index or item.
+			%  <strong>22</strong> <strong>KEY_FROM_INDEX</strong> 	KEY_FROM_INDEX (query, string) returns the key of an index
+			%  <strong>23</strong> <strong>KEY_FROM_IT</strong> 	KEY_FROM_IT (query, string) returns the key of a item.
+			%  <strong>24</strong> <strong>IT</strong> 	IT (query, item) returns the item of an index or key.
+			%  <strong>25</strong> <strong>IT_FROM_INDEX</strong> 	IT_FROM_INDEX (query, item) returns the item of an index.
+			%  <strong>26</strong> <strong>IT_FROM_KEY</strong> 	IT_FROM_KEY (query, item) returns the item of a key.
+			%  <strong>27</strong> <strong>ADD</strong> 	ADD (query, empty) adds an item and key to an indexed dictionary
+			%  <strong>28</strong> <strong>REMOVE</strong> 	REMOVE (query, empty) removes a key and item from an indexed dictionary.
+			%  <strong>29</strong> <strong>REPLACE</strong> 	REPLACE (query, empty) replaces an item and key in an indexed dictionary.
+			%  <strong>30</strong> <strong>REPLACE_KEY</strong> 	REPLACE_KEY (query, empty) replaces key in indexed dictionary.
+			%  <strong>31</strong> <strong>REPLACE_IT</strong> 	REPLACE_IT (query, empty) replaces item in indexed dictionary.
+			%  <strong>32</strong> <strong>INVERT</strong> 	INVERT (query, empty) inverts position of two items in indexed dictionary.
+			%  <strong>33</strong> <strong>MOVE_TO</strong> 	MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.
+			%  <strong>34</strong> <strong>REMOVE_ALL</strong> 	REMOVE_ALL (query, rvector) removes selected items.
+			%  <strong>35</strong> <strong>MOVE_UP</strong> 	MOVE_UP (query, rvector) moves up selected items.
+			%  <strong>36</strong> <strong>MOVE_DOWN</strong> 	MOVE_DOWN (query, rvector) moves down selected items.
+			%  <strong>37</strong> <strong>MOVE_TO_TOP</strong> 	MOVE_TO_TOP (query, empty) moves selected items to top.
+			%  <strong>38</strong> <strong>MOVE_TO_BOTTOM</strong> 	MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.
 			%
 			% See also Category, Format.
 			
@@ -395,21 +397,21 @@ classdef IndexedDictionary < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 8 9];
+					prop_list = [4 9 10];
 				case 4 % Category.DATA
-					prop_list = [4 10];
+					prop_list = [5 11];
 				case 6 % Category.QUERY
-					prop_list = [7 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
+					prop_list = [8 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
 				otherwise
 					prop_list = [];
 			end
@@ -435,13 +437,13 @@ classdef IndexedDictionary < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 37;
+				prop_number = 38;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -480,7 +482,7 @@ classdef IndexedDictionary < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 38 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -518,7 +520,7 @@ classdef IndexedDictionary < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -551,7 +553,7 @@ classdef IndexedDictionary < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -580,7 +582,7 @@ classdef IndexedDictionary < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				indexeddictionary_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' };
+				indexeddictionary_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'IT_CLASS'  'IT_KEY'  'IT_LIST'  'LENGTH'  'CONTAINS'  'CONTAINS_INDEX'  'CONTAINS_KEY'  'CONTAINS_IT'  'INDEX'  'INDEX_FROM_KEY'  'INDEX_FROM_IT'  'KEYS'  'KEY'  'KEY_FROM_INDEX'  'KEY_FROM_IT'  'IT'  'IT_FROM_INDEX'  'IT_FROM_KEY'  'ADD'  'REMOVE'  'REPLACE'  'REPLACE_KEY'  'REPLACE_IT'  'INVERT'  'MOVE_TO'  'REMOVE_ALL'  'MOVE_UP'  'MOVE_DOWN'  'MOVE_TO_TOP'  'MOVE_TO_BOTTOM' };
 				tag = indexeddictionary_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -607,7 +609,7 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			indexeddictionary_category_list = { 1  1  3  4  2  2  6  3  3  4  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 };
+			indexeddictionary_category_list = { 1  1  1  3  4  2  2  6  3  3  4  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6  6 };
 			prop_category = indexeddictionary_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -633,7 +635,7 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			indexeddictionary_format_list = { 2  2  8  2  2  2  2  6  11  9  11  4  4  4  4  11  11  11  3  2  2  2  8  8  8  1  1  1  1  1  1  1  12  12  12  1  12 };
+			indexeddictionary_format_list = { 2  2  2  8  2  2  2  2  6  11  9  11  4  4  4  4  11  11  11  3  2  2  2  8  8  8  1  1  1  1  1  1  1  12  12  12  1  12 };
 			prop_format = indexeddictionary_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -659,7 +661,7 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			indexeddictionary_description_list = { 'NAME (constant, string) is the name of the indexed dictionary.'  'DESCRIPTION (constant, string) is the description of the indexed dictionary.'  'TEMPLATE (parameter, item) is the template of the indexed dictionary.'  'ID (data, string) is a few-letter code for the indexed dictionary.'  'LABEL (metadata, string) is an extended label of the indexed dictionary.'  'NOTES (metadata, string) are some specific notes about the indexed dictionary.'  'TOSTRING (query, string) returns a string that represents the object.'  'IT_CLASS (parameter, class) is the class of the item elements.'  'IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).'  'IT_LIST (data, itemlist) is the list containing the items.'  'LENGTH (query, scalar) returns the number of items in the indexed dictionary.'  'CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.'  'CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.'  'CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.'  'CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary'  'INDEX (query, scalar) returns the index of a key or item.'  'INDEX_FROM_KEY (query, scalar) returns the index of a key.'  'INDEX_FROM_IT (query, scalar) returns the index of a item.'  'KEYS (query, stringlist) returns all the keys in the indexed dictionary.'  'KEY (query, string) returns the key of an index or item.'  'KEY_FROM_INDEX (query, string) returns the key of an index'  'KEY_FROM_IT (query, string) returns the key of a item.'  'IT (query, item) returns the item of an index or key.'  'IT_FROM_INDEX (query, item) returns the item of an index.'  'IT_FROM_KEY (query, item) returns the item of a key.'  'ADD (query, empty) adds an item and key to an indexed dictionary'  'REMOVE (query, empty) removes a key and item from an indexed dictionary.'  'REPLACE (query, empty) replaces an item and key in an indexed dictionary.'  'REPLACE_KEY (query, empty) replaces key in indexed dictionary.'  'REPLACE_IT (query, empty) replaces item in indexed dictionary.'  'INVERT (query, empty) inverts position of two items in indexed dictionary.'  'MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.'  'REMOVE_ALL (query, rvector) removes selected items.'  'MOVE_UP (query, rvector) moves up selected items.'  'MOVE_DOWN (query, rvector) moves down selected items.'  'MOVE_TO_TOP (query, empty) moves selected items to top.'  'MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.' };
+			indexeddictionary_description_list = { 'ELCLASS (constant, string) is the class of the indexed dictionary.'  'NAME (constant, string) is the name of the indexed dictionary.'  'DESCRIPTION (constant, string) is the description of the indexed dictionary.'  'TEMPLATE (parameter, item) is the template of the indexed dictionary.'  'ID (data, string) is a few-letter code for the indexed dictionary.'  'LABEL (metadata, string) is an extended label of the indexed dictionary.'  'NOTES (metadata, string) are some specific notes about the indexed dictionary.'  'TOSTRING (query, string) returns a string that represents the object.'  'IT_CLASS (parameter, class) is the class of the item elements.'  'IT_KEY (parameter, scalar) is the property of the elements to be used as key (its category must be parameter or data, and its format must be string or class).'  'IT_LIST (data, itemlist) is the list containing the items.'  'LENGTH (query, scalar) returns the number of items in the indexed dictionary.'  'CONTAINS (query, logical) checks whether an item exists in an indexed dictionary.'  'CONTAINS_INDEX (query, logical) checks whether an index exists in an indexed dictionary.'  'CONTAINS_KEY (query, logical) checks whether a key exists in an indexed dictionary.'  'CONTAINS_IT (query, logical) checks whether an item exists in an indexed dictionary'  'INDEX (query, scalar) returns the index of a key or item.'  'INDEX_FROM_KEY (query, scalar) returns the index of a key.'  'INDEX_FROM_IT (query, scalar) returns the index of a item.'  'KEYS (query, stringlist) returns all the keys in the indexed dictionary.'  'KEY (query, string) returns the key of an index or item.'  'KEY_FROM_INDEX (query, string) returns the key of an index'  'KEY_FROM_IT (query, string) returns the key of a item.'  'IT (query, item) returns the item of an index or key.'  'IT_FROM_INDEX (query, item) returns the item of an index.'  'IT_FROM_KEY (query, item) returns the item of a key.'  'ADD (query, empty) adds an item and key to an indexed dictionary'  'REMOVE (query, empty) removes a key and item from an indexed dictionary.'  'REPLACE (query, empty) replaces an item and key in an indexed dictionary.'  'REPLACE_KEY (query, empty) replaces key in indexed dictionary.'  'REPLACE_IT (query, empty) replaces item in indexed dictionary.'  'INVERT (query, empty) inverts position of two items in indexed dictionary.'  'MOVE_TO (query, empty) moves an item of an indexed dictionary to another position.'  'REMOVE_ALL (query, rvector) removes selected items.'  'MOVE_UP (query, rvector) moves up selected items.'  'MOVE_DOWN (query, rvector) moves down selected items.'  'MOVE_TO_TOP (query, empty) moves selected items to top.'  'MOVE_TO_BOTTOM (query, rvector) moves selected items to bottom.' };
 			prop_description = indexeddictionary_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -685,67 +687,67 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % IndexedDictionary.IT_CLASS
+				case 9 % IndexedDictionary.IT_CLASS
 					prop_settings = Format.getFormatSettings(6);
-				case 9 % IndexedDictionary.IT_KEY
+				case 10 % IndexedDictionary.IT_KEY
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % IndexedDictionary.IT_LIST
+				case 11 % IndexedDictionary.IT_LIST
 					prop_settings = Format.getFormatSettings(9);
-				case 11 % IndexedDictionary.LENGTH
+				case 12 % IndexedDictionary.LENGTH
 					prop_settings = Format.getFormatSettings(11);
-				case 12 % IndexedDictionary.CONTAINS
+				case 13 % IndexedDictionary.CONTAINS
 					prop_settings = Format.getFormatSettings(4);
-				case 13 % IndexedDictionary.CONTAINS_INDEX
+				case 14 % IndexedDictionary.CONTAINS_INDEX
 					prop_settings = Format.getFormatSettings(4);
-				case 14 % IndexedDictionary.CONTAINS_KEY
+				case 15 % IndexedDictionary.CONTAINS_KEY
 					prop_settings = Format.getFormatSettings(4);
-				case 15 % IndexedDictionary.CONTAINS_IT
+				case 16 % IndexedDictionary.CONTAINS_IT
 					prop_settings = Format.getFormatSettings(4);
-				case 16 % IndexedDictionary.INDEX
+				case 17 % IndexedDictionary.INDEX
 					prop_settings = Format.getFormatSettings(11);
-				case 17 % IndexedDictionary.INDEX_FROM_KEY
+				case 18 % IndexedDictionary.INDEX_FROM_KEY
 					prop_settings = Format.getFormatSettings(11);
-				case 18 % IndexedDictionary.INDEX_FROM_IT
+				case 19 % IndexedDictionary.INDEX_FROM_IT
 					prop_settings = Format.getFormatSettings(11);
-				case 19 % IndexedDictionary.KEYS
+				case 20 % IndexedDictionary.KEYS
 					prop_settings = Format.getFormatSettings(3);
-				case 20 % IndexedDictionary.KEY
+				case 21 % IndexedDictionary.KEY
 					prop_settings = Format.getFormatSettings(2);
-				case 21 % IndexedDictionary.KEY_FROM_INDEX
+				case 22 % IndexedDictionary.KEY_FROM_INDEX
 					prop_settings = Format.getFormatSettings(2);
-				case 22 % IndexedDictionary.KEY_FROM_IT
+				case 23 % IndexedDictionary.KEY_FROM_IT
 					prop_settings = Format.getFormatSettings(2);
-				case 23 % IndexedDictionary.IT
+				case 24 % IndexedDictionary.IT
 					prop_settings = Format.getFormatSettings(8);
-				case 24 % IndexedDictionary.IT_FROM_INDEX
+				case 25 % IndexedDictionary.IT_FROM_INDEX
 					prop_settings = Format.getFormatSettings(8);
-				case 25 % IndexedDictionary.IT_FROM_KEY
+				case 26 % IndexedDictionary.IT_FROM_KEY
 					prop_settings = Format.getFormatSettings(8);
-				case 26 % IndexedDictionary.ADD
+				case 27 % IndexedDictionary.ADD
 					prop_settings = Format.getFormatSettings(1);
-				case 27 % IndexedDictionary.REMOVE
+				case 28 % IndexedDictionary.REMOVE
 					prop_settings = Format.getFormatSettings(1);
-				case 28 % IndexedDictionary.REPLACE
+				case 29 % IndexedDictionary.REPLACE
 					prop_settings = Format.getFormatSettings(1);
-				case 29 % IndexedDictionary.REPLACE_KEY
+				case 30 % IndexedDictionary.REPLACE_KEY
 					prop_settings = Format.getFormatSettings(1);
-				case 30 % IndexedDictionary.REPLACE_IT
+				case 31 % IndexedDictionary.REPLACE_IT
 					prop_settings = Format.getFormatSettings(1);
-				case 31 % IndexedDictionary.INVERT
+				case 32 % IndexedDictionary.INVERT
 					prop_settings = Format.getFormatSettings(1);
-				case 32 % IndexedDictionary.MOVE_TO
+				case 33 % IndexedDictionary.MOVE_TO
 					prop_settings = Format.getFormatSettings(1);
-				case 33 % IndexedDictionary.REMOVE_ALL
+				case 34 % IndexedDictionary.REMOVE_ALL
 					prop_settings = Format.getFormatSettings(12);
-				case 34 % IndexedDictionary.MOVE_UP
+				case 35 % IndexedDictionary.MOVE_UP
 					prop_settings = Format.getFormatSettings(12);
-				case 35 % IndexedDictionary.MOVE_DOWN
+				case 36 % IndexedDictionary.MOVE_DOWN
 					prop_settings = Format.getFormatSettings(12);
-				case 36 % IndexedDictionary.MOVE_TO_TOP
+				case 37 % IndexedDictionary.MOVE_TO_TOP
 					prop_settings = Format.getFormatSettings(1);
-				case 37 % IndexedDictionary.MOVE_TO_BOTTOM
+				case 38 % IndexedDictionary.MOVE_TO_BOTTOM
 					prop_settings = Format.getFormatSettings(12);
-				case 3 % IndexedDictionary.TEMPLATE
+				case 4 % IndexedDictionary.TEMPLATE
 					prop_settings = 'IndexedDictionary';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -774,77 +776,79 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % IndexedDictionary.IT_CLASS
+				case 9 % IndexedDictionary.IT_CLASS
 					prop_default = Format.getFormatDefault(6, IndexedDictionary.getPropSettings(prop));
-				case 9 % IndexedDictionary.IT_KEY
-					prop_default = 4;
-				case 10 % IndexedDictionary.IT_LIST
+				case 10 % IndexedDictionary.IT_KEY
+					prop_default = 5;
+				case 11 % IndexedDictionary.IT_LIST
 					prop_default = Format.getFormatDefault(9, IndexedDictionary.getPropSettings(prop));
-				case 11 % IndexedDictionary.LENGTH
+				case 12 % IndexedDictionary.LENGTH
 					prop_default = Format.getFormatDefault(11, IndexedDictionary.getPropSettings(prop));
-				case 12 % IndexedDictionary.CONTAINS
+				case 13 % IndexedDictionary.CONTAINS
 					prop_default = Format.getFormatDefault(4, IndexedDictionary.getPropSettings(prop));
-				case 13 % IndexedDictionary.CONTAINS_INDEX
+				case 14 % IndexedDictionary.CONTAINS_INDEX
 					prop_default = Format.getFormatDefault(4, IndexedDictionary.getPropSettings(prop));
-				case 14 % IndexedDictionary.CONTAINS_KEY
+				case 15 % IndexedDictionary.CONTAINS_KEY
 					prop_default = Format.getFormatDefault(4, IndexedDictionary.getPropSettings(prop));
-				case 15 % IndexedDictionary.CONTAINS_IT
+				case 16 % IndexedDictionary.CONTAINS_IT
 					prop_default = Format.getFormatDefault(4, IndexedDictionary.getPropSettings(prop));
-				case 16 % IndexedDictionary.INDEX
+				case 17 % IndexedDictionary.INDEX
 					prop_default = Format.getFormatDefault(11, IndexedDictionary.getPropSettings(prop));
-				case 17 % IndexedDictionary.INDEX_FROM_KEY
+				case 18 % IndexedDictionary.INDEX_FROM_KEY
 					prop_default = Format.getFormatDefault(11, IndexedDictionary.getPropSettings(prop));
-				case 18 % IndexedDictionary.INDEX_FROM_IT
+				case 19 % IndexedDictionary.INDEX_FROM_IT
 					prop_default = Format.getFormatDefault(11, IndexedDictionary.getPropSettings(prop));
-				case 19 % IndexedDictionary.KEYS
+				case 20 % IndexedDictionary.KEYS
 					prop_default = Format.getFormatDefault(3, IndexedDictionary.getPropSettings(prop));
-				case 20 % IndexedDictionary.KEY
+				case 21 % IndexedDictionary.KEY
 					prop_default = Format.getFormatDefault(2, IndexedDictionary.getPropSettings(prop));
-				case 21 % IndexedDictionary.KEY_FROM_INDEX
+				case 22 % IndexedDictionary.KEY_FROM_INDEX
 					prop_default = Format.getFormatDefault(2, IndexedDictionary.getPropSettings(prop));
-				case 22 % IndexedDictionary.KEY_FROM_IT
+				case 23 % IndexedDictionary.KEY_FROM_IT
 					prop_default = Format.getFormatDefault(2, IndexedDictionary.getPropSettings(prop));
-				case 23 % IndexedDictionary.IT
+				case 24 % IndexedDictionary.IT
 					prop_default = Format.getFormatDefault(8, IndexedDictionary.getPropSettings(prop));
-				case 24 % IndexedDictionary.IT_FROM_INDEX
+				case 25 % IndexedDictionary.IT_FROM_INDEX
 					prop_default = Format.getFormatDefault(8, IndexedDictionary.getPropSettings(prop));
-				case 25 % IndexedDictionary.IT_FROM_KEY
+				case 26 % IndexedDictionary.IT_FROM_KEY
 					prop_default = Format.getFormatDefault(8, IndexedDictionary.getPropSettings(prop));
-				case 26 % IndexedDictionary.ADD
+				case 27 % IndexedDictionary.ADD
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 27 % IndexedDictionary.REMOVE
+				case 28 % IndexedDictionary.REMOVE
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 28 % IndexedDictionary.REPLACE
+				case 29 % IndexedDictionary.REPLACE
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 29 % IndexedDictionary.REPLACE_KEY
+				case 30 % IndexedDictionary.REPLACE_KEY
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 30 % IndexedDictionary.REPLACE_IT
+				case 31 % IndexedDictionary.REPLACE_IT
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 31 % IndexedDictionary.INVERT
+				case 32 % IndexedDictionary.INVERT
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 32 % IndexedDictionary.MOVE_TO
+				case 33 % IndexedDictionary.MOVE_TO
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 33 % IndexedDictionary.REMOVE_ALL
+				case 34 % IndexedDictionary.REMOVE_ALL
 					prop_default = Format.getFormatDefault(12, IndexedDictionary.getPropSettings(prop));
-				case 34 % IndexedDictionary.MOVE_UP
+				case 35 % IndexedDictionary.MOVE_UP
 					prop_default = Format.getFormatDefault(12, IndexedDictionary.getPropSettings(prop));
-				case 35 % IndexedDictionary.MOVE_DOWN
+				case 36 % IndexedDictionary.MOVE_DOWN
 					prop_default = Format.getFormatDefault(12, IndexedDictionary.getPropSettings(prop));
-				case 36 % IndexedDictionary.MOVE_TO_TOP
+				case 37 % IndexedDictionary.MOVE_TO_TOP
 					prop_default = Format.getFormatDefault(1, IndexedDictionary.getPropSettings(prop));
-				case 37 % IndexedDictionary.MOVE_TO_BOTTOM
+				case 38 % IndexedDictionary.MOVE_TO_BOTTOM
 					prop_default = Format.getFormatDefault(12, IndexedDictionary.getPropSettings(prop));
-				case 1 % IndexedDictionary.NAME
+				case 1 % IndexedDictionary.ELCLASS
 					prop_default = 'IndexedDictionary';
-				case 2 % IndexedDictionary.DESCRIPTION
-					prop_default = 'IndexedDictionary provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of format STRING or CLASS and of category PARAMETER or DATA and IT is an element of a class defined in the constructor using the property IT_CLASS.';
-				case 3 % IndexedDictionary.TEMPLATE
+				case 2 % IndexedDictionary.NAME
+					prop_default = 'Indexed Dictionary';
+				case 3 % IndexedDictionary.DESCRIPTION
+					prop_default = 'An Indexed Dictionary (IndexedDictionary) provides the methods necessary to handle data in an indexed dictionary. It contains and manages an ordered list of couples {KEY, IT}, where KEY is a unique alphanumeric key (a string) provided by a property of format STRING or CLASS and of category PARAMETER or DATA, and IT is an element of a class defined in the constructor using the property IT_CLASS.';
+				case 4 % IndexedDictionary.TEMPLATE
 					prop_default = Format.getFormatDefault(8, IndexedDictionary.getPropSettings(prop));
-				case 4 % IndexedDictionary.ID
+				case 5 % IndexedDictionary.ID
 					prop_default = 'IndexedDictionary ID';
-				case 5 % IndexedDictionary.LABEL
+				case 6 % IndexedDictionary.LABEL
 					prop_default = 'IndexedDictionary label';
-				case 6 % IndexedDictionary.NOTES
+				case 7 % IndexedDictionary.NOTES
 					prop_default = 'IndexedDictionary notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -890,7 +894,7 @@ classdef IndexedDictionary < ConcreteElement
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case 9 % IndexedDictionary.IT_KEY
+				case 10 % IndexedDictionary.IT_KEY
 					it_class = idict.get('IT_CLASS');
 					category = Element.getPropCategory(it_class, value);
 					format = Element.getPropFormat(it_class, value);
@@ -903,7 +907,7 @@ classdef IndexedDictionary < ConcreteElement
 					        )
 					end
 					
-				case 10 % IndexedDictionary.IT_LIST
+				case 11 % IndexedDictionary.IT_LIST
 					if ~all(cellfun(@(x) isa(x, idict.get('IT_CLASS')), idict.get('IT_LIST')))
 					    error( ...
 					        ['BRAPH2' ':IndexedDictionary:' 'WrongInput'], ...
@@ -913,7 +917,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = preset@ConcreteElement(idict, prop, value);
 					end
 			end
@@ -953,70 +957,70 @@ classdef IndexedDictionary < ConcreteElement
 			prop = IndexedDictionary.getPropProp(pointer);
 			
 			switch prop
-				case 8 % IndexedDictionary.IT_CLASS
+				case 9 % IndexedDictionary.IT_CLASS
 					check = Format.checkFormat(6, value, IndexedDictionary.getPropSettings(prop));
-				case 9 % IndexedDictionary.IT_KEY
+				case 10 % IndexedDictionary.IT_KEY
 					check = Format.checkFormat(11, value, IndexedDictionary.getPropSettings(prop));
-				case 10 % IndexedDictionary.IT_LIST
+				case 11 % IndexedDictionary.IT_LIST
 					check = Format.checkFormat(9, value, IndexedDictionary.getPropSettings(prop));
-				case 11 % IndexedDictionary.LENGTH
+				case 12 % IndexedDictionary.LENGTH
 					check = Format.checkFormat(11, value, IndexedDictionary.getPropSettings(prop));
-				case 12 % IndexedDictionary.CONTAINS
+				case 13 % IndexedDictionary.CONTAINS
 					check = Format.checkFormat(4, value, IndexedDictionary.getPropSettings(prop));
-				case 13 % IndexedDictionary.CONTAINS_INDEX
+				case 14 % IndexedDictionary.CONTAINS_INDEX
 					check = Format.checkFormat(4, value, IndexedDictionary.getPropSettings(prop));
-				case 14 % IndexedDictionary.CONTAINS_KEY
+				case 15 % IndexedDictionary.CONTAINS_KEY
 					check = Format.checkFormat(4, value, IndexedDictionary.getPropSettings(prop));
-				case 15 % IndexedDictionary.CONTAINS_IT
+				case 16 % IndexedDictionary.CONTAINS_IT
 					check = Format.checkFormat(4, value, IndexedDictionary.getPropSettings(prop));
-				case 16 % IndexedDictionary.INDEX
+				case 17 % IndexedDictionary.INDEX
 					check = Format.checkFormat(11, value, IndexedDictionary.getPropSettings(prop));
-				case 17 % IndexedDictionary.INDEX_FROM_KEY
+				case 18 % IndexedDictionary.INDEX_FROM_KEY
 					check = Format.checkFormat(11, value, IndexedDictionary.getPropSettings(prop));
-				case 18 % IndexedDictionary.INDEX_FROM_IT
+				case 19 % IndexedDictionary.INDEX_FROM_IT
 					check = Format.checkFormat(11, value, IndexedDictionary.getPropSettings(prop));
-				case 19 % IndexedDictionary.KEYS
+				case 20 % IndexedDictionary.KEYS
 					check = Format.checkFormat(3, value, IndexedDictionary.getPropSettings(prop));
-				case 20 % IndexedDictionary.KEY
+				case 21 % IndexedDictionary.KEY
 					check = Format.checkFormat(2, value, IndexedDictionary.getPropSettings(prop));
-				case 21 % IndexedDictionary.KEY_FROM_INDEX
+				case 22 % IndexedDictionary.KEY_FROM_INDEX
 					check = Format.checkFormat(2, value, IndexedDictionary.getPropSettings(prop));
-				case 22 % IndexedDictionary.KEY_FROM_IT
+				case 23 % IndexedDictionary.KEY_FROM_IT
 					check = Format.checkFormat(2, value, IndexedDictionary.getPropSettings(prop));
-				case 23 % IndexedDictionary.IT
+				case 24 % IndexedDictionary.IT
 					check = Format.checkFormat(8, value, IndexedDictionary.getPropSettings(prop));
-				case 24 % IndexedDictionary.IT_FROM_INDEX
+				case 25 % IndexedDictionary.IT_FROM_INDEX
 					check = Format.checkFormat(8, value, IndexedDictionary.getPropSettings(prop));
-				case 25 % IndexedDictionary.IT_FROM_KEY
+				case 26 % IndexedDictionary.IT_FROM_KEY
 					check = Format.checkFormat(8, value, IndexedDictionary.getPropSettings(prop));
-				case 26 % IndexedDictionary.ADD
+				case 27 % IndexedDictionary.ADD
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 27 % IndexedDictionary.REMOVE
+				case 28 % IndexedDictionary.REMOVE
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 28 % IndexedDictionary.REPLACE
+				case 29 % IndexedDictionary.REPLACE
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 29 % IndexedDictionary.REPLACE_KEY
+				case 30 % IndexedDictionary.REPLACE_KEY
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 30 % IndexedDictionary.REPLACE_IT
+				case 31 % IndexedDictionary.REPLACE_IT
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 31 % IndexedDictionary.INVERT
+				case 32 % IndexedDictionary.INVERT
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 32 % IndexedDictionary.MOVE_TO
+				case 33 % IndexedDictionary.MOVE_TO
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 33 % IndexedDictionary.REMOVE_ALL
+				case 34 % IndexedDictionary.REMOVE_ALL
 					check = Format.checkFormat(12, value, IndexedDictionary.getPropSettings(prop));
-				case 34 % IndexedDictionary.MOVE_UP
+				case 35 % IndexedDictionary.MOVE_UP
 					check = Format.checkFormat(12, value, IndexedDictionary.getPropSettings(prop));
-				case 35 % IndexedDictionary.MOVE_DOWN
+				case 36 % IndexedDictionary.MOVE_DOWN
 					check = Format.checkFormat(12, value, IndexedDictionary.getPropSettings(prop));
-				case 36 % IndexedDictionary.MOVE_TO_TOP
+				case 37 % IndexedDictionary.MOVE_TO_TOP
 					check = Format.checkFormat(1, value, IndexedDictionary.getPropSettings(prop));
-				case 37 % IndexedDictionary.MOVE_TO_BOTTOM
+				case 38 % IndexedDictionary.MOVE_TO_BOTTOM
 					check = Format.checkFormat(12, value, IndexedDictionary.getPropSettings(prop));
-				case 3 % IndexedDictionary.TEMPLATE
+				case 4 % IndexedDictionary.TEMPLATE
 					check = Format.checkFormat(8, value, IndexedDictionary.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -1049,11 +1053,11 @@ classdef IndexedDictionary < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % IndexedDictionary.LENGTH
+				case 12 % IndexedDictionary.LENGTH
 					value = length(idict.get('IT_LIST')); 
 					% length = value
 					
-				case 12 % IndexedDictionary.CONTAINS
+				case 13 % IndexedDictionary.CONTAINS
 					% BOOL = idict.get('CONTAINS', POINTER) returns true if POINTER (index, key
 					%  or item) exists in the indexed dictionary.
 					if isempty(varargin)
@@ -1073,7 +1077,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					% bool = value
 					
-				case 13 % IndexedDictionary.CONTAINS_INDEX
+				case 14 % IndexedDictionary.CONTAINS_INDEX
 					% BOOL = idict.get('CONTAINS_INDEX', INDEX) returns true if the INDEX exists in
 					%  the indexed dictionary.
 					if isempty(varargin)
@@ -1085,7 +1089,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = index >= 1 && index <= idict.get('LENGTH') && round(index) == index;
 					% bool = value
 					
-				case 14 % IndexedDictionary.CONTAINS_KEY
+				case 15 % IndexedDictionary.CONTAINS_KEY
 					% BOOL = idict.get('CONTAINS_KEY', KEY) returns true if the KEY exists in
 					%  the indexed dictionary.
 					if isempty(varargin)
@@ -1098,7 +1102,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = any(cellfun(@(it) strcmp(it.get(it_key), key), idict.get('IT_LIST')));
 					% bool = value
 					
-				case 15 % IndexedDictionary.CONTAINS_IT
+				case 16 % IndexedDictionary.CONTAINS_IT
 					% BOOL = idict.get('CONTAINS_IT', IT) returns true if IT exists in
 					%  the indexed dictionary.
 					if isempty(varargin)
@@ -1110,7 +1114,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = any(cellfun(@(it) it == item, idict.get('IT_LIST')));
 					% bool = value
 					
-				case 16 % IndexedDictionary.INDEX
+				case 17 % IndexedDictionary.INDEX
 					% INDEX = idict.get('INDEX', POINTER) returns the index of a POINTER (a key
 					%  or item).
 					if isempty(varargin)
@@ -1128,7 +1132,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					% index = value
 					
-				case 17 % IndexedDictionary.INDEX_FROM_KEY
+				case 18 % IndexedDictionary.INDEX_FROM_KEY
 					% INDEX = idict.get('INDEX_FROM_KEY', KEY) returns the index of KEY.
 					if isempty(varargin)
 					    value = -1;
@@ -1140,7 +1144,7 @@ classdef IndexedDictionary < ConcreteElement
 					% index = value 
 					% error if idict does not contain the key
 					
-				case 18 % IndexedDictionary.INDEX_FROM_IT
+				case 19 % IndexedDictionary.INDEX_FROM_IT
 					% INDEX = idict.get('INDEX_FROM_IT', IT) returns the index of the first
 					% occurrence of item IT.
 					if isempty(varargin)
@@ -1153,12 +1157,12 @@ classdef IndexedDictionary < ConcreteElement
 					% index = value 
 					% error if idict does not contain the item
 					
-				case 19 % IndexedDictionary.KEYS
+				case 20 % IndexedDictionary.KEYS
 					it_key = idict.get('IT_KEY');
 					value = cellfun(@(it) it.get(it_key), idict.get('IT_LIST'), 'UniformOutput', false);
 					% keys = value
 					
-				case 20 % IndexedDictionary.KEY
+				case 21 % IndexedDictionary.KEY
 					% KEY = idict.get('KEY', POINTER) returns the key of POINTER (a index or
 					%  item). If the POINTER is a item, it returns the first occurrence.
 					if isempty(varargin)
@@ -1175,7 +1179,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					% key = value
 					
-				case 21 % IndexedDictionary.KEY_FROM_INDEX
+				case 22 % IndexedDictionary.KEY_FROM_INDEX
 					% KEY = idict.get('KEY_FROM_INDEX', INDEX) returns the key of INDEX.
 					if isempty(varargin)
 					    value = '';
@@ -1187,7 +1191,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = it_list{index}.get(idict.get('IT_KEY'));
 					% key = value % error if index does not exist
 					
-				case 22 % IndexedDictionary.KEY_FROM_IT
+				case 23 % IndexedDictionary.KEY_FROM_IT
 					% KEY = get('KEY_FROM_IT', IT) returns the key of the first occurrence
 					%  of item IT.
 					if isempty(varargin)
@@ -1200,7 +1204,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = it_list{idict.get('INDEX_FROM_IT', item)}.get(idict.get('IT_KEY'));
 					% key = value % error if idict does not contain the item
 					
-				case 23 % IndexedDictionary.IT
+				case 24 % IndexedDictionary.IT
 					% IT = idict.get('IT', POINTER) returns the item of POINTER (an index or key).
 					if isempty(varargin)
 					    value = ConcreteElement();
@@ -1215,7 +1219,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					% item = value
 					
-				case 24 % IndexedDictionary.IT_FROM_INDEX
+				case 25 % IndexedDictionary.IT_FROM_INDEX
 					% IT = idict.get('IT_FROM_INDEX', INDEX) returns the item of INDEX.
 					if isempty(varargin)
 					    value = ConcreteElement();
@@ -1227,7 +1231,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = it_list{index};
 					% item = value % error if the index does not exist
 					
-				case 25 % IndexedDictionary.IT_FROM_KEY
+				case 26 % IndexedDictionary.IT_FROM_KEY
 					% IT = idict.get('IT_FROM_KEY', KEY) returns the item of KEY.
 					if isempty(varargin)
 					    value = ConcreteElement();
@@ -1239,7 +1243,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = it_list{idict.get('INDEX_FROM_KEY', key)};
 					% item = value % error if idict does not containt the key
 					
-				case 26 % IndexedDictionary.ADD
+				case 27 % IndexedDictionary.ADD
 					% idict.get('ADD', IT, INDEX) adds an item and key to the indexed
 					%  dictionary in position INDEX. If INDEX is empty, it adds it to the end
 					%  of IDICT.
@@ -1286,7 +1290,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 27 % IndexedDictionary.REMOVE
+				case 28 % IndexedDictionary.REMOVE
 					% idict.get('REMOVE', POINTER) removes the key and item of POINTER (an
 					%  index, key or item) from the indexed dictionary IDICT.
 					if isempty(varargin)
@@ -1303,7 +1307,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 28 % IndexedDictionary.REPLACE
+				case 29 % IndexedDictionary.REPLACE
 					% idict.get('REPLACE', NEW_IT, INDEX) replaces the item and key of INDEX
 					%  in the indexed dictionary IDICT with item NEW_IT.
 					if isempty(varargin)
@@ -1327,7 +1331,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 29 % IndexedDictionary.REPLACE_KEY
+				case 30 % IndexedDictionary.REPLACE_KEY
 					% idict.get('REPLACE_KEY', OLD_KEY, NEW_KEY) replaces OLD_KEY in the
 					%  indexed dictionary IDICT with NEW_KEY.
 					if isempty(varargin)
@@ -1344,7 +1348,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 30 % IndexedDictionary.REPLACE_IT
+				case 31 % IndexedDictionary.REPLACE_IT
 					% idict.get('REPLACE_IT', OLD_IT, NEW_IT) replaces OLD_IT with
 					%  NEW_IT in the indexed dictionary IDICT. It replaces only the first
 					%  occurrence of OLD_IT.
@@ -1360,7 +1364,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 31 % IndexedDictionary.INVERT
+				case 32 % IndexedDictionary.INVERT
 					% idict.get('INVERT', INDEXI, INDEXJ) inverts the positions of the items at
 					%  INDEX_I and INDEX_J in the indexed dictionary IDICT.
 					if isempty(varargin)
@@ -1387,7 +1391,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 32 % IndexedDictionary.MOVE_TO
+				case 33 % IndexedDictionary.MOVE_TO
 					% idict.get('MOVE_TO', OLD_INDEX, NEW_INDEX) moves an item from position
 					%  OLD_INDEX to position NEW_INDEX in the indexed dictionary IDICT.
 					if isempty(varargin)
@@ -1405,7 +1409,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = [];
 					
-				case 33 % IndexedDictionary.REMOVE_ALL
+				case 34 % IndexedDictionary.REMOVE_ALL
 					% SELECTED = idict.get('REMOVE_ALL', SELECTED) removes all items whose
 					%  positions in the indexed dictionary DICT are included in the array
 					%  SELECTED. It returns an empty array.
@@ -1420,7 +1424,7 @@ classdef IndexedDictionary < ConcreteElement
 					end
 					value = []; % selected = value;
 					
-				case 34 % IndexedDictionary.MOVE_UP
+				case 35 % IndexedDictionary.MOVE_UP
 					% SELECTED = idict.get('MOVE_UP', SELECTED) moves up by one position all
 					%  items whose positions in the indexed dictionary DICT are included in the
 					%  SELECTED array and returns their final positions.
@@ -1448,7 +1452,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = selected;
 					
-				case 35 % IndexedDictionary.MOVE_DOWN
+				case 36 % IndexedDictionary.MOVE_DOWN
 					% SELECTED = idict.get('MOVE_DOWN', SELECTED) moves down by one position
 					%  all items whose positions in the indexed dictionary DICT are included in
 					%  the SELECTED array and returns their final positions.  
@@ -1475,7 +1479,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = selected;
 					
-				case 36 % IndexedDictionary.MOVE_TO_TOP
+				case 37 % IndexedDictionary.MOVE_TO_TOP
 					% SELECTED = idict.get('MOVE_TO_TOP', SELECTED) moves to top all items
 					%  whose positions in the indexed dictionary DICT are included in the
 					%  SELECTED array and returns their final positions.
@@ -1494,7 +1498,7 @@ classdef IndexedDictionary < ConcreteElement
 					
 					value = selected;
 					
-				case 37 % IndexedDictionary.MOVE_TO_BOTTOM
+				case 38 % IndexedDictionary.MOVE_TO_BOTTOM
 					% SELECTED = idict.get('MOVE_TO_BOTTOM', SELECTED) moves to bottom all
 					%  items whose positions in the indexed dictionary DICT dictionary are
 					%  included in the SELECTED array and returns their final positions.
@@ -1515,7 +1519,7 @@ classdef IndexedDictionary < ConcreteElement
 					value = selected;
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(idict, prop, varargin{:});
 					else
 						value = calculateValue@Element(idict, prop, varargin{:});

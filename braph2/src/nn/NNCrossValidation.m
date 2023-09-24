@@ -9,30 +9,31 @@ classdef NNCrossValidation < ConcreteElement
 	% To train all the neural networks for all folds, use: nncv.get('TRAIN')
 	%
 	% The list of NNCrossValidation properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-	%  <strong>9</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-	%  <strong>10</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-	%  <strong>11</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-	%  <strong>12</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-	%  <strong>13</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-	%  <strong>14</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-	%  <strong>15</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-	%  <strong>16</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
-	%  <strong>17</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
-	%  <strong>18</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-	%  <strong>19</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-	%  <strong>20</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-	%  <strong>21</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>22</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-	%  <strong>23</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-	%  <strong>24</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+	%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+	%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+	%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+	%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+	%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+	%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+	%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
+	%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
+	%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+	%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+	%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+	%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+	%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+	%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
 	%
 	% NNCrossValidation methods (constructor):
 	%  NNCrossValidation - constructor
@@ -123,87 +124,87 @@ classdef NNCrossValidation < ConcreteElement
 	% See also NNDataset, NNEvaluator, NNBase.
 	
 	properties (Constant) % properties
-		KFOLDS = 8; %CET: Computational Efficiency Trick
+		KFOLDS = 9; %CET: Computational Efficiency Trick
 		KFOLDS_TAG = 'KFOLDS';
 		KFOLDS_CATEGORY = 4;
 		KFOLDS_FORMAT = 11;
 		
-		SPLIT = 9; %CET: Computational Efficiency Trick
+		SPLIT = 10; %CET: Computational Efficiency Trick
 		SPLIT_TAG = 'SPLIT';
 		SPLIT_CATEGORY = 4;
 		SPLIT_FORMAT = 16;
 		
-		D = 10; %CET: Computational Efficiency Trick
+		D = 11; %CET: Computational Efficiency Trick
 		D_TAG = 'D';
 		D_CATEGORY = 4;
 		D_FORMAT = 9;
 		
-		NN_TEMPLATE = 11; %CET: Computational Efficiency Trick
+		NN_TEMPLATE = 12; %CET: Computational Efficiency Trick
 		NN_TEMPLATE_TAG = 'NN_TEMPLATE';
 		NN_TEMPLATE_CATEGORY = 3;
 		NN_TEMPLATE_FORMAT = 8;
 		
-		NNEVALUATOR_TEMPLATE = 12; %CET: Computational Efficiency Trick
+		NNEVALUATOR_TEMPLATE = 13; %CET: Computational Efficiency Trick
 		NNEVALUATOR_TEMPLATE_TAG = 'NNEVALUATOR_TEMPLATE';
 		NNEVALUATOR_TEMPLATE_CATEGORY = 3;
 		NNEVALUATOR_TEMPLATE_FORMAT = 8;
 		
-		DSP = 13; %CET: Computational Efficiency Trick
+		DSP = 14; %CET: Computational Efficiency Trick
 		DSP_TAG = 'DSP';
 		DSP_CATEGORY = 5;
 		DSP_FORMAT = 9;
 		
-		DCO = 14; %CET: Computational Efficiency Trick
+		DCO = 15; %CET: Computational Efficiency Trick
 		DCO_TAG = 'DCO';
 		DCO_CATEGORY = 5;
 		DCO_FORMAT = 9;
 		
-		D_LIST = 15; %CET: Computational Efficiency Trick
+		D_LIST = 16; %CET: Computational Efficiency Trick
 		D_LIST_TAG = 'D_LIST';
 		D_LIST_CATEGORY = 5;
 		D_LIST_FORMAT = 9;
 		
-		NN_LIST = 16; %CET: Computational Efficiency Trick
+		NN_LIST = 17; %CET: Computational Efficiency Trick
 		NN_LIST_TAG = 'NN_LIST';
 		NN_LIST_CATEGORY = 5;
 		NN_LIST_FORMAT = 9;
 		
-		EVALUATOR_LIST = 17; %CET: Computational Efficiency Trick
+		EVALUATOR_LIST = 18; %CET: Computational Efficiency Trick
 		EVALUATOR_LIST_TAG = 'EVALUATOR_LIST';
 		EVALUATOR_LIST_CATEGORY = 5;
 		EVALUATOR_LIST_FORMAT = 9;
 		
-		EPOCHS = 18; %CET: Computational Efficiency Trick
+		EPOCHS = 19; %CET: Computational Efficiency Trick
 		EPOCHS_TAG = 'EPOCHS';
 		EPOCHS_CATEGORY = 3;
 		EPOCHS_FORMAT = 11;
 		
-		BATCH = 19; %CET: Computational Efficiency Trick
+		BATCH = 20; %CET: Computational Efficiency Trick
 		BATCH_TAG = 'BATCH';
 		BATCH_CATEGORY = 3;
 		BATCH_FORMAT = 11;
 		
-		SHUFFLE = 20; %CET: Computational Efficiency Trick
+		SHUFFLE = 21; %CET: Computational Efficiency Trick
 		SHUFFLE_TAG = 'SHUFFLE';
 		SHUFFLE_CATEGORY = 3;
 		SHUFFLE_FORMAT = 5;
 		
-		SOLVER = 21; %CET: Computational Efficiency Trick
+		SOLVER = 22; %CET: Computational Efficiency Trick
 		SOLVER_TAG = 'SOLVER';
 		SOLVER_CATEGORY = 3;
 		SOLVER_FORMAT = 5;
 		
-		VERBOSE = 22; %CET: Computational Efficiency Trick
+		VERBOSE = 23; %CET: Computational Efficiency Trick
 		VERBOSE_TAG = 'VERBOSE';
 		VERBOSE_CATEGORY = 2;
 		VERBOSE_FORMAT = 4;
 		
-		PLOT_TRAINING = 23; %CET: Computational Efficiency Trick
+		PLOT_TRAINING = 24; %CET: Computational Efficiency Trick
 		PLOT_TRAINING_TAG = 'PLOT_TRAINING';
 		PLOT_TRAINING_CATEGORY = 2;
 		PLOT_TRAINING_FORMAT = 5;
 		
-		TRAIN = 24; %CET: Computational Efficiency Trick
+		TRAIN = 25; %CET: Computational Efficiency Trick
 		TRAIN_TAG = 'TRAIN';
 		TRAIN_CATEGORY = 6;
 		TRAIN_FORMAT = 1;
@@ -220,30 +221,31 @@ classdef NNCrossValidation < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNCrossValidation properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-			%  <strong>9</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-			%  <strong>10</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-			%  <strong>11</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-			%  <strong>12</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-			%  <strong>13</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-			%  <strong>14</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-			%  <strong>15</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-			%  <strong>16</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
-			%  <strong>17</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
-			%  <strong>18</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-			%  <strong>19</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-			%  <strong>20</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-			%  <strong>21</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>22</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-			%  <strong>23</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-			%  <strong>24</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+			%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+			%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+			%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+			%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+			%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+			%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+			%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
+			%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
+			%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+			%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+			%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+			%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+			%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+			%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
 			%
 			% See also Category, Format.
 			
@@ -305,23 +307,23 @@ classdef NNCrossValidation < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 22 23];
+					prop_list = [6 7 23 24];
 				case 3 % Category.PARAMETER
-					prop_list = [3 11 12 18 19 20 21];
+					prop_list = [4 12 13 19 20 21 22];
 				case 4 % Category.DATA
-					prop_list = [4 8 9 10];
+					prop_list = [5 9 10 11];
 				case 5 % Category.RESULT
-					prop_list = [13 14 15 16 17];
+					prop_list = [14 15 16 17 18];
 				case 6 % Category.QUERY
-					prop_list = [7 24];
+					prop_list = [8 25];
 				otherwise
 					prop_list = [];
 			end
@@ -347,13 +349,13 @@ classdef NNCrossValidation < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 24;
+				prop_number = 25;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 4;
 				case 3 % Category.PARAMETER
@@ -394,7 +396,7 @@ classdef NNCrossValidation < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 24 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 25 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -432,7 +434,7 @@ classdef NNCrossValidation < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -465,7 +467,7 @@ classdef NNCrossValidation < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -494,7 +496,7 @@ classdef NNCrossValidation < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nncrossvalidation_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' };
+				nncrossvalidation_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN' };
 				tag = nncrossvalidation_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -521,7 +523,7 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nncrossvalidation_category_list = { 1  1  3  4  2  2  6  4  4  4  3  3  5  5  5  5  5  3  3  3  3  2  2  6 };
+			nncrossvalidation_category_list = { 1  1  1  3  4  2  2  6  4  4  4  3  3  5  5  5  5  5  3  3  3  3  2  2  6 };
 			prop_category = nncrossvalidation_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -547,7 +549,7 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nncrossvalidation_format_list = { 2  2  8  2  2  2  2  11  16  9  8  8  9  9  9  9  9  11  11  5  5  4  5  1 };
+			nncrossvalidation_format_list = { 2  2  2  8  2  2  2  2  11  16  9  8  8  9  9  9  9  9  11  11  5  5  4  5  1 };
 			prop_format = nncrossvalidation_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -573,7 +575,7 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nncrossvalidation_description_list = { 'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.' };
+			nncrossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.' };
 			prop_description = nncrossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -599,41 +601,41 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNCrossValidation.KFOLDS
+				case 9 % NNCrossValidation.KFOLDS
 					prop_settings = Format.getFormatSettings(11);
-				case 9 % NNCrossValidation.SPLIT
+				case 10 % NNCrossValidation.SPLIT
 					prop_settings = Format.getFormatSettings(16);
-				case 10 % NNCrossValidation.D
+				case 11 % NNCrossValidation.D
 					prop_settings = 'NNDataset';
-				case 11 % NNCrossValidation.NN_TEMPLATE
+				case 12 % NNCrossValidation.NN_TEMPLATE
 					prop_settings = 'NNBase';
-				case 12 % NNCrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNCrossValidation.NNEVALUATOR_TEMPLATE
 					prop_settings = 'NNEvaluator';
-				case 13 % NNCrossValidation.DSP
+				case 14 % NNCrossValidation.DSP
 					prop_settings = 'NNDatasetSplit';
-				case 14 % NNCrossValidation.DCO
+				case 15 % NNCrossValidation.DCO
 					prop_settings = 'NNDatasetCombine';
-				case 15 % NNCrossValidation.D_LIST
+				case 16 % NNCrossValidation.D_LIST
 					prop_settings = Format.getFormatSettings(9);
-				case 16 % NNCrossValidation.NN_LIST
+				case 17 % NNCrossValidation.NN_LIST
 					prop_settings = Format.getFormatSettings(9);
-				case 17 % NNCrossValidation.EVALUATOR_LIST
+				case 18 % NNCrossValidation.EVALUATOR_LIST
 					prop_settings = Format.getFormatSettings(9);
-				case 18 % NNCrossValidation.EPOCHS
+				case 19 % NNCrossValidation.EPOCHS
 					prop_settings = Format.getFormatSettings(11);
-				case 19 % NNCrossValidation.BATCH
+				case 20 % NNCrossValidation.BATCH
 					prop_settings = Format.getFormatSettings(11);
-				case 20 % NNCrossValidation.SHUFFLE
+				case 21 % NNCrossValidation.SHUFFLE
 					prop_settings = {'once' 'never' 'every-epoch'};
-				case 21 % NNCrossValidation.SOLVER
+				case 22 % NNCrossValidation.SOLVER
 					prop_settings = {'adam' 'sgdm' 'rmsprop'};
-				case 22 % NNCrossValidation.VERBOSE
+				case 23 % NNCrossValidation.VERBOSE
 					prop_settings = Format.getFormatSettings(4);
-				case 23 % NNCrossValidation.PLOT_TRAINING
+				case 24 % NNCrossValidation.PLOT_TRAINING
 					prop_settings = {'none' 'training-progress'};
-				case 24 % NNCrossValidation.TRAIN
+				case 25 % NNCrossValidation.TRAIN
 					prop_settings = Format.getFormatSettings(1);
-				case 3 % NNCrossValidation.TEMPLATE
+				case 4 % NNCrossValidation.TEMPLATE
 					prop_settings = 'NNCrossValidation';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -662,51 +664,53 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNCrossValidation.KFOLDS
+				case 9 % NNCrossValidation.KFOLDS
 					prop_default = 5;
-				case 9 % NNCrossValidation.SPLIT
+				case 10 % NNCrossValidation.SPLIT
 					prop_default = Format.getFormatDefault(16, NNCrossValidation.getPropSettings(prop));
-				case 10 % NNCrossValidation.D
+				case 11 % NNCrossValidation.D
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 11 % NNCrossValidation.NN_TEMPLATE
+				case 12 % NNCrossValidation.NN_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNCrossValidation.getPropSettings(prop));
-				case 12 % NNCrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNCrossValidation.NNEVALUATOR_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNCrossValidation.getPropSettings(prop));
-				case 13 % NNCrossValidation.DSP
+				case 14 % NNCrossValidation.DSP
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 14 % NNCrossValidation.DCO
+				case 15 % NNCrossValidation.DCO
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 15 % NNCrossValidation.D_LIST
+				case 16 % NNCrossValidation.D_LIST
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 16 % NNCrossValidation.NN_LIST
+				case 17 % NNCrossValidation.NN_LIST
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 17 % NNCrossValidation.EVALUATOR_LIST
+				case 18 % NNCrossValidation.EVALUATOR_LIST
 					prop_default = Format.getFormatDefault(9, NNCrossValidation.getPropSettings(prop));
-				case 18 % NNCrossValidation.EPOCHS
+				case 19 % NNCrossValidation.EPOCHS
 					prop_default = 20;
-				case 19 % NNCrossValidation.BATCH
+				case 20 % NNCrossValidation.BATCH
 					prop_default = 8;
-				case 20 % NNCrossValidation.SHUFFLE
+				case 21 % NNCrossValidation.SHUFFLE
 					prop_default = Format.getFormatDefault(5, NNCrossValidation.getPropSettings(prop));
-				case 21 % NNCrossValidation.SOLVER
+				case 22 % NNCrossValidation.SOLVER
 					prop_default = Format.getFormatDefault(5, NNCrossValidation.getPropSettings(prop));
-				case 22 % NNCrossValidation.VERBOSE
+				case 23 % NNCrossValidation.VERBOSE
 					prop_default = false;
-				case 23 % NNCrossValidation.PLOT_TRAINING
+				case 24 % NNCrossValidation.PLOT_TRAINING
 					prop_default = Format.getFormatDefault(5, NNCrossValidation.getPropSettings(prop));
-				case 24 % NNCrossValidation.TRAIN
+				case 25 % NNCrossValidation.TRAIN
 					prop_default = Format.getFormatDefault(1, NNCrossValidation.getPropSettings(prop));
-				case 1 % NNCrossValidation.NAME
+				case 1 % NNCrossValidation.ELCLASS
 					prop_default = 'NNCrossValidation';
-				case 2 % NNCrossValidation.DESCRIPTION
+				case 2 % NNCrossValidation.NAME
+					prop_default = 'NNCrossValidation';
+				case 3 % NNCrossValidation.DESCRIPTION
 					prop_default = 'A cross validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
-				case 3 % NNCrossValidation.TEMPLATE
+				case 4 % NNCrossValidation.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNCrossValidation.getPropSettings(prop));
-				case 4 % NNCrossValidation.ID
+				case 5 % NNCrossValidation.ID
 					prop_default = 'NNCrossValidation ID';
-				case 5 % NNCrossValidation.LABEL
+				case 6 % NNCrossValidation.LABEL
 					prop_default = 'NNCrossValidation label';
-				case 6 % NNCrossValidation.NOTES
+				case 7 % NNCrossValidation.NOTES
 					prop_default = 'NNCrossValidation notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -772,44 +776,44 @@ classdef NNCrossValidation < ConcreteElement
 			prop = NNCrossValidation.getPropProp(pointer);
 			
 			switch prop
-				case 8 % NNCrossValidation.KFOLDS
+				case 9 % NNCrossValidation.KFOLDS
 					check = Format.checkFormat(11, value, NNCrossValidation.getPropSettings(prop));
-				case 9 % NNCrossValidation.SPLIT
+				case 10 % NNCrossValidation.SPLIT
 					check = Format.checkFormat(16, value, NNCrossValidation.getPropSettings(prop));
-				case 10 % NNCrossValidation.D
+				case 11 % NNCrossValidation.D
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 11 % NNCrossValidation.NN_TEMPLATE
+				case 12 % NNCrossValidation.NN_TEMPLATE
 					check = Format.checkFormat(8, value, NNCrossValidation.getPropSettings(prop));
-				case 12 % NNCrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNCrossValidation.NNEVALUATOR_TEMPLATE
 					check = Format.checkFormat(8, value, NNCrossValidation.getPropSettings(prop));
-				case 13 % NNCrossValidation.DSP
+				case 14 % NNCrossValidation.DSP
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 14 % NNCrossValidation.DCO
+				case 15 % NNCrossValidation.DCO
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 15 % NNCrossValidation.D_LIST
+				case 16 % NNCrossValidation.D_LIST
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 16 % NNCrossValidation.NN_LIST
+				case 17 % NNCrossValidation.NN_LIST
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 17 % NNCrossValidation.EVALUATOR_LIST
+				case 18 % NNCrossValidation.EVALUATOR_LIST
 					check = Format.checkFormat(9, value, NNCrossValidation.getPropSettings(prop));
-				case 18 % NNCrossValidation.EPOCHS
+				case 19 % NNCrossValidation.EPOCHS
 					check = Format.checkFormat(11, value, NNCrossValidation.getPropSettings(prop));
-				case 19 % NNCrossValidation.BATCH
+				case 20 % NNCrossValidation.BATCH
 					check = Format.checkFormat(11, value, NNCrossValidation.getPropSettings(prop));
-				case 20 % NNCrossValidation.SHUFFLE
+				case 21 % NNCrossValidation.SHUFFLE
 					check = Format.checkFormat(5, value, NNCrossValidation.getPropSettings(prop));
-				case 21 % NNCrossValidation.SOLVER
+				case 22 % NNCrossValidation.SOLVER
 					check = Format.checkFormat(5, value, NNCrossValidation.getPropSettings(prop));
-				case 22 % NNCrossValidation.VERBOSE
+				case 23 % NNCrossValidation.VERBOSE
 					check = Format.checkFormat(4, value, NNCrossValidation.getPropSettings(prop));
-				case 23 % NNCrossValidation.PLOT_TRAINING
+				case 24 % NNCrossValidation.PLOT_TRAINING
 					check = Format.checkFormat(5, value, NNCrossValidation.getPropSettings(prop));
-				case 24 % NNCrossValidation.TRAIN
+				case 25 % NNCrossValidation.TRAIN
 					check = Format.checkFormat(1, value, NNCrossValidation.getPropSettings(prop));
-				case 3 % NNCrossValidation.TEMPLATE
+				case 4 % NNCrossValidation.TEMPLATE
 					check = Format.checkFormat(8, value, NNCrossValidation.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -839,7 +843,7 @@ classdef NNCrossValidation < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 9 % NNCrossValidation.SPLIT
+				case 10 % NNCrossValidation.SPLIT
 					split = nncv.get('SPLIT');
 					kfolds = nncv.get('KFOLDS');
 					d = nncv.get('D');
@@ -848,7 +852,7 @@ classdef NNCrossValidation < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						postprocessing@ConcreteElement(nncv, prop);
 					end
 			end
@@ -871,16 +875,16 @@ classdef NNCrossValidation < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % NNCrossValidation.DSP
-					rng_settings_ = rng(); rng(nncv.getPropSeed(13), 'twister')
+				case 14 % NNCrossValidation.DSP
+					rng_settings_ = rng(); rng(nncv.getPropSeed(14), 'twister')
 					
 					d_list = nncv.get('D');
 					value = cellfun(@(d) NNDatasetSplit('D', d, 'SPLIT', nncv.get('SPLIT')), d_list, 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
-				case 14 % NNCrossValidation.DCO
-					rng_settings_ = rng(); rng(nncv.getPropSeed(14), 'twister')
+				case 15 % NNCrossValidation.DCO
+					rng_settings_ = rng(); rng(nncv.getPropSeed(15), 'twister')
 					
 					dsp_list = nncv.get('DSP');
 					if length(dsp_list) == 0
@@ -900,8 +904,8 @@ classdef NNCrossValidation < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 15 % NNCrossValidation.D_LIST
-					rng_settings_ = rng(); rng(nncv.getPropSeed(15), 'twister')
+				case 16 % NNCrossValidation.D_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(16), 'twister')
 					
 					dco_list = nncv.get('DCO');
 					if length(dco_list) == 0
@@ -912,7 +916,7 @@ classdef NNCrossValidation < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 24 % NNCrossValidation.TRAIN
+				case 25 % NNCrossValidation.TRAIN
 					nn_list = nncv.memorize('NN_LIST');
 					for i = 1:1:length(nn_list)
 					    nn_list{i}.memorize('MODEL');
@@ -920,7 +924,7 @@ classdef NNCrossValidation < ConcreteElement
 					value = [];
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(nncv, prop, varargin{:});
 					else
 						value = calculateValue@Element(nncv, prop, varargin{:});

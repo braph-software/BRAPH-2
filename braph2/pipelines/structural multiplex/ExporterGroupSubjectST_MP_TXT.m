@@ -18,18 +18,19 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ExporterGroupSubjectST_MP_TXT properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural multiplex data.
-	%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
-	%  <strong>11</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
-	%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural multiplex data.
+	%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
+	%  <strong>12</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
+	%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
 	%
 	% ExporterGroupSubjectST_MP_TXT methods (constructor):
 	%  ExporterGroupSubjectST_MP_TXT - constructor
@@ -120,22 +121,22 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 	% See also Group, SubjectST_MP, ImporterGroupSubjectST_MP_TXT.
 	
 	properties (Constant) % properties
-		GR = 9; %CET: Computational Efficiency Trick
+		GR = 10; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 4;
 		GR_FORMAT = 8;
 		
-		DIRECTORY = 10; %CET: Computational Efficiency Trick
+		DIRECTORY = 11; %CET: Computational Efficiency Trick
 		DIRECTORY_TAG = 'DIRECTORY';
 		DIRECTORY_CATEGORY = 4;
 		DIRECTORY_FORMAT = 2;
 		
-		PUT_DIR = 11; %CET: Computational Efficiency Trick
+		PUT_DIR = 12; %CET: Computational Efficiency Trick
 		PUT_DIR_TAG = 'PUT_DIR';
 		PUT_DIR_CATEGORY = 6;
 		PUT_DIR_FORMAT = 8;
 		
-		SAVE = 12; %CET: Computational Efficiency Trick
+		SAVE = 13; %CET: Computational Efficiency Trick
 		SAVE_TAG = 'SAVE';
 		SAVE_CATEGORY = 5;
 		SAVE_FORMAT = 1;
@@ -152,18 +153,19 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ExporterGroupSubjectST_MP_TXT properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural multiplex data.
-			%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
-			%  <strong>11</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
-			%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in TXT.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural multiplex data.
+			%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.
+			%  <strong>12</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.
+			%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.
 			%
 			% See also Category, Format.
 			
@@ -225,25 +227,25 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 9 10];
+					prop_list = [5 10 11];
 				case 5 % Category.RESULT
-					prop_list = 12;
+					prop_list = 13;
 				case 6 % Category.QUERY
-					prop_list = [7 11];
+					prop_list = [8 12];
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
@@ -269,13 +271,13 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -318,7 +320,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -356,7 +358,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -389,7 +391,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -418,7 +420,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exportergroupsubjectst_mp_txt_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' };
+				exportergroupsubjectst_mp_txt_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' };
 				tag = exportergroupsubjectst_mp_txt_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -445,7 +447,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_mp_txt_category_list = { 1  1  3  4  2  2  6  9  4  4  6  5 };
+			exportergroupsubjectst_mp_txt_category_list = { 1  1  1  3  4  2  2  6  9  4  4  6  5 };
 			prop_category = exportergroupsubjectst_mp_txt_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -471,7 +473,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_mp_txt_format_list = { 2  2  8  2  2  2  2  4  8  2  8  1 };
+			exportergroupsubjectst_mp_txt_format_list = { 2  2  2  8  2  2  2  2  4  8  2  8  1 };
 			prop_format = exportergroupsubjectst_mp_txt_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -497,7 +499,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_mp_txt_description_list = { 'NAME (constant, string) is the name of the ST subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the ST subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural multiplex data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.'  'SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.' };
+			exportergroupsubjectst_mp_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the ST subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural multiplex data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with structural multiplex data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with structural multiplex data.'  'SAVE (result, empty) saves the group of subjects with structural multiplex data in TXT files in the selected directory.' };
 			prop_description = exportergroupsubjectst_mp_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -523,15 +525,15 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterGroupSubjectST_MP_TXT.GR
+				case 10 % ExporterGroupSubjectST_MP_TXT.GR
 					prop_settings = 'Group';
-				case 10 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
+				case 11 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
 					prop_settings = Format.getFormatSettings(2);
-				case 11 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
+				case 12 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
 					prop_settings = 'ExporterGroupSubjectST_MP_TXT';
-				case 12 % ExporterGroupSubjectST_MP_TXT.SAVE
+				case 13 % ExporterGroupSubjectST_MP_TXT.SAVE
 					prop_settings = Format.getFormatSettings(1);
-				case 3 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
+				case 4 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
 					prop_settings = 'ExporterGroupSubjectST_MP_TXT';
 				otherwise
 					prop_settings = getPropSettings@Exporter(prop);
@@ -560,25 +562,27 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterGroupSubjectST_MP_TXT.GR
+				case 10 % ExporterGroupSubjectST_MP_TXT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST_MP'));
-				case 10 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
+				case 11 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_group_subjects_ST_ML_most_likely_to_be_erased'];
-				case 11 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
+				case 12 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 12 % ExporterGroupSubjectST_MP_TXT.SAVE
+				case 13 % ExporterGroupSubjectST_MP_TXT.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 1 % ExporterGroupSubjectST_MP_TXT.NAME
+				case 1 % ExporterGroupSubjectST_MP_TXT.ELCLASS
 					prop_default = 'ExporterGroupSubjectST_MP_TXT';
-				case 2 % ExporterGroupSubjectST_MP_TXT.DESCRIPTION
+				case 2 % ExporterGroupSubjectST_MP_TXT.NAME
+					prop_default = 'ExporterGroupSubjectST_MP_TXT';
+				case 3 % ExporterGroupSubjectST_MP_TXT.DESCRIPTION
 					prop_default = 'ExporterGroupSubjectST_MP_TXT exports a group of subjects with structural multiplex data to an TXT file and their covariates age and sex (if existing) to another TXT file.';
-				case 3 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
+				case 4 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 4 % ExporterGroupSubjectST_MP_TXT.ID
+				case 5 % ExporterGroupSubjectST_MP_TXT.ID
 					prop_default = 'ExporterGroupSubjectST_MP_TXT ID';
-				case 5 % ExporterGroupSubjectST_MP_TXT.LABEL
+				case 6 % ExporterGroupSubjectST_MP_TXT.LABEL
 					prop_default = 'ExporterGroupSubjectST_MP_TXT label';
-				case 6 % ExporterGroupSubjectST_MP_TXT.NOTES
+				case 7 % ExporterGroupSubjectST_MP_TXT.NOTES
 					prop_default = 'ExporterGroupSubjectST_MP_TXT notes';
 				otherwise
 					prop_default = getPropDefault@Exporter(prop);
@@ -644,21 +648,21 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			prop = ExporterGroupSubjectST_MP_TXT.getPropProp(pointer);
 			
 			switch prop
-				case 9 % ExporterGroupSubjectST_MP_TXT.GR
+				case 10 % ExporterGroupSubjectST_MP_TXT.GR
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
 					if check
 						check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectST_MP', [], [], true)));
 					end
-				case 10 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
+				case 11 % ExporterGroupSubjectST_MP_TXT.DIRECTORY
 					check = Format.checkFormat(2, value, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 11 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
+				case 12 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 12 % ExporterGroupSubjectST_MP_TXT.SAVE
+				case 13 % ExporterGroupSubjectST_MP_TXT.SAVE
 					check = Format.checkFormat(1, value, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
-				case 3 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
+				case 4 % ExporterGroupSubjectST_MP_TXT.TEMPLATE
 					check = Format.checkFormat(8, value, ExporterGroupSubjectST_MP_TXT.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -691,15 +695,15 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
+				case 12 % ExporterGroupSubjectST_MP_TXT.PUT_DIR
 					directory = uigetdir('Select directory');
 					if ischar(directory) && isfolder(directory)
 					    ex.set('DIRECTORY', directory);
 					end
 					value = ex;
 					
-				case 12 % ExporterGroupSubjectST_MP_TXT.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(12), 'twister')
+				case 13 % ExporterGroupSubjectST_MP_TXT.SAVE
+					rng_settings_ = rng(); rng(ex.getPropSeed(13), 'twister')
 					
 					directory = ex.get('DIRECTORY');
 					
@@ -798,7 +802,7 @@ classdef ExporterGroupSubjectST_MP_TXT < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});

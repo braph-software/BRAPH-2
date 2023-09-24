@@ -2,48 +2,49 @@ classdef MeasurePF_BU < MeasurePF
 	%MeasurePF_BU is the base element to plot a binodal unilayer measure.
 	% It is a subclass of <a href="matlab:help MeasurePF">MeasurePF</a>.
 	%
-	% MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer measure.
+	% A Panel Figure for Binodal Unilayer Measure (MeasurePF_BU) manages the basic functionalities to plot of a binodal unilayer measure.
 	%
 	% The list of MeasurePF_BU properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer measure.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure binodal unilayer measure.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer measure.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>25</strong> <strong>M</strong> 	M (metadata, item) is the measure.
-	%  <strong>26</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it.
-	%  <strong>27</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
-	%  <strong>28</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
-	%  <strong>29</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
-	%  <strong>30</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
-	%  <strong>31</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
-	%  <strong>32</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-	%  <strong>33</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-	%  <strong>34</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-	%  <strong>35</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-	%  <strong>36</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-	%  <strong>37</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-	%  <strong>38</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
-	%  <strong>39</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal measure.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for binodal unilayer measure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for binodal unilayer measure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for binodal unilayer measure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for binodal unilayer measure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for binodal unilayer measure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for binodal unilayer measure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+	%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it.
+	%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
+	%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+	%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+	%  <strong>31</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
+	%  <strong>32</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
+	%  <strong>33</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+	%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+	%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+	%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+	%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+	%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%  <strong>40</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal measure.
 	%
 	% MeasurePF_BU methods (constructor):
 	%  MeasurePF_BU - constructor
@@ -63,33 +64,33 @@ classdef MeasurePF_BU < MeasurePF
 	%  unchecked - sets a property to NOT checked
 	%
 	% MeasurePF_BU methods (display):
-	%  tostring - string with information about the panel figure binodal unilayer measure
-	%  disp - displays information about the panel figure binodal unilayer measure
-	%  tree - displays the tree of the panel figure binodal unilayer measure
+	%  tostring - string with information about the panel figure for binodal unilayer measure
+	%  disp - displays information about the panel figure for binodal unilayer measure
+	%  tree - displays the tree of the panel figure for binodal unilayer measure
 	%
 	% MeasurePF_BU methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel figure binodal unilayer measure are equal (values, locked)
+	%  isequal - determines whether two panel figure for binodal unilayer measure are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel figure binodal unilayer measure
+	%  copy - copies the panel figure for binodal unilayer measure
 	%
 	% MeasurePF_BU methods (save/load, Static):
-	%  save - saves BRAPH2 panel figure binodal unilayer measure as b2 file
-	%  load - loads a BRAPH2 panel figure binodal unilayer measure from a b2 file
+	%  save - saves BRAPH2 panel figure for binodal unilayer measure as b2 file
+	%  load - loads a BRAPH2 panel figure for binodal unilayer measure from a b2 file
 	%
 	% MeasurePF_BU method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel figure binodal unilayer measure
+	%  encodeJSON - returns a JSON string encoding the panel figure for binodal unilayer measure
 	%
 	% MeasurePF_BU method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel figure binodal unilayer measure
+	%   decodeJSON - returns a JSON string encoding the panel figure for binodal unilayer measure
 	%
 	% MeasurePF_BU methods (inspection, Static):
-	%  getClass - returns the class of the panel figure binodal unilayer measure
+	%  getClass - returns the class of the panel figure for binodal unilayer measure
 	%  getSubclasses - returns all subclasses of MeasurePF_BU
-	%  getProps - returns the property list of the panel figure binodal unilayer measure
-	%  getPropNumber - returns the property number of the panel figure binodal unilayer measure
+	%  getProps - returns the property list of the panel figure for binodal unilayer measure
+	%  getPropNumber - returns the property number of the panel figure for binodal unilayer measure
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -134,14 +135,14 @@ classdef MeasurePF_BU < MeasurePF
 	% See also Measure.
 	
 	properties (Constant) % properties
-		NODES = 39; %CET: Computational Efficiency Trick
+		NODES = 40; %CET: Computational Efficiency Trick
 		NODES_TAG = 'NODES';
 		NODES_CATEGORY = 8;
 		NODES_FORMAT = 12;
 	end
 	methods % constructor
 		function pf = MeasurePF_BU(varargin)
-			%MeasurePF_BU() creates a panel figure binodal unilayer measure.
+			%MeasurePF_BU() creates a panel figure for binodal unilayer measure.
 			%
 			% MeasurePF_BU(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -151,45 +152,46 @@ classdef MeasurePF_BU < MeasurePF
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MeasurePF_BU properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer measure.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure binodal unilayer measure.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer measure.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-			%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>25</strong> <strong>M</strong> 	M (metadata, item) is the measure.
-			%  <strong>26</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it.
-			%  <strong>27</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
-			%  <strong>28</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
-			%  <strong>29</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
-			%  <strong>30</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
-			%  <strong>31</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
-			%  <strong>32</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-			%  <strong>33</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-			%  <strong>34</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-			%  <strong>35</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-			%  <strong>36</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-			%  <strong>37</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-			%  <strong>38</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
-			%  <strong>39</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal measure.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for binodal unilayer measure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for binodal unilayer measure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for binodal unilayer measure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for binodal unilayer measure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for binodal unilayer measure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for binodal unilayer measure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure measure.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+			%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it.
+			%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the measure area.
+			%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+			%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+			%  <strong>31</strong> <strong>H_LINE</strong> 	H_LINE (evanescent, handle) is the handle for the measure line.
+			%  <strong>32</strong> <strong>ST_LINE</strong> 	ST_LINE (figure, item) determines the line settings.
+			%  <strong>33</strong> <strong>LISTENER_ST_LINE</strong> 	LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+			%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+			%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+			%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+			%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+			%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+			%  <strong>40</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal measure.
 			%
 			% See also Category, Format.
 			
@@ -198,12 +200,12 @@ classdef MeasurePF_BU < MeasurePF
 	end
 	methods (Static) % inspection
 		function pf_class = getClass()
-			%GETCLASS returns the class of the panel figure binodal unilayer measure.
+			%GETCLASS returns the class of the panel figure for binodal unilayer measure.
 			%
 			% CLASS = MeasurePF_BU.GETCLASS() returns the class 'MeasurePF_BU'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PF.GETCLASS() returns the class of the panel figure binodal unilayer measure PF.
+			%  CLASS = PF.GETCLASS() returns the class of the panel figure for binodal unilayer measure PF.
 			%  CLASS = Element.GETCLASS(PF) returns the class of 'PF'.
 			%  CLASS = Element.GETCLASS('MeasurePF_BU') returns 'MeasurePF_BU'.
 			%
@@ -213,12 +215,12 @@ classdef MeasurePF_BU < MeasurePF
 			pf_class = 'MeasurePF_BU';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel figure binodal unilayer measure.
+			%GETSUBCLASSES returns all subclasses of the panel figure for binodal unilayer measure.
 			%
 			% LIST = MeasurePF_BU.GETSUBCLASSES() returns all subclasses of 'MeasurePF_BU'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure binodal unilayer measure PF.
+			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure for binodal unilayer measure PF.
 			%  LIST = Element.GETSUBCLASSES(PF) returns all subclasses of 'PF'.
 			%  LIST = Element.GETSUBCLASSES('MeasurePF_BU') returns all subclasses of 'MeasurePF_BU'.
 			%
@@ -230,16 +232,16 @@ classdef MeasurePF_BU < MeasurePF
 			subclass_list = { 'MeasurePF_BU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel figure binodal unilayer measure.
+			%GETPROPS returns the property list of panel figure for binodal unilayer measure.
 			%
-			% PROPS = MeasurePF_BU.GETPROPS() returns the property list of panel figure binodal unilayer measure
+			% PROPS = MeasurePF_BU.GETPROPS() returns the property list of panel figure for binodal unilayer measure
 			%  as a row vector.
 			%
 			% PROPS = MeasurePF_BU.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure binodal unilayer measure PF.
+			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure for binodal unilayer measure PF.
 			%  PROPS = Element.GETPROPS(PF[, CATEGORY]) returns the property list of 'PF'.
 			%  PROPS = Element.GETPROPS('MeasurePF_BU'[, CATEGORY]) returns the property list of 'MeasurePF_BU'.
 			%
@@ -251,41 +253,41 @@ classdef MeasurePF_BU < MeasurePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 25];
+					prop_list = [6 7 26];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
-				case 4 % Category.DATA
 					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
 				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18 26];
+					prop_list = [8 11 12 16 17 18 19 27];
 				case 7 % Category.EVANESCENT
-					prop_list = [9 14 20 21 22 24 27 29 30 32 33 35 37];
+					prop_list = [10 15 21 22 23 25 28 30 31 33 34 36 38];
 				case 8 % Category.FIGURE
-					prop_list = [13 19 23 28 31 34 36 38 39];
+					prop_list = [14 20 24 29 32 35 37 39 40];
 				case 9 % Category.GUI
-					prop_list = [8 12];
+					prop_list = [9 13];
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel figure binodal unilayer measure.
+			%GETPROPNUMBER returns the property number of panel figure for binodal unilayer measure.
 			%
-			% N = MeasurePF_BU.GETPROPNUMBER() returns the property number of panel figure binodal unilayer measure.
+			% N = MeasurePF_BU.GETPROPNUMBER() returns the property number of panel figure for binodal unilayer measure.
 			%
-			% N = MeasurePF_BU.GETPROPNUMBER(CATEGORY) returns the property number of panel figure binodal unilayer measure
+			% N = MeasurePF_BU.GETPROPNUMBER(CATEGORY) returns the property number of panel figure for binodal unilayer measure
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure binodal unilayer measure PF.
+			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure for binodal unilayer measure PF.
 			%  N = Element.GETPROPNUMBER(PF) returns the property number of 'PF'.
 			%  N = Element.GETPROPNUMBER('MeasurePF_BU') returns the property number of 'MeasurePF_BU'.
 			%
@@ -297,13 +299,13 @@ classdef MeasurePF_BU < MeasurePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 39;
+				prop_number = 40;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 3;
 				case 3 % Category.PARAMETER
@@ -323,7 +325,7 @@ classdef MeasurePF_BU < MeasurePF
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel figure binodal unilayer measure/error.
+			%EXISTSPROP checks whether property exists in panel figure for binodal unilayer measure/error.
 			%
 			% CHECK = MeasurePF_BU.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -348,7 +350,7 @@ classdef MeasurePF_BU < MeasurePF
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 39 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -361,7 +363,7 @@ classdef MeasurePF_BU < MeasurePF
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel figure binodal unilayer measure/error.
+			%EXISTSTAG checks whether tag exists in panel figure for binodal unilayer measure/error.
 			%
 			% CHECK = MeasurePF_BU.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -386,7 +388,7 @@ classdef MeasurePF_BU < MeasurePF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -419,7 +421,7 @@ classdef MeasurePF_BU < MeasurePF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -448,7 +450,7 @@ classdef MeasurePF_BU < MeasurePF
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measurepf_bu_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' };
+				measurepf_bu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' };
 				tag = measurepf_bu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -475,7 +477,7 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_bu_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8 };
+			measurepf_bu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8 };
 			prop_category = measurepf_bu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -501,7 +503,7 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_bu_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  12 };
+			measurepf_bu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  12 };
 			prop_format = measurepf_bu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -527,7 +529,7 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_bu_description_list = { 'NAME (constant, string) is the name of the panel figure binodal unilayer measure.'  'DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer measure.'  'TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer measure.'  'ID (data, string) is a few-letter code for the panel figure binodal unilayer measure.'  'LABEL (metadata, string) is an extended label of the panel figure binodal unilayer measure.'  'NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODES (figure, rvector) are the node numbers of the binodal measure.' };
+			measurepf_bu_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure.'  'NAME (constant, string) is the name of the panel figure for binodal unilayer measure.'  'DESCRIPTION (constant, string) is the description of the panel figure for binodal unilayer measure.'  'TEMPLATE (parameter, item) is the template of the panel figure for binodal unilayer measure.'  'ID (data, string) is a few-letter code for the panel figure for binodal unilayer measure.'  'LABEL (metadata, string) is an extended label of the panel figure for binodal unilayer measure.'  'NOTES (metadata, string) are some specific notes about the panel figure for binodal unilayer measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODES (figure, rvector) are the node numbers of the binodal measure.' };
 			prop_description = measurepf_bu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -553,9 +555,9 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 39 % MeasurePF_BU.NODES
+				case 40 % MeasurePF_BU.NODES
 					prop_settings = Format.getFormatSettings(12);
-				case 3 % MeasurePF_BU.TEMPLATE
+				case 4 % MeasurePF_BU.TEMPLATE
 					prop_settings = 'MeasurePF_BU';
 				otherwise
 					prop_settings = getPropSettings@MeasurePF(prop);
@@ -584,19 +586,21 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 39 % MeasurePF_BU.NODES
+				case 40 % MeasurePF_BU.NODES
 					prop_default = [1 1];
-				case 1 % MeasurePF_BU.NAME
+				case 1 % MeasurePF_BU.ELCLASS
 					prop_default = 'MeasurePF_BU';
-				case 2 % MeasurePF_BU.DESCRIPTION
-					prop_default = 'MeasurePF_BU manages the basic functionalities to plot of a binodal unilayer measure.';
-				case 3 % MeasurePF_BU.TEMPLATE
+				case 2 % MeasurePF_BU.NAME
+					prop_default = 'Panel Figure for Binodal Unilayer Measure';
+				case 3 % MeasurePF_BU.DESCRIPTION
+					prop_default = 'A Panel Figure for Binodal Unilayer Measure (MeasurePF_BU) manages the basic functionalities to plot of a binodal unilayer measure.';
+				case 4 % MeasurePF_BU.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MeasurePF_BU.getPropSettings(prop));
-				case 4 % MeasurePF_BU.ID
+				case 5 % MeasurePF_BU.ID
 					prop_default = 'MeasurePF_BU ID';
-				case 5 % MeasurePF_BU.LABEL
+				case 6 % MeasurePF_BU.LABEL
 					prop_default = 'MeasurePF_BU label';
-				case 6 % MeasurePF_BU.NOTES
+				case 7 % MeasurePF_BU.NOTES
 					prop_default = 'MeasurePF_BU notes';
 				otherwise
 					prop_default = getPropDefault@MeasurePF(prop);
@@ -662,12 +666,12 @@ classdef MeasurePF_BU < MeasurePF
 			prop = MeasurePF_BU.getPropProp(pointer);
 			
 			switch prop
-				case 39 % MeasurePF_BU.NODES
+				case 40 % MeasurePF_BU.NODES
 					check = Format.checkFormat(12, value, MeasurePF_BU.getPropSettings(prop));
-				case 3 % MeasurePF_BU.TEMPLATE
+				case 4 % MeasurePF_BU.TEMPLATE
 					check = Format.checkFormat(8, value, MeasurePF_BU.getPropSettings(prop));
 				otherwise
-					if prop <= 38
+					if prop <= 39
 						check = checkProp@MeasurePF(prop, value);
 					end
 			end
@@ -697,11 +701,11 @@ classdef MeasurePF_BU < MeasurePF
 			%  checkValue.
 			
 			switch prop
-				case 39 % MeasurePF_BU.NODES
+				case 40 % MeasurePF_BU.NODES
 					pf.get('SETUP')
 					
 				otherwise
-					if prop <= 38
+					if prop <= 39
 						postset@MeasurePF(pf, prop);
 					end
 			end
@@ -724,7 +728,7 @@ classdef MeasurePF_BU < MeasurePF
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 26 % MeasurePF_BU.SETUP
+				case 27 % MeasurePF_BU.SETUP
 					x = pf.get('M').get('G').get('ALAYERTICKS');
 					
 					nodes = pf.get('NODES');
@@ -765,7 +769,7 @@ classdef MeasurePF_BU < MeasurePF
 					value = [];
 					
 				otherwise
-					if prop <= 38
+					if prop <= 39
 						value = calculateValue@MeasurePF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -791,7 +795,7 @@ classdef MeasurePF_BU < MeasurePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 39 % MeasurePF_BU.NODES
+				case 40 % MeasurePF_BU.NODES
 					pr = MeasurePF_BxPP_Node('EL', pf, 'PROP', MeasurePF_BU.NODE);
 					
 				otherwise

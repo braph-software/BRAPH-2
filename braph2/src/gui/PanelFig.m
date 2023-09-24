@@ -2,7 +2,7 @@ classdef PanelFig < Panel
 	%PanelFig plots the panel of a figure.
 	% It is a subclass of <a href="matlab:help Panel">Panel</a>.
 	%
-	% PanelFig plots a figure.
+	% A Figure Panel (PanelFig) plots a figure.
 	% 
 	% CONSTRUCTOR - To construct a PanelFig use, e.g.:
 	% 
@@ -29,27 +29,28 @@ classdef PanelFig < Panel
 	%     pf.get('<strong>RESIZEY</strong>') - resizes the y-extension of the element panel and its prop panels.
 	%
 	% The list of PanelFig properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the figure panel.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
 	%
 	% PanelFig methods (constructor):
 	%  PanelFig - constructor
@@ -140,17 +141,17 @@ classdef PanelFig < Panel
 	% See also uipanel, GUIFig, Settings.
 	
 	properties (Constant) % properties
-		ST_POSITION = 19; %CET: Computational Efficiency Trick
+		ST_POSITION = 20; %CET: Computational Efficiency Trick
 		ST_POSITION_TAG = 'ST_POSITION';
 		ST_POSITION_CATEGORY = 8;
 		ST_POSITION_FORMAT = 8;
 		
-		H_TOOLBAR = 20; %CET: Computational Efficiency Trick
+		H_TOOLBAR = 21; %CET: Computational Efficiency Trick
 		H_TOOLBAR_TAG = 'H_TOOLBAR';
 		H_TOOLBAR_CATEGORY = 7;
 		H_TOOLBAR_FORMAT = 18;
 		
-		H_TOOLS = 21; %CET: Computational Efficiency Trick
+		H_TOOLS = 22; %CET: Computational Efficiency Trick
 		H_TOOLS_TAG = 'H_TOOLS';
 		H_TOOLS_CATEGORY = 7;
 		H_TOOLS_FORMAT = 19;
@@ -167,27 +168,28 @@ classdef PanelFig < Panel
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PanelFig properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the figure panel.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
 			%
 			% See also Category, Format.
 			
@@ -249,27 +251,27 @@ classdef PanelFig < Panel
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
-				case 4 % Category.DATA
 					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
 				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18];
+					prop_list = [8 11 12 16 17 18 19];
 				case 7 % Category.EVANESCENT
-					prop_list = [9 14 20 21];
+					prop_list = [10 15 21 22];
 				case 8 % Category.FIGURE
-					prop_list = [13 19];
+					prop_list = [14 20];
 				case 9 % Category.GUI
-					prop_list = [8 12];
+					prop_list = [9 13];
 				otherwise
 					prop_list = [];
 			end
@@ -295,13 +297,13 @@ classdef PanelFig < Panel
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 21;
+				prop_number = 22;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -346,7 +348,7 @@ classdef PanelFig < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 22 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -384,7 +386,7 @@ classdef PanelFig < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -417,7 +419,7 @@ classdef PanelFig < Panel
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -446,7 +448,7 @@ classdef PanelFig < Panel
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				panelfig_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' };
+				panelfig_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' };
 				tag = panelfig_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -473,7 +475,7 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panelfig_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7 };
+			panelfig_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7 };
 			prop_category = panelfig_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -499,7 +501,7 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panelfig_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19 };
+			panelfig_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19 };
 			prop_format = panelfig_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -525,7 +527,7 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panelfig_description_list = { 'NAME (constant, string) is the name of the figure panel.'  'DESCRIPTION (constant, string) is the description of the figure panel.'  'TEMPLATE (parameter, item) is the template of the figure panel.'  'ID (data, string) is a few-letter code for the figure panel.'  'LABEL (metadata, string) is an extended label of the figure panel.'  'NOTES (metadata, string) are some specific notes about the figure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the figure panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.' };
+			panelfig_description_list = { 'ELCLASS (constant, string) is the class of the figure panel.'  'NAME (constant, string) is the name of the figure panel.'  'DESCRIPTION (constant, string) is the description of the figure panel.'  'TEMPLATE (parameter, item) is the template of the figure panel.'  'ID (data, string) is a few-letter code for the figure panel.'  'LABEL (metadata, string) is an extended label of the figure panel.'  'NOTES (metadata, string) are some specific notes about the figure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the figure panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.' };
 			prop_description = panelfig_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -551,13 +553,13 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 19 % PanelFig.ST_POSITION
+				case 20 % PanelFig.ST_POSITION
 					prop_settings = 'SettingsPosition';
-				case 20 % PanelFig.H_TOOLBAR
+				case 21 % PanelFig.H_TOOLBAR
 					prop_settings = Format.getFormatSettings(18);
-				case 21 % PanelFig.H_TOOLS
+				case 22 % PanelFig.H_TOOLS
 					prop_settings = Format.getFormatSettings(19);
-				case 3 % PanelFig.TEMPLATE
+				case 4 % PanelFig.TEMPLATE
 					prop_settings = 'PanelFig';
 				otherwise
 					prop_settings = getPropSettings@Panel(prop);
@@ -586,25 +588,27 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 19 % PanelFig.ST_POSITION
+				case 20 % PanelFig.ST_POSITION
 					prop_default = Format.getFormatDefault(8, PanelFig.getPropSettings(prop));
-				case 20 % PanelFig.H_TOOLBAR
+				case 21 % PanelFig.H_TOOLBAR
 					prop_default = Format.getFormatDefault(18, PanelFig.getPropSettings(prop));
-				case 21 % PanelFig.H_TOOLS
+				case 22 % PanelFig.H_TOOLS
 					prop_default = Format.getFormatDefault(19, PanelFig.getPropSettings(prop));
-				case 1 % PanelFig.NAME
+				case 1 % PanelFig.ELCLASS
 					prop_default = 'PanelFig';
-				case 2 % PanelFig.DESCRIPTION
-					prop_default = 'PanelFig plots a figure.';
-				case 3 % PanelFig.TEMPLATE
+				case 2 % PanelFig.NAME
+					prop_default = 'Figure Panel';
+				case 3 % PanelFig.DESCRIPTION
+					prop_default = 'A Figure Panel (PanelFig) plots a figure.';
+				case 4 % PanelFig.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PanelFig.getPropSettings(prop));
-				case 4 % PanelFig.ID
+				case 5 % PanelFig.ID
 					prop_default = 'PanelFig ID';
-				case 5 % PanelFig.LABEL
+				case 6 % PanelFig.LABEL
 					prop_default = 'PanelFig label';
-				case 6 % PanelFig.NOTES
+				case 7 % PanelFig.NOTES
 					prop_default = 'PanelFig notes';
-				case 13 % PanelFig.BKGCOLOR
+				case 14 % PanelFig.BKGCOLOR
 					prop_default = [1 1 1];
 				otherwise
 					prop_default = getPropDefault@Panel(prop);
@@ -670,16 +674,16 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			switch prop
-				case 19 % PanelFig.ST_POSITION
+				case 20 % PanelFig.ST_POSITION
 					check = Format.checkFormat(8, value, PanelFig.getPropSettings(prop));
-				case 20 % PanelFig.H_TOOLBAR
+				case 21 % PanelFig.H_TOOLBAR
 					check = Format.checkFormat(18, value, PanelFig.getPropSettings(prop));
-				case 21 % PanelFig.H_TOOLS
+				case 22 % PanelFig.H_TOOLS
 					check = Format.checkFormat(19, value, PanelFig.getPropSettings(prop));
-				case 3 % PanelFig.TEMPLATE
+				case 4 % PanelFig.TEMPLATE
 					check = Format.checkFormat(8, value, PanelFig.getPropSettings(prop));
 				otherwise
-					if prop <= 18
+					if prop <= 19
 						check = checkProp@Panel(prop, value);
 					end
 			end
@@ -712,13 +716,13 @@ classdef PanelFig < Panel
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 20 % PanelFig.H_TOOLBAR
+				case 21 % PanelFig.H_TOOLBAR
 					value = findobj(ancestor(pf.memorize('PARENT').memorize('H'), 'Figure'), 'Tag', 'TOOLBAR');
 					
-				case 21 % PanelFig.H_TOOLS
+				case 22 % PanelFig.H_TOOLS
 					value = {};
 					
-				case 10 % PanelFig.DRAW
+				case 11 % PanelFig.DRAW
 					if check_graphics(pf.memorize('H'), 'uipanel') % H = p for panel
 					    
 					    pf.memorize('ST_POSITION').set('PANEL', pf, 'PROP', pf.H).get('SETUP')
@@ -734,15 +738,15 @@ classdef PanelFig < Panel
 					    value = false;
 					end
 					
-				case 17 % PanelFig.DELETE
-					value = calculateValue@Panel(pf, 17, varargin{:}); % also warning
+				case 18 % PanelFig.DELETE
+					value = calculateValue@Panel(pf, 18, varargin{:}); % also warning
 					if value
 					    pf.set('H_TOOLBAR', Element.getNoValue())
 					    pf.set('H_TOOLS', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 18
+					if prop <= 19
 						value = calculateValue@Panel(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -768,8 +772,8 @@ classdef PanelFig < Panel
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 19 % PanelFig.ST_POSITION
-					pr = SettingsPositionPP('EL', pf, 'PROP', 19, varargin{:});
+				case 20 % PanelFig.ST_POSITION
+					pr = SettingsPositionPP('EL', pf, 'PROP', 20, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@Panel(pf, prop, varargin{:});

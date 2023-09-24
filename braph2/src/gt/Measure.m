@@ -2,7 +2,7 @@ classdef Measure < ConcreteElement
 	%Measure is a measure.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% Measure provides the methods necessary for all graph measures. 
+	% A Measure provides the methods necessary for all graph measures. 
 	%  Instances of this class should not be created. 
 	%  Use one of its subclasses instead.
 	% 
@@ -23,20 +23,21 @@ classdef Measure < ConcreteElement
 	%   2. <strong>Non-parametric</strong>: Non-parametric measure consists of a measure where the results are not based on a parameter.
 	%
 	% The list of Measure properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph measure.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph measure.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph measure.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
-	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
-	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
-	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the measure result.
-	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph measure.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph measure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph measure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph measure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the measure result.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% Measure methods (constructor):
 	%  Measure - constructor
@@ -213,37 +214,37 @@ classdef Measure < ConcreteElement
 		    }
 	end
 	properties (Constant) % properties
-		SHAPE = 8; %CET: Computational Efficiency Trick
+		SHAPE = 9; %CET: Computational Efficiency Trick
 		SHAPE_TAG = 'SHAPE';
 		SHAPE_CATEGORY = 1;
 		SHAPE_FORMAT = 11;
 		
-		SCOPE = 9; %CET: Computational Efficiency Trick
+		SCOPE = 10; %CET: Computational Efficiency Trick
 		SCOPE_TAG = 'SCOPE';
 		SCOPE_CATEGORY = 1;
 		SCOPE_FORMAT = 11;
 		
-		PARAMETRICITY = 10; %CET: Computational Efficiency Trick
+		PARAMETRICITY = 11; %CET: Computational Efficiency Trick
 		PARAMETRICITY_TAG = 'PARAMETRICITY';
 		PARAMETRICITY_CATEGORY = 1;
 		PARAMETRICITY_FORMAT = 11;
 		
-		COMPATIBLE_GRAPHS = 11; %CET: Computational Efficiency Trick
+		COMPATIBLE_GRAPHS = 12; %CET: Computational Efficiency Trick
 		COMPATIBLE_GRAPHS_TAG = 'COMPATIBLE_GRAPHS';
 		COMPATIBLE_GRAPHS_CATEGORY = 1;
 		COMPATIBLE_GRAPHS_FORMAT = 7;
 		
-		G = 12; %CET: Computational Efficiency Trick
+		G = 13; %CET: Computational Efficiency Trick
 		G_TAG = 'G';
 		G_CATEGORY = 4;
 		G_FORMAT = 8;
 		
-		M = 13; %CET: Computational Efficiency Trick
+		M = 14; %CET: Computational Efficiency Trick
 		M_TAG = 'M';
 		M_CATEGORY = 5;
 		M_FORMAT = 16;
 		
-		PFM = 14; %CET: Computational Efficiency Trick
+		PFM = 15; %CET: Computational Efficiency Trick
 		PFM_TAG = 'PFM';
 		PFM_CATEGORY = 9;
 		PFM_FORMAT = 8;
@@ -260,20 +261,21 @@ classdef Measure < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Measure properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph measure.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph measure.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph measure.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
-			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
-			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
-			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the measure result.
-			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph measure.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph measure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph measure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph measure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the measure result.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -335,25 +337,25 @@ classdef Measure < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 8 9 10 11];
+					prop_list = [1 2 3 9 10 11 12];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 12];
+					prop_list = [5 13];
 				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
 				otherwise
 					prop_list = [];
 			end
@@ -379,13 +381,13 @@ classdef Measure < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 15;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 6;
+					prop_number = 7;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -428,7 +430,7 @@ classdef Measure < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -466,7 +468,7 @@ classdef Measure < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -499,7 +501,7 @@ classdef Measure < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -528,7 +530,7 @@ classdef Measure < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measure_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				measure_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = measure_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -555,7 +557,7 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measure_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			measure_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = measure_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -581,7 +583,7 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measure_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			measure_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = measure_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -607,7 +609,7 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measure_description_list = { 'NAME (constant, string) is the name of the graph measure.'  'DESCRIPTION (constant, string) is the description of the graph measure.'  'TEMPLATE (parameter, item) is the template of the graph measure.'  'ID (data, string) is a few-letter code for the graph measure.'  'LABEL (metadata, string) is an extended label of the graph measure.'  'NOTES (metadata, string) are some specific notes about the graph measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape.'  'SCOPE (constant, scalar) is the measure scope.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the measure result.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			measure_description_list = { 'ELCLASS (constant, string) is the class of the graph measure.'  'NAME (constant, string) is the name of the graph measure.'  'DESCRIPTION (constant, string) is the description of the graph measure.'  'TEMPLATE (parameter, item) is the template of the graph measure.'  'ID (data, string) is a few-letter code for the graph measure.'  'LABEL (metadata, string) is an extended label of the graph measure.'  'NOTES (metadata, string) are some specific notes about the graph measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape.'  'SCOPE (constant, scalar) is the measure scope.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the measure result.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = measure_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -633,21 +635,21 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % Measure.SHAPE
+				case 9 % Measure.SHAPE
 					prop_settings = Format.getFormatSettings(11);
-				case 9 % Measure.SCOPE
+				case 10 % Measure.SCOPE
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % Measure.PARAMETRICITY
+				case 11 % Measure.PARAMETRICITY
 					prop_settings = Format.getFormatSettings(11);
-				case 11 % Measure.COMPATIBLE_GRAPHS
+				case 12 % Measure.COMPATIBLE_GRAPHS
 					prop_settings = 'Graph';
-				case 12 % Measure.G
+				case 13 % Measure.G
 					prop_settings = 'Graph';
-				case 13 % Measure.M
+				case 14 % Measure.M
 					prop_settings = Format.getFormatSettings(16);
-				case 14 % Measure.PFM
+				case 15 % Measure.PFM
 					prop_settings = 'MeasurePF';
-				case 3 % Measure.TEMPLATE
+				case 4 % Measure.TEMPLATE
 					prop_settings = 'Measure';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -676,31 +678,33 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % Measure.SHAPE
+				case 9 % Measure.SHAPE
 					prop_default = 2;
-				case 9 % Measure.SCOPE
+				case 10 % Measure.SCOPE
 					prop_default = 2;
-				case 10 % Measure.PARAMETRICITY
+				case 11 % Measure.PARAMETRICITY
 					prop_default = 2;
-				case 11 % Measure.COMPATIBLE_GRAPHS
+				case 12 % Measure.COMPATIBLE_GRAPHS
 					prop_default = Format.getFormatDefault(7, Measure.getPropSettings(prop));
-				case 12 % Measure.G
+				case 13 % Measure.G
 					prop_default = Format.getFormatDefault(8, Measure.getPropSettings(prop));
-				case 13 % Measure.M
+				case 14 % Measure.M
 					prop_default = Format.getFormatDefault(16, Measure.getPropSettings(prop));
-				case 14 % Measure.PFM
+				case 15 % Measure.PFM
 					prop_default = Format.getFormatDefault(8, Measure.getPropSettings(prop));
-				case 1 % Measure.NAME
+				case 1 % Measure.ELCLASS
 					prop_default = 'Measure';
-				case 2 % Measure.DESCRIPTION
-					prop_default = 'Measure provides the methods necessary for all graph measures. Instances of this class should not be created. Use one of its subclasses instead.';
-				case 3 % Measure.TEMPLATE
+				case 2 % Measure.NAME
+					prop_default = 'Measure';
+				case 3 % Measure.DESCRIPTION
+					prop_default = 'A Measure provides the methods necessary for all graph measures. Instances of this class should not be created. Use one of its subclasses instead.';
+				case 4 % Measure.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Measure.getPropSettings(prop));
-				case 4 % Measure.ID
+				case 5 % Measure.ID
 					prop_default = 'Measure ID';
-				case 5 % Measure.LABEL
+				case 6 % Measure.LABEL
 					prop_default = 'Measure label';
-				case 6 % Measure.NOTES
+				case 7 % Measure.NOTES
 					prop_default = 'Measure notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -766,24 +770,24 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			switch prop
-				case 8 % Measure.SHAPE
+				case 9 % Measure.SHAPE
 					check = Format.checkFormat(11, value, Measure.getPropSettings(prop));
-				case 9 % Measure.SCOPE
+				case 10 % Measure.SCOPE
 					check = Format.checkFormat(11, value, Measure.getPropSettings(prop));
-				case 10 % Measure.PARAMETRICITY
+				case 11 % Measure.PARAMETRICITY
 					check = Format.checkFormat(11, value, Measure.getPropSettings(prop));
-				case 11 % Measure.COMPATIBLE_GRAPHS
+				case 12 % Measure.COMPATIBLE_GRAPHS
 					check = Format.checkFormat(7, value, Measure.getPropSettings(prop));
-				case 12 % Measure.G
+				case 13 % Measure.G
 					check = Format.checkFormat(8, value, Measure.getPropSettings(prop));
-				case 13 % Measure.M
+				case 14 % Measure.M
 					check = Format.checkFormat(16, value, Measure.getPropSettings(prop));
-				case 14 % Measure.PFM
+				case 15 % Measure.PFM
 					check = Format.checkFormat(8, value, Measure.getPropSettings(prop));
-				case 3 % Measure.TEMPLATE
+				case 4 % Measure.TEMPLATE
 					check = Format.checkFormat(8, value, Measure.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -813,7 +817,7 @@ classdef Measure < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 14 % Measure.PFM
+				case 15 % Measure.PFM
 					if isa(m.getr('PFM'), 'NoValue')
 					    switch m.get('SHAPE')
 					        case 1 % Measure.GLOBAL
@@ -847,7 +851,7 @@ classdef Measure < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						postprocessing@ConcreteElement(m, prop);
 					end
 			end
@@ -870,15 +874,15 @@ classdef Measure < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % Measure.M
-					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
+				case 14 % Measure.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					value = {};
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});
@@ -904,10 +908,10 @@ classdef Measure < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 13 % Measure.M
+				case 14 % Measure.M
 					g = m.get('G');
 					
-					pr = PanelPropCell('EL', m, 'PROP', 13, varargin{:});
+					pr = PanelPropCell('EL', m, 'PROP', 14, varargin{:});
 					
 					if m.get('SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
@@ -964,8 +968,8 @@ classdef Measure < ConcreteElement
 					    end
 					end
 					
-				case 14 % Measure.PFM
-					pr = PanelPropItem('EL', m, 'PROP', 14, ...
+				case 15 % Measure.PFM
+					pr = PanelPropItem('EL', m, 'PROP', 15, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['Plot ' m.get('LABEL')], ...
 					    varargin{:});

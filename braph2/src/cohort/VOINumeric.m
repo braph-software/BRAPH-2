@@ -2,17 +2,18 @@ classdef VOINumeric < VOI
 	%VOINumeric is a numerical variable of interest.
 	% It is a subclass of <a href="matlab:help VOI">VOI</a>.
 	%
-	% VOINumeric is a numerical variable of interest.
+	% A Numerical Variable Of Interest (VOINumeric) is a numerical variable of interest.
 	%
 	% The list of VOINumeric properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the numerical variable of interest.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the numerical variable of interest.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the numerical variable of interest.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the numerical variable of interest.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the numerical variable of interest.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the numerical variable of interest.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the numerical variable of interest.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 	%
 	% VOINumeric methods (constructor):
 	%  VOINumeric - constructor
@@ -100,9 +101,7 @@ classdef VOINumeric < VOI
 	% To print full list of constants, click here <a href="matlab:metaclass = ?VOINumeric; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">VOINumeric constants</a>.
 	%
 	%
-	% See also VOICategoric
- 
- %% ¡props_update!.
+	% See also VOICategoric.
 	
 	methods % constructor
 		function voi = VOINumeric(varargin)
@@ -116,14 +115,15 @@ classdef VOINumeric < VOI
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of VOINumeric properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the numerical variable of interest.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the numerical variable of interest.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the numerical variable of interest.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the numerical variable of interest.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the numerical variable of interest.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the numerical variable of interest.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the numerical variable of interest.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 			%
 			% See also Category, Format.
 			
@@ -185,21 +185,21 @@ classdef VOINumeric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8];
+				prop_list = [1 2 3 4 5 6 7 8 9];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [5 9];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -225,13 +225,13 @@ classdef VOINumeric < VOI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 8;
+				prop_number = 9;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -270,7 +270,7 @@ classdef VOINumeric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -308,7 +308,7 @@ classdef VOINumeric < VOI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -341,7 +341,7 @@ classdef VOINumeric < VOI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -370,7 +370,7 @@ classdef VOINumeric < VOI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				voinumeric_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' };
+				voinumeric_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' };
 				tag = voinumeric_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -397,7 +397,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_category_list = { 1  1  3  4  2  2  6  4 };
+			voinumeric_category_list = { 1  1  1  3  4  2  2  6  4 };
 			prop_category = voinumeric_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -423,7 +423,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_format_list = { 2  2  8  2  2  2  2  11 };
+			voinumeric_format_list = { 2  2  2  8  2  2  2  2  11 };
 			prop_format = voinumeric_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -449,7 +449,7 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voinumeric_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
+			voinumeric_description_list = { 'ELCLASS (constant, string) is the class of the numerical variable of interest.'  'NAME (constant, string) is the name of the numerical variable of interest.'  'DESCRIPTION (constant, string) is the description of the numerical variable of interest.'  'TEMPLATE (parameter, item) is the template of the numerical variable of interest.'  'ID (data, string) is a few-letter code for the numerical variable of interest.'  'LABEL (metadata, string) is an extended label of the numerical variable of interest.'  'NOTES (metadata, string) are some specific notes about the numerical variable of interest.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
 			prop_description = voinumeric_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -475,6 +475,8 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 4 % VOINumeric.TEMPLATE
+					prop_settings = 'VOINumeric';
 				otherwise
 					prop_settings = getPropSettings@VOI(prop);
 			end
@@ -502,6 +504,20 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 1 % VOINumeric.ELCLASS
+					prop_default = 'VOINumeric';
+				case 2 % VOINumeric.NAME
+					prop_default = 'Numerical Variable Of Interest';
+				case 3 % VOINumeric.DESCRIPTION
+					prop_default = 'A Numerical Variable Of Interest (VOINumeric) is a numerical variable of interest.';
+				case 4 % VOINumeric.TEMPLATE
+					prop_default = Format.getFormatDefault(8, VOINumeric.getPropSettings(prop));
+				case 5 % VOINumeric.ID
+					prop_default = 'VOINumeric ID';
+				case 6 % VOINumeric.LABEL
+					prop_default = 'VOINumeric label';
+				case 7 % VOINumeric.NOTES
+					prop_default = 'VOINumeric notes';
 				otherwise
 					prop_default = getPropDefault@VOI(prop);
 			end
@@ -566,8 +582,10 @@ classdef VOINumeric < VOI
 			prop = VOINumeric.getPropProp(pointer);
 			
 			switch prop
+				case 4 % VOINumeric.TEMPLATE
+					check = Format.checkFormat(8, value, VOINumeric.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@VOI(prop, value);
 					end
 			end

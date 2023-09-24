@@ -2,21 +2,22 @@ classdef ExporterBrainAtlasXLS < Exporter
 	%ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.
 	% It is a subclass of <a href="matlab:help Exporter">Exporter</a>.
 	%
-	% ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.
+	% A Brain Atlas Exporter in XLS Files (ExporterBrainAtlasXLS) exports a brain atlas to an XLS/XLSX file.
 	%
 	% The list of ExporterBrainAtlasXLS properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas exporter in XLS.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file where to save the brain atlas.
-	%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
-	%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas exporter in XLS.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas exporter in XLS.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file where to save the brain atlas.
+	%  <strong>12</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
+	%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
 	%
 	% ExporterBrainAtlasXLS methods (constructor):
 	%  ExporterBrainAtlasXLS - constructor
@@ -36,33 +37,33 @@ classdef ExporterBrainAtlasXLS < Exporter
 	%  unchecked - sets a property to NOT checked
 	%
 	% ExporterBrainAtlasXLS methods (display):
-	%  tostring - string with information about the exporter of brain atlas in XLS
-	%  disp - displays information about the exporter of brain atlas in XLS
-	%  tree - displays the tree of the exporter of brain atlas in XLS
+	%  tostring - string with information about the brain atlas exporter in XLS
+	%  disp - displays information about the brain atlas exporter in XLS
+	%  tree - displays the tree of the brain atlas exporter in XLS
 	%
 	% ExporterBrainAtlasXLS methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two exporter of brain atlas in XLS are equal (values, locked)
+	%  isequal - determines whether two brain atlas exporter in XLS are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the exporter of brain atlas in XLS
+	%  copy - copies the brain atlas exporter in XLS
 	%
 	% ExporterBrainAtlasXLS methods (save/load, Static):
-	%  save - saves BRAPH2 exporter of brain atlas in XLS as b2 file
-	%  load - loads a BRAPH2 exporter of brain atlas in XLS from a b2 file
+	%  save - saves BRAPH2 brain atlas exporter in XLS as b2 file
+	%  load - loads a BRAPH2 brain atlas exporter in XLS from a b2 file
 	%
 	% ExporterBrainAtlasXLS method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the exporter of brain atlas in XLS
+	%  encodeJSON - returns a JSON string encoding the brain atlas exporter in XLS
 	%
 	% ExporterBrainAtlasXLS method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the exporter of brain atlas in XLS
+	%   decodeJSON - returns a JSON string encoding the brain atlas exporter in XLS
 	%
 	% ExporterBrainAtlasXLS methods (inspection, Static):
-	%  getClass - returns the class of the exporter of brain atlas in XLS
+	%  getClass - returns the class of the brain atlas exporter in XLS
 	%  getSubclasses - returns all subclasses of ExporterBrainAtlasXLS
-	%  getProps - returns the property list of the exporter of brain atlas in XLS
-	%  getPropNumber - returns the property number of the exporter of brain atlas in XLS
+	%  getProps - returns the property list of the brain atlas exporter in XLS
+	%  getPropNumber - returns the property number of the brain atlas exporter in XLS
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -107,29 +108,29 @@ classdef ExporterBrainAtlasXLS < Exporter
 	% See also BrainAtlas, ImporterBrainAtlasXLS.
 	
 	properties (Constant) % properties
-		BA = 9; %CET: Computational Efficiency Trick
+		BA = 10; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		FILE = 10; %CET: Computational Efficiency Trick
+		FILE = 11; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 4;
 		FILE_FORMAT = 2;
 		
-		PUT_FILE = 11; %CET: Computational Efficiency Trick
+		PUT_FILE = 12; %CET: Computational Efficiency Trick
 		PUT_FILE_TAG = 'PUT_FILE';
 		PUT_FILE_CATEGORY = 6;
 		PUT_FILE_FORMAT = 8;
 		
-		SAVE = 12; %CET: Computational Efficiency Trick
+		SAVE = 13; %CET: Computational Efficiency Trick
 		SAVE_TAG = 'SAVE';
 		SAVE_CATEGORY = 5;
 		SAVE_FORMAT = 1;
 	end
 	methods % constructor
 		function ex = ExporterBrainAtlasXLS(varargin)
-			%ExporterBrainAtlasXLS() creates a exporter of brain atlas in XLS.
+			%ExporterBrainAtlasXLS() creates a brain atlas exporter in XLS.
 			%
 			% ExporterBrainAtlasXLS(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -139,18 +140,19 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ExporterBrainAtlasXLS properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas exporter in XLS.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file where to save the brain atlas.
-			%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
-			%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas exporter in XLS.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas exporter in XLS.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in XLS.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file where to save the brain atlas.
+			%  <strong>12</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.
+			%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.
 			%
 			% See also Category, Format.
 			
@@ -159,12 +161,12 @@ classdef ExporterBrainAtlasXLS < Exporter
 	end
 	methods (Static) % inspection
 		function ex_class = getClass()
-			%GETCLASS returns the class of the exporter of brain atlas in XLS.
+			%GETCLASS returns the class of the brain atlas exporter in XLS.
 			%
 			% CLASS = ExporterBrainAtlasXLS.GETCLASS() returns the class 'ExporterBrainAtlasXLS'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = EX.GETCLASS() returns the class of the exporter of brain atlas in XLS EX.
+			%  CLASS = EX.GETCLASS() returns the class of the brain atlas exporter in XLS EX.
 			%  CLASS = Element.GETCLASS(EX) returns the class of 'EX'.
 			%  CLASS = Element.GETCLASS('ExporterBrainAtlasXLS') returns 'ExporterBrainAtlasXLS'.
 			%
@@ -174,12 +176,12 @@ classdef ExporterBrainAtlasXLS < Exporter
 			ex_class = 'ExporterBrainAtlasXLS';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the exporter of brain atlas in XLS.
+			%GETSUBCLASSES returns all subclasses of the brain atlas exporter in XLS.
 			%
 			% LIST = ExporterBrainAtlasXLS.GETSUBCLASSES() returns all subclasses of 'ExporterBrainAtlasXLS'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = EX.GETSUBCLASSES() returns all subclasses of the exporter of brain atlas in XLS EX.
+			%  LIST = EX.GETSUBCLASSES() returns all subclasses of the brain atlas exporter in XLS EX.
 			%  LIST = Element.GETSUBCLASSES(EX) returns all subclasses of 'EX'.
 			%  LIST = Element.GETSUBCLASSES('ExporterBrainAtlasXLS') returns all subclasses of 'ExporterBrainAtlasXLS'.
 			%
@@ -191,16 +193,16 @@ classdef ExporterBrainAtlasXLS < Exporter
 			subclass_list = { 'ExporterBrainAtlasXLS' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of exporter of brain atlas in XLS.
+			%GETPROPS returns the property list of brain atlas exporter in XLS.
 			%
-			% PROPS = ExporterBrainAtlasXLS.GETPROPS() returns the property list of exporter of brain atlas in XLS
+			% PROPS = ExporterBrainAtlasXLS.GETPROPS() returns the property list of brain atlas exporter in XLS
 			%  as a row vector.
 			%
 			% PROPS = ExporterBrainAtlasXLS.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = EX.GETPROPS([CATEGORY]) returns the property list of the exporter of brain atlas in XLS EX.
+			%  PROPS = EX.GETPROPS([CATEGORY]) returns the property list of the brain atlas exporter in XLS EX.
 			%  PROPS = Element.GETPROPS(EX[, CATEGORY]) returns the property list of 'EX'.
 			%  PROPS = Element.GETPROPS('ExporterBrainAtlasXLS'[, CATEGORY]) returns the property list of 'ExporterBrainAtlasXLS'.
 			%
@@ -212,39 +214,39 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 9 10];
+					prop_list = [5 10 11];
 				case 5 % Category.RESULT
-					prop_list = 12;
+					prop_list = 13;
 				case 6 % Category.QUERY
-					prop_list = [7 11];
+					prop_list = [8 12];
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of exporter of brain atlas in XLS.
+			%GETPROPNUMBER returns the property number of brain atlas exporter in XLS.
 			%
-			% N = ExporterBrainAtlasXLS.GETPROPNUMBER() returns the property number of exporter of brain atlas in XLS.
+			% N = ExporterBrainAtlasXLS.GETPROPNUMBER() returns the property number of brain atlas exporter in XLS.
 			%
-			% N = ExporterBrainAtlasXLS.GETPROPNUMBER(CATEGORY) returns the property number of exporter of brain atlas in XLS
+			% N = ExporterBrainAtlasXLS.GETPROPNUMBER(CATEGORY) returns the property number of brain atlas exporter in XLS
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = EX.GETPROPNUMBER([CATEGORY]) returns the property number of the exporter of brain atlas in XLS EX.
+			%  N = EX.GETPROPNUMBER([CATEGORY]) returns the property number of the brain atlas exporter in XLS EX.
 			%  N = Element.GETPROPNUMBER(EX) returns the property number of 'EX'.
 			%  N = Element.GETPROPNUMBER('ExporterBrainAtlasXLS') returns the property number of 'ExporterBrainAtlasXLS'.
 			%
@@ -256,13 +258,13 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -280,7 +282,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in exporter of brain atlas in XLS/error.
+			%EXISTSPROP checks whether property exists in brain atlas exporter in XLS/error.
 			%
 			% CHECK = ExporterBrainAtlasXLS.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -305,7 +307,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -318,7 +320,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in exporter of brain atlas in XLS/error.
+			%EXISTSTAG checks whether tag exists in brain atlas exporter in XLS/error.
 			%
 			% CHECK = ExporterBrainAtlasXLS.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -343,7 +345,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -376,7 +378,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -405,7 +407,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exporterbrainatlasxls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' };
+				exporterbrainatlasxls_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'BA'  'FILE'  'PUT_FILE'  'SAVE' };
 				tag = exporterbrainatlasxls_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -432,7 +434,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterbrainatlasxls_category_list = { 1  1  3  4  2  2  6  9  4  4  6  5 };
+			exporterbrainatlasxls_category_list = { 1  1  1  3  4  2  2  6  9  4  4  6  5 };
 			prop_category = exporterbrainatlasxls_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -458,7 +460,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterbrainatlasxls_format_list = { 2  2  8  2  2  2  2  4  8  2  8  1 };
+			exporterbrainatlasxls_format_list = { 2  2  2  8  2  2  2  2  4  8  2  8  1 };
 			prop_format = exporterbrainatlasxls_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -484,7 +486,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterbrainatlasxls_description_list = { 'NAME (constant, string) is the name of the brain atlas exporter in XLS.'  'DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.'  'TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.'  'ID (data, string) is a few-letter code for the brain atlas exporter in XLS.'  'LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.'  'NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'BA (data, item) is a brain atlas.'  'FILE (data, string) is the XLS/XLSX file where to save the brain atlas.'  'PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.'  'SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.' };
+			exporterbrainatlasxls_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas exporter in XLS.'  'NAME (constant, string) is the name of the brain atlas exporter in XLS.'  'DESCRIPTION (constant, string) is the description of the brain atlas exporter in XLS.'  'TEMPLATE (parameter, item) is the template of the brain atlas exporter in XLS.'  'ID (data, string) is a few-letter code for the brain atlas exporter in XLS.'  'LABEL (metadata, string) is an extended label of the brain atlas exporter in XLS.'  'NOTES (metadata, string) are some specific notes about the brain atlas exporter in XLS.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'BA (data, item) is a brain atlas.'  'FILE (data, string) is the XLS/XLSX file where to save the brain atlas.'  'PUT_FILE (query, item) opens a dialog box to set the XLS/XLSX file where to save the brain atlas.'  'SAVE (result, empty) saves the brain atlas in the selected XLS/XLSX file.' };
 			prop_description = exporterbrainatlasxls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -510,15 +512,15 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterBrainAtlasXLS.BA
+				case 10 % ExporterBrainAtlasXLS.BA
 					prop_settings = 'BrainAtlas';
-				case 10 % ExporterBrainAtlasXLS.FILE
+				case 11 % ExporterBrainAtlasXLS.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 11 % ExporterBrainAtlasXLS.PUT_FILE
+				case 12 % ExporterBrainAtlasXLS.PUT_FILE
 					prop_settings = 'ExporterBrainAtlasXLS';
-				case 12 % ExporterBrainAtlasXLS.SAVE
+				case 13 % ExporterBrainAtlasXLS.SAVE
 					prop_settings = Format.getFormatSettings(1);
-				case 3 % ExporterBrainAtlasXLS.TEMPLATE
+				case 4 % ExporterBrainAtlasXLS.TEMPLATE
 					prop_settings = 'ExporterBrainAtlasXLS';
 				otherwise
 					prop_settings = getPropSettings@Exporter(prop);
@@ -547,25 +549,27 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterBrainAtlasXLS.BA
+				case 10 % ExporterBrainAtlasXLS.BA
 					prop_default = Format.getFormatDefault(8, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 10 % ExporterBrainAtlasXLS.FILE
+				case 11 % ExporterBrainAtlasXLS.FILE
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_xls_file_to_save_brain_atlas_most_likely_to_be_erased.xlsx'];
-				case 11 % ExporterBrainAtlasXLS.PUT_FILE
+				case 12 % ExporterBrainAtlasXLS.PUT_FILE
 					prop_default = Format.getFormatDefault(8, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 12 % ExporterBrainAtlasXLS.SAVE
+				case 13 % ExporterBrainAtlasXLS.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 1 % ExporterBrainAtlasXLS.NAME
+				case 1 % ExporterBrainAtlasXLS.ELCLASS
 					prop_default = 'ExporterBrainAtlasXLS';
-				case 2 % ExporterBrainAtlasXLS.DESCRIPTION
-					prop_default = 'ExporterBrainAtlasXLS exports a brain atlas to an XLS/XLSX file.';
-				case 3 % ExporterBrainAtlasXLS.TEMPLATE
+				case 2 % ExporterBrainAtlasXLS.NAME
+					prop_default = 'Brain Atlas Exporter in XLS Files';
+				case 3 % ExporterBrainAtlasXLS.DESCRIPTION
+					prop_default = 'A Brain Atlas Exporter in XLS Files (ExporterBrainAtlasXLS) exports a brain atlas to an XLS/XLSX file.';
+				case 4 % ExporterBrainAtlasXLS.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 4 % ExporterBrainAtlasXLS.ID
+				case 5 % ExporterBrainAtlasXLS.ID
 					prop_default = 'ExporterBrainAtlasXLS ID';
-				case 5 % ExporterBrainAtlasXLS.LABEL
+				case 6 % ExporterBrainAtlasXLS.LABEL
 					prop_default = 'ExporterBrainAtlasXLS label';
-				case 6 % ExporterBrainAtlasXLS.NOTES
+				case 7 % ExporterBrainAtlasXLS.NOTES
 					prop_default = 'ExporterBrainAtlasXLS notes';
 				otherwise
 					prop_default = getPropDefault@Exporter(prop);
@@ -631,18 +635,18 @@ classdef ExporterBrainAtlasXLS < Exporter
 			prop = ExporterBrainAtlasXLS.getPropProp(pointer);
 			
 			switch prop
-				case 9 % ExporterBrainAtlasXLS.BA
+				case 10 % ExporterBrainAtlasXLS.BA
 					check = Format.checkFormat(8, value, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 10 % ExporterBrainAtlasXLS.FILE
+				case 11 % ExporterBrainAtlasXLS.FILE
 					check = Format.checkFormat(2, value, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 11 % ExporterBrainAtlasXLS.PUT_FILE
+				case 12 % ExporterBrainAtlasXLS.PUT_FILE
 					check = Format.checkFormat(8, value, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 12 % ExporterBrainAtlasXLS.SAVE
+				case 13 % ExporterBrainAtlasXLS.SAVE
 					check = Format.checkFormat(1, value, ExporterBrainAtlasXLS.getPropSettings(prop));
-				case 3 % ExporterBrainAtlasXLS.TEMPLATE
+				case 4 % ExporterBrainAtlasXLS.TEMPLATE
 					check = Format.checkFormat(8, value, ExporterBrainAtlasXLS.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -675,7 +679,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ExporterBrainAtlasXLS.PUT_FILE
+				case 12 % ExporterBrainAtlasXLS.PUT_FILE
 					[filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
 					if filterindex
 					    file = [filepath filename];
@@ -683,8 +687,8 @@ classdef ExporterBrainAtlasXLS < Exporter
 					end
 					value = ex;
 					
-				case 12 % ExporterBrainAtlasXLS.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(12), 'twister')
+				case 13 % ExporterBrainAtlasXLS.SAVE
+					rng_settings_ = rng(); rng(ex.getPropSeed(13), 'twister')
 					
 					file = ex.get('FILE');
 					
@@ -757,7 +761,7 @@ classdef ExporterBrainAtlasXLS < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});

@@ -14,18 +14,19 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ImporterGroupSubjectCON_XLS properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
-	%  <strong>10</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
-	%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with connectivity data.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
+	%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
+	%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with connectivity data.
 	%
 	% ImporterGroupSubjectCON_XLS methods (constructor):
 	%  ImporterGroupSubjectCON_XLS - constructor
@@ -116,22 +117,22 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 	% See also Group, SubjectCON, ExporterGroupSubjectCON_XLS.
 	
 	properties (Constant) % properties
-		DIRECTORY = 9; %CET: Computational Efficiency Trick
+		DIRECTORY = 10; %CET: Computational Efficiency Trick
 		DIRECTORY_TAG = 'DIRECTORY';
 		DIRECTORY_CATEGORY = 4;
 		DIRECTORY_FORMAT = 2;
 		
-		GET_DIR = 10; %CET: Computational Efficiency Trick
+		GET_DIR = 11; %CET: Computational Efficiency Trick
 		GET_DIR_TAG = 'GET_DIR';
 		GET_DIR_CATEGORY = 6;
 		GET_DIR_FORMAT = 8;
 		
-		BA = 11; %CET: Computational Efficiency Trick
+		BA = 12; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		GR = 12; %CET: Computational Efficiency Trick
+		GR = 13; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 5;
 		GR_FORMAT = 8;
@@ -148,18 +149,19 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ImporterGroupSubjectCON_XLS properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
-			%  <strong>10</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
-			%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with connectivity data.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
+			%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
+			%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with connectivity data.
 			%
 			% See also Category, Format.
 			
@@ -221,25 +223,25 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 9 11];
+					prop_list = [5 10 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
+					prop_list = 13;
 				case 6 % Category.QUERY
-					prop_list = [7 10];
+					prop_list = [8 11];
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
@@ -265,13 +267,13 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -314,7 +316,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -352,7 +354,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -385,7 +387,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -414,7 +416,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				importergroupsubjectcon_xls_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' };
+				importergroupsubjectcon_xls_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' };
 				tag = importergroupsubjectcon_xls_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -441,7 +443,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectcon_xls_category_list = { 1  1  3  4  2  2  6  9  4  6  4  5 };
+			importergroupsubjectcon_xls_category_list = { 1  1  1  3  4  2  2  6  9  4  6  4  5 };
 			prop_category = importergroupsubjectcon_xls_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -467,7 +469,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectcon_xls_format_list = { 2  2  8  2  2  2  2  4  2  8  8  8 };
+			importergroupsubjectcon_xls_format_list = { 2  2  2  8  2  2  2  2  4  2  8  8  8 };
 			prop_format = importergroupsubjectcon_xls_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -493,7 +495,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectcon_xls_description_list = { 'NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with connectivity data.' };
+			importergroupsubjectcon_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the CON subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the CON subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the CON subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with connectivity data.' };
 			prop_description = importergroupsubjectcon_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -519,15 +521,15 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ImporterGroupSubjectCON_XLS.DIRECTORY
+				case 10 % ImporterGroupSubjectCON_XLS.DIRECTORY
 					prop_settings = Format.getFormatSettings(2);
-				case 10 % ImporterGroupSubjectCON_XLS.GET_DIR
+				case 11 % ImporterGroupSubjectCON_XLS.GET_DIR
 					prop_settings = 'ImporterGroupSubjectCON_XLS';
-				case 11 % ImporterGroupSubjectCON_XLS.BA
+				case 12 % ImporterGroupSubjectCON_XLS.BA
 					prop_settings = 'BrainAtlas';
-				case 12 % ImporterGroupSubjectCON_XLS.GR
+				case 13 % ImporterGroupSubjectCON_XLS.GR
 					prop_settings = 'Group';
-				case 3 % ImporterGroupSubjectCON_XLS.TEMPLATE
+				case 4 % ImporterGroupSubjectCON_XLS.TEMPLATE
 					prop_settings = 'ImporterGroupSubjectCON_XLS';
 				otherwise
 					prop_settings = getPropSettings@Importer(prop);
@@ -556,25 +558,27 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ImporterGroupSubjectCON_XLS.DIRECTORY
+				case 10 % ImporterGroupSubjectCON_XLS.DIRECTORY
 					prop_default = fileparts(which('test_braph2'));
-				case 10 % ImporterGroupSubjectCON_XLS.GET_DIR
+				case 11 % ImporterGroupSubjectCON_XLS.GET_DIR
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectCON_XLS.BA
+				case 12 % ImporterGroupSubjectCON_XLS.BA
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectCON_XLS.GR
+				case 13 % ImporterGroupSubjectCON_XLS.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
-				case 1 % ImporterGroupSubjectCON_XLS.NAME
+				case 1 % ImporterGroupSubjectCON_XLS.ELCLASS
 					prop_default = 'ImporterGroupSubjectCON_XLS';
-				case 2 % ImporterGroupSubjectCON_XLS.DESCRIPTION
+				case 2 % ImporterGroupSubjectCON_XLS.NAME
+					prop_default = 'ImporterGroupSubjectCON_XLS';
+				case 3 % ImporterGroupSubjectCON_XLS.DESCRIPTION
 					prop_default = 'ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data from a series of XLS/XLSX file. The variables of interest can be loaded from another XLS/XLSX file.';
-				case 3 % ImporterGroupSubjectCON_XLS.TEMPLATE
+				case 4 % ImporterGroupSubjectCON_XLS.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 4 % ImporterGroupSubjectCON_XLS.ID
+				case 5 % ImporterGroupSubjectCON_XLS.ID
 					prop_default = 'ImporterGroupSubjectCON_XLS ID';
-				case 5 % ImporterGroupSubjectCON_XLS.LABEL
+				case 6 % ImporterGroupSubjectCON_XLS.LABEL
 					prop_default = 'ImporterGroupSubjectCON_XLS label';
-				case 6 % ImporterGroupSubjectCON_XLS.NOTES
+				case 7 % ImporterGroupSubjectCON_XLS.NOTES
 					prop_default = 'ImporterGroupSubjectCON_XLS notes';
 				otherwise
 					prop_default = getPropDefault@Importer(prop);
@@ -640,18 +644,18 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			prop = ImporterGroupSubjectCON_XLS.getPropProp(pointer);
 			
 			switch prop
-				case 9 % ImporterGroupSubjectCON_XLS.DIRECTORY
+				case 10 % ImporterGroupSubjectCON_XLS.DIRECTORY
 					check = Format.checkFormat(2, value, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 10 % ImporterGroupSubjectCON_XLS.GET_DIR
+				case 11 % ImporterGroupSubjectCON_XLS.GET_DIR
 					check = Format.checkFormat(8, value, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectCON_XLS.BA
+				case 12 % ImporterGroupSubjectCON_XLS.BA
 					check = Format.checkFormat(8, value, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectCON_XLS.GR
+				case 13 % ImporterGroupSubjectCON_XLS.GR
 					check = Format.checkFormat(8, value, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
-				case 3 % ImporterGroupSubjectCON_XLS.TEMPLATE
+				case 4 % ImporterGroupSubjectCON_XLS.TEMPLATE
 					check = Format.checkFormat(8, value, ImporterGroupSubjectCON_XLS.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -684,15 +688,15 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % ImporterGroupSubjectCON_XLS.GET_DIR
+				case 11 % ImporterGroupSubjectCON_XLS.GET_DIR
 					directory = uigetdir('Select directory');
 					if ischar(directory) && isfolder(directory)
 					    im.set('DIRECTORY', directory);
 					end
 					value = im;
 					
-				case 12 % ImporterGroupSubjectCON_XLS.GR
-					rng_settings_ = rng(); rng(im.getPropSeed(12), 'twister')
+				case 13 % ImporterGroupSubjectCON_XLS.GR
+					rng_settings_ = rng(); rng(im.getPropSeed(13), 'twister')
 					
 					% creates empty Group
 					gr = Group( ...
@@ -809,7 +813,7 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});
@@ -834,11 +838,11 @@ classdef ImporterGroupSubjectCON_XLS < Importer
 			msg = ['Error while checking ' tostring(im) ' ' im.getPropTag(prop) '.'];
 			
 			switch prop
-				case 12 % ImporterGroupSubjectCON_XLS.GR
+				case 13 % ImporterGroupSubjectCON_XLS.GR
 					check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectCON', [], [], true))); % Format.checkFormat(8, value, 'Group') already checked
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						[check, msg] = checkValue@Importer(im, prop, value);
 					end
 			end

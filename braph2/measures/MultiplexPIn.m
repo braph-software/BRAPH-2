@@ -6,20 +6,21 @@ classdef MultiplexPIn < Measure
 	% neighbours of a node across the layers.
 	%
 	% The list of MultiplexPIn properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
-	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% MultiplexPIn methods (constructor):
 	%  MultiplexPIn - constructor
@@ -119,20 +120,21 @@ classdef MultiplexPIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexPIn properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
-			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -194,25 +196,25 @@ classdef MultiplexPIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 8 9 10 11];
+					prop_list = [1 2 3 9 10 11 12];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 12];
+					prop_list = [5 13];
 				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
 				otherwise
 					prop_list = [];
 			end
@@ -238,13 +240,13 @@ classdef MultiplexPIn < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 15;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 6;
+					prop_number = 7;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -287,7 +289,7 @@ classdef MultiplexPIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -325,7 +327,7 @@ classdef MultiplexPIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -358,7 +360,7 @@ classdef MultiplexPIn < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -387,7 +389,7 @@ classdef MultiplexPIn < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				multiplexpin_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				multiplexpin_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
 				tag = multiplexpin_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -414,7 +416,7 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpin_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			multiplexpin_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
 			prop_category = multiplexpin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -440,7 +442,7 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpin_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			multiplexpin_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
 			prop_format = multiplexpin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -466,7 +468,7 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpin_description_list = { 'NAME (constant, string) is the name of the multiplex in-participation.'  'DESCRIPTION (constant, string) is the description of the multiplex in-participation.'  'TEMPLATE (parameter, item) is the template of the multiplex in-participation.'  'ID (data, string) is a few-letter code of the multiplex in-participation.'  'LABEL (metadata, string) is an extended label of the multiplex in-participation.'  'NOTES (metadata, string) are some specific notes about the multiplex in-participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex in-participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			multiplexpin_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex in-participation.'  'DESCRIPTION (constant, string) is the description of the multiplex in-participation.'  'TEMPLATE (parameter, item) is the template of the multiplex in-participation.'  'ID (data, string) is a few-letter code of the multiplex in-participation.'  'LABEL (metadata, string) is an extended label of the multiplex in-participation.'  'NOTES (metadata, string) are some specific notes about the multiplex in-participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex in-participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = multiplexpin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -492,7 +494,7 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 3 % MultiplexPIn.TEMPLATE
+				case 4 % MultiplexPIn.TEMPLATE
 					prop_settings = 'MultiplexPIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -521,25 +523,27 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 1 % MultiplexPIn.NAME
+				case 1 % MultiplexPIn.ELCLASS
+					prop_default = 'MultiplexPIn';
+				case 2 % MultiplexPIn.NAME
 					prop_default = 'MultiplexInParticipation';
-				case 2 % MultiplexPIn.DESCRIPTION
+				case 3 % MultiplexPIn.DESCRIPTION
 					prop_default = 'The multiplex in-participation is the homogeneity of the number of inward neighbours of a node across the layers.';
-				case 3 % MultiplexPIn.TEMPLATE
+				case 4 % MultiplexPIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPIn.getPropSettings(prop));
-				case 4 % MultiplexPIn.ID
+				case 5 % MultiplexPIn.ID
 					prop_default = 'MultiplexPIn ID';
-				case 5 % MultiplexPIn.LABEL
+				case 6 % MultiplexPIn.LABEL
 					prop_default = 'MultiplexInParticipation label';
-				case 6 % MultiplexPIn.NOTES
+				case 7 % MultiplexPIn.NOTES
 					prop_default = 'MultiplexInParticipation notes';
-				case 8 % MultiplexPIn.SHAPE
+				case 9 % MultiplexPIn.SHAPE
 					prop_default = 2;
-				case 9 % MultiplexPIn.SCOPE
+				case 10 % MultiplexPIn.SCOPE
 					prop_default = 1;
-				case 10 % MultiplexPIn.PARAMETRICITY
+				case 11 % MultiplexPIn.PARAMETRICITY
 					prop_default = 2;
-				case 11 % MultiplexPIn.COMPATIBLE_GRAPHS
+				case 12 % MultiplexPIn.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexBD' 'MultiplexWD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -605,10 +609,10 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			switch prop
-				case 3 % MultiplexPIn.TEMPLATE
+				case 4 % MultiplexPIn.TEMPLATE
 					check = Format.checkFormat(8, value, MultiplexPIn.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -641,8 +645,8 @@ classdef MultiplexPIn < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % MultiplexPIn.M
-					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
+				case 14 % MultiplexPIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					L = g.get('LAYERNUMBER');
@@ -664,7 +668,7 @@ classdef MultiplexPIn < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

@@ -2,7 +2,7 @@ classdef GUIElement < GUI
 	%GUIElement is a GUI for an element.
 	% It is a subclass of <a href="matlab:help GUI">GUI</a>.
 	%
-	% GUIElement renders an element in a figure.
+	% An Element GUI (GUIElement) renders an element in a figure.
 	% 
 	% CONSTRUCTOR - To construct a GUI use, e.g.:
 	% 
@@ -26,47 +26,48 @@ classdef GUIElement < GUI
 	%     gui.get('<strong>CLOSE</strong>') - closes the figure and its dependent figures
 	%
 	% The list of GUIElement properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element GUI.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element GUI.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element GUI.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element GUI.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element GUI.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element GUI.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-	%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-	%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-	%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-	%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
-	%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-	%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
-	%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-	%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
-	%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
-	%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
-	%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-	%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-	%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
-	%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-	%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-	%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-	%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-	%  <strong>29</strong> <strong>PE</strong> 	PE (data, item) is the panel element.
-	%  <strong>30</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
-	%  <strong>31</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
-	%  <strong>32</strong> <strong>LAYOUT</strong> 	LAYOUT (data, item) is the handle to the figure to manage layout.
-	%  <strong>33</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
-	%  <strong>34</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
-	%  <strong>35</strong> <strong>H_MENU_IMPORT</strong> 	H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.
-	%  <strong>36</strong> <strong>MENU_IMPORT</strong> 	MENU_IMPORT (gui, logical) determines whether to show the menu import.
-	%  <strong>37</strong> <strong>H_MENU_EXPORT</strong> 	H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.
-	%  <strong>38</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the menu export.
-	%  <strong>39</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
-	%  <strong>40</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
-	%  <strong>41</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the element GUI.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element GUI.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element GUI.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element GUI.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element GUI.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element GUI.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element GUI.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+	%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+	%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+	%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+	%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
+	%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+	%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
+	%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+	%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
+	%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
+	%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
+	%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+	%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+	%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
+	%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+	%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+	%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+	%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+	%  <strong>30</strong> <strong>PE</strong> 	PE (data, item) is the panel element.
+	%  <strong>31</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
+	%  <strong>32</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
+	%  <strong>33</strong> <strong>LAYOUT</strong> 	LAYOUT (data, item) is the handle to the figure to manage layout.
+	%  <strong>34</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
+	%  <strong>35</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
+	%  <strong>36</strong> <strong>H_MENU_IMPORT</strong> 	H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.
+	%  <strong>37</strong> <strong>MENU_IMPORT</strong> 	MENU_IMPORT (gui, logical) determines whether to show the menu import.
+	%  <strong>38</strong> <strong>H_MENU_EXPORT</strong> 	H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.
+	%  <strong>39</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the menu export.
+	%  <strong>40</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
+	%  <strong>41</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
+	%  <strong>42</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
 	%
 	% GUIElement methods (constructor):
 	%  GUIElement - constructor
@@ -157,67 +158,67 @@ classdef GUIElement < GUI
 	% See also uifigure, ConcreteElement, PanelElement.
 	
 	properties (Constant) % properties
-		PE = 29; %CET: Computational Efficiency Trick
+		PE = 30; %CET: Computational Efficiency Trick
 		PE_TAG = 'PE';
 		PE_CATEGORY = 4;
 		PE_FORMAT = 8;
 		
-		FILE = 30; %CET: Computational Efficiency Trick
+		FILE = 31; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 2;
 		FILE_FORMAT = 2;
 		
-		TEXT_FILE = 31; %CET: Computational Efficiency Trick
+		TEXT_FILE = 32; %CET: Computational Efficiency Trick
 		TEXT_FILE_TAG = 'TEXT_FILE';
 		TEXT_FILE_CATEGORY = 7;
 		TEXT_FILE_FORMAT = 18;
 		
-		LAYOUT = 32; %CET: Computational Efficiency Trick
+		LAYOUT = 33; %CET: Computational Efficiency Trick
 		LAYOUT_TAG = 'LAYOUT';
 		LAYOUT_CATEGORY = 4;
 		LAYOUT_FORMAT = 8;
 		
-		H_MENU_FILE = 33; %CET: Computational Efficiency Trick
+		H_MENU_FILE = 34; %CET: Computational Efficiency Trick
 		H_MENU_FILE_TAG = 'H_MENU_FILE';
 		H_MENU_FILE_CATEGORY = 7;
 		H_MENU_FILE_FORMAT = 18;
 		
-		MENU_FILE = 34; %CET: Computational Efficiency Trick
+		MENU_FILE = 35; %CET: Computational Efficiency Trick
 		MENU_FILE_TAG = 'MENU_FILE';
 		MENU_FILE_CATEGORY = 9;
 		MENU_FILE_FORMAT = 4;
 		
-		H_MENU_IMPORT = 35; %CET: Computational Efficiency Trick
+		H_MENU_IMPORT = 36; %CET: Computational Efficiency Trick
 		H_MENU_IMPORT_TAG = 'H_MENU_IMPORT';
 		H_MENU_IMPORT_CATEGORY = 7;
 		H_MENU_IMPORT_FORMAT = 18;
 		
-		MENU_IMPORT = 36; %CET: Computational Efficiency Trick
+		MENU_IMPORT = 37; %CET: Computational Efficiency Trick
 		MENU_IMPORT_TAG = 'MENU_IMPORT';
 		MENU_IMPORT_CATEGORY = 9;
 		MENU_IMPORT_FORMAT = 4;
 		
-		H_MENU_EXPORT = 37; %CET: Computational Efficiency Trick
+		H_MENU_EXPORT = 38; %CET: Computational Efficiency Trick
 		H_MENU_EXPORT_TAG = 'H_MENU_EXPORT';
 		H_MENU_EXPORT_CATEGORY = 7;
 		H_MENU_EXPORT_FORMAT = 18;
 		
-		MENU_EXPORT = 38; %CET: Computational Efficiency Trick
+		MENU_EXPORT = 39; %CET: Computational Efficiency Trick
 		MENU_EXPORT_TAG = 'MENU_EXPORT';
 		MENU_EXPORT_CATEGORY = 9;
 		MENU_EXPORT_FORMAT = 4;
 		
-		H_MENU_PERSONALIZE = 39; %CET: Computational Efficiency Trick
+		H_MENU_PERSONALIZE = 40; %CET: Computational Efficiency Trick
 		H_MENU_PERSONALIZE_TAG = 'H_MENU_PERSONALIZE';
 		H_MENU_PERSONALIZE_CATEGORY = 7;
 		H_MENU_PERSONALIZE_FORMAT = 18;
 		
-		MENU_PERSONALIZE = 40; %CET: Computational Efficiency Trick
+		MENU_PERSONALIZE = 41; %CET: Computational Efficiency Trick
 		MENU_PERSONALIZE_TAG = 'MENU_PERSONALIZE';
 		MENU_PERSONALIZE_CATEGORY = 9;
 		MENU_PERSONALIZE_FORMAT = 4;
 		
-		TOOL_FILE = 41; %CET: Computational Efficiency Trick
+		TOOL_FILE = 42; %CET: Computational Efficiency Trick
 		TOOL_FILE_TAG = 'TOOL_FILE';
 		TOOL_FILE_CATEGORY = 9;
 		TOOL_FILE_FORMAT = 4;
@@ -234,47 +235,48 @@ classdef GUIElement < GUI
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GUIElement properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element GUI.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element GUI.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element GUI.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element GUI.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element GUI.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element GUI.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-			%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-			%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-			%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-			%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
-			%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-			%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
-			%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-			%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
-			%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
-			%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
-			%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-			%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-			%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
-			%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-			%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-			%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-			%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-			%  <strong>29</strong> <strong>PE</strong> 	PE (data, item) is the panel element.
-			%  <strong>30</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
-			%  <strong>31</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
-			%  <strong>32</strong> <strong>LAYOUT</strong> 	LAYOUT (data, item) is the handle to the figure to manage layout.
-			%  <strong>33</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
-			%  <strong>34</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
-			%  <strong>35</strong> <strong>H_MENU_IMPORT</strong> 	H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.
-			%  <strong>36</strong> <strong>MENU_IMPORT</strong> 	MENU_IMPORT (gui, logical) determines whether to show the menu import.
-			%  <strong>37</strong> <strong>H_MENU_EXPORT</strong> 	H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.
-			%  <strong>38</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the menu export.
-			%  <strong>39</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
-			%  <strong>40</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
-			%  <strong>41</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the element GUI.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element GUI.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element GUI.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element GUI.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element GUI.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element GUI.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element GUI.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+			%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+			%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+			%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+			%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar.
+			%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+			%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about.
+			%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+			%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.
+			%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar.
+			%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.
+			%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+			%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+			%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
+			%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+			%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+			%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+			%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+			%  <strong>30</strong> <strong>PE</strong> 	PE (data, item) is the panel element.
+			%  <strong>31</strong> <strong>FILE</strong> 	FILE (metadata, string) is the B2 file where the element is saved.
+			%  <strong>32</strong> <strong>TEXT_FILE</strong> 	TEXT_FILE (evanescent, handle) is the label where the file name is shown.
+			%  <strong>33</strong> <strong>LAYOUT</strong> 	LAYOUT (data, item) is the handle to the figure to manage layout.
+			%  <strong>34</strong> <strong>H_MENU_FILE</strong> 	H_MENU_FILE (evanescent, handle) is the handle of the menu file.
+			%  <strong>35</strong> <strong>MENU_FILE</strong> 	MENU_FILE (gui, logical) determines whether to show the menu file.
+			%  <strong>36</strong> <strong>H_MENU_IMPORT</strong> 	H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.
+			%  <strong>37</strong> <strong>MENU_IMPORT</strong> 	MENU_IMPORT (gui, logical) determines whether to show the menu import.
+			%  <strong>38</strong> <strong>H_MENU_EXPORT</strong> 	H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.
+			%  <strong>39</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the menu export.
+			%  <strong>40</strong> <strong>H_MENU_PERSONALIZE</strong> 	H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.
+			%  <strong>41</strong> <strong>MENU_PERSONALIZE</strong> 	MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.
+			%  <strong>42</strong> <strong>TOOL_FILE</strong> 	TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.
 			%
 			% See also Category, Format.
 			
@@ -336,25 +338,25 @@ classdef GUIElement < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 30];
+					prop_list = [6 7 31];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 29 32];
+					prop_list = [5 30 33];
 				case 6 % Category.QUERY
-					prop_list = [7 9 10 24 25 26 27 28];
+					prop_list = [8 10 11 25 26 27 28 29];
 				case 7 % Category.EVANESCENT
-					prop_list = [14 16 18 19 23 31 33 35 37 39];
+					prop_list = [15 17 19 20 24 32 34 36 38 40];
 				case 9 % Category.GUI
-					prop_list = [8 11 12 13 15 17 20 21 22 34 36 38 40 41];
+					prop_list = [9 12 13 14 16 18 21 22 23 35 37 39 41 42];
 				otherwise
 					prop_list = [];
 			end
@@ -380,13 +382,13 @@ classdef GUIElement < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 41;
+				prop_number = 42;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 3;
 				case 3 % Category.PARAMETER
@@ -429,7 +431,7 @@ classdef GUIElement < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -467,7 +469,7 @@ classdef GUIElement < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -500,7 +502,7 @@ classdef GUIElement < GUI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -529,7 +531,7 @@ classdef GUIElement < GUI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				guielement_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' };
+				guielement_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'PE'  'FILE'  'TEXT_FILE'  'LAYOUT'  'H_MENU_FILE'  'MENU_FILE'  'H_MENU_IMPORT'  'MENU_IMPORT'  'H_MENU_EXPORT'  'MENU_EXPORT'  'H_MENU_PERSONALIZE'  'MENU_PERSONALIZE'  'TOOL_FILE' };
 				tag = guielement_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -556,7 +558,7 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guielement_category_list = { 1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  2  7  4  7  9  7  9  7  9  7  9  9 };
+			guielement_category_list = { 1  1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  2  7  4  7  9  7  9  7  9  7  9  9 };
 			prop_category = guielement_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -582,7 +584,7 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guielement_format_list = { 2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  8  2  18  8  18  4  18  4  18  4  18  4  4 };
+			guielement_format_list = { 2  2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  8  2  18  8  18  4  18  4  18  4  18  4  4 };
 			prop_format = guielement_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -608,7 +610,7 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guielement_description_list = { 'NAME (constant, string) is the name of the element GUI.'  'DESCRIPTION (constant, string) is the description of the element GUI.'  'TEMPLATE (parameter, item) is the template of the element GUI.'  'ID (data, string) is a few-letter code for the element GUI.'  'LABEL (metadata, string) is an extended label of the element GUI.'  'NOTES (metadata, string) are some specific notes about the element GUI.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar.'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about.'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar.'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'PE (data, item) is the panel element.'  'FILE (metadata, string) is the B2 file where the element is saved.'  'TEXT_FILE (evanescent, handle) is the label where the file name is shown.'  'LAYOUT (data, item) is the handle to the figure to manage layout.'  'H_MENU_FILE (evanescent, handle) is the handle of the menu file.'  'MENU_FILE (gui, logical) determines whether to show the menu file.'  'H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.'  'MENU_IMPORT (gui, logical) determines whether to show the menu import.'  'H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.'  'MENU_EXPORT (gui, logical) determines whether to show the menu export.'  'H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.'  'MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.'  'TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.' };
+			guielement_description_list = { 'ELCLASS (constant, string) is the class of the element GUI.'  'NAME (constant, string) is the name of the element GUI.'  'DESCRIPTION (constant, string) is the description of the element GUI.'  'TEMPLATE (parameter, item) is the template of the element GUI.'  'ID (data, string) is a few-letter code for the element GUI.'  'LABEL (metadata, string) is an extended label of the element GUI.'  'NOTES (metadata, string) are some specific notes about the element GUI.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar.'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about.'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the toolbar followed by the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar.'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons.'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'PE (data, item) is the panel element.'  'FILE (metadata, string) is the B2 file where the element is saved.'  'TEXT_FILE (evanescent, handle) is the label where the file name is shown.'  'LAYOUT (data, item) is the handle to the figure to manage layout.'  'H_MENU_FILE (evanescent, handle) is the handle of the menu file.'  'MENU_FILE (gui, logical) determines whether to show the menu file.'  'H_MENU_IMPORT (evanescent, handle) is the handle of the menu import.'  'MENU_IMPORT (gui, logical) determines whether to show the menu import.'  'H_MENU_EXPORT (evanescent, handle) is the handle of the menu export.'  'MENU_EXPORT (gui, logical) determines whether to show the menu export.'  'H_MENU_PERSONALIZE (evanescent, handle) is the handle of the menu personalize.'  'MENU_PERSONALIZE (gui, logical) determines whether to show the menu personalize.'  'TOOL_FILE (gui, logical) determines whether to show the toolbar file buttons.' };
 			prop_description = guielement_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -634,33 +636,33 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 29 % GUIElement.PE
+				case 30 % GUIElement.PE
 					prop_settings = 'PanelElement';
-				case 30 % GUIElement.FILE
+				case 31 % GUIElement.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 31 % GUIElement.TEXT_FILE
+				case 32 % GUIElement.TEXT_FILE
 					prop_settings = Format.getFormatSettings(18);
-				case 32 % GUIElement.LAYOUT
+				case 33 % GUIElement.LAYOUT
 					prop_settings = 'GUILayout';
-				case 33 % GUIElement.H_MENU_FILE
+				case 34 % GUIElement.H_MENU_FILE
 					prop_settings = Format.getFormatSettings(18);
-				case 34 % GUIElement.MENU_FILE
+				case 35 % GUIElement.MENU_FILE
 					prop_settings = Format.getFormatSettings(4);
-				case 35 % GUIElement.H_MENU_IMPORT
+				case 36 % GUIElement.H_MENU_IMPORT
 					prop_settings = Format.getFormatSettings(18);
-				case 36 % GUIElement.MENU_IMPORT
+				case 37 % GUIElement.MENU_IMPORT
 					prop_settings = Format.getFormatSettings(4);
-				case 37 % GUIElement.H_MENU_EXPORT
+				case 38 % GUIElement.H_MENU_EXPORT
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % GUIElement.MENU_EXPORT
+				case 39 % GUIElement.MENU_EXPORT
 					prop_settings = Format.getFormatSettings(4);
-				case 39 % GUIElement.H_MENU_PERSONALIZE
+				case 40 % GUIElement.H_MENU_PERSONALIZE
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % GUIElement.MENU_PERSONALIZE
+				case 41 % GUIElement.MENU_PERSONALIZE
 					prop_settings = Format.getFormatSettings(4);
-				case 41 % GUIElement.TOOL_FILE
+				case 42 % GUIElement.TOOL_FILE
 					prop_settings = Format.getFormatSettings(4);
-				case 3 % GUIElement.TEMPLATE
+				case 4 % GUIElement.TEMPLATE
 					prop_settings = 'GUIElement';
 				otherwise
 					prop_settings = getPropSettings@GUI(prop);
@@ -689,51 +691,53 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 29 % GUIElement.PE
+				case 30 % GUIElement.PE
 					prop_default = Format.getFormatDefault(8, GUIElement.getPropSettings(prop));
-				case 30 % GUIElement.FILE
+				case 31 % GUIElement.FILE
 					prop_default = Format.getFormatDefault(2, GUIElement.getPropSettings(prop));
-				case 31 % GUIElement.TEXT_FILE
+				case 32 % GUIElement.TEXT_FILE
 					prop_default = Format.getFormatDefault(18, GUIElement.getPropSettings(prop));
-				case 32 % GUIElement.LAYOUT
+				case 33 % GUIElement.LAYOUT
 					prop_default = Format.getFormatDefault(8, GUIElement.getPropSettings(prop));
-				case 33 % GUIElement.H_MENU_FILE
+				case 34 % GUIElement.H_MENU_FILE
 					prop_default = Format.getFormatDefault(18, GUIElement.getPropSettings(prop));
-				case 34 % GUIElement.MENU_FILE
+				case 35 % GUIElement.MENU_FILE
 					prop_default = true;
-				case 35 % GUIElement.H_MENU_IMPORT
+				case 36 % GUIElement.H_MENU_IMPORT
 					prop_default = Format.getFormatDefault(18, GUIElement.getPropSettings(prop));
-				case 36 % GUIElement.MENU_IMPORT
+				case 37 % GUIElement.MENU_IMPORT
 					prop_default = true;
-				case 37 % GUIElement.H_MENU_EXPORT
+				case 38 % GUIElement.H_MENU_EXPORT
 					prop_default = Format.getFormatDefault(18, GUIElement.getPropSettings(prop));
-				case 38 % GUIElement.MENU_EXPORT
+				case 39 % GUIElement.MENU_EXPORT
 					prop_default = true;
-				case 39 % GUIElement.H_MENU_PERSONALIZE
+				case 40 % GUIElement.H_MENU_PERSONALIZE
 					prop_default = Format.getFormatDefault(18, GUIElement.getPropSettings(prop));
-				case 40 % GUIElement.MENU_PERSONALIZE
+				case 41 % GUIElement.MENU_PERSONALIZE
 					prop_default = true;
-				case 41 % GUIElement.TOOL_FILE
+				case 42 % GUIElement.TOOL_FILE
 					prop_default = true;
-				case 1 % GUIElement.NAME
+				case 1 % GUIElement.ELCLASS
 					prop_default = 'GUIElement';
-				case 2 % GUIElement.DESCRIPTION
-					prop_default = 'GUIElement renders an element in a figure.';
-				case 3 % GUIElement.TEMPLATE
+				case 2 % GUIElement.NAME
+					prop_default = 'Element GUI';
+				case 3 % GUIElement.DESCRIPTION
+					prop_default = 'An Element GUI (GUIElement) renders an element in a figure.';
+				case 4 % GUIElement.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GUIElement.getPropSettings(prop));
-				case 4 % GUIElement.ID
+				case 5 % GUIElement.ID
 					prop_default = 'GUIElement ID';
-				case 5 % GUIElement.LABEL
+				case 6 % GUIElement.LABEL
 					prop_default = 'GUIElement label';
-				case 6 % GUIElement.NOTES
+				case 7 % GUIElement.NOTES
 					prop_default = 'GUIElement notes';
-				case 15 % GUIElement.MENUBAR
+				case 16 % GUIElement.MENUBAR
 					prop_default = true;
-				case 17 % GUIElement.MENU_ABOUT
+				case 18 % GUIElement.MENU_ABOUT
 					prop_default = true;
-				case 20 % GUIElement.TOOLBAR
+				case 21 % GUIElement.TOOLBAR
 					prop_default = true;
-				case 21 % GUIElement.TOOL_ABOUT
+				case 22 % GUIElement.TOOL_ABOUT
 					prop_default = true;
 				otherwise
 					prop_default = getPropDefault@GUI(prop);
@@ -783,7 +787,7 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			switch prop
-				case 29 % GUIElement.PE
+				case 30 % GUIElement.PE
 					if ~isa(value, 'PanelElement')
 					    value = PanelElement( ...
 					        'EL', value, ...
@@ -792,7 +796,7 @@ classdef GUIElement < GUI
 					end
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						value = conditioning@GUI(pointer, value);
 					end
 			end
@@ -812,7 +816,7 @@ classdef GUIElement < GUI
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case 32 % GUIElement.LAYOUT
+				case 33 % GUIElement.LAYOUT
 					if isa(value.getr('EL_CLASS'), 'NoValue')
 					    f = gui.get('H');
 					    value.set( ...
@@ -823,7 +827,7 @@ classdef GUIElement < GUI
 					end
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						value = preset@GUI(gui, prop, value);
 					end
 			end
@@ -863,36 +867,36 @@ classdef GUIElement < GUI
 			prop = GUIElement.getPropProp(pointer);
 			
 			switch prop
-				case 29 % GUIElement.PE
+				case 30 % GUIElement.PE
 					check = Format.checkFormat(8, value, GUIElement.getPropSettings(prop));
-				case 30 % GUIElement.FILE
+				case 31 % GUIElement.FILE
 					check = Format.checkFormat(2, value, GUIElement.getPropSettings(prop));
-				case 31 % GUIElement.TEXT_FILE
+				case 32 % GUIElement.TEXT_FILE
 					check = Format.checkFormat(18, value, GUIElement.getPropSettings(prop));
-				case 32 % GUIElement.LAYOUT
+				case 33 % GUIElement.LAYOUT
 					check = Format.checkFormat(8, value, GUIElement.getPropSettings(prop));
-				case 33 % GUIElement.H_MENU_FILE
+				case 34 % GUIElement.H_MENU_FILE
 					check = Format.checkFormat(18, value, GUIElement.getPropSettings(prop));
-				case 34 % GUIElement.MENU_FILE
+				case 35 % GUIElement.MENU_FILE
 					check = Format.checkFormat(4, value, GUIElement.getPropSettings(prop));
-				case 35 % GUIElement.H_MENU_IMPORT
+				case 36 % GUIElement.H_MENU_IMPORT
 					check = Format.checkFormat(18, value, GUIElement.getPropSettings(prop));
-				case 36 % GUIElement.MENU_IMPORT
+				case 37 % GUIElement.MENU_IMPORT
 					check = Format.checkFormat(4, value, GUIElement.getPropSettings(prop));
-				case 37 % GUIElement.H_MENU_EXPORT
+				case 38 % GUIElement.H_MENU_EXPORT
 					check = Format.checkFormat(18, value, GUIElement.getPropSettings(prop));
-				case 38 % GUIElement.MENU_EXPORT
+				case 39 % GUIElement.MENU_EXPORT
 					check = Format.checkFormat(4, value, GUIElement.getPropSettings(prop));
-				case 39 % GUIElement.H_MENU_PERSONALIZE
+				case 40 % GUIElement.H_MENU_PERSONALIZE
 					check = Format.checkFormat(18, value, GUIElement.getPropSettings(prop));
-				case 40 % GUIElement.MENU_PERSONALIZE
+				case 41 % GUIElement.MENU_PERSONALIZE
 					check = Format.checkFormat(4, value, GUIElement.getPropSettings(prop));
-				case 41 % GUIElement.TOOL_FILE
+				case 42 % GUIElement.TOOL_FILE
 					check = Format.checkFormat(4, value, GUIElement.getPropSettings(prop));
-				case 3 % GUIElement.TEMPLATE
+				case 4 % GUIElement.TEMPLATE
 					check = Format.checkFormat(8, value, GUIElement.getPropSettings(prop));
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						check = checkProp@GUI(prop, value);
 					end
 			end
@@ -922,7 +926,7 @@ classdef GUIElement < GUI
 			%  checkValue.
 			
 			switch prop
-				case 29 % GUIElement.PE
+				case 30 % GUIElement.PE
 					pe = gui.get('PE');
 					pe.set('PARENT', gui)
 					if isa(gui.getr('TITLE'), 'NoValue')
@@ -935,7 +939,7 @@ classdef GUIElement < GUI
 						pe.set('WAITBAR', gui.getCallback('WAITBAR'))
 					end
 					
-				case 30 % GUIElement.FILE
+				case 31 % GUIElement.FILE
 					if gui.get('DRAWN')
 					    set(gui.get('TEXT_FILE'), ...
 					        'Text', gui.get('FILE'), ...
@@ -944,7 +948,7 @@ classdef GUIElement < GUI
 					end
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						postset@GUI(gui, prop);
 					end
 			end
@@ -967,7 +971,7 @@ classdef GUIElement < GUI
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 31 % GUIElement.TEXT_FILE
+				case 32 % GUIElement.TEXT_FILE
 					text_file = uilabel( ...
 					    'Parent', gui.memorize('H'), ... % H = p for Panel
 					    'Tag', 'TEXT_FILE', ...    
@@ -979,7 +983,7 @@ classdef GUIElement < GUI
 					    );
 					value = text_file;
 					
-				case 33 % GUIElement.H_MENU_FILE
+				case 34 % GUIElement.H_MENU_FILE
 					menu_file = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.File', ...
 					    'Label', 'File' ...
@@ -1009,21 +1013,21 @@ classdef GUIElement < GUI
 					
 					value = menu_file;
 					
-				case 35 % GUIElement.H_MENU_IMPORT
+				case 36 % GUIElement.H_MENU_IMPORT
 					menu_import = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Import', ...
 					    'Label', 'Import', ...
 					    'Callback', {@cb_refresh_import_menu});
 					value = menu_import;
 					
-				case 37 % GUIElement.H_MENU_EXPORT
+				case 38 % GUIElement.H_MENU_EXPORT
 					menu_export = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Export', ...
 						'Label', 'Export', ...
 						'Callback', {@cb_refresh_export_menu});
 					value = menu_export;
 					
-				case 39 % GUIElement.H_MENU_PERSONALIZE
+				case 40 % GUIElement.H_MENU_PERSONALIZE
 					menu_file = uimenu(gui.memorize('H'), ... % f for figure
 					    'Tag', 'MENU.Personalize', ...
 					    'Label', 'Personalize' ...
@@ -1036,7 +1040,7 @@ classdef GUIElement < GUI
 					
 					value = menu_file;
 					
-				case 14 % GUIElement.H_MENUBAR
+				case 15 % GUIElement.H_MENUBAR
 					value = {};
 					if gui.get('MENU_FILE')
 					    value = [value, gui.memorize('H_MENU_FILE')];
@@ -1054,10 +1058,10 @@ classdef GUIElement < GUI
 					    value = [value, gui.memorize('H_MENU_ABOUT')];
 					end
 					
-				case 19 % GUIElement.H_TOOLS
+				case 20 % GUIElement.H_TOOLS
 					toolbar = gui.memorize('H_TOOLBAR');
 					
-					children = calculateValue@GUI(gui, 19);
+					children = calculateValue@GUI(gui, 20);
 					
 					value = {};
 					if gui.get('TOOL_FILE')
@@ -1086,7 +1090,7 @@ classdef GUIElement < GUI
 					% reorder tools
 					toolbar.Children = [value{end:-1:1}];
 					
-				case 9 % GUIElement.DRAW
+				case 10 % GUIElement.DRAW
 					if check_graphics(gui.memorize('H'), 'figure')
 					
 					    if gui.get('MENUBAR')
@@ -1117,20 +1121,20 @@ classdef GUIElement < GUI
 					    value = false;
 					end
 					
-				case 24 % GUIElement.RESIZE
-					value = calculateValue@GUI(gui, 24, varargin{:}); % also warning
+				case 25 % GUIElement.RESIZE
+					value = calculateValue@GUI(gui, 25, varargin{:}); % also warning
 					if value
 					    gui.get('PE').get('RESIZEX')
 					
 					    set(gui.get('TEXT_FILE'), 'Position', [5 0 w(gui.get('H'), 'pixels')-10 24])
 					end
 					
-				case 23 % GUIElement.H
-					f = calculateValue@GUI(gui, 23);
+				case 24 % GUIElement.H
+					f = calculateValue@GUI(gui, 24);
 					el = gui.memorize('PE').memorize('EL');
 					value = f;
 					
-				case 25 % GUIElement.SHOW
+				case 26 % GUIElement.SHOW
 					if gui.get('DRAWN')
 					
 					    % panel element
@@ -1141,7 +1145,7 @@ classdef GUIElement < GUI
 					        gui.get('LAYOUT').get('SHOW')
 					    end
 					    
-					    value = calculateValue@GUI(gui, 25, varargin{:});
+					    value = calculateValue@GUI(gui, 26, varargin{:});
 					else
 					    warning( ...
 					        ['BRAPH2' ':' class(gui)], ...
@@ -1153,7 +1157,7 @@ classdef GUIElement < GUI
 					    value = false;
 					end
 					
-				case 26 % GUIElement.HIDE
+				case 27 % GUIElement.HIDE
 					if gui.get('DRAWN')
 					    
 					    % panel element
@@ -1164,7 +1168,7 @@ classdef GUIElement < GUI
 					        gui.get('LAYOUT').get('HIDE')
 					    end
 					    
-					    value = calculateValue@GUI(gui, 26, varargin{:});
+					    value = calculateValue@GUI(gui, 27, varargin{:});
 					else
 					    warning( ...
 					        ['BRAPH2' ':' class(gui)], ...
@@ -1176,7 +1180,7 @@ classdef GUIElement < GUI
 					    value = false;
 					end
 					
-				case 27 % GUIElement.DELETE
+				case 28 % GUIElement.DELETE
 					if gui.get('DRAWN')
 					    
 					    gui.set('TEXT_FILE', Element.getNoValue())
@@ -1186,7 +1190,7 @@ classdef GUIElement < GUI
 					    gui.set('H_MENU_EXPORT', Element.getNoValue())
 					    gui.set('H_MENU_PERSONALIZE', Element.getNoValue())
 					    
-					    value = calculateValue@GUI(gui, 27, varargin{:});
+					    value = calculateValue@GUI(gui, 28, varargin{:});
 					else
 					    warning( ...
 					        ['BRAPH2' ':' class(gui)], ...
@@ -1198,7 +1202,7 @@ classdef GUIElement < GUI
 					    value = false;
 					end
 					
-				case 28 % GUIElement.CLOSE
+				case 29 % GUIElement.CLOSE
 					if gui.get('DRAWN')
 					
 					    title = gui.get('TITLE');
@@ -1241,7 +1245,7 @@ classdef GUIElement < GUI
 					end
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						value = calculateValue@GUI(gui, prop, varargin{:});
 					else
 						value = calculateValue@Element(gui, prop, varargin{:});

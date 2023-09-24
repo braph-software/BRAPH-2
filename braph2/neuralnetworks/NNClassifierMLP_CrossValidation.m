@@ -9,35 +9,36 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	% To train all the neural networks for all folds, use: nncv.get('TRAIN')
 	%
 	% The list of NNClassifierMLP_CrossValidation properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-	%  <strong>9</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-	%  <strong>10</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-	%  <strong>11</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-	%  <strong>12</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-	%  <strong>13</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-	%  <strong>14</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-	%  <strong>15</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-	%  <strong>16</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
-	%  <strong>17</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
-	%  <strong>18</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-	%  <strong>19</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-	%  <strong>20</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-	%  <strong>21</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>22</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-	%  <strong>23</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-	%  <strong>24</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
-	%  <strong>25</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-	%  <strong>26</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
-	%  <strong>27</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
-	%  <strong>28</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
-	%  <strong>29</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+	%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+	%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+	%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+	%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+	%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+	%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+	%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+	%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+	%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+	%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+	%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+	%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+	%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+	%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+	%  <strong>26</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+	%  <strong>27</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
+	%  <strong>28</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
+	%  <strong>29</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
+	%  <strong>30</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
 	%
 	% NNClassifierMLP_CrossValidation methods (constructor):
 	%  NNClassifierMLP_CrossValidation - constructor
@@ -128,27 +129,27 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	% See also NNDataPoint, NNDataset, NNEvaluator.
 	
 	properties (Constant) % properties
-		P = 25; %CET: Computational Efficiency Trick
+		P = 26; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
 		P_CATEGORY = 3;
 		P_FORMAT = 11;
 		
-		AV_AUC = 26; %CET: Computational Efficiency Trick
+		AV_AUC = 27; %CET: Computational Efficiency Trick
 		AV_AUC_TAG = 'AV_AUC';
 		AV_AUC_CATEGORY = 5;
 		AV_AUC_FORMAT = 12;
 		
-		AV_MACRO_AUC = 27; %CET: Computational Efficiency Trick
+		AV_MACRO_AUC = 28; %CET: Computational Efficiency Trick
 		AV_MACRO_AUC_TAG = 'AV_MACRO_AUC';
 		AV_MACRO_AUC_CATEGORY = 5;
 		AV_MACRO_AUC_FORMAT = 11;
 		
-		C_MATRIX = 28; %CET: Computational Efficiency Trick
+		C_MATRIX = 29; %CET: Computational Efficiency Trick
 		C_MATRIX_TAG = 'C_MATRIX';
 		C_MATRIX_CATEGORY = 5;
 		C_MATRIX_FORMAT = 14;
 		
-		AV_FEATURE_IMPORTANCE = 29; %CET: Computational Efficiency Trick
+		AV_FEATURE_IMPORTANCE = 30; %CET: Computational Efficiency Trick
 		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
 		AV_FEATURE_IMPORTANCE_CATEGORY = 5;
 		AV_FEATURE_IMPORTANCE_FORMAT = 16;
@@ -165,35 +166,36 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNClassifierMLP_CrossValidation properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-			%  <strong>9</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-			%  <strong>10</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-			%  <strong>11</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-			%  <strong>12</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-			%  <strong>13</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-			%  <strong>14</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-			%  <strong>15</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-			%  <strong>16</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
-			%  <strong>17</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
-			%  <strong>18</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-			%  <strong>19</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-			%  <strong>20</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-			%  <strong>21</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>22</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-			%  <strong>23</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-			%  <strong>24</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
-			%  <strong>25</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-			%  <strong>26</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
-			%  <strong>27</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
-			%  <strong>28</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
-			%  <strong>29</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+			%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+			%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+			%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+			%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+			%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+			%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+			%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+			%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+			%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+			%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+			%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+			%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+			%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+			%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+			%  <strong>26</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+			%  <strong>27</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
+			%  <strong>28</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
+			%  <strong>29</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
+			%  <strong>30</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
 			%
 			% See also Category, Format.
 			
@@ -255,23 +257,23 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 22 23];
+					prop_list = [6 7 23 24];
 				case 3 % Category.PARAMETER
-					prop_list = [3 11 12 18 19 20 21 25];
+					prop_list = [4 12 13 19 20 21 22 26];
 				case 4 % Category.DATA
-					prop_list = [4 8 9 10];
+					prop_list = [5 9 10 11];
 				case 5 % Category.RESULT
-					prop_list = [13 14 15 16 17 26 27 28 29];
+					prop_list = [14 15 16 17 18 27 28 29 30];
 				case 6 % Category.QUERY
-					prop_list = [7 24];
+					prop_list = [8 25];
 				otherwise
 					prop_list = [];
 			end
@@ -297,13 +299,13 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 29;
+				prop_number = 30;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 4;
 				case 3 % Category.PARAMETER
@@ -344,7 +346,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 29 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 30 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -382,7 +384,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -415,7 +417,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -444,7 +446,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnclassifiermlp_crossvalidation_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' };
+				nnclassifiermlp_crossvalidation_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' };
 				tag = nnclassifiermlp_crossvalidation_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -471,7 +473,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_crossvalidation_category_list = { 1  1  3  4  2  2  6  4  4  4  3  3  5  5  5  5  5  3  3  3  3  2  2  6  3  5  5  5  5 };
+			nnclassifiermlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  4  4  4  3  3  5  5  5  5  5  3  3  3  3  2  2  6  3  5  5  5  5 };
 			prop_category = nnclassifiermlp_crossvalidation_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -497,7 +499,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_crossvalidation_format_list = { 2  2  8  2  2  2  2  11  16  9  8  8  9  9  9  9  9  11  11  5  5  4  5  1  11  12  11  14  16 };
+			nnclassifiermlp_crossvalidation_format_list = { 2  2  2  8  2  2  2  2  11  16  9  8  8  9  9  9  9  9  11  11  5  5  4  5  1  11  12  11  14  16 };
 			prop_format = nnclassifiermlp_crossvalidation_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -523,7 +525,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_crossvalidation_description_list = { 'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.'  'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.'  'C_MATRIX (result, matrix) provides the confusion matrix across k folds.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
+			nnclassifiermlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.'  'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.'  'C_MATRIX (result, matrix) provides the confusion matrix across k folds.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
 			prop_description = nnclassifiermlp_crossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -549,21 +551,21 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 25 % NNClassifierMLP_CrossValidation.P
+				case 26 % NNClassifierMLP_CrossValidation.P
 					prop_settings = Format.getFormatSettings(11);
-				case 26 % NNClassifierMLP_CrossValidation.AV_AUC
+				case 27 % NNClassifierMLP_CrossValidation.AV_AUC
 					prop_settings = Format.getFormatSettings(12);
-				case 27 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+				case 28 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
 					prop_settings = Format.getFormatSettings(11);
-				case 28 % NNClassifierMLP_CrossValidation.C_MATRIX
+				case 29 % NNClassifierMLP_CrossValidation.C_MATRIX
 					prop_settings = Format.getFormatSettings(14);
-				case 29 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 30 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(16);
-				case 3 % NNClassifierMLP_CrossValidation.TEMPLATE
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
 					prop_settings = 'NNClassifierMLP_CrossValidation';
-				case 11 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
+				case 12 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
 					prop_settings = 'NNClassifierMLP';
-				case 12 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					prop_settings = 'NNClassifierMLP_Evaluator';
 				otherwise
 					prop_settings = getPropSettings@NNCrossValidation(prop);
@@ -592,31 +594,33 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 25 % NNClassifierMLP_CrossValidation.P
+				case 26 % NNClassifierMLP_CrossValidation.P
 					prop_default = 1e+2;
-				case 26 % NNClassifierMLP_CrossValidation.AV_AUC
+				case 27 % NNClassifierMLP_CrossValidation.AV_AUC
 					prop_default = Format.getFormatDefault(12, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 27 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+				case 28 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
 					prop_default = Format.getFormatDefault(11, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 28 % NNClassifierMLP_CrossValidation.C_MATRIX
+				case 29 % NNClassifierMLP_CrossValidation.C_MATRIX
 					prop_default = Format.getFormatDefault(14, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 29 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 30 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(16, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 1 % NNClassifierMLP_CrossValidation.NAME
+				case 1 % NNClassifierMLP_CrossValidation.ELCLASS
 					prop_default = 'NNClassifierMLP_CrossValidation';
-				case 2 % NNClassifierMLP_CrossValidation.DESCRIPTION
+				case 2 % NNClassifierMLP_CrossValidation.NAME
+					prop_default = 'NNClassifierMLP_CrossValidation';
+				case 3 % NNClassifierMLP_CrossValidation.DESCRIPTION
 					prop_default = 'A cross validation for multi-layer perceptron classifiers (NNClassifierMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron classifiers using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
-				case 3 % NNClassifierMLP_CrossValidation.TEMPLATE
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 4 % NNClassifierMLP_CrossValidation.ID
+				case 5 % NNClassifierMLP_CrossValidation.ID
 					prop_default = 'NNClassifierMLP_CrossValidation ID';
-				case 5 % NNClassifierMLP_CrossValidation.LABEL
+				case 6 % NNClassifierMLP_CrossValidation.LABEL
 					prop_default = 'NNClassifierMLP_CrossValidation label';
-				case 6 % NNClassifierMLP_CrossValidation.NOTES
+				case 7 % NNClassifierMLP_CrossValidation.NOTES
 					prop_default = 'NNClassifierMLP_CrossValidation notes';
-				case 11 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
+				case 12 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 12 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@NNCrossValidation(prop);
@@ -682,27 +686,27 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop
-				case 25 % NNClassifierMLP_CrossValidation.P
+				case 26 % NNClassifierMLP_CrossValidation.P
 					check = Format.checkFormat(11, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case 26 % NNClassifierMLP_CrossValidation.AV_AUC
+				case 27 % NNClassifierMLP_CrossValidation.AV_AUC
 					check = Format.checkFormat(12, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 27 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+				case 28 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
 					check = Format.checkFormat(11, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 28 % NNClassifierMLP_CrossValidation.C_MATRIX
+				case 29 % NNClassifierMLP_CrossValidation.C_MATRIX
 					check = Format.checkFormat(14, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 29 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 30 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					check = Format.checkFormat(16, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 3 % NNClassifierMLP_CrossValidation.TEMPLATE
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
 					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 11 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
+				case 12 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
 					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case 12 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 13 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 				otherwise
-					if prop <= 24
+					if prop <= 25
 						check = checkProp@NNCrossValidation(prop, value);
 					end
 			end
@@ -735,8 +739,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 26 % NNClassifierMLP_CrossValidation.AV_AUC
-					rng_settings_ = rng(); rng(nncv.getPropSeed(26), 'twister')
+				case 27 % NNClassifierMLP_CrossValidation.AV_AUC
+					rng_settings_ = rng(); rng(nncv.getPropSeed(27), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -751,8 +755,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 27 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					rng_settings_ = rng(); rng(nncv.getPropSeed(27), 'twister')
+				case 28 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+					rng_settings_ = rng(); rng(nncv.getPropSeed(28), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -767,8 +771,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 28 % NNClassifierMLP_CrossValidation.C_MATRIX
-					rng_settings_ = rng(); rng(nncv.getPropSeed(28), 'twister')
+				case 29 % NNClassifierMLP_CrossValidation.C_MATRIX
+					rng_settings_ = rng(); rng(nncv.getPropSeed(29), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -780,8 +784,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 29 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					rng_settings_ = rng(); rng(nncv.getPropSeed(29), 'twister')
+				case 30 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(30), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -802,8 +806,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 16 % NNClassifierMLP_CrossValidation.NN_LIST
-					rng_settings_ = rng(); rng(nncv.getPropSeed(16), 'twister')
+				case 17 % NNClassifierMLP_CrossValidation.NN_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(17), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					
@@ -837,8 +841,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 17 % NNClassifierMLP_CrossValidation.EVALUATOR_LIST
-					rng_settings_ = rng(); rng(nncv.getPropSeed(17), 'twister')
+				case 18 % NNClassifierMLP_CrossValidation.EVALUATOR_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(18), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					nn_list = nncv.get('NN_LIST');
@@ -856,7 +860,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 24
+					if prop <= 25
 						value = calculateValue@NNCrossValidation(nncv, prop, varargin{:});
 					else
 						value = calculateValue@Element(nncv, prop, varargin{:});

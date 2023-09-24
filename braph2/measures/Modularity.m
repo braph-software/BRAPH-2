@@ -5,26 +5,27 @@ classdef Modularity < CommunityStructure
 	% The modularity of a graph is the quality function Q of the resulting partition of the network.
 	%
 	% The list of Modularity properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the modularity.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the modularity.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the modularity.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the modularity.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the modularity.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the modularity.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the modularity.
-	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option)
-	%  <strong>16</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-	%  <strong>17</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
-	%  <strong>18</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
-	%  <strong>19</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
-	%  <strong>20</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the modularity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the modularity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the modularity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the modularity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the modularity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the modularity.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the modularity.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
+	%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+	%  <strong>18</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+	%  <strong>19</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+	%  <strong>20</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+	%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
 	%
 	% Modularity methods (constructor):
 	%  Modularity - constructor
@@ -124,26 +125,27 @@ classdef Modularity < CommunityStructure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Modularity properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the modularity.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the modularity.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the modularity.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the modularity.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the modularity.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the modularity.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the modularity.
-			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option)
-			%  <strong>16</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-			%  <strong>17</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
-			%  <strong>18</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
-			%  <strong>19</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
-			%  <strong>20</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the modularity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the modularity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the modularity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the modularity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the modularity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the modularity.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the modularity.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
+			%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+			%  <strong>18</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+			%  <strong>19</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+			%  <strong>20</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+			%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
 			%
 			% See also Category, Format.
 			
@@ -205,25 +207,25 @@ classdef Modularity < CommunityStructure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 8 9 10 11];
+					prop_list = [1 2 3 9 10 11 12];
 				case 2 % Category.METADATA
-					prop_list = [5 6 20];
+					prop_list = [6 7 21];
 				case 3 % Category.PARAMETER
-					prop_list = [3 15 16];
+					prop_list = [4 16 17];
 				case 4 % Category.DATA
-					prop_list = [4 12 17 18 19];
+					prop_list = [5 13 18 19 20];
 				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
 				otherwise
 					prop_list = [];
 			end
@@ -249,13 +251,13 @@ classdef Modularity < CommunityStructure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 20;
+				prop_number = 21;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 6;
+					prop_number = 7;
 				case 2 % Category.METADATA
 					prop_number = 3;
 				case 3 % Category.PARAMETER
@@ -298,7 +300,7 @@ classdef Modularity < CommunityStructure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -336,7 +338,7 @@ classdef Modularity < CommunityStructure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -369,7 +371,7 @@ classdef Modularity < CommunityStructure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -398,7 +400,7 @@ classdef Modularity < CommunityStructure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				modularity_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' };
+				modularity_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' };
 				tag = modularity_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -425,7 +427,7 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			modularity_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  4  4  4  2 };
+			modularity_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  4  4  4  2 };
 			prop_category = modularity_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -451,7 +453,7 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			modularity_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  5  11  12  14  5  16 };
+			modularity_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5  11  12  14  5  16 };
 			prop_format = modularity_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -477,7 +479,7 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			modularity_description_list = { 'NAME (constant, string) is the name of the modularity.'  'DESCRIPTION (constant, string) is the description of the modularity.'  'TEMPLATE (parameter, item) is the template of the modularity.'  'ID (data, string) is a few-letter code of the modularity.'  'LABEL (metadata, string) is an extended label of the modularity.'  'NOTES (metadata, string) are some specific notes about the modularity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the modularity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
+			modularity_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the modularity.'  'DESCRIPTION (constant, string) is the description of the modularity.'  'TEMPLATE (parameter, item) is the template of the modularity.'  'ID (data, string) is a few-letter code of the modularity.'  'LABEL (metadata, string) is an extended label of the modularity.'  'NOTES (metadata, string) are some specific notes about the modularity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the modularity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
 			prop_description = modularity_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -503,7 +505,7 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 3 % Modularity.TEMPLATE
+				case 4 % Modularity.TEMPLATE
 					prop_settings = 'Modularity';
 				otherwise
 					prop_settings = getPropSettings@CommunityStructure(prop);
@@ -532,25 +534,27 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 1 % Modularity.NAME
+				case 1 % Modularity.ELCLASS
 					prop_default = 'Modularity';
-				case 2 % Modularity.DESCRIPTION
+				case 2 % Modularity.NAME
+					prop_default = 'Modularity';
+				case 3 % Modularity.DESCRIPTION
 					prop_default = 'The modularity of a graph is the quality function Q of the resulting partition of the network.';
-				case 3 % Modularity.TEMPLATE
+				case 4 % Modularity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Modularity.getPropSettings(prop));
-				case 4 % Modularity.ID
+				case 5 % Modularity.ID
 					prop_default = 'Modularity ID';
-				case 5 % Modularity.LABEL
+				case 6 % Modularity.LABEL
 					prop_default = 'Modularity label';
-				case 6 % Modularity.NOTES
+				case 7 % Modularity.NOTES
 					prop_default = 'Modularity notes';
-				case 8 % Modularity.SHAPE
+				case 9 % Modularity.SHAPE
 					prop_default = 1;
-				case 9 % Modularity.SCOPE
+				case 10 % Modularity.SCOPE
 					prop_default = 2;
-				case 10 % Modularity.PARAMETRICITY
+				case 11 % Modularity.PARAMETRICITY
 					prop_default = 2;
-				case 11 % Modularity.COMPATIBLE_GRAPHS
+				case 12 % Modularity.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUT' 'MultigraphBUD'};;
 				otherwise
 					prop_default = getPropDefault@CommunityStructure(prop);
@@ -616,10 +620,10 @@ classdef Modularity < CommunityStructure
 			prop = Modularity.getPropProp(pointer);
 			
 			switch prop
-				case 3 % Modularity.TEMPLATE
+				case 4 % Modularity.TEMPLATE
 					check = Format.checkFormat(8, value, Modularity.getPropSettings(prop));
 				otherwise
-					if prop <= 20
+					if prop <= 21
 						check = checkProp@CommunityStructure(prop, value);
 					end
 			end
@@ -652,8 +656,8 @@ classdef Modularity < CommunityStructure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % Modularity.M
-					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
+				case 14 % Modularity.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					community_structure = calculateValue@CommunityStructure(m, prop);
 					Q = {0};
@@ -666,7 +670,7 @@ classdef Modularity < CommunityStructure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 20
+					if prop <= 21
 						value = calculateValue@CommunityStructure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

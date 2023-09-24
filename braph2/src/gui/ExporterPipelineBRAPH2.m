@@ -2,21 +2,22 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	%ExporterPipelineBRAPH2 exports a pipeline in a BRAPH2 file.
 	% It is a subclass of <a href="matlab:help Exporter">Exporter</a>.
 	%
-	% ExporterPipelineBRAPH2 exports a pipeline to a BRAPH2 file.
+	% A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline to a BRAPH2 file.
 	%
 	% The list of ExporterPipelineBRAPH2 properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
-	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
-	%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.
-	%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
+	%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
+	%  <strong>12</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.
+	%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.
 	%
 	% ExporterPipelineBRAPH2 methods (constructor):
 	%  ExporterPipelineBRAPH2 - constructor
@@ -36,33 +37,33 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	%  unchecked - sets a property to NOT checked
 	%
 	% ExporterPipelineBRAPH2 methods (display):
-	%  tostring - string with information about the exporter of pipeline in BRAPH2
-	%  disp - displays information about the exporter of pipeline in BRAPH2
-	%  tree - displays the tree of the exporter of pipeline in BRAPH2
+	%  tostring - string with information about the pipeline exporter in BRAPH2
+	%  disp - displays information about the pipeline exporter in BRAPH2
+	%  tree - displays the tree of the pipeline exporter in BRAPH2
 	%
 	% ExporterPipelineBRAPH2 methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two exporter of pipeline in BRAPH2 are equal (values, locked)
+	%  isequal - determines whether two pipeline exporter in BRAPH2 are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the exporter of pipeline in BRAPH2
+	%  copy - copies the pipeline exporter in BRAPH2
 	%
 	% ExporterPipelineBRAPH2 methods (save/load, Static):
-	%  save - saves BRAPH2 exporter of pipeline in BRAPH2 as b2 file
-	%  load - loads a BRAPH2 exporter of pipeline in BRAPH2 from a b2 file
+	%  save - saves BRAPH2 pipeline exporter in BRAPH2 as b2 file
+	%  load - loads a BRAPH2 pipeline exporter in BRAPH2 from a b2 file
 	%
 	% ExporterPipelineBRAPH2 method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the exporter of pipeline in BRAPH2
+	%  encodeJSON - returns a JSON string encoding the pipeline exporter in BRAPH2
 	%
 	% ExporterPipelineBRAPH2 method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the exporter of pipeline in BRAPH2
+	%   decodeJSON - returns a JSON string encoding the pipeline exporter in BRAPH2
 	%
 	% ExporterPipelineBRAPH2 methods (inspection, Static):
-	%  getClass - returns the class of the exporter of pipeline in BRAPH2
+	%  getClass - returns the class of the pipeline exporter in BRAPH2
 	%  getSubclasses - returns all subclasses of ExporterPipelineBRAPH2
-	%  getProps - returns the property list of the exporter of pipeline in BRAPH2
-	%  getPropNumber - returns the property number of the exporter of pipeline in BRAPH2
+	%  getProps - returns the property list of the pipeline exporter in BRAPH2
+	%  getPropNumber - returns the property number of the pipeline exporter in BRAPH2
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -107,29 +108,29 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	% See also Exporter, Pipeline, ImporterPipelineBRAPH2.
 	
 	properties (Constant) % properties
-		PIP = 9; %CET: Computational Efficiency Trick
+		PIP = 10; %CET: Computational Efficiency Trick
 		PIP_TAG = 'PIP';
 		PIP_CATEGORY = 4;
 		PIP_FORMAT = 8;
 		
-		FILE = 10; %CET: Computational Efficiency Trick
+		FILE = 11; %CET: Computational Efficiency Trick
 		FILE_TAG = 'FILE';
 		FILE_CATEGORY = 4;
 		FILE_FORMAT = 2;
 		
-		PUT_FILE = 11; %CET: Computational Efficiency Trick
+		PUT_FILE = 12; %CET: Computational Efficiency Trick
 		PUT_FILE_TAG = 'PUT_FILE';
 		PUT_FILE_CATEGORY = 6;
 		PUT_FILE_FORMAT = 1;
 		
-		SAVE = 12; %CET: Computational Efficiency Trick
+		SAVE = 13; %CET: Computational Efficiency Trick
 		SAVE_TAG = 'SAVE';
 		SAVE_CATEGORY = 5;
 		SAVE_FORMAT = 1;
 	end
 	methods % constructor
 		function ex = ExporterPipelineBRAPH2(varargin)
-			%ExporterPipelineBRAPH2() creates a exporter of pipeline in BRAPH2.
+			%ExporterPipelineBRAPH2() creates a pipeline exporter in BRAPH2.
 			%
 			% ExporterPipelineBRAPH2(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -139,18 +140,19 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ExporterPipelineBRAPH2 properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
-			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
-			%  <strong>11</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.
-			%  <strong>12</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
+			%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
+			%  <strong>12</strong> <strong>PUT_FILE</strong> 	PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.
+			%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.
 			%
 			% See also Category, Format.
 			
@@ -159,12 +161,12 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	end
 	methods (Static) % inspection
 		function ex_class = getClass()
-			%GETCLASS returns the class of the exporter of pipeline in BRAPH2.
+			%GETCLASS returns the class of the pipeline exporter in BRAPH2.
 			%
 			% CLASS = ExporterPipelineBRAPH2.GETCLASS() returns the class 'ExporterPipelineBRAPH2'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = EX.GETCLASS() returns the class of the exporter of pipeline in BRAPH2 EX.
+			%  CLASS = EX.GETCLASS() returns the class of the pipeline exporter in BRAPH2 EX.
 			%  CLASS = Element.GETCLASS(EX) returns the class of 'EX'.
 			%  CLASS = Element.GETCLASS('ExporterPipelineBRAPH2') returns 'ExporterPipelineBRAPH2'.
 			%
@@ -174,12 +176,12 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			ex_class = 'ExporterPipelineBRAPH2';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the exporter of pipeline in BRAPH2.
+			%GETSUBCLASSES returns all subclasses of the pipeline exporter in BRAPH2.
 			%
 			% LIST = ExporterPipelineBRAPH2.GETSUBCLASSES() returns all subclasses of 'ExporterPipelineBRAPH2'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = EX.GETSUBCLASSES() returns all subclasses of the exporter of pipeline in BRAPH2 EX.
+			%  LIST = EX.GETSUBCLASSES() returns all subclasses of the pipeline exporter in BRAPH2 EX.
 			%  LIST = Element.GETSUBCLASSES(EX) returns all subclasses of 'EX'.
 			%  LIST = Element.GETSUBCLASSES('ExporterPipelineBRAPH2') returns all subclasses of 'ExporterPipelineBRAPH2'.
 			%
@@ -191,16 +193,16 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			subclass_list = { 'ExporterPipelineBRAPH2' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of exporter of pipeline in BRAPH2.
+			%GETPROPS returns the property list of pipeline exporter in BRAPH2.
 			%
-			% PROPS = ExporterPipelineBRAPH2.GETPROPS() returns the property list of exporter of pipeline in BRAPH2
+			% PROPS = ExporterPipelineBRAPH2.GETPROPS() returns the property list of pipeline exporter in BRAPH2
 			%  as a row vector.
 			%
 			% PROPS = ExporterPipelineBRAPH2.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = EX.GETPROPS([CATEGORY]) returns the property list of the exporter of pipeline in BRAPH2 EX.
+			%  PROPS = EX.GETPROPS([CATEGORY]) returns the property list of the pipeline exporter in BRAPH2 EX.
 			%  PROPS = Element.GETPROPS(EX[, CATEGORY]) returns the property list of 'EX'.
 			%  PROPS = Element.GETPROPS('ExporterPipelineBRAPH2'[, CATEGORY]) returns the property list of 'ExporterPipelineBRAPH2'.
 			%
@@ -212,39 +214,39 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 9 10];
+					prop_list = [5 10 11];
 				case 5 % Category.RESULT
-					prop_list = 12;
+					prop_list = 13;
 				case 6 % Category.QUERY
-					prop_list = [7 11];
+					prop_list = [8 12];
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of exporter of pipeline in BRAPH2.
+			%GETPROPNUMBER returns the property number of pipeline exporter in BRAPH2.
 			%
-			% N = ExporterPipelineBRAPH2.GETPROPNUMBER() returns the property number of exporter of pipeline in BRAPH2.
+			% N = ExporterPipelineBRAPH2.GETPROPNUMBER() returns the property number of pipeline exporter in BRAPH2.
 			%
-			% N = ExporterPipelineBRAPH2.GETPROPNUMBER(CATEGORY) returns the property number of exporter of pipeline in BRAPH2
+			% N = ExporterPipelineBRAPH2.GETPROPNUMBER(CATEGORY) returns the property number of pipeline exporter in BRAPH2
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = EX.GETPROPNUMBER([CATEGORY]) returns the property number of the exporter of pipeline in BRAPH2 EX.
+			%  N = EX.GETPROPNUMBER([CATEGORY]) returns the property number of the pipeline exporter in BRAPH2 EX.
 			%  N = Element.GETPROPNUMBER(EX) returns the property number of 'EX'.
 			%  N = Element.GETPROPNUMBER('ExporterPipelineBRAPH2') returns the property number of 'ExporterPipelineBRAPH2'.
 			%
@@ -256,13 +258,13 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -280,7 +282,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in exporter of pipeline in BRAPH2/error.
+			%EXISTSPROP checks whether property exists in pipeline exporter in BRAPH2/error.
 			%
 			% CHECK = ExporterPipelineBRAPH2.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -305,7 +307,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -318,7 +320,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in exporter of pipeline in BRAPH2/error.
+			%EXISTSTAG checks whether tag exists in pipeline exporter in BRAPH2/error.
 			%
 			% CHECK = ExporterPipelineBRAPH2.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -343,7 +345,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -376,7 +378,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -405,7 +407,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				exporterpipelinebraph2_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' };
+				exporterpipelinebraph2_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'PIP'  'FILE'  'PUT_FILE'  'SAVE' };
 				tag = exporterpipelinebraph2_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -432,7 +434,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterpipelinebraph2_category_list = { 1  1  3  4  2  2  6  9  4  4  6  5 };
+			exporterpipelinebraph2_category_list = { 1  1  1  3  4  2  2  6  9  4  4  6  5 };
 			prop_category = exporterpipelinebraph2_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -458,7 +460,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterpipelinebraph2_format_list = { 2  2  8  2  2  2  2  4  8  2  1  1 };
+			exporterpipelinebraph2_format_list = { 2  2  2  8  2  2  2  2  4  8  2  1  1 };
 			prop_format = exporterpipelinebraph2_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -484,7 +486,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterpipelinebraph2_description_list = { 'NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.'  'ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'PIP (data, item) is a pipeline.'  'FILE (data, string) is the BRAPH2 file where to save the pipeline.'  'PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.'  'SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.' };
+			exporterpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.'  'NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.'  'ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'PIP (data, item) is a pipeline.'  'FILE (data, string) is the BRAPH2 file where to save the pipeline.'  'PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.'  'SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.' };
 			prop_description = exporterpipelinebraph2_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -510,15 +512,15 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterPipelineBRAPH2.PIP
+				case 10 % ExporterPipelineBRAPH2.PIP
 					prop_settings = 'Pipeline';
-				case 10 % ExporterPipelineBRAPH2.FILE
+				case 11 % ExporterPipelineBRAPH2.FILE
 					prop_settings = Format.getFormatSettings(2);
-				case 11 % ExporterPipelineBRAPH2.PUT_FILE
+				case 12 % ExporterPipelineBRAPH2.PUT_FILE
 					prop_settings = 'ExporterPipelineBRAPH2';
-				case 12 % ExporterPipelineBRAPH2.SAVE
+				case 13 % ExporterPipelineBRAPH2.SAVE
 					prop_settings = Format.getFormatSettings(1);
-				case 3 % ExporterPipelineBRAPH2.TEMPLATE
+				case 4 % ExporterPipelineBRAPH2.TEMPLATE
 					prop_settings = 'ExporterPipelineBRAPH2';
 				otherwise
 					prop_settings = getPropSettings@Exporter(prop);
@@ -547,25 +549,27 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ExporterPipelineBRAPH2.PIP
+				case 10 % ExporterPipelineBRAPH2.PIP
 					prop_default = Format.getFormatDefault(8, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 10 % ExporterPipelineBRAPH2.FILE
+				case 11 % ExporterPipelineBRAPH2.FILE
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_braph2_file_to_save_pipeline_most_likely_to_be_erased.braph2'];
-				case 11 % ExporterPipelineBRAPH2.PUT_FILE
+				case 12 % ExporterPipelineBRAPH2.PUT_FILE
 					prop_default = Format.getFormatDefault(1, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 12 % ExporterPipelineBRAPH2.SAVE
+				case 13 % ExporterPipelineBRAPH2.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 1 % ExporterPipeline'BRAPH 2.0'
+				case 1 % ExporterPipelineBRAPH2.ELCLASS
 					prop_default = 'ExporterPipelineBRAPH2';
-				case 2 % ExporterPipelineBRAPH2.DESCRIPTION
-					prop_default = 'ExporterPipelineBRAPH2 exports a pipeline to a BRAPH2 file.';
-				case 3 % ExporterPipelineBRAPH2.TEMPLATE
+				case 2 % ExporterPipeline'BRAPH 2.0'
+					prop_default = 'Pipeline Exporter in BRAPH2 File';
+				case 3 % ExporterPipelineBRAPH2.DESCRIPTION
+					prop_default = 'A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline to a BRAPH2 file.';
+				case 4 % ExporterPipelineBRAPH2.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 4 % ExporterPipelineBRAPH2.ID
+				case 5 % ExporterPipelineBRAPH2.ID
 					prop_default = 'ExporterPipelineBRAPH2 ID';
-				case 5 % ExporterPipelineBRAPH2.LABEL
+				case 6 % ExporterPipelineBRAPH2.LABEL
 					prop_default = 'ExporterPipelineBRAPH2 label';
-				case 6 % ExporterPipelineBRAPH2.NOTES
+				case 7 % ExporterPipelineBRAPH2.NOTES
 					prop_default = 'ExporterPipelineBRAPH2 notes';
 				otherwise
 					prop_default = getPropDefault@Exporter(prop);
@@ -631,18 +635,18 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			switch prop
-				case 9 % ExporterPipelineBRAPH2.PIP
+				case 10 % ExporterPipelineBRAPH2.PIP
 					check = Format.checkFormat(8, value, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 10 % ExporterPipelineBRAPH2.FILE
+				case 11 % ExporterPipelineBRAPH2.FILE
 					check = Format.checkFormat(2, value, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 11 % ExporterPipelineBRAPH2.PUT_FILE
+				case 12 % ExporterPipelineBRAPH2.PUT_FILE
 					check = Format.checkFormat(1, value, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 12 % ExporterPipelineBRAPH2.SAVE
+				case 13 % ExporterPipelineBRAPH2.SAVE
 					check = Format.checkFormat(1, value, ExporterPipelineBRAPH2.getPropSettings(prop));
-				case 3 % ExporterPipelineBRAPH2.TEMPLATE
+				case 4 % ExporterPipelineBRAPH2.TEMPLATE
 					check = Format.checkFormat(8, value, ExporterPipelineBRAPH2.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -675,7 +679,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ExporterPipelineBRAPH2.PUT_FILE
+				case 12 % ExporterPipelineBRAPH2.PUT_FILE
 					[filename, filepath, filterindex] = uiputfile(BRAPH2.EXT_PIPELINE, 'Select BRAPH2 Pipeline file');
 					if filterindex
 					    file = [filepath filename];
@@ -683,8 +687,8 @@ classdef ExporterPipelineBRAPH2 < Exporter
 					end
 					value = ex;
 					
-				case 12 % ExporterPipelineBRAPH2.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(12), 'twister')
+				case 13 % ExporterPipelineBRAPH2.SAVE
+					rng_settings_ = rng(); rng(ex.getPropSeed(13), 'twister')
 					
 					file = ex.get('FILE');
 					
@@ -741,7 +745,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});

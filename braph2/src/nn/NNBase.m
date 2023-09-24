@@ -12,26 +12,27 @@ classdef NNBase < ConcreteElement
 	% To obtain the prediction on a dataset D use: predictions = nn.get('PREDICT', D)
 	%
 	% The list of NNBase properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
-	%  <strong>9</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
-	%  <strong>10</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-	%  <strong>11</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-	%  <strong>12</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-	%  <strong>13</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>14</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model with the given dataset.
-	%  <strong>15</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the cell array of the data.
-	%  <strong>16</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the cell array of the targets.
-	%  <strong>17</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
-	%  <strong>18</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-	%  <strong>19</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-	%  <strong>20</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
+	%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
+	%  <strong>11</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+	%  <strong>12</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+	%  <strong>13</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+	%  <strong>14</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+	%  <strong>15</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model with the given dataset.
+	%  <strong>16</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the cell array of the data.
+	%  <strong>17</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the cell array of the targets.
+	%  <strong>18</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
+	%  <strong>19</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>20</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+	%  <strong>21</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
 	%
 	% NNBase methods (constructor):
 	%  NNBase - constructor
@@ -122,67 +123,67 @@ classdef NNBase < ConcreteElement
 	% See also NNDataPoint, NNDataset, NNEvaluator.
 	
 	properties (Constant) % properties
-		D = 8; %CET: Computational Efficiency Trick
+		D = 9; %CET: Computational Efficiency Trick
 		D_TAG = 'D';
 		D_CATEGORY = 4;
 		D_FORMAT = 8;
 		
-		DP_CLASSES = 9; %CET: Computational Efficiency Trick
+		DP_CLASSES = 10; %CET: Computational Efficiency Trick
 		DP_CLASSES_TAG = 'DP_CLASSES';
 		DP_CLASSES_CATEGORY = 3;
 		DP_CLASSES_FORMAT = 7;
 		
-		EPOCHS = 10; %CET: Computational Efficiency Trick
+		EPOCHS = 11; %CET: Computational Efficiency Trick
 		EPOCHS_TAG = 'EPOCHS';
 		EPOCHS_CATEGORY = 3;
 		EPOCHS_FORMAT = 11;
 		
-		BATCH = 11; %CET: Computational Efficiency Trick
+		BATCH = 12; %CET: Computational Efficiency Trick
 		BATCH_TAG = 'BATCH';
 		BATCH_CATEGORY = 3;
 		BATCH_FORMAT = 11;
 		
-		SHUFFLE = 12; %CET: Computational Efficiency Trick
+		SHUFFLE = 13; %CET: Computational Efficiency Trick
 		SHUFFLE_TAG = 'SHUFFLE';
 		SHUFFLE_CATEGORY = 3;
 		SHUFFLE_FORMAT = 5;
 		
-		SOLVER = 13; %CET: Computational Efficiency Trick
+		SOLVER = 14; %CET: Computational Efficiency Trick
 		SOLVER_TAG = 'SOLVER';
 		SOLVER_CATEGORY = 3;
 		SOLVER_FORMAT = 5;
 		
-		MODEL = 14; %CET: Computational Efficiency Trick
+		MODEL = 15; %CET: Computational Efficiency Trick
 		MODEL_TAG = 'MODEL';
 		MODEL_CATEGORY = 5;
 		MODEL_FORMAT = 17;
 		
-		INPUTS = 15; %CET: Computational Efficiency Trick
+		INPUTS = 16; %CET: Computational Efficiency Trick
 		INPUTS_TAG = 'INPUTS';
 		INPUTS_CATEGORY = 6;
 		INPUTS_FORMAT = 16;
 		
-		TARGETS = 16; %CET: Computational Efficiency Trick
+		TARGETS = 17; %CET: Computational Efficiency Trick
 		TARGETS_TAG = 'TARGETS';
 		TARGETS_CATEGORY = 6;
 		TARGETS_FORMAT = 16;
 		
-		TRAIN = 17; %CET: Computational Efficiency Trick
+		TRAIN = 18; %CET: Computational Efficiency Trick
 		TRAIN_TAG = 'TRAIN';
 		TRAIN_CATEGORY = 6;
 		TRAIN_FORMAT = 1;
 		
-		VERBOSE = 18; %CET: Computational Efficiency Trick
+		VERBOSE = 19; %CET: Computational Efficiency Trick
 		VERBOSE_TAG = 'VERBOSE';
 		VERBOSE_CATEGORY = 2;
 		VERBOSE_FORMAT = 4;
 		
-		PLOT_TRAINING = 19; %CET: Computational Efficiency Trick
+		PLOT_TRAINING = 20; %CET: Computational Efficiency Trick
 		PLOT_TRAINING_TAG = 'PLOT_TRAINING';
 		PLOT_TRAINING_CATEGORY = 2;
 		PLOT_TRAINING_FORMAT = 5;
 		
-		PREDICT = 20; %CET: Computational Efficiency Trick
+		PREDICT = 21; %CET: Computational Efficiency Trick
 		PREDICT_TAG = 'PREDICT';
 		PREDICT_CATEGORY = 6;
 		PREDICT_FORMAT = 16;
@@ -199,26 +200,27 @@ classdef NNBase < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNBase properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
-			%  <strong>9</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
-			%  <strong>10</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-			%  <strong>11</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-			%  <strong>12</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-			%  <strong>13</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>14</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model with the given dataset.
-			%  <strong>15</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the cell array of the data.
-			%  <strong>16</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the cell array of the targets.
-			%  <strong>17</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
-			%  <strong>18</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-			%  <strong>19</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-			%  <strong>20</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
+			%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
+			%  <strong>11</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+			%  <strong>12</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+			%  <strong>13</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+			%  <strong>14</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+			%  <strong>15</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model with the given dataset.
+			%  <strong>16</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the cell array of the data.
+			%  <strong>17</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the cell array of the targets.
+			%  <strong>18</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
+			%  <strong>19</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>20</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+			%  <strong>21</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
 			%
 			% See also Category, Format.
 			
@@ -280,23 +282,23 @@ classdef NNBase < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 18 19];
+					prop_list = [6 7 19 20];
 				case 3 % Category.PARAMETER
-					prop_list = [3 9 10 11 12 13];
+					prop_list = [4 10 11 12 13 14];
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [5 9];
 				case 5 % Category.RESULT
-					prop_list = 14;
+					prop_list = 15;
 				case 6 % Category.QUERY
-					prop_list = [7 15 16 17 20];
+					prop_list = [8 16 17 18 21];
 				otherwise
 					prop_list = [];
 			end
@@ -322,13 +324,13 @@ classdef NNBase < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 20;
+				prop_number = 21;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 4;
 				case 3 % Category.PARAMETER
@@ -369,7 +371,7 @@ classdef NNBase < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -407,7 +409,7 @@ classdef NNBase < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -440,7 +442,7 @@ classdef NNBase < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -469,7 +471,7 @@ classdef NNBase < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnbase_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' };
+				nnbase_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT' };
 				tag = nnbase_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -496,7 +498,7 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnbase_category_list = { 1  1  3  4  2  2  6  4  3  3  3  3  3  5  6  6  6  2  2  6 };
+			nnbase_category_list = { 1  1  1  3  4  2  2  6  4  3  3  3  3  3  5  6  6  6  2  2  6 };
 			prop_category = nnbase_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -522,7 +524,7 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnbase_format_list = { 2  2  8  2  2  2  2  8  7  11  11  5  5  17  16  16  1  4  5  16 };
+			nnbase_format_list = { 2  2  2  8  2  2  2  2  8  7  11  11  5  5  17  16  16  1  4  5  16 };
 			prop_format = nnbase_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -548,7 +550,7 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnbase_description_list = { 'NAME (constant, string) is the name of the nerual network base.'  'DESCRIPTION (constant, string) is the description of the nerual network base.'  'TEMPLATE (parameter, item) is the template of the nerual network base.'  'ID (data, string) is a few-letter code for the nerual network base.'  'LABEL (metadata, string) is an extended label of the nerual network base.'  'NOTES (metadata, string) are some specific notes about the nerual network base.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model with the given dataset.'  'INPUTS (query, cell) constructs the cell array of the data.'  'TARGETS (query, cell) constructs the cell array of the targets.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.' };
+			nnbase_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the nerual network base.'  'DESCRIPTION (constant, string) is the description of the nerual network base.'  'TEMPLATE (parameter, item) is the template of the nerual network base.'  'ID (data, string) is a few-letter code for the nerual network base.'  'LABEL (metadata, string) is an extended label of the nerual network base.'  'NOTES (metadata, string) are some specific notes about the nerual network base.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model with the given dataset.'  'INPUTS (query, cell) constructs the cell array of the data.'  'TARGETS (query, cell) constructs the cell array of the targets.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.' };
 			prop_description = nnbase_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -574,33 +576,33 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNBase.D
+				case 9 % NNBase.D
 					prop_settings = 'NNDataset';
-				case 9 % NNBase.DP_CLASSES
+				case 10 % NNBase.DP_CLASSES
 					prop_settings = Format.getFormatSettings(7);
-				case 10 % NNBase.EPOCHS
+				case 11 % NNBase.EPOCHS
 					prop_settings = Format.getFormatSettings(11);
-				case 11 % NNBase.BATCH
+				case 12 % NNBase.BATCH
 					prop_settings = Format.getFormatSettings(11);
-				case 12 % NNBase.SHUFFLE
+				case 13 % NNBase.SHUFFLE
 					prop_settings = {'once' 'never' 'every-epoch'};
-				case 13 % NNBase.SOLVER
+				case 14 % NNBase.SOLVER
 					prop_settings = {'adam' 'sgdm' 'rmsprop'};
-				case 14 % NNBase.MODEL
+				case 15 % NNBase.MODEL
 					prop_settings = Format.getFormatSettings(17);
-				case 15 % NNBase.INPUTS
+				case 16 % NNBase.INPUTS
 					prop_settings = Format.getFormatSettings(16);
-				case 16 % NNBase.TARGETS
+				case 17 % NNBase.TARGETS
 					prop_settings = Format.getFormatSettings(16);
-				case 17 % NNBase.TRAIN
+				case 18 % NNBase.TRAIN
 					prop_settings = Format.getFormatSettings(1);
-				case 18 % NNBase.VERBOSE
+				case 19 % NNBase.VERBOSE
 					prop_settings = Format.getFormatSettings(4);
-				case 19 % NNBase.PLOT_TRAINING
+				case 20 % NNBase.PLOT_TRAINING
 					prop_settings = {'none' 'training-progress'};
-				case 20 % NNBase.PREDICT
+				case 21 % NNBase.PREDICT
 					prop_settings = Format.getFormatSettings(16);
-				case 3 % NNBase.TEMPLATE
+				case 4 % NNBase.TEMPLATE
 					prop_settings = 'NNBase';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -629,43 +631,45 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNBase.D
+				case 9 % NNBase.D
 					prop_default = NNDataset('DP_CLASS', 'NNDataPoint');
-				case 9 % NNBase.DP_CLASSES
+				case 10 % NNBase.DP_CLASSES
 					prop_default = {'NNDataPoint'};
-				case 10 % NNBase.EPOCHS
+				case 11 % NNBase.EPOCHS
 					prop_default = 20;
-				case 11 % NNBase.BATCH
+				case 12 % NNBase.BATCH
 					prop_default = 8;
-				case 12 % NNBase.SHUFFLE
+				case 13 % NNBase.SHUFFLE
 					prop_default = Format.getFormatDefault(5, NNBase.getPropSettings(prop));
-				case 13 % NNBase.SOLVER
+				case 14 % NNBase.SOLVER
 					prop_default = Format.getFormatDefault(5, NNBase.getPropSettings(prop));
-				case 14 % NNBase.MODEL
+				case 15 % NNBase.MODEL
 					prop_default = Format.getFormatDefault(17, NNBase.getPropSettings(prop));
-				case 15 % NNBase.INPUTS
+				case 16 % NNBase.INPUTS
 					prop_default = Format.getFormatDefault(16, NNBase.getPropSettings(prop));
-				case 16 % NNBase.TARGETS
+				case 17 % NNBase.TARGETS
 					prop_default = Format.getFormatDefault(16, NNBase.getPropSettings(prop));
-				case 17 % NNBase.TRAIN
+				case 18 % NNBase.TRAIN
 					prop_default = Format.getFormatDefault(1, NNBase.getPropSettings(prop));
-				case 18 % NNBase.VERBOSE
+				case 19 % NNBase.VERBOSE
 					prop_default = false;
-				case 19 % NNBase.PLOT_TRAINING
+				case 20 % NNBase.PLOT_TRAINING
 					prop_default = Format.getFormatDefault(5, NNBase.getPropSettings(prop));
-				case 20 % NNBase.PREDICT
+				case 21 % NNBase.PREDICT
 					prop_default = Format.getFormatDefault(16, NNBase.getPropSettings(prop));
-				case 1 % NNBase.NAME
+				case 1 % NNBase.ELCLASS
 					prop_default = 'NNBase';
-				case 2 % NNBase.DESCRIPTION
+				case 2 % NNBase.NAME
+					prop_default = 'NNBase';
+				case 3 % NNBase.DESCRIPTION
 					prop_default = 'A neural network base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.';
-				case 3 % NNBase.TEMPLATE
+				case 4 % NNBase.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNBase.getPropSettings(prop));
-				case 4 % NNBase.ID
+				case 5 % NNBase.ID
 					prop_default = 'NNBase ID';
-				case 5 % NNBase.LABEL
+				case 6 % NNBase.LABEL
 					prop_default = 'NNBase label';
-				case 6 % NNBase.NOTES
+				case 7 % NNBase.NOTES
 					prop_default = 'NNBase notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -731,36 +735,36 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			switch prop
-				case 8 % NNBase.D
+				case 9 % NNBase.D
 					check = Format.checkFormat(8, value, NNBase.getPropSettings(prop));
-				case 9 % NNBase.DP_CLASSES
+				case 10 % NNBase.DP_CLASSES
 					check = Format.checkFormat(7, value, NNBase.getPropSettings(prop));
-				case 10 % NNBase.EPOCHS
+				case 11 % NNBase.EPOCHS
 					check = Format.checkFormat(11, value, NNBase.getPropSettings(prop));
-				case 11 % NNBase.BATCH
+				case 12 % NNBase.BATCH
 					check = Format.checkFormat(11, value, NNBase.getPropSettings(prop));
-				case 12 % NNBase.SHUFFLE
+				case 13 % NNBase.SHUFFLE
 					check = Format.checkFormat(5, value, NNBase.getPropSettings(prop));
-				case 13 % NNBase.SOLVER
+				case 14 % NNBase.SOLVER
 					check = Format.checkFormat(5, value, NNBase.getPropSettings(prop));
-				case 14 % NNBase.MODEL
+				case 15 % NNBase.MODEL
 					check = Format.checkFormat(17, value, NNBase.getPropSettings(prop));
-				case 15 % NNBase.INPUTS
+				case 16 % NNBase.INPUTS
 					check = Format.checkFormat(16, value, NNBase.getPropSettings(prop));
-				case 16 % NNBase.TARGETS
+				case 17 % NNBase.TARGETS
 					check = Format.checkFormat(16, value, NNBase.getPropSettings(prop));
-				case 17 % NNBase.TRAIN
+				case 18 % NNBase.TRAIN
 					check = Format.checkFormat(1, value, NNBase.getPropSettings(prop));
-				case 18 % NNBase.VERBOSE
+				case 19 % NNBase.VERBOSE
 					check = Format.checkFormat(4, value, NNBase.getPropSettings(prop));
-				case 19 % NNBase.PLOT_TRAINING
+				case 20 % NNBase.PLOT_TRAINING
 					check = Format.checkFormat(5, value, NNBase.getPropSettings(prop));
-				case 20 % NNBase.PREDICT
+				case 21 % NNBase.PREDICT
 					check = Format.checkFormat(16, value, NNBase.getPropSettings(prop));
-				case 3 % NNBase.TEMPLATE
+				case 4 % NNBase.TEMPLATE
 					check = Format.checkFormat(8, value, NNBase.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -793,28 +797,28 @@ classdef NNBase < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % NNBase.MODEL
-					rng_settings_ = rng(); rng(nn.getPropSeed(14), 'twister')
+				case 15 % NNBase.MODEL
+					rng_settings_ = rng(); rng(nn.getPropSeed(15), 'twister')
 					
 					value = network();
 					
 					rng(rng_settings_)
 					
-				case 15 % NNBase.INPUTS
+				case 16 % NNBase.INPUTS
 					% inputs = nn.get('inputs', D) returns a cell array with the
 					%  inputs for all data points in dataset D.
 					value = {};
 					
-				case 16 % NNBase.TARGETS
+				case 17 % NNBase.TARGETS
 					% targets = nn.get('PREDICT', D) returns a cell array with the
 					%  targets for all data points in dataset D.
 					value = {};
 					
-				case 17 % NNBase.TRAIN
+				case 18 % NNBase.TRAIN
 					nn.memorize('MODEL');
 					value = [];
 					
-				case 20 % NNBase.PREDICT
+				case 21 % NNBase.PREDICT
 					% PREDICTIONS = nn.get('PREDICT', D) returns a cell array with the
 					%  predictions for all data points in dataset D.
 					if isempty(varargin)
@@ -833,7 +837,7 @@ classdef NNBase < ConcreteElement
 					value = predictions;
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(nn, prop, varargin{:});
 					else
 						value = calculateValue@Element(nn, prop, varargin{:});
@@ -858,11 +862,11 @@ classdef NNBase < ConcreteElement
 			msg = ['Error while checking ' tostring(nn) ' ' nn.getPropTag(prop) '.'];
 			
 			switch prop
-				case 8 % NNBase.D
+				case 9 % NNBase.D
 					check = ismember(value.get('DP_CLASS'), nn.get('DP_CLASSES'));
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						[check, msg] = checkValue@ConcreteElement(nn, prop, value);
 					end
 			end

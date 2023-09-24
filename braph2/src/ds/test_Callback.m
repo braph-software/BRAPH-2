@@ -5,6 +5,13 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	categories = num2cell(Category.getCategories());
 	cb = Callback();
 	 
+	% get('ELCLASS')
+	if isa(Callback, 'ConcreteElement')
+		assert(strcmp(Callback().get('ELCLASS'), 'Callback'), ...
+			[BRAPH2.STR ':Callback:' BRAPH2.FAIL_TEST], ...
+			'Callback().get(''ELCLASS'') should return ''Callback''.')
+	end
+	 
 	% getClass
 	assert(strcmp(Callback.getClass(), 'Callback'), ...
 		[BRAPH2.STR ':Callback:' BRAPH2.FAIL_TEST], ...

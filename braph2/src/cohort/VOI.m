@@ -2,24 +2,20 @@ classdef VOI < ConcreteElement
 	%VOI is the base element for the variables of interest.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% VOI is the base element for a variable of interest.
+	% A Variable Of Interest (VOI) is the base element for a variable of interest.
 	%  Instances of this class should not be created. 
 	%  Use one of its subclasses instead.
-	% 
-	%  %% ¡seealso!
-	%  VOINumeric, VOICategoric
-	%  
-	%  %% ¡props_update!
 	%
 	% The list of VOI properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the variable of interest.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the variable of interest.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the variable of interest.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the variable of interest.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the variable of interest.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the variable of interest.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the variable of interest.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 	%
 	% VOI methods (constructor):
 	%  VOI - constructor
@@ -106,9 +102,11 @@ classdef VOI < ConcreteElement
 	%
 	% To print full list of constants, click here <a href="matlab:metaclass = ?VOI; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">VOI constants</a>.
 	%
+	%
+	% See also VOINumeric, VOICategoric.
 	
 	properties (Constant) % properties
-		V = 8; %CET: Computational Efficiency Trick
+		V = 9; %CET: Computational Efficiency Trick
 		V_TAG = 'V';
 		V_CATEGORY = 4;
 		V_FORMAT = 11;
@@ -125,14 +123,15 @@ classdef VOI < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of VOI properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the variable of interest.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the variable of interest.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the variable of interest.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the variable of interest.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the variable of interest.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the variable of interest.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the variable of interest.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 			%
 			% See also Category, Format.
 			
@@ -194,21 +193,21 @@ classdef VOI < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8];
+				prop_list = [1 2 3 4 5 6 7 8 9];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [5 9];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -234,13 +233,13 @@ classdef VOI < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 8;
+				prop_number = 9;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -279,7 +278,7 @@ classdef VOI < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 8 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -317,7 +316,7 @@ classdef VOI < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -350,7 +349,7 @@ classdef VOI < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -379,7 +378,7 @@ classdef VOI < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				voi_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' };
+				voi_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'V' };
 				tag = voi_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -406,7 +405,7 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voi_category_list = { 1  1  3  4  2  2  6  4 };
+			voi_category_list = { 1  1  1  3  4  2  2  6  4 };
 			prop_category = voi_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -432,7 +431,7 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voi_format_list = { 2  2  8  2  2  2  2  11 };
+			voi_format_list = { 2  2  2  8  2  2  2  2  11 };
 			prop_format = voi_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -458,7 +457,7 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voi_description_list = { 'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
+			voi_description_list = { 'ELCLASS (constant, string) is the class of the variable of interest.'  'NAME (constant, string) is the name of the variable of interest.'  'DESCRIPTION (constant, string) is the description of the variable of interest.'  'TEMPLATE (parameter, item) is the template of the variable of interest.'  'ID (data, string) is a few-letter code for the variable of interest.'  'LABEL (metadata, string) is an extended label of the variable of interest.'  'NOTES (metadata, string) are some specific notes about the variable of interest.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
 			prop_description = voi_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -484,8 +483,10 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % VOI.V
+				case 9 % VOI.V
 					prop_settings = Format.getFormatSettings(11);
+				case 4 % VOI.TEMPLATE
+					prop_settings = 'VOI';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
 			end
@@ -513,8 +514,22 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % VOI.V
+				case 9 % VOI.V
 					prop_default = Format.getFormatDefault(11, VOI.getPropSettings(prop));
+				case 1 % VOI.ELCLASS
+					prop_default = 'VOI';
+				case 2 % VOI.NAME
+					prop_default = 'Variable Of Interest';
+				case 3 % VOI.DESCRIPTION
+					prop_default = 'A Variable Of Interest (VOI) is the base element for a variable of interest. Instances of this class should not be created. Use one of its subclasses instead.';
+				case 4 % VOI.TEMPLATE
+					prop_default = Format.getFormatDefault(8, VOI.getPropSettings(prop));
+				case 5 % VOI.ID
+					prop_default = 'VOI ID';
+				case 6 % VOI.LABEL
+					prop_default = 'VOI label';
+				case 7 % VOI.NOTES
+					prop_default = 'VOI notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
 			end
@@ -579,10 +594,12 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			switch prop
-				case 8 % VOI.V
+				case 9 % VOI.V
 					check = Format.checkFormat(11, value, VOI.getPropSettings(prop));
+				case 4 % VOI.TEMPLATE
+					check = Format.checkFormat(8, value, VOI.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

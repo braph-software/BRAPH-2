@@ -5,16 +5,17 @@ classdef SubjectFUN < Subject
 	% Subject with a functional matrix (e.g. obtained from fMRI).
 	%
 	% The list of SubjectFUN properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-	%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>10</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>11</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
 	%
 	% SubjectFUN methods (constructor):
 	%  SubjectFUN - constructor
@@ -105,12 +106,12 @@ classdef SubjectFUN < Subject
 	% See also ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS.
 	
 	properties (Constant) % properties
-		BA = 9; %CET: Computational Efficiency Trick
+		BA = 10; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		FUN = 10; %CET: Computational Efficiency Trick
+		FUN = 11; %CET: Computational Efficiency Trick
 		FUN_TAG = 'FUN';
 		FUN_CATEGORY = 4;
 		FUN_FORMAT = 14;
@@ -127,16 +128,17 @@ classdef SubjectFUN < Subject
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of SubjectFUN properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-			%  <strong>9</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>10</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>11</strong> <strong>FUN</strong> 	FUN (data, matrix) is an adjacency matrix.
 			%
 			% See also Category, Format.
 			
@@ -198,21 +200,21 @@ classdef SubjectFUN < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8 9 10];
+					prop_list = [5 9 10 11];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -238,13 +240,13 @@ classdef SubjectFUN < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -283,7 +285,7 @@ classdef SubjectFUN < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -321,7 +323,7 @@ classdef SubjectFUN < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +356,7 @@ classdef SubjectFUN < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -383,7 +385,7 @@ classdef SubjectFUN < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectfun_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' };
+				subjectfun_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'FUN' };
 				tag = subjectfun_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -410,7 +412,7 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectfun_category_list = { 1  1  3  4  2  2  6  4  4  4 };
+			subjectfun_category_list = { 1  1  1  3  4  2  2  6  4  4  4 };
 			prop_category = subjectfun_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -436,7 +438,7 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectfun_format_list = { 2  2  8  2  2  2  2  10  8  14 };
+			subjectfun_format_list = { 2  2  2  8  2  2  2  2  10  8  14 };
 			prop_format = subjectfun_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -462,7 +464,7 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectfun_description_list = { 'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'FUN (data, matrix) is an adjacency matrix.' };
+			subjectfun_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'FUN (data, matrix) is an adjacency matrix.' };
 			prop_description = subjectfun_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -488,9 +490,9 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % SubjectFUN.BA
+				case 10 % SubjectFUN.BA
 					prop_settings = 'BrainAtlas';
-				case 10 % SubjectFUN.FUN
+				case 11 % SubjectFUN.FUN
 					prop_settings = Format.getFormatSettings(14);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
@@ -519,19 +521,21 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % SubjectFUN.BA
+				case 10 % SubjectFUN.BA
 					prop_default = Format.getFormatDefault(8, SubjectFUN.getPropSettings(prop));
-				case 10 % SubjectFUN.FUN
+				case 11 % SubjectFUN.FUN
 					prop_default = Format.getFormatDefault(14, SubjectFUN.getPropSettings(prop));
-				case 1 % SubjectFUN.NAME
+				case 1 % SubjectFUN.ELCLASS
 					prop_default = 'SubjectFUN';
-				case 2 % SubjectFUN.DESCRIPTION
+				case 2 % SubjectFUN.NAME
+					prop_default = 'SubjectFUN';
+				case 3 % SubjectFUN.DESCRIPTION
 					prop_default = 'Subject with a functional matrix (e.g. obtained from fMRI).';
-				case 4 % SubjectFUN.ID
+				case 5 % SubjectFUN.ID
 					prop_default = 'SubjectFUN ID';
-				case 5 % SubjectFUN.LABEL
+				case 6 % SubjectFUN.LABEL
 					prop_default = 'SubjectFUN label';
-				case 6 % SubjectFUN.NOTES
+				case 7 % SubjectFUN.NOTES
 					prop_default = 'SubjectFUN notes';
 				otherwise
 					prop_default = getPropDefault@Subject(prop);
@@ -597,12 +601,12 @@ classdef SubjectFUN < Subject
 			prop = SubjectFUN.getPropProp(pointer);
 			
 			switch prop
-				case 9 % SubjectFUN.BA
+				case 10 % SubjectFUN.BA
 					check = Format.checkFormat(8, value, SubjectFUN.getPropSettings(prop));
-				case 10 % SubjectFUN.FUN
+				case 11 % SubjectFUN.FUN
 					check = Format.checkFormat(14, value, SubjectFUN.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Subject(prop, value);
 					end
 			end
@@ -634,7 +638,7 @@ classdef SubjectFUN < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case 10 % SubjectFUN.FUN
+				case 11 % SubjectFUN.FUN
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					check = size(value, 2) == br_number; % Format.checkFormat(14, value) already checked
 					if check
@@ -644,7 +648,7 @@ classdef SubjectFUN < Subject
 					end
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						[check, msg] = checkValue@Subject(sub, prop, value);
 					end
 			end
@@ -667,8 +671,8 @@ classdef SubjectFUN < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 10 % SubjectFUN.FUN
-					pr = PanelPropMatrix('EL', sub, 'PROP', 10, ...
+				case 11 % SubjectFUN.FUN
+					pr = PanelPropMatrix('EL', sub, 'PROP', 11, ...
 					    'ROWNAME', {'numbered'}, ...
 					    'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    varargin{:});

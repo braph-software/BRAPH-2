@@ -8,17 +8,18 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 	% The target is obtained from the variables of interest of the subject.
 	%
 	% The list of NNDataPoint_ST_CLA properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with structural data.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with structural data.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with structural data.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with structural data.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with structural data.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural data.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
-	%  <strong>10</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural data.
-	%  <strong>11</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with structural data.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with structural data.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with structural data.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with structural data.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with structural data.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural data.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+	%  <strong>11</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural data.
+	%  <strong>12</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 	%
 	% NNDataPoint_ST_CLA methods (constructor):
 	%  NNDataPoint_ST_CLA - constructor
@@ -109,12 +110,12 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 	% See also SubjectST.
 	
 	properties (Constant) % properties
-		SUB = 10; %CET: Computational Efficiency Trick
+		SUB = 11; %CET: Computational Efficiency Trick
 		SUB_TAG = 'SUB';
 		SUB_CATEGORY = 4;
 		SUB_FORMAT = 8;
 		
-		TARGET_IDS = 11; %CET: Computational Efficiency Trick
+		TARGET_IDS = 12; %CET: Computational Efficiency Trick
 		TARGET_IDS_TAG = 'TARGET_IDS';
 		TARGET_IDS_CATEGORY = 3;
 		TARGET_IDS_FORMAT = 3;
@@ -131,17 +132,18 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDataPoint_ST_CLA properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with structural data.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with structural data.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with structural data.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with structural data.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with structural data.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural data.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>9</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
-			%  <strong>10</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural data.
-			%  <strong>11</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with structural data.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with structural data.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with structural data.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with structural data.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with structural data.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural data.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
+			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+			%  <strong>11</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural data.
+			%  <strong>12</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 			%
 			% See also Category, Format.
 			
@@ -203,23 +205,23 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 11];
+					prop_list = [4 12];
 				case 4 % Category.DATA
-					prop_list = [4 10];
+					prop_list = [5 11];
 				case 5 % Category.RESULT
-					prop_list = [8 9];
+					prop_list = [9 10];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -245,13 +247,13 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 11;
+				prop_number = 12;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -292,7 +294,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -330,7 +332,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -363,7 +365,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -392,7 +394,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatapoint_st_cla_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' };
+				nndatapoint_st_cla_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' };
 				tag = nndatapoint_st_cla_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -419,7 +421,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_st_cla_category_list = { 1  1  3  4  2  2  6  5  5  4  3 };
+			nndatapoint_st_cla_category_list = { 1  1  1  3  4  2  2  6  5  5  4  3 };
 			prop_category = nndatapoint_st_cla_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -445,7 +447,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_st_cla_format_list = { 2  2  8  2  2  2  2  16  16  8  3 };
+			nndatapoint_st_cla_format_list = { 2  2  2  8  2  2  2  2  16  16  8  3 };
 			prop_format = nndatapoint_st_cla_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -471,7 +473,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_st_cla_description_list = { 'NAME (constant, string) is the name of a data point for classification with structural data.'  'DESCRIPTION (constant, string) is the description of a data point for classification with structural data.'  'TEMPLATE (parameter, item) is the template of a data point for classification with structural data.'  'ID (data, string) is a few-letter code for a data point for classification with structural data.'  'LABEL (metadata, string) is an extended label of a data point for classification with structural data.'  'NOTES (metadata, string) are some specific notes about a data point for classification with structural data.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'SUB (data, item) is a subject with structural data.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
+			nndatapoint_st_cla_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of a data point for classification with structural data.'  'DESCRIPTION (constant, string) is the description of a data point for classification with structural data.'  'TEMPLATE (parameter, item) is the template of a data point for classification with structural data.'  'ID (data, string) is a few-letter code for a data point for classification with structural data.'  'LABEL (metadata, string) is an extended label of a data point for classification with structural data.'  'NOTES (metadata, string) are some specific notes about a data point for classification with structural data.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'SUB (data, item) is a subject with structural data.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
 			prop_description = nndatapoint_st_cla_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -497,11 +499,11 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % NNDataPoint_ST_CLA.SUB
+				case 11 % NNDataPoint_ST_CLA.SUB
 					prop_settings = 'SubjectST';
-				case 11 % NNDataPoint_ST_CLA.TARGET_IDS
+				case 12 % NNDataPoint_ST_CLA.TARGET_IDS
 					prop_settings = Format.getFormatSettings(3);
-				case 3 % NNDataPoint_ST_CLA.TEMPLATE
+				case 4 % NNDataPoint_ST_CLA.TEMPLATE
 					prop_settings = 'NNDataPoint_ST_CLA';
 				otherwise
 					prop_settings = getPropSettings@NNDataPoint(prop);
@@ -530,21 +532,23 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 10 % NNDataPoint_ST_CLA.SUB
+				case 11 % NNDataPoint_ST_CLA.SUB
 					prop_default = Format.getFormatDefault(8, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case 11 % NNDataPoint_ST_CLA.TARGET_IDS
+				case 12 % NNDataPoint_ST_CLA.TARGET_IDS
 					prop_default = Format.getFormatDefault(3, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case 1 % NNDataPoint_ST_CLA.NAME
+				case 1 % NNDataPoint_ST_CLA.ELCLASS
 					prop_default = 'NNDataPoint_ST_CLA';
-				case 2 % NNDataPoint_ST_CLA.DESCRIPTION
+				case 2 % NNDataPoint_ST_CLA.NAME
+					prop_default = 'NNDataPoint_ST_CLA';
+				case 3 % NNDataPoint_ST_CLA.DESCRIPTION
 					prop_default = 'A data point for classification with structural data (NNDataPoint_ST_CLA) contains the input and target for neural network analysis with a subject with structural data (SubjectST). The input is the structural data of the subject. The target is obtained from the variables of interest of the subject.';
-				case 3 % NNDataPoint_ST_CLA.TEMPLATE
+				case 4 % NNDataPoint_ST_CLA.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case 4 % NNDataPoint_ST_CLA.ID
+				case 5 % NNDataPoint_ST_CLA.ID
 					prop_default = 'NNDataPoint_ST_CLA ID';
-				case 5 % NNDataPoint_ST_CLA.LABEL
+				case 6 % NNDataPoint_ST_CLA.LABEL
 					prop_default = 'NNDataPoint_ST_CLA label';
-				case 6 % NNDataPoint_ST_CLA.NOTES
+				case 7 % NNDataPoint_ST_CLA.NOTES
 					prop_default = 'NNDataPoint_ST_CLA notes';
 				otherwise
 					prop_default = getPropDefault@NNDataPoint(prop);
@@ -610,14 +614,14 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			prop = NNDataPoint_ST_CLA.getPropProp(pointer);
 			
 			switch prop
-				case 10 % NNDataPoint_ST_CLA.SUB
+				case 11 % NNDataPoint_ST_CLA.SUB
 					check = Format.checkFormat(8, value, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case 11 % NNDataPoint_ST_CLA.TARGET_IDS
+				case 12 % NNDataPoint_ST_CLA.TARGET_IDS
 					check = Format.checkFormat(3, value, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case 3 % NNDataPoint_ST_CLA.TEMPLATE
+				case 4 % NNDataPoint_ST_CLA.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint_ST_CLA.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						check = checkProp@NNDataPoint(prop, value);
 					end
 			end
@@ -650,22 +654,22 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 8 % NNDataPoint_ST_CLA.INPUT
-					rng_settings_ = rng(); rng(dp.getPropSeed(8), 'twister')
+				case 9 % NNDataPoint_ST_CLA.INPUT
+					rng_settings_ = rng(); rng(dp.getPropSeed(9), 'twister')
 					
 					value = {dp.get('SUB').get('ST')};
 					
 					rng(rng_settings_)
 					
-				case 9 % NNDataPoint_ST_CLA.TARGET
-					rng_settings_ = rng(); rng(dp.getPropSeed(9), 'twister')
+				case 10 % NNDataPoint_ST_CLA.TARGET
+					rng_settings_ = rng(); rng(dp.getPropSeed(10), 'twister')
 					
 					value = dp.get('TARGET_IDS');
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= 10
 						value = calculateValue@NNDataPoint(dp, prop, varargin{:});
 					else
 						value = calculateValue@Element(dp, prop, varargin{:});

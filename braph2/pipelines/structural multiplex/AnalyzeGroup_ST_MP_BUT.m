@@ -6,19 +6,20 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 	% analyzes them using binary undirected graphs.
 	%
 	% The list of AnalyzeGroup_ST_MP_BUT properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
-	%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
-	%  <strong>11</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-	%  <strong>12</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-	%  <strong>13</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
+	%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+	%  <strong>12</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+	%  <strong>13</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+	%  <strong>14</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 	%
 	% AnalyzeGroup_ST_MP_BUT methods (constructor):
 	%  AnalyzeGroup_ST_MP_BUT - constructor
@@ -109,17 +110,17 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 	% See also SubjectST_MP, MultiplexBUT.
 	
 	properties (Constant) % properties
-		CORRELATION_RULE = 11; %CET: Computational Efficiency Trick
+		CORRELATION_RULE = 12; %CET: Computational Efficiency Trick
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
 		CORRELATION_RULE_CATEGORY = 3;
 		CORRELATION_RULE_FORMAT = 5;
 		
-		NEGATIVE_WEIGHT_RULE = 12; %CET: Computational Efficiency Trick
+		NEGATIVE_WEIGHT_RULE = 13; %CET: Computational Efficiency Trick
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
 		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
 		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
 		
-		THRESHOLDS = 13; %CET: Computational Efficiency Trick
+		THRESHOLDS = 14; %CET: Computational Efficiency Trick
 		THRESHOLDS_TAG = 'THRESHOLDS';
 		THRESHOLDS_CATEGORY = 3;
 		THRESHOLDS_FORMAT = 12;
@@ -136,19 +137,20 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of AnalyzeGroup_ST_MP_BUT properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
-			%  <strong>10</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
-			%  <strong>11</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
-			%  <strong>12</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
-			%  <strong>13</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
+			%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+			%  <strong>12</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+			%  <strong>13</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+			%  <strong>14</strong> <strong>THRESHOLDS</strong> 	THRESHOLDS (parameter, rvector) is the vector of thresholds.
 			%
 			% See also Category, Format.
 			
@@ -210,25 +212,25 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 11 12 13];
+					prop_list = [4 12 13 14];
 				case 4 % Category.DATA
-					prop_list = [4 9];
+					prop_list = [5 10];
 				case 5 % Category.RESULT
-					prop_list = 10;
+					prop_list = 11;
 				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
@@ -254,13 +256,13 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -303,7 +305,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -341,7 +343,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -374,7 +376,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -403,7 +405,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegroup_st_mp_but_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' };
+				analyzegroup_st_mp_but_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'THRESHOLDS' };
 				tag = analyzegroup_st_mp_but_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -430,7 +432,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_mp_but_category_list = { 1  1  3  4  2  2  6  9  4  5  3  3  3 };
+			analyzegroup_st_mp_but_category_list = { 1  1  1  3  4  2  2  6  9  4  5  3  3  3 };
 			prop_category = analyzegroup_st_mp_but_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -456,7 +458,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_mp_but_format_list = { 2  2  8  2  2  2  2  4  8  8  5  5  12 };
+			analyzegroup_st_mp_but_format_list = { 2  2  2  8  2  2  2  2  4  8  8  5  5  12 };
 			prop_format = analyzegroup_st_mp_but_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -482,7 +484,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_mp_but_description_list = { 'NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.'  'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
+			analyzegroup_st_mp_but_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.'  'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.'  'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data of fixed threshold.'  'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data of fixed threshold.'  'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data of fixed threshold.'  'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data of fixed threshold.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'THRESHOLDS (parameter, rvector) is the vector of thresholds.' };
 			prop_description = analyzegroup_st_mp_but_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -508,15 +510,15 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 11 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
+				case 12 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST;
-				case 12 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
+				case 13 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
-				case 13 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
+				case 14 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
 					prop_settings = Format.getFormatSettings(12);
-				case 3 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
+				case 4 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
 					prop_settings = 'AnalyzeGroup_ST_MP_BUT';
-				case 10 % AnalyzeGroup_ST_MP_BUT.G
+				case 11 % AnalyzeGroup_ST_MP_BUT.G
 					prop_settings = 'MultiplexBUT';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeGroup(prop);
@@ -545,27 +547,29 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 11 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
+				case 12 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
 					prop_default = Correlation.PEARSON;
-				case 12 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
+				case 13 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.ZERO;
-				case 13 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
+				case 14 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
 					prop_default = [-1:.5:1];
-				case 1 % AnalyzeGroup_ST_MP_BUT.NAME
+				case 1 % AnalyzeGroup_ST_MP_BUT.ELCLASS
 					prop_default = 'AnalyzeGroup_ST_MP_BUT';
-				case 2 % AnalyzeGroup_ST_MP_BUT.DESCRIPTION
+				case 2 % AnalyzeGroup_ST_MP_BUT.NAME
+					prop_default = 'AnalyzeGroup_ST_MP_BUT';
+				case 3 % AnalyzeGroup_ST_MP_BUT.DESCRIPTION
 					prop_default = 'This graph analysis uses structural multiplex data of fixed threshold and analyzes them using binary undirected graphs.';
-				case 3 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
+				case 4 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
-				case 4 % AnalyzeGroup_ST_MP_BUT.ID
+				case 5 % AnalyzeGroup_ST_MP_BUT.ID
 					prop_default = 'AnalyzeGroup_ST_MP_BUT ID';
-				case 5 % AnalyzeGroup_ST_MP_BUT.LABEL
+				case 6 % AnalyzeGroup_ST_MP_BUT.LABEL
 					prop_default = 'AnalyzeGroup_ST_MP_BUT label';
-				case 6 % AnalyzeGroup_ST_MP_BUT.NOTES
+				case 7 % AnalyzeGroup_ST_MP_BUT.NOTES
 					prop_default = 'AnalyzeGroup_ST_MP_BUT notes';
-				case 9 % AnalyzeGroup_ST_MP_BUT.GR
+				case 10 % AnalyzeGroup_ST_MP_BUT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST_MP');
-				case 10 % AnalyzeGroup_ST_MP_BUT.G
+				case 11 % AnalyzeGroup_ST_MP_BUT.G
 					prop_default = MultiplexBUT();
 				otherwise
 					prop_default = getPropDefault@AnalyzeGroup(prop);
@@ -631,18 +635,18 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_BUT.getPropProp(pointer);
 			
 			switch prop
-				case 11 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
+				case 12 % AnalyzeGroup_ST_MP_BUT.CORRELATION_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
-				case 12 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
+				case 13 % AnalyzeGroup_ST_MP_BUT.NEGATIVE_WEIGHT_RULE
 					check = Format.checkFormat(5, value, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
-				case 13 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
+				case 14 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
 					check = Format.checkFormat(12, value, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
-				case 3 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
+				case 4 % AnalyzeGroup_ST_MP_BUT.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
-				case 10 % AnalyzeGroup_ST_MP_BUT.G
+				case 11 % AnalyzeGroup_ST_MP_BUT.G
 					check = Format.checkFormat(8, value, AnalyzeGroup_ST_MP_BUT.getPropSettings(prop));
 				otherwise
-					if prop <= 10
+					if prop <= 11
 						check = checkProp@AnalyzeGroup(prop, value);
 					end
 			end
@@ -675,8 +679,8 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % AnalyzeGroup_ST_MP_BUT.G
-					rng_settings_ = rng(); rng(a.getPropSeed(10), 'twister')
+				case 11 % AnalyzeGroup_ST_MP_BUT.G
+					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
 					
 					gr = a.get('GR');
 					data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -734,7 +738,7 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 10
+					if prop <= 11
 						value = calculateValue@AnalyzeGroup(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -760,8 +764,8 @@ classdef AnalyzeGroup_ST_MP_BUT < AnalyzeGroup
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 13 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
-					pr = PanelPropRVectorSmart('EL', a, 'PROP', 13, ...
+				case 14 % AnalyzeGroup_ST_MP_BUT.THRESHOLDS
+					pr = PanelPropRVectorSmart('EL', a, 'PROP', 14, ...
 					    'MIN', -1, 'MAX', 1, ...
 					    'DEFAULT', AnalyzeGroup_ST_BUT.getPropDefault('THRESHOLDS'), ...
 					    varargin{:});

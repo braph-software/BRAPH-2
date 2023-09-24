@@ -6,48 +6,49 @@ classdef AnalyzeGroupPP_G < PanelProp
 	% It is intended to be used only with the property G of AnalyzeGroup.
 	%
 	% The list of AnalyzeGroupPP_G properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
-	%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-	%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-	%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>35</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
-	%  <strong>36</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
-	%  <strong>37</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-	%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-	%  <strong>39</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-	%  <strong>40</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-	%  <strong>41</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-	%  <strong>42</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
+	%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
+	%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+	%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 	%
 	% AnalyzeGroupPP_G methods (constructor):
 	%  AnalyzeGroupPP_G - constructor
@@ -138,42 +139,42 @@ classdef AnalyzeGroupPP_G < PanelProp
 	% See also uitable, AnalyzeGroup, Graph, Measure.
 	
 	properties (Constant) % properties
-		TABLE_HEIGHT = 35; %CET: Computational Efficiency Trick
+		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
 		TABLE_HEIGHT_CATEGORY = 9;
 		TABLE_HEIGHT_FORMAT = 22;
 		
-		SELECTED = 36; %CET: Computational Efficiency Trick
+		SELECTED = 37; %CET: Computational Efficiency Trick
 		SELECTED_TAG = 'SELECTED';
 		SELECTED_CATEGORY = 9;
 		SELECTED_FORMAT = 13;
 		
-		TABLE = 37; %CET: Computational Efficiency Trick
+		TABLE = 38; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
 		TABLE_CATEGORY = 7;
 		TABLE_FORMAT = 18;
 		
-		CONTEXTMENU = 38; %CET: Computational Efficiency Trick
+		CONTEXTMENU = 39; %CET: Computational Efficiency Trick
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
 		CONTEXTMENU_CATEGORY = 7;
 		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_G_PL = 39; %CET: Computational Efficiency Trick
+		GUI_G_PL = 40; %CET: Computational Efficiency Trick
 		GUI_G_PL_TAG = 'GUI_G_PL';
 		GUI_G_PL_CATEGORY = 9;
 		GUI_G_PL_FORMAT = 8;
 		
-		GUI_G_EL = 40; %CET: Computational Efficiency Trick
+		GUI_G_EL = 41; %CET: Computational Efficiency Trick
 		GUI_G_EL_TAG = 'GUI_G_EL';
 		GUI_G_EL_CATEGORY = 9;
 		GUI_G_EL_FORMAT = 8;
 		
-		GUI_F_DICT = 41; %CET: Computational Efficiency Trick
+		GUI_F_DICT = 42; %CET: Computational Efficiency Trick
 		GUI_F_DICT_TAG = 'GUI_F_DICT';
 		GUI_F_DICT_CATEGORY = 9;
 		GUI_F_DICT_FORMAT = 10;
 		
-		GUI_M_DICT = 42; %CET: Computational Efficiency Trick
+		GUI_M_DICT = 43; %CET: Computational Efficiency Trick
 		GUI_M_DICT_TAG = 'GUI_M_DICT';
 		GUI_M_DICT_CATEGORY = 9;
 		GUI_M_DICT_FORMAT = 10;
@@ -190,48 +191,49 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of AnalyzeGroupPP_G properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
-			%  <strong>19</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>20</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-			%  <strong>21</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>22</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>23</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>24</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-			%  <strong>25</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>26</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>27</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>28</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>29</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>30</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>31</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>33</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>34</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>35</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
-			%  <strong>36</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
-			%  <strong>37</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-			%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-			%  <strong>39</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-			%  <strong>40</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-			%  <strong>41</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-			%  <strong>42</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+			%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
+			%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
+			%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+			%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 			%
 			% See also Category, Format.
 			
@@ -293,27 +295,27 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 22 23 28];
+					prop_list = [5 23 24 29];
 				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18 19 20 21];
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
 				case 7 % Category.EVANESCENT
-					prop_list = [9 14 26 27 29 30 31 32 33 34 37 38];
+					prop_list = [10 15 27 28 30 31 32 33 34 35 38 39];
 				case 8 % Category.FIGURE
-					prop_list = 13;
+					prop_list = 14;
 				case 9 % Category.GUI
-					prop_list = [8 12 24 25 35 36 39 40 41 42];
+					prop_list = [9 13 25 26 36 37 40 41 42 43];
 				otherwise
 					prop_list = [];
 			end
@@ -339,13 +341,13 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 42;
+				prop_number = 43;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -390,7 +392,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -428,7 +430,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -461,7 +463,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -490,7 +492,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzegrouppp_g_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' };
+				analyzegrouppp_g_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' };
 				tag = analyzegrouppp_g_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -517,7 +519,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9 };
+			analyzegrouppp_g_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9 };
 			prop_category = analyzegrouppp_g_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -543,7 +545,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10 };
+			analyzegrouppp_g_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10 };
 			prop_format = analyzegrouppp_g_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -569,7 +571,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_description_list = { 'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.' };
+			analyzegrouppp_g_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.' };
 			prop_description = analyzegrouppp_g_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -595,23 +597,23 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 35 % AnalyzeGroupPP_G.TABLE_HEIGHT
+				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
 					prop_settings = Format.getFormatSettings(22);
-				case 36 % AnalyzeGroupPP_G.SELECTED
+				case 37 % AnalyzeGroupPP_G.SELECTED
 					prop_settings = Format.getFormatSettings(13);
-				case 37 % AnalyzeGroupPP_G.TABLE
+				case 38 % AnalyzeGroupPP_G.TABLE
 					prop_settings = Format.getFormatSettings(18);
-				case 38 % AnalyzeGroupPP_G.CONTEXTMENU
+				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % AnalyzeGroupPP_G.GUI_G_PL
+				case 40 % AnalyzeGroupPP_G.GUI_G_PL
 					prop_settings = 'GUIFig';
-				case 40 % AnalyzeGroupPP_G.GUI_G_EL
+				case 41 % AnalyzeGroupPP_G.GUI_G_EL
 					prop_settings = 'GUIElement';
-				case 41 % AnalyzeGroupPP_G.GUI_F_DICT
+				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
 					prop_settings = 'GUIFig';
-				case 42 % AnalyzeGroupPP_G.GUI_M_DICT
+				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
 					prop_settings = 'GUIElement';
-				case 3 % AnalyzeGroupPP_G.TEMPLATE
+				case 4 % AnalyzeGroupPP_G.TEMPLATE
 					prop_settings = 'AnalyzeGroupPP_G';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -640,38 +642,40 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 35 % AnalyzeGroupPP_G.TABLE_HEIGHT
+				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
 					prop_default = 360;
-				case 36 % AnalyzeGroupPP_G.SELECTED
+				case 37 % AnalyzeGroupPP_G.SELECTED
 					prop_default = Format.getFormatDefault(13, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 37 % AnalyzeGroupPP_G.TABLE
+				case 38 % AnalyzeGroupPP_G.TABLE
 					prop_default = Format.getFormatDefault(18, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 38 % AnalyzeGroupPP_G.CONTEXTMENU
+				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
 					prop_default = Format.getFormatDefault(18, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 39 % AnalyzeGroupPP_G.GUI_G_PL
+				case 40 % AnalyzeGroupPP_G.GUI_G_PL
 					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 40 % AnalyzeGroupPP_G.GUI_G_EL
+				case 41 % AnalyzeGroupPP_G.GUI_G_EL
 					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 41 % AnalyzeGroupPP_G.GUI_F_DICT
+				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 42 % AnalyzeGroupPP_G.GUI_M_DICT
+				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 1 % AnalyzeGroupPP_G.NAME
+				case 1 % AnalyzeGroupPP_G.ELCLASS
 					prop_default = 'AnalyzeGroupPP_G';
-				case 2 % AnalyzeGroupPP_G.DESCRIPTION
+				case 2 % AnalyzeGroupPP_G.NAME
+					prop_default = 'AnalyzeGroupPP_G';
+				case 3 % AnalyzeGroupPP_G.DESCRIPTION
 					prop_default = 'AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.';
-				case 3 % AnalyzeGroupPP_G.TEMPLATE
+				case 4 % AnalyzeGroupPP_G.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 4 % AnalyzeGroupPP_G.ID
+				case 5 % AnalyzeGroupPP_G.ID
 					prop_default = 'AnalyzeGroupPP_G';
-				case 5 % AnalyzeGroupPP_G.LABEL
+				case 6 % AnalyzeGroupPP_G.LABEL
 					prop_default = 'AnalyzeGroupPP_G label';
-				case 6 % AnalyzeGroupPP_G.NOTES
+				case 7 % AnalyzeGroupPP_G.NOTES
 					prop_default = 'AnalyzeGroupPP_G';
-				case 22 % AnalyzeGroupPP_G.EL
+				case 23 % AnalyzeGroupPP_G.EL
 					prop_default = AnalyzeGroup();
-				case 23 % AnalyzeGroupPP_G.PROP
-					prop_default = 10;
+				case 24 % AnalyzeGroupPP_G.PROP
+					prop_default = 11;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -720,13 +724,13 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop
-				case 36 % AnalyzeGroupPP_G.SELECTED
+				case 37 % AnalyzeGroupPP_G.SELECTED
 					if isrow(value)
 					    value = value';
 					end
 					
 				otherwise
-					if prop <= 34
+					if prop <= 35
 						value = conditioning@PanelProp(pointer, value);
 					end
 			end
@@ -766,26 +770,26 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop
-				case 35 % AnalyzeGroupPP_G.TABLE_HEIGHT
+				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
 					check = Format.checkFormat(22, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 36 % AnalyzeGroupPP_G.SELECTED
+				case 37 % AnalyzeGroupPP_G.SELECTED
 					check = Format.checkFormat(13, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 37 % AnalyzeGroupPP_G.TABLE
+				case 38 % AnalyzeGroupPP_G.TABLE
 					check = Format.checkFormat(18, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 38 % AnalyzeGroupPP_G.CONTEXTMENU
+				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
 					check = Format.checkFormat(18, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 39 % AnalyzeGroupPP_G.GUI_G_PL
+				case 40 % AnalyzeGroupPP_G.GUI_G_PL
 					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 40 % AnalyzeGroupPP_G.GUI_G_EL
+				case 41 % AnalyzeGroupPP_G.GUI_G_EL
 					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 41 % AnalyzeGroupPP_G.GUI_F_DICT
+				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
 					check = Format.checkFormat(10, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 42 % AnalyzeGroupPP_G.GUI_M_DICT
+				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
 					check = Format.checkFormat(10, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 3 % AnalyzeGroupPP_G.TEMPLATE
+				case 4 % AnalyzeGroupPP_G.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
 				otherwise
-					if prop <= 34
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -818,7 +822,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % AnalyzeGroupPP_G.TABLE
+				case 38 % AnalyzeGroupPP_G.TABLE
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
@@ -832,7 +836,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    );
 					value = table;
 					
-				case 38 % AnalyzeGroupPP_G.CONTEXTMENU
+				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
 					contextmenu = uicontextmenu( ...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -920,15 +924,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 					
 					value = contextmenu;
 					
-				case 19 % AnalyzeGroupPP_G.X_DRAW
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case 20 % AnalyzeGroupPP_G.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case 20 % AnalyzeGroupPP_G.UPDATE
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case 21 % AnalyzeGroupPP_G.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 						el = pr.get('EL');
 						prop = pr.get('PROP');
@@ -944,16 +948,16 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 21 % AnalyzeGroupPP_G.REDRAW
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case 22 % AnalyzeGroupPP_G.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
 					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
 					end
 					
-				case 15 % AnalyzeGroupPP_G.SHOW
-					value = calculateValue@PanelProp(pr, 15, varargin{:}); % also warning
+				case 16 % AnalyzeGroupPP_G.SHOW
+					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
@@ -984,8 +988,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 16 % AnalyzeGroupPP_G.HIDE
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case 17 % AnalyzeGroupPP_G.HIDE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
@@ -1016,15 +1020,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 17 % AnalyzeGroupPP_G.DELETE
-					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
+				case 18 % AnalyzeGroupPP_G.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case 18 % AnalyzeGroupPP_G.CLOSE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case 19 % AnalyzeGroupPP_G.CLOSE
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
@@ -1056,7 +1060,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 					end
 					
 				otherwise
-					if prop <= 34
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1327,7 +1331,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			    if isa(g.getr('M_DICT'), 'NoValue')
 			        mlist_already_calculated = {};
 			    else
-			        mlist_already_calculated = cellfun(@(x) x.get('NAME'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+			        mlist_already_calculated = cellfun(@(x) x.get('ELCLASS'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
 			    end
 			    
 			    rowname = cell(length(mlist), 1);

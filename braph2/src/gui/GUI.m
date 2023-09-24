@@ -2,7 +2,7 @@ classdef GUI < ConcreteElement
 	%GUI renders a GUI figure.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% GUI renders a figure with its basic functionalities.
+	% A GUI renders a figure with its basic functionalities.
 	% 
 	% CONSTRUCTOR - To construct a GUI use, e.g.:
 	% 
@@ -26,34 +26,35 @@ classdef GUI < ConcreteElement
 	%     gui.get('<strong>CLOSE</strong>') - closes the figure and its dependent figures
 	%
 	% The list of GUI properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphical user interface.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphical user interface.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graphical user interface.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphical user interface.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphical user interface.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphical user interface.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-	%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-	%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-	%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-	%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
-	%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-	%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
-	%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-	%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
-	%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
-	%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
-	%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-	%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-	%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
-	%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-	%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-	%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-	%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graphical user interface.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphical user interface.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphical user interface.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graphical user interface.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphical user interface.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphical user interface.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphical user interface.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+	%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+	%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+	%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+	%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
+	%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+	%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
+	%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+	%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
+	%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
+	%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
+	%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+	%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+	%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
+	%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+	%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+	%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+	%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
 	%
 	% GUI methods (constructor):
 	%  GUI - constructor
@@ -144,107 +145,107 @@ classdef GUI < ConcreteElement
 	% See also uifigure, GUIElement, GUIFig.
 	
 	properties (Constant) % properties
-		WAITBAR = 8; %CET: Computational Efficiency Trick
+		WAITBAR = 9; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
 		WAITBAR_CATEGORY = 9;
 		WAITBAR_FORMAT = 4;
 		
-		DRAW = 9; %CET: Computational Efficiency Trick
+		DRAW = 10; %CET: Computational Efficiency Trick
 		DRAW_TAG = 'DRAW';
 		DRAW_CATEGORY = 6;
 		DRAW_FORMAT = 4;
 		
-		DRAWN = 10; %CET: Computational Efficiency Trick
+		DRAWN = 11; %CET: Computational Efficiency Trick
 		DRAWN_TAG = 'DRAWN';
 		DRAWN_CATEGORY = 6;
 		DRAWN_FORMAT = 4;
 		
-		TITLE = 11; %CET: Computational Efficiency Trick
+		TITLE = 12; %CET: Computational Efficiency Trick
 		TITLE_TAG = 'TITLE';
 		TITLE_CATEGORY = 9;
 		TITLE_FORMAT = 2;
 		
-		POSITION = 12; %CET: Computational Efficiency Trick
+		POSITION = 13; %CET: Computational Efficiency Trick
 		POSITION_TAG = 'POSITION';
 		POSITION_CATEGORY = 9;
 		POSITION_FORMAT = 12;
 		
-		BKGCOLOR = 13; %CET: Computational Efficiency Trick
+		BKGCOLOR = 14; %CET: Computational Efficiency Trick
 		BKGCOLOR_TAG = 'BKGCOLOR';
 		BKGCOLOR_CATEGORY = 9;
 		BKGCOLOR_FORMAT = 20;
 		
-		H_MENUBAR = 14; %CET: Computational Efficiency Trick
+		H_MENUBAR = 15; %CET: Computational Efficiency Trick
 		H_MENUBAR_TAG = 'H_MENUBAR';
 		H_MENUBAR_CATEGORY = 7;
 		H_MENUBAR_FORMAT = 19;
 		
-		MENUBAR = 15; %CET: Computational Efficiency Trick
+		MENUBAR = 16; %CET: Computational Efficiency Trick
 		MENUBAR_TAG = 'MENUBAR';
 		MENUBAR_CATEGORY = 9;
 		MENUBAR_FORMAT = 4;
 		
-		H_MENU_ABOUT = 16; %CET: Computational Efficiency Trick
+		H_MENU_ABOUT = 17; %CET: Computational Efficiency Trick
 		H_MENU_ABOUT_TAG = 'H_MENU_ABOUT';
 		H_MENU_ABOUT_CATEGORY = 7;
 		H_MENU_ABOUT_FORMAT = 18;
 		
-		MENU_ABOUT = 17; %CET: Computational Efficiency Trick
+		MENU_ABOUT = 18; %CET: Computational Efficiency Trick
 		MENU_ABOUT_TAG = 'MENU_ABOUT';
 		MENU_ABOUT_CATEGORY = 9;
 		MENU_ABOUT_FORMAT = 4;
 		
-		H_TOOLBAR = 18; %CET: Computational Efficiency Trick
+		H_TOOLBAR = 19; %CET: Computational Efficiency Trick
 		H_TOOLBAR_TAG = 'H_TOOLBAR';
 		H_TOOLBAR_CATEGORY = 7;
 		H_TOOLBAR_FORMAT = 18;
 		
-		H_TOOLS = 19; %CET: Computational Efficiency Trick
+		H_TOOLS = 20; %CET: Computational Efficiency Trick
 		H_TOOLS_TAG = 'H_TOOLS';
 		H_TOOLS_CATEGORY = 7;
 		H_TOOLS_FORMAT = 19;
 		
-		TOOLBAR = 20; %CET: Computational Efficiency Trick
+		TOOLBAR = 21; %CET: Computational Efficiency Trick
 		TOOLBAR_TAG = 'TOOLBAR';
 		TOOLBAR_CATEGORY = 9;
 		TOOLBAR_FORMAT = 4;
 		
-		TOOL_ABOUT = 21; %CET: Computational Efficiency Trick
+		TOOL_ABOUT = 22; %CET: Computational Efficiency Trick
 		TOOL_ABOUT_TAG = 'TOOL_ABOUT';
 		TOOL_ABOUT_CATEGORY = 9;
 		TOOL_ABOUT_FORMAT = 4;
 		
-		CLOSEREQ = 22; %CET: Computational Efficiency Trick
+		CLOSEREQ = 23; %CET: Computational Efficiency Trick
 		CLOSEREQ_TAG = 'CLOSEREQ';
 		CLOSEREQ_CATEGORY = 9;
 		CLOSEREQ_FORMAT = 4;
 		
-		H = 23; %CET: Computational Efficiency Trick
+		H = 24; %CET: Computational Efficiency Trick
 		H_TAG = 'H';
 		H_CATEGORY = 7;
 		H_FORMAT = 18;
 		
-		RESIZE = 24; %CET: Computational Efficiency Trick
+		RESIZE = 25; %CET: Computational Efficiency Trick
 		RESIZE_TAG = 'RESIZE';
 		RESIZE_CATEGORY = 6;
 		RESIZE_FORMAT = 4;
 		
-		SHOW = 25; %CET: Computational Efficiency Trick
+		SHOW = 26; %CET: Computational Efficiency Trick
 		SHOW_TAG = 'SHOW';
 		SHOW_CATEGORY = 6;
 		SHOW_FORMAT = 4;
 		
-		HIDE = 26; %CET: Computational Efficiency Trick
+		HIDE = 27; %CET: Computational Efficiency Trick
 		HIDE_TAG = 'HIDE';
 		HIDE_CATEGORY = 6;
 		HIDE_FORMAT = 4;
 		
-		DELETE = 27; %CET: Computational Efficiency Trick
+		DELETE = 28; %CET: Computational Efficiency Trick
 		DELETE_TAG = 'DELETE';
 		DELETE_CATEGORY = 6;
 		DELETE_FORMAT = 4;
 		
-		CLOSE = 28; %CET: Computational Efficiency Trick
+		CLOSE = 29; %CET: Computational Efficiency Trick
 		CLOSE_TAG = 'CLOSE';
 		CLOSE_CATEGORY = 6;
 		CLOSE_FORMAT = 4;
@@ -261,34 +262,35 @@ classdef GUI < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GUI properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphical user interface.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphical user interface.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graphical user interface.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphical user interface.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphical user interface.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphical user interface.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-			%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
-			%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-			%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-			%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
-			%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-			%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
-			%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-			%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
-			%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
-			%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
-			%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-			%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-			%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
-			%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-			%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-			%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-			%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graphical user interface.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphical user interface.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphical user interface.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graphical user interface.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphical user interface.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphical user interface.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphical user interface.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+			%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI.
+			%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+			%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+			%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
+			%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+			%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
+			%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+			%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
+			%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
+			%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
+			%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+			%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+			%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates POSITION when figure size is changed.
+			%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+			%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+			%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+			%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
 			%
 			% See also Category, Format.
 			
@@ -350,25 +352,25 @@ classdef GUI < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
-				case 4 % Category.DATA
 					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
 				case 6 % Category.QUERY
-					prop_list = [7 9 10 24 25 26 27 28];
+					prop_list = [8 10 11 25 26 27 28 29];
 				case 7 % Category.EVANESCENT
-					prop_list = [14 16 18 19 23];
+					prop_list = [15 17 19 20 24];
 				case 9 % Category.GUI
-					prop_list = [8 11 12 13 15 17 20 21 22];
+					prop_list = [9 12 13 14 16 18 21 22 23];
 				otherwise
 					prop_list = [];
 			end
@@ -394,13 +396,13 @@ classdef GUI < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 28;
+				prop_number = 29;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -443,7 +445,7 @@ classdef GUI < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 28 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 29 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -481,7 +483,7 @@ classdef GUI < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -514,7 +516,7 @@ classdef GUI < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -543,7 +545,7 @@ classdef GUI < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				gui_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' };
+				gui_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE' };
 				tag = gui_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -570,7 +572,7 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			gui_category_list = { 1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6 };
+			gui_category_list = { 1  1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6 };
 			prop_category = gui_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -596,7 +598,7 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			gui_format_list = { 2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4 };
+			gui_format_list = { 2  2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4 };
 			prop_format = gui_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -622,7 +624,7 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			gui_description_list = { 'NAME (constant, string) is the name of the graphical user interface.'  'DESCRIPTION (constant, string) is the description of the graphical user interface.'  'TEMPLATE (parameter, item) is the template of the graphical user interface.'  'ID (data, string) is a few-letter code for the graphical user interface.'  'LABEL (metadata, string) is an extended label of the graphical user interface.'  'NOTES (metadata, string) are some specific notes about the graphical user interface.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates POSITION when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.' };
+			gui_description_list = { 'ELCLASS (constant, string) is the class of the graphical user interface.'  'NAME (constant, string) is the name of the graphical user interface.'  'DESCRIPTION (constant, string) is the description of the graphical user interface.'  'TEMPLATE (parameter, item) is the template of the graphical user interface.'  'ID (data, string) is a few-letter code for the graphical user interface.'  'LABEL (metadata, string) is an extended label of the graphical user interface.'  'NOTES (metadata, string) are some specific notes about the graphical user interface.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates POSITION when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.' };
 			prop_description = gui_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -648,49 +650,49 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % GUI.WAITBAR
+				case 9 % GUI.WAITBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 9 % GUI.DRAW
+				case 10 % GUI.DRAW
 					prop_settings = Format.getFormatSettings(4);
-				case 10 % GUI.DRAWN
+				case 11 % GUI.DRAWN
 					prop_settings = Format.getFormatSettings(4);
-				case 11 % GUI.TITLE
+				case 12 % GUI.TITLE
 					prop_settings = Format.getFormatSettings(2);
-				case 12 % GUI.POSITION
+				case 13 % GUI.POSITION
 					prop_settings = Format.getFormatSettings(12);
-				case 13 % GUI.BKGCOLOR
+				case 14 % GUI.BKGCOLOR
 					prop_settings = Format.getFormatSettings(20);
-				case 14 % GUI.H_MENUBAR
+				case 15 % GUI.H_MENUBAR
 					prop_settings = Format.getFormatSettings(19);
-				case 15 % GUI.MENUBAR
+				case 16 % GUI.MENUBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 16 % GUI.H_MENU_ABOUT
+				case 17 % GUI.H_MENU_ABOUT
 					prop_settings = Format.getFormatSettings(18);
-				case 17 % GUI.MENU_ABOUT
+				case 18 % GUI.MENU_ABOUT
 					prop_settings = Format.getFormatSettings(4);
-				case 18 % GUI.H_TOOLBAR
+				case 19 % GUI.H_TOOLBAR
 					prop_settings = Format.getFormatSettings(18);
-				case 19 % GUI.H_TOOLS
+				case 20 % GUI.H_TOOLS
 					prop_settings = Format.getFormatSettings(19);
-				case 20 % GUI.TOOLBAR
+				case 21 % GUI.TOOLBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 21 % GUI.TOOL_ABOUT
+				case 22 % GUI.TOOL_ABOUT
 					prop_settings = Format.getFormatSettings(4);
-				case 22 % GUI.CLOSEREQ
+				case 23 % GUI.CLOSEREQ
 					prop_settings = Format.getFormatSettings(4);
-				case 23 % GUI.H
+				case 24 % GUI.H
 					prop_settings = Format.getFormatSettings(18);
-				case 24 % GUI.RESIZE
+				case 25 % GUI.RESIZE
 					prop_settings = Format.getFormatSettings(4);
-				case 25 % GUI.SHOW
+				case 26 % GUI.SHOW
 					prop_settings = Format.getFormatSettings(4);
-				case 26 % GUI.HIDE
+				case 27 % GUI.HIDE
 					prop_settings = Format.getFormatSettings(4);
-				case 27 % GUI.DELETE
+				case 28 % GUI.DELETE
 					prop_settings = Format.getFormatSettings(4);
-				case 28 % GUI.CLOSE
+				case 29 % GUI.CLOSE
 					prop_settings = Format.getFormatSettings(4);
-				case 3 % GUI.TEMPLATE
+				case 4 % GUI.TEMPLATE
 					prop_settings = 'GUI';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -719,59 +721,61 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % GUI.WAITBAR
+				case 9 % GUI.WAITBAR
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 9 % GUI.DRAW
+				case 10 % GUI.DRAW
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 10 % GUI.DRAWN
+				case 11 % GUI.DRAWN
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 11 % GUI.TITLE
+				case 12 % GUI.TITLE
 					prop_default = 'BRAPH2';
-				case 12 % GUI.POSITION
+				case 13 % GUI.POSITION
 					prop_default = [.00 .00 (PanelElement.getPropDefault('MIN_WIDTH')+20)/w(0, 'pixels') 1.00];
-				case 13 % GUI.BKGCOLOR
+				case 14 % GUI.BKGCOLOR
 					prop_default = [1 0.9725 0.929];
-				case 14 % GUI.H_MENUBAR
+				case 15 % GUI.H_MENUBAR
 					prop_default = Format.getFormatDefault(19, GUI.getPropSettings(prop));
-				case 15 % GUI.MENUBAR
+				case 16 % GUI.MENUBAR
 					prop_default = false;
-				case 16 % GUI.H_MENU_ABOUT
+				case 17 % GUI.H_MENU_ABOUT
 					prop_default = Format.getFormatDefault(18, GUI.getPropSettings(prop));
-				case 17 % GUI.MENU_ABOUT
+				case 18 % GUI.MENU_ABOUT
 					prop_default = false;
-				case 18 % GUI.H_TOOLBAR
+				case 19 % GUI.H_TOOLBAR
 					prop_default = Format.getFormatDefault(18, GUI.getPropSettings(prop));
-				case 19 % GUI.H_TOOLS
+				case 20 % GUI.H_TOOLS
 					prop_default = Format.getFormatDefault(19, GUI.getPropSettings(prop));
-				case 20 % GUI.TOOLBAR
+				case 21 % GUI.TOOLBAR
 					prop_default = false;
-				case 21 % GUI.TOOL_ABOUT
+				case 22 % GUI.TOOL_ABOUT
 					prop_default = false;
-				case 22 % GUI.CLOSEREQ
+				case 23 % GUI.CLOSEREQ
 					prop_default = true;
-				case 23 % GUI.H
+				case 24 % GUI.H
 					prop_default = Format.getFormatDefault(18, GUI.getPropSettings(prop));
-				case 24 % GUI.RESIZE
+				case 25 % GUI.RESIZE
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 25 % GUI.SHOW
+				case 26 % GUI.SHOW
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 26 % GUI.HIDE
+				case 27 % GUI.HIDE
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 27 % GUI.DELETE
+				case 28 % GUI.DELETE
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 28 % GUI.CLOSE
+				case 29 % GUI.CLOSE
 					prop_default = Format.getFormatDefault(4, GUI.getPropSettings(prop));
-				case 1 % GUI.NAME
+				case 1 % GUI.ELCLASS
 					prop_default = 'GUI';
-				case 2 % GUI.DESCRIPTION
-					prop_default = 'GUI renders a figure with its basic functionalities.';
-				case 3 % GUI.TEMPLATE
+				case 2 % GUI.NAME
+					prop_default = 'GUI';
+				case 3 % GUI.DESCRIPTION
+					prop_default = 'A GUI renders a figure with its basic functionalities.';
+				case 4 % GUI.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GUI.getPropSettings(prop));
-				case 4 % GUI.ID
+				case 5 % GUI.ID
 					prop_default = 'GUI ID';
-				case 5 % GUI.LABEL
+				case 6 % GUI.LABEL
 					prop_default = 'GUI label';
-				case 6 % GUI.NOTES
+				case 7 % GUI.NOTES
 					prop_default = 'GUI notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -837,55 +841,55 @@ classdef GUI < ConcreteElement
 			prop = GUI.getPropProp(pointer);
 			
 			switch prop
-				case 8 % GUI.WAITBAR
+				case 9 % GUI.WAITBAR
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 9 % GUI.DRAW
+				case 10 % GUI.DRAW
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 10 % GUI.DRAWN
+				case 11 % GUI.DRAWN
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 11 % GUI.TITLE
+				case 12 % GUI.TITLE
 					check = Format.checkFormat(2, value, GUI.getPropSettings(prop));
-				case 12 % GUI.POSITION
+				case 13 % GUI.POSITION
 					check = Format.checkFormat(12, value, GUI.getPropSettings(prop));
 					if check
 						check = (length(value) == 4) && all(value(3:4) >= 0);
 					end
-				case 13 % GUI.BKGCOLOR
+				case 14 % GUI.BKGCOLOR
 					check = Format.checkFormat(20, value, GUI.getPropSettings(prop));
-				case 14 % GUI.H_MENUBAR
+				case 15 % GUI.H_MENUBAR
 					check = Format.checkFormat(19, value, GUI.getPropSettings(prop));
-				case 15 % GUI.MENUBAR
+				case 16 % GUI.MENUBAR
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 16 % GUI.H_MENU_ABOUT
+				case 17 % GUI.H_MENU_ABOUT
 					check = Format.checkFormat(18, value, GUI.getPropSettings(prop));
-				case 17 % GUI.MENU_ABOUT
+				case 18 % GUI.MENU_ABOUT
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 18 % GUI.H_TOOLBAR
+				case 19 % GUI.H_TOOLBAR
 					check = Format.checkFormat(18, value, GUI.getPropSettings(prop));
-				case 19 % GUI.H_TOOLS
+				case 20 % GUI.H_TOOLS
 					check = Format.checkFormat(19, value, GUI.getPropSettings(prop));
-				case 20 % GUI.TOOLBAR
+				case 21 % GUI.TOOLBAR
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 21 % GUI.TOOL_ABOUT
+				case 22 % GUI.TOOL_ABOUT
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 22 % GUI.CLOSEREQ
+				case 23 % GUI.CLOSEREQ
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 23 % GUI.H
+				case 24 % GUI.H
 					check = Format.checkFormat(18, value, GUI.getPropSettings(prop));
-				case 24 % GUI.RESIZE
+				case 25 % GUI.RESIZE
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 25 % GUI.SHOW
+				case 26 % GUI.SHOW
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 26 % GUI.HIDE
+				case 27 % GUI.HIDE
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 27 % GUI.DELETE
+				case 28 % GUI.DELETE
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 28 % GUI.CLOSE
+				case 29 % GUI.CLOSE
 					check = Format.checkFormat(4, value, GUI.getPropSettings(prop));
-				case 3 % GUI.TEMPLATE
+				case 4 % GUI.TEMPLATE
 					check = Format.checkFormat(8, value, GUI.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -915,23 +919,23 @@ classdef GUI < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 11 % GUI.TITLE
+				case 12 % GUI.TITLE
 					if gui.get('DRAWN')
 					    set(gui.get('H'), 'Name', gui.get('TITLE'))
 					end
 					
-				case 12 % GUI.POSITION
+				case 13 % GUI.POSITION
 					if gui.get('DRAWN')
 					    set(gui.get('H'), 'Position', gui.get('POSITION'))
 					end
 					
-				case 13 % GUI.BKGCOLOR
+				case 14 % GUI.BKGCOLOR
 					if gui.get('DRAWN')
 					    set(gui.get('H'), 'Color', gui.get('BKGCOLOR'))
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						postset@ConcreteElement(gui, prop);
 					end
 			end
@@ -954,7 +958,7 @@ classdef GUI < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % GUI.DRAW
+				case 10 % GUI.DRAW
 					if check_graphics(gui.memorize('H'), 'figure')
 					
 					    if gui.get('MENUBAR')
@@ -979,16 +983,16 @@ classdef GUI < ConcreteElement
 					    value = false;
 					end
 					
-				case 10 % GUI.DRAWN
+				case 11 % GUI.DRAWN
 					value = check_graphics(gui.getr('H'), 'figure');
 					
-				case 14 % GUI.H_MENUBAR
+				case 15 % GUI.H_MENUBAR
 					value = {};
 					if gui.get('MENU_ABOUT')
 					    value = [value, gui.memorize('H_MENU_ABOUT')];
 					end
 					
-				case 16 % GUI.H_MENU_ABOUT
+				case 17 % GUI.H_MENU_ABOUT
 					menu_about = uimenu(gui.get('H'), ... % f for figure
 					    'Tag', 'MENU.About', ...
 					    'Label', 'About' ...
@@ -1017,10 +1021,10 @@ classdef GUI < ConcreteElement
 					
 					value = menu_about;
 					
-				case 18 % GUI.H_TOOLBAR
+				case 19 % GUI.H_TOOLBAR
 					value = uitoolbar(gui.memorize('H'), 'Tag', 'TOOLBAR');
 					
-				case 19 % GUI.H_TOOLS
+				case 20 % GUI.H_TOOLS
 					toolbar = gui.memorize('H_TOOLBAR');
 					
 					value = {};
@@ -1073,7 +1077,7 @@ classdef GUI < ConcreteElement
 					    value = {value{:}, tool_spacer_1, tool_about_web, tool_about_forum, tool_about_twitter, tool_spacer_2, tool_about_license, tool_about_credits};
 					end
 					
-				case 23 % GUI.H
+				case 24 % GUI.H
 					f = uifigure( ...
 					    'Visible', 'off', ...
 					    'Tag', 'H', ...
@@ -1090,7 +1094,7 @@ classdef GUI < ConcreteElement
 					    );
 					value = f;
 					
-				case 24 % GUI.RESIZE
+				case 25 % GUI.RESIZE
 					if gui.get('DRAWN')
 					    gui.set('POSITION', gui.get('H').get('Position'))
 					    
@@ -1106,7 +1110,7 @@ classdef GUI < ConcreteElement
 					    value = false;
 					end
 					
-				case 25 % GUI.SHOW
+				case 26 % GUI.SHOW
 					if gui.get('DRAWN')
 					    figure(gui.get('H')) 
 					    set(gui.get('H'), ...
@@ -1126,7 +1130,7 @@ classdef GUI < ConcreteElement
 					    value = false;
 					end
 					
-				case 26 % GUI.HIDE
+				case 27 % GUI.HIDE
 					if gui.get('DRAWN')
 					    set(gui.get('H'), 'Visible', 'off')
 					
@@ -1142,7 +1146,7 @@ classdef GUI < ConcreteElement
 					    value = false;
 					end
 					
-				case 27 % GUI.DELETE
+				case 28 % GUI.DELETE
 					if gui.get('DRAWN')
 					    gui.set('POSITION', gui.get('H').get('Position'))
 					
@@ -1166,7 +1170,7 @@ classdef GUI < ConcreteElement
 					    value = false;
 					end
 					
-				case 28 % GUI.CLOSE
+				case 29 % GUI.CLOSE
 					if gui.get('DRAWN')
 					
 					    title = gui.get('TITLE');
@@ -1200,7 +1204,7 @@ classdef GUI < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(gui, prop, varargin{:});
 					else
 						value = calculateValue@Element(gui, prop, varargin{:});

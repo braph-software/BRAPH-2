@@ -2,41 +2,42 @@ classdef GraphAdjPF < PanelFig
 	%GraphAdjPF is a plot of a graph adjacency matrix.
 	% It is a subclass of <a href="matlab:help PanelFig">PanelFig</a>.
 	%
-	% GraphAdjPF manages the plot of an adjacency matrix.
+	% A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of an adjacency matrix.
 	%
 	% The list of GraphAdjPF properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure graph adjacency matrix.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure graph adjacency matrix.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure graph adjacency matrix.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure graph adjacency matrix.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure graph adjacency matrix.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure graph adjacency matrix.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph adjacency matrix.
-	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-	%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>25</strong> <strong>G</strong> 	G (metadata, item) is the graph.
-	%  <strong>26</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
-	%  <strong>27</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
-	%  <strong>28</strong> <strong>WEIGHTED</strong> 	WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.
-	%  <strong>29</strong> <strong>COLORBAR</strong> 	COLORBAR (figure, logical) detemines whether to show the colorbar.
-	%  <strong>30</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-	%  <strong>31</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the adjacency matrix ans stores it.
-	%  <strong>32</strong> <strong>H_ADJ</strong> 	H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for graph adjacency matrix.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for graph adjacency matrix.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for graph adjacency matrix.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for graph adjacency matrix.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for graph adjacency matrix.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for graph adjacency matrix.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph adjacency matrix.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>G</strong> 	G (metadata, item) is the graph.
+	%  <strong>27</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
+	%  <strong>28</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
+	%  <strong>29</strong> <strong>WEIGHTED</strong> 	WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.
+	%  <strong>30</strong> <strong>COLORBAR</strong> 	COLORBAR (figure, logical) detemines whether to show the colorbar.
+	%  <strong>31</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+	%  <strong>32</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the adjacency matrix ans stores it.
+	%  <strong>33</strong> <strong>H_ADJ</strong> 	H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.
 	%
 	% GraphAdjPF methods (constructor):
 	%  GraphAdjPF - constructor
@@ -56,33 +57,33 @@ classdef GraphAdjPF < PanelFig
 	%  unchecked - sets a property to NOT checked
 	%
 	% GraphAdjPF methods (display):
-	%  tostring - string with information about the panel figure graph
-	%  disp - displays information about the panel figure graph
-	%  tree - displays the tree of the panel figure graph
+	%  tostring - string with information about the panel figure for graph adjacency matrix
+	%  disp - displays information about the panel figure for graph adjacency matrix
+	%  tree - displays the tree of the panel figure for graph adjacency matrix
 	%
 	% GraphAdjPF methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel figure graph are equal (values, locked)
+	%  isequal - determines whether two panel figure for graph adjacency matrix are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel figure graph
+	%  copy - copies the panel figure for graph adjacency matrix
 	%
 	% GraphAdjPF methods (save/load, Static):
-	%  save - saves BRAPH2 panel figure graph as b2 file
-	%  load - loads a BRAPH2 panel figure graph from a b2 file
+	%  save - saves BRAPH2 panel figure for graph adjacency matrix as b2 file
+	%  load - loads a BRAPH2 panel figure for graph adjacency matrix from a b2 file
 	%
 	% GraphAdjPF method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel figure graph
+	%  encodeJSON - returns a JSON string encoding the panel figure for graph adjacency matrix
 	%
 	% GraphAdjPF method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel figure graph
+	%   decodeJSON - returns a JSON string encoding the panel figure for graph adjacency matrix
 	%
 	% GraphAdjPF methods (inspection, Static):
-	%  getClass - returns the class of the panel figure graph
+	%  getClass - returns the class of the panel figure for graph adjacency matrix
 	%  getSubclasses - returns all subclasses of GraphAdjPF
-	%  getProps - returns the property list of the panel figure graph
-	%  getPropNumber - returns the property number of the panel figure graph
+	%  getProps - returns the property list of the panel figure for graph adjacency matrix
+	%  getPropNumber - returns the property number of the panel figure for graph adjacency matrix
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -127,64 +128,64 @@ classdef GraphAdjPF < PanelFig
 	% See also Graph, GraphAdjPF.
 	
 	properties (Constant) % properties
-		H_AXES = 22; %CET: Computational Efficiency Trick
+		H_AXES = 23; %CET: Computational Efficiency Trick
 		H_AXES_TAG = 'H_AXES';
 		H_AXES_CATEGORY = 7;
 		H_AXES_FORMAT = 18;
 		
-		ST_AXIS = 23; %CET: Computational Efficiency Trick
+		ST_AXIS = 24; %CET: Computational Efficiency Trick
 		ST_AXIS_TAG = 'ST_AXIS';
 		ST_AXIS_CATEGORY = 8;
 		ST_AXIS_FORMAT = 8;
 		
-		LISTENER_ST_AXIS = 24; %CET: Computational Efficiency Trick
+		LISTENER_ST_AXIS = 25; %CET: Computational Efficiency Trick
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
 		LISTENER_ST_AXIS_CATEGORY = 7;
 		LISTENER_ST_AXIS_FORMAT = 18;
 		
-		G = 25; %CET: Computational Efficiency Trick
+		G = 26; %CET: Computational Efficiency Trick
 		G_TAG = 'G';
 		G_CATEGORY = 2;
 		G_FORMAT = 8;
 		
-		LAYERS = 26; %CET: Computational Efficiency Trick
+		LAYERS = 27; %CET: Computational Efficiency Trick
 		LAYERS_TAG = 'LAYERS';
 		LAYERS_CATEGORY = 8;
 		LAYERS_FORMAT = 12;
 		
-		LAYERLOCK = 27; %CET: Computational Efficiency Trick
+		LAYERLOCK = 28; %CET: Computational Efficiency Trick
 		LAYERLOCK_TAG = 'LAYERLOCK';
 		LAYERLOCK_CATEGORY = 2;
 		LAYERLOCK_FORMAT = 4;
 		
-		WEIGHTED = 28; %CET: Computational Efficiency Trick
+		WEIGHTED = 29; %CET: Computational Efficiency Trick
 		WEIGHTED_TAG = 'WEIGHTED';
 		WEIGHTED_CATEGORY = 8;
 		WEIGHTED_FORMAT = 4;
 		
-		COLORBAR = 29; %CET: Computational Efficiency Trick
+		COLORBAR = 30; %CET: Computational Efficiency Trick
 		COLORBAR_TAG = 'COLORBAR';
 		COLORBAR_CATEGORY = 8;
 		COLORBAR_FORMAT = 4;
 		
-		ST_AMBIENT = 30; %CET: Computational Efficiency Trick
+		ST_AMBIENT = 31; %CET: Computational Efficiency Trick
 		ST_AMBIENT_TAG = 'ST_AMBIENT';
 		ST_AMBIENT_CATEGORY = 8;
 		ST_AMBIENT_FORMAT = 8;
 		
-		SETUP = 31; %CET: Computational Efficiency Trick
+		SETUP = 32; %CET: Computational Efficiency Trick
 		SETUP_TAG = 'SETUP';
 		SETUP_CATEGORY = 6;
 		SETUP_FORMAT = 1;
 		
-		H_ADJ = 32; %CET: Computational Efficiency Trick
+		H_ADJ = 33; %CET: Computational Efficiency Trick
 		H_ADJ_TAG = 'H_ADJ';
 		H_ADJ_CATEGORY = 7;
 		H_ADJ_FORMAT = 18;
 	end
 	methods % constructor
 		function pf = GraphAdjPF(varargin)
-			%GraphAdjPF() creates a panel figure graph.
+			%GraphAdjPF() creates a panel figure for graph adjacency matrix.
 			%
 			% GraphAdjPF(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -194,38 +195,39 @@ classdef GraphAdjPF < PanelFig
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GraphAdjPF properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure graph adjacency matrix.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure graph adjacency matrix.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure graph adjacency matrix.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure graph adjacency matrix.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure graph adjacency matrix.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure graph adjacency matrix.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph adjacency matrix.
-			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>12</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>14</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>15</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>16</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>17</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-			%  <strong>18</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>19</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>20</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>21</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-			%  <strong>22</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>23</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>24</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>25</strong> <strong>G</strong> 	G (metadata, item) is the graph.
-			%  <strong>26</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
-			%  <strong>27</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
-			%  <strong>28</strong> <strong>WEIGHTED</strong> 	WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.
-			%  <strong>29</strong> <strong>COLORBAR</strong> 	COLORBAR (figure, logical) detemines whether to show the colorbar.
-			%  <strong>30</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-			%  <strong>31</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the adjacency matrix ans stores it.
-			%  <strong>32</strong> <strong>H_ADJ</strong> 	H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for graph adjacency matrix.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for graph adjacency matrix.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for graph adjacency matrix.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for graph adjacency matrix.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for graph adjacency matrix.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for graph adjacency matrix.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph adjacency matrix.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>G</strong> 	G (metadata, item) is the graph.
+			%  <strong>27</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
+			%  <strong>28</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
+			%  <strong>29</strong> <strong>WEIGHTED</strong> 	WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.
+			%  <strong>30</strong> <strong>COLORBAR</strong> 	COLORBAR (figure, logical) detemines whether to show the colorbar.
+			%  <strong>31</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+			%  <strong>32</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the adjacency matrix ans stores it.
+			%  <strong>33</strong> <strong>H_ADJ</strong> 	H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.
 			%
 			% See also Category, Format.
 			
@@ -234,12 +236,12 @@ classdef GraphAdjPF < PanelFig
 	end
 	methods (Static) % inspection
 		function pf_class = getClass()
-			%GETCLASS returns the class of the panel figure graph.
+			%GETCLASS returns the class of the panel figure for graph adjacency matrix.
 			%
 			% CLASS = GraphAdjPF.GETCLASS() returns the class 'GraphAdjPF'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PF.GETCLASS() returns the class of the panel figure graph PF.
+			%  CLASS = PF.GETCLASS() returns the class of the panel figure for graph adjacency matrix PF.
 			%  CLASS = Element.GETCLASS(PF) returns the class of 'PF'.
 			%  CLASS = Element.GETCLASS('GraphAdjPF') returns 'GraphAdjPF'.
 			%
@@ -249,12 +251,12 @@ classdef GraphAdjPF < PanelFig
 			pf_class = 'GraphAdjPF';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel figure graph.
+			%GETSUBCLASSES returns all subclasses of the panel figure for graph adjacency matrix.
 			%
 			% LIST = GraphAdjPF.GETSUBCLASSES() returns all subclasses of 'GraphAdjPF'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure graph PF.
+			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure for graph adjacency matrix PF.
 			%  LIST = Element.GETSUBCLASSES(PF) returns all subclasses of 'PF'.
 			%  LIST = Element.GETSUBCLASSES('GraphAdjPF') returns all subclasses of 'GraphAdjPF'.
 			%
@@ -266,16 +268,16 @@ classdef GraphAdjPF < PanelFig
 			subclass_list = { 'GraphAdjPF' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel figure graph.
+			%GETPROPS returns the property list of panel figure for graph adjacency matrix.
 			%
-			% PROPS = GraphAdjPF.GETPROPS() returns the property list of panel figure graph
+			% PROPS = GraphAdjPF.GETPROPS() returns the property list of panel figure for graph adjacency matrix
 			%  as a row vector.
 			%
 			% PROPS = GraphAdjPF.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure graph PF.
+			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure for graph adjacency matrix PF.
 			%  PROPS = Element.GETPROPS(PF[, CATEGORY]) returns the property list of 'PF'.
 			%  PROPS = Element.GETPROPS('GraphAdjPF'[, CATEGORY]) returns the property list of 'GraphAdjPF'.
 			%
@@ -287,41 +289,41 @@ classdef GraphAdjPF < PanelFig
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6 25 27];
+					prop_list = [6 7 26 28];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
-				case 4 % Category.DATA
 					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
 				case 6 % Category.QUERY
-					prop_list = [7 10 11 15 16 17 18 31];
+					prop_list = [8 11 12 16 17 18 19 32];
 				case 7 % Category.EVANESCENT
-					prop_list = [9 14 20 21 22 24 32];
+					prop_list = [10 15 21 22 23 25 33];
 				case 8 % Category.FIGURE
-					prop_list = [13 19 23 26 28 29 30];
+					prop_list = [14 20 24 27 29 30 31];
 				case 9 % Category.GUI
-					prop_list = [8 12];
+					prop_list = [9 13];
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel figure graph.
+			%GETPROPNUMBER returns the property number of panel figure for graph adjacency matrix.
 			%
-			% N = GraphAdjPF.GETPROPNUMBER() returns the property number of panel figure graph.
+			% N = GraphAdjPF.GETPROPNUMBER() returns the property number of panel figure for graph adjacency matrix.
 			%
-			% N = GraphAdjPF.GETPROPNUMBER(CATEGORY) returns the property number of panel figure graph
+			% N = GraphAdjPF.GETPROPNUMBER(CATEGORY) returns the property number of panel figure for graph adjacency matrix
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure graph PF.
+			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure for graph adjacency matrix PF.
 			%  N = Element.GETPROPNUMBER(PF) returns the property number of 'PF'.
 			%  N = Element.GETPROPNUMBER('GraphAdjPF') returns the property number of 'GraphAdjPF'.
 			%
@@ -333,13 +335,13 @@ classdef GraphAdjPF < PanelFig
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 32;
+				prop_number = 33;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 4;
 				case 3 % Category.PARAMETER
@@ -359,7 +361,7 @@ classdef GraphAdjPF < PanelFig
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel figure graph/error.
+			%EXISTSPROP checks whether property exists in panel figure for graph adjacency matrix/error.
 			%
 			% CHECK = GraphAdjPF.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -384,7 +386,7 @@ classdef GraphAdjPF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 32 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 33 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -397,7 +399,7 @@ classdef GraphAdjPF < PanelFig
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel figure graph/error.
+			%EXISTSTAG checks whether tag exists in panel figure for graph adjacency matrix/error.
 			%
 			% CHECK = GraphAdjPF.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -422,7 +424,7 @@ classdef GraphAdjPF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -455,7 +457,7 @@ classdef GraphAdjPF < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -484,7 +486,7 @@ classdef GraphAdjPF < PanelFig
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				graphadjpf_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' };
+				graphadjpf_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'WEIGHTED'  'COLORBAR'  'ST_AMBIENT'  'SETUP'  'H_ADJ' };
 				tag = graphadjpf_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -511,7 +513,7 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graphadjpf_category_list = { 1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  8  2  8  8  8  6  7 };
+			graphadjpf_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  8  2  8  8  8  6  7 };
 			prop_category = graphadjpf_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -537,7 +539,7 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graphadjpf_format_list = { 2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  12  4  4  4  8  1  18 };
+			graphadjpf_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  12  4  4  4  8  1  18 };
 			prop_format = graphadjpf_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -563,7 +565,7 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			graphadjpf_description_list = { 'NAME (constant, string) is the name of the panel figure graph adjacency matrix.'  'DESCRIPTION (constant, string) is the description of the panel figure graph adjacency matrix.'  'TEMPLATE (parameter, item) is the template of the panel figure graph adjacency matrix.'  'ID (data, string) is a few-letter code for the panel figure graph adjacency matrix.'  'LABEL (metadata, string) is an extended label of the panel figure graph adjacency matrix.'  'NOTES (metadata, string) are some specific notes about the panel figure graph adjacency matrix.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure graph adjacency matrix.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'G (metadata, item) is the graph.'  'LAYERS (figure, rvector) determines the indices of the layers.'  'LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.'  'WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.'  'COLORBAR (figure, logical) detemines whether to show the colorbar.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'SETUP (query, empty) calculates the adjacency matrix ans stores it.'  'H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.' };
+			graphadjpf_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix.'  'NAME (constant, string) is the name of the panel figure for graph adjacency matrix.'  'DESCRIPTION (constant, string) is the description of the panel figure for graph adjacency matrix.'  'TEMPLATE (parameter, item) is the template of the panel figure for graph adjacency matrix.'  'ID (data, string) is a few-letter code for the panel figure for graph adjacency matrix.'  'LABEL (metadata, string) is an extended label of the panel figure for graph adjacency matrix.'  'NOTES (metadata, string) are some specific notes about the panel figure for graph adjacency matrix.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure graph adjacency matrix.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'G (metadata, item) is the graph.'  'LAYERS (figure, rvector) determines the indices of the layers.'  'LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.'  'WEIGHTED (figure, logical) determines whether to show the weighted or binary adjacency matrix.'  'COLORBAR (figure, logical) detemines whether to show the colorbar.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'SETUP (query, empty) calculates the adjacency matrix ans stores it.'  'H_ADJ (evanescent, handle) is the handle for weighted adjacency matrix.' };
 			prop_description = graphadjpf_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -589,29 +591,29 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 22 % GraphAdjPF.H_AXES
+				case 23 % GraphAdjPF.H_AXES
 					prop_settings = Format.getFormatSettings(18);
-				case 23 % GraphAdjPF.ST_AXIS
+				case 24 % GraphAdjPF.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case 24 % GraphAdjPF.LISTENER_ST_AXIS
+				case 25 % GraphAdjPF.LISTENER_ST_AXIS
 					prop_settings = Format.getFormatSettings(18);
-				case 25 % GraphAdjPF.G
+				case 26 % GraphAdjPF.G
 					prop_settings = 'Graph';
-				case 26 % GraphAdjPF.LAYERS
+				case 27 % GraphAdjPF.LAYERS
 					prop_settings = Format.getFormatSettings(12);
-				case 27 % GraphAdjPF.LAYERLOCK
+				case 28 % GraphAdjPF.LAYERLOCK
 					prop_settings = Format.getFormatSettings(4);
-				case 28 % GraphAdjPF.WEIGHTED
+				case 29 % GraphAdjPF.WEIGHTED
 					prop_settings = Format.getFormatSettings(4);
-				case 29 % GraphAdjPF.COLORBAR
+				case 30 % GraphAdjPF.COLORBAR
 					prop_settings = Format.getFormatSettings(4);
-				case 30 % GraphAdjPF.ST_AMBIENT
+				case 31 % GraphAdjPF.ST_AMBIENT
 					prop_settings = 'SettingsAmbient';
-				case 31 % GraphAdjPF.SETUP
+				case 32 % GraphAdjPF.SETUP
 					prop_settings = Format.getFormatSettings(1);
-				case 32 % GraphAdjPF.H_ADJ
+				case 33 % GraphAdjPF.H_ADJ
 					prop_settings = Format.getFormatSettings(18);
-				case 3 % GraphAdjPF.TEMPLATE
+				case 4 % GraphAdjPF.TEMPLATE
 					prop_settings = 'GraphAdjPF';
 				otherwise
 					prop_settings = getPropSettings@PanelFig(prop);
@@ -640,39 +642,41 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 22 % GraphAdjPF.H_AXES
+				case 23 % GraphAdjPF.H_AXES
 					prop_default = Format.getFormatDefault(18, GraphAdjPF.getPropSettings(prop));
-				case 23 % GraphAdjPF.ST_AXIS
+				case 24 % GraphAdjPF.ST_AXIS
 					prop_default = SettingsAxis('GRID', false, 'AXIS', false, 'BOX', true);
-				case 24 % GraphAdjPF.LISTENER_ST_AXIS
+				case 25 % GraphAdjPF.LISTENER_ST_AXIS
 					prop_default = Format.getFormatDefault(18, GraphAdjPF.getPropSettings(prop));
-				case 25 % GraphAdjPF.G
+				case 26 % GraphAdjPF.G
 					prop_default = Format.getFormatDefault(8, GraphAdjPF.getPropSettings(prop));
-				case 26 % GraphAdjPF.LAYERS
+				case 27 % GraphAdjPF.LAYERS
 					prop_default = [1 1];
-				case 27 % GraphAdjPF.LAYERLOCK
+				case 28 % GraphAdjPF.LAYERLOCK
 					prop_default = false;
-				case 28 % GraphAdjPF.WEIGHTED
+				case 29 % GraphAdjPF.WEIGHTED
 					prop_default = true;
-				case 29 % GraphAdjPF.COLORBAR
+				case 30 % GraphAdjPF.COLORBAR
 					prop_default = true;
-				case 30 % GraphAdjPF.ST_AMBIENT
+				case 31 % GraphAdjPF.ST_AMBIENT
 					prop_default = SettingsAmbient('LIGHTING', 'none', 'MATERIAL', 'dull', 'CAMLIGHT', 'none', 'SHADING', 'flat', 'COLORMAP', 'jet');
-				case 31 % GraphAdjPF.SETUP
+				case 32 % GraphAdjPF.SETUP
 					prop_default = Format.getFormatDefault(1, GraphAdjPF.getPropSettings(prop));
-				case 32 % GraphAdjPF.H_ADJ
+				case 33 % GraphAdjPF.H_ADJ
 					prop_default = Format.getFormatDefault(18, GraphAdjPF.getPropSettings(prop));
-				case 1 % GraphAdjPF.NAME
+				case 1 % GraphAdjPF.ELCLASS
 					prop_default = 'GraphAdjPF';
-				case 2 % GraphAdjPF.DESCRIPTION
-					prop_default = 'GraphAdjPF manages the plot of an adjacency matrix.';
-				case 3 % GraphAdjPF.TEMPLATE
+				case 2 % GraphAdjPF.NAME
+					prop_default = 'Panel Figure for Graph Adjacency Matrix';
+				case 3 % GraphAdjPF.DESCRIPTION
+					prop_default = 'A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of an adjacency matrix.';
+				case 4 % GraphAdjPF.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GraphAdjPF.getPropSettings(prop));
-				case 4 % GraphAdjPF.ID
+				case 5 % GraphAdjPF.ID
 					prop_default = 'GraphAdjPF ID';
-				case 5 % GraphAdjPF.LABEL
+				case 6 % GraphAdjPF.LABEL
 					prop_default = 'GraphAdjPF label';
-				case 6 % GraphAdjPF.NOTES
+				case 7 % GraphAdjPF.NOTES
 					prop_default = 'GraphAdjPF notes';
 				otherwise
 					prop_default = getPropDefault@PanelFig(prop);
@@ -718,13 +722,13 @@ classdef GraphAdjPF < PanelFig
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case 26 % GraphAdjPF.LAYERS
+				case 27 % GraphAdjPF.LAYERS
 					if pf.get('LAYERLOCK')
 					    value = [value(1) value(1)];
 					end
 					
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						value = preset@PanelFig(pf, prop, value);
 					end
 			end
@@ -764,32 +768,32 @@ classdef GraphAdjPF < PanelFig
 			prop = GraphAdjPF.getPropProp(pointer);
 			
 			switch prop
-				case 22 % GraphAdjPF.H_AXES
+				case 23 % GraphAdjPF.H_AXES
 					check = Format.checkFormat(18, value, GraphAdjPF.getPropSettings(prop));
-				case 23 % GraphAdjPF.ST_AXIS
+				case 24 % GraphAdjPF.ST_AXIS
 					check = Format.checkFormat(8, value, GraphAdjPF.getPropSettings(prop));
-				case 24 % GraphAdjPF.LISTENER_ST_AXIS
+				case 25 % GraphAdjPF.LISTENER_ST_AXIS
 					check = Format.checkFormat(18, value, GraphAdjPF.getPropSettings(prop));
-				case 25 % GraphAdjPF.G
+				case 26 % GraphAdjPF.G
 					check = Format.checkFormat(8, value, GraphAdjPF.getPropSettings(prop));
-				case 26 % GraphAdjPF.LAYERS
+				case 27 % GraphAdjPF.LAYERS
 					check = Format.checkFormat(12, value, GraphAdjPF.getPropSettings(prop));
-				case 27 % GraphAdjPF.LAYERLOCK
+				case 28 % GraphAdjPF.LAYERLOCK
 					check = Format.checkFormat(4, value, GraphAdjPF.getPropSettings(prop));
-				case 28 % GraphAdjPF.WEIGHTED
+				case 29 % GraphAdjPF.WEIGHTED
 					check = Format.checkFormat(4, value, GraphAdjPF.getPropSettings(prop));
-				case 29 % GraphAdjPF.COLORBAR
+				case 30 % GraphAdjPF.COLORBAR
 					check = Format.checkFormat(4, value, GraphAdjPF.getPropSettings(prop));
-				case 30 % GraphAdjPF.ST_AMBIENT
+				case 31 % GraphAdjPF.ST_AMBIENT
 					check = Format.checkFormat(8, value, GraphAdjPF.getPropSettings(prop));
-				case 31 % GraphAdjPF.SETUP
+				case 32 % GraphAdjPF.SETUP
 					check = Format.checkFormat(1, value, GraphAdjPF.getPropSettings(prop));
-				case 32 % GraphAdjPF.H_ADJ
+				case 33 % GraphAdjPF.H_ADJ
 					check = Format.checkFormat(18, value, GraphAdjPF.getPropSettings(prop));
-				case 3 % GraphAdjPF.TEMPLATE
+				case 4 % GraphAdjPF.TEMPLATE
 					check = Format.checkFormat(8, value, GraphAdjPF.getPropSettings(prop));
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -819,7 +823,7 @@ classdef GraphAdjPF < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case 23 % GraphAdjPF.ST_AXIS
+				case 24 % GraphAdjPF.ST_AXIS
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -828,10 +832,10 @@ classdef GraphAdjPF < PanelFig
 					    end
 					end
 					
-				case 26 % GraphAdjPF.LAYERS
+				case 27 % GraphAdjPF.LAYERS
 					pf.get('SETUP')
 					
-				case 27 % GraphAdjPF.LAYERLOCK
+				case 28 % GraphAdjPF.LAYERLOCK
 					if pf.get('LAYERLOCK')
 					    layers = pf.get('LAYERS');
 					    if layers(1) ~= layers(2)
@@ -839,7 +843,7 @@ classdef GraphAdjPF < PanelFig
 					    end
 					end
 					
-				case 28 % GraphAdjPF.WEIGHTED
+				case 29 % GraphAdjPF.WEIGHTED
 					if pf.get('DRAWN')
 					    pf.get('SETUP')
 					    
@@ -850,7 +854,7 @@ classdef GraphAdjPF < PanelFig
 					    end
 					end
 					
-				case 29 % GraphAdjPF.COLORBAR
+				case 30 % GraphAdjPF.COLORBAR
 					if pf.get('DRAWN')
 					    if pf.get('COLORBAR')
 					        colorbar(pf.get('H_AXES'))
@@ -865,7 +869,7 @@ classdef GraphAdjPF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -888,7 +892,7 @@ classdef GraphAdjPF < PanelFig
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 22 % GraphAdjPF.H_AXES
+				case 23 % GraphAdjPF.H_AXES
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -902,10 +906,10 @@ classdef GraphAdjPF < PanelFig
 					h_axes.Interactions = [];
 					value = h_axes;
 					
-				case 24 % GraphAdjPF.LISTENER_ST_AXIS
+				case 25 % GraphAdjPF.LISTENER_ST_AXIS
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case 31 % GraphAdjPF.SETUP
+				case 32 % GraphAdjPF.SETUP
 					A = pf.get('G').get('A');
 					if numel(A) <= 1
 					    A = cell2mat(A);
@@ -941,26 +945,26 @@ classdef GraphAdjPF < PanelFig
 					
 					value = [];
 					
-				case 32 % GraphAdjPF.H_ADJ
+				case 33 % GraphAdjPF.H_ADJ
 					value = surf(pf.get('H_AXES'), [], [], []);
 					
-				case 10 % GraphAdjPF.DRAW
-					value = calculateValue@PanelFig(pf, 10, varargin{:}); % also warning
+				case 11 % GraphAdjPF.DRAW
+					value = calculateValue@PanelFig(pf, 11, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					    
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 22).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					    
-					    pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', 22).get('SETUP')
+					    pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', 23).get('SETUP')
 					    
 					    pf.memorize('H_ADJ')
 					
 					    pf.get('SETUP')
 					end
 					
-				case 17 % GraphAdjPF.DELETE
-					value = calculateValue@PanelFig(pf, 17, varargin{:}); % also warning
+				case 18 % GraphAdjPF.DELETE
+					value = calculateValue@PanelFig(pf, 18, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					
@@ -969,10 +973,10 @@ classdef GraphAdjPF < PanelFig
 					    pf.set('H_ADJ', Element.getNoValue())
 					end
 					
-				case 21 % GraphAdjPF.H_TOOLS
+				case 22 % GraphAdjPF.H_TOOLS
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, 21);
+					    value = calculateValue@PanelFig(pf, 22);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1035,7 +1039,7 @@ classdef GraphAdjPF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 21
+					if prop <= 22
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1088,16 +1092,16 @@ classdef GraphAdjPF < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 23 % GraphAdjPF.ST_AXIS
-					pr = SettingsAxisPP('EL', pf, 'PROP', 23, varargin{:});
+				case 24 % GraphAdjPF.ST_AXIS
+					pr = SettingsAxisPP('EL', pf, 'PROP', 24, varargin{:});
 					
-				case 26 % GraphAdjPF.LAYERS
-					pr = LayersPP('EL', pf, 'PROP', 26, ...
-					    'G_PROP', 25, ...
+				case 27 % GraphAdjPF.LAYERS
+					pr = LayersPP('EL', pf, 'PROP', 27, ...
+					    'G_PROP', 26, ...
 					    varargin{:});
 					
-				case 30 % GraphAdjPF.ST_AMBIENT
-					pr = SettingsAmbientPP('EL', pf, 'PROP', 30, varargin{:});
+				case 31 % GraphAdjPF.ST_AMBIENT
+					pr = SettingsAmbientPP('EL', pf, 'PROP', 31, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

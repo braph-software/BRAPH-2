@@ -5,6 +5,13 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	categories = num2cell(Category.getCategories());
 	nv = NoValue();
 	 
+	% get('ELCLASS')
+	if isa(NoValue, 'ConcreteElement')
+		assert(strcmp(NoValue().get('ELCLASS'), 'NoValue'), ...
+			[BRAPH2.STR ':NoValue:' BRAPH2.FAIL_TEST], ...
+			'NoValue().get(''ELCLASS'') should return ''NoValue''.')
+	end
+	 
 	% getClass
 	assert(strcmp(NoValue.getClass(), 'NoValue'), ...
 		[BRAPH2.STR ':NoValue:' BRAPH2.FAIL_TEST], ...

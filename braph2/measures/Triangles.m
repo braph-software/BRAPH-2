@@ -7,21 +7,22 @@ classdef Triangles < Measure
 	%  calculated as the geometric mean of the weights of the edges forming the triangle.
 	%
 	% The list of Triangles properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the triangles.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the triangles.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the triangles.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the triangles.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the triangles.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the triangles.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the triangles.
-	%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the triangles.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the triangles.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the triangles.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the triangles.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the triangles.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the triangles.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 	%
 	% Triangles methods (constructor):
 	%  Triangles - constructor
@@ -110,7 +111,7 @@ classdef Triangles < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = 15; %CET: Computational Efficiency Trick
+		RULE = 16; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
 		RULE_CATEGORY = 3;
 		RULE_FORMAT = 5;
@@ -127,21 +128,22 @@ classdef Triangles < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Triangles properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the triangles.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the triangles.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the triangles.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the triangles.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the triangles.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the triangles.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>9</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>10</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>11</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>12</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>13</strong> <strong>M</strong> 	M (result, cell) is the triangles.
-			%  <strong>14</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>15</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the triangles.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the triangles.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the triangles.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the triangles.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the triangles.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the triangles.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
 			% See also Category, Format.
 			
@@ -203,25 +205,25 @@ classdef Triangles < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2 8 9 10 11];
+					prop_list = [1 2 3 9 10 11 12];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = [3 15];
+					prop_list = [4 16];
 				case 4 % Category.DATA
-					prop_list = [4 12];
+					prop_list = [5 13];
 				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = 7;
-				case 9 % Category.GUI
 					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
 				otherwise
 					prop_list = [];
 			end
@@ -247,13 +249,13 @@ classdef Triangles < Measure
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 15;
+				prop_number = 16;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 6;
+					prop_number = 7;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -296,7 +298,7 @@ classdef Triangles < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -334,7 +336,7 @@ classdef Triangles < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -367,7 +369,7 @@ classdef Triangles < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -396,7 +398,7 @@ classdef Triangles < Measure
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				triangles_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				triangles_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
 				tag = triangles_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -423,7 +425,7 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			triangles_category_list = { 1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			triangles_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
 			prop_category = triangles_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -449,7 +451,7 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			triangles_format_list = { 2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
+			triangles_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
 			prop_format = triangles_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -475,7 +477,7 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			triangles_description_list = { 'NAME (constant, string) is the name of the triangles.'  'DESCRIPTION (constant, string) is the description of the triangles.'  'TEMPLATE (parameter, item) is the template of the triangles.'  'ID (data, string) is a few-letter code of the triangles.'  'LABEL (metadata, string) is an extended label of the triangles.'  'NOTES (metadata, string) are some specific notes about the triangles.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
+			triangles_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the triangles.'  'DESCRIPTION (constant, string) is the description of the triangles.'  'TEMPLATE (parameter, item) is the template of the triangles.'  'ID (data, string) is a few-letter code of the triangles.'  'LABEL (metadata, string) is an extended label of the triangles.'  'NOTES (metadata, string) are some specific notes about the triangles.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
 			prop_description = triangles_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -501,9 +503,9 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % Triangles.RULE
+				case 16 % Triangles.RULE
 					prop_settings = {'all' 'middleman' 'in' 'out' 'cycle'};
-				case 3 % Triangles.TEMPLATE
+				case 4 % Triangles.TEMPLATE
 					prop_settings = 'Triangles';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -532,27 +534,29 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 15 % Triangles.RULE
+				case 16 % Triangles.RULE
 					prop_default = 'cycle';
-				case 1 % Triangles.NAME
+				case 1 % Triangles.ELCLASS
 					prop_default = 'Triangles';
-				case 2 % Triangles.DESCRIPTION
+				case 2 % Triangles.NAME
+					prop_default = 'Triangles';
+				case 3 % Triangles.DESCRIPTION
 					prop_default = 'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.';
-				case 3 % Triangles.TEMPLATE
+				case 4 % Triangles.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Triangles.getPropSettings(prop));
-				case 4 % Triangles.ID
+				case 5 % Triangles.ID
 					prop_default = 'Triangles ID';
-				case 5 % Triangles.LABEL
+				case 6 % Triangles.LABEL
 					prop_default = 'Triangles label';
-				case 6 % Triangles.NOTES
+				case 7 % Triangles.NOTES
 					prop_default = 'Triangles notes';
-				case 8 % Triangles.SHAPE
+				case 9 % Triangles.SHAPE
 					prop_default = 2;
-				case 9 % Triangles.SCOPE
+				case 10 % Triangles.SCOPE
 					prop_default = 2;
-				case 10 % Triangles.PARAMETRICITY
+				case 11 % Triangles.PARAMETRICITY
 					prop_default = 2;
-				case 11 % Triangles.COMPATIBLE_GRAPHS
+				case 12 % Triangles.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxWD' 'OrdMxBU' 'OrdMxBD' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -618,12 +622,12 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			switch prop
-				case 15 % Triangles.RULE
+				case 16 % Triangles.RULE
 					check = Format.checkFormat(5, value, Triangles.getPropSettings(prop));
-				case 3 % Triangles.TEMPLATE
+				case 4 % Triangles.TEMPLATE
 					check = Format.checkFormat(8, value, Triangles.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -656,8 +660,8 @@ classdef Triangles < Measure
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % Triangles.M
-					rng_settings_ = rng(); rng(m.getPropSeed(13), 'twister')
+				case 14 % Triangles.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
@@ -697,7 +701,7 @@ classdef Triangles < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

@@ -7,15 +7,16 @@ classdef NNDatasetCombine < ConcreteElement
 	% and any overlapping datapoints are excluded to ensure data consistency.
 	%
 	% The list of NNDatasetCombine properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combier of a neural network data.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combier of a neural network data.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combier of a neural network data.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combier of a neural network data.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combier of a neural network data.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combier of a neural network data.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
-	%  <strong>9</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combier of a neural network data.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combier of a neural network data.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combier of a neural network data.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combier of a neural network data.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combier of a neural network data.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combier of a neural network data.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
+	%  <strong>10</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
 	%
 	% NNDatasetCombine methods (constructor):
 	%  NNDatasetCombine - constructor
@@ -106,12 +107,12 @@ classdef NNDatasetCombine < ConcreteElement
 	% See also NNDataset, NNDatasetSplit.
 	
 	properties (Constant) % properties
-		D_LIST = 8; %CET: Computational Efficiency Trick
+		D_LIST = 9; %CET: Computational Efficiency Trick
 		D_LIST_TAG = 'D_LIST';
 		D_LIST_CATEGORY = 4;
 		D_LIST_FORMAT = 9;
 		
-		D = 9; %CET: Computational Efficiency Trick
+		D = 10; %CET: Computational Efficiency Trick
 		D_TAG = 'D';
 		D_CATEGORY = 5;
 		D_FORMAT = 8;
@@ -128,15 +129,16 @@ classdef NNDatasetCombine < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDatasetCombine properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combier of a neural network data.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combier of a neural network data.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combier of a neural network data.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combier of a neural network data.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combier of a neural network data.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combier of a neural network data.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
-			%  <strong>9</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combier of a neural network data.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combier of a neural network data.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combier of a neural network data.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combier of a neural network data.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combier of a neural network data.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combier of a neural network data.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
+			%  <strong>10</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
 			%
 			% See also Category, Format.
 			
@@ -198,23 +200,23 @@ classdef NNDatasetCombine < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8];
+					prop_list = [5 9];
 				case 5 % Category.RESULT
-					prop_list = 9;
+					prop_list = 10;
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -240,13 +242,13 @@ classdef NNDatasetCombine < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -287,7 +289,7 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -325,7 +327,7 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -358,7 +360,7 @@ classdef NNDatasetCombine < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -387,7 +389,7 @@ classdef NNDatasetCombine < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatasetcombine_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' };
+				nndatasetcombine_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' };
 				tag = nndatasetcombine_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -414,7 +416,7 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatasetcombine_category_list = { 1  1  3  4  2  2  6  4  5 };
+			nndatasetcombine_category_list = { 1  1  1  3  4  2  2  6  4  5 };
 			prop_category = nndatasetcombine_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -440,7 +442,7 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatasetcombine_format_list = { 2  2  8  2  2  2  2  9  8 };
+			nndatasetcombine_format_list = { 2  2  2  8  2  2  2  2  9  8 };
 			prop_format = nndatasetcombine_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -466,7 +468,7 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatasetcombine_description_list = { 'NAME (constant, string) is the name of the combier of a neural network data.'  'DESCRIPTION (constant, string) is the description of the combier of a neural network data.'  'TEMPLATE (parameter, item) is the template of the combier of a neural network data.'  'ID (data, string) is a few-letter code for the combier of a neural network data.'  'LABEL (metadata, string) is an extended label of the combier of a neural network data.'  'NOTES (metadata, string) are some specific notes about the combier of a neural network data.'  'TOSTRING (query, string) returns a string that represents the object.'  'D_LIST (data, itemlist) is a items of datasets to be combined.'  'D (result, item) is the combined neural network dataset.' };
+			nndatasetcombine_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the combier of a neural network data.'  'DESCRIPTION (constant, string) is the description of the combier of a neural network data.'  'TEMPLATE (parameter, item) is the template of the combier of a neural network data.'  'ID (data, string) is a few-letter code for the combier of a neural network data.'  'LABEL (metadata, string) is an extended label of the combier of a neural network data.'  'NOTES (metadata, string) are some specific notes about the combier of a neural network data.'  'TOSTRING (query, string) returns a string that represents the object.'  'D_LIST (data, itemlist) is a items of datasets to be combined.'  'D (result, item) is the combined neural network dataset.' };
 			prop_description = nndatasetcombine_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -492,11 +494,11 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNDatasetCombine.D_LIST
+				case 9 % NNDatasetCombine.D_LIST
 					prop_settings = 'NNDataset';
-				case 9 % NNDatasetCombine.D
+				case 10 % NNDatasetCombine.D
 					prop_settings = 'NNDataset';
-				case 3 % NNDatasetCombine.TEMPLATE
+				case 4 % NNDatasetCombine.TEMPLATE
 					prop_settings = 'NNDatasetCombine';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -525,21 +527,23 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNDatasetCombine.D_LIST
+				case 9 % NNDatasetCombine.D_LIST
 					prop_default = Format.getFormatDefault(9, NNDatasetCombine.getPropSettings(prop));
-				case 9 % NNDatasetCombine.D
+				case 10 % NNDatasetCombine.D
 					prop_default = Format.getFormatDefault(8, NNDatasetCombine.getPropSettings(prop));
-				case 1 % NNDatasetCombine.NAME
+				case 1 % NNDatasetCombine.ELCLASS
 					prop_default = 'NNDatasetCombine';
-				case 2 % NNDatasetCombine.DESCRIPTION
+				case 2 % NNDatasetCombine.NAME
+					prop_default = 'NNDatasetCombine';
+				case 3 % NNDatasetCombine.DESCRIPTION
 					prop_default = 'A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.';
-				case 3 % NNDatasetCombine.TEMPLATE
+				case 4 % NNDatasetCombine.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNDatasetCombine.getPropSettings(prop));
-				case 4 % NNDatasetCombine.ID
+				case 5 % NNDatasetCombine.ID
 					prop_default = 'NNDatasetCombine ID';
-				case 5 % NNDatasetCombine.LABEL
+				case 6 % NNDatasetCombine.LABEL
 					prop_default = 'NNDatasetCombine label';
-				case 6 % NNDatasetCombine.NOTES
+				case 7 % NNDatasetCombine.NOTES
 					prop_default = 'NNDatasetCombine notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -605,7 +609,7 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			switch prop
-				case 8 % NNDatasetCombine.D_LIST
+				case 9 % NNDatasetCombine.D_LIST
 					check = Format.checkFormat(9, value, NNDatasetCombine.getPropSettings(prop));
 					if check
 						if ~isempty(value)
@@ -617,12 +621,12 @@ classdef NNDatasetCombine < ConcreteElement
 						    end
 						end
 					end
-				case 9 % NNDatasetCombine.D
+				case 10 % NNDatasetCombine.D
 					check = Format.checkFormat(8, value, NNDatasetCombine.getPropSettings(prop));
-				case 3 % NNDatasetCombine.TEMPLATE
+				case 4 % NNDatasetCombine.TEMPLATE
 					check = Format.checkFormat(8, value, NNDatasetCombine.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -655,8 +659,8 @@ classdef NNDatasetCombine < ConcreteElement
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % NNDatasetCombine.D
-					rng_settings_ = rng(); rng(dco.getPropSeed(9), 'twister')
+				case 10 % NNDatasetCombine.D
+					rng_settings_ = rng(); rng(dco.getPropSeed(10), 'twister')
 					
 					dp_list = cellfun(@(x) x.get('DP_DICT').get('IT_LIST'), dco.get('D_LIST'), 'UniformOutput', false);
 					dp_classes = cellfun(@(x) x.get('DP_CLASS'), dco.get('D_LIST'), 'UniformOutput', false);
@@ -689,7 +693,7 @@ classdef NNDatasetCombine < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						value = calculateValue@ConcreteElement(dco, prop, varargin{:});
 					else
 						value = calculateValue@Element(dco, prop, varargin{:});

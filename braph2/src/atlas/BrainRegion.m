@@ -2,22 +2,23 @@ classdef BrainRegion < ConcreteElement
 	%BrainRegion is a brain region.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% BrainRegion contains the information of a brain region.
-	% It provides the methods necessary to handle the brain regions data.
-	% BrainRegion contains and manages the id, label, x coordinate, y 
-	% coordinate, and z coordinate of a brain region.
+	% A Brain Region (BrainRegion) contains the information of a brain region.
+	%  It provides the methods necessary to handle the brain regions data.
+	%  BrainRegion contains and manages the id, label, x coordinate, y 
+	%  coordinate, and z coordinate of a brain region.
 	%
 	% The list of BrainRegion properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain region.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain region.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain region.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain region.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain region.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain region.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>X</strong> 	X (data, scalar) is the x-coordinate of the brain region.
-	%  <strong>9</strong> <strong>Y</strong> 	Y (data, scalar) is the y-coordinate of the brain region.
-	%  <strong>10</strong> <strong>Z</strong> 	Z (data, scalar) is the z-coordinate of the brain region.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain region.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain region.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain region.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain region.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain region.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain region.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain region.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>X</strong> 	X (data, scalar) is the x-coordinate of the brain region.
+	%  <strong>10</strong> <strong>Y</strong> 	Y (data, scalar) is the y-coordinate of the brain region.
+	%  <strong>11</strong> <strong>Z</strong> 	Z (data, scalar) is the z-coordinate of the brain region.
 	%
 	% BrainRegion methods (constructor):
 	%  BrainRegion - constructor
@@ -108,17 +109,17 @@ classdef BrainRegion < ConcreteElement
 	% See also BrainAtlas, BrainSurface.
 	
 	properties (Constant) % properties
-		X = 8; %CET: Computational Efficiency Trick
+		X = 9; %CET: Computational Efficiency Trick
 		X_TAG = 'X';
 		X_CATEGORY = 4;
 		X_FORMAT = 11;
 		
-		Y = 9; %CET: Computational Efficiency Trick
+		Y = 10; %CET: Computational Efficiency Trick
 		Y_TAG = 'Y';
 		Y_CATEGORY = 4;
 		Y_FORMAT = 11;
 		
-		Z = 10; %CET: Computational Efficiency Trick
+		Z = 11; %CET: Computational Efficiency Trick
 		Z_TAG = 'Z';
 		Z_CATEGORY = 4;
 		Z_FORMAT = 11;
@@ -135,16 +136,17 @@ classdef BrainRegion < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of BrainRegion properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain region.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain region.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain region.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain region.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain region.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain region.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>X</strong> 	X (data, scalar) is the x-coordinate of the brain region.
-			%  <strong>9</strong> <strong>Y</strong> 	Y (data, scalar) is the y-coordinate of the brain region.
-			%  <strong>10</strong> <strong>Z</strong> 	Z (data, scalar) is the z-coordinate of the brain region.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain region.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain region.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain region.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain region.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain region.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain region.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain region.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>X</strong> 	X (data, scalar) is the x-coordinate of the brain region.
+			%  <strong>10</strong> <strong>Y</strong> 	Y (data, scalar) is the y-coordinate of the brain region.
+			%  <strong>11</strong> <strong>Z</strong> 	Z (data, scalar) is the z-coordinate of the brain region.
 			%
 			% See also Category, Format.
 			
@@ -206,21 +208,21 @@ classdef BrainRegion < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8 9 10];
+					prop_list = [5 9 10 11];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -246,13 +248,13 @@ classdef BrainRegion < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 10;
+				prop_number = 11;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -291,7 +293,7 @@ classdef BrainRegion < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -329,7 +331,7 @@ classdef BrainRegion < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -362,7 +364,7 @@ classdef BrainRegion < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -391,7 +393,7 @@ classdef BrainRegion < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				brainregion_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' };
+				brainregion_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'X'  'Y'  'Z' };
 				tag = brainregion_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -418,7 +420,7 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainregion_category_list = { 1  1  3  4  2  2  6  4  4  4 };
+			brainregion_category_list = { 1  1  1  3  4  2  2  6  4  4  4 };
 			prop_category = brainregion_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -444,7 +446,7 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainregion_format_list = { 2  2  8  2  2  2  2  11  11  11 };
+			brainregion_format_list = { 2  2  2  8  2  2  2  2  11  11  11 };
 			prop_format = brainregion_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -470,7 +472,7 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainregion_description_list = { 'NAME (constant, string) is the name of the brain region.'  'DESCRIPTION (constant, string) is the description of the brain region.'  'TEMPLATE (parameter, item) is the template of the brain region.'  'ID (data, string) is a few-letter code for the brain region.'  'LABEL (metadata, string) is an extended label of the brain region.'  'NOTES (metadata, string) are some specific notes about the brain region.'  'TOSTRING (query, string) returns a string that represents the object.'  'X (data, scalar) is the x-coordinate of the brain region.'  'Y (data, scalar) is the y-coordinate of the brain region.'  'Z (data, scalar) is the z-coordinate of the brain region.' };
+			brainregion_description_list = { 'ELCLASS (constant, string) is the class of the brain region.'  'NAME (constant, string) is the name of the brain region.'  'DESCRIPTION (constant, string) is the description of the brain region.'  'TEMPLATE (parameter, item) is the template of the brain region.'  'ID (data, string) is a few-letter code for the brain region.'  'LABEL (metadata, string) is an extended label of the brain region.'  'NOTES (metadata, string) are some specific notes about the brain region.'  'TOSTRING (query, string) returns a string that represents the object.'  'X (data, scalar) is the x-coordinate of the brain region.'  'Y (data, scalar) is the y-coordinate of the brain region.'  'Z (data, scalar) is the z-coordinate of the brain region.' };
 			prop_description = brainregion_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -496,13 +498,13 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % BrainRegion.X
+				case 9 % BrainRegion.X
 					prop_settings = Format.getFormatSettings(11);
-				case 9 % BrainRegion.Y
+				case 10 % BrainRegion.Y
 					prop_settings = Format.getFormatSettings(11);
-				case 10 % BrainRegion.Z
+				case 11 % BrainRegion.Z
 					prop_settings = Format.getFormatSettings(11);
-				case 3 % BrainRegion.TEMPLATE
+				case 4 % BrainRegion.TEMPLATE
 					prop_settings = 'BrainRegion';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -531,23 +533,25 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % BrainRegion.X
+				case 9 % BrainRegion.X
 					prop_default = Format.getFormatDefault(11, BrainRegion.getPropSettings(prop));
-				case 9 % BrainRegion.Y
+				case 10 % BrainRegion.Y
 					prop_default = Format.getFormatDefault(11, BrainRegion.getPropSettings(prop));
-				case 10 % BrainRegion.Z
+				case 11 % BrainRegion.Z
 					prop_default = Format.getFormatDefault(11, BrainRegion.getPropSettings(prop));
-				case 1 % BrainRegion.NAME
+				case 1 % BrainRegion.ELCLASS
 					prop_default = 'BrainRegion';
-				case 2 % BrainRegion.DESCRIPTION
-					prop_default = 'BrainRegion contains the information of a brain region. It provides the methods necessary to handle the brain regions data. BrainRegion contains and manages the id, label, x coordinate, y coordinate, and z coordinate of a brain region.';
-				case 3 % BrainRegion.TEMPLATE
+				case 2 % BrainRegion.NAME
+					prop_default = 'Brain Region';
+				case 3 % BrainRegion.DESCRIPTION
+					prop_default = 'A Brain Region (BrainRegion) contains the information of a brain region. It provides the methods necessary to handle the brain regions data. BrainRegion contains and manages the id, label, x coordinate, y coordinate, and z coordinate of a brain region.';
+				case 4 % BrainRegion.TEMPLATE
 					prop_default = Format.getFormatDefault(8, BrainRegion.getPropSettings(prop));
-				case 4 % BrainRegion.ID
+				case 5 % BrainRegion.ID
 					prop_default = 'BrainRegion ID';
-				case 5 % BrainRegion.LABEL
+				case 6 % BrainRegion.LABEL
 					prop_default = 'BrainRegion label';
-				case 6 % BrainRegion.NOTES
+				case 7 % BrainRegion.NOTES
 					prop_default = 'BrainRegion notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -613,16 +617,16 @@ classdef BrainRegion < ConcreteElement
 			prop = BrainRegion.getPropProp(pointer);
 			
 			switch prop
-				case 8 % BrainRegion.X
+				case 9 % BrainRegion.X
 					check = Format.checkFormat(11, value, BrainRegion.getPropSettings(prop));
-				case 9 % BrainRegion.Y
+				case 10 % BrainRegion.Y
 					check = Format.checkFormat(11, value, BrainRegion.getPropSettings(prop));
-				case 10 % BrainRegion.Z
+				case 11 % BrainRegion.Z
 					check = Format.checkFormat(11, value, BrainRegion.getPropSettings(prop));
-				case 3 % BrainRegion.TEMPLATE
+				case 4 % BrainRegion.TEMPLATE
 					check = Format.checkFormat(8, value, BrainRegion.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

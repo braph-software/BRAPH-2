@@ -2,7 +2,7 @@ classdef GUILayout < GUI
 	%GUILayout is a layout editor.
 	% It is a subclass of <a href="matlab:help GUI">GUI</a>.
 	%
-	% GUILayout renders a layout editor.
+	% A GUI Layout (GUILayout) renders a layout editor.
 	% 
 	% CONSTRUCTOR - To construct a GUILayout use, e.g.:
 	% 
@@ -29,39 +29,40 @@ classdef GUILayout < GUI
 	%     gui.get('<strong>CLOSE</strong>') - closes the figure and its dependent figures
 	%
 	% The list of GUILayout properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the layout GUI.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the layout GUI.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the layout GUI.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the layout GUI.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the layout GUI.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the layout GUI.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-	%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-	%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the layout GUI.
-	%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-	%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-	%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-	%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
-	%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-	%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
-	%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-	%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
-	%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
-	%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
-	%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-	%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-	%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
-	%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-	%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-	%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-	%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-	%  <strong>29</strong> <strong>EL_CLASS</strong> 	EL_CLASS (data, class) is the element class.
-	%  <strong>30</strong> <strong>P</strong> 	P (evanescent, handle) is the panel.
-	%  <strong>31</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-	%  <strong>32</strong> <strong>SAVE_BTN</strong> 	SAVE_BTN (evanescent, handle) is the save button.
-	%  <strong>33</strong> <strong>CANCEL_BTN</strong> 	CANCEL_BTN (evanescent, handle) is the edit button.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the GUI layout.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GUI layout.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GUI layout.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GUI layout.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the GUI layout.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GUI layout.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GUI layout.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+	%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+	%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI layout.
+	%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+	%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+	%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
+	%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+	%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
+	%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+	%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
+	%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
+	%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
+	%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+	%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+	%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
+	%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+	%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+	%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+	%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+	%  <strong>30</strong> <strong>EL_CLASS</strong> 	EL_CLASS (data, class) is the element class.
+	%  <strong>31</strong> <strong>P</strong> 	P (evanescent, handle) is the panel.
+	%  <strong>32</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+	%  <strong>33</strong> <strong>SAVE_BTN</strong> 	SAVE_BTN (evanescent, handle) is the save button.
+	%  <strong>34</strong> <strong>CANCEL_BTN</strong> 	CANCEL_BTN (evanescent, handle) is the edit button.
 	%
 	% GUILayout methods (constructor):
 	%  GUILayout - constructor
@@ -81,33 +82,33 @@ classdef GUILayout < GUI
 	%  unchecked - sets a property to NOT checked
 	%
 	% GUILayout methods (display):
-	%  tostring - string with information about the layout GUI
-	%  disp - displays information about the layout GUI
-	%  tree - displays the tree of the layout GUI
+	%  tostring - string with information about the GUI layout
+	%  disp - displays information about the GUI layout
+	%  tree - displays the tree of the GUI layout
 	%
 	% GUILayout methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two layout GUI are equal (values, locked)
+	%  isequal - determines whether two GUI layout are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the layout GUI
+	%  copy - copies the GUI layout
 	%
 	% GUILayout methods (save/load, Static):
-	%  save - saves BRAPH2 layout GUI as b2 file
-	%  load - loads a BRAPH2 layout GUI from a b2 file
+	%  save - saves BRAPH2 GUI layout as b2 file
+	%  load - loads a BRAPH2 GUI layout from a b2 file
 	%
 	% GUILayout method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the layout GUI
+	%  encodeJSON - returns a JSON string encoding the GUI layout
 	%
 	% GUILayout method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the layout GUI
+	%   decodeJSON - returns a JSON string encoding the GUI layout
 	%
 	% GUILayout methods (inspection, Static):
-	%  getClass - returns the class of the layout GUI
+	%  getClass - returns the class of the GUI layout
 	%  getSubclasses - returns all subclasses of GUILayout
-	%  getProps - returns the property list of the layout GUI
-	%  getPropNumber - returns the property number of the layout GUI
+	%  getProps - returns the property list of the GUI layout
+	%  getPropNumber - returns the property number of the GUI layout
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -152,34 +153,34 @@ classdef GUILayout < GUI
 	% See also uifigure, GUI, Element.
 	
 	properties (Constant) % properties
-		EL_CLASS = 29; %CET: Computational Efficiency Trick
+		EL_CLASS = 30; %CET: Computational Efficiency Trick
 		EL_CLASS_TAG = 'EL_CLASS';
 		EL_CLASS_CATEGORY = 4;
 		EL_CLASS_FORMAT = 6;
 		
-		P = 30; %CET: Computational Efficiency Trick
+		P = 31; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
 		P_CATEGORY = 7;
 		P_FORMAT = 18;
 		
-		TABLE = 31; %CET: Computational Efficiency Trick
+		TABLE = 32; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
 		TABLE_CATEGORY = 7;
 		TABLE_FORMAT = 18;
 		
-		SAVE_BTN = 32; %CET: Computational Efficiency Trick
+		SAVE_BTN = 33; %CET: Computational Efficiency Trick
 		SAVE_BTN_TAG = 'SAVE_BTN';
 		SAVE_BTN_CATEGORY = 7;
 		SAVE_BTN_FORMAT = 18;
 		
-		CANCEL_BTN = 33; %CET: Computational Efficiency Trick
+		CANCEL_BTN = 34; %CET: Computational Efficiency Trick
 		CANCEL_BTN_TAG = 'CANCEL_BTN';
 		CANCEL_BTN_CATEGORY = 7;
 		CANCEL_BTN_FORMAT = 18;
 	end
 	methods % constructor
 		function gui = GUILayout(varargin)
-			%GUILayout() creates a layout GUI.
+			%GUILayout() creates a GUI layout.
 			%
 			% GUILayout(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -189,39 +190,40 @@ classdef GUILayout < GUI
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GUILayout properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the layout GUI.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the layout GUI.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the layout GUI.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the layout GUI.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the layout GUI.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the layout GUI.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
-			%  <strong>10</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
-			%  <strong>11</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the layout GUI.
-			%  <strong>12</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
-			%  <strong>13</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
-			%  <strong>14</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
-			%  <strong>15</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
-			%  <strong>16</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
-			%  <strong>17</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
-			%  <strong>18</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
-			%  <strong>19</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
-			%  <strong>20</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
-			%  <strong>21</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
-			%  <strong>22</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
-			%  <strong>23</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
-			%  <strong>24</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
-			%  <strong>25</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
-			%  <strong>26</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
-			%  <strong>27</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
-			%  <strong>28</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
-			%  <strong>29</strong> <strong>EL_CLASS</strong> 	EL_CLASS (data, class) is the element class.
-			%  <strong>30</strong> <strong>P</strong> 	P (evanescent, handle) is the panel.
-			%  <strong>31</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-			%  <strong>32</strong> <strong>SAVE_BTN</strong> 	SAVE_BTN (evanescent, handle) is the save button.
-			%  <strong>33</strong> <strong>CANCEL_BTN</strong> 	CANCEL_BTN (evanescent, handle) is the edit button.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the GUI layout.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the GUI layout.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the GUI layout.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the GUI layout.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the GUI layout.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the GUI layout.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the GUI layout.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the contents of a GUI before showing it.
+			%  <strong>11</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the GUI has been drawn.
+			%  <strong>12</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the name of the GUI layout.
+			%  <strong>13</strong> <strong>POSITION</strong> 	POSITION (gui, rvector) is the normalized position of the GUI on the screen.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (gui, color) is the GUI background color.
+			%  <strong>15</strong> <strong>H_MENUBAR</strong> 	H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.
+			%  <strong>16</strong> <strong>MENUBAR</strong> 	MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].
+			%  <strong>17</strong> <strong>H_MENU_ABOUT</strong> 	H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.
+			%  <strong>18</strong> <strong>MENU_ABOUT</strong> 	MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].
+			%  <strong>19</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.
+			%  <strong>20</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.
+			%  <strong>21</strong> <strong>TOOLBAR</strong> 	TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].
+			%  <strong>22</strong> <strong>TOOL_ABOUT</strong> 	TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].
+			%  <strong>23</strong> <strong>CLOSEREQ</strong> 	CLOSEREQ (gui, logical) determines whether to confirm close.
+			%  <strong>24</strong> <strong>H</strong> 	H (evanescent, handle) is the figure handle.
+			%  <strong>25</strong> <strong>RESIZE</strong> 	RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.
+			%  <strong>26</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure and its dependent figures.
+			%  <strong>27</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure and its dependent figures.
+			%  <strong>28</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure is deleted.
+			%  <strong>29</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure and its dependent figures.
+			%  <strong>30</strong> <strong>EL_CLASS</strong> 	EL_CLASS (data, class) is the element class.
+			%  <strong>31</strong> <strong>P</strong> 	P (evanescent, handle) is the panel.
+			%  <strong>32</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+			%  <strong>33</strong> <strong>SAVE_BTN</strong> 	SAVE_BTN (evanescent, handle) is the save button.
+			%  <strong>34</strong> <strong>CANCEL_BTN</strong> 	CANCEL_BTN (evanescent, handle) is the edit button.
 			%
 			% See also Category, Format.
 			
@@ -230,12 +232,12 @@ classdef GUILayout < GUI
 	end
 	methods (Static) % inspection
 		function gui_class = getClass()
-			%GETCLASS returns the class of the layout GUI.
+			%GETCLASS returns the class of the GUI layout.
 			%
 			% CLASS = GUILayout.GETCLASS() returns the class 'GUILayout'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = GUI.GETCLASS() returns the class of the layout GUI GUI.
+			%  CLASS = GUI.GETCLASS() returns the class of the GUI layout GUI.
 			%  CLASS = Element.GETCLASS(GUI) returns the class of 'GUI'.
 			%  CLASS = Element.GETCLASS('GUILayout') returns 'GUILayout'.
 			%
@@ -245,12 +247,12 @@ classdef GUILayout < GUI
 			gui_class = 'GUILayout';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the layout GUI.
+			%GETSUBCLASSES returns all subclasses of the GUI layout.
 			%
 			% LIST = GUILayout.GETSUBCLASSES() returns all subclasses of 'GUILayout'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = GUI.GETSUBCLASSES() returns all subclasses of the layout GUI GUI.
+			%  LIST = GUI.GETSUBCLASSES() returns all subclasses of the GUI layout GUI.
 			%  LIST = Element.GETSUBCLASSES(GUI) returns all subclasses of 'GUI'.
 			%  LIST = Element.GETSUBCLASSES('GUILayout') returns all subclasses of 'GUILayout'.
 			%
@@ -262,16 +264,16 @@ classdef GUILayout < GUI
 			subclass_list = { 'GUILayout' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of layout GUI.
+			%GETPROPS returns the property list of GUI layout.
 			%
-			% PROPS = GUILayout.GETPROPS() returns the property list of layout GUI
+			% PROPS = GUILayout.GETPROPS() returns the property list of GUI layout
 			%  as a row vector.
 			%
 			% PROPS = GUILayout.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = GUI.GETPROPS([CATEGORY]) returns the property list of the layout GUI GUI.
+			%  PROPS = GUI.GETPROPS([CATEGORY]) returns the property list of the GUI layout GUI.
 			%  PROPS = Element.GETPROPS(GUI[, CATEGORY]) returns the property list of 'GUI'.
 			%  PROPS = Element.GETPROPS('GUILayout'[, CATEGORY]) returns the property list of 'GUILayout'.
 			%
@@ -283,39 +285,39 @@ classdef GUILayout < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 29];
+					prop_list = [5 30];
 				case 6 % Category.QUERY
-					prop_list = [7 9 10 24 25 26 27 28];
+					prop_list = [8 10 11 25 26 27 28 29];
 				case 7 % Category.EVANESCENT
-					prop_list = [14 16 18 19 23 30 31 32 33];
+					prop_list = [15 17 19 20 24 31 32 33 34];
 				case 9 % Category.GUI
-					prop_list = [8 11 12 13 15 17 20 21 22];
+					prop_list = [9 12 13 14 16 18 21 22 23];
 				otherwise
 					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of layout GUI.
+			%GETPROPNUMBER returns the property number of GUI layout.
 			%
-			% N = GUILayout.GETPROPNUMBER() returns the property number of layout GUI.
+			% N = GUILayout.GETPROPNUMBER() returns the property number of GUI layout.
 			%
-			% N = GUILayout.GETPROPNUMBER(CATEGORY) returns the property number of layout GUI
+			% N = GUILayout.GETPROPNUMBER(CATEGORY) returns the property number of GUI layout
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = GUI.GETPROPNUMBER([CATEGORY]) returns the property number of the layout GUI GUI.
+			%  N = GUI.GETPROPNUMBER([CATEGORY]) returns the property number of the GUI layout GUI.
 			%  N = Element.GETPROPNUMBER(GUI) returns the property number of 'GUI'.
 			%  N = Element.GETPROPNUMBER('GUILayout') returns the property number of 'GUILayout'.
 			%
@@ -327,13 +329,13 @@ classdef GUILayout < GUI
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 33;
+				prop_number = 34;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -351,7 +353,7 @@ classdef GUILayout < GUI
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in layout GUI/error.
+			%EXISTSPROP checks whether property exists in GUI layout/error.
 			%
 			% CHECK = GUILayout.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -376,7 +378,7 @@ classdef GUILayout < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 33 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 34 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -389,7 +391,7 @@ classdef GUILayout < GUI
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in layout GUI/error.
+			%EXISTSTAG checks whether tag exists in GUI layout/error.
 			%
 			% CHECK = GUILayout.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -414,7 +416,7 @@ classdef GUILayout < GUI
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -447,7 +449,7 @@ classdef GUILayout < GUI
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -476,7 +478,7 @@ classdef GUILayout < GUI
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				guilayout_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' };
+				guilayout_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DRAW'  'DRAWN'  'TITLE'  'POSITION'  'BKGCOLOR'  'H_MENUBAR'  'MENUBAR'  'H_MENU_ABOUT'  'MENU_ABOUT'  'H_TOOLBAR'  'H_TOOLS'  'TOOLBAR'  'TOOL_ABOUT'  'CLOSEREQ'  'H'  'RESIZE'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL_CLASS'  'P'  'TABLE'  'SAVE_BTN'  'CANCEL_BTN' };
 				tag = guilayout_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -503,7 +505,7 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guilayout_category_list = { 1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  7  7  7  7 };
+			guilayout_category_list = { 1  1  1  3  4  2  2  6  9  6  6  9  9  9  7  9  7  9  7  7  9  9  9  7  6  6  6  6  6  4  7  7  7  7 };
 			prop_category = guilayout_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -529,7 +531,7 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guilayout_format_list = { 2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  6  18  18  18  18 };
+			guilayout_format_list = { 2  2  2  8  2  2  2  2  4  4  4  2  12  20  19  4  18  4  18  19  4  4  4  18  4  4  4  4  4  6  18  18  18  18 };
 			prop_format = guilayout_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -555,7 +557,7 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			guilayout_description_list = { 'NAME (constant, string) is the name of the layout GUI.'  'DESCRIPTION (constant, string) is the description of the layout GUI.'  'TEMPLATE (parameter, item) is the template of the layout GUI.'  'ID (data, string) is a few-letter code for the layout GUI.'  'LABEL (metadata, string) is an extended label of the layout GUI.'  'NOTES (metadata, string) are some specific notes about the layout GUI.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the layout GUI.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'EL_CLASS (data, class) is the element class.'  'P (evanescent, handle) is the panel.'  'TABLE (evanescent, handle) is the table.'  'SAVE_BTN (evanescent, handle) is the save button.'  'CANCEL_BTN (evanescent, handle) is the edit button.' };
+			guilayout_description_list = { 'ELCLASS (constant, string) is the class of the GUI layout.'  'NAME (constant, string) is the name of the GUI layout.'  'DESCRIPTION (constant, string) is the description of the GUI layout.'  'TEMPLATE (parameter, item) is the template of the GUI layout.'  'ID (data, string) is a few-letter code for the GUI layout.'  'LABEL (metadata, string) is an extended label of the GUI layout.'  'NOTES (metadata, string) are some specific notes about the GUI layout.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DRAW (query, logical) draws the contents of a GUI before showing it.'  'DRAWN (query, logical) returns whether the GUI has been drawn.'  'TITLE (gui, string) is the name of the GUI layout.'  'POSITION (gui, rvector) is the normalized position of the GUI on the screen.'  'BKGCOLOR (gui, color) is the GUI background color.'  'H_MENUBAR (evanescent, handlelist) is the list of handles for the menus.'  'MENUBAR (gui, logical) determines whether to show the menubar [set before DRAW].'  'H_MENU_ABOUT (evanescent, handle) is the handle of the menu about.'  'MENU_ABOUT (gui, logical) determines whether to show the menu about [set before DRAW].'  'H_TOOLBAR (evanescent, handle) is the handle list of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the handle list of the tools from the first.'  'TOOLBAR (gui, logical) determines whether to show the toolbar [set before DRAW].'  'TOOL_ABOUT (gui, logical) determines whether to show the toolbar about buttons [set before DRAW].'  'CLOSEREQ (gui, logical) determines whether to confirm close.'  'H (evanescent, handle) is the figure handle.'  'RESIZE (query, logical) updates prop POSITION and panel PanelElement when figure size is changed.'  'SHOW (query, logical) shows the figure and its dependent figures.'  'HIDE (query, logical) hides the figure and its dependent figures.'  'DELETE (query, logical) resets the handles when the figure is deleted.'  'CLOSE (query, logical) closes the figure and its dependent figures.'  'EL_CLASS (data, class) is the element class.'  'P (evanescent, handle) is the panel.'  'TABLE (evanescent, handle) is the table.'  'SAVE_BTN (evanescent, handle) is the save button.'  'CANCEL_BTN (evanescent, handle) is the edit button.' };
 			prop_description = guilayout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -581,17 +583,17 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 29 % GUILayout.EL_CLASS
+				case 30 % GUILayout.EL_CLASS
 					prop_settings = Format.getFormatSettings(6);
-				case 30 % GUILayout.P
+				case 31 % GUILayout.P
 					prop_settings = Format.getFormatSettings(18);
-				case 31 % GUILayout.TABLE
+				case 32 % GUILayout.TABLE
 					prop_settings = Format.getFormatSettings(18);
-				case 32 % GUILayout.SAVE_BTN
+				case 33 % GUILayout.SAVE_BTN
 					prop_settings = Format.getFormatSettings(18);
-				case 33 % GUILayout.CANCEL_BTN
+				case 34 % GUILayout.CANCEL_BTN
 					prop_settings = Format.getFormatSettings(18);
-				case 3 % GUILayout.TEMPLATE
+				case 4 % GUILayout.TEMPLATE
 					prop_settings = 'GUILayout';
 				otherwise
 					prop_settings = getPropSettings@GUI(prop);
@@ -620,31 +622,33 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 29 % GUILayout.EL_CLASS
+				case 30 % GUILayout.EL_CLASS
 					prop_default = Format.getFormatDefault(6, GUILayout.getPropSettings(prop));
-				case 30 % GUILayout.P
+				case 31 % GUILayout.P
 					prop_default = Format.getFormatDefault(18, GUILayout.getPropSettings(prop));
-				case 31 % GUILayout.TABLE
+				case 32 % GUILayout.TABLE
 					prop_default = Format.getFormatDefault(18, GUILayout.getPropSettings(prop));
-				case 32 % GUILayout.SAVE_BTN
+				case 33 % GUILayout.SAVE_BTN
 					prop_default = Format.getFormatDefault(18, GUILayout.getPropSettings(prop));
-				case 33 % GUILayout.CANCEL_BTN
+				case 34 % GUILayout.CANCEL_BTN
 					prop_default = Format.getFormatDefault(18, GUILayout.getPropSettings(prop));
-				case 1 % GUILayout.NAME
+				case 1 % GUILayout.ELCLASS
 					prop_default = 'GUILayout';
-				case 2 % GUILayout.DESCRIPTION
-					prop_default = 'GUILayout renders a layout editor.';
-				case 3 % GUILayout.TEMPLATE
+				case 2 % GUILayout.NAME
+					prop_default = 'GUI Layout';
+				case 3 % GUILayout.DESCRIPTION
+					prop_default = 'A GUI Layout (GUILayout) renders a layout editor.';
+				case 4 % GUILayout.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GUILayout.getPropSettings(prop));
-				case 4 % GUILayout.ID
+				case 5 % GUILayout.ID
 					prop_default = 'GUILayout ID';
-				case 5 % GUILayout.LABEL
+				case 6 % GUILayout.LABEL
 					prop_default = 'GUILayout label';
-				case 6 % GUILayout.NOTES
+				case 7 % GUILayout.NOTES
 					prop_default = 'GUILayout notes';
-				case 11 % GUILayout.TITLE
+				case 12 % GUILayout.TITLE
 					prop_default = ['Layout Editor - ' 'BRAPH2'];
-				case 22 % GUILayout.CLOSEREQ
+				case 23 % GUILayout.CLOSEREQ
 					prop_default = false;
 				otherwise
 					prop_default = getPropDefault@GUI(prop);
@@ -694,11 +698,11 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			switch prop
-				case 29 % GUILayout.EL_CLASS
+				case 30 % GUILayout.EL_CLASS
 					value = Element.getClass(value);
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						value = conditioning@GUI(pointer, value);
 					end
 			end
@@ -738,20 +742,20 @@ classdef GUILayout < GUI
 			prop = GUILayout.getPropProp(pointer);
 			
 			switch prop
-				case 29 % GUILayout.EL_CLASS
+				case 30 % GUILayout.EL_CLASS
 					check = Format.checkFormat(6, value, GUILayout.getPropSettings(prop));
-				case 30 % GUILayout.P
+				case 31 % GUILayout.P
 					check = Format.checkFormat(18, value, GUILayout.getPropSettings(prop));
-				case 31 % GUILayout.TABLE
+				case 32 % GUILayout.TABLE
 					check = Format.checkFormat(18, value, GUILayout.getPropSettings(prop));
-				case 32 % GUILayout.SAVE_BTN
+				case 33 % GUILayout.SAVE_BTN
 					check = Format.checkFormat(18, value, GUILayout.getPropSettings(prop));
-				case 33 % GUILayout.CANCEL_BTN
+				case 34 % GUILayout.CANCEL_BTN
 					check = Format.checkFormat(18, value, GUILayout.getPropSettings(prop));
-				case 3 % GUILayout.TEMPLATE
+				case 4 % GUILayout.TEMPLATE
 					check = Format.checkFormat(8, value, GUILayout.getPropSettings(prop));
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						check = checkProp@GUI(prop, value);
 					end
 			end
@@ -781,14 +785,14 @@ classdef GUILayout < GUI
 			%  checkValue.
 			
 			switch prop
-				case 29 % GUILayout.EL_CLASS
+				case 30 % GUILayout.EL_CLASS
 					if isa(gui.getr('TITLE'), 'NoValue')
 					    gui.set('TITLE', ['Layout Editor - ' gui.get('EL_CLASS') ' - ' 'BRAPH2'])
 					end
 					gui.lock('EL_CLASS', 'Iterative', false)
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						postset@GUI(gui, prop);
 					end
 			end
@@ -811,7 +815,7 @@ classdef GUILayout < GUI
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 30 % GUILayout.P
+				case 31 % GUILayout.P
 					p = uipanel( ...
 					    'Parent', gui.memorize('H'), ...
 					    'Tag', 'p', ...
@@ -822,7 +826,7 @@ classdef GUILayout < GUI
 					    );
 					value = p;
 					
-				case 31 % GUILayout.TABLE
+				case 32 % GUILayout.TABLE
 					table = uitable( ...
 					    'Parent', gui.memorize('P'), ...
 					    'Tag', 'table', ...
@@ -853,7 +857,7 @@ classdef GUILayout < GUI
 					
 					value = table;
 					
-				case 32 % GUILayout.SAVE_BTN
+				case 33 % GUILayout.SAVE_BTN
 					save_btn = uibutton( ...
 					    'Parent', gui.memorize('P'), ...
 					    'Tag', 'save_btn', ...
@@ -866,7 +870,7 @@ classdef GUILayout < GUI
 					    );
 					value = save_btn;
 					
-				case 33 % GUILayout.CANCEL_BTN
+				case 34 % GUILayout.CANCEL_BTN
 					cancel_btn = uibutton( ...
 					    'Parent', gui.memorize('P'), ...
 					    'Tag', 'save_btn', ...
@@ -878,7 +882,7 @@ classdef GUILayout < GUI
 					    );
 					value = cancel_btn;
 					
-				case 9 % GUILayout.DRAW
+				case 10 % GUILayout.DRAW
 					if check_graphics(gui.memorize('H'), 'figure')
 						el_class = gui.memorize('EL_CLASS');
 					
@@ -902,8 +906,8 @@ classdef GUILayout < GUI
 					    value = false;
 					end
 					
-				case 24 % GUILayout.RESIZE
-					value = calculateValue@GUI(gui, 24, varargin{:}); % also warning
+				case 25 % GUILayout.RESIZE
+					value = calculateValue@GUI(gui, 25, varargin{:}); % also warning
 					if value    
 					    p = gui.get('P');
 					    
@@ -912,8 +916,8 @@ classdef GUILayout < GUI
 					    set(gui.get('CANCEL_BTN'), 'Position', [144 12 120 24])
 					end
 					
-				case 27 % GUILayout.DELETE
-					value = calculateValue@GUI(gui, 27, varargin{:}); % also warning
+				case 28 % GUILayout.DELETE
+					value = calculateValue@GUI(gui, 28, varargin{:}); % also warning
 					if value
 					    gui.set('P', Element.getNoValue())
 					    gui.set('TABLE', Element.getNoValue())
@@ -922,7 +926,7 @@ classdef GUILayout < GUI
 					end
 					
 				otherwise
-					if prop <= 28
+					if prop <= 29
 						value = calculateValue@GUI(gui, prop, varargin{:});
 					else
 						value = calculateValue@Element(gui, prop, varargin{:});

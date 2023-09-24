@@ -7,15 +7,16 @@ classdef NNEvaluator < ConcreteElement
 	% Its subclasses shall be specifically designed to cater to different evaluation cases such as a classification task, a regression task, or a data generation task.
 	%
 	% The list of NNEvaluator properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the evaluator for the neural network analysis.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the evaluator for the neural network analysis.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network model.
-	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the evaluator for the neural network analysis.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the evaluator for the neural network analysis.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network model.
+	%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 	%
 	% NNEvaluator methods (constructor):
 	%  NNEvaluator - constructor
@@ -106,12 +107,12 @@ classdef NNEvaluator < ConcreteElement
 	% See also NNDataPoint, NNDataset, NNBase.
 	
 	properties (Constant) % properties
-		NN = 8; %CET: Computational Efficiency Trick
+		NN = 9; %CET: Computational Efficiency Trick
 		NN_TAG = 'NN';
 		NN_CATEGORY = 4;
 		NN_FORMAT = 8;
 		
-		D = 9; %CET: Computational Efficiency Trick
+		D = 10; %CET: Computational Efficiency Trick
 		D_TAG = 'D';
 		D_CATEGORY = 4;
 		D_FORMAT = 8;
@@ -128,15 +129,16 @@ classdef NNEvaluator < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNEvaluator properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the evaluator for the neural network analysis.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the evaluator for the neural network analysis.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network model.
-			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the evaluator for the neural network analysis.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the evaluator for the neural network analysis.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network model.
+			%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 			%
 			% See also Category, Format.
 			
@@ -198,21 +200,21 @@ classdef NNEvaluator < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 8 9];
+					prop_list = [5 9 10];
 				case 6 % Category.QUERY
-					prop_list = 7;
+					prop_list = 8;
 				otherwise
 					prop_list = [];
 			end
@@ -238,13 +240,13 @@ classdef NNEvaluator < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 10;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -283,7 +285,7 @@ classdef NNEvaluator < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -321,7 +323,7 @@ classdef NNEvaluator < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +356,7 @@ classdef NNEvaluator < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -383,7 +385,7 @@ classdef NNEvaluator < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnevaluator_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' };
+				nnevaluator_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D' };
 				tag = nnevaluator_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -410,7 +412,7 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnevaluator_category_list = { 1  1  3  4  2  2  6  4  4 };
+			nnevaluator_category_list = { 1  1  1  3  4  2  2  6  4  4 };
 			prop_category = nnevaluator_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -436,7 +438,7 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnevaluator_format_list = { 2  2  8  2  2  2  2  8  8 };
+			nnevaluator_format_list = { 2  2  2  8  2  2  2  2  8  8 };
 			prop_format = nnevaluator_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -462,7 +464,7 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnevaluator_description_list = { 'NAME (constant, string) is the name of the evaluator for the neural network analysis.'  'DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.'  'TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.'  'ID (data, string) is a few-letter code for the evaluator for the neural network analysis.'  'LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.'  'NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'NN (data, item) contains a trained neural network model.'  'D (data, item) is the dataset to evaluate the neural network model.' };
+			nnevaluator_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the evaluator for the neural network analysis.'  'DESCRIPTION (constant, string) is the description of the evaluator for the neural network analysis.'  'TEMPLATE (parameter, item) is the template of the evaluator for the neural network analysis.'  'ID (data, string) is a few-letter code for the evaluator for the neural network analysis.'  'LABEL (metadata, string) is an extended label of the evaluator for the neural network analysis.'  'NOTES (metadata, string) are some specific notes about the evaluator for the neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'NN (data, item) contains a trained neural network model.'  'D (data, item) is the dataset to evaluate the neural network model.' };
 			prop_description = nnevaluator_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -488,11 +490,11 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNEvaluator.NN
+				case 9 % NNEvaluator.NN
 					prop_settings = 'NNBase';
-				case 9 % NNEvaluator.D
+				case 10 % NNEvaluator.D
 					prop_settings = 'NNDataset';
-				case 3 % NNEvaluator.TEMPLATE
+				case 4 % NNEvaluator.TEMPLATE
 					prop_settings = 'NNEvaluator';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -521,21 +523,23 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 8 % NNEvaluator.NN
+				case 9 % NNEvaluator.NN
 					prop_default = Format.getFormatDefault(8, NNEvaluator.getPropSettings(prop));
-				case 9 % NNEvaluator.D
+				case 10 % NNEvaluator.D
 					prop_default = Format.getFormatDefault(8, NNEvaluator.getPropSettings(prop));
-				case 1 % NNEvaluator.NAME
+				case 1 % NNEvaluator.ELCLASS
 					prop_default = 'NNEvaluator';
-				case 2 % NNEvaluator.DESCRIPTION
+				case 2 % NNEvaluator.NAME
+					prop_default = 'NNEvaluator';
+				case 3 % NNEvaluator.DESCRIPTION
 					prop_default = 'A neural network evaluator (NNEvaluator) evaluates the performance of a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses shall be specifically designed to cater to different evaluation cases such as a classification task, a regression task, or a data generation task.';
-				case 3 % NNEvaluator.TEMPLATE
+				case 4 % NNEvaluator.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNEvaluator.getPropSettings(prop));
-				case 4 % NNEvaluator.ID
+				case 5 % NNEvaluator.ID
 					prop_default = 'NNEvaluator ID';
-				case 5 % NNEvaluator.LABEL
+				case 6 % NNEvaluator.LABEL
 					prop_default = 'NNEvaluator label';
-				case 6 % NNEvaluator.NOTES
+				case 7 % NNEvaluator.NOTES
 					prop_default = 'NNEvaluator notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -601,14 +605,14 @@ classdef NNEvaluator < ConcreteElement
 			prop = NNEvaluator.getPropProp(pointer);
 			
 			switch prop
-				case 8 % NNEvaluator.NN
+				case 9 % NNEvaluator.NN
 					check = Format.checkFormat(8, value, NNEvaluator.getPropSettings(prop));
-				case 9 % NNEvaluator.D
+				case 10 % NNEvaluator.D
 					check = Format.checkFormat(8, value, NNEvaluator.getPropSettings(prop));
-				case 3 % NNEvaluator.TEMPLATE
+				case 4 % NNEvaluator.TEMPLATE
 					check = Format.checkFormat(8, value, NNEvaluator.getPropSettings(prop));
 				otherwise
-					if prop <= 7
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end

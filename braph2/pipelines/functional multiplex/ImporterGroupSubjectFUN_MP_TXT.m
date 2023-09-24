@@ -16,18 +16,19 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ImporterGroupSubjectFUN_MP_TXT properties is:
-	%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN MP subject group importer from TXT.
-	%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.
-	%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.
-	%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.
-	%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.
-	%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.
-	%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.
-	%  <strong>10</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.
-	%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with functional multiplex data.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN MP subject group importer from TXT.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.
+	%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.
+	%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with functional multiplex data.
 	%
 	% ImporterGroupSubjectFUN_MP_TXT methods (constructor):
 	%  ImporterGroupSubjectFUN_MP_TXT - constructor
@@ -118,22 +119,22 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 	% See also Group, SubjectFUN_MP, ExporterGroupSubjectFUN_MP_TXT.
 	
 	properties (Constant) % properties
-		DIRECTORY = 9; %CET: Computational Efficiency Trick
+		DIRECTORY = 10; %CET: Computational Efficiency Trick
 		DIRECTORY_TAG = 'DIRECTORY';
 		DIRECTORY_CATEGORY = 4;
 		DIRECTORY_FORMAT = 2;
 		
-		GET_DIR = 10; %CET: Computational Efficiency Trick
+		GET_DIR = 11; %CET: Computational Efficiency Trick
 		GET_DIR_TAG = 'GET_DIR';
 		GET_DIR_CATEGORY = 6;
 		GET_DIR_FORMAT = 8;
 		
-		BA = 11; %CET: Computational Efficiency Trick
+		BA = 12; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		GR = 12; %CET: Computational Efficiency Trick
+		GR = 13; %CET: Computational Efficiency Trick
 		GR_TAG = 'GR';
 		GR_CATEGORY = 5;
 		GR_FORMAT = 8;
@@ -150,18 +151,19 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ImporterGroupSubjectFUN_MP_TXT properties is:
-			%  <strong>1</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN MP subject group importer from TXT.
-			%  <strong>2</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.
-			%  <strong>3</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.
-			%  <strong>4</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.
-			%  <strong>5</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.
-			%  <strong>6</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.
-			%  <strong>7</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>8</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>9</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.
-			%  <strong>10</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.
-			%  <strong>11</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>12</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with functional multiplex data.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN MP subject group importer from TXT.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.
+			%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.
+			%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with functional multiplex data.
 			%
 			% See also Category, Format.
 			
@@ -223,25 +225,25 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
 				case 1 % Category.CONSTANT
-					prop_list = [1 2];
+					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [5 6];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
-					prop_list = 3;
+					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [4 9 11];
+					prop_list = [5 10 12];
 				case 5 % Category.RESULT
-					prop_list = 12;
+					prop_list = 13;
 				case 6 % Category.QUERY
-					prop_list = [7 10];
+					prop_list = [8 11];
 				case 9 % Category.GUI
-					prop_list = 8;
+					prop_list = 9;
 				otherwise
 					prop_list = [];
 			end
@@ -267,13 +269,13 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 12;
+				prop_number = 13;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 1 % Category.CONSTANT
-					prop_number = 2;
+					prop_number = 3;
 				case 2 % Category.METADATA
 					prop_number = 2;
 				case 3 % Category.PARAMETER
@@ -316,7 +318,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -354,7 +356,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -387,7 +389,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -416,7 +418,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				importergroupsubjectfun_mp_txt_tag_list = { 'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' };
+				importergroupsubjectfun_mp_txt_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'DIRECTORY'  'GET_DIR'  'BA'  'GR' };
 				tag = importergroupsubjectfun_mp_txt_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -443,7 +445,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectfun_mp_txt_category_list = { 1  1  3  4  2  2  6  9  4  6  4  5 };
+			importergroupsubjectfun_mp_txt_category_list = { 1  1  1  3  4  2  2  6  9  4  6  4  5 };
 			prop_category = importergroupsubjectfun_mp_txt_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -469,7 +471,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectfun_mp_txt_format_list = { 2  2  8  2  2  2  2  4  2  8  8  8 };
+			importergroupsubjectfun_mp_txt_format_list = { 2  2  2  8  2  2  2  2  4  2  8  8  8 };
 			prop_format = importergroupsubjectfun_mp_txt_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -495,7 +497,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectfun_mp_txt_description_list = { 'NAME (constant, string) is the name of the FUN MP subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.'  'ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with functional multiplex data.' };
+			importergroupsubjectfun_mp_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN MP subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the FUN MP subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the FUN MP subject group importer from TXT.'  'ID (data, string) is a few-letter code for the FUN MP subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the FUN MP subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the FUN MP subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the FUN MP subject group files from which to load the L layers of the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN MP subject group with L layers.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with functional multiplex data.' };
 			prop_description = importergroupsubjectfun_mp_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -521,15 +523,15 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
+				case 10 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
 					prop_settings = Format.getFormatSettings(2);
-				case 10 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
+				case 11 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
 					prop_settings = 'ImporterGroupSubjectFUN_MP_TXT';
-				case 11 % ImporterGroupSubjectFUN_MP_TXT.BA
+				case 12 % ImporterGroupSubjectFUN_MP_TXT.BA
 					prop_settings = 'BrainAtlas';
-				case 12 % ImporterGroupSubjectFUN_MP_TXT.GR
+				case 13 % ImporterGroupSubjectFUN_MP_TXT.GR
 					prop_settings = 'Group';
-				case 3 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
+				case 4 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
 					prop_settings = 'ImporterGroupSubjectFUN_MP_TXT';
 				otherwise
 					prop_settings = getPropSettings@Importer(prop);
@@ -558,25 +560,27 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
+				case 10 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
 					prop_default = fileparts(which('test_braph2'));
-				case 10 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
+				case 11 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectFUN_MP_TXT.BA
+				case 12 % ImporterGroupSubjectFUN_MP_TXT.BA
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectFUN_MP_TXT.GR
+				case 13 % ImporterGroupSubjectFUN_MP_TXT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectFUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN_MP'));
-				case 1 % ImporterGroupSubjectFUN_MP_TXT.NAME
+				case 1 % ImporterGroupSubjectFUN_MP_TXT.ELCLASS
 					prop_default = 'ImporterGroupSubjectFUN_MP_TXT';
-				case 2 % ImporterGroupSubjectFUN_MP_TXT.DESCRIPTION
+				case 2 % ImporterGroupSubjectFUN_MP_TXT.NAME
+					prop_default = 'ImporterGroupSubjectFUN_MP_TXT';
+				case 3 % ImporterGroupSubjectFUN_MP_TXT.DESCRIPTION
 					prop_default = 'ImporterGroupSubjectFUN_MP_TXT imports a group of subjects with functional multiplex data from an TXT file and their covariates (optional) from another TXT file.';
-				case 3 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
+				case 4 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 4 % ImporterGroupSubjectFUN_MP_TXT.ID
+				case 5 % ImporterGroupSubjectFUN_MP_TXT.ID
 					prop_default = 'ImporterGroupSubjectFUN_MP_TXT ID';
-				case 5 % ImporterGroupSubjectFUN_MP_TXT.LABEL
+				case 6 % ImporterGroupSubjectFUN_MP_TXT.LABEL
 					prop_default = 'ImporterGroupSubjectFUN_MP_TXT label';
-				case 6 % ImporterGroupSubjectFUN_MP_TXT.NOTES
+				case 7 % ImporterGroupSubjectFUN_MP_TXT.NOTES
 					prop_default = 'ImporterGroupSubjectFUN_MP_TXT notes';
 				otherwise
 					prop_default = getPropDefault@Importer(prop);
@@ -642,18 +646,18 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			prop = ImporterGroupSubjectFUN_MP_TXT.getPropProp(pointer);
 			
 			switch prop
-				case 9 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
+				case 10 % ImporterGroupSubjectFUN_MP_TXT.DIRECTORY
 					check = Format.checkFormat(2, value, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 10 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
+				case 11 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
 					check = Format.checkFormat(8, value, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectFUN_MP_TXT.BA
+				case 12 % ImporterGroupSubjectFUN_MP_TXT.BA
 					check = Format.checkFormat(8, value, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectFUN_MP_TXT.GR
+				case 13 % ImporterGroupSubjectFUN_MP_TXT.GR
 					check = Format.checkFormat(8, value, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
-				case 3 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
+				case 4 % ImporterGroupSubjectFUN_MP_TXT.TEMPLATE
 					check = Format.checkFormat(8, value, ImporterGroupSubjectFUN_MP_TXT.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -686,15 +690,15 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 10 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
+				case 11 % ImporterGroupSubjectFUN_MP_TXT.GET_DIR
 					directory = uigetdir('Select directory');
 					if ischar(directory) && isfolder(directory)
 					    im.set('DIRECTORY', directory);
 					end
 					value = im;
 					
-				case 12 % ImporterGroupSubjectFUN_MP_TXT.GR
-					rng_settings_ = rng(); rng(im.getPropSeed(12), 'twister')
+				case 13 % ImporterGroupSubjectFUN_MP_TXT.GR
+					rng_settings_ = rng(); rng(im.getPropSeed(13), 'twister')
 					
 					% creates empty Group
 					gr = Group( ...
@@ -824,7 +828,7 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});
@@ -849,11 +853,11 @@ classdef ImporterGroupSubjectFUN_MP_TXT < Importer
 			msg = ['Error while checking ' tostring(im) ' ' im.getPropTag(prop) '.'];
 			
 			switch prop
-				case 12 % ImporterGroupSubjectFUN_MP_TXT.GR
+				case 13 % ImporterGroupSubjectFUN_MP_TXT.GR
 					check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectFUN_MP', [], [], true)));
 					
 				otherwise
-					if prop <= 8
+					if prop <= 9
 						[check, msg] = checkValue@Importer(im, prop, value);
 					end
 			end
