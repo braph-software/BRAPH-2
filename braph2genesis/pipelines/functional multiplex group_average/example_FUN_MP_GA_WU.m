@@ -75,4 +75,4 @@ weo_av_WU_diff = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('DIFF');
 weo_av_WU_p1 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P1');
 weo_av_WU_p2 = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('P2');
 weo_av_WU_cil = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIL');
-weo_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOverlap').get('CIU');
+weo_av_WU_ciu = c_WU.get('COMPARISON', 'WeightedEdgeOvlp').get('CIU');
