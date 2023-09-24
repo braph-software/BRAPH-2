@@ -104,7 +104,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT' 'MultiplexBUD' 'MultiplexBUT' 'OrdMlWU' 'OrdMlBU' 'OrdMlBUT' 'OrdMlBUD'};
+{'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBUT' 'OrdMlBUD'};
 
 %%% ¡prop!
 M (result, cell) is the edge overlap.
