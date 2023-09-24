@@ -524,7 +524,7 @@ classdef EdgeNumDist < Measure
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 1 % EdgeNumDist.ELCLASS
-					prop_default = 'EdgeNumbDist';
+					prop_default = 'EdgeNumDist';
 				case 2 % EdgeNumDist.NAME
 					prop_default = 'EdgeNumberDistance';
 				case 3 % EdgeNumDist.DESCRIPTION

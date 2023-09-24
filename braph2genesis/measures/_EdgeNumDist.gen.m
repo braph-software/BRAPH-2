@@ -9,7 +9,7 @@ weighted path between two nodes within a layer.
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'EdgeNumbDist'
+'EdgeNumDist'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the edge number distance.
