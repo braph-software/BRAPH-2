@@ -5,7 +5,7 @@ classdef SubjectST < Subject
 	% Subject with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.
 	%
 	% The list of SubjectST properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
@@ -128,7 +128,7 @@ classdef SubjectST < Subject
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of SubjectST properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
@@ -464,7 +464,7 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_description_list = { 'ELCLASS (constant, string) is the class of the subject.'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'ST (data, cvector) is a column vector with data for each brain region.' };
+			subjectst_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'ST (data, cvector) is a column vector with data for each brain region.' };
 			prop_description = subjectst_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -525,6 +525,8 @@ classdef SubjectST < Subject
 					prop_default = Format.getFormatDefault(8, SubjectST.getPropSettings(prop));
 				case 11 % SubjectST.ST
 					prop_default = Format.getFormatDefault(13, SubjectST.getPropSettings(prop));
+				case 1 % SubjectST.ELCLASS
+					prop_default = 'SubjectST';
 				case 2 % SubjectST.NAME
 					prop_default = 'SubjectST';
 				case 3 % SubjectST.DESCRIPTION

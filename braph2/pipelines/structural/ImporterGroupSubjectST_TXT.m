@@ -15,7 +15,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ImporterGroupSubjectST_TXT properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from TXT.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.
@@ -150,7 +150,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ImporterGroupSubjectST_TXT properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from TXT.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.
@@ -496,7 +496,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectst_txt_description_list = { 'ELCLASS (constant, string) is the class of the importer.'  'NAME (constant, string) is the name of the ST subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.'  'ID (data, string) is a few-letter code for the ST subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the TXT file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
+			importergroupsubjectst_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.'  'ID (data, string) is a few-letter code for the ST subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the TXT file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
 			prop_description = importergroupsubjectst_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -567,6 +567,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_TXT.getPropSettings(prop));
 				case 13 % ImporterGroupSubjectST_TXT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+				case 1 % ImporterGroupSubjectST_TXT.ELCLASS
+					prop_default = 'ImporterGroupSubjectST_TXT';
 				case 2 % ImporterGroupSubjectST_TXT.NAME
 					prop_default = 'ImporterGroupSubjectST_TXT';
 				case 3 % ImporterGroupSubjectST_TXT.DESCRIPTION

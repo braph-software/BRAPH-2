@@ -15,7 +15,7 @@ classdef ExporterGroupSubjectST_TXT < Exporter
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ExporterGroupSubjectST_TXT properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
@@ -150,7 +150,7 @@ classdef ExporterGroupSubjectST_TXT < Exporter
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ExporterGroupSubjectST_TXT properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in TXT.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.
@@ -496,7 +496,7 @@ classdef ExporterGroupSubjectST_TXT < Exporter
 			prop = ExporterGroupSubjectST_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_txt_description_list = { 'ELCLASS (constant, string) is the class of the exporter.'  'NAME (constant, string) is the name of the ST subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the ST subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the TXT file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected TXT file.' };
+			exportergroupsubjectst_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the ST subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the TXT file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected TXT file.' };
 			prop_description = exportergroupsubjectst_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -567,6 +567,8 @@ classdef ExporterGroupSubjectST_TXT < Exporter
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectST_TXT.getPropSettings(prop));
 				case 13 % ExporterGroupSubjectST_TXT.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectST_TXT.getPropSettings(prop));
+				case 1 % ExporterGroupSubjectST_TXT.ELCLASS
+					prop_default = 'ExporterGroupSubjectST_TXT';
 				case 2 % ExporterGroupSubjectST_TXT.NAME
 					prop_default = 'ExporterGroupSubjectST_TXT';
 				case 3 % ExporterGroupSubjectST_TXT.DESCRIPTION

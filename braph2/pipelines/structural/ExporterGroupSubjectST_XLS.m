@@ -15,7 +15,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ExporterGroupSubjectST_XLS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in XLSX.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.
@@ -150,7 +150,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ExporterGroupSubjectST_XLS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group exporter in XLSX.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.
@@ -496,7 +496,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the exporter.'  'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
+			exportergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
 			prop_description = exportergroupsubjectst_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -567,6 +567,8 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectST_XLS.getPropSettings(prop));
 				case 13 % ExporterGroupSubjectST_XLS.SAVE
 					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectST_XLS.getPropSettings(prop));
+				case 1 % ExporterGroupSubjectST_XLS.ELCLASS
+					prop_default = 'ExporterGroupSubjectST_XLS';
 				case 2 % ExporterGroupSubjectST_XLS.NAME
 					prop_default = 'ExporterGroupSubjectST_XLS';
 				case 3 % ExporterGroupSubjectST_XLS.DESCRIPTION

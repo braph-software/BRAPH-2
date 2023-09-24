@@ -15,7 +15,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ImporterGroupSubjectST_XLS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.
@@ -150,7 +150,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ImporterGroupSubjectST_XLS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.
@@ -496,7 +496,7 @@ classdef ImporterGroupSubjectST_XLS < Importer
 			prop = ImporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the importer.'  'NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
+			importergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the ST subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the XLS/XLSX file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
 			prop_description = importergroupsubjectst_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -567,6 +567,8 @@ classdef ImporterGroupSubjectST_XLS < Importer
 					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_XLS.getPropSettings(prop));
 				case 13 % ImporterGroupSubjectST_XLS.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
+				case 1 % ImporterGroupSubjectST_XLS.ELCLASS
+					prop_default = 'ImporterGroupSubjectST_XLS';
 				case 2 % ImporterGroupSubjectST_XLS.NAME
 					prop_default = 'ImporterGroupSubjectST_XLS';
 				case 3 % ImporterGroupSubjectST_XLS.DESCRIPTION
