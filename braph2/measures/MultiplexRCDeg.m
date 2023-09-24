@@ -540,7 +540,7 @@ classdef MultiplexRCDeg < RCDeg
 				case 17 % MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
 					prop_default = [0];
 				case 1 % Multiplex1
-					prop_default = 'MultiplexRCD';
+					prop_default = 'MultiplexRCDeg';
 				case 2 % Multiplex2
 					prop_default = 'MultiplexRichClubDegree';
 				case 3 % Multiplex3
