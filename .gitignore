@@ -8,4 +8,4 @@
 *.out
 *.toc
 
-braph2/pipelines/*/Example*
+braph2/pipelines/*/Example *
