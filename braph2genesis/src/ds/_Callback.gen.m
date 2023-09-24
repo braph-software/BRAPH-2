@@ -36,3 +36,8 @@ tag = cb.get('TAG');
 if cb.get('PROP') ~= el.getPropProp(tag)
     cb.set('PROP', el.getPropProp(tag));
 end
+
+%%% ¡prop!
+TOSTRING (query, string) returns a string that represents the object.
+%%%% ¡calculate!
+value = cb.tostring();

@@ -1362,7 +1362,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 
 %% AnalyzeEnsemble
 
-% el_class_list = {'ConcreteElement'} % {'IndexedDictionary'}
+% el_class_list = {'Callback'} % {'IndexedDictionary' 'ConcreteElement' 'NoValue'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/ds';

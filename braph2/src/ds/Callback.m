@@ -10,6 +10,7 @@ classdef (Sealed=true) Callback < Element
 	%  <strong>1</strong> <strong>EL</strong> 	EL (data, item) is the callback element.
 	%  <strong>2</strong> <strong>PROP</strong> 	PROP (data, scalar) is the callback property number.
 	%  <strong>3</strong> <strong>TAG</strong> 	TAG (data, string) is the callback property tag.
+	%  <strong>4</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%
 	% Callback methods (constructor):
 	%  Callback - constructor
@@ -114,6 +115,11 @@ classdef (Sealed=true) Callback < Element
 		TAG_TAG = 'TAG';
 		TAG_CATEGORY = 4;
 		TAG_FORMAT = 2;
+		
+		TOSTRING = 4; %CET: Computational Efficiency Trick
+		TOSTRING_TAG = 'TOSTRING';
+		TOSTRING_CATEGORY = 6;
+		TOSTRING_FORMAT = 2;
 	end
 	methods % constructor
 		function cb = Callback(varargin)
@@ -130,6 +136,7 @@ classdef (Sealed=true) Callback < Element
 			%  <strong>1</strong> <strong>EL</strong> 	EL (data, item) is the callback element.
 			%  <strong>2</strong> <strong>PROP</strong> 	PROP (data, scalar) is the callback property number.
 			%  <strong>3</strong> <strong>TAG</strong> 	TAG (data, string) is the callback property tag.
+			%  <strong>4</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%
 			% See also Category, Format.
 			
@@ -191,13 +198,15 @@ classdef (Sealed=true) Callback < Element
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3];
+				prop_list = [1 2 3 4];
 				return
 			end
 			
 			switch category
 				case 4 % Category.DATA
 					prop_list = [1 2 3];
+				case 6 % Category.QUERY
+					prop_list = 4;
 				otherwise
 					prop_list = [];
 			end
@@ -223,13 +232,15 @@ classdef (Sealed=true) Callback < Element
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 3;
+				prop_number = 4;
 				return
 			end
 			
 			switch varargin{1} % category = varargin{1}
 				case 4 % Category.DATA
 					prop_number = 3;
+				case 6 % Category.QUERY
+					prop_number = 1;
 				otherwise
 					prop_number = 0;
 			end
@@ -260,7 +271,7 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 3 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 4 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -298,7 +309,7 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'EL'  'PROP'  'TAG' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'EL'  'PROP'  'TAG'  'TOSTRING' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -331,7 +342,7 @@ classdef (Sealed=true) Callback < Element
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'EL'  'PROP'  'TAG' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'EL'  'PROP'  'TAG'  'TOSTRING' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -360,7 +371,7 @@ classdef (Sealed=true) Callback < Element
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				callback_tag_list = { 'EL'  'PROP'  'TAG' };
+				callback_tag_list = { 'EL'  'PROP'  'TAG'  'TOSTRING' };
 				tag = callback_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -387,7 +398,7 @@ classdef (Sealed=true) Callback < Element
 			prop = Callback.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			callback_category_list = { 4  4  4 };
+			callback_category_list = { 4  4  4  6 };
 			prop_category = callback_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -413,7 +424,7 @@ classdef (Sealed=true) Callback < Element
 			prop = Callback.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			callback_format_list = { 8  11  2 };
+			callback_format_list = { 8  11  2  2 };
 			prop_format = callback_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -439,7 +450,7 @@ classdef (Sealed=true) Callback < Element
 			prop = Callback.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			callback_description_list = { 'EL (data, item) is the callback element.'  'PROP (data, scalar) is the callback property number.'  'TAG (data, string) is the callback property tag.' };
+			callback_description_list = { 'EL (data, item) is the callback element.'  'PROP (data, scalar) is the callback property number.'  'TAG (data, string) is the callback property tag.'  'TOSTRING (query, string) returns a string that represents the object.' };
 			prop_description = callback_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -471,6 +482,8 @@ classdef (Sealed=true) Callback < Element
 					prop_settings = Format.getFormatSettings(11);
 				case 3 % Callback.TAG
 					prop_settings = Format.getFormatSettings(2);
+				case 4 % Callback.TOSTRING
+					prop_settings = Format.getFormatSettings(2);
 			end
 		end
 		function prop_default = getPropDefault(pointer)
@@ -501,6 +514,8 @@ classdef (Sealed=true) Callback < Element
 				case 2 % Callback.PROP
 					prop_default = Format.getFormatDefault(11, Callback.getPropSettings(prop));
 				case 3 % Callback.TAG
+					prop_default = Format.getFormatDefault(2, Callback.getPropSettings(prop));
+				case 4 % Callback.TOSTRING
 					prop_default = Format.getFormatDefault(2, Callback.getPropSettings(prop));
 			end
 		end
@@ -587,6 +602,8 @@ classdef (Sealed=true) Callback < Element
 					check = Format.checkFormat(11, value, Callback.getPropSettings(prop));
 				case 3 % Callback.TAG
 					check = Format.checkFormat(2, value, Callback.getPropSettings(prop));
+				case 4 % Callback.TOSTRING
+					check = Format.checkFormat(2, value, Callback.getPropSettings(prop));
 			end
 			
 			if nargout == 1
@@ -629,6 +646,36 @@ classdef (Sealed=true) Callback < Element
 					end
 					
 			end
+		end
+	end
+	methods (Access=protected) % calculate value
+		function value = calculateValue(cb, prop, varargin)
+			%CALCULATEVALUE calculates the value of a property.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
+			%  returns the default value for the prop and should be implemented in the
+			%  subclasses of Element when needed.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
+			%  6.
+			%
+			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
+			%  postset, postprocessing, checkValue.
+			
+			switch prop
+				case 4 % Callback.TOSTRING
+					value = cb.tostring();
+					
+				otherwise
+					if prop <= Element.getPropNumber()
+						value = calculateValue@Element(cb, prop, varargin{:});
+					else
+						value = calculateValue@Element(cb, prop, varargin{:});
+					end
+			end
+			
 		end
 	end
 end
