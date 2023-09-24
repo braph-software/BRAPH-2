@@ -535,7 +535,7 @@ classdef PathLengthIn < Measure
 				case 16 % PathLengthIn.RULE
 					prop_default = 'harmonic';
 				case 1 % PathLengthIn.ELCLASS
-					prop_default = 'PathLengthAv';
+					prop_default = 'PathLengthIn';
 				case 2 % PathLengthIn.NAME
 					prop_default = 'PathLengthIn';
 				case 3 % PathLengthIn.DESCRIPTION

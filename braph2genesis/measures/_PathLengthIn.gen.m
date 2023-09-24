@@ -9,7 +9,7 @@ The in-path length is the average shortest in-path length of one node to all oth
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'PathLengthAv'
+'PathLengthIn'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the in-path length.
