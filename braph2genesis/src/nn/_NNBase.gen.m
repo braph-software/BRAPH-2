@@ -2,7 +2,7 @@
 NNBase < ConcreteElement (nn, neural network) comprises a neural network model with a dataset.
 
 %%% ¡description!
-A neural network base (NNBase) comprises a neural network model with a specific dataset.
+A Neural Network Base (NNBase) comprises a neural network model with a specific dataset.
  Instances of this class should not be created. Use one of its subclasses instead.
 
 Its subclasses need to implement the props MODEL, INPUTS and TARGETS.
@@ -17,37 +17,37 @@ NNDataPoint, NNDataset, NNEvaluator
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network base.
 %%%% ¡default!
 'NNBase'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the nerual network base.
+NAME (constant, string) is the name of the neural network base.
 %%%% ¡default!
-'NNBase'
+'Neural Network Base '
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the nerual network base.
+DESCRIPTION (constant, string) is the description of the neural network base.
 %%%% ¡default!
-'A neural network base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.'
+'A Neural Network Base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the nerual network base.
+TEMPLATE (parameter, item) is the template of the neural network base.
 %%%% ¡settings!
 'NNBase'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the nerual network base.
+ID (data, string) is a few-letter code for the neural network base.
 %%%% ¡default!
 'NNBase ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the nerual network base.
+LABEL (metadata, string) is an extended label of the neural network base.
 %%%% ¡default!
 'NNBase label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the nerual network base.
+NOTES (metadata, string) are some specific notes about the neural network base.
 %%%% ¡default!
 'NNBase notes'
     

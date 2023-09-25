@@ -2,8 +2,8 @@
 OverlappingDeg < Degree (m, ovrlapdeg) is the graph overlapping degree.
 
 %%% ¡description!
-The overlapping degree of a graph is the sum of the degrees of a node in 
-all layers. 
+The Overlapping Degree (OverlappingDeg) of a graph is the sum of the 
+ degrees of a node in all layers.
 
 %% ¡layout!
 
@@ -52,19 +52,19 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the overlapping degree.
 %%%% ¡default!
 'OverlappingDeg'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the overlapping degree.
 %%%% ¡default!
-'OverlappingDegree'
+'Overlapping Degree'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the overlapping degree.
 %%%% ¡default!
-'The overlapping degree of a graph is the sum of the degrees of a node in all layers.'
+'The Overlapping Degree (OverlappingDeg) of a graph is the sum of the degrees of a node in all layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the overlapping degree.

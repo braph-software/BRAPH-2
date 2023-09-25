@@ -2,15 +2,60 @@
 Assortativity < Measure (m, assortativity) is the graph assortativity.
 
 %%% ¡description!
-The assortativity coefficient of a graph is the correlation coefficient 
- between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
-The corresponding coefficient for directed and weighted networks is calculated 
- by using the weighted and directed variants of degree/strength.
+The Assortativity coefficient of a graph is the correlation coefficient 
+ between the degrees/strengths of all nodes on two opposite ends of an edge 
+ within a layer.
+The corresponding coefficient for directed and weighted networks is 
+ calculated by using the weighted and directed variants of degree/strength.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.M
+%%%% ¡title!
+Assortativity
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Assortativity.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the assortativity.
 %%%% ¡default!
 'Assortativity'
 
@@ -22,7 +67,7 @@ NAME (constant, string) is the name of the assortativity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the assortativity.
 %%%% ¡default!
-'The assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.'
+'The Assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the assortativity.
