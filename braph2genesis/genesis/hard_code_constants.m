@@ -99,17 +99,20 @@ if isempty(constants)
     constants{end, 2} = ['''' regexprep(BRAPH2.AUTHORS, '''', '''''') ''''];
     
     constants{end+1, 1} = 'BRAPH2\.COPYRIGHT';
-    constants{end, 2} = int2str(BRAPH2.COPYRIGHT);
+    constants{end, 2} = ['''' BRAPH2.COPYRIGHT ''''];
     
     constants{end+1, 1} = 'BRAPH2\.WEB';
-    constants{end, 2} = int2str(BRAPH2.WEB);
+    constants{end, 2} = ['''' BRAPH2.WEB ''''];
 
     constants{end+1, 1} = 'BRAPH2\.TWITTER';
-    constants{end, 2} = int2str(BRAPH2.TWITTER);
+    constants{end, 2} = ['''' BRAPH2.TWITTER ''''];
+    
+    constants{end+1, 1} = 'BRAPH2\.MATLAB_VERSION';
+    constants{end, 2} = ['''' BRAPH2.MATLAB_VERSION ''''];
 
     constants{end+1, 1} = 'BRAPH2\.MATLAB_RELEASE';
-    constants{end, 2} = int2str(BRAPH2.MATLAB_RELEASE);
-    
+    constants{end, 2} = ['''' BRAPH2.MATLAB_RELEASE ''''];
+
     constants{end+1, 1} = '€BRAPH2\.WRONG_VER€';
     constants{end, 2} = BRAPH2.WRONG_VER;
     constants{end+1, 1} = 'BRAPH2\.WRONG_VER';
