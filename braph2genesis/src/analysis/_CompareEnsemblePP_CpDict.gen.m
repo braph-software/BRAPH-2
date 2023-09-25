@@ -173,7 +173,16 @@ if value
             gui.get('SHOW')
         end
     end
-    
+
+    % figures for brain measures comparison figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
+
     % figures for brain graph comparison figures
     gui_bg_dict = pr.get('GUI_BG_DICT');
     for i = 1:1:gui_bg_dict.get('LENGTH')
@@ -206,7 +215,16 @@ if value
             gui.get('HIDE')
         end
     end
-    
+
+    % figures for measure figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+
     % figures for measure figures
     gui_bg_dict = pr.get('GUI_BG_DICT');
     for i = 1:1:gui_bg_dict.get('LENGTH')
@@ -248,7 +266,16 @@ if value
             gui.get('CLOSE')
         end
     end
-    
+
+    % figures for brain measures comparison figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+
     % figures for measure figures
     gui_bg_dict = pr.get('GUI_BG_DICT');
     for i = 1:1:gui_bg_dict.get('LENGTH')
@@ -617,6 +644,70 @@ function cb_hide_brains(~, ~)
         
         if gui_f_dict.get('CONTAINS_KEY', measure)
             gui = gui_f_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
+
+function cb_open_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
+    m_list = g.get('COMPATIBLE_MEASURES');
+
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+
+        measure = m_list{i}; % also key
+
+        cp = c.get('COMPARISON', measure);
+
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', cp.get('PFB'), ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+
+function cb_hide_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = m_list{i}; % also key
+        
+        if gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = gui_b_dict.get('IT', measure);
             if gui.get('DRAWN')
                 gui.get('HIDE')
             end
