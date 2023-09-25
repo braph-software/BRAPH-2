@@ -1000,9 +1000,9 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_select_all(~, ~) 
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			
-			    pr.set('SELECTED', [1:1:length(mlist)])
+			    pr.set('SELECTED', [1:1:length(m_list)])
 			
 			    pr.get('UPDATE')
 			end
@@ -1013,9 +1013,9 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_invert_selection(~, ~) 
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			
-			    selected_tmp = [1:1:length(mlist)];
+			    selected_tmp = [1:1:length(m_list)];
 			    selected_tmp(pr.get('SELECTED')) = [];
 			    pr.set('SELECTED', selected_tmp);
 			
@@ -1023,14 +1023,14 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_calculate(~, ~) 
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    selected = pr.get('SELECTED');
 			    
 			    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
 			
-			    for i = 1:1:length(mlist)
+			    for i = 1:1:length(m_list)
 			        if ismember(i, selected)
-			            measure = mlist{i};
+			            measure = m_list{i};
 			
 			            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 			
@@ -1046,10 +1046,10 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_open_plots(~, ~)
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
 			    gui_f_dict = pr.memorize('GUI_F_DICT');
 			    
@@ -1057,7 +1057,7 @@ classdef GraphPP_MDict < PanelProp
 				for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			
 			        m = g.get('MEASURE', measure);
 			        
@@ -1086,7 +1086,7 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_hide_plots(~, ~)
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    gui_f_dict = pr.memorize('GUI_F_DICT');
 			
@@ -1094,7 +1094,7 @@ classdef GraphPP_MDict < PanelProp
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			        
 			        if gui_f_dict.get('CONTAINS_KEY', measure)
 			            gui = gui_f_dict.get('IT', measure);
@@ -1106,10 +1106,10 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_open_elements(~, ~)
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
 			    gui_m_dict = pr.memorize('GUI_M_DICT');
 			    
@@ -1117,7 +1117,7 @@ classdef GraphPP_MDict < PanelProp
 				for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			
 			        m = g.get('MEASURE', measure);
 			        
@@ -1146,7 +1146,7 @@ classdef GraphPP_MDict < PanelProp
 			end
 			function cb_hide_elements(~, ~)
 			    g = pr.get('EL');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    gui_m_dict = pr.memorize('GUI_M_DICT');
 			
@@ -1154,7 +1154,7 @@ classdef GraphPP_MDict < PanelProp
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			        
 			        if gui_m_dict.get('CONTAINS_KEY', measure)
 			            gui = gui_m_dict.get('IT', measure);
@@ -1167,13 +1167,13 @@ classdef GraphPP_MDict < PanelProp
 			function set_table()
 			    g = pr.get('EL');
 			
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    mlist_already_calculated = cellfun(@(x) x.get('ID'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
 			
-			    rowname = cell(length(mlist), 1);
-			    data = cell(length(mlist), 5);
-			    for mi = 1:1:length(mlist)
-			        if any(cellfun(@(y) isequal(mlist{mi}, y), mlist_already_calculated)) && ~isa(g.get('MEASURE', mlist{mi}).getr('M'), 'NoValue')
+			    rowname = cell(length(m_list), 1);
+			    data = cell(length(m_list), 5);
+			    for mi = 1:1:length(m_list)
+			        if any(cellfun(@(y) isequal(m_list{mi}, y), mlist_already_calculated)) && ~isa(g.get('MEASURE', m_list{mi}).getr('M'), 'NoValue')
 			            rowname{mi} = 'C';
 			        else
 			            rowname{mi} = '';
@@ -1185,25 +1185,25 @@ classdef GraphPP_MDict < PanelProp
 			            data{mi, 1} = false;
 			        end
 			
-			        data{mi, 2} = mlist{mi};
+			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
 			
-			        if Element.getPropDefault(mlist{mi}, 'SHAPE') == 2
+			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
 			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SHAPE') == 1
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
 			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SHAPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
 			            data{mi, 3} = 'BINODAL';
 			        end
 			
-			        if Element.getPropDefault(mlist{mi}, 'SCOPE') == 1
+			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
 			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == 2
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
 			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
 			            data{mi, 4} = 'BILAYER';
 			        end
 			        
-			        data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
+			        data{mi, 5} = eval([m_list{mi} '.getPropDefault(''DESCRIPTION'')']);
 			    end
 			
 			    set(pr.get('TABLE'), ...

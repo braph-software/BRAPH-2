@@ -1055,9 +1055,9 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_select_all(~, ~) 
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			
-			    pr.set('SELECTED', [1:1:length(mlist)])
+			    pr.set('SELECTED', [1:1:length(m_list)])
 			
 			    pr.get('UPDATE')
 			end
@@ -1069,9 +1069,9 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_invert_selection(~, ~) 
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			
-			    selected_tmp = [1:1:length(mlist)];
+			    selected_tmp = [1:1:length(m_list)];
 			    selected_tmp(pr.get('SELECTED')) = [];
 			    pr.set('SELECTED', selected_tmp);
 			
@@ -1080,7 +1080,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_calculate(~, ~) 
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    selected = pr.get('SELECTED');
 			    
 			    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' comparisons ...']);
@@ -1088,9 +1088,9 @@ classdef CompareGroupPP_CpDict < PanelProp
 			        set(wb, 'Position', [x0(wb) y0(wb)+h(wb) w(wb) h(wb)])
 			    end
 			
-			    for i = 1:1:length(mlist)
+			    for i = 1:1:length(m_list)
 			        if ismember(i, selected)
-			            measure = mlist{i};
+			            measure = m_list{i};
 			
 			            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating comparison ' int2str(sum(selected <= i)) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 			
@@ -1111,10 +1111,10 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_open_plots(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
 			    gui_f_dict = pr.memorize('GUI_F_DICT');
 			    
@@ -1122,7 +1122,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 				for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			
 			        cp = c.get('COMPARISON', measure);
 			        
@@ -1152,7 +1152,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_hide_plots(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    gui_f_dict = pr.memorize('GUI_F_DICT');
 			
@@ -1160,7 +1160,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			        
 			        if gui_f_dict.get('CONTAINS_KEY', measure)
 			            gui = gui_f_dict.get('IT', measure);
@@ -1173,10 +1173,10 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_open_elements(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
 			    gui_cp_dict = pr.memorize('GUI_CP_DICT');
 			    
@@ -1184,7 +1184,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 				for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			
 			        cp = c.get('COMPARISON', measure);
 			        
@@ -1214,7 +1214,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_hide_elements(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    gui_m_dict = pr.memorize('GUI_CP_DICT');
 			
@@ -1222,7 +1222,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			        
 			        if gui_m_dict.get('CONTAINS_KEY', measure)
 			            gui = gui_m_dict.get('IT', measure);
@@ -1235,10 +1235,10 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_open_brains(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(mlist))); % number of row and columns of figures
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
 			    gui_bg_dict = pr.memorize('GUI_BG_DICT');
 			    
@@ -1246,7 +1246,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 				for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			
 			        cp = c.get('COMPARISON', measure);
 			        
@@ -1276,7 +1276,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			function cb_hide_brains(~, ~)
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
 			    gui_f_dict = pr.memorize('GUI_F_DICT');
 			
@@ -1284,7 +1284,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = mlist{i}; % also key
+			        measure = m_list{i}; % also key
 			        
 			        if gui_f_dict.get('CONTAINS_KEY', measure)
 			            gui = gui_f_dict.get('IT', measure);
@@ -1298,13 +1298,13 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
 			
-			    mlist = g.get('COMPATIBLE_MEASURES');
+			    m_list = g.get('COMPATIBLE_MEASURES');
 			    cplist_already_calculated = cellfun(@(x) x.get('MEASURE'), c.get('CP_DICT').get('IT_LIST'), 'UniformOutput', false);
 			
-			    rowname = cell(length(mlist), 1);
-			    data = cell(length(mlist), 5);
-			    for mi = 1:1:length(mlist)
-			        if any(cellfun(@(y) isequal(mlist{mi}, y), cplist_already_calculated)) && ~isa(c.get('COMPARISON', mlist{mi}).getr('DIFF'), 'NoValue')
+			    rowname = cell(length(m_list), 1);
+			    data = cell(length(m_list), 5);
+			    for mi = 1:1:length(m_list)
+			        if any(cellfun(@(y) isequal(m_list{mi}, y), cplist_already_calculated)) && ~isa(c.get('COMPARISON', m_list{mi}).getr('DIFF'), 'NoValue')
 			            rowname{mi} = 'C';
 			        else
 			            rowname{mi} = '';
@@ -1316,25 +1316,25 @@ classdef CompareGroupPP_CpDict < PanelProp
 			            data{mi, 1} = false;
 			        end
 			
-			        data{mi, 2} = mlist{mi};
+			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
 			
-			        if Element.getPropDefault(mlist{mi}, 'SHAPE') == 2
+			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
 			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SHAPE') == 1
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
 			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SHAPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
 			            data{mi, 3} = 'BINODAL';
 			        end
 			
-			        if Element.getPropDefault(mlist{mi}, 'SCOPE') == 1
+			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
 			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == 2
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
 			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(mlist{mi}, 'SCOPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
 			            data{mi, 4} = 'BILAYER';
 			        end
 			        
-			        data{mi, 5} = eval([mlist{mi} '.getPropDefault(''DESCRIPTION'')']);
+			        data{mi, 5} = eval([m_list{mi} '.getPropDefault(''DESCRIPTION'')']);
 			    end
 			
 			    set(pr.get('TABLE'), ...
