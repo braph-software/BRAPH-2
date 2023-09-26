@@ -79,7 +79,7 @@ BRAPH2.installed('DM', ewm)
 BRAPH2.installed('NN', ewm)
 
 if nargin < 1 || isempty(gui) || gui
-%     BRAPH2GUI() % % % UNCOMMENTs
+    BRAPH2GUI()
 end
 
 if ispc

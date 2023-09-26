@@ -4,9 +4,10 @@ classdef BRAPH2
     %
     % Properties (Constant) - BRAPH2 ID Card:
     %  NAME             - BRAPH2 full name
-    %  VERSION          - BRAPH2 version
     %  STR              - BRAPH2 short string
+    %  VERSION          - BRAPH2 version
     %  BUILD            - BRAPH2 build number
+    %  RELEASE          - BRAPH2 release date
     %  AUTHORS          - BRAPH2 authors
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
@@ -65,9 +66,10 @@ classdef BRAPH2
     
     properties (Constant) % BRAPH2 ID Card
         NAME = 'BRAPH 2.0' % BRAPH2 full name
-        VERSION = '2.0.0.0' % BRAPH2 version
         STR = 'BRAPH2' % BRAPH2 short string
+        VERSION = '2.0.0.b1' % BRAPH2 version % % % ON RELEASE: Ensure correct VERSION
         BUILD = 5 % BRAPH2 build number % % % ON RELEASE: Ensure correct BUILD
+        RELEASE = '2023-10-02' % BRAPH2 release date % % % ON RELEASE: Ensure correct RELEASE date
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
