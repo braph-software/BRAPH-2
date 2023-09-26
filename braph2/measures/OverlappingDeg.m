@@ -2,11 +2,11 @@ classdef OverlappingDeg < Degree
 	%OverlappingDeg is the graph overlapping degree.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
-	% The overlapping degree of a graph is the sum of the degrees of a node in 
-	% all layers.
+	% The Overlapping Degree (OverlappingDeg) of a graph is the sum of the 
+	%  degrees of a node in all layers.
 	%
 	% The list of OverlappingDeg properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the overlapping degree.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping degree.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping degree.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping degree.
@@ -120,7 +120,7 @@ classdef OverlappingDeg < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingDeg properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the overlapping degree.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping degree.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping degree.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping degree.
@@ -468,7 +468,7 @@ classdef OverlappingDeg < Degree
 			prop = OverlappingDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdeg_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the overlapping degree.'  'DESCRIPTION (constant, string) is the description of the overlapping degree.'  'TEMPLATE (parameter, item) is the template of the overlapping degree.'  'ID (data, string) is a few-letter code of the overlapping degree.'  'LABEL (metadata, string) is an extended label of the overlapping degree.'  'NOTES (metadata, string) are some specific notes about the overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdeg_description_list = { 'ELCLASS (constant, string) is the class of the overlapping degree.'  'NAME (constant, string) is the name of the overlapping degree.'  'DESCRIPTION (constant, string) is the description of the overlapping degree.'  'TEMPLATE (parameter, item) is the template of the overlapping degree.'  'ID (data, string) is a few-letter code of the overlapping degree.'  'LABEL (metadata, string) is an extended label of the overlapping degree.'  'NOTES (metadata, string) are some specific notes about the overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,9 +526,9 @@ classdef OverlappingDeg < Degree
 				case 1 % OverlappingDeg.ELCLASS
 					prop_default = 'OverlappingDeg';
 				case 2 % OverlappingDeg.NAME
-					prop_default = 'OverlappingDegree';
+					prop_default = 'Overlapping Degree';
 				case 3 % OverlappingDeg.DESCRIPTION
-					prop_default = 'The overlapping degree of a graph is the sum of the degrees of a node in all layers.';
+					prop_default = 'The Overlapping Degree (OverlappingDeg) of a graph is the sum of the degrees of a node in all layers.';
 				case 4 % OverlappingDeg.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingDeg.getPropSettings(prop));
 				case 5 % OverlappingDeg.ID

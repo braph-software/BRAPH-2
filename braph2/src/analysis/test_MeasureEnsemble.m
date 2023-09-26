@@ -459,7 +459,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemble.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [])
+		if any(prop == [MeasureEnsemble.PFME MeasureEnsemble.PFBG])
 			continue
 		end
 	 
@@ -573,7 +573,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemble.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [])
+		if any(prop == [MeasureEnsemble.PFME MeasureEnsemble.PFBG])
 			continue
 		end
 	 
@@ -676,7 +676,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:MeasureEnsemble.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [])
+			if any(prop == [MeasureEnsemble.PFME MeasureEnsemble.PFBG])
 				continue
 			end
 	 
@@ -1256,7 +1256,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemble.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [])
+		if any(prop == [MeasureEnsemble.PFME MeasureEnsemble.PFBG])
 			continue
 		end
 	 

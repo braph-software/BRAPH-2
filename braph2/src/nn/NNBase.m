@@ -2,7 +2,7 @@ classdef NNBase < ConcreteElement
 	%NNBase comprises a neural network model with a dataset.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% A neural network base (NNBase) comprises a neural network model with a specific dataset.
+	% A Neural Network Base (NNBase) comprises a neural network model with a specific dataset.
 	%  Instances of this class should not be created. Use one of its subclasses instead.
 	% 
 	% Its subclasses need to implement the props MODEL, INPUTS and TARGETS.
@@ -12,13 +12,13 @@ classdef NNBase < ConcreteElement
 	% To obtain the prediction on a dataset D use: predictions = nn.get('PREDICT', D)
 	%
 	% The list of NNBase properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network base.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network base.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network base.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network base.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network base.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network base.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network base.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
 	%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
@@ -200,13 +200,13 @@ classdef NNBase < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNBase properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the nerual network base.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the nerual network base.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the nerual network base.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the nerual network base.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the nerual network base.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the nerual network base.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network base.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network base.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network base.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network base.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network base.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network base.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network base.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
 			%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
@@ -550,7 +550,7 @@ classdef NNBase < ConcreteElement
 			prop = NNBase.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnbase_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the nerual network base.'  'DESCRIPTION (constant, string) is the description of the nerual network base.'  'TEMPLATE (parameter, item) is the template of the nerual network base.'  'ID (data, string) is a few-letter code for the nerual network base.'  'LABEL (metadata, string) is an extended label of the nerual network base.'  'NOTES (metadata, string) are some specific notes about the nerual network base.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model with the given dataset.'  'INPUTS (query, cell) constructs the cell array of the data.'  'TARGETS (query, cell) constructs the cell array of the targets.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.' };
+			nnbase_description_list = { 'ELCLASS (constant, string) is the class of the neural network base.'  'NAME (constant, string) is the name of the neural network base.'  'DESCRIPTION (constant, string) is the description of the neural network base.'  'TEMPLATE (parameter, item) is the template of the neural network base.'  'ID (data, string) is a few-letter code for the neural network base.'  'LABEL (metadata, string) is an extended label of the neural network base.'  'NOTES (metadata, string) are some specific notes about the neural network base.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model with the given dataset.'  'INPUTS (query, cell) constructs the cell array of the data.'  'TARGETS (query, cell) constructs the cell array of the targets.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.' };
 			prop_description = nnbase_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -660,9 +660,9 @@ classdef NNBase < ConcreteElement
 				case 1 % NNBase.ELCLASS
 					prop_default = 'NNBase';
 				case 2 % NNBase.NAME
-					prop_default = 'NNBase';
+					prop_default = 'Neural Network Base ';
 				case 3 % NNBase.DESCRIPTION
-					prop_default = 'A neural network base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.';
+					prop_default = 'A Neural Network Base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.';
 				case 4 % NNBase.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNBase.getPropSettings(prop));
 				case 5 % NNBase.ID

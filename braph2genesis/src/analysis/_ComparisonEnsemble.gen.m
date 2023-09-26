@@ -497,7 +497,7 @@ if isa(cp.getr('PFC'), 'NoValue')
                 case Measure.UNILAYER % __Measure.UNILAYER__
                     cp.set('PFC', ComparisonEnsemblePF_BU('CP', cp))
                 case Measure.BILAYER % __Measure.BILAYER__
-                    cp.set('PFC',ComparisonEnsemblePF_BB('CP', cp))
+                    cp.set('PFC', ComparisonEnsemblePF_BB('CP', cp))
             end
     end
 end

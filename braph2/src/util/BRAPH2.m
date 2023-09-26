@@ -11,7 +11,8 @@ classdef BRAPH2
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
     %  TWITTER          - BRAPH2 twitter handle
-    %  MATLAB_RELEASE   - Minimal MatLab version (2022a)
+    %  MATLAB_VERSION   - Minimal MatLab version (9.12)
+    %  MATLAB_RELEASE   - Minimal MatLab release (2022a)
     %
     % Properties (Constant) - BRAPH2 extensions
     %  EXT_ELEMENT      - BRAPH2 element extension (*.b2)
@@ -59,7 +60,7 @@ classdef BRAPH2
     %  add_tool_about   - adds the about tools to a uitoolbar
     %
     % Methods (Static) - BRAPH2 checks:
-    %  checkMatLab      - checks whether the MatLab release is sufficiently new/error
+    %  checkMatLab      - checks whether the MatLab version is sufficiently new/error
     %  installed        - returns whether an addon is installed/error
     
     properties (Constant) % BRAPH2 ID Card
@@ -71,7 +72,8 @@ classdef BRAPH2
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
         TWITTER = 'braph2software' % BRAPH2 twitter handle
-        MATLAB_RELEASE = '9.12'; % Minimal MatLab release (2022a)
+        MATLAB_VERSION = '9.12' % Minimal MatLab version (9.12)
+        MATLAB_RELEASE = '(2022a)' % Minimal MatLab release (2022a)
     end
     properties (Constant) % BRAPH2 extensions
         EXT_ELEMENT = {'*.b2'} % BRAPH2 element extension
@@ -185,29 +187,29 @@ classdef BRAPH2
     end
     methods (Static) % BRAPH2 checks
         function check_out = checkMatLab(ewm)
-            %CHECKMATLAB checks whether the MatLab release is sufficiently new/error.
+            %CHECKMATLAB checks whether the MatLab version is sufficiently new/error.
             %
-            % CHECK = CHECKMATLAB() checks whether the MatLab release is sufficiently new.
+            % CHECK = CHECKMATLAB() checks whether the MatLab version is sufficiently new.
             %
-            % CHECKMATLAB('error') throws an error if the MatLab release is sufficiently new.
+            % CHECKMATLAB('error') throws an error if the MatLab version is sufficiently new.
             %  Error id: BRAPH2:BRAPH2:WrongVersion.
             %
-            % CHECKMATLAB('warning') throws a warning if the MatLab release is sufficiently new.
+            % CHECKMATLAB('warning') throws a warning if the MatLab version is sufficiently new.
             %  Warning id: BRAPH2:BRAPH2.
             %
-            % CHECKMATLAB('msgbox') opens a message box if the MatLab release is sufficiently new.
+            % CHECKMATLAB('msgbox') opens a message box if the MatLab version is sufficiently new.
             
             persistent check %CET
             if isempty(check)
-                check = ~verLessThan('MatLab', BRAPH2.MATLAB_RELEASE);
+                check = ~verLessThan('MatLab', BRAPH2.MATLAB_VERSION);
             end
             
             if ((nargin == 0 && nargout == 0) || (nargin > 0 && strcmpi(ewm, 'error'))) && ~check
                 error( ...
                     [BRAPH2.STR ':BRAPH2:' BRAPH2.WRONG_VER], ...
                     [BRAPH2.STR ':BRAPH2:' BRAPH2.WRONG_VER '\n' ...
-                    'The minimal required MatLab release is ' BRAPH2.MATLAB_RELEASE ', ' ...
-                    'while the installed one is ' ver('MATLAB').Version '.' ...
+                    'The minimal required MatLab version is ' BRAPH2.MATLAB_VERSION ' ' BRAPH2.MATLAB_RELEASE ', ' ...
+                    'while the installed one is ' ver('MATLAB').Version ' ' ver('MATLAB').Release '.' ...
                     'Some BRAPH2 functionalities might not be available, ' ...
                     'or they might not function correctly.'] ...
                     )
@@ -215,8 +217,8 @@ classdef BRAPH2
                 warning( ...
                     [BRAPH2.STR ':BRAPH2'], ...
                     [BRAPH2.STR ':BRAPH2 \n' ...
-                    'The minimal required MatLab release is ' BRAPH2.MATLAB_RELEASE ', ' ...
-                    'while the installed one is ' ver('MATLAB').Version '. ' ...
+                    'The minimal required MatLab version is ' BRAPH2.MATLAB_VERSION ' ' BRAPH2.MATLAB_RELEASE ', ' ...
+                    'while the installed one is ' ver('MATLAB').Version ' ' ver('MATLAB').Release '. ' ...
                     'Some BRAPH2 functionalities might not be available, ' ...
                     'or they might not function correctly.'])
             elseif nargin > 0 && strcmpi(ewm, 'msgbox') && ~check
@@ -229,7 +231,8 @@ classdef BRAPH2
                     ''
                     '{\bf{WARNING} - Wrong MatLab version}'
                     ''
-                    ['MatLab ' BRAPH2.MATLAB_RELEASE ' is required, while MatLab ' ver('MATLAB').Version ' is installed.']
+                    ['MatLab ' BRAPH2.MATLAB_VERSION ' ' BRAPH2.MATLAB_RELEASE ' is required, ']
+                    ['while MatLab ' ver('MATLAB').Version ' ' ver('MATLAB').Release ' is installed.']
                     ''
                     'Some BRAPH2 functionalities might not be available, '
                     'or they might not function correctly.'

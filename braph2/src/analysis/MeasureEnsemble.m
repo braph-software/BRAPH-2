@@ -673,6 +673,63 @@ classdef MeasureEnsemble < ConcreteElement
 			end
 		end
 	end
+	methods (Access=protected) % postprocessing
+		function postprocessing(me, prop)
+			%POSTPROCESSING postprocessesing after setting.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing of PROP after setting. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% The postprocessing of all properties occurs each time set is called.
+			%
+			% See also conditioning, preset, checkProp, postset, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 12 % MeasureEnsemble.PFME
+					if isa(me.getr('PFME'), 'NoValue')
+					
+					    measure = me.get('MEASURE');
+					
+					    switch Element.getPropDefault(measure, 'SHAPE')
+					        case 1 % Measure.GLOBAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    me.set('PFME', MeasureEnsemblePF_GS('ME', me))
+					                case 2 % Measure.UNILAYER
+					                    me.set('PFME', MeasureEnsemblePF_GU('ME', me))
+					                case 3 % Measure.BILAYER
+					                    me.set('PFME', MeasureEnsemblePF_GB('ME', me))
+					            end
+					        case 2 % Measure.NODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    me.set('PFME', MeasureEnsemblePF_NS('ME', me))
+					                case 2 % Measure.UNILAYER
+					                    me.set('PFME', MeasureEnsemblePF_NU('ME', me))
+					                case 3 % Measure.BILAYER
+					                    me.set('PFME', MeasureEnsemblePF_NB('ME', me))
+					            end
+					        case 3 % Measure.BINODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    me.set('PFME', MeasureEnsemblePF_BS('ME', me))
+					                case 2 % Measure.UNILAYER
+					                    me.set('PFME', MeasureEnsemblePF_BU('ME', me))
+					                case 3 % Measure.BILAYER
+					                    me.set('PFME', MeasureEnsemblePF_BB('ME', me))
+					            end
+					    end
+					end
+					
+				otherwise
+					if prop <= 8
+						postprocessing@ConcreteElement(me, prop);
+					end
+			end
+		end
+	end
 	methods (Access=protected) % calculate value
 		function value = calculateValue(me, prop, varargin)
 			%CALCULATEVALUE calculates the value of a property.
@@ -719,6 +776,96 @@ classdef MeasureEnsemble < ConcreteElement
 					end
 			end
 			
+		end
+	end
+	methods % GUI
+		function pr = getPanelProp(me, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 11 % MeasureEnsemble.M
+					g = me.get('A').get('GRAPH_TEMPLATE');
+					measure = me.get('MEASURE');
+					
+					pr = PanelPropCell('EL', me, 'PROP', 11, varargin{:});
+					
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
+					    pr.set( ...
+					        'TABLE_HEIGHT', 48, ...
+					        'ROWNAME', {}, ...
+					        'COLUMNNAME', {} ...
+					        )
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
+					    pr.set( ...
+					        'TABLE_HEIGHT', 480, ...
+					        'ROWNAME', g.getCallback('ANODELABELS'), ...
+					        'COLUMNNAME', {} ...
+					        )
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
+					    pr.set( ...
+					        'TABLE_HEIGHT', 480, ...
+					        'ROWNAME', g.getCallback('ANODELABELS'), ...
+					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
+					        )
+					end
+					
+					if g.get('LAYERNUMBER') == 1
+					    pr.set( ...
+					        'XSLIDERSHOW', false, ...
+					        'YSLIDERSHOW', false ...
+					        )
+					else % multilayer
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
+					        pr.set( ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
+					            'XSLIDERSHOW', false, ...
+					            'YSLIDERSHOW', true, ...
+					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+					            'YSLIDERWIDTH', 60 ...
+					            )
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
+					        pr.set( ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
+					            'XSLIDERSHOW', false, ...
+					            'YSLIDERSHOW', true, ...
+					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+					            'YSLIDERWIDTH', 60 ...
+					            )
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
+					        pr.set( ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
+					            'XSLIDERSHOW', true, ...
+					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+					            'XSLIDERHEIGHT', 36, ...
+					            'YSLIDERSHOW', true, ...
+					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+					            'YSLIDERWIDTH', 60 ...
+					            )
+					    end
+					end
+					
+				case 12 % MeasureEnsemble.PFME
+					pr = PanelPropItem('EL', me, 'PROP', 12, ...
+					    'GUICLASS', 'GUIFig', ...
+						'BUTTON_TEXT', ['Plot ' me.get('MEASURE') ' Ensemble'], ...
+					    varargin{:});
+					
+				otherwise
+					pr = getPanelProp@ConcreteElement(me, prop, varargin{:});
+					
+			end
 		end
 	end
 end

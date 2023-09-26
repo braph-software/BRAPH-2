@@ -7,6 +7,50 @@ MeasureEnsemble provides the methods necessary for a graph ensemble measure.
 %%% ¡seealso!
 AnalyzeEnsemble, CompareEnsemble
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.ID
+%%%% ¡title!
+Measure Ensemble ID
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.LABEL
+%%%% ¡title!
+Measure Ensemble NAME
+
+%%% ¡_prop! % % % %TBE
+%%%% ¡id!
+MeasureEnsemble.MEASURE_TEMPLATE
+%%%% ¡title!
+Measure TEMPLATE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.MEASURE
+%%%% ¡title!
+Measure Ensemble
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.M
+%%%% ¡title!
+Measure Ensemble VALUE
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.PFME
+%%%% ¡title!
+Measure Ensemble Plot
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemble.PFBG
+%%%% ¡title!
+Measure Ensemble Brain Graph
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -51,10 +95,10 @@ MEASURE (data, class) is the measure class.
 %%%% ¡settings!
 'Measure'
 
-%%% ¡_prop!
-% % % MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 
-% % % %%%% ¡settings!
-% % % 'Measure'
+%%% ¡_prop! % % % %TBE
+MEASURE_TEMPLATE (parameter, item) provides the measure parameters. 
+%%%% ¡settings!
+'Measure'
 
 %%% ¡prop!
 A (data, item) is the ensemble-based graph analysis.
@@ -79,157 +123,111 @@ else
 end
 
 value = m_av;
-%%%% ¡_gui!
-% % % g = me.get('A').get('GRAPH_TEMPLATE');
-% % % 
-% % % pr = PanelPropCell('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});
-% % % 
-% % % if Measure.is_global(me.get('MEASURE'))
-% % %     pr.set( ...
-% % %         'TAB_H', 3, ...
-% % %         'ROWNAME', '[]', ...
-% % %         'COLUMNNAME', '[]' ...
-% % %         )
-% % % elseif Measure.is_nodal(me.get('MEASURE'))
-% % %     bas = g.get('BAS');
-% % %     if ~isempty(bas)
-% % %         ba = bas{1};
-% % %         br_ids = ba.get('BR_DICT').getKeys();
-% % %         rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % %         
-% % %         pr.set( ...
-% % %             'TAB_H', 40, ...
-% % %             'ROWNAME', rowname, ...
-% % %             'COLUMNNAME', '[]' ...
-% % %             )
-% % %     end
-% % % elseif Measure.is_binodal(me.get('MEASURE'))
-% % %     bas = g.get('BAS');
-% % %     if ~isempty(bas)
-% % %         ba = bas{1};
-% % %         br_ids = ba.get('BR_DICT').getKeys();
-% % %         rowname = ['{' sprintf('''%s'' ', br_ids{:}) '}'];
-% % %         
-% % %         pr.set( ...
-% % %             'TAB_H', 40, ...
-% % %             'ROWNAME', rowname, ...
-% % %             'COLUMNNAME', rowname ...
-% % %             )
-% % %     end
-% % % end
-% % % 
-% % % if g.layernumber() == 1
-% % %     pr.set( ...
-% % %         'XSLIDER', false, ...
-% % %         'YSLIDER', false ...
-% % %         )
-% % % else % multilayer
-% % %     if  Measure.is_superglobal(me.get('MEASURE'))
-% % %         if Graph.is_weighted(g)
-% % %             pr.set( ...
-% % %                 'XSLIDER', false, ...
-% % %                 'YSLIDER', false ...
-% % %                 )
-% % %         else
-% % %             if isempty(g.get('LAYERTICKS'))
-% % %                 ylayerlabels = PanelPropCell.getPropDefault('LAYERTICKS');
-% % %             else
-% % %                 layerlabels = num2cell(g.get('LAYERTICKS'));
-% % %                 if isa(g, "MultiplexBUD")
-% % %                     ylayerlabels = ['{' sprintf('''%d'' ', layerlabels{end:-1:1}) '}'];
-% % %                 else
-% % %                     ylayerlabels = ['{' sprintf('''%.2f'' ', layerlabels{end:-1:1}) '}'];
-% % %                 end
-% % %             end
-% % % 
-% % %             pr.set( ...
-% % %                 'TAB_H', max(pr.get('TAB_H'), length(layerlabels)), ...
-% % %                 'XSLIDER', false, ...
-% % %                 'YSLIDER', true, ...
-% % %                 'YSLIDERLABELS', ylayerlabels, ...
-% % %                 'YSLIDERWIDTH', 5 ...
-% % %                 )
-% % %         end
-% % %     elseif Measure.is_unilayer(me.get('MEASURE'))
-% % %         if isempty(g.get('LAYERLABELS'))
-% % %             % xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
-% % %             ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
-% % %         else
-% % %             layerlabels = str2cell(g.get('LAYERLABELS'));
-% % %             % xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
-% % %             ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
-% % %         end
-% % % 
-% % %         pr.set( ...
-% % %             'TAB_H', max(pr.get('TAB_H'), g.layernumber()), ...
-% % %             'XSLIDER', false, ...
-% % %             'YSLIDER', true, ...
-% % %             'YSLIDERLABELS', ylayerlabels, ...
-% % %             'YSLIDERWIDTH', 5 ...
-% % %             )
-% % %     elseif Measure.is_bilayer(me.get('MEASURE'))
-% % %         if isempty(g.get('LAYERLABELS'))
-% % %             xlayerlabels = PanelPropCell.getPropDefault('XSLIDERLABELS');
-% % %             ylayerlabels = PanelPropCell.getPropDefault('YSLIDERLABELS');
-% % %         else
-% % %             layerlabels = str2cell(g.get('LAYERLABELS'));
-% % %             xlayerlabels = ['{' sprintf('''%s'' ', layerlabels{:}) '}'];
-% % %             ylayerlabels = ['{' sprintf('''%s'' ', layerlabels{end:-1:1}) '}'];
-% % %         end
-% % % 
-% % %         pr.set( ...
-% % %             'TAB_H', max(3 + pr.get('TAB_H'), 3 + g.layernumber()), ...
-% % %             'XSLIDER', true, ...
-% % %             'XSLIDERLABELS', xlayerlabels, ...
-% % %             'XSLIDERHEIGHT', 3, ...
-% % %             'YSLIDER', true, ...
-% % %             'YSLIDERLABELS', ylayerlabels, ...
-% % %             'YSLIDERWIDTH', 5 ...
-% % %             )
-% % %     end
-% % % end
+%%%% ¡gui!
+g = me.get('A').get('GRAPH_TEMPLATE');
+measure = me.get('MEASURE');
+
+pr = PanelPropCell('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});
+
+if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+    pr.set( ...
+        'TABLE_HEIGHT', s(4), ...
+        'ROWNAME', {}, ...
+        'COLUMNNAME', {} ...
+        )
+elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+    pr.set( ...
+        'TABLE_HEIGHT', s(40), ...
+        'ROWNAME', g.getCallback('ANODELABELS'), ...
+        'COLUMNNAME', {} ...
+        )
+elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+    pr.set( ...
+        'TABLE_HEIGHT', s(40), ...
+        'ROWNAME', g.getCallback('ANODELABELS'), ...
+        'COLUMNNAME', g.getCallback('ANODELABELS') ...
+        )
+end
+
+if g.get('LAYERNUMBER') == 1
+    pr.set( ...
+        'XSLIDERSHOW', false, ...
+        'YSLIDERSHOW', false ...
+        )
+else % multilayer
+    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+        pr.set( ...
+            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+            'XSLIDERSHOW', false, ...
+            'YSLIDERSHOW', true, ...
+            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+            'YSLIDERWIDTH', s(5) ...
+            )
+    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+        pr.set( ...
+            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+            'XSLIDERSHOW', false, ...
+            'YSLIDERSHOW', true, ...
+            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+            'YSLIDERWIDTH', s(5) ...
+            )
+    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+        pr.set( ...
+            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+            'XSLIDERSHOW', true, ...
+            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+            'XSLIDERHEIGHT', s(3), ...
+            'YSLIDERSHOW', true, ...
+            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+            'YSLIDERWIDTH', s(5) ...
+            )
+    end
+end
 
 %%% ¡prop!
 PFME (gui, item) contains the panel figure of the measure.
 %%%% ¡_settings!
-% % % 'PFMeasureEnsemble'
-%%%% ¡_postprocessing!
-% % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
-% % %     if isa(me.getr('PFME'), 'NoValue')
-% % %         g_dict = me.memorize('a').memorize('g_dict');
-% % %         if ~isempty(me.get('MEASURE')) && Measure.is_global(me.get('MEASURE')) && ...
-% % %                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-% % %             g = g_dict.getItem(1);
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(me.get('MEASURE')) 
-% % %                 me.set('PFME', PFMeasureEnsembleMultiplexGU('ME', me))
-% % %             else
-% % %                 me.set('PFME', PFMeasureEnsembleGU('ME', me))
-% % %             end
-% % %         elseif ~isempty(me.get('MEASURE')) && Measure.is_nodal(me.get('MEASURE')) && ...
-% % %                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-% % %             g = g_dict.getItem(1);
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(me.get('MEASURE'))
-% % %                 me.set('PFME', PFMeasureEnsembleMultiplexNU('ME', me))
-% % %             else
-% % %                 me.set('PFME', PFMeasureEnsembleNU('ME', me))
-% % %             end
-% % %         elseif ~isempty(me.get('MEASURE')) && Measure.is_binodal(me.get('MEASURE')) && ...
-% % %                 (Measure.is_unilayer(me.get('MEASURE')) || Measure.is_superglobal(me.get('MEASURE')))
-% % %             g = g_dict.getItem(1);
-% % %             if (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Measure.is_unilayer(me.get('MEASURE'))
-% % %                 me.set('PFME', PFMeasureEnsembleMultiplexBU('ME', me))
-% % %             else
-% % %                 me.set('PFME', PFMeasureEnsembleBU('ME', me))
-% % %             end
-% % %         else
-% % %             me.memorize('PFME').set('ME', me)
-% % %         end
-% % %     end
-% % % end
-%%%% ¡_gui!
-% % % pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFME, ...
-% % %     'GUICLASS', 'GUIFig', ...
-% % %     varargin{:});
+'MeasureEnsemblePF'
+%%%% ¡postprocessing!
+if isa(me.getr('PFME'), 'NoValue')
+
+    measure = me.get('MEASURE');
+
+    switch Element.getPropDefault(measure, 'SHAPE')
+        case Measure.GLOBAL % __Measure.GLOBAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    me.set('PFME', MeasureEnsemblePF_GS('ME', me))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    me.set('PFME', MeasureEnsemblePF_GU('ME', me))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    me.set('PFME', MeasureEnsemblePF_GB('ME', me))
+            end
+        case Measure.NODAL % __Measure.NODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    me.set('PFME', MeasureEnsemblePF_NS('ME', me))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    me.set('PFME', MeasureEnsemblePF_NU('ME', me))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    me.set('PFME', MeasureEnsemblePF_NB('ME', me))
+            end
+        case Measure.BINODAL % __Measure.BINODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    me.set('PFME', MeasureEnsemblePF_BS('ME', me))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    me.set('PFME', MeasureEnsemblePF_BU('ME', me))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    me.set('PFME', MeasureEnsemblePF_BB('ME', me))
+            end
+    end
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFME, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Plot ' me.get('MEASURE') ' Ensemble'], ...
+    varargin{:});
 
 %%% ¡prop!
 PFBG (gui, item) contains the panel figure of the brain graph.
@@ -282,3 +280,8 @@ PFBG (gui, item) contains the panel figure of the brain graph.
 % % % pr = PanelPropItem('EL', me, 'PROP', MeasureEnsemble.PFBG, ...
 % % %     'GUICLASS', 'GUIFig', ...
 % % %     varargin{:});
+
+%% ¡tests!
+
+%%% ¡excluded_props!
+[MeasureEnsemble.PFME MeasureEnsemble.PFBG]

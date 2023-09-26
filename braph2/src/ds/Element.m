@@ -1853,9 +1853,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                 el = el.copy();
                 build = 5;
-                matlab_release = ver('MATLAB').Version;
-                matlab_release_details = ver();
-                save(filename, 'el', 'build', 'matlab_release', 'matlab_release_details');
+                matlab_version = ver('MATLAB').Version;
+                matlab_version_details = ver();
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');
                 
                 saved = true;
                 
@@ -1868,7 +1868,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 saved_out = saved;
             end
         end
-        function [el, build, matlab_release, matlab_release_details] = load(filename, waitbar)
+        function [el, build, matlab_version, matlab_version_details] = load(filename, waitbar)
             %LOAD loads a BRAPH2 element from a b2 file.
             %
             % EL = LOAD(FILENAME) loads the element EL from the file b2 FILENAME. 
@@ -1878,8 +1878,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % EL = LOAD([], TRUE) determines whether to show the waitbar.
             %
-            % [EL, BUILD, R, RD] = LOAD() returns also the BRAPH2 BUILD, the MatLab
-            %  release number, and the details of the MatLab release RD.
+            % [EL, BUILD, V, VD] = LOAD() returns also the BRAPH2 BUILD, the MatLab
+            %  version number, and the details of the MatLab version RD.
             %
             % See also save, uigetfile.
             
@@ -1902,18 +1902,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 wb = braph2waitbar(waitbar, .5, 'Loading file (this might take a while) ...'); 
                 drawnow()
                 
-                tmp = load(filename, '-mat', 'el', 'build', 'matlab_release', 'matlab_release_details');
+                tmp = load(filename, '-mat', 'el', 'build', 'matlab_version', 'matlab_version_details');
                 el = tmp.el;
                 build  = tmp.build;
-                matlab_release = tmp.matlab_release;
-                matlab_release_details = tmp.matlab_release_details;
+                matlab_version = tmp.matlab_version;
+                matlab_version_details = tmp.matlab_version_details;
                 
                 braph2waitbar(wb, 'close')                
             else
                 el = false;
                 build  = [];
-                matlab_release = [];
-                matlab_release_details = [];
+                matlab_version = [];
+                matlab_version_details = [];
             end
         end
     end

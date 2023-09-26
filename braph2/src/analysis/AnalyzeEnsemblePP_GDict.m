@@ -1,11 +1,11 @@
-classdef AnalyzeEnsemblePP_MeDict < PanelProp
-	%AnalyzeEnsemblePP_MeDict plots the panel to manage the graph and measures of an ensemble analysis.
+classdef AnalyzeEnsemblePP_GDict < PanelProp
+	%AnalyzeEnsemblePP_GDict plots the panel to manage the graph of an ensemble analysis.
 	% It is a subclass of <a href="matlab:help PanelProp">PanelProp</a>.
 	%
-	% AnalyzeEnsemblePP_MeDict plots the panel to manage the graph and measures of an ensemble analysis.
+	% AnalyzeEnsemblePP_GDict plots the panel to manage the graph and measures of an ensemble analysis.
 	% It is intended to be used only with the property ME_DICT of AnalyzeEnsemble.
 	%
-	% The list of AnalyzeEnsemblePP_MeDict properties is:
+	% The list of AnalyzeEnsemblePP_GDict properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
@@ -45,15 +45,12 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
 	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
 	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-	%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-	%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-	%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-	%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+	%  <strong>40</strong> <strong>GUI_G_DICT</strong> 	GUI_G_DICT (gui, idict) contains the GUIs for the graph.
 	%
-	% AnalyzeEnsemblePP_MeDict methods (constructor):
-	%  AnalyzeEnsemblePP_MeDict - constructor
+	% AnalyzeEnsemblePP_GDict methods (constructor):
+	%  AnalyzeEnsemblePP_GDict - constructor
 	%
-	% AnalyzeEnsemblePP_MeDict methods:
+	% AnalyzeEnsemblePP_GDict methods:
 	%  set - sets values of a property
 	%  check - checks the values of all properties
 	%  getr - returns the raw value of a property
@@ -67,12 +64,12 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  checked - sets a property to checked
 	%  unchecked - sets a property to NOT checked
 	%
-	% AnalyzeEnsemblePP_MeDict methods (display):
+	% AnalyzeEnsemblePP_GDict methods (display):
 	%  tostring - string with information about the graph and measure plot
 	%  disp - displays information about the graph and measure plot
 	%  tree - displays the tree of the graph and measure plot
 	%
-	% AnalyzeEnsemblePP_MeDict methods (miscellanea):
+	% AnalyzeEnsemblePP_GDict methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
@@ -80,19 +77,19 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  getElementList - returns a list with all subelements
 	%  copy - copies the graph and measure plot
 	%
-	% AnalyzeEnsemblePP_MeDict methods (save/load, Static):
+	% AnalyzeEnsemblePP_GDict methods (save/load, Static):
 	%  save - saves BRAPH2 graph and measure plot as b2 file
 	%  load - loads a BRAPH2 graph and measure plot from a b2 file
 	%
-	% AnalyzeEnsemblePP_MeDict method (JSON encode):
+	% AnalyzeEnsemblePP_GDict method (JSON encode):
 	%  encodeJSON - returns a JSON string encoding the graph and measure plot
 	%
-	% AnalyzeEnsemblePP_MeDict method (JSON decode, Static):
+	% AnalyzeEnsemblePP_GDict method (JSON decode, Static):
 	%   decodeJSON - returns a JSON string encoding the graph and measure plot
 	%
-	% AnalyzeEnsemblePP_MeDict methods (inspection, Static):
+	% AnalyzeEnsemblePP_GDict methods (inspection, Static):
 	%  getClass - returns the class of the graph and measure plot
-	%  getSubclasses - returns all subclasses of AnalyzeEnsemblePP_MeDict
+	%  getSubclasses - returns all subclasses of AnalyzeEnsemblePP_GDict
 	%  getProps - returns the property list of the graph and measure plot
 	%  getPropNumber - returns the property number of the graph and measure plot
 	%  existsProp - checks whether property exists/error
@@ -107,14 +104,14 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  getPropDefaultConditioned - returns the conditioned default value of a property
 	%  checkProp - checks whether a value has the correct format/error
 	%
-	% AnalyzeEnsemblePP_MeDict methods (GUI):
+	% AnalyzeEnsemblePP_GDict methods (GUI):
 	%  getPanelProp - returns a prop panel
 	%
-	% AnalyzeEnsemblePP_MeDict methods (GUI, Static):
+	% AnalyzeEnsemblePP_GDict methods (GUI, Static):
 	%  getGUIMenuImport - returns the importer menu
 	%  getGUIMenuExport - returns the exporter menu
 	%
-	% AnalyzeEnsemblePP_MeDict methods (category, Static):
+	% AnalyzeEnsemblePP_GDict methods (category, Static):
 	%  getCategories - returns the list of categories
 	%  getCategoryNumber - returns the number of categories
 	%  existsCategory - returns whether a category exists/error
@@ -122,7 +119,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  getCategoryName - returns the name of a category
 	%  getCategoryDescription - returns the description of a category
 	%
-	% AnalyzeEnsemblePP_MeDict methods (format, Static):
+	% AnalyzeEnsemblePP_GDict methods (format, Static):
 	%  getFormats - returns the list of formats
 	%  getFormatNumber - returns the number of formats
 	%  existsFormat - returns whether a format exists/error
@@ -133,7 +130,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  getFormatDefault - returns the default value for a format
 	%  checkFormat - returns whether a value format is correct/error
 	%
-	% To print full list of constants, click here <a href="matlab:metaclass = ?AnalyzeEnsemblePP_MeDict; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">AnalyzeEnsemblePP_MeDict constants</a>.
+	% To print full list of constants, click here <a href="matlab:metaclass = ?AnalyzeEnsemblePP_GDict; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">AnalyzeEnsemblePP_GDict constants</a>.
 	%
 	%
 	% See also uitable, AnalyzeEnsemble, Graph, Measure.
@@ -159,38 +156,23 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		CONTEXTMENU_CATEGORY = 7;
 		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_G_PL = 40; %CET: Computational Efficiency Trick
-		GUI_G_PL_TAG = 'GUI_G_PL';
-		GUI_G_PL_CATEGORY = 9;
-		GUI_G_PL_FORMAT = 8;
-		
-		GUI_G_EL = 41; %CET: Computational Efficiency Trick
-		GUI_G_EL_TAG = 'GUI_G_EL';
-		GUI_G_EL_CATEGORY = 9;
-		GUI_G_EL_FORMAT = 8;
-		
-		GUI_F_DICT = 42; %CET: Computational Efficiency Trick
-		GUI_F_DICT_TAG = 'GUI_F_DICT';
-		GUI_F_DICT_CATEGORY = 9;
-		GUI_F_DICT_FORMAT = 10;
-		
-		GUI_M_DICT = 43; %CET: Computational Efficiency Trick
-		GUI_M_DICT_TAG = 'GUI_M_DICT';
-		GUI_M_DICT_CATEGORY = 9;
-		GUI_M_DICT_FORMAT = 10;
+		GUI_G_DICT = 40; %CET: Computational Efficiency Trick
+		GUI_G_DICT_TAG = 'GUI_G_DICT';
+		GUI_G_DICT_CATEGORY = 9;
+		GUI_G_DICT_FORMAT = 10;
 	end
 	methods % constructor
-		function pr = AnalyzeEnsemblePP_MeDict(varargin)
-			%AnalyzeEnsemblePP_MeDict() creates a graph and measure plot.
+		function pr = AnalyzeEnsemblePP_GDict(varargin)
+			%AnalyzeEnsemblePP_GDict() creates a graph and measure plot.
 			%
-			% AnalyzeEnsemblePP_MeDict(PROP, VALUE, ...) with property PROP initialized to VALUE.
+			% AnalyzeEnsemblePP_GDict(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
-			% AnalyzeEnsemblePP_MeDict(TAG, VALUE, ...) with property TAG set to VALUE.
+			% AnalyzeEnsemblePP_GDict(TAG, VALUE, ...) with property TAG set to VALUE.
 			%
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeEnsemblePP_MeDict properties is:
+			% The list of AnalyzeEnsemblePP_GDict properties is:
 			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
@@ -230,10 +212,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
 			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
 			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-			%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-			%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-			%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-			%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+			%  <strong>40</strong> <strong>GUI_G_DICT</strong> 	GUI_G_DICT (gui, idict) contains the GUIs for the graph.
 			%
 			% See also Category, Format.
 			
@@ -244,50 +223,50 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		function pr_class = getClass()
 			%GETCLASS returns the class of the graph and measure plot.
 			%
-			% CLASS = AnalyzeEnsemblePP_MeDict.GETCLASS() returns the class 'AnalyzeEnsemblePP_MeDict'.
+			% CLASS = AnalyzeEnsemblePP_GDict.GETCLASS() returns the class 'AnalyzeEnsemblePP_GDict'.
 			%
 			% Alternative forms to call this method are:
 			%  CLASS = PR.GETCLASS() returns the class of the graph and measure plot PR.
 			%  CLASS = Element.GETCLASS(PR) returns the class of 'PR'.
-			%  CLASS = Element.GETCLASS('AnalyzeEnsemblePP_MeDict') returns 'AnalyzeEnsemblePP_MeDict'.
+			%  CLASS = Element.GETCLASS('AnalyzeEnsemblePP_GDict') returns 'AnalyzeEnsemblePP_GDict'.
 			%
-			% Note that the Element.GETCLASS(PR) and Element.GETCLASS('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETCLASS(PR) and Element.GETCLASS('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			
-			pr_class = 'AnalyzeEnsemblePP_MeDict';
+			pr_class = 'AnalyzeEnsemblePP_GDict';
 		end
 		function subclass_list = getSubclasses()
 			%GETSUBCLASSES returns all subclasses of the graph and measure plot.
 			%
-			% LIST = AnalyzeEnsemblePP_MeDict.GETSUBCLASSES() returns all subclasses of 'AnalyzeEnsemblePP_MeDict'.
+			% LIST = AnalyzeEnsemblePP_GDict.GETSUBCLASSES() returns all subclasses of 'AnalyzeEnsemblePP_GDict'.
 			%
 			% Alternative forms to call this method are:
 			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the graph and measure plot PR.
 			%  LIST = Element.GETSUBCLASSES(PR) returns all subclasses of 'PR'.
-			%  LIST = Element.GETSUBCLASSES('AnalyzeEnsemblePP_MeDict') returns all subclasses of 'AnalyzeEnsemblePP_MeDict'.
+			%  LIST = Element.GETSUBCLASSES('AnalyzeEnsemblePP_GDict') returns all subclasses of 'AnalyzeEnsemblePP_GDict'.
 			%
-			% Note that the Element.GETSUBCLASSES(PR) and Element.GETSUBCLASSES('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETSUBCLASSES(PR) and Element.GETSUBCLASSES('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeEnsemblePP_MeDict' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'AnalyzeEnsemblePP_GDict' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graph and measure plot.
 			%
-			% PROPS = AnalyzeEnsemblePP_MeDict.GETPROPS() returns the property list of graph and measure plot
+			% PROPS = AnalyzeEnsemblePP_GDict.GETPROPS() returns the property list of graph and measure plot
 			%  as a row vector.
 			%
-			% PROPS = AnalyzeEnsemblePP_MeDict.GETPROPS(CATEGORY) returns the property list 
+			% PROPS = AnalyzeEnsemblePP_GDict.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
 			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the graph and measure plot PR.
 			%  PROPS = Element.GETPROPS(PR[, CATEGORY]) returns the property list of 'PR'.
-			%  PROPS = Element.GETPROPS('AnalyzeEnsemblePP_MeDict'[, CATEGORY]) returns the property list of 'AnalyzeEnsemblePP_MeDict'.
+			%  PROPS = Element.GETPROPS('AnalyzeEnsemblePP_GDict'[, CATEGORY]) returns the property list of 'AnalyzeEnsemblePP_GDict'.
 			%
-			% Note that the Element.GETPROPS(PR) and Element.GETPROPS('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPS(PR) and Element.GETPROPS('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropNumber, Category.
@@ -295,7 +274,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
@@ -315,7 +294,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_list = 14;
 				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36 37 40 41 42 43];
+					prop_list = [9 13 25 26 36 37 40];
 				otherwise
 					prop_list = [];
 			end
@@ -323,17 +302,17 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		function prop_number = getPropNumber(varargin)
 			%GETPROPNUMBER returns the property number of graph and measure plot.
 			%
-			% N = AnalyzeEnsemblePP_MeDict.GETPROPNUMBER() returns the property number of graph and measure plot.
+			% N = AnalyzeEnsemblePP_GDict.GETPROPNUMBER() returns the property number of graph and measure plot.
 			%
-			% N = AnalyzeEnsemblePP_MeDict.GETPROPNUMBER(CATEGORY) returns the property number of graph and measure plot
+			% N = AnalyzeEnsemblePP_GDict.GETPROPNUMBER(CATEGORY) returns the property number of graph and measure plot
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
 			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the graph and measure plot PR.
 			%  N = Element.GETPROPNUMBER(PR) returns the property number of 'PR'.
-			%  N = Element.GETPROPNUMBER('AnalyzeEnsemblePP_MeDict') returns the property number of 'AnalyzeEnsemblePP_MeDict'.
+			%  N = Element.GETPROPNUMBER('AnalyzeEnsemblePP_GDict') returns the property number of 'AnalyzeEnsemblePP_GDict'.
 			%
-			% Note that the Element.GETPROPNUMBER(PR) and Element.GETPROPNUMBER('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPNUMBER(PR) and Element.GETPROPNUMBER('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getProps, Category.
@@ -341,7 +320,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 43;
+				prop_number = 40;
 				return
 			end
 			
@@ -361,7 +340,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_number = 1;
 				case 9 % Category.GUI
-					prop_number = 10;
+					prop_number = 7;
 				otherwise
 					prop_number = 0;
 			end
@@ -369,76 +348,76 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graph and measure plot/error.
 			%
-			% CHECK = AnalyzeEnsemblePP_MeDict.EXISTSPROP(PROP) checks whether the property PROP exists.
+			% CHECK = AnalyzeEnsemblePP_GDict.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PR.EXISTSPROP(PROP) checks whether PROP exists for PR.
 			%  CHECK = Element.EXISTSPROP(PR, PROP) checks whether PROP exists for PR.
-			%  CHECK = Element.EXISTSPROP(AnalyzeEnsemblePP_MeDict, PROP) checks whether PROP exists for AnalyzeEnsemblePP_MeDict.
+			%  CHECK = Element.EXISTSPROP(AnalyzeEnsemblePP_GDict, PROP) checks whether PROP exists for AnalyzeEnsemblePP_GDict.
 			%
 			% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT exist.
-			%  Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%  Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PR.EXISTSPROP(PROP) throws error if PROP does NOT exist for PR.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%  Element.EXISTSPROP(PR, PROP) throws error if PROP does NOT exist for PR.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
-			%  Element.EXISTSPROP(AnalyzeEnsemblePP_MeDict, PROP) throws error if PROP does NOT exist for AnalyzeEnsemblePP_MeDict.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
+			%  Element.EXISTSPROP(AnalyzeEnsemblePP_GDict, PROP) throws error if PROP does NOT exist for AnalyzeEnsemblePP_GDict.
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%
-			% Note that the Element.EXISTSPROP(PR) and Element.EXISTSPROP('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.EXISTSPROP(PR) and Element.EXISTSPROP('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput' '\n' ...
-					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeEnsemblePP_MeDict.'] ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput' '\n' ...
+					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeEnsemblePP_GDict.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
 			%EXISTSTAG checks whether tag exists in graph and measure plot/error.
 			%
-			% CHECK = AnalyzeEnsemblePP_MeDict.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
+			% CHECK = AnalyzeEnsemblePP_GDict.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PR.EXISTSTAG(TAG) checks whether TAG exists for PR.
 			%  CHECK = Element.EXISTSTAG(PR, TAG) checks whether TAG exists for PR.
-			%  CHECK = Element.EXISTSTAG(AnalyzeEnsemblePP_MeDict, TAG) checks whether TAG exists for AnalyzeEnsemblePP_MeDict.
+			%  CHECK = Element.EXISTSTAG(AnalyzeEnsemblePP_GDict, TAG) checks whether TAG exists for AnalyzeEnsemblePP_GDict.
 			%
 			% Element.EXISTSTAG(TAG) throws an error if the TAG does NOT exist.
-			%  Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%  Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PR.EXISTSTAG(TAG) throws error if TAG does NOT exist for PR.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%  Element.EXISTSTAG(PR, TAG) throws error if TAG does NOT exist for PR.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
-			%  Element.EXISTSTAG(AnalyzeEnsemblePP_MeDict, TAG) throws error if TAG does NOT exist for AnalyzeEnsemblePP_MeDict.
-			%   Error id: [BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
+			%  Element.EXISTSTAG(AnalyzeEnsemblePP_GDict, TAG) throws error if TAG does NOT exist for AnalyzeEnsemblePP_GDict.
+			%   Error id: [BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			%
-			% Note that the Element.EXISTSTAG(PR) and Element.EXISTSTAG('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.EXISTSTAG(PR) and Element.EXISTSTAG('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput' '\n' ...
-					'The value ' tag ' is not a valid tag for AnalyzeEnsemblePP_MeDict.'] ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput' '\n' ...
+					'The value ' tag ' is not a valid tag for AnalyzeEnsemblePP_GDict.'] ...
 					)
 			end
 		end
@@ -453,17 +432,17 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PROPERTY = PR.GETPROPPROP(POINTER) returns property number of POINTER of PR.
-			%  PROPERTY = Element.GETPROPPROP(AnalyzeEnsemblePP_MeDict, POINTER) returns property number of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  PROPERTY = PR.GETPROPPROP(AnalyzeEnsemblePP_MeDict, POINTER) returns property number of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  PROPERTY = Element.GETPROPPROP(AnalyzeEnsemblePP_GDict, POINTER) returns property number of POINTER of AnalyzeEnsemblePP_GDict.
+			%  PROPERTY = PR.GETPROPPROP(AnalyzeEnsemblePP_GDict, POINTER) returns property number of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPPROP(PR) and Element.GETPROPPROP('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPPROP(PR) and Element.GETPROPPROP('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropFormat, getPropTag, getPropCategory, getPropDescription,
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -479,10 +458,10 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  TAG = PR.GETPROPTAG(POINTER) returns tag of POINTER of PR.
-			%  TAG = Element.GETPROPTAG(AnalyzeEnsemblePP_MeDict, POINTER) returns tag of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  TAG = PR.GETPROPTAG(AnalyzeEnsemblePP_MeDict, POINTER) returns tag of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  TAG = Element.GETPROPTAG(AnalyzeEnsemblePP_GDict, POINTER) returns tag of POINTER of AnalyzeEnsemblePP_GDict.
+			%  TAG = PR.GETPROPTAG(AnalyzeEnsemblePP_GDict, POINTER) returns tag of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPTAG(PR) and Element.GETPROPTAG('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPTAG(PR) and Element.GETPROPTAG('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropSettings, getPropCategory, getPropFormat,
@@ -492,8 +471,8 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzeensemblepp_medict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' };
-				tag = analyzeensemblepp_medict_tag_list{pointer}; % prop = pointer
+				analyzeensemblepp_gdict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_DICT' };
+				tag = analyzeensemblepp_gdict_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -507,20 +486,20 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CATEGORY = PR.GETPROPCATEGORY(POINTER) returns category of POINTER of PR.
-			%  CATEGORY = Element.GETPROPCATEGORY(AnalyzeEnsemblePP_MeDict, POINTER) returns category of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  CATEGORY = PR.GETPROPCATEGORY(AnalyzeEnsemblePP_MeDict, POINTER) returns category of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  CATEGORY = Element.GETPROPCATEGORY(AnalyzeEnsemblePP_GDict, POINTER) returns category of POINTER of AnalyzeEnsemblePP_GDict.
+			%  CATEGORY = PR.GETPROPCATEGORY(AnalyzeEnsemblePP_GDict, POINTER) returns category of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPCATEGORY(PR) and Element.GETPROPCATEGORY('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPCATEGORY(PR) and Element.GETPROPCATEGORY('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also Category, getPropProp, getPropTag, getPropSettings,
 			%  getPropFormat, getPropDescription, getPropDefault, checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9 };
-			prop_category = analyzeensemblepp_medict_category_list{prop};
+			analyzeensemblepp_gdict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9 };
+			prop_category = analyzeensemblepp_gdict_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -533,20 +512,20 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  FORMAT = PR.GETPROPFORMAT(POINTER) returns format of POINTER of PR.
-			%  FORMAT = Element.GETPROPFORMAT(AnalyzeEnsemblePP_MeDict, POINTER) returns format of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  FORMAT = PR.GETPROPFORMAT(AnalyzeEnsemblePP_MeDict, POINTER) returns format of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  FORMAT = Element.GETPROPFORMAT(AnalyzeEnsemblePP_GDict, POINTER) returns format of POINTER of AnalyzeEnsemblePP_GDict.
+			%  FORMAT = PR.GETPROPFORMAT(AnalyzeEnsemblePP_GDict, POINTER) returns format of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPFORMAT(PR) and Element.GETPROPFORMAT('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPFORMAT(PR) and Element.GETPROPFORMAT('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropCategory,
 			%  getPropDescription, getPropSettings, getPropDefault, checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10 };
-			prop_format = analyzeensemblepp_medict_format_list{prop};
+			analyzeensemblepp_gdict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  10 };
+			prop_format = analyzeensemblepp_gdict_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -559,20 +538,20 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DESCRIPTION = PR.GETPROPDESCRIPTION(POINTER) returns description of POINTER of PR.
-			%  DESCRIPTION = Element.GETPROPDESCRIPTION(AnalyzeEnsemblePP_MeDict, POINTER) returns description of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  DESCRIPTION = PR.GETPROPDESCRIPTION(AnalyzeEnsemblePP_MeDict, POINTER) returns description of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  DESCRIPTION = Element.GETPROPDESCRIPTION(AnalyzeEnsemblePP_GDict, POINTER) returns description of POINTER of AnalyzeEnsemblePP_GDict.
+			%  DESCRIPTION = PR.GETPROPDESCRIPTION(AnalyzeEnsemblePP_GDict, POINTER) returns description of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPDESCRIPTION(PR) and Element.GETPROPDESCRIPTION('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPDESCRIPTION(PR) and Element.GETPROPDESCRIPTION('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory,
 			%  getPropFormat, getPropSettings, getPropDefault, checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.' };
-			prop_description = analyzeensemblepp_medict_description_list{prop};
+			analyzeensemblepp_gdict_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_DICT (gui, idict) contains the GUIs for the graph.' };
+			prop_description = analyzeensemblepp_gdict_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -585,36 +564,30 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  SETTINGS = PR.GETPROPSETTINGS(POINTER) returns settings of POINTER of PR.
-			%  SETTINGS = Element.GETPROPSETTINGS(AnalyzeEnsemblePP_MeDict, POINTER) returns settings of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  SETTINGS = PR.GETPROPSETTINGS(AnalyzeEnsemblePP_MeDict, POINTER) returns settings of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  SETTINGS = Element.GETPROPSETTINGS(AnalyzeEnsemblePP_GDict, POINTER) returns settings of POINTER of AnalyzeEnsemblePP_GDict.
+			%  SETTINGS = PR.GETPROPSETTINGS(AnalyzeEnsemblePP_GDict, POINTER) returns settings of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPSETTINGS(PR) and Element.GETPROPSETTINGS('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPSETTINGS(PR) and Element.GETPROPSETTINGS('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory, getPropFormat,
 			%  getPropDescription, getPropDefault, checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 36 % AnalyzeEnsemblePP_MeDict.TABLE_HEIGHT
+				case 36 % AnalyzeEnsemblePP_GDict.TABLE_HEIGHT
 					prop_settings = Format.getFormatSettings(22);
-				case 37 % AnalyzeEnsemblePP_MeDict.SELECTED
+				case 37 % AnalyzeEnsemblePP_GDict.SELECTED
 					prop_settings = Format.getFormatSettings(13);
-				case 38 % AnalyzeEnsemblePP_MeDict.TABLE
+				case 38 % AnalyzeEnsemblePP_GDict.TABLE
 					prop_settings = Format.getFormatSettings(18);
-				case 39 % AnalyzeEnsemblePP_MeDict.CONTEXTMENU
+				case 39 % AnalyzeEnsemblePP_GDict.CONTEXTMENU
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % AnalyzeEnsemblePP_MeDict.GUI_G_PL
-					prop_settings = 'GUIFig';
-				case 41 % AnalyzeEnsemblePP_MeDict.GUI_G_EL
+				case 40 % AnalyzeEnsemblePP_GDict.GUI_G_DICT
 					prop_settings = 'GUIElement';
-				case 42 % AnalyzeEnsemblePP_MeDict.GUI_F_DICT
-					prop_settings = 'GUIFig';
-				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
-					prop_settings = 'GUIElement';
-				case 4 % AnalyzeEnsemblePP_MeDict.TEMPLATE
-					prop_settings = 'AnalyzeEnsemblePP_MeDict';
+				case 4 % AnalyzeEnsemblePP_GDict.TEMPLATE
+					prop_settings = 'AnalyzeEnsemblePP_GDict';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
 			end
@@ -622,60 +595,54 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		function prop_default = getPropDefault(pointer)
 			%GETPROPDEFAULT returns the default value of a property.
 			%
-			% DEFAULT = AnalyzeEnsemblePP_MeDict.GETPROPDEFAULT(PROP) returns the default 
+			% DEFAULT = AnalyzeEnsemblePP_GDict.GETPROPDEFAULT(PROP) returns the default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = AnalyzeEnsemblePP_MeDict.GETPROPDEFAULT(TAG) returns the default 
+			% DEFAULT = AnalyzeEnsemblePP_GDict.GETPROPDEFAULT(TAG) returns the default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PR.GETPROPDEFAULT(POINTER) returns the default value of POINTER of PR.
-			%  DEFAULT = Element.GETPROPDEFAULT(AnalyzeEnsemblePP_MeDict, POINTER) returns the default value of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  DEFAULT = PR.GETPROPDEFAULT(AnalyzeEnsemblePP_MeDict, POINTER) returns the default value of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  DEFAULT = Element.GETPROPDEFAULT(AnalyzeEnsemblePP_GDict, POINTER) returns the default value of POINTER of AnalyzeEnsemblePP_GDict.
+			%  DEFAULT = PR.GETPROPDEFAULT(AnalyzeEnsemblePP_GDict, POINTER) returns the default value of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPDEFAULT(PR) and Element.GETPROPDEFAULT('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPDEFAULT(PR) and Element.GETPROPDEFAULT('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings, 
 			%  getPropCategory, getPropFormat, getPropDescription, checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 36 % AnalyzeEnsemblePP_MeDict.TABLE_HEIGHT
+				case 36 % AnalyzeEnsemblePP_GDict.TABLE_HEIGHT
 					prop_default = 360;
-				case 37 % AnalyzeEnsemblePP_MeDict.SELECTED
-					prop_default = Format.getFormatDefault(13, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 38 % AnalyzeEnsemblePP_MeDict.TABLE
-					prop_default = Format.getFormatDefault(18, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 39 % AnalyzeEnsemblePP_MeDict.CONTEXTMENU
-					prop_default = Format.getFormatDefault(18, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 40 % AnalyzeEnsemblePP_MeDict.GUI_G_PL
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 41 % AnalyzeEnsemblePP_MeDict.GUI_G_EL
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 42 % AnalyzeEnsemblePP_MeDict.GUI_F_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 1 % AnalyzeEnsemblePP_MeDict.ELCLASS
-					prop_default = 'AnalyzeEnsemblePP_MeDict';
-				case 2 % AnalyzeEnsemblePP_MeDict.NAME
-					prop_default = 'AnalyzeEnsemblePP_MeDict';
-				case 3 % AnalyzeEnsemblePP_MeDict.DESCRIPTION
-					prop_default = 'AnalyzeEnsemblePP_MeDict plots the panel to manage the graph and measures of an ensemble analysis.';
-				case 4 % AnalyzeEnsemblePP_MeDict.TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 5 % AnalyzeEnsemblePP_MeDict.ID
-					prop_default = 'AnalyzeEnsemblePP_MeDict';
-				case 6 % AnalyzeEnsemblePP_MeDict.LABEL
-					prop_default = 'AnalyzeEnsemblePP_MeDict label';
-				case 7 % AnalyzeEnsemblePP_MeDict.NOTES
-					prop_default = 'AnalyzeEnsemblePP_MeDict';
-				case 23 % AnalyzeEnsemblePP_MeDict.EL
+				case 37 % AnalyzeEnsemblePP_GDict.SELECTED
+					prop_default = Format.getFormatDefault(13, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 38 % AnalyzeEnsemblePP_GDict.TABLE
+					prop_default = Format.getFormatDefault(18, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 39 % AnalyzeEnsemblePP_GDict.CONTEXTMENU
+					prop_default = Format.getFormatDefault(18, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 40 % AnalyzeEnsemblePP_GDict.GUI_G_DICT
+					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 1 % AnalyzeEnsemblePP_GDict.ELCLASS
+					prop_default = 'AnalyzeEnsemblePP_GDict';
+				case 2 % AnalyzeEnsemblePP_GDict.NAME
+					prop_default = 'AnalyzeEnsemblePP_GDict';
+				case 3 % AnalyzeEnsemblePP_GDict.DESCRIPTION
+					prop_default = 'AnalyzeEnsemblePP_GDict plots the panel to manage the graph and measures of an ensemble analysis.';
+				case 4 % AnalyzeEnsemblePP_GDict.TEMPLATE
+					prop_default = Format.getFormatDefault(8, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 5 % AnalyzeEnsemblePP_GDict.ID
+					prop_default = 'AnalyzeEnsemblePP_GDict';
+				case 6 % AnalyzeEnsemblePP_GDict.LABEL
+					prop_default = 'AnalyzeEnsemblePP_GDict label';
+				case 7 % AnalyzeEnsemblePP_GDict.NOTES
+					prop_default = 'AnalyzeEnsemblePP_GDict';
+				case 23 % AnalyzeEnsemblePP_GDict.EL
 					prop_default = AnalyzeEnsemble();
-				case 24 % AnalyzeEnsemblePP_MeDict.PROP
-					prop_default = 13;
+				case 24 % AnalyzeEnsemblePP_GDict.PROP
+					prop_default = 12;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -683,27 +650,27 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		function prop_default = getPropDefaultConditioned(pointer)
 			%GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
 			%
-			% DEFAULT = AnalyzeEnsemblePP_MeDict.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
+			% DEFAULT = AnalyzeEnsemblePP_GDict.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = AnalyzeEnsemblePP_MeDict.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
+			% DEFAULT = AnalyzeEnsemblePP_GDict.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of PR.
-			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(AnalyzeEnsemblePP_MeDict, POINTER) returns the conditioned default value of POINTER of AnalyzeEnsemblePP_MeDict.
-			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(AnalyzeEnsemblePP_MeDict, POINTER) returns the conditioned default value of POINTER of AnalyzeEnsemblePP_MeDict.
+			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(AnalyzeEnsemblePP_GDict, POINTER) returns the conditioned default value of POINTER of AnalyzeEnsemblePP_GDict.
+			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(AnalyzeEnsemblePP_GDict, POINTER) returns the conditioned default value of POINTER of AnalyzeEnsemblePP_GDict.
 			%
-			% Note that the Element.GETPROPDEFAULTCONDITIONED(PR) and Element.GETPROPDEFAULTCONDITIONED('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.GETPROPDEFAULTCONDITIONED(PR) and Element.GETPROPDEFAULTCONDITIONED('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also conditioning, getPropDefault, getPropProp, getPropTag, 
 			%  getPropSettings, getPropCategory, getPropFormat, getPropDescription, 
 			%  checkProp.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
-			prop_default = AnalyzeEnsemblePP_MeDict.conditioning(prop, AnalyzeEnsemblePP_MeDict.getPropDefault(prop));
+			prop_default = AnalyzeEnsemblePP_GDict.conditioning(prop, AnalyzeEnsemblePP_GDict.getPropDefault(prop));
 		end
 	end
 	methods (Static, Access=protected) % conditioning
@@ -721,10 +688,10 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			switch prop
-				case 37 % AnalyzeEnsemblePP_MeDict.SELECTED
+				case 37 % AnalyzeEnsemblePP_GDict.SELECTED
 					if isrow(value)
 					    value = value';
 					end
@@ -746,48 +713,42 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CHECK = PR.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of PR.
-			%  CHECK = Element.CHECKPROP(AnalyzeEnsemblePP_MeDict, PROP, VALUE) checks VALUE format for PROP of AnalyzeEnsemblePP_MeDict.
-			%  CHECK = PR.CHECKPROP(AnalyzeEnsemblePP_MeDict, PROP, VALUE) checks VALUE format for PROP of AnalyzeEnsemblePP_MeDict.
+			%  CHECK = Element.CHECKPROP(AnalyzeEnsemblePP_GDict, PROP, VALUE) checks VALUE format for PROP of AnalyzeEnsemblePP_GDict.
+			%  CHECK = PR.CHECKPROP(AnalyzeEnsemblePP_GDict, PROP, VALUE) checks VALUE format for PROP of AnalyzeEnsemblePP_GDict.
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput
+			%  Error id: BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput
-			%  Element.CHECKPROP(AnalyzeEnsemblePP_MeDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemblePP_MeDict.
-			%   Error id: BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput
-			%  PR.CHECKPROP(AnalyzeEnsemblePP_MeDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemblePP_MeDict.
-			%   Error id: BRAPH2:AnalyzeEnsemblePP_MeDict:WrongInput]
+			%   Error id: BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput
+			%  Element.CHECKPROP(AnalyzeEnsemblePP_GDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemblePP_GDict.
+			%   Error id: BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput
+			%  PR.CHECKPROP(AnalyzeEnsemblePP_GDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemblePP_GDict.
+			%   Error id: BRAPH2:AnalyzeEnsemblePP_GDict:WrongInput]
 			% 
-			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('AnalyzeEnsemblePP_MeDict')
+			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('AnalyzeEnsemblePP_GDict')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropSettings,
 			% getPropCategory, getPropFormat, getPropDescription, getPropDefault.
 			
-			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
+			prop = AnalyzeEnsemblePP_GDict.getPropProp(pointer);
 			
 			switch prop
-				case 36 % AnalyzeEnsemblePP_MeDict.TABLE_HEIGHT
-					check = Format.checkFormat(22, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 37 % AnalyzeEnsemblePP_MeDict.SELECTED
-					check = Format.checkFormat(13, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 38 % AnalyzeEnsemblePP_MeDict.TABLE
-					check = Format.checkFormat(18, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 39 % AnalyzeEnsemblePP_MeDict.CONTEXTMENU
-					check = Format.checkFormat(18, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 40 % AnalyzeEnsemblePP_MeDict.GUI_G_PL
-					check = Format.checkFormat(8, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 41 % AnalyzeEnsemblePP_MeDict.GUI_G_EL
-					check = Format.checkFormat(8, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 42 % AnalyzeEnsemblePP_MeDict.GUI_F_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
-				case 4 % AnalyzeEnsemblePP_MeDict.TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
+				case 36 % AnalyzeEnsemblePP_GDict.TABLE_HEIGHT
+					check = Format.checkFormat(22, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 37 % AnalyzeEnsemblePP_GDict.SELECTED
+					check = Format.checkFormat(13, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 38 % AnalyzeEnsemblePP_GDict.TABLE
+					check = Format.checkFormat(18, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 39 % AnalyzeEnsemblePP_GDict.CONTEXTMENU
+					check = Format.checkFormat(18, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 40 % AnalyzeEnsemblePP_GDict.GUI_G_DICT
+					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
+				case 4 % AnalyzeEnsemblePP_GDict.TEMPLATE
+					check = Format.checkFormat(8, value, AnalyzeEnsemblePP_GDict.getPropSettings(prop));
 				otherwise
 					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
@@ -798,9 +759,9 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemblePP_MeDict:' 'WrongInput' '\n' ...
-					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeEnsemblePP_MeDict.getPropTag(prop) ' (' AnalyzeEnsemblePP_MeDict.getFormatTag(AnalyzeEnsemblePP_MeDict.getPropFormat(prop)) ').'] ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeEnsemblePP_GDict:' 'WrongInput' '\n' ...
+					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeEnsemblePP_GDict.getPropTag(prop) ' (' AnalyzeEnsemblePP_GDict.getFormatTag(AnalyzeEnsemblePP_GDict.getPropFormat(prop)) ').'] ...
 					)
 			end
 		end
@@ -822,21 +783,21 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 38 % AnalyzeEnsemblePP_MeDict.TABLE
+				case 38 % AnalyzeEnsemblePP_GDict.TABLE
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
 					    'FontSize', 12, ...
 					    'ColumnSortable', true, ...
-					    'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
-					    'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
-					    'ColumnWidth', {30, 'auto', 'auto', 'auto', 'auto'}, ...
-					    'ColumnEditable', [true false false false false], ...
+					    'ColumnName', {'', 'Subject', 'Notes'}, ...
+					    'ColumnFormat', {'logical',  'char', 'char'}, ...
+					    'ColumnWidth', {30, 'auto', 'auto'}, ...
+					    'ColumnEditable', [true false false], ...
 					    'CellEditCallback', {@cb_table} ...
 					    );
 					value = table;
 					
-				case 39 % AnalyzeEnsemblePP_MeDict.CONTEXTMENU
+				case 39 % AnalyzeEnsemblePP_GDict.CONTEXTMENU
 					contextmenu = uicontextmenu( ...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -845,7 +806,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 						'Separator', 'on', ...
 					    'Parent', contextmenu, ...
 					    'Tag', 'MENU_SELECT_ALL', ...
-					    'Text', 'Select All Measures', ...
+					    'Text', 'Select All Graphs', ...
 					    'MenuSelectedFcn', {@cb_select_all} ...
 					    );
 					menu_clear_selection = uimenu( ...
@@ -860,52 +821,56 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    'Text', 'Invert Selection', ...
 					    'MenuSelectedFcn', {@cb_invert_selection} ...
 					    );
-					menu_calculate = uimenu( ...
-						'Separator', 'on', ...
+					menu_open_g_pl = uimenu( ...
 						'Parent', contextmenu, ...
-						'Tag', 'MENU_CALCULATE', ...
-					    'Text', 'Calculate Selected Measures', ...
-						'MenuSelectedFcn', {@cb_calculate} ...
-					    );
-					menu_open_plots = uimenu( ... 
-						'Separator', 'on', ...
+						'Tag', 'MENU_OPEN_G_PL', ...
+						'Text', 'Plot Selected Adjacency Matrices', ...
+						'MenuSelectedFcn', {@cb_open_g_pl} ...
+						);
+					menu_hide_g_pl = uimenu( ...
+					    'Parent', contextmenu, ...
+					    'Tag', 'MENU_HIDE_G_PL', ...
+					    'Text', 'Hide Selected Adjacency Matrices', ...
+					    'MenuSelectedFcn', {@cb_hide_g_pl} ...
+						);
+					menu_open_g_h = uimenu( ...
 						'Parent', contextmenu, ...
-						'Tag', 'MENU_OPEN_PLOTS', ...
-						'Text', 'Plot Selected Measures ...', ...
-						'MenuSelectedFcn', {@cb_open_plots} ...
+						'Tag', 'MENU_OPEN_G_H', ...
+						'Text', 'Plot Selected Histograms', ...
+						'MenuSelectedFcn', {@cb_open_g_h} ...
 						);
-					menu_hide_plots = uimenu( ...
+					menu_hide_g_pl = uimenu( ...
 					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_HIDE_PLOTS', ...
-					    'Text', 'Hide Selected Plots', ...
-					    'MenuSelectedFcn', {@cb_hide_plots} ...
+					    'Tag', 'MENU_HIDE_G_H', ...
+					    'Text', 'Hide Selected Histograms', ...
+					    'MenuSelectedFcn', {@cb_hide_g_h} ...
 						);
-					menu_open_elements = uimenu( ...
+					menu_open_g_el = uimenu( ...
 						'Separator', 'on', ...
 					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_OPEN_ELEMENTS', ...
-					    'Text', 'Data Selected Measures ...', ...
-					    'MenuSelectedFcn', {@cb_open_elements} ...
+					    'Tag', 'MENU_OPEN_G_EL', ...
+					    'Text', 'Data Selected Graph ...', ...
+					    'MenuSelectedFcn', {@cb_open_g_el} ...
 					    );
-					menu_hide_elements = uimenu( ...
+					menu_hide_g_el = uimenu( ...
 					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_HIDE_ELEMENTS', ...
-					    'Text', 'Hide Selected Data', ...
-						'MenuSelectedFcn', {@cb_hide_elements} ...
+					    'Tag', 'MENU_HIDE_G_EL', ...
+					    'Text', 'Hide Selected Graph Data', ...
+						'MenuSelectedFcn', {@cb_hide_g_el} ...
 					    );
 					
 					set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 					
 					value = contextmenu;
 					
-				case 20 % AnalyzeEnsemblePP_MeDict.X_DRAW
+				case 20 % AnalyzeEnsemblePP_GDict.X_DRAW
 					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case 21 % AnalyzeEnsemblePP_MeDict.UPDATE
+				case 21 % AnalyzeEnsemblePP_GDict.UPDATE
 					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 						el = pr.get('EL');
@@ -922,7 +887,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    end
 					end
 					
-				case 22 % AnalyzeEnsemblePP_MeDict.REDRAW
+				case 22 % AnalyzeEnsemblePP_GDict.REDRAW
 					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
@@ -930,106 +895,37 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
 					end
 					
-				case 16 % AnalyzeEnsemblePP_MeDict.SHOW
+				case 16 % AnalyzeEnsemblePP_GDict.SHOW
 					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value
-					    % figure for graph plot
-					    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
-					        pr.get('GUI_G_PL').get('SHOW')
-					    end
-					
 					    % figure for graph data
-					    if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
-					        pr.get('GUI_G_EL').get('SHOW')
-					    end
-					    
-					    % figures for measure figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('SHOW')
-					        end
-					    end
-					    
-					    % figures for measure data
-					    gui_m_dict = pr.get('GUI_M_DICT');
-					    for i = 1:1:gui_m_dict.get('LENGTH')
-					        gui = gui_m_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('SHOW')
-					        end
+					    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
+					        pr.get('GUI_G_DICT').get('SHOW')
 					    end
 					end
 					
-				case 17 % AnalyzeEnsemblePP_MeDict.HIDE
+				case 17 % AnalyzeEnsemblePP_GDict.HIDE
 					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
-					    % figure for graph plot
-					    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
-					        pr.get('GUI_G_PL').get('HIDE')
-					    end
-					
 					    % figure for graph data
-					    if isa(pr.getr('GUI_G_EL'), 'GUI') && pr.get('GUI_G_EL').get('DRAWN')
-					        pr.get('GUI_G_EL').get('HIDE')
-					    end
-					
-					    % figures for measure figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('HIDE')
-					        end
-					    end
-					    
-					    % figures for measure data
-					    gui_m_dict = pr.get('GUI_M_DICT');
-					    for i = 1:1:gui_m_dict.get('LENGTH')
-					        gui = gui_m_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('HIDE')
-					        end
+					    if isa(pr.getr('GUI_G_DICT'), 'GUI') && pr.get('GUI_G_DICT').get('DRAWN')
+					        pr.get('GUI_G_DICT').get('HIDE')
 					    end
 					end
 					
-				case 18 % AnalyzeEnsemblePP_MeDict.DELETE
+				case 18 % AnalyzeEnsemblePP_GDict.DELETE
 					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case 19 % AnalyzeEnsemblePP_MeDict.CLOSE
+				case 19 % AnalyzeEnsemblePP_GDict.CLOSE
 					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
-					    % figure for graph plot
-					    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
-					        pr.get('GUI_G_PL').get('CLOSE')
-					    end
-					
 					    % figure for graph data
-					    if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
-					        pr.get('GUI_G_EL').get('CLOSE')
-					    end
-					
-					    % figures for measure figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('CLOSE')
-					        end
-					    end
-					    
-					    % figures for measure data
-					    gui_m_dict = pr.get('GUI_M_DICT');
-					    for i = 1:1:gui_m_dict.get('LENGTH')
-					        gui = gui_m_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('CLOSE')
-					        end
+					    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
+					        pr.get('GUI_G_DICT').get('CLOSE')
 					    end
 					end
 					
@@ -1055,137 +951,159 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			        
 			        pr.get('UPDATE')    
 			end
-			function cb_select_all(~, ~) 
-			    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP'));
-			    m_list = g.get('COMPATIBLE_MEASURES');
-			
-			    pr.set('SELECTED', [1:1:length(m_list)])
-			
-			    pr.get('UPDATE')
-			end
-			function cb_clear_selection(~, ~) 
-			    pr.set('SELECTED', [])
-			
-			    pr.get('UPDATE')
-			end
-			function cb_invert_selection(~, ~) 
-			    g = pr.get('EL').get('GRAPH_TEMPLATE'); % default graph
-			    m_list = g.get('COMPATIBLE_MEASURES');
-			
-			    selected_tmp = [1:1:length(m_list)];
-			    selected_tmp(pr.get('SELECTED')) = [];
-			    pr.set('SELECTED', selected_tmp);
-			
-			    pr.get('UPDATE')
-			end
-			function cb_calculate(~, ~) 
+			function cb_open_g_pl(~, ~)
 			    a = pr.get('EL');
-			    g = a.get('GRAPH_TEMPLATE'); 
-			    m_list = g.get('COMPATIBLE_MEASURES');
+			    g_dict = a.get(pr.get('PROP')); 
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
+			
+			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+			    N = ceil(sqrt(length(g_key_list))); % number of row and columns of figures
+			
 			    selected = pr.get('SELECTED');
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
 			    
-			    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
-			
-			    for i = 1:1:length(m_list)
-			        if ismember(i, selected)
-			            measure = m_list{i};
-			            me = a.get('MEASUREENSEMBLE', measure);
-			
-			            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
-			
-			            if isa(me.getr('M'), 'NoValue')
-			                a.get('MEASUREENSEMBLE', measure).memorize('M');
-			            end
-			        end
-			    end
-			    
-				braph2waitbar(wb, 'close')
-			
-				pr.get('UPDATE');
-			end
-			function cb_open_plots(~, ~)
-			    a = pr.get('EL');   
-			    g = a.get('GRAPH_TEMPLATE'); 
-			    m_list = g.get('COMPATIBLE_MEASURES');
-			    
-			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
-			
-			    gui_f_dict = pr.memorize('GUI_F_DICT');
-			    
-			    selected = pr.get('SELECTED');
-				for s = 1:1:length(selected)
+			    for s = 1:1:length(selected)
 			        i = selected(s);
-			        
-			        measure = m_list{i}; % also key
-			
-			        me = a.get('MEASUREENSEMBLE', measure);
-			        
-			        if ~gui_f_dict.get('CONTAINS_KEY', measure)
-			            gui = GUIFig( ...
-			                'ID', measure, ... % this is the dictionary key
-			                'PF', me.get('PFME'), ...
+			        g_key = g_key_list{i}; % key for graph
+			        if ~gui_g_dict.get('CONTAINS_KEY', g_key)
+			            g = g_dict.get('IT', g_key); % actual graph
+			            gui = GUIElement( ...
+			                'ID', g_key, ... % this is the dictionary key for graph
+			                'PE', g, ...
 			                'POSITION', [ ...
-			                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
-			                    y0(f, 'normalized') ...
-			                    w(f, 'normalized') * 3 ...
-			                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
-			                    ], ...
+			                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+			                y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+			                w(f, 'normalized') ... % w = f_gr_w / screen_w;
+			                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+			                ], ...
 			                'WAITBAR', pr.getCallback('WAITBAR'), ...
 			                'CLOSEREQ', false ...
 			                );
-			            gui_f_dict.get('ADD', gui)
+			            gui_g_dict.get('ADD', gui)
 			        end
-			        
-			        gui = gui_f_dict.get('IT', measure);
+			
+			        gui = gui_g_dict.get('IT', g_key);
 			        if ~gui.get('DRAWN')
 			            gui.get('DRAW')
 			        end
-			        gui.get('SHOW')
+			
+			        gui_pfga = gui.get('PE').get('PR_DICT').get('IT', 'PFGA').memorize('GUI_ITEM');
+			    
+			        if ~gui_pfga.get('DRAWN')
+			            gui_pfga.get('DRAW')
+			        end
+			
+			        gui_pfga.get('SHOW')
 			    end
 			end
-			function cb_hide_plots(~, ~)
-			    g = pr.get('EL').get('GRAPH_TEMPLATE'); % default graph
-			    m_list = g.get('COMPATIBLE_MEASURES');
+			function cb_hide_g_pl(~, ~)
+			    g_dict = pr.get('EL').get(pr.get('PROP'));
+			    g_key_list =  cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
 			    
-			    gui_f_dict = pr.memorize('GUI_F_DICT');
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
 			
 			    selected = pr.get('SELECTED');
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = m_list{i}; % also key
+			        g_key = g_key_list{i}; % key for graph
 			        
-			        if gui_f_dict.get('CONTAINS_KEY', measure)
-			            gui = gui_f_dict.get('IT', measure);
+			        if gui_g_dict.get('CONTAINS_KEY', g_key)
+			            gui = gui_g_dict.get('IT', g_key);
+			            gui_pfga = gui.get('PE').get('PR_DICT').get('IT', 'PFGA').memorize('GUI_ITEM');
 			            if gui.get('DRAWN')
-			                gui.get('HIDE')
+			                gui_pfga.get('HIDE')
 			            end
 			        end
 			    end
 			end
-			function cb_open_elements(~, ~)
-			    a = pr.get('EL');    
-			    g = a.get('GRAPH_TEMPLATE'); % actual graph
-			    m_list = g.get('COMPATIBLE_MEASURES');
-			    
-			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+			function cb_open_g_h(~, ~)
+			    a = pr.get('EL');
+			    g_dict = a.get(pr.get('PROP')); 
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
 			
-			    gui_m_dict = pr.memorize('GUI_M_DICT');
-			    
+			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+			    N = ceil(sqrt(length(g_key_list))); % number of row and columns of figures
+			
 			    selected = pr.get('SELECTED');
-				for s = 1:1:length(selected)
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
+			    
+			    for s = 1:1:length(selected)
+			        i = selected(s);
+			        g_key = g_key_list{i}; % key for graph
+			        if ~gui_g_dict.get('CONTAINS_KEY', g_key)
+			            g = g_dict.get('IT', g_key); % actual graph
+			            gui = GUIElement( ...
+			                'ID', g_key, ... % this is the dictionary key for graph
+			                'PE', g, ...
+			                'POSITION', [ ...
+			                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+			                y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+			                w(f, 'normalized') ... % w = f_gr_w / screen_w;
+			                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+			                ], ...
+			                'WAITBAR', pr.getCallback('WAITBAR'), ...
+			                'CLOSEREQ', false ...
+			                );
+			            gui_g_dict.get('ADD', gui)
+			        end
+			
+			        gui = gui_g_dict.get('IT', g_key);
+			        if ~gui.get('DRAWN')
+			            gui.get('DRAW')
+			        end
+			
+			        gui_pfgh = gui.get('PE').get('PR_DICT').get('IT', 'PFGH').memorize('GUI_ITEM');
+			    
+			        if ~gui_pfgh.get('DRAWN')
+			            gui_pfgh.get('DRAW')
+			        end
+			
+			        gui_pfgh.get('SHOW')
+			    end
+			end
+			function cb_hide_g_h(~, ~)
+			    g_dict = pr.get('EL').get(pr.get('PROP'));
+			    g_key_list =  cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
+			    
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
+			
+			    selected = pr.get('SELECTED');
+			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = m_list{i}; % also key
-			
-			        me = a.get('MEASUREENSEMBLE', measure);
+			        g_key = g_key_list{i}; % key for graph
 			        
-			        if ~gui_m_dict.get('CONTAINS_KEY', measure)
+			        if gui_g_dict.get('CONTAINS_KEY', g_key)
+			            gui = gui_g_dict.get('IT', g_key);
+			            gui_pfgh = gui.get('PE').get('PR_DICT').get('IT', 'PFGH').memorize('GUI_ITEM');
+			            if gui.get('DRAWN')
+			                gui_pfgh.get('HIDE')
+			            end
+			        end
+			    end
+			end
+			function cb_open_g_el(~, ~)
+			    a = pr.get('EL');
+			    g_dict = a.get(pr.get('PROP'));
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
+			    
+			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+			    N = ceil(sqrt(length(g_key_list))); % number of row and columns of figures
+			    
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
+			    
+			    selected = pr.get('SELECTED');
+			    for s = 1:1:length(selected)
+			        i = selected(s);
+			    
+			        g_key = g_key_list{i}; % key for graph
+			    
+			        if ~gui_g_dict.get('CONTAINS_KEY', g_key)
+			            g_key = g_dict.get('IT', g_key); % actural graph
 			            gui = GUIElement( ...
-			                'ID', measure, ... % this is the dictionary key
-			                'PE', me, ... 
+			                'ID', g_key, ... % this is the dictionary key for graph
+			                'PE', g, ... 
 			                'POSITION', [ ...
 			                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
 			                    y0(f, 'normalized') ... % y = f_gr_y / screen_h;
@@ -1195,35 +1113,57 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			                'WAITBAR', pr.getCallback('WAITBAR'), ...
 			                'CLOSEREQ', false ...
 			                );
-			            gui_m_dict.get('ADD', gui)
+			            gui_g_dict.get('ADD', gui)
 			        end
-			        
-			        gui = gui_m_dict.get('IT', measure);
+			        gui = gui_g_dict.get('IT', g_key);
 			        if ~gui.get('DRAWN')
 			            gui.get('DRAW')
 			        end
 			        gui.get('SHOW')
-				end
+			    end
 			end
-			function cb_hide_elements(~, ~)
-			    g = pr.get('EL').get('GRAPH_TEMPLATE'); % default graph
-			    m_list = g.get('COMPATIBLE_MEASURES');
+			function cb_hide_g_el(~, ~)
+			    g_dict = pr.get('EL').get(pr.get('PROP'));
+			    g_key_list =  cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false); % The graph ID is the key
 			    
-			    gui_m_dict = pr.memorize('GUI_M_DICT');
+			    gui_g_dict = pr.memorize('GUI_G_DICT');
 			
 			    selected = pr.get('SELECTED');
 			    for s = 1:1:length(selected)
 			        i = selected(s);
 			        
-			        measure = m_list{i}; % also key
+			        g_key = g_key_list{i}; % key for graph
 			        
-			        if gui_m_dict.get('CONTAINS_KEY', measure)
-			            gui = gui_m_dict.get('IT', measure);
+			        if gui_g_dict.get('CONTAINS_KEY', g_key)
+			            gui = gui_g_dict.get('IT', g_key);
 			            if gui.get('DRAWN')
 			                gui.get('HIDE')
 			            end
 			        end
 			    end
+			end
+			function cb_select_all(~, ~) 
+			    g_dict = pr.get('EL').get(pr.get('PROP'));
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false);
+			
+			    pr.set('SELECTED', [1:1:length(g_key_list)])
+			
+			    pr.get('UPDATE')
+			end
+			function cb_clear_selection(~, ~) 
+			    pr.set('SELECTED', [])
+			
+			    pr.get('UPDATE')
+			end
+			function cb_invert_selection(~, ~) 
+			    g_dict = pr.get('EL').get(pr.get('PROP'));
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false);
+			
+			    selected_tmp = [1:1:length(g_key_list)];
+			    selected_tmp(pr.get('SELECTED')) = [];
+			    pr.set('SELECTED', selected_tmp);
+			
+			    pr.get('UPDATE')
 			end
 			function set_table()
 			    a = pr.get('EL');
@@ -1234,62 +1174,34 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			        g = a.get('GRAPH_TEMPLATE'); % actual graph
 			    end
 			    
-			    m_list = g.get('COMPATIBLE_MEASURES');
+			    g_dict = a.get(prop);
+			    g_key_list = cellfun(@(g) g.get('ID'), g_dict.get('IT_LIST'), 'UniformOutput', false);
 			    
-			    if isempty(a.getr(prop).get('IT_LIST'))
-			        m_list_already_calculated = {};
-			    else
-			        m_list_already_calculated = cellfun(@(x) x.get('ELCLASS'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+			    rowname = cell(length(g_key_list), 1);
+			    data = cell(length(g_key_list), 3);
+			    for gi = 1:1:length(g_key_list)
+			        if any(pr.get('SELECTED') == gi)
+			            data{gi, 1} = true;
+			        else
+			            data{gi, 1} = false;
+			        end
+			    
+			        data{gi, 2} = g_key_list{gi};
+			        data{gi, 3} = g_dict.get('IT', gi).get('NOTES');
 			    end
-			    
-			    rowname = cell(length(m_list), 1);
-			    data = cell(length(m_list), 5);
-			    for mi = 1:1:length(m_list)
-			        if any(cellfun(@(y) isequal(m_list{mi}, y), m_list_already_calculated)) && ~isa(g.get('MEASURE', m_list{mi}).getr('M'), 'NoValue')
-			            rowname{mi} = 'C';
-			        else
-			            rowname{mi} = '';
-			        end                
 			
-			        if any(pr.get('SELECTED') == mi)
-			            data{mi, 1} = true;
-			        else
-			            data{mi, 1} = false;
-			        end
+			    set(pr.get('TABLE'), ...
+			        'RowName', rowname, ...
+			        'Data', data ...
+			        )
 			
-			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
-			
-			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
-			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
-			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
-			            data{mi, 3} = 'BINODAL';
-			        end
-			
-			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
-			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
-			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
-			            data{mi, 4} = 'BILAYER';
-			        end
-			        
-			        data{mi, 5} = eval([m_list{mi} '.getPropDefault(''DESCRIPTION'')']);
-			    
-			        set(pr.get('TABLE'), ...
-			            'RowName', rowname, ...
-			            'Data', data ...
-			            )
-			    
-			        % style SELECTED
-			        styles_row = find(pr.get('TABLE').StyleConfigurations.Target == 'row');
-			        if ~isempty(styles_row)
-			            removeStyle(pr.get('TABLE'), styles_row)
-			        end
-			        if ~isempty(pr.get('SELECTED'))
-			            addStyle(pr.get('TABLE'), uistyle('FontWeight', 'bold'), 'row', pr.get('SELECTED'))
-			        end
+			    % style SELECTED
+			    styles_row = find(pr.get('TABLE').StyleConfigurations.Target == 'row');
+			    if ~isempty(styles_row)
+			        removeStyle(pr.get('TABLE'), styles_row)
+			    end
+			    if ~isempty(pr.get('SELECTED'))
+			        addStyle(pr.get('TABLE'), uistyle('FontWeight', 'bold'), 'row', pr.get('SELECTED'))
 			    end
 			end
 		end

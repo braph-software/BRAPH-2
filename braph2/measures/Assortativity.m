@@ -2,13 +2,14 @@ classdef Assortativity < Measure
 	%Assortativity is the graph assortativity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The assortativity coefficient of a graph is the correlation coefficient 
-	%  between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
-	% The corresponding coefficient for directed and weighted networks is calculated 
-	%  by using the weighted and directed variants of degree/strength.
+	% The Assortativity coefficient of a graph is the correlation coefficient 
+	%  between the degrees/strengths of all nodes on two opposite ends of an edge 
+	%  within a layer.
+	% The corresponding coefficient for directed and weighted networks is 
+	%  calculated by using the weighted and directed variants of degree/strength.
 	%
 	% The list of Assortativity properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the assortativity.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the assortativity.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the assortativity.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the assortativity.
@@ -122,7 +123,7 @@ classdef Assortativity < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Assortativity properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the assortativity.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the assortativity.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the assortativity.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the assortativity.
@@ -470,7 +471,7 @@ classdef Assortativity < Measure
 			prop = Assortativity.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			assortativity_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the assortativity.'  'DESCRIPTION (constant, string) is the description of the assortativity.'  'TEMPLATE (parameter, item) is the template of the assortativity.'  'ID (data, string) is a few-letter code of the assortativity.'  'LABEL (metadata, string) is an extended label of the assortativity.'  'NOTES (metadata, string) are some specific notes about the assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the assortativity value.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			assortativity_description_list = { 'ELCLASS (constant, string) is the class of the assortativity.'  'NAME (constant, string) is the name of the assortativity.'  'DESCRIPTION (constant, string) is the description of the assortativity.'  'TEMPLATE (parameter, item) is the template of the assortativity.'  'ID (data, string) is a few-letter code of the assortativity.'  'LABEL (metadata, string) is an extended label of the assortativity.'  'NOTES (metadata, string) are some specific notes about the assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the assortativity value.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = assortativity_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -530,7 +531,7 @@ classdef Assortativity < Measure
 				case 2 % Assortativity.NAME
 					prop_default = 'Assortativity';
 				case 3 % Assortativity.DESCRIPTION
-					prop_default = 'The assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.';
+					prop_default = 'The Assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.';
 				case 4 % Assortativity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Assortativity.getPropSettings(prop));
 				case 5 % Assortativity.ID

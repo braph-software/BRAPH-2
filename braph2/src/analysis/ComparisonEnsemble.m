@@ -802,7 +802,7 @@ classdef ComparisonEnsemble < ConcreteElement
 					                case 2 % Measure.UNILAYER
 					                    cp.set('PFC', ComparisonEnsemblePF_BU('CP', cp))
 					                case 3 % Measure.BILAYER
-					                    cp.set('PFC',ComparisonEnsemblePF_BB('CP', cp))
+					                    cp.set('PFC', ComparisonEnsemblePF_BB('CP', cp))
 					            end
 					    end
 					end
