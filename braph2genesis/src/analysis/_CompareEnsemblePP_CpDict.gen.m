@@ -726,7 +726,7 @@ GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 'GUIElement'
 
 %%% ¡prop!
-GUI_BG_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
+GUI_B_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
 %%%% ¡settings!
 'GUIFig'
 

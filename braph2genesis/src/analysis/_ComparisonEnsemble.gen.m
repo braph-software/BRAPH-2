@@ -501,8 +501,55 @@ if isa(cp.getr('PFC'), 'NoValue')
             end
     end
 end
+
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
+    varargin{:});
+
+%%% ¡prop!
+PFB (gui, item) contains the panel figure of the comparison.
+%%%% ¡settings!
+'ComparisonEnsemblePF'
+%%%% ¡postprocessing!
+if isa(cp.getr('PFB'), 'NoValue')
+
+    measure = cp.get('MEASURE');
+
+    switch Element.getPropDefault(measure, 'SHAPE')
+        case Measure.GLOBAL % __Measure.GLOBAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GS('CP', cp))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GU('CP', cp))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GB('CP', cp))
+            end
+        case Measure.NODAL % __Measure.NODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NS('CP', cp))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NU('CP', cp))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NB('CP', cp))
+            end
+        case Measure.BINODAL % __Measure.BINODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_BS('CP', cp))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_BU('CP', cp))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB',ComparisonEnsembleBrainPF_BB('CP', cp))
+            end
+    end
+end
+
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFB, ...
     'GUICLASS', 'GUIFig', ...
 	'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
     varargin{:});
