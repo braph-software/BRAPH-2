@@ -67,6 +67,12 @@ Measure Comparison Plot
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonEnsemble.PFB
+%%%% ¡title!
+Measure Comparison Brain
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonEnsemble.PFBG
 %%%% ¡title!
 Measure Comparison Brain Graph
@@ -511,7 +517,7 @@ pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
 %%% ¡prop!
 PFB (gui, item) contains the panel figure of the comparison.
 %%%% ¡settings!
-'ComparisonEnsemblePF'
+'ComparisonEnsembleBrainPF'
 %%%% ¡postprocessing!
 if isa(cp.getr('PFB'), 'NoValue')
 
@@ -706,4 +712,4 @@ value = {diff, p1, p2, ci_lower, ci_upper};
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonEnsemble.PFC ComparisonEnsemble.PFBG ComparisonEnsemble.CALCULATE_RESULTS]
+[ComparisonEnsemble.PFC ComparisonEnsemble.PFB ComparisonEnsemble.PFBG ComparisonEnsemble.CALCULATE_RESULTS]
