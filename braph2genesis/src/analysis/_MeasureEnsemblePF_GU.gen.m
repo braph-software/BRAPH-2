@@ -78,6 +78,11 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
+ELCLASS (constant, string) is the class of the % % % .
+%%%% ¡default!
+'MeasureEnsemblePF_GU'
+
+%%% ¡prop!
 NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.
 %%%% ¡default!
 'MeasureEnsemblePF_GU'
