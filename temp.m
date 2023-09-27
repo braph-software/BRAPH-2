@@ -1584,3 +1584,16 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 % 
 % % % a1 = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL')
 % % % a1g = pip.get('PS_DICT').get('IT', 3).get('PC_DICT').get('IT', 1).get('EL').get('G')
+
+%% NN
+el_class_list = {'NNRegressorMLP'} % {'NNRegressorMLP' 'NNClassifierMLP'}
+for i = 1:1:length(el_class_list)
+    el_class = el_class_list{i};
+    el_path = '/neuralnetworks';
+    delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+    % eval(['test_' el_class])
+end

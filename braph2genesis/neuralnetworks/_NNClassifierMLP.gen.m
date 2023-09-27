@@ -82,7 +82,7 @@ NNClassifierMLP.MODEL
 %%%% ¡title!
 Neural Network CLASSIFIER
 
-E%%% ¡prop!
+%%% ¡prop!
 %%%% ¡id!
 NNClassifierMLP.NOTES
 %%%% ¡title!

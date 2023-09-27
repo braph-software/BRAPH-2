@@ -82,7 +82,7 @@ NNRegressorMLP.MODEL
 %%%% ¡title!
 Neural Network REGRESSOR
 
-E%%% ¡prop!
+%%% ¡prop!
 %%%% ¡id!
 NNRegressorMLP.NOTES
 %%%% ¡title!
