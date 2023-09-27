@@ -258,10 +258,10 @@ for run = 1:1:run_number
     pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
     pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
     for i = 1:1:length(pipelines_dir_list)
-        wf_name = pipelines_dir_list(i).name;
-        wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-        for j = 1:numel(wf_gen_list)
-            create_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
+        pipeline_dir_name = pipelines_dir_list(i).name;
+        pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
+        for j = 1:numel(pipeline_gen_list)
+            create_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
         end
     end
 
@@ -357,10 +357,10 @@ pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder content
 pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
 pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
 for i = 1:1:length(pipelines_dir_list)
-    wf_name = pipelines_dir_list(i).name;
-    wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-    parfor j = 1:numel(wf_gen_list)
-        create_layout([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+    pipeline_dir_name = pipelines_dir_list(i).name;
+    pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
+    parfor j = 1:numel(pipeline_gen_list)
+        create_layout([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
     end
 end
 
@@ -445,10 +445,10 @@ pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder content
 pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
 pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
 for i = 1:1:length(pipelines_dir_list)
-    wf_name = pipelines_dir_list(i).name;
-    wf_gen_list = getGenerators([source_dir fp 'pipelines' fp wf_name]);
-    parfor j = 1:numel(wf_gen_list)
-        create_test_Element([source_dir fp 'pipelines' fp wf_name fp wf_gen_list{j}], [target_dir fp 'pipelines' fp wf_name])
+    pipeline_dir_name = pipelines_dir_list(i).name;
+    pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
+    parfor j = 1:numel(pipeline_gen_list)
+        create_test_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
     end
 end
 
