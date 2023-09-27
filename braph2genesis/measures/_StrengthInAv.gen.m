@@ -1,47 +1,91 @@
 %% ¡header!
-StrengthInAv < StrengthIn (m, average in-strength) is the graph average in-strength.
+StrengthInAv < StrengthIn (m, average in-strength) is the graph Average In-Strength.
 
 %%% ¡description!
-The average in-strength of a graph is the mean of the sum of all weights of the inward edges 
+The Average In-Strength (StrengthIn) of a graph is the mean of the sum of all weights of the inward edges 
 connected to a node within a layer, i.e., it is the sum of the columns of 
 the adjacency matrix. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.M
+%%%% ¡title!
+Average In-Strength
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthInAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average In-Strength.
 %%%% ¡default!
 'StrengthInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the in-strength.
+NAME (constant, string) is the name of the Average In-Strength.
 %%%% ¡default!
-'StrengthInAv'
+'Average In-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-strength.
+DESCRIPTION (constant, string) is the description of the Average In-Strength.
 %%%% ¡default!
-'The average in-strength of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.'
+'The Average In-Strength (StrengthIn) of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-strength.
+TEMPLATE (parameter, item) is the template of the Average In-Strength.
 %%%% ¡settings!
 'StrengthInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-strength.
+ID (data, string) is a few-letter code of the Average In-Strength.
 %%%% ¡default!
 'StrengthInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-strength.
+LABEL (metadata, string) is an extended label of the Average In-Strength.
 %%%% ¡default!
-'StrengthInAv label'
+'Average In-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-strength.
+NOTES (metadata, string) are some specific notes about the Average In-Strength.
 %%%% ¡default!
-'StrengthInAv notes'
+'Average In-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
-M (result, cell) is the in-strength.
+M (result, cell) is the Average In-Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 in_strength = calculateValue@StrengthIn(m, prop);

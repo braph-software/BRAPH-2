@@ -1,46 +1,90 @@
 %% ¡header!
-StrengthAv < Strength (m, average strength) is the graph average strength.
+StrengthAv < Strength (m, average strength) is the graph Average Strength.
 
 %%% ¡description!
-The average strength of a graph is the average of the sum of all weights of 
-the edges connected to a node within a layer.
+The Average Strength (StrengthAv) of a graph is the average of the sum of all weights of 
+ the edges connected to a node within a layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.M
+%%%% ¡title!
+Average Strength
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Strength.
 %%%% ¡default!
 'StrengthAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average strength.
+NAME (constant, string) is the name of the Average Strength.
 %%%% ¡default!
-'StrengthAv'
+'Average Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average strength.
+DESCRIPTION (constant, string) is the description of the Average Strength.
 %%%% ¡default!
-'The average strength of a graph is the average of the sum of all weights of the edges connected to a node within a layer.'
+'The Average Strength (StrengthAv) of a graph is the average of the sum of all weights of the edges connected to a node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average strength.
+TEMPLATE (parameter, item) is the template of the Average Strength.
 %%%% ¡settings!
 'StrengthAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average strength.
+ID (data, string) is a few-letter code of the Average Strength.
 %%%% ¡default!
 'StrengthAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average strength.
+LABEL (metadata, string) is an extended label of the Average Strength.
 %%%% ¡default!
-'StrengthAv label'
+'Average Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average strength.
+NOTES (metadata, string) are some specific notes about the Average Strength.
 %%%% ¡default!
-'StrengthAv notes'
+'Average Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
-M (result, cell) is the average strength.
+M (result, cell) is the Average Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 L = g.get('LAYERNUMBER');

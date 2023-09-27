@@ -1,8 +1,8 @@
 %% ¡header!
-WeightedMxP < Measure (m, weighted multiplex participation) is the graph weighted multiplex participation.
+WeightedMxP < Measure (m, weighted multiplex participation) is the graph Weighted Multiplex Participation.
 
 %%% ¡description!
-The weighted multiplex participation of a graph is the nodal homogeneity 
+The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity 
  of its number of neighbours across the layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 WeightedMxP.M
 %%%% ¡title!
-WeightedMxP
+Weighted Multiplex Participation
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Weighted Multiplex Participation.
 %%%% ¡default!
 'WeightedMxP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted multiplex particiption.
+NAME (constant, string) is the name of the Weighted Multiplex Participation.
 %%%% ¡default!
-'WeightedMxP'
+'Weighted Multiplex Participation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
+DESCRIPTION (constant, string) is the description of the Weighted Multiplex Participation.
 %%%% ¡default!
-'The weighted multiplex participation of a graph is the nodal homogeneity of its number of inward neighbours across the layers.'
+'The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
+TEMPLATE (parameter, item) is the template of the Weighted Multiplex Participation.
 %%%% ¡settings!
 'WeightedMxP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted multiplex particiption.
+ID (data, string) is a few-letter code of the Weighted Multiplex Participation.
 %%%% ¡default!
 'WeightedMxP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
+LABEL (metadata, string) is an extended label of the Weighted Multiplex Participation.
 %%%% ¡default!
-'WeightedMxP label'
+'Weighted Multiplex Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+NOTES (metadata, string) are some specific notes about the Weighted Multiplex Participation.
 %%%% ¡default!
-'WeightedMxP notes'
+'Weighted Multiplex Participation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the weighted multiplex particiption.
+M (result, cell) is the Weighted Multiplex Participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

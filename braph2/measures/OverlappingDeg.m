@@ -1,25 +1,25 @@
 classdef OverlappingDeg < Degree
-	%OverlappingDeg is the graph overlapping degree.
+	%OverlappingDeg is the graph Overlapping Degree.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
 	% The Overlapping Degree (OverlappingDeg) of a graph is the sum of the 
 	%  degrees of a node in all layers.
 	%
 	% The list of OverlappingDeg properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the overlapping degree.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping degree.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Degree.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDeg methods (constructor):
@@ -120,20 +120,20 @@ classdef OverlappingDeg < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingDeg properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the overlapping degree.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping degree.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Degree.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef OverlappingDeg < Degree
 			prop = OverlappingDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdeg_description_list = { 'ELCLASS (constant, string) is the class of the overlapping degree.'  'NAME (constant, string) is the name of the overlapping degree.'  'DESCRIPTION (constant, string) is the description of the overlapping degree.'  'TEMPLATE (parameter, item) is the template of the overlapping degree.'  'ID (data, string) is a few-letter code of the overlapping degree.'  'LABEL (metadata, string) is an extended label of the overlapping degree.'  'NOTES (metadata, string) are some specific notes about the overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdeg_description_list = { 'ELCLASS (constant, string) is the class of the Overlapping Degree.'  'NAME (constant, string) is the name of the Overlapping Degree.'  'DESCRIPTION (constant, string) is the description of the Overlapping Degree.'  'TEMPLATE (parameter, item) is the template of the Overlapping Degree.'  'ID (data, string) is a few-letter code of the Overlapping Degree.'  'LABEL (metadata, string) is an extended label of the Overlapping Degree.'  'NOTES (metadata, string) are some specific notes about the Overlapping Degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Overlapping Degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -534,9 +534,9 @@ classdef OverlappingDeg < Degree
 				case 5 % OverlappingDeg.ID
 					prop_default = 'OverlappingDeg ID';
 				case 6 % OverlappingDeg.LABEL
-					prop_default = 'OverlappingDegree label';
+					prop_default = 'Overlapping Degree label';
 				case 7 % OverlappingDeg.NOTES
-					prop_default = 'OverlappingDegree notes';
+					prop_default = 'Overlapping Degree notes';
 				case 9 % OverlappingDeg.SHAPE
 					prop_default = 2;
 				case 10 % OverlappingDeg.SCOPE

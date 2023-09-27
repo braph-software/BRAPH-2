@@ -1,8 +1,8 @@
 %% ¡header!
-Triangles < Measure(m, triangles) is the graph triangles.
+Triangles < Measure(m, triangles) is the graph Triangles.
 
 %%% ¡description!
-The triangles are calculated as the number of neighbors of a node that are 
+The Triangles are calculated as the number of neighbors of a node that are 
  also neighbors of each other within a layer. In weighted graphs, the triangles are 
  calculated as the geometric mean of the weights of the edges forming the triangle.
 
@@ -59,37 +59,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Triangles.
 %%%% ¡default!
 'Triangles'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the triangles.
+NAME (constant, string) is the name of the Triangles.
 %%%% ¡default!
 'Triangles'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the triangles.
+DESCRIPTION (constant, string) is the description of the Triangles.
 %%%% ¡default!
 'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the triangles.
+TEMPLATE (parameter, item) is the template of the Triangles.
 %%%% ¡settings!
 'Triangles'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the triangles.
+ID (data, string) is a few-letter code of the Triangles.
 %%%% ¡default!
 'Triangles ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the triangles.
+LABEL (metadata, string) is an extended label of the Triangles.
 %%%% ¡default!
 'Triangles label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the triangles.
+NOTES (metadata, string) are some specific notes about the Triangles.
 %%%% ¡default!
 'Triangles notes'
 
@@ -114,7 +114,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxWD' 'OrdMxBU' 'OrdMxBD' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'};
 
 %%% ¡prop!
-M (result, cell) is the triangles.
+M (result, cell) is the Triangles.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 

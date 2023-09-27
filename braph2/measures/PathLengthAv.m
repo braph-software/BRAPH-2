@@ -1,14 +1,14 @@
 classdef PathLengthAv < PathLength
-	%PathLengthAv is the graph average path length.
+	%PathLengthAv is the graph Average Path Length.
 	% It is a subclass of <a href="matlab:help PathLength">PathLength</a>.
 	%
-	% The average path length of a graph is the average of the sum of 
-	% the path lengths within each layer.
+	% The Average Path Length (PathLengthAv) of a graph is the average of the sum of 
+	%  the path lengths within each layer.
 	%
 	% The list of PathLengthAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average path length.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average path length.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Path Length.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Path Length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Path Length.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average path length.
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average path length.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average path length.
@@ -121,9 +121,9 @@ classdef PathLengthAv < PathLength
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average path length.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average path length.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Path Length.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Path Length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Path Length.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average path length.
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average path length.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average path length.
@@ -470,7 +470,7 @@ classdef PathLengthAv < PathLength
 			prop = PathLengthAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average path length.'  'DESCRIPTION (constant, string) is the description of the average path length.'  'TEMPLATE (parameter, item) is the template of the average path length.'  'ID (data, string) is a few-letter code of the average path length.'  'LABEL (metadata, string) is an extended label of the average path length.'  'NOTES (metadata, string) are some specific notes about the average path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
+			pathlengthav_description_list = { 'ELCLASS (constant, string) is the class of the Average Path Length.'  'NAME (constant, string) is the name of the Average Path Length.'  'DESCRIPTION (constant, string) is the description of the Average Path Length.'  'TEMPLATE (parameter, item) is the template of the average path length.'  'ID (data, string) is a few-letter code of the average path length.'  'LABEL (metadata, string) is an extended label of the average path length.'  'NOTES (metadata, string) are some specific notes about the average path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
 			prop_description = pathlengthav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,9 +528,9 @@ classdef PathLengthAv < PathLength
 				case 1 % PathLengthAv.ELCLASS
 					prop_default = 'PathLengthAv';
 				case 2 % PathLengthAv.NAME
-					prop_default = 'PathLengthAv';
+					prop_default = 'Average Path Length';
 				case 3 % PathLengthAv.DESCRIPTION
-					prop_default = 'The average path length of a graph is the average of the sum of the path lengths within each layer.';
+					prop_default = 'The Average Path Length (PathLengthAv) of a graph is the average of the sum of the path lengths within each layer.';
 				case 4 % PathLengthAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthAv.getPropSettings(prop));
 				case 5 % PathLengthAv.ID

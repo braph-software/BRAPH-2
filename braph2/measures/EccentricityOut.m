@@ -1,25 +1,25 @@
 classdef EccentricityOut < Measure
-	%EccentricityOut is the graph out-eccentricity.
+	%EccentricityOut is the graph Out-Eccentricity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The in-eccentricity of a node is the maximal shortest out-path length 
+	% The Out-Eccentricity (EccentricityOut) of a node is the maximal shortest out-path length 
 	% between a node and any other node within a layer.
 	%
 	% The list of EccentricityOut properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-eccentricity.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-eccentricity.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-eccentricity.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-eccentricity.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-eccentricity.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-eccentricity.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-Eccentricity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-Eccentricity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-Eccentricity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-Eccentricity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Eccentricity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Eccentricity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Eccentricity.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the out-eccentricity.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Out-Eccentricity.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -127,20 +127,20 @@ classdef EccentricityOut < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EccentricityOut properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-eccentricity.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-eccentricity.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-eccentricity.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-eccentricity.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-eccentricity.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-eccentricity.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-Eccentricity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-Eccentricity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-Eccentricity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-Eccentricity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Eccentricity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Eccentricity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Eccentricity.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the out-eccentricity.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Out-Eccentricity.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -476,7 +476,7 @@ classdef EccentricityOut < Measure
 			prop = EccentricityOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			eccentricityout_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the out-eccentricity.'  'DESCRIPTION (constant, string) is the description of the out-eccentricity.'  'TEMPLATE (parameter, item) is the template of the out-eccentricity.'  'ID (data, string) is a few-letter code of the out-eccentricity.'  'LABEL (metadata, string) is an extended label of the out-eccentricity.'  'NOTES (metadata, string) are some specific notes about the out-eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the out-eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			eccentricityout_description_list = { 'ELCLASS (constant, string) is the class of the Out-Eccentricity.'  'NAME (constant, string) is the name of the Out-Eccentricity.'  'DESCRIPTION (constant, string) is the description of the Out-Eccentricity.'  'TEMPLATE (parameter, item) is the template of the Out-Eccentricity.'  'ID (data, string) is a few-letter code of the Out-Eccentricity.'  'LABEL (metadata, string) is an extended label of the Out-Eccentricity.'  'NOTES (metadata, string) are some specific notes about the Out-Eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Out-Eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = eccentricityout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -538,17 +538,17 @@ classdef EccentricityOut < Measure
 				case 1 % EccentricityOut.ELCLASS
 					prop_default = 'EccentricityOut';
 				case 2 % EccentricityOut.NAME
-					prop_default = 'EccentricityOut';
+					prop_default = 'Out-Eccentricity';
 				case 3 % EccentricityOut.DESCRIPTION
-					prop_default = 'The in-eccentricity of a node is the maximal shortest out-path length between a node and any other node within a layer.';
+					prop_default = 'The Out-Eccentricity (EccentricityOut) of a node is the maximal shortest out-path length between a node and any other node within a layer.';
 				case 4 % EccentricityOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, EccentricityOut.getPropSettings(prop));
 				case 5 % EccentricityOut.ID
 					prop_default = 'EccentricityOut ID';
 				case 6 % EccentricityOut.LABEL
-					prop_default = 'EccentricityOut label';
+					prop_default = 'Out-Eccentricity label';
 				case 7 % EccentricityOut.NOTES
-					prop_default = 'EccentricityOut notes';
+					prop_default = 'Out-Eccentricity notes';
 				case 9 % EccentricityOut.SHAPE
 					prop_default = 2;
 				case 10 % EccentricityOut.SCOPE

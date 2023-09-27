@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexCP < MultiRC (m, multiplex core-periphery) is the graph multiplex core-periphery.
+MultiplexCP < MultiRC (m, multiplex core-periphery) is the graph Multiplex Core-Periphery.
 
 %%% ¡description!
-The multiplex core-periphery of a node is the value of the rank corresponding 
+The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding 
  to the maximum multirichness nodes. It returns 1 for a node belonging to the 
  core and zero otherwise. The relevance of each layer is controlled by the 
  multirichness coefficients that are between 0 and 1, and add up to one; 
@@ -24,6 +24,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexCP.MULTIRICHNESS_COEFFICIENTS
+%%%% ¡title!
+Multirichness coefficients
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexCP.G
 %%%% ¡title!
 Graph
@@ -32,7 +38,7 @@ Graph
 %%%% ¡id!
 MultiplexCP.M
 %%%% ¡title!
-MultiplexCP
+Multiplex Core-Periphery
 
 %%% ¡prop!
 %%%% ¡id!
@@ -55,39 +61,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.
 %%%% ¡default!
 'MultiplexCP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex core-periphery.
+NAME (constant, string) is the name of the Multiplex Core-Periphery.
 %%%% ¡default!
-'MultiplexCorePeriphery'
+'Multiplex Core-Periphery'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex core-periphery.
+DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.
 %%%% ¡default!
-'The multiplex core-periphery of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).'
+'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex core-periphery.
+TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.
 %%%% ¡settings!
 'MultiplexCP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex core-periphery.
+ID (data, string) is a few-letter code of the Multiplex Core-Periphery.
 %%%% ¡default!
 'MultiplexCP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex core-periphery.
+LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.
 %%%% ¡default!
-'MultiplexCorePeriphery label'
+'Multiplex Core-Periphery label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex core-periphery.
+NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.
 %%%% ¡default!
-'MultiplexCorePeriphery notes'
+'Multiplex Core-Periphery notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.

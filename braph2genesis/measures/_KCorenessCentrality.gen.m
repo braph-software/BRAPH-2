@@ -1,46 +1,90 @@
 %% ¡header!
-KCorenessCentrality < Measure (m, kcorenesscentrality) is the graph kcorenesscentrality.
+KCorenessCentrality < Measure (m, k-coreness centrality) is the graph K-Coreness Centrality.
 
 %%% ¡description!
-The k-coreness centrality of a node is k if the node belongs to the k-core 
+The K-Coreness Centrality (KCorenessCentrality) of a node is k if the node belongs to the k-core 
 but not to the (k+1)-core.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.M
+%%%% ¡title!
+K-Coreness Centrality
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+KCorenessCentrality.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the K-Coreness Centrality.
 %%%% ¡default!
 'KCorenessCentrality'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the kcorenesscentrality.
+NAME (constant, string) is the name of the K-Coreness Centrality.
 %%%% ¡default!
-'KCorenessCentrality'
+'K-Coreness Centrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the kcorenesscentrality.
+DESCRIPTION (constant, string) is the description of the K-Coreness Centrality.
 %%%% ¡default!
-'The k-coreness centrality of a node is k if the node belongs to the k-core but not to the (k+1)-core.'
+'The K-Coreness Centrality (KCorenessCentrality) of a node is k if the node belongs to the k-core but not to the (k+1)-core.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the kcorenesscentrality.
+TEMPLATE (parameter, item) is the template of the K-Coreness Centrality.
 %%%% ¡settings!
 'KCorenessCentrality'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the kcorenesscentrality.
+ID (data, string) is a few-letter code of the K-Coreness Centrality.
 %%%% ¡default!
 'KCorenessCentrality ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the kcorenesscentrality.
+LABEL (metadata, string) is an extended label of the K-Coreness Centrality.
 %%%% ¡default!
-'KCorenessCentrality label'
+'K-Coreness Centrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the kcorenesscentrality.
+NOTES (metadata, string) are some specific notes about the K-Coreness Centrality.
 %%%% ¡default!
-'KCorenessCentrality notes'
+'K-Coreness Centrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'GraphWD' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexWD' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the kcorenesscentrality.
+M (result, cell) is the K-Coreness Centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

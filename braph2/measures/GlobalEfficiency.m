@@ -1,25 +1,25 @@
 classdef GlobalEfficiency < Distance
-	%GlobalEfficiency is the graph global efficiency.
+	%GlobalEfficiency is the graph Global Efficiency.
 	% It is a subclass of <a href="matlab:help Distance">Distance</a>.
 	%
-	% The global efficiency is the average inverse shortest path length within each layer. 
+	% The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. 
 	% It is inversely related to the characteristic path length.
 	%
 	% The list of GlobalEfficiency properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the global efficiency.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the global efficiency.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the global efficiency.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Global Efficiency.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Global Efficiency.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Global Efficiency.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Global Efficiency.
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the global efficiency.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the global efficiency.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Global Efficiency.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Global Efficiency.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the global efficiency.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Global Efficiency.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% GlobalEfficiency methods (constructor):
@@ -120,20 +120,20 @@ classdef GlobalEfficiency < Distance
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GlobalEfficiency properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the global efficiency.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the global efficiency.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the global efficiency.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Global Efficiency.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Global Efficiency.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Global Efficiency.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Global Efficiency.
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the global efficiency.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the global efficiency.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Global Efficiency.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Global Efficiency.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the global efficiency.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Global Efficiency.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef GlobalEfficiency < Distance
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			globalefficiency_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the global efficiency.'  'DESCRIPTION (constant, string) is the description of the global efficiency.'  'TEMPLATE (parameter, item) is the template of the global efficiency.'  'ID (data, string) is a few-letter code of the degree.'  'LABEL (metadata, string) is an extended label of the global efficiency.'  'NOTES (metadata, string) are some specific notes about the global efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			globalefficiency_description_list = { 'ELCLASS (constant, string) is the class of the Global Efficiency.'  'NAME (constant, string) is the name of the Global Efficiency.'  'DESCRIPTION (constant, string) is the description of the Global Efficiency.'  'TEMPLATE (parameter, item) is the template of the Global Efficiency.'  'ID (data, string) is a few-letter code of the degree.'  'LABEL (metadata, string) is an extended label of the Global Efficiency.'  'NOTES (metadata, string) are some specific notes about the Global Efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Global Efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = globalefficiency_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef GlobalEfficiency < Distance
 				case 1 % GlobalEfficiency.ELCLASS
 					prop_default = 'GlobalEfficiency';
 				case 2 % GlobalEfficiency.NAME
-					prop_default = 'GlobalEfficiency';
+					prop_default = 'Global Efficiency';
 				case 3 % GlobalEfficiency.DESCRIPTION
-					prop_default = 'The global efficiency is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.';
+					prop_default = 'The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.';
 				case 4 % GlobalEfficiency.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GlobalEfficiency.getPropSettings(prop));
 				case 5 % GlobalEfficiency.ID
 					prop_default = 'GlobalEfficiency ID';
 				case 6 % GlobalEfficiency.LABEL
-					prop_default = 'GlobalEfficiency label';
+					prop_default = 'Global Efficiency label';
 				case 7 % GlobalEfficiency.NOTES
-					prop_default = 'GlobalEfficiency notes';
+					prop_default = 'Global Efficiency notes';
 				case 9 % GlobalEfficiency.SHAPE
 					prop_default = 2;
 				case 10 % GlobalEfficiency.SCOPE

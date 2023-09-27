@@ -1414,17 +1414,21 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	    1  1  0  0  0;
 	    0  0  0  0  0
 	    ];
-	known_out_path_length_av = {Inf};
+	
+	known_out_path_length_av = {harmmean([1.3333 2 1.3333 1.6000 Inf])};
 	
 	g = GraphBD('B', B);
 	
 	m_outside_g = PathLengthOutAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+	known_out_path_length_av_round = cellfun(@(x) round(x, 3), known_out_path_length_av, 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 	
 	m_inside_g = g.get('MEASURE', 'PathLengthOutAv');
-	assert(isequal(m_inside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
@@ -1449,19 +1453,22 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	B = {B11 B22};
 	
 	known_out_path_length_av = {
-	                    Inf
-	                    Inf
-	                    };
+	    harmmean([1.3333 2 1.3333 1.6000 Inf])
+	    harmmean([1.3333 2 1.3333 1.6000 Inf])
+	    };
 	
 	g = MultiplexBD('B', B);
 	
 	m_outside_g = PathLengthOutAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+	known_out_path_length_av_round = cellfun(@(x) round(x, 3), known_out_path_length_av, 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 	
 	m_inside_g = g.get('MEASURE', 'PathLengthOutAv');
-	assert(isequal(m_inside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
@@ -1486,18 +1493,21 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	A = {A11  A22};
 	
 	known_out_path_length_av = {
-	                    Inf
-	                    Inf
-	                    };
+	    harmmean([1.3333 2 1.3333 1.6000 Inf])
+	    harmmean([1.3333 2 1.3333 1.6000 Inf])
+	    };
 	
 	g = OrdMxBD('B', A);
 	m_outside_g = PathLengthOutAv('G', g);
-	assert(isequal(m_outside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+	known_out_path_length_av_round = cellfun(@(x) round(x, 3), known_out_path_length_av, 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 	
 	m_inside_g = g.get('MEASURE', 'PathLengthOutAv');
-	assert(isequal(m_inside_g.get('M'), known_out_path_length_av), ...
+	pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+	assert(isequal(pl_answer, known_out_path_length_av_round), ...
 	    [BRAPH2.STR ':PathLengthOutAv:' BRAPH2.FAIL_TEST], ...
 	    [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 end

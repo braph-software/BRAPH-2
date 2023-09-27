@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexT < Measure (m, multiplex triangles) is the graph multiplex triangles.
+MultiplexT < Measure (m, multiplex triangles) is the graph Multiplex Triangles.
 
 %%% ¡description!
-The multiplex triangles are calculated as the number of neighbors of a node 
+The Multiplex Triangles (MultiplexT) are calculated as the number of neighbors of a node 
  that are also neighbors of each other between each pair of layers. 
 In weighted graphs, the multiplex triangles are calculated as geometric mean 
  of the weights of the edges forming the multiplex triangle.
@@ -31,7 +31,7 @@ Graph
 %%%% ¡id!
 MultiplexT.M
 %%%% ¡title!
-MultiplexT
+Multiplex Triangles
 
 %%% ¡prop!
 %%%% ¡id!
@@ -54,39 +54,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Triangles.
 %%%% ¡default!
 'MultiplexT'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex triangles.
+NAME (constant, string) is the name of the Multiplex Triangles.
 %%%% ¡default!
-'MultiplexTriangles'
+'Multiplex Triangles'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex triangles.
+DESCRIPTION (constant, string) is the description of the Multiplex Triangles.
 %%%% ¡default!
-'The multiplex triangles are calculated as the number of neighbors of a node that are also neighbors of each other between each pair of layers. In weighted graphs, the multiplex triangles are calculated as geometric mean of the weights of the edges forming the multiplex triangle.'
+'The Multiplex Triangles (MultiplexT) are calculated as the number of neighbors of a node that are also neighbors of each other between each pair of layers. In weighted graphs, the multiplex triangles are calculated as geometric mean of the weights of the edges forming the multiplex triangle.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex triangles.
+TEMPLATE (parameter, item) is the template of the Multiplex Triangles.
 %%%% ¡settings!
 'MultiplexT'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex triangles.
+ID (data, string) is a few-letter code of the Multiplex Triangles.
 %%%% ¡default!
 'MultiplexT ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex triangles.
+LABEL (metadata, string) is an extended label of the Multiplex Triangles.
 %%%% ¡default!
-'MultiplexTriangles label'
+'Multiplex Triangles label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex triangles.
+NOTES (metadata, string) are some specific notes about the Multiplex Triangles.
 %%%% ¡default!
-'MultiplexTriangles notes'
+'Multiplex Triangles notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -109,7 +109,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex triangles.
+M (result, cell) is the Multiplex Triangles.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

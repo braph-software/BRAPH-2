@@ -1,46 +1,90 @@
 %% ¡header!
-LocalEfficiencyAv < LocalEfficiency (m, average local efficiency) is the graph average local efficiency.
+LocalEfficiencyAv < LocalEfficiency (m, average local efficiency) is the graph Average Local Efficiency.
 
 %%% ¡description!
-The average local efficiency is the average of all the local efficiencies 
+The Average Local Efficiency (LocalEfficiencyAv) is the average of all the local efficiencies 
   within each layer.
+ 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.M
+%%%% ¡title!
+Average Local Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiencyAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Local Efficiency.
 %%%% ¡default!
 'LocalEfficiencyAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of theaverage local efficiency.
+NAME (constant, string) is the name of the Average Local Efficiency.
 %%%% ¡default!
-'LocalEfficiencyAv'
+'Average Local Efficiency'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of th eaverage local efficiency.
+DESCRIPTION (constant, string) is the description of the Average Local Efficiency.
 %%%% ¡default!
-'The average local efficiency is the average of all the local efficiencies within each layer.'
+'The Average Local Efficiency (LocalEfficiencyAv) is the average of all the local efficiencies within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average local efficiency.
+TEMPLATE (parameter, item) is the template of the Average Local Efficiency.
 %%%% ¡settings!
 'LocalEfficiencyAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of theaverage local efficiency.
+ID (data, string) is a few-letter code of the Average Local Efficiency.
 %%%% ¡default!
 'LocalEfficiencyAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average local efficiency.
+LABEL (metadata, string) is an extended label of the Average Local Efficiency.
 %%%% ¡default!
-'LocalEfficiencyAv label'
+'Average Local Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average local efficiency.
+NOTES (metadata, string) are some specific notes about the Average Local Efficiency.
 %%%% ¡default!
-'LocalEfficiencyAv notes'
+'Average Local Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the average local efficiency.
+M (result, cell) is the Average Local Efficiency.
 %%%% ¡calculate!
 local_efficiency = calculateValue@LocalEfficiency(m, prop);
 g = m.get('G');  % graph from measure class

@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexPIn < Measure (m, multiplex in-participation) is the graph multiplex in-participation.
+MultiplexPIn < Measure (m, multiplex in-participation) is the graph Multiplex In-Participation.
 
 %%% ¡description!
-The multiplex in-participation is the homogeneity of the number of inward 
+The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward 
 neighbours of a node across the layers.
  
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 MultiplexPIn.M
 %%%% ¡title!
-MultiplexPIn
+Multiplex In-Participation
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex In-Participation.
 %%%% ¡default!
 'MultiplexPIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex in-participation.
+NAME (constant, string) is the name of the Multiplex In-Participation.
 %%%% ¡default!
-'MultiplexInParticipation'
+'Multiplex In-Participation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex in-participation.
+DESCRIPTION (constant, string) is the description of the Multiplex In-Participation.
 %%%% ¡default!
-'The multiplex in-participation is the homogeneity of the number of inward neighbours of a node across the layers.'
+'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbours of a node across the layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex in-participation.
+TEMPLATE (parameter, item) is the template of the Multiplex In-Participation.
 %%%% ¡settings!
 'MultiplexPIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex in-participation.
+ID (data, string) is a few-letter code of the Multiplex In-Participation.
 %%%% ¡default!
 'MultiplexPIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex in-participation.
+LABEL (metadata, string) is an extended label of the Multiplex In-Participation.
 %%%% ¡default!
-'MultiplexInParticipation label'
+'Multiplex In-Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex in-participation.
+NOTES (metadata, string) are some specific notes about the Multiplex In-Participation.
 %%%% ¡default!
-'MultiplexInParticipation notes'
+'Multiplex In-Participation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexBD' 'MultiplexWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex in-participation.
+M (result, cell) is the Multiplex In-Participation.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 L = g.get('LAYERNUMBER');

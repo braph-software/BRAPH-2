@@ -1,24 +1,24 @@
 classdef Radius < Measure
-	%Radius is the graph radius.
+	%Radius is the graph Radius.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The radius is the minimum eccentricity among the vertice within a layer.
+	% The Radius is the minimum eccentricity among the vertice within a layer.
 	%
 	% The list of Radius properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the radius.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the radius.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the radius.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the radius.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the radius.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the radius.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Radius.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Radius.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Radius.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Radius.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Radius.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Radius.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Radius.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the radius.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Radius.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION) % calculation in a graph or its subgraph
 	%
@@ -126,20 +126,20 @@ classdef Radius < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Radius properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the radius.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the radius.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the radius.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the radius.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the radius.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the radius.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Radius.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Radius.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Radius.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Radius.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Radius.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Radius.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Radius.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the radius.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Radius.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION) % calculation in a graph or its subgraph
 			%
@@ -475,7 +475,7 @@ classdef Radius < Measure
 			prop = Radius.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			radius_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the radius.'  'DESCRIPTION (constant, string) is the description of the radius.'  'TEMPLATE (parameter, item) is the template of the radius.'  'ID (data, string) is a few-letter code of the radius.'  'LABEL (metadata, string) is an extended label of the radius.'  'NOTES (metadata, string) are some specific notes about the radius.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the radius.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION) % calculation in a graph or its subgraph' };
+			radius_description_list = { 'ELCLASS (constant, string) is the class of the Radius.'  'NAME (constant, string) is the name of the Radius.'  'DESCRIPTION (constant, string) is the description of the Radius.'  'TEMPLATE (parameter, item) is the template of the Radius.'  'ID (data, string) is a few-letter code of the Radius.'  'LABEL (metadata, string) is an extended label of the Radius.'  'NOTES (metadata, string) are some specific notes about the Radius.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Radius.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION) % calculation in a graph or its subgraph' };
 			prop_description = radius_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -539,7 +539,7 @@ classdef Radius < Measure
 				case 2 % Radius.NAME
 					prop_default = 'Radius';
 				case 3 % Radius.DESCRIPTION
-					prop_default = 'The radius is the minimum eccentricity among the vertice within a layer.';
+					prop_default = 'The Radius is the minimum eccentricity among the vertice within a layer.';
 				case 4 % Radius.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Radius.getPropSettings(prop));
 				case 5 % Radius.ID

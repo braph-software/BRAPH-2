@@ -1,29 +1,73 @@
 %% ¡header!
-GlobalEfficiency < Distance (m, global efficiency) is the graph global efficiency.
+GlobalEfficiency < Distance (m, global efficiency) is the graph Global Efficiency.
 
 %%% ¡description!
-The global efficiency is the average inverse shortest path length within each layer. 
+The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. 
 It is inversely related to the characteristic path length.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.M
+%%%% ¡title!
+Global Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiency.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiency'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the global efficiency.
+NAME (constant, string) is the name of the Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiency'
+'Global Efficiency'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the global efficiency.
+DESCRIPTION (constant, string) is the description of the Global Efficiency.
 %%%% ¡default!
-'The global efficiency is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.'
+'The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the global efficiency.
+TEMPLATE (parameter, item) is the template of the Global Efficiency.
 %%%% ¡settings!
 'GlobalEfficiency'
 
@@ -33,14 +77,14 @@ ID (data, string) is a few-letter code of the degree.
 'GlobalEfficiency ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the global efficiency.
+LABEL (metadata, string) is an extended label of the Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiency label'
+'Global Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the global efficiency.
+NOTES (metadata, string) are some specific notes about the Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiency notes'
+'Global Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'}
 
 %%% ¡prop!
-M (result, cell) is the global efficiency.
+M (result, cell) is the Global Efficiency.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

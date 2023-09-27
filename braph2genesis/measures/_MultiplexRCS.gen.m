@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexRCS < RCS (m, multi rich-club strength) is the graph multiplex rich-club strength.
+MultiplexRCS < RCS (m, multi rich-club strength) is the graph Multiplex Rich-Club Strength.
 
 %%% ¡description!
-The multi rich-club strength of a node at level s is the sum of the 
+The Multiplex Rich-Club Strength (MultiplexRCS) of a node at level s is the sum of the 
  weighted edges that connect nodes of strength s or higher in all layers. 
 The relevance of each layer is controlled by the coefficients c that are 
  between 0 and 1; the default coefficients are (1/layernumber).
@@ -23,6 +23,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+%%%% ¡title!
+Multiplex Rich-Club Strength coefficients
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexRCS.G
 %%%% ¡title!
 Graph
@@ -31,7 +37,7 @@ Graph
 %%%% ¡id!
 MultiplexRCS.M
 %%%% ¡title!
-MultiplexRCS
+Multiplex Rich-Club Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -54,39 +60,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.
 %%%% ¡default!
 'MultiplexRCS'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex rich-club strength.
+NAME (constant, string) is the name of the Multiplex Rich-Club Strength.
 %%%% ¡default!
-'MultiplexRichClubStrength'
+'Multiplex Rich-Club Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
+DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.
 %%%% ¡default!
-'The multi rich-club strength of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
+'The Multiplex Rich-Club Strength (MultiplexRCS) of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
+TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.
 %%%% ¡settings!
 'MultiplexRCS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex rich-club strength.
+ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.
 %%%% ¡default!
 'MultiplexRCS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
+LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.
 %%%% ¡default!
-'MultiplexRichClubStrength label'
+'Multiplex Rich-Club Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.
 %%%% ¡default!
-'MultiplexRichClubStrength notes'
+'Multiplex Rich-Club Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -109,7 +115,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex rich-club strength.
+M (result, cell) is the Multiplex Rich-Club Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

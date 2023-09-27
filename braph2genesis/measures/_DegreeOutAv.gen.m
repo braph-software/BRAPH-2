@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeOutAv < DegreeOut (m, average out-degree) is the graph average out-degree.
+DegreeOutAv < DegreeOut (m, average out-degree) is the graph Average Out-Degree.
 
 %%% ¡description!
-The average out-degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer. 
+The Average Out-Degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer. 
 
 %% ¡layout!
 
@@ -51,22 +51,22 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Out-Degree.
 %%%% ¡default!
 'DegreeOutAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average out-degree.
+NAME (constant, string) is the name of the Average Out-Degree.
 %%%% ¡default!
-'DegreeOutAv'
+'Average Out-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average out-degree.
+DESCRIPTION (constant, string) is the description of the Average Out-Degree.
 %%%% ¡default!
-'The average out-degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer.'
+'The Average Out-Degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average out-degree.
+TEMPLATE (parameter, item) is the template of the Average Out-Degree.
 %%%% ¡settings!
 'DegreeOutAv'
 
@@ -76,14 +76,14 @@ ID (data, string) is a few-letter code of the average out-degree.
 'DegreeOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average out-degree.
+LABEL (metadata, string) is an extended label of the Average Out-Degree.
 %%%% ¡default!
-'DegreeOutAv label'
+'Average Out-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average out-degree.
+NOTES (metadata, string) are some specific notes about the Average Out-Degree.
 %%%% ¡default!
-'DegreeOutAv notes'
+'Average Out-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -106,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the degree-outav.
+M (result, cell) is the cell containing the Average Out-Degree.
 %%%% ¡calculate!
 out_degree = calculateValue@DegreeOut(m, prop);	
 g = m.get('G'); % graph from measure class

@@ -1,47 +1,91 @@
 %% ¡header!
-EdgeBetwCentr < Measure (m, edge betweenness centrality) is the edge betweenness centrality.
+EdgeBetwCentr < Measure (m, edge betweenness centrality) is the Edge Betweenness Centrality.
 
 %%% ¡description!
-The edge betweenness centrality of a graph is the fraction of all shortest paths in the 
+The Edge Betweenness Centrality (EdgeBetwCentr) of a graph is the fraction of all shortest paths in the 
 graph that pass through a given edge within a layer. Edges with high values 
 of betweenness centrality participate in a large number of shortest paths.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.M
+%%%% ¡title!
+Edge Betweenness Centrality
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeBetwCentr.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Edge Betweenness Centrality.
 %%%% ¡default!
 'EdgeBetwCentr'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the edge betweenness centrality.
+NAME (constant, string) is the name of the Edge Betweenness Centrality.
 %%%% ¡default!
-'EdgeBetweennessCentrality'
+'Edge Betweenness Centrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the edge betweenness centrality.
+DESCRIPTION (constant, string) is the description of the Edge Betweenness Centrality.
 %%%% ¡default!
-'The edge betweenness centrality of a graph is the fraction of all shortest paths in the graph that pass through a given edge within a layer. Edges with high values of betweenness centrality participate in a large number of shortest paths.'
+'The Edge Betweenness Centrality (EdgeBetwCentr) of a graph is the fraction of all shortest paths in the graph that pass through a given edge within a layer. Edges with high values of betweenness centrality participate in a large number of shortest paths.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the edge betweenness centrality.
+TEMPLATE (parameter, item) is the template of the Edge Betweenness Centrality.
 %%%% ¡settings!
 'EdgeBetwCentr'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the edge betweenness centrality.
+ID (data, string) is a few-letter code of the Edge Betweenness Centrality.
 %%%% ¡default!
 'EdgeBetwCentr ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the edge betweenness centrality.
+LABEL (metadata, string) is an extended label of the Edge Betweenness Centrality.
 %%%% ¡default!
-'EdgeBetweennessCentrality label'
+'Edge Betweenness Centrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the edge betweenness centrality.
+NOTES (metadata, string) are some specific notes about the Edge Betweenness Centrality.
 %%%% ¡default!
-'EdgeBetweennessCentrality notes'
+'Edge Betweenness Centrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.BINODAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the edge betweenness centrality.
+M (result, cell) is the Edge Betweenness Centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

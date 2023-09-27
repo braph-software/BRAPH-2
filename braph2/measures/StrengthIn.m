@@ -1,26 +1,26 @@
 classdef StrengthIn < Measure
-	%StrengthIn is the graph in-strength.
+	%StrengthIn is the graph In-Strength.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The in-strength of a graph is the sum of all weights of the inward edges 
-	% connected to a node within a layer, i.e., it is the sum of the columns of 
-	% the adjacency matrix.
+	% The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges 
+	%  connected to a node within a layer, i.e., it is the sum of the columns of 
+	%  the adjacency matrix.
 	%
 	% The list of StrengthIn properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% StrengthIn methods (constructor):
@@ -121,20 +121,20 @@ classdef StrengthIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of StrengthIn properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -469,7 +469,7 @@ classdef StrengthIn < Measure
 			prop = StrengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			strengthin_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the in-strength.'  'DESCRIPTION (constant, string) is the description of the in-strength.'  'TEMPLATE (parameter, item) is the template of the in-strength.'  'ID (data, string) is a few-letter code of the in-strength.'  'LABEL (metadata, string) is an extended label of the in-strength.'  'NOTES (metadata, string) are some specific notes about the in-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the in-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			strengthin_description_list = { 'ELCLASS (constant, string) is the class of the In-Strength.'  'NAME (constant, string) is the name of the In-Strength.'  'DESCRIPTION (constant, string) is the description of the In-Strength.'  'TEMPLATE (parameter, item) is the template of the In-Strength.'  'ID (data, string) is a few-letter code of the In-Strength.'  'LABEL (metadata, string) is an extended label of the In-Strength.'  'NOTES (metadata, string) are some specific notes about the In-Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the In-Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = strengthin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,17 +527,17 @@ classdef StrengthIn < Measure
 				case 1 % StrengthIn.ELCLASS
 					prop_default = 'StrengthIn';
 				case 2 % StrengthIn.NAME
-					prop_default = 'StrengthIn';
+					prop_default = 'In-Strength';
 				case 3 % StrengthIn.DESCRIPTION
-					prop_default = 'The in-strength of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
+					prop_default = 'The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
 				case 4 % StrengthIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, StrengthIn.getPropSettings(prop));
 				case 5 % StrengthIn.ID
 					prop_default = 'StrengthIn ID';
 				case 6 % StrengthIn.LABEL
-					prop_default = 'StrengthIn label';
+					prop_default = 'In-Strength label';
 				case 7 % StrengthIn.NOTES
-					prop_default = 'StrengthIn notes';
+					prop_default = 'In-Strength notes';
 				case 9 % StrengthIn.SHAPE
 					prop_default = 2;
 				case 10 % StrengthIn.SCOPE

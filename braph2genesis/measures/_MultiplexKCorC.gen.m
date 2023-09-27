@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexKCorC < Measure (m, multiplex k-coreness centrality) is the graph multiplex k-coreness centrality.
+MultiplexKCorC < Measure (m, multiplex k-coreness centrality) is the graph Multiplex K-Coreness Centrality.
 
 %%% ¡description!
-The multiplex k-coreness centrality of a node is k if the node belongs to the k-core 
+The Multiplex K-Coreness Centrality (MultiplexKCorC) of a node is k if the node belongs to the k-core 
 but not to the (k+1)-core.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 MultiplexKCorC.M
 %%%% ¡title!
-MultiplexKCorC
+Multiplex K-Coreness Centrality
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex K-Coreness Centrality.
 %%%% ¡default!
 'MultiplexKCorC'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex k-coreness centrality.
+NAME (constant, string) is the name of the Multiplex K-Coreness Centrality.
 %%%% ¡default!
-'MultiplexKCorenessCentrality'
+'Multiplex K-Coreness Centrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex k-coreness centrality.
+DESCRIPTION (constant, string) is the description of the Multiplex K-Coreness Centrality.
 %%%% ¡default!
-'The multiplex k-coreness centrality of a node is k if the node belongs to the k-core but not to the (k+1)-core.'
+'The Multiplex K-Coreness Centrality (MultiplexKCorC) of a node is k if the node belongs to the k-core but not to the (k+1)-core.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex k-coreness centrality.
+TEMPLATE (parameter, item) is the template of the Multiplex K-Coreness Centrality.
 %%%% ¡settings!
 'MultiplexKCorC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex k-coreness centrality.
+ID (data, string) is a few-letter code of the Multiplex K-Coreness Centrality.
 %%%% ¡default!
 'MultiplexKCorC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex k-coreness centrality.
+LABEL (metadata, string) is an extended label of the Multiplex K-Coreness Centrality.
 %%%% ¡default!
-'MultiplexKCorenessCentrality label'
+'Multiplex K-Coreness Centrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex k-coreness centrality.
+NOTES (metadata, string) are some specific notes about the Multiplex K-Coreness Centrality.
 %%%% ¡default!
-'MultiplexKCorenessCentrality notes'
+'Multiplex K-Coreness Centrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex k-coreness centrality.
+M (result, cell) is the Multiplex K-Coreness Centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

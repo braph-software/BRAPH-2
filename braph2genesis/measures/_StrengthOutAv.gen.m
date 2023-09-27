@@ -1,47 +1,91 @@
 %% ¡header!
-StrengthOutAv < StrengthOut (m, average out-strength) is the graph average out-strength.
+StrengthOutAv < StrengthOut (m, average out-strength) is the graph Average Out-Strength.
 
 %%% ¡description!
-The average out-strength of a graph is the mean of the sum of all weights of the outward edges 
+The Average Out-Strength (StrengthOutAv) of a graph is the mean of the sum of all weights of the outward edges 
 connected to a node within a layer, i.e., it is the sum of the rows of 
 the adjacency matrix. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.M
+%%%% ¡title!
+Average Out-Strength
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthOutAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Out-Strength.
 %%%% ¡default!
 'StrengthOutAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the out-strength.
+NAME (constant, string) is the name of the Average Out-Strength.
 %%%% ¡default!
-'StrengthOutAv'
+'Average Out-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the out-strength.
+DESCRIPTION (constant, string) is the description of the Average Out-Strength.
 %%%% ¡default!
-'The average out-strength of a graph is the mean of the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.'
+'The Average Out-Strength (StrengthOutAv) of a graph is the mean of the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the out-strength.
+TEMPLATE (parameter, item) is the template of the Average Out-Strength.
 %%%% ¡settings!
 'StrengthOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the out-strength.
+ID (data, string) is a few-letter code of the Average Out-Strength.
 %%%% ¡default!
 'StrengthOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the out-strength.
+LABEL (metadata, string) is an extended label of the Average Out-Strength.
 %%%% ¡default!
-'StrengthOutAv label'
+'Average Out-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the out-strength.
+NOTES (metadata, string) are some specific notes about the Average Out-Strength.
 %%%% ¡default!
-'StrengthOutAv notes'
+'Average Out-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
-M (result, cell) is the out-strength.
+M (result, cell) is the Average Out-Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 out_strength = calculateValue@StrengthOut(m, prop);

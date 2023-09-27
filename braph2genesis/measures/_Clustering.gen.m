@@ -1,8 +1,8 @@
 %% ¡header!
-Clustering < Triangles (m, clustering) is the graph clustering.
+Clustering < Triangles (m, clustering) is the graph Clustering.
 
 %%% ¡description!
-The clustering coefficient (Clustering) of a node is the fraction of triangles present 
+The Clustering coefficient (Clustering) of a node is the fraction of triangles present 
 around a node. The clustering coefficient is calculated as the ratio between 
 the number of triangles present around a node and the maximum number of 
 triangles that could possibly be formed around that node.
@@ -60,37 +60,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Clustering.
 %%%% ¡default!
 'Clustering'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the clustering.
+NAME (constant, string) is the name of the Clustering.
 %%%% ¡default!
 'Clustering'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the clustering.
+DESCRIPTION (constant, string) is the description of the Clustering.
 %%%% ¡default!
-'The clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.'
+'The Clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the clustering.
+TEMPLATE (parameter, item) is the template of the Clustering.
 %%%% ¡settings!
 'Clustering'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the clustering.
+ID (data, string) is a few-letter code of the Clustering.
 %%%% ¡default!
 'Clustering ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the clustering.
+LABEL (metadata, string) is an extended label of the Clustering.
 %%%% ¡default!
 'Clustering label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the clustering.
+NOTES (metadata, string) are some specific notes about the Clustering.
 %%%% ¡default!
 'Clustering notes'
 
@@ -115,7 +115,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the clustering value.
+M (result, cell) is the cell containing the Clustering value.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 

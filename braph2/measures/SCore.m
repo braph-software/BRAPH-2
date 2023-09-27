@@ -1,25 +1,25 @@
 classdef SCore < Measure
-	%SCore is the score.
+	%SCore is the S-Core.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The s-core of a graph is the largest subnetwork comprising nodes of strength 
+	% The S-Core (SCore) of a graph is the largest subnetwork comprising nodes of strength 
 	%   s or higher. s is set by the user; the default value is equal to 1.
 	%
 	% The list of SCore properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the score.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the score.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the score.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the score.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the score.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the score.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the S-Core.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the S-Core.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the S-Core.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the S-Core.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the S-Core.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the S-Core.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the S-Core.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the score.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the S-Core.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>SCORETHRESHOLD</strong> 	SCORETHRESHOLD (parameter, scalar) is the strength threshold.
 	%
@@ -127,20 +127,20 @@ classdef SCore < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of SCore properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the score.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the score.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the score.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the score.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the score.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the score.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the S-Core.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the S-Core.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the S-Core.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the S-Core.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the S-Core.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the S-Core.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the S-Core.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the score.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the S-Core.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>SCORETHRESHOLD</strong> 	SCORETHRESHOLD (parameter, scalar) is the strength threshold.
 			%
@@ -476,7 +476,7 @@ classdef SCore < Measure
 			prop = SCore.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			score_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the score.'  'DESCRIPTION (constant, string) is the description of the score.'  'TEMPLATE (parameter, item) is the template of the score.'  'ID (data, string) is a few-letter code of the score.'  'LABEL (metadata, string) is an extended label of the score.'  'NOTES (metadata, string) are some specific notes about the score.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the score.'  'PFM (gui, item) contains the panel figure of the measure.'  'SCORETHRESHOLD (parameter, scalar) is the strength threshold.' };
+			score_description_list = { 'ELCLASS (constant, string) is the class of the S-Core.'  'NAME (constant, string) is the name of the S-Core.'  'DESCRIPTION (constant, string) is the description of the S-Core.'  'TEMPLATE (parameter, item) is the template of the S-Core.'  'ID (data, string) is a few-letter code of the S-Core.'  'LABEL (metadata, string) is an extended label of the S-Core.'  'NOTES (metadata, string) are some specific notes about the S-Core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the S-Core.'  'PFM (gui, item) contains the panel figure of the measure.'  'SCORETHRESHOLD (parameter, scalar) is the strength threshold.' };
 			prop_description = score_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -538,17 +538,17 @@ classdef SCore < Measure
 				case 1 % SCore.ELCLASS
 					prop_default = 'SCore';
 				case 2 % SCore.NAME
-					prop_default = 'SCore';
+					prop_default = 'S-Core';
 				case 3 % SCore.DESCRIPTION
-					prop_default = 'The s-core of a graph is the largest subnetwork comprising nodes of strength s or higher. s is set by the user; the default value is equal to 1.';
+					prop_default = 'The S-Core (SCore) of a graph is the largest subnetwork comprising nodes of strength s or higher. s is set by the user; the default value is equal to 1.';
 				case 4 % SCore.TEMPLATE
 					prop_default = Format.getFormatDefault(8, SCore.getPropSettings(prop));
 				case 5 % SCore.ID
 					prop_default = 'SCore ID';
 				case 6 % SCore.LABEL
-					prop_default = 'SCore label';
+					prop_default = 'S-Core label';
 				case 7 % SCore.NOTES
-					prop_default = 'SCore notes';
+					prop_default = 'S-Core notes';
 				case 9 % SCore.SHAPE
 					prop_default = 3;
 				case 10 % SCore.SCOPE

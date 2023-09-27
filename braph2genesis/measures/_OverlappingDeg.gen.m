@@ -1,5 +1,5 @@
 %% ¡header!
-OverlappingDeg < Degree (m, ovrlapdeg) is the graph overlapping degree.
+OverlappingDeg < Degree (m, ovrlapdeg) is the graph Overlapping Degree.
 
 %%% ¡description!
 The Overlapping Degree (OverlappingDeg) of a graph is the sum of the 
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingDeg.M
 %%%% ¡title!
-OverlappingDeg
+Overlapping Degree
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the overlapping degree.
+ELCLASS (constant, string) is the class of the Overlapping Degree.
 %%%% ¡default!
 'OverlappingDeg'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping degree.
+NAME (constant, string) is the name of the Overlapping Degree.
 %%%% ¡default!
 'Overlapping Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping degree.
+DESCRIPTION (constant, string) is the description of the Overlapping Degree.
 %%%% ¡default!
 'The Overlapping Degree (OverlappingDeg) of a graph is the sum of the degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping degree.
+TEMPLATE (parameter, item) is the template of the Overlapping Degree.
 %%%% ¡settings!
 'OverlappingDeg'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping degree.
+ID (data, string) is a few-letter code of the Overlapping Degree.
 %%%% ¡default!
 'OverlappingDeg ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping degree.
+LABEL (metadata, string) is an extended label of the Overlapping Degree.
 %%%% ¡default!
-'OverlappingDegree label'
+'Overlapping Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping degree.
+NOTES (metadata, string) are some specific notes about the Overlapping Degree.
 %%%% ¡default!
-'OverlappingDegree notes'
+'Overlapping Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU' 'MultilayerBU'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping degree.
+M (result, cell) is the Overlapping Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

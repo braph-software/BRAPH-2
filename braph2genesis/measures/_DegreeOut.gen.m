@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeOut < Measure (m, out-degree) is the graph out-degree.
+DegreeOut < Measure (m, out-degree) is the graph Out-Degree.
 
 %%% ¡description!
-The out-degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. 
+The Out-Degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Out-Degree.
 %%%% ¡default!
 'DegreeOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the out-degree.
+NAME (constant, string) is the name of the Out-Degree.
 %%%% ¡default!
-'DegreeOut'
+'Out-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the out-degree.
+DESCRIPTION (constant, string) is the description of the Out-Degree.
 %%%% ¡default!
-'The out-degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. Connection weights are ignored in calculations.'
+'The Out-Degree (DegreeOut) of a node is the number of outward edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the out-degree.
+TEMPLATE (parameter, item) is the template of the Out-Degree.
 %%%% ¡settings!
 'DegreeOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the out-degree.
+ID (data, string) is a few-letter code of the Out-Degree.
 %%%% ¡default!
 'DegreeOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the out-degree.
+LABEL (metadata, string) is an extended label of the Out-Degree.
 %%%% ¡default!
-'DegreeOut label'
+'Out-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the out-degree.
+NOTES (metadata, string) are some specific notes about the Out-Degree.
 %%%% ¡default!
-'DegreeOut notes'
+'Out-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the degree-out value.
+M (result, cell) is the cell containing the Out-Degree value.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

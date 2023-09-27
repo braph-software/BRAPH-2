@@ -1,47 +1,91 @@
 %% ¡header!
-StrengthIn < Measure (m, in-strength) is the graph in-strength.
+StrengthIn < Measure (m, in-strength) is the graph In-Strength.
 
 %%% ¡description!
-The in-strength of a graph is the sum of all weights of the inward edges 
-connected to a node within a layer, i.e., it is the sum of the columns of 
-the adjacency matrix. 
+The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges 
+ connected to a node within a layer, i.e., it is the sum of the columns of 
+ the adjacency matrix. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.M
+%%%% ¡title!
+In-Strength
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+StrengthIn.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the In-Strength.
 %%%% ¡default!
 'StrengthIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the in-strength.
+NAME (constant, string) is the name of the In-Strength.
 %%%% ¡default!
-'StrengthIn'
+'In-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-strength.
+DESCRIPTION (constant, string) is the description of the In-Strength.
 %%%% ¡default!
-'The in-strength of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.'
+'The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-strength.
+TEMPLATE (parameter, item) is the template of the In-Strength.
 %%%% ¡settings!
 'StrengthIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-strength.
+ID (data, string) is a few-letter code of the In-Strength.
 %%%% ¡default!
 'StrengthIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-strength.
+LABEL (metadata, string) is an extended label of the In-Strength.
 %%%% ¡default!
-'StrengthIn label'
+'In-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-strength.
+NOTES (metadata, string) are some specific notes about the In-Strength.
 %%%% ¡default!
-'StrengthIn notes'
+'In-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
-M (result, cell) is the in-strength.
+M (result, cell) is the In-Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

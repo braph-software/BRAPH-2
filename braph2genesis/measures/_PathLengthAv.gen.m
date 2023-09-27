@@ -1,26 +1,76 @@
 %% ¡header!
-PathLengthAv < PathLength (m, average path length) is the graph average path length.
+PathLengthAv < PathLength (m, average path length) is the graph Average Path Length.
 
 %%% ¡description!
-The average path length of a graph is the average of the sum of 
-the path lengths within each layer.
+The Average Path Length (PathLengthAv) of a graph is the average of the sum of 
+ the path lengths within each layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.RULE
+%%%% ¡title!
+Path Length rule
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.M
+%%%% ¡title!
+Average Path Length
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graph
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Path Length.
 %%%% ¡default!
 'PathLengthAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average path length.
+NAME (constant, string) is the name of the Average Path Length.
 %%%% ¡default!
-'PathLengthAv'
+'Average Path Length'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average path length.
+DESCRIPTION (constant, string) is the description of the Average Path Length.
 %%%% ¡default!
-'The average path length of a graph is the average of the sum of the path lengths within each layer.'
+'The Average Path Length (PathLengthAv) of a graph is the average of the sum of the path lengths within each layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the average path length.

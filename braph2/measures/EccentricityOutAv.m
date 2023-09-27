@@ -1,25 +1,25 @@
 classdef EccentricityOutAv < EccentricityOut
-	%EccentricityOutAv is the graph average out-eccentricity.
+	%EccentricityOutAv is the graph Average Out-Eccentricity.
 	% It is a subclass of <a href="matlab:help EccentricityOut">EccentricityOut</a>.
 	%
-	% The average out-eccentricity of a node is the sum of the nodal 
+	% The Average Out-Eccentricity (EccentricityOutAv) of a node is the sum of the nodal 
 	% out-eccentricities divided by their number within a layer.
 	%
 	% The list of EccentricityOutAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-eccentricity.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-eccentricity.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-eccentricity.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-eccentricity.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-eccentricity.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-eccentricity.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Eccentricity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Eccentricity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Eccentricity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Eccentricity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Eccentricity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Eccentricity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Eccentricity.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average out-eccentricity.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Out-Eccentricity.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -121,20 +121,20 @@ classdef EccentricityOutAv < EccentricityOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EccentricityOutAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average out-eccentricity.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average out-eccentricity.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average out-eccentricity.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average out-eccentricity.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average out-eccentricity.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average out-eccentricity.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Eccentricity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Eccentricity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Eccentricity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Eccentricity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Eccentricity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Eccentricity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Eccentricity.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average out-eccentricity.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Out-Eccentricity.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -470,7 +470,7 @@ classdef EccentricityOutAv < EccentricityOut
 			prop = EccentricityOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			eccentricityoutav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average out-eccentricity.'  'DESCRIPTION (constant, string) is the description of the average out-eccentricity.'  'TEMPLATE (parameter, item) is the template of the average out-eccentricity.'  'ID (data, string) is a few-letter code of the average out-eccentricity.'  'LABEL (metadata, string) is an extended label of the average out-eccentricity.'  'NOTES (metadata, string) are some specific notes about the average out-eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average out-eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			eccentricityoutav_description_list = { 'ELCLASS (constant, string) is the class of the Average Out-Eccentricity.'  'NAME (constant, string) is the name of the Average Out-Eccentricity.'  'DESCRIPTION (constant, string) is the description of the Average Out-Eccentricity.'  'TEMPLATE (parameter, item) is the template of the Average Out-Eccentricity.'  'ID (data, string) is a few-letter code of the Average Out-Eccentricity.'  'LABEL (metadata, string) is an extended label of the Average Out-Eccentricity.'  'NOTES (metadata, string) are some specific notes about the Average Out-Eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Out-Eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = eccentricityoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,17 +528,17 @@ classdef EccentricityOutAv < EccentricityOut
 				case 1 % EccentricityOutAv.ELCLASS
 					prop_default = 'EccentricityOutAv';
 				case 2 % EccentricityOutAv.NAME
-					prop_default = 'EccentricityOutAv';
+					prop_default = 'Average Out-Eccentricity';
 				case 3 % EccentricityOutAv.DESCRIPTION
-					prop_default = 'The average out-eccentricity of a node is the sum of the nodal out-eccentricities divided by their number within a layer.';
+					prop_default = 'The Average Out-Eccentricity (EccentricityOutAv) of a node is the sum of the nodal out-eccentricities divided by their number within a layer.';
 				case 4 % EccentricityOutAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, EccentricityOutAv.getPropSettings(prop));
 				case 5 % EccentricityOutAv.ID
 					prop_default = 'EccentricityOutAv ID';
 				case 6 % EccentricityOutAv.LABEL
-					prop_default = 'EccentricityOutAv label';
+					prop_default = 'Average Out-Eccentricity label';
 				case 7 % EccentricityOutAv.NOTES
-					prop_default = 'EccentricityOutAv notes';
+					prop_default = 'Average Out-Eccentricity notes';
 				case 9 % EccentricityOutAv.SHAPE
 					prop_default = 1;
 				case 10 % EccentricityOutAv.SCOPE

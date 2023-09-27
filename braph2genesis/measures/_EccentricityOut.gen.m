@@ -1,46 +1,96 @@
 %% ¡header!
-EccentricityOut < Measure (m, out-eccentricity) is the graph out-eccentricity.
+EccentricityOut < Measure (m, out-eccentricity) is the graph Out-Eccentricity.
 
 %%% ¡description!
-The in-eccentricity of a node is the maximal shortest out-path length 
+The Out-Eccentricity (EccentricityOut) of a node is the maximal shortest out-path length 
 between a node and any other node within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.RULE
+%%%% ¡title!
+Out-Eccentricity rule for calculation in a graph or its subgraph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.M
+%%%% ¡title!
+Out-Eccentricity
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOut.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Out-Eccentricity.
 %%%% ¡default!
 'EccentricityOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the out-eccentricity.
+NAME (constant, string) is the name of the Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOut'
+'Out-Eccentricity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the out-eccentricity.
+DESCRIPTION (constant, string) is the description of the Out-Eccentricity.
 %%%% ¡default!
-'The in-eccentricity of a node is the maximal shortest out-path length between a node and any other node within a layer.'
+'The Out-Eccentricity (EccentricityOut) of a node is the maximal shortest out-path length between a node and any other node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the out-eccentricity.
+TEMPLATE (parameter, item) is the template of the Out-Eccentricity.
 %%%% ¡settings!
 'EccentricityOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the out-eccentricity.
+ID (data, string) is a few-letter code of the Out-Eccentricity.
 %%%% ¡default!
 'EccentricityOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the out-eccentricity.
+LABEL (metadata, string) is an extended label of the Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOut label'
+'Out-Eccentricity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the out-eccentricity.
+NOTES (metadata, string) are some specific notes about the Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOut notes'
+'Out-Eccentricity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'} ;
 
 %%% ¡prop!
-M (result, cell) is the out-eccentricity.
+M (result, cell) is the Out-Eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

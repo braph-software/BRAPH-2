@@ -1,8 +1,8 @@
 %% ¡header!
-MultiRC < Richness (m, multirichness) is the graph multirichness.
+MultiRC < Richness (m, multirichness) is the graph Multirichness.
 
 %%% ¡description!
-The multirichness of a node is the sum of the edges that connect nodes 
+The Multirichness (MultiRC) of a node is the sum of the edges that connect nodes 
  of degree k or higher in all layers. The relevance of each layer is 
  controlled by the coefficients c that are between 0 and 1; 
  the default coefficients are (1/layernumber).
@@ -23,6 +23,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+MultiRC.MULTIRICHNESS_COEFFICIENTS
+%%%% ¡title!
+Multirichness coefficients
+
+%%% ¡prop!
+%%%% ¡id!
 MultiRC.G
 %%%% ¡title!
 Graph
@@ -31,7 +37,7 @@ Graph
 %%%% ¡id!
 MultiRC.M
 %%%% ¡title!
-MultiRC
+Multirichness
 
 %%% ¡prop!
 %%%% ¡id!
@@ -54,19 +60,19 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multirichness.
 %%%% ¡default!
 'MultiRC'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multirichness.
+NAME (constant, string) is the name of the Multirichness.
 %%%% ¡default!
 'Multirichness'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multirichness.
+DESCRIPTION (constant, string) is the description of the Multirichness.
 %%%% ¡default!
-'The multirichness of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
+'The Multirichness (MultiRC) of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multirichness.
@@ -74,17 +80,17 @@ TEMPLATE (parameter, item) is the template of the multirichness.
 'MultiRC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multirichness.
+ID (data, string) is a few-letter code of the Multirichness.
 %%%% ¡default!
 'MultiRC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multirichness.
+LABEL (metadata, string) is an extended label of the Multirichness.
 %%%% ¡default!
 'Multirichness label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multirichness.
+NOTES (metadata, string) are some specific notes about the Multirichness.
 %%%% ¡default!
 'Multirichness notes'
 
@@ -109,7 +115,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multirichness.
+M (result, cell) is the Multirichness.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

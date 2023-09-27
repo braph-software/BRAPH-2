@@ -1,25 +1,25 @@
 classdef MultiplexPAv < MultiplexP
-	%MultiplexPAv is the graph average multiplex participation.
+	%MultiplexPAv is the graph Average Multiplex Participation.
 	% It is a subclass of <a href="matlab:help MultiplexP">MultiplexP</a>.
 	%
-	% The average multiplex participation of a graph is the average homogeneity 
+	% The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity 
 	%    of its number of neighbours across the layers.
 	%
 	% The list of MultiplexPAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex participation.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex participation.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex participation.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex participation.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex participation.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex participation.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Multiplex Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Multiplex Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Multiplex Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Multiplex Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Multiplex Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Multiplex Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Multiplex Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average multiplex participation.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Multiplex Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% MultiplexPAv methods (constructor):
@@ -120,20 +120,20 @@ classdef MultiplexPAv < MultiplexP
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexPAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average multiplex participation.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average multiplex participation.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average multiplex participation.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average multiplex participation.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average multiplex participation.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average multiplex participation.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Multiplex Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Multiplex Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Multiplex Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Multiplex Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Multiplex Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Multiplex Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Multiplex Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average multiplex participation.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Multiplex Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef MultiplexPAv < MultiplexP
 			prop = MultiplexPAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average multiplex participation.'  'DESCRIPTION (constant, string) is the description of the average multiplex participation.'  'TEMPLATE (parameter, item) is the template of the average multiplex participation.'  'ID (data, string) is a few-letter code of the average multiplex participation.'  'LABEL (metadata, string) is an extended label of the average multiplex participation.'  'NOTES (metadata, string) are some specific notes about the average multiplex participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average multiplex participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			multiplexpav_description_list = { 'ELCLASS (constant, string) is the class of the Average Multiplex Participation.'  'NAME (constant, string) is the name of the Average Multiplex Participation.'  'DESCRIPTION (constant, string) is the description of the Average Multiplex Participation.'  'TEMPLATE (parameter, item) is the template of the Average Multiplex Participation.'  'ID (data, string) is a few-letter code of the Average Multiplex Participation.'  'LABEL (metadata, string) is an extended label of the Average Multiplex Participation.'  'NOTES (metadata, string) are some specific notes about the Average Multiplex Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Multiplex Participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = multiplexpav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef MultiplexPAv < MultiplexP
 				case 1 % MultiplexPAv.ELCLASS
 					prop_default = 'MultiplexPAv';
 				case 2 % MultiplexPAv.NAME
-					prop_default = 'MultiplexParticipationAv';
+					prop_default = 'Average Multiplex Participation';
 				case 3 % MultiplexPAv.DESCRIPTION
-					prop_default = 'The average multiplex participation of a graph is the average homogeneity of its number of neighbours across the layers.';
+					prop_default = 'The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity of its number of neighbours across the layers.';
 				case 4 % MultiplexPAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPAv.getPropSettings(prop));
 				case 5 % MultiplexPAv.ID
 					prop_default = 'MultiplexPAv ID';
 				case 6 % MultiplexPAv.LABEL
-					prop_default = 'MultiplexParticipationAv label';
+					prop_default = 'Average Multiplex Participation label';
 				case 7 % MultiplexPAv.NOTES
-					prop_default = 'MultiplexParticipationAv notes';
+					prop_default = 'Average Multiplex Participation notes';
 				case 9 % MultiplexPAv.SHAPE
 					prop_default = 1;
 				case 10 % MultiplexPAv.SCOPE

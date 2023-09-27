@@ -1,24 +1,24 @@
 classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
-	%GlobalEfficiencyInAv is the average graph in-global efficiency.
+	%GlobalEfficiencyInAv is the graph Average In-Global Efficiency.
 	% It is a subclass of <a href="matlab:help GlobalEfficiencyIn">GlobalEfficiencyIn</a>.
 	%
-	% The average in-global efficiency is the average inverse shortest in-path length within each layer.
+	% The Average In-Global Efficiency (GlobalEfficiencyInAv) is the average inverse shortest in-path length within each layer.
 	%
 	% The list of GlobalEfficiencyInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-global efficiency.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average graph in-global efficiency.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average graph in-global efficiency.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average graph in-global efficiency.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average graph in-global efficiency.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average graph in-global efficiency.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph Average In-Global Efficiency.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph Average In-Global Efficiency.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph Average In-Global Efficiency.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph Average In-Global Efficiency.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the graph Average In-Global Efficiency.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph Average In-Global Efficiency.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph Average In-Global Efficiency.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average in-global efficiency.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average In-Global Efficiency.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% GlobalEfficiencyInAv methods (constructor):
@@ -119,20 +119,20 @@ classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of GlobalEfficiencyInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-global efficiency.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average graph in-global efficiency.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average graph in-global efficiency.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average graph in-global efficiency.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average graph in-global efficiency.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average graph in-global efficiency.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph Average In-Global Efficiency.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph Average In-Global Efficiency.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph Average In-Global Efficiency.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph Average In-Global Efficiency.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the graph Average In-Global Efficiency.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph Average In-Global Efficiency.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph Average In-Global Efficiency.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average in-global efficiency.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average In-Global Efficiency.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -467,7 +467,7 @@ classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
 			prop = GlobalEfficiencyInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			globalefficiencyinav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average in-global efficiency.'  'DESCRIPTION (constant, string) is the description of the average graph in-global efficiency.'  'TEMPLATE (parameter, item) is the template of the average graph in-global efficiency.'  'ID (data, string) is a few-letter code of the average graph in-global efficiency.'  'LABEL (metadata, string) is an extended label of the average graph in-global efficiency.'  'NOTES (metadata, string) are some specific notes about the average graph in-global efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average in-global efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			globalefficiencyinav_description_list = { 'ELCLASS (constant, string) is the class of the graph Average In-Global Efficiency.'  'NAME (constant, string) is the name of the graph Average In-Global Efficiency.'  'DESCRIPTION (constant, string) is the description of the graph Average In-Global Efficiency.'  'TEMPLATE (parameter, item) is the template of the graph Average In-Global Efficiency.'  'ID (data, string) is a few-letter code of the graph Average In-Global Efficiency.'  'LABEL (metadata, string) is an extended label of the graph Average In-Global Efficiency.'  'NOTES (metadata, string) are some specific notes about the graph Average In-Global Efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average In-Global Efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = globalefficiencyinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,15 +527,15 @@ classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
 				case 2 % GlobalEfficiencyInAv.NAME
 					prop_default = 'GlobalEfficiencyInAv';
 				case 3 % GlobalEfficiencyInAv.DESCRIPTION
-					prop_default = 'The average in-global efficiency is the average inverse shortest in-path length within each layer.';
+					prop_default = 'The Average In-Global Efficiency (GlobalEfficiencyInAv) is the average inverse shortest in-path length within each layer.';
 				case 4 % GlobalEfficiencyInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, GlobalEfficiencyInAv.getPropSettings(prop));
 				case 5 % GlobalEfficiencyInAv.ID
 					prop_default = 'GlobalEfficiencyInAv ID';
 				case 6 % GlobalEfficiencyInAv.LABEL
-					prop_default = 'GlobalEfficiencyInAv label';
+					prop_default = 'Average In-Global Efficiency label';
 				case 7 % GlobalEfficiencyInAv.NOTES
-					prop_default = 'GlobalEfficiencyInAv notes';
+					prop_default = 'Average In-Global Efficiency notes';
 				case 9 % GlobalEfficiencyInAv.SHAPE
 					prop_default = 1;
 				case 10 % GlobalEfficiencyInAv.SCOPE

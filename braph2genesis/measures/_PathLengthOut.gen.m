@@ -1,45 +1,95 @@
 %% ¡header!
-PathLengthOut < Measure (m, out-path length) is the graph out-path length.
+PathLengthOut < Measure (m, out-path length) is the graph Out-Path Length.
 
 %%% ¡description!
-The out-path length is the average shortest out-path lengths of one node to all other nodes without a layer.
+The Out-Path Length (PathLengthOut) is the average shortest out-path lengths of one node to all other nodes without a layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.RULE
+%%%% ¡title!
+Out-Path Length rule
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.M
+%%%% ¡title!
+Out-Path Length
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthOut.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graph
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Out-Path Length.
 %%%% ¡default!
 'PathLengthOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the out-path length.
+NAME (constant, string) is the name of the Out-Path Length.
 %%%% ¡default!
-'PathLengthOut'
+'Out-Path Length'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the out-path length.
+DESCRIPTION (constant, string) is the description of the Out-Path Length.
 %%%% ¡default!
-'The out-path length is the average shortest out-path length of one node to all other nodes within a layer.'
+'The Out-Path Length (PathLengthOut) is the average shortest out-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the out-path length.
+TEMPLATE (parameter, item) is the template of the Out-Path Length.
 %%%% ¡settings!
 'PathLengthOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the out-path length.
+ID (data, string) is a few-letter code of the Out-Path Length.
 %%%% ¡default!
 'PathLengthOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the out-path length.
+LABEL (metadata, string) is an extended label of the Out-Path Length.
 %%%% ¡default!
-'PathLengthOut label'
+'Out-Path Length label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the out-path length.
+NOTES (metadata, string) are some specific notes about the Out-Path Length.
 %%%% ¡default!
-'PathLengthOut notes'
+'Out-Path Length notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -62,7 +112,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMxBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the out-path length.
+M (result, cell) is the cell containing the Out-Path Length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -81,19 +131,19 @@ parfor li = 1:1:L
     switch lower(path_length_rule)
         case {'subgraphs'}
             for u = 1:1:N
-                Du = distance_layer(:, u);
-                out_path_length_layer(u) = mean(Du(Du~=Outf & Du~=0));
+                Du = distance_layer(u, :);
+                out_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
             end
             out_path_length_layer(isnan(out_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
-        case {'harmonic'}
+        case {'mean'}
             for u = 1:1:N
-                Du = distance_layer(:, u);
-                out_path_length_layer(u) = harmmean(Du(Du~=0));
-            end
-        otherwise  % 'default'
-            for u = 1:1:N
-                Du = distance_layer(:, u);
+                Du = distance_layer(u, :);
                 out_path_length_layer(u) = mean(Du(Du~=0));
+            end
+        otherwise  % 'harmonic' 'default'
+            for u = 1:1:N
+                Du = distance_layer(u, :);
+                out_path_length_layer(u) = harmmean(Du(Du~=0));
             end
     end
     out_path_length(li) = {out_path_length_layer};
@@ -128,7 +178,7 @@ B = [
     0  0  0  0  0
     ];
 
-known_out_path_length = {[1.3333 1.3333 2 1.6000 Inf]'};
+known_out_path_length = {[1.3333 2 1.3333 1.6000 Inf]'};
 known_out_path_length = cellfun(@(x) round(x, 3), known_out_path_length, 'UniformOutput', false);
 g = GraphBD('B', B);
 

@@ -1,25 +1,25 @@
 classdef KCore < Measure
-	%KCore is the kcore.
+	%KCore is the graph K-Core.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. 
+	% The K-Core (KCore) of a graph is the largest subnetwork comprising nodes of degree k or higher. 
 	%   k is set by the user; the default value is equal to 1.
 	%
 	% The list of KCore properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the kcore.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the kcore.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the kcore.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the kcore.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the kcore.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the kcore.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the K-Core.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the K-Core.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the K-Core.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the K-Core.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the K-Core.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the K-Core.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the K-Core.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the kcore.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the K-Core.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>KCORETHRESHOLD</strong> 	KCORETHRESHOLD (parameter, scalar) is the k-core threshold
 	%
@@ -127,20 +127,20 @@ classdef KCore < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of KCore properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the kcore.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the kcore.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the kcore.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the kcore.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the kcore.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the kcore.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the K-Core.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the K-Core.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the K-Core.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the K-Core.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the K-Core.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the K-Core.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the K-Core.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the kcore.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the K-Core.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>KCORETHRESHOLD</strong> 	KCORETHRESHOLD (parameter, scalar) is the k-core threshold
 			%
@@ -476,7 +476,7 @@ classdef KCore < Measure
 			prop = KCore.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			kcore_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the kcore.'  'DESCRIPTION (constant, string) is the description of the kcore.'  'TEMPLATE (parameter, item) is the template of the kcore.'  'ID (data, string) is a few-letter code of the kcore.'  'LABEL (metadata, string) is an extended label of the kcore.'  'NOTES (metadata, string) are some specific notes about the kcore.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the kcore.'  'PFM (gui, item) contains the panel figure of the measure.'  'KCORETHRESHOLD (parameter, scalar) is the k-core threshold' };
+			kcore_description_list = { 'ELCLASS (constant, string) is the class of the K-Core.'  'NAME (constant, string) is the name of the K-Core.'  'DESCRIPTION (constant, string) is the description of the K-Core.'  'TEMPLATE (parameter, item) is the template of the K-Core.'  'ID (data, string) is a few-letter code of the K-Core.'  'LABEL (metadata, string) is an extended label of the K-Core.'  'NOTES (metadata, string) are some specific notes about the K-Core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the K-Core.'  'PFM (gui, item) contains the panel figure of the measure.'  'KCORETHRESHOLD (parameter, scalar) is the k-core threshold' };
 			prop_description = kcore_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -538,17 +538,17 @@ classdef KCore < Measure
 				case 1 % KCore.ELCLASS
 					prop_default = 'KCore';
 				case 2 % KCore.NAME
-					prop_default = 'KCore';
+					prop_default = 'K-Core';
 				case 3 % KCore.DESCRIPTION
-					prop_default = 'The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. k is set by the user; the default value is equal to 1.';
+					prop_default = 'The K-Core (KCore) of a graph is the largest subnetwork comprising nodes of degree k or higher. k is set by the user; the default value is equal to 1.';
 				case 4 % KCore.TEMPLATE
 					prop_default = Format.getFormatDefault(8, KCore.getPropSettings(prop));
 				case 5 % KCore.ID
 					prop_default = 'KCore ID';
 				case 6 % KCore.LABEL
-					prop_default = 'KCore label';
+					prop_default = 'K-Core label';
 				case 7 % KCore.NOTES
-					prop_default = 'KCore notes';
+					prop_default = 'K-Core notes';
 				case 9 % KCore.SHAPE
 					prop_default = 3;
 				case 10 % KCore.SCOPE

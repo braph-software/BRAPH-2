@@ -1,27 +1,27 @@
 classdef RCS < Strength
-	%RCS is the graph rich-club strength.
+	%RCS is the graph Rich-Club Strength.
 	% It is a subclass of <a href="matlab:help Strength">Strength</a>.
 	%
-	% The rich-club strength of a node at level s is the sum of the weighted edges 
+	% The Rich-Club Strength (RCS) of a node at level s is the sum of the weighted edges 
 	%   that connect nodes of strength s or higher within a layer. 
 	%   s is set by the user and it can be a vector containting all the strength thresholds 
 	%   the default value is equal to 1.
 	%
 	% The list of RCS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the rich-club strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) 
 	%
@@ -129,20 +129,20 @@ classdef RCS < Strength
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of RCS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the rich-club strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) 
 			%
@@ -478,7 +478,7 @@ classdef RCS < Strength
 			prop = RCS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			rcs_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the rich-club strength.'  'DESCRIPTION (constant, string) is the description of the rich-club strength.'  'TEMPLATE (parameter, item) is the template of the rich-club strength.'  'ID (data, string) is a few-letter code of the rich-club strength.'  'LABEL (metadata, string) is an extended label of the rich-club strength.'  'NOTES (metadata, string) are some specific notes about the rich-club strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the rich-club strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) ' };
+			rcs_description_list = { 'ELCLASS (constant, string) is the class of the Rich-Club Strength.'  'NAME (constant, string) is the name of the Rich-Club Strength.'  'DESCRIPTION (constant, string) is the description of the Rich-Club Strength.'  'TEMPLATE (parameter, item) is the template of the Rich-Club Strength.'  'ID (data, string) is a few-letter code of the Rich-Club Strength.'  'LABEL (metadata, string) is an extended label of the Rich-Club Strength.'  'NOTES (metadata, string) are some specific notes about the Rich-Club Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Rich-Club Strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) ' };
 			prop_description = rcs_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,17 +540,17 @@ classdef RCS < Strength
 				case 1 % RCS.ELCLASS
 					prop_default = 'RCS';
 				case 2 % RCS.NAME
-					prop_default = 'RCS';
+					prop_default = 'Rich-Club Strength';
 				case 3 % RCS.DESCRIPTION
-					prop_default = 'The rich-club strength of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher within a layer. s is set by the user and it can be a vector containting all the strength thresholds the default value is equal to 1.';
+					prop_default = 'The Rich-Club Strength (RCS) of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher within a layer. s is set by the user and it can be a vector containting all the strength thresholds the default value is equal to 1.';
 				case 4 % RCS.TEMPLATE
 					prop_default = Format.getFormatDefault(8, RCS.getPropSettings(prop));
 				case 5 % RCS.ID
 					prop_default = 'RCS ID';
 				case 6 % RCS.LABEL
-					prop_default = 'RCS label';
+					prop_default = 'Rich-Club Strength label';
 				case 7 % RCS.NOTES
-					prop_default = 'RCS notes';
+					prop_default = 'Rich-Club Strength notes';
 				case 9 % RCS.SHAPE
 					prop_default = 2;
 				case 10 % RCS.SCOPE

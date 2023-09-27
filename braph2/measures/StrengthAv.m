@@ -1,25 +1,25 @@
 classdef StrengthAv < Strength
-	%StrengthAv is the graph average strength.
+	%StrengthAv is the graph Average Strength.
 	% It is a subclass of <a href="matlab:help Strength">Strength</a>.
 	%
-	% The average strength of a graph is the average of the sum of all weights of 
-	% the edges connected to a node within a layer.
+	% The Average Strength (StrengthAv) of a graph is the average of the sum of all weights of 
+	%  the edges connected to a node within a layer.
 	%
 	% The list of StrengthAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% StrengthAv methods (constructor):
@@ -120,20 +120,20 @@ classdef StrengthAv < Strength
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of StrengthAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef StrengthAv < Strength
 			prop = StrengthAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			strengthav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average strength.'  'DESCRIPTION (constant, string) is the description of the average strength.'  'TEMPLATE (parameter, item) is the template of the average strength.'  'ID (data, string) is a few-letter code of the average strength.'  'LABEL (metadata, string) is an extended label of the average strength.'  'NOTES (metadata, string) are some specific notes about the average strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			strengthav_description_list = { 'ELCLASS (constant, string) is the class of the Average Strength.'  'NAME (constant, string) is the name of the Average Strength.'  'DESCRIPTION (constant, string) is the description of the Average Strength.'  'TEMPLATE (parameter, item) is the template of the Average Strength.'  'ID (data, string) is a few-letter code of the Average Strength.'  'LABEL (metadata, string) is an extended label of the Average Strength.'  'NOTES (metadata, string) are some specific notes about the Average Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = strengthav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef StrengthAv < Strength
 				case 1 % StrengthAv.ELCLASS
 					prop_default = 'StrengthAv';
 				case 2 % StrengthAv.NAME
-					prop_default = 'StrengthAv';
+					prop_default = 'Average Strength';
 				case 3 % StrengthAv.DESCRIPTION
-					prop_default = 'The average strength of a graph is the average of the sum of all weights of the edges connected to a node within a layer.';
+					prop_default = 'The Average Strength (StrengthAv) of a graph is the average of the sum of all weights of the edges connected to a node within a layer.';
 				case 4 % StrengthAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, StrengthAv.getPropSettings(prop));
 				case 5 % StrengthAv.ID
 					prop_default = 'StrengthAv ID';
 				case 6 % StrengthAv.LABEL
-					prop_default = 'StrengthAv label';
+					prop_default = 'Average Strength label';
 				case 7 % StrengthAv.NOTES
-					prop_default = 'StrengthAv notes';
+					prop_default = 'Average Strength notes';
 				case 9 % StrengthAv.SHAPE
 					prop_default = 1;
 				case 10 % StrengthAv.SCOPE

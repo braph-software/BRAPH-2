@@ -1,9 +1,9 @@
 %% ¡header!
-OverlappingSOut < StrengthOut (m, overlapping out-strength) is the graph overlapping out-strength.
+OverlappingSOut < StrengthOut (m, overlapping out-strength) is the graph Overlapping Out-Strength.
 
 %%% ¡description!
-The overlapping out-strength of a graph is the sum of the out-strengths of a 
-node in all layers. 
+The Overlapping Out-Strength (OverlappingSOut) of a graph is the sum of the out-strengths of a 
+ node in all layers. 
 %% ¡layout!
 
 %%% ¡prop!
@@ -28,7 +28,7 @@ Graph
 %%%% ¡id!
 OverlappingSOut.M
 %%%% ¡title!
-OverlappingSOut
+Overlapping Out-Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -51,39 +51,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Overlapping Out-Strength.
 %%%% ¡default!
 'OverlappingSOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping out-strength.
+NAME (constant, string) is the name of the Overlapping Out-Strength.
 %%%% ¡default!
-'OverlappingSOut'
+'Overlapping Out-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping out-strength.
+DESCRIPTION (constant, string) is the description of the Overlapping Out-Strength.
 %%%% ¡default!
-'The overlapping out-strength of a graph is the sum of the out-strengths of a node in all layers.'
+'The Overlapping Out-Strength (OverlappingSOut) of a graph is the sum of the out-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping out-strength.
+TEMPLATE (parameter, item) is the template of the Overlapping Out-Strength.
 %%%% ¡settings!
 'OverlappingSOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping out-strength.
+ID (data, string) is a few-letter code of the Overlapping Out-Strength.
 %%%% ¡default!
 'OverlappingSOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping out-strength.
+LABEL (metadata, string) is an extended label of the Overlapping Out-Strength.
 %%%% ¡default!
-'OverlappingSOut label'
+'Overlapping Out-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping out-strength.
+NOTES (metadata, string) are some specific notes about the Overlapping Out-Strength.
 %%%% ¡default!
-'OverlappingSOut notes'
+'Overlapping Out-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -106,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultilayerWD' 'OrdMxWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping out-strength.
+M (result, cell) is the Overlapping Out-Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

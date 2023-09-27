@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexCl < MultiplexT (m, multiplex clustering) is the graph multiplex clustering.
+MultiplexCl < MultiplexT (m, multiplex clustering) is the graph Multiplex Clustering.
 
 %%% ¡description!
-The two-multiplex clustering coefficient of a node i is the fraction 
+The two-Multiplex Clustering coefficient (MultiplexCl) of a node i is the fraction 
  of two-multiplex triangles (triangles which use edges from two different 
  layers) with a vertex in node i and the number of one-triads centered in i.
 
@@ -30,7 +30,7 @@ Graph
 %%%% ¡id!
 MultiplexCl.M
 %%%% ¡title!
-MultiplexCl
+Multiplex Clustering
 
 %%% ¡prop!
 %%%% ¡id!
@@ -53,39 +53,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Clustering.
 %%%% ¡default!
 'MultiplexCl'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex clustering.
+NAME (constant, string) is the name of the Multiplex Clustering.
 %%%% ¡default!
-'MultiplexClustering'
+'Multiplex Clustering'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex clustering.
+DESCRIPTION (constant, string) is the description of the Multiplex Clustering.
 %%%% ¡default!
-'The two-multiplex clustering coefficient of a node i is the fraction of two-multiplex triangles (triangles which use edges from two different layers) with a vertex in node i and the number of one-triads centered in i.'
+'The two-Multiplex Clustering coefficient (MultiplexCl) of a node i is the fraction of two-multiplex triangles (triangles which use edges from two different layers) with a vertex in node i and the number of one-triads centered in i.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex clustering.
+TEMPLATE (parameter, item) is the template of the Multiplex Clustering.
 %%%% ¡settings!
 'MultiplexCl'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex clustering.
+ID (data, string) is a few-letter code of the Multiplex Clustering.
 %%%% ¡default!
 'MultiplexCl ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex clustering.
+LABEL (metadata, string) is an extended label of the Multiplex Clustering.
 %%%% ¡default!
-'MultiplexClustering label'
+'Multiplex Clustering label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex clustering.
+NOTES (metadata, string) are some specific notes about the Multiplex Clustering.
 %%%% ¡default!
-'MultiplexClustering notes'
+'Multiplex Clustering notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -108,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex clustering.
+M (result, cell) is the Multiplex Clustering.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -1,19 +1,19 @@
 classdef MultiplexRCDeg < RCDeg
-	%MultiplexRCDeg is the graph multiplex rich-club degree.
+	%MultiplexRCDeg is the graph Multiplex Rich-Club Degree.
 	% It is a subclass of <a href="matlab:help RCDeg">RCDeg</a>.
 	%
-	% The multi rich-club degree of a node at level k is the sum of 
+	% The Multiplex Rich-Club Degree (MultiplexRCDeg) of a node at level k is the sum of 
 	%  the edges that connect nodes of degree k or higher in all layers. 
 	% The relevance of each layer is controlled by the coefficients c that are 
 	%  between 0 and 1; the default coefficients are (1/layernumber).
 	%
 	% The list of MultiplexRCDeg properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Degree.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
@@ -21,7 +21,7 @@ classdef MultiplexRCDeg < RCDeg
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Degree.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 	%  <strong>17</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
@@ -130,12 +130,12 @@ classdef MultiplexRCDeg < RCDeg
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexRCDeg properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Degree.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
@@ -143,7 +143,7 @@ classdef MultiplexRCDeg < RCDeg
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club degree.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Degree.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 			%  <strong>17</strong> <strong>MULTIRICHCLUB_COEFFICIENTS</strong> 	MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients
@@ -480,7 +480,7 @@ classdef MultiplexRCDeg < RCDeg
 			prop = MultiplexRCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexrcdeg_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex rich-club degree.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.'  'ID (data, string) is a few-letter code of the multiplex rich-club degree.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club degree.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) '  'MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients' };
+			multiplexrcdeg_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Rich-Club Degree.'  'NAME (constant, string) is the name of the Multiplex Rich-Club Degree.'  'DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Degree.'  'TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Degree.'  'ID (data, string) is a few-letter code of the Multiplex Rich-Club Degree.'  'LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Degree.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex Rich-Club Degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) '  'MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club degree coefficients' };
 			prop_description = multiplexrcdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -542,17 +542,17 @@ classdef MultiplexRCDeg < RCDeg
 				case 1 % Multiplex1
 					prop_default = 'MultiplexRCDeg';
 				case 2 % Multiplex2
-					prop_default = 'MultiplexRichClubDegree';
+					prop_default = 'Multiplex Rich-Club Degree';
 				case 3 % Multiplex3
-					prop_default = 'The multi rich-club degree of a node at level k is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
+					prop_default = 'The Multiplex Rich-Club Degree (MultiplexRCDeg) of a node at level k is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
 				case 4 % Multiplex4
 					prop_default = Format.getFormatDefault(8, MultiplexRCDeg.getPropSettings(prop));
 				case 5 % Multiplex5
 					prop_default = 'MultiplexRCDeg ID';
 				case 6 % Multiplex6
-					prop_default = 'MultiplexRichClubDegree label';
+					prop_default = 'Multiplex Rich-Club Degree label';
 				case 7 % Multiplex7
-					prop_default = 'MultiplexRichClubDegree notes';
+					prop_default = 'Multiplex Rich-Club Degree notes';
 				case 9 % Multiplex9
 					prop_default = 2;
 				case 10 % Multiplex10

@@ -1,26 +1,26 @@
 classdef CommunityStructure < Measure
-	%CommunityStructure is the graph community structure.
+	%CommunityStructure is the graph Community Structure.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The community structure of a graph is a subdivision of the network into 
+	% The Community Structure (CommunityStructure) of a graph is a subdivision of the network into 
 	% non-overlapping groups of nodes which maximizes the number of whitin group 
 	% edges, and minimizes the number of between group edges.
 	%
 	% The list of CommunityStructure properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the community structure.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the community structure.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the community structure.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the community structure.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Community Structure.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Community Structure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Community Structure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Community Structure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Community Structure.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the community structure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Community Structure.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Community Structure.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
 	%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
@@ -158,20 +158,20 @@ classdef CommunityStructure < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of CommunityStructure properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the community structure.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the community structure.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the community structure.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the community structure.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Community Structure.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Community Structure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Community Structure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Community Structure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Community Structure.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the community structure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Community Structure.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Community Structure.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
 			%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
@@ -512,7 +512,7 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			communitystructure_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the community structure.'  'DESCRIPTION (constant, string) is the description of the community structure.'  'TEMPLATE (parameter, item) is the template of the community structure.'  'ID (data, string) is a few-letter code of the community structure.'  'LABEL (metadata, string) is an extended label of the community structure.'  'NOTES (metadata, string) are some specific notes about the community structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
+			communitystructure_description_list = { 'ELCLASS (constant, string) is the class of the Community Structure.'  'NAME (constant, string) is the name of the Community Structure.'  'DESCRIPTION (constant, string) is the description of the Community Structure.'  'TEMPLATE (parameter, item) is the template of the Community Structure.'  'ID (data, string) is a few-letter code of the Community Structure.'  'LABEL (metadata, string) is an extended label of the community structure.'  'NOTES (metadata, string) are some specific notes about the Community Structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Community Structure.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
 			prop_description = communitystructure_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -594,17 +594,17 @@ classdef CommunityStructure < Measure
 				case 1 % CommunityStructure.ELCLASS
 					prop_default = 'CommunityStructure';
 				case 2 % CommunityStructure.NAME
-					prop_default = 'CommunityStructure';
+					prop_default = 'Community Structure';
 				case 3 % CommunityStructure.DESCRIPTION
-					prop_default = 'The community structure of a graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of whitin group edges, and minimizes the number of between group edges.';
+					prop_default = 'The Community Structure (CommunityStructure) of a graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of whitin group edges, and minimizes the number of between group edges.';
 				case 4 % CommunityStructure.TEMPLATE
 					prop_default = Format.getFormatDefault(8, CommunityStructure.getPropSettings(prop));
 				case 5 % CommunityStructure.ID
 					prop_default = 'CommunityStructure ID';
 				case 6 % CommunityStructure.LABEL
-					prop_default = 'CommunityStructure label';
+					prop_default = 'Community Structure label';
 				case 7 % CommunityStructure.NOTES
-					prop_default = 'CommunityStructure notes';
+					prop_default = 'Community Structure notes';
 				case 9 % CommunityStructure.SHAPE
 					prop_default = 2;
 				case 10 % CommunityStructure.SCOPE

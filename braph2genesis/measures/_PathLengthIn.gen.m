@@ -1,45 +1,95 @@
 %% ¡header!
-PathLengthIn < Measure (m, in-path length) is the graph in-path length.
+PathLengthIn < Measure (m, in-path length) is the graph In-Path Length.
 
 %%% ¡description!
-The in-path length is the average shortest in-path length of one node to all other nodes within a layer.
+The In-Path Length (PathLengthIn) is the average shortest in-path length of one node to all other nodes within a layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.RULE
+%%%% ¡title!
+In-Path Length rule
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.M
+%%%% ¡title!
+In-Path Length
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthIn.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graph
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the In-Path Length .
 %%%% ¡default!
 'PathLengthIn'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the in-path length.
 %%%% ¡default!
-'PathLengthIn'
+'In-Path Length'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-path length.
+DESCRIPTION (constant, string) is the description of the In-Path Length.
 %%%% ¡default!
-'The in-path length is the average shortest in-path length of one node to all other nodes within a layer.'
+'The In-Path Length (PathLengthIn) is the average shortest in-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-path length.
+TEMPLATE (parameter, item) is the template of the In-Path Length.
 %%%% ¡settings!
 'PathLengthIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-path length.
+ID (data, string) is a few-letter code of the In-Path Length.
 %%%% ¡default!
 'PathLengthIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-path length.
+LABEL (metadata, string) is an extended label of the In-Path Length.
 %%%% ¡default!
-'PathLengthIn label'
+'In-Path Length label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-path length.
+NOTES (metadata, string) are some specific notes about the In-Path Length.
 %%%% ¡default!
-'PathLengthIn notes'
+'In-Path Length notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -62,7 +112,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the in-path length.
+M (result, cell) is the cell containing the In-Path Length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -85,15 +135,15 @@ parfor li = 1:1:L
                 in_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
             end
             in_path_length_layer(isnan(in_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
-        case {'harmonic'}
-            for u = 1:1:N
-                Du = distance_layer(:, u);
-                in_path_length_layer(u) = harmmean(Du(Du~=0));
-            end
-        otherwise 
+        case {'mean'}
             for u = 1:1:N
                 Du = distance_layer(:, u);
                 in_path_length_layer(u) = mean(Du(Du~=0));
+            end
+        otherwise  % 'harmonic' 'default'
+            for u = 1:1:N
+                Du = distance_layer(:, u);
+                in_path_length_layer(u) = harmmean(Du(Du~=0));
             end
     end
     in_path_length(li) = {in_path_length_layer};

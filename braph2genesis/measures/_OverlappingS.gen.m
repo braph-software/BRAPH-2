@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingS < Strength (m, overlapping strength) is the graph overlapping strength.
+OverlappingS < Strength (m, overlapping strength) is the graph Overlapping Strength.
 
 %%% ¡description!
-The overlapping strength of a graph is the sum of the strengths of a node in 
+The Overlapping Strength (OverlappingS) of a graph is the sum of the strengths of a node in 
 all layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingS.M
 %%%% ¡title!
-OverlappingS
+Overlapping Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Overlapping Strength.
 %%%% ¡default!
 'OverlappingS'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping strength.
+NAME (constant, string) is the name of the Overlapping Strength.
 %%%% ¡default!
-'OverlappingS'
+'Overlapping Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping strength.
+DESCRIPTION (constant, string) is the description of the Overlapping Strength.
 %%%% ¡default!
-'The overlapping strength of a graph is the sum of the strengths of a node in all layers.'
+'The Overlapping Strength (OverlappingS) of a graph is the sum of the strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping strength.
+TEMPLATE (parameter, item) is the template of the Overlapping Strength.
 %%%% ¡settings!
 'OverlappingS'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping strength.
+ID (data, string) is a few-letter code of the Overlapping Strength.
 %%%% ¡default!
 'OverlappingS ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping strength.
+LABEL (metadata, string) is an extended label of the Overlapping Strength.
 %%%% ¡default!
-'OverlappingS label'
+'Overlapping Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping strength.
+NOTES (metadata, string) are some specific notes about the Overlapping Strength.
 %%%% ¡default!
-'OverlappingS notes'
+'Overlapping Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping strength.
+M (result, cell) is the Overlapping Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

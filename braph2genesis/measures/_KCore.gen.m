@@ -1,46 +1,96 @@
 %% ¡header!
-KCore < Measure (m, kcore) is the kcore.
+KCore < Measure (m, kcore) is the graph K-Core.
 
 %%% ¡description!
-The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. 
+The K-Core (KCore) of a graph is the largest subnetwork comprising nodes of degree k or higher. 
   k is set by the user; the default value is equal to 1.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.KCORETHRESHOLD
+%%%% ¡title!
+K-core threshold
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.M
+%%%% ¡title!
+K-Core
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+KCore.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the K-Core.
 %%%% ¡default!
 'KCore'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the kcore.
+NAME (constant, string) is the name of the K-Core.
 %%%% ¡default!
-'KCore'
+'K-Core'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the kcore.
+DESCRIPTION (constant, string) is the description of the K-Core.
 %%%% ¡default!
-'The k-core of a graph is the largest subnetwork comprising nodes of degree k or higher. k is set by the user; the default value is equal to 1.'
+'The K-Core (KCore) of a graph is the largest subnetwork comprising nodes of degree k or higher. k is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the kcore.
+TEMPLATE (parameter, item) is the template of the K-Core.
 %%%% ¡settings!
 'KCore'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the kcore.
+ID (data, string) is a few-letter code of the K-Core.
 %%%% ¡default!
 'KCore ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the kcore.
+LABEL (metadata, string) is an extended label of the K-Core.
 %%%% ¡default!
-'KCore label'
+'K-Core label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the kcore.
+NOTES (metadata, string) are some specific notes about the K-Core.
 %%%% ¡default!
-'KCore notes'
+'K-Core notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.BINODAL__.
@@ -63,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the kcore.
+M (result, cell) is the K-Core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -1,26 +1,26 @@
 classdef CorePeriphery < Richness
-	%CorePeriphery is the graph core-periphery.
+	%CorePeriphery is the graph Core-Periphery.
 	% It is a subclass of <a href="matlab:help Richness">Richness</a>.
 	%
-	% The core-periphery of a node is the value of the rank corresponding 
+	% The Core-Periphery (CorePeriphery) of a node is the value of the rank corresponding 
 	% to the maximum richness nodes. It returns 1 for a node belonging to the 
 	% core and zero otherwise.
 	%
 	% The list of CorePeriphery properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the core-periphery.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the core-periphery.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the core-periphery.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the core-periphery.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the core-periphery.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the core-periphery.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Core-Periphery.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Core-Periphery.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Core-Periphery.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Core-Periphery.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Core-Periphery.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Core-Periphery.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Core-Periphery.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Core-Periphery.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% CorePeriphery methods (constructor):
@@ -121,20 +121,20 @@ classdef CorePeriphery < Richness
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of CorePeriphery properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the core-periphery.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the core-periphery.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the core-periphery.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the core-periphery.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the core-periphery.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the core-periphery.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Core-Periphery.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Core-Periphery.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Core-Periphery.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Core-Periphery.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Core-Periphery.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Core-Periphery.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Core-Periphery.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the core-periphery.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Core-Periphery.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -469,7 +469,7 @@ classdef CorePeriphery < Richness
 			prop = CorePeriphery.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			coreperiphery_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the core-periphery.'  'DESCRIPTION (constant, string) is the description of the core-periphery.'  'TEMPLATE (parameter, item) is the template of the core-periphery.'  'ID (data, string) is a few-letter code of the core-periphery.'  'LABEL (metadata, string) is an extended label of the core-periphery.'  'NOTES (metadata, string) are some specific notes about the core-periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			coreperiphery_description_list = { 'ELCLASS (constant, string) is the class of the Core-Periphery.'  'NAME (constant, string) is the name of the Core-Periphery.'  'DESCRIPTION (constant, string) is the description of the Core-Periphery.'  'TEMPLATE (parameter, item) is the template of the Core-Periphery.'  'ID (data, string) is a few-letter code of the Core-Periphery.'  'LABEL (metadata, string) is an extended label of the Core-Periphery.'  'NOTES (metadata, string) are some specific notes about the Core-Periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Core-Periphery.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = coreperiphery_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,17 +527,17 @@ classdef CorePeriphery < Richness
 				case 1 % CorePeriphery.ELCLASS
 					prop_default = 'CorePeriphery';
 				case 2 % CorePeriphery.NAME
-					prop_default = 'CorePeriphery';
+					prop_default = 'Core-Periphery';
 				case 3 % CorePeriphery.DESCRIPTION
-					prop_default = 'The core-periphery of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.';
+					prop_default = 'The Core-Periphery (CorePeriphery) of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.';
 				case 4 % CorePeriphery.TEMPLATE
 					prop_default = Format.getFormatDefault(8, CorePeriphery.getPropSettings(prop));
 				case 5 % CorePeriphery.ID
 					prop_default = 'CorePeriphery ID';
 				case 6 % CorePeriphery.LABEL
-					prop_default = 'CorePeriphery label';
+					prop_default = 'Core-Periphery label';
 				case 7 % CorePeriphery.NOTES
-					prop_default = 'CorePeriphery notes';
+					prop_default = 'Core-Periphery notes';
 				case 9 % CorePeriphery.SHAPE
 					prop_default = 2;
 				case 10 % CorePeriphery.SCOPE

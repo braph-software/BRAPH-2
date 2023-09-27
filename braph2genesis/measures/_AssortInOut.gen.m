@@ -1,48 +1,92 @@
 %% ¡header!
-AssortInOut < Measure (m, in-out-assortativity) is the graph in-out-assortativity.
+AssortInOut < Measure (m, in-out-assortativity) is the graph In-Out-Assortativity.
 
 %%% ¡description!
-The in-out-assortativity coefficient of a graph is the correlation coefficient between 
+The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between 
   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 The corresponding coefficient for directed and weighted networks is calculated by 
   using the weighted and directed variants of out-degree/out-strength.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.M
+%%%% ¡title!
+In-Out-Assortativity
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInOut.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the In-Out-Assortativity.
 %%%% ¡default!
 'AssortInOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the in-out-assortativity.
+NAME (constant, string) is the name of the In-Out-Assortativity.
 %%%% ¡default!
-'InOutAssortativity'
+'In-Out-Assortativity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-out-assortativity.
+DESCRIPTION (constant, string) is the description of the In-Out-Assortativity.
 %%%% ¡default!
-'The in-out-assortativity coefficient of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.'
+'The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-out-assortativity.
+TEMPLATE (parameter, item) is the template of the In-Out-Assortativity.
 %%%% ¡settings!
 'AssortInOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-out-assortativity.
+ID (data, string) is a few-letter code of the In-Out-Assortativity.
 %%%% ¡default!
 'AssortInOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-out-assortativity.
+LABEL (metadata, string) is an extended label of the In-Out-Assortativity.
 %%%% ¡default!
-'InOutAssortativity label'
+'In-Out-Assortativity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-out-assortativity.
+NOTES (metadata, string) are some specific notes about the In-Out-Assortativity.
 %%%% ¡default!
-'InOutAssortativity notes'
+'In-Out-Assortativity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -65,7 +109,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the in-out-assortativity.
+M (result, cell) is the In-Out-Assortativity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

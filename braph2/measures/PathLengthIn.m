@@ -1,24 +1,24 @@
 classdef PathLengthIn < Measure
-	%PathLengthIn is the graph in-path length.
+	%PathLengthIn is the graph In-Path Length.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The in-path length is the average shortest in-path length of one node to all other nodes within a layer.
+	% The In-Path Length (PathLengthIn) is the average shortest in-path length of one node to all other nodes within a layer.
 	%
 	% The list of PathLengthIn properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Path Length .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-path length.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-path length.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-path length.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-path length.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-path length.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-path length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Path Length.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Path Length.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Path Length.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Path Length.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Path Length.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the in-path length.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the In-Path Length.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 	%
@@ -126,20 +126,20 @@ classdef PathLengthIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthIn properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Path Length .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-path length.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-path length.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-path length.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-path length.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-path length.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-path length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Path Length.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Path Length.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Path Length.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Path Length.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Path Length.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the in-path length.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the In-Path Length.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 			%
@@ -475,7 +475,7 @@ classdef PathLengthIn < Measure
 			prop = PathLengthIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthin_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the in-path length.'  'DESCRIPTION (constant, string) is the description of the in-path length.'  'TEMPLATE (parameter, item) is the template of the in-path length.'  'ID (data, string) is a few-letter code of the in-path length.'  'LABEL (metadata, string) is an extended label of the in-path length.'  'NOTES (metadata, string) are some specific notes about the in-path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the in-path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
+			pathlengthin_description_list = { 'ELCLASS (constant, string) is the class of the In-Path Length .'  'NAME (constant, string) is the name of the in-path length.'  'DESCRIPTION (constant, string) is the description of the In-Path Length.'  'TEMPLATE (parameter, item) is the template of the In-Path Length.'  'ID (data, string) is a few-letter code of the In-Path Length.'  'LABEL (metadata, string) is an extended label of the In-Path Length.'  'NOTES (metadata, string) are some specific notes about the In-Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the In-Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
 			prop_description = pathlengthin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -537,17 +537,17 @@ classdef PathLengthIn < Measure
 				case 1 % PathLengthIn.ELCLASS
 					prop_default = 'PathLengthIn';
 				case 2 % PathLengthIn.NAME
-					prop_default = 'PathLengthIn';
+					prop_default = 'In-Path Length';
 				case 3 % PathLengthIn.DESCRIPTION
-					prop_default = 'The in-path length is the average shortest in-path length of one node to all other nodes within a layer.';
+					prop_default = 'The In-Path Length (PathLengthIn) is the average shortest in-path length of one node to all other nodes within a layer.';
 				case 4 % PathLengthIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthIn.getPropSettings(prop));
 				case 5 % PathLengthIn.ID
 					prop_default = 'PathLengthIn ID';
 				case 6 % PathLengthIn.LABEL
-					prop_default = 'PathLengthIn label';
+					prop_default = 'In-Path Length label';
 				case 7 % PathLengthIn.NOTES
-					prop_default = 'PathLengthIn notes';
+					prop_default = 'In-Path Length notes';
 				case 9 % PathLengthIn.SHAPE
 					prop_default = 2;
 				case 10 % PathLengthIn.SCOPE
@@ -682,15 +682,15 @@ classdef PathLengthIn < Measure
 					                in_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
 					            end
 					            in_path_length_layer(isnan(in_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
-					        case {'harmonic'}
-					            for u = 1:1:N
-					                Du = distance_layer(:, u);
-					                in_path_length_layer(u) = harmmean(Du(Du~=0));
-					            end
-					        otherwise 
+					        case {'mean'}
 					            for u = 1:1:N
 					                Du = distance_layer(:, u);
 					                in_path_length_layer(u) = mean(Du(Du~=0));
+					            end
+					        otherwise  % 'harmonic' 'default'
+					            for u = 1:1:N
+					                Du = distance_layer(:, u);
+					                in_path_length_layer(u) = harmmean(Du(Du~=0));
 					            end
 					    end
 					    in_path_length(li) = {in_path_length_layer};

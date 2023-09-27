@@ -1,26 +1,26 @@
 classdef EdgeBetwCentr < Measure
-	%EdgeBetwCentr is the edge betweenness centrality.
+	%EdgeBetwCentr is the Edge Betweenness Centrality.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The edge betweenness centrality of a graph is the fraction of all shortest paths in the 
+	% The Edge Betweenness Centrality (EdgeBetwCentr) of a graph is the fraction of all shortest paths in the 
 	% graph that pass through a given edge within a layer. Edges with high values 
 	% of betweenness centrality participate in a large number of shortest paths.
 	%
 	% The list of EdgeBetwCentr properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edge betweenness centrality.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edge betweenness centrality.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edge betweenness centrality.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edge betweenness centrality.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edge betweenness centrality.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edge betweenness centrality.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Edge Betweenness Centrality.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Edge Betweenness Centrality.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Edge Betweenness Centrality.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Edge Betweenness Centrality.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Edge Betweenness Centrality.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Edge Betweenness Centrality.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Edge Betweenness Centrality.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the edge betweenness centrality.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Edge Betweenness Centrality.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% EdgeBetwCentr methods (constructor):
@@ -121,20 +121,20 @@ classdef EdgeBetwCentr < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of EdgeBetwCentr properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the edge betweenness centrality.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the edge betweenness centrality.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the edge betweenness centrality.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the edge betweenness centrality.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the edge betweenness centrality.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the edge betweenness centrality.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Edge Betweenness Centrality.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Edge Betweenness Centrality.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Edge Betweenness Centrality.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Edge Betweenness Centrality.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Edge Betweenness Centrality.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Edge Betweenness Centrality.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Edge Betweenness Centrality.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.BINODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the edge betweenness centrality.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Edge Betweenness Centrality.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -469,7 +469,7 @@ classdef EdgeBetwCentr < Measure
 			prop = EdgeBetwCentr.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			edgebetwcentr_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the edge betweenness centrality.'  'DESCRIPTION (constant, string) is the description of the edge betweenness centrality.'  'TEMPLATE (parameter, item) is the template of the edge betweenness centrality.'  'ID (data, string) is a few-letter code of the edge betweenness centrality.'  'LABEL (metadata, string) is an extended label of the edge betweenness centrality.'  'NOTES (metadata, string) are some specific notes about the edge betweenness centrality.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the edge betweenness centrality.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			edgebetwcentr_description_list = { 'ELCLASS (constant, string) is the class of the Edge Betweenness Centrality.'  'NAME (constant, string) is the name of the Edge Betweenness Centrality.'  'DESCRIPTION (constant, string) is the description of the Edge Betweenness Centrality.'  'TEMPLATE (parameter, item) is the template of the Edge Betweenness Centrality.'  'ID (data, string) is a few-letter code of the Edge Betweenness Centrality.'  'LABEL (metadata, string) is an extended label of the Edge Betweenness Centrality.'  'NOTES (metadata, string) are some specific notes about the Edge Betweenness Centrality.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.BINODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Edge Betweenness Centrality.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = edgebetwcentr_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,17 +527,17 @@ classdef EdgeBetwCentr < Measure
 				case 1 % EdgeBetwCentr.ELCLASS
 					prop_default = 'EdgeBetwCentr';
 				case 2 % EdgeBetwCentr.NAME
-					prop_default = 'EdgeBetweennessCentrality';
+					prop_default = 'Edge Betweenness Centrality';
 				case 3 % EdgeBetwCentr.DESCRIPTION
-					prop_default = 'The edge betweenness centrality of a graph is the fraction of all shortest paths in the graph that pass through a given edge within a layer. Edges with high values of betweenness centrality participate in a large number of shortest paths.';
+					prop_default = 'The Edge Betweenness Centrality (EdgeBetwCentr) of a graph is the fraction of all shortest paths in the graph that pass through a given edge within a layer. Edges with high values of betweenness centrality participate in a large number of shortest paths.';
 				case 4 % EdgeBetwCentr.TEMPLATE
 					prop_default = Format.getFormatDefault(8, EdgeBetwCentr.getPropSettings(prop));
 				case 5 % EdgeBetwCentr.ID
 					prop_default = 'EdgeBetwCentr ID';
 				case 6 % EdgeBetwCentr.LABEL
-					prop_default = 'EdgeBetweennessCentrality label';
+					prop_default = 'Edge Betweenness Centrality label';
 				case 7 % EdgeBetwCentr.NOTES
-					prop_default = 'EdgeBetweennessCentrality notes';
+					prop_default = 'Edge Betweenness Centrality notes';
 				case 9 % EdgeBetwCentr.SHAPE
 					prop_default = 3;
 				case 10 % EdgeBetwCentr.SCOPE

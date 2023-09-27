@@ -1,25 +1,25 @@
 classdef MultiplexPIn < Measure
-	%MultiplexPIn is the graph multiplex in-participation.
+	%MultiplexPIn is the graph Multiplex In-Participation.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The multiplex in-participation is the homogeneity of the number of inward 
+	% The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward 
 	% neighbours of a node across the layers.
 	%
 	% The list of MultiplexPIn properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex In-Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex In-Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex In-Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex In-Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex In-Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex In-Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex In-Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex In-Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% MultiplexPIn methods (constructor):
@@ -120,20 +120,20 @@ classdef MultiplexPIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexPIn properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex in-participation.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex in-participation.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex in-participation.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex in-participation.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex in-participation.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex in-participation.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex In-Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex In-Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex In-Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex In-Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex In-Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex In-Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex In-Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex in-participation.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex In-Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef MultiplexPIn < Measure
 			prop = MultiplexPIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexpin_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex in-participation.'  'DESCRIPTION (constant, string) is the description of the multiplex in-participation.'  'TEMPLATE (parameter, item) is the template of the multiplex in-participation.'  'ID (data, string) is a few-letter code of the multiplex in-participation.'  'LABEL (metadata, string) is an extended label of the multiplex in-participation.'  'NOTES (metadata, string) are some specific notes about the multiplex in-participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex in-participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			multiplexpin_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex In-Participation.'  'NAME (constant, string) is the name of the Multiplex In-Participation.'  'DESCRIPTION (constant, string) is the description of the Multiplex In-Participation.'  'TEMPLATE (parameter, item) is the template of the Multiplex In-Participation.'  'ID (data, string) is a few-letter code of the Multiplex In-Participation.'  'LABEL (metadata, string) is an extended label of the Multiplex In-Participation.'  'NOTES (metadata, string) are some specific notes about the Multiplex In-Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex In-Participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = multiplexpin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef MultiplexPIn < Measure
 				case 1 % MultiplexPIn.ELCLASS
 					prop_default = 'MultiplexPIn';
 				case 2 % MultiplexPIn.NAME
-					prop_default = 'MultiplexInParticipation';
+					prop_default = 'Multiplex In-Participation';
 				case 3 % MultiplexPIn.DESCRIPTION
-					prop_default = 'The multiplex in-participation is the homogeneity of the number of inward neighbours of a node across the layers.';
+					prop_default = 'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbours of a node across the layers.';
 				case 4 % MultiplexPIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPIn.getPropSettings(prop));
 				case 5 % MultiplexPIn.ID
 					prop_default = 'MultiplexPIn ID';
 				case 6 % MultiplexPIn.LABEL
-					prop_default = 'MultiplexInParticipation label';
+					prop_default = 'Multiplex In-Participation label';
 				case 7 % MultiplexPIn.NOTES
-					prop_default = 'MultiplexInParticipation notes';
+					prop_default = 'Multiplex In-Participation notes';
 				case 9 % MultiplexPIn.SHAPE
 					prop_default = 2;
 				case 10 % MultiplexPIn.SCOPE

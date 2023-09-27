@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeOverlap < EdgeOverlap (m, degree overlap) is the graph degree overlap.
+DegreeOverlap < EdgeOverlap (m, degree overlap) is the graph Degree Overlap.
 
 %%% ¡description!
-The degree overlap is the number of edges connected to a node in all layers. 
+The Degree Overlap (DegreeOverlap) is the number of edges connected to a node in all layers. 
 Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 DegreeOverlap.M
 %%%% ¡title!
-DegreeOverlap
+Degree Overlap
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Degree Overlap.
 %%%% ¡default!
 'DegreeOverlap'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degree overlap.
+NAME (constant, string) is the name of the Degree Overlap.
 %%%% ¡default!
-'DegreeOverlap'
+'Degree Overlap'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degree overlap.
+DESCRIPTION (constant, string) is the description of the Degree Overlap.
 %%%% ¡default!
-'The degree overlap is the number of edges connected to a node in all layers. Connection weights are ignored in calculations.'
+'The Degree Overlap (DegreeOverlap) is the number of edges connected to a node in all layers. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degree overlap.
+TEMPLATE (parameter, item) is the template of the Degree Overlap.
 %%%% ¡settings!
 'DegreeOverlap'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degree overlap.
+ID (data, string) is a few-letter code of the Degree Overlap.
 %%%% ¡default!
 'DegreeOverlap ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degree overlap.
+LABEL (metadata, string) is an extended label of the Degree Overlap.
 %%%% ¡default!
-'DegreeOverlap label'
+'Degree Overlap label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degree overlap.
+NOTES (metadata, string) are some specific notes about the Degree Overlap.
 %%%% ¡default!
-'DegreeOverlap notes'
+'Degree Overlap notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'MultilayerWU' 'MultilayerBU' 'MultilayerBUD' 'MultilayerBUT' 'OrdMlBU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the degree overlap.
+M (result, cell) is the Degree Overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingSAv < OverlappingS (m, averge overlapping strength) is the graph averge overlapping strength.
+OverlappingSAv < OverlappingS (m, averge overlapping strength) is the graph Average Overlapping Strength.
 
 %%% ¡description!
-The average overlapping strength of a graph is the average of the sum of the 
+The Average Overlapping Strength (OverlappingSAv) of a graph is the average of the sum of the 
 strengths of a node in all layers.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingSAv.M
 %%%% ¡title!
-OverlappingSAv
+Average Overlapping Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Overlapping Strength.
 %%%% ¡default!
 'OverlappingSAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the averge overlapping strength.
+NAME (constant, string) is the name of the Average Overlapping Strength.
 %%%% ¡default!
 'OverlappingSAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the averge overlapping strength.
+DESCRIPTION (constant, string) is the description of the Average Overlapping Strength.
 %%%% ¡default!
-'The average overlapping strength of a graph is the average of the sum of the strengths of a node in all layers.'
+'The Average Overlapping Strength (OverlappingSAv) of a graph is the average of the sum of the strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the averge overlapping strength.
+TEMPLATE (parameter, item) is the template of the Average Overlapping Strength.
 %%%% ¡settings!
 'OverlappingSAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the averge overlapping strength.
+ID (data, string) is a few-letter code of the Average Overlapping Strength.
 %%%% ¡default!
 'OverlappingSAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the averge overlapping strength.
+LABEL (metadata, string) is an extended label of the Average Overlapping Strength.
 %%%% ¡default!
-'OverlappingSAv label'
+'Average Overlapping Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the averge overlapping strength.
+NOTES (metadata, string) are some specific notes about the Average Overlapping Strength.
 %%%% ¡default!
-'OverlappingSAv notes'
+'Average Overlapping Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the averge overlapping strength.
+M (result, cell) is the Average Overlapping Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 overlapping_strength = calculateValue@OverlappingS(m, prop);

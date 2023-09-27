@@ -1,27 +1,27 @@
 classdef AssortInOut < Measure
-	%AssortInOut is the graph in-out-assortativity.
+	%AssortInOut is the graph In-Out-Assortativity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The in-out-assortativity coefficient of a graph is the correlation coefficient between 
+	% The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between 
 	%   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 	% The corresponding coefficient for directed and weighted networks is calculated by 
 	%   using the weighted and directed variants of out-degree/out-strength.
 	%
 	% The list of AssortInOut properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-out-assortativity.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-out-assortativity.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-out-assortativity.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-out-assortativity.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-out-assortativity.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-out-assortativity.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Out-Assortativity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Out-Assortativity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Out-Assortativity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Out-Assortativity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Out-Assortativity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Out-Assortativity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Out-Assortativity.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-out-assortativity.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Out-Assortativity.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% AssortInOut methods (constructor):
@@ -122,20 +122,20 @@ classdef AssortInOut < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of AssortInOut properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-out-assortativity.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-out-assortativity.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-out-assortativity.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-out-assortativity.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-out-assortativity.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-out-assortativity.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Out-Assortativity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Out-Assortativity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Out-Assortativity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Out-Assortativity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Out-Assortativity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Out-Assortativity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Out-Assortativity.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-out-assortativity.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Out-Assortativity.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -470,7 +470,7 @@ classdef AssortInOut < Measure
 			prop = AssortInOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			assortinout_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the in-out-assortativity.'  'DESCRIPTION (constant, string) is the description of the in-out-assortativity.'  'TEMPLATE (parameter, item) is the template of the in-out-assortativity.'  'ID (data, string) is a few-letter code of the in-out-assortativity.'  'LABEL (metadata, string) is an extended label of the in-out-assortativity.'  'NOTES (metadata, string) are some specific notes about the in-out-assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the in-out-assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			assortinout_description_list = { 'ELCLASS (constant, string) is the class of the In-Out-Assortativity.'  'NAME (constant, string) is the name of the In-Out-Assortativity.'  'DESCRIPTION (constant, string) is the description of the In-Out-Assortativity.'  'TEMPLATE (parameter, item) is the template of the In-Out-Assortativity.'  'ID (data, string) is a few-letter code of the In-Out-Assortativity.'  'LABEL (metadata, string) is an extended label of the In-Out-Assortativity.'  'NOTES (metadata, string) are some specific notes about the In-Out-Assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the In-Out-Assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = assortinout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,17 +528,17 @@ classdef AssortInOut < Measure
 				case 1 % AssortInOut.ELCLASS
 					prop_default = 'AssortInOut';
 				case 2 % AssortInOut.NAME
-					prop_default = 'InOutAssortativity';
+					prop_default = 'In-Out-Assortativity';
 				case 3 % AssortInOut.DESCRIPTION
-					prop_default = 'The in-out-assortativity coefficient of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
+					prop_default = 'The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
 				case 4 % AssortInOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AssortInOut.getPropSettings(prop));
 				case 5 % AssortInOut.ID
 					prop_default = 'AssortInOut ID';
 				case 6 % AssortInOut.LABEL
-					prop_default = 'InOutAssortativity label';
+					prop_default = 'In-Out-Assortativity label';
 				case 7 % AssortInOut.NOTES
-					prop_default = 'InOutAssortativity notes';
+					prop_default = 'In-Out-Assortativity notes';
 				case 9 % AssortInOut.SHAPE
 					prop_default = 1;
 				case 10 % AssortInOut.SCOPE

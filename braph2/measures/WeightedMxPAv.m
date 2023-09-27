@@ -1,25 +1,25 @@
 classdef WeightedMxPAv < WeightedMxP
-	%WeightedMxPAv is the graph average weighted multiplex participation.
+	%WeightedMxPAv is the graph Average Weighted Multiplex Participation.
 	% It is a subclass of <a href="matlab:help WeightedMxP">WeightedMxP</a>.
 	%
-	% The average weighted multiplex participation of a graph is the average homogeneity 
-	% of its number of neighbours across the layers.
+	% The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity 
+	%  of its number of neighbours across the layers.
 	%
 	% The list of WeightedMxPAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average weighted multiplex participation.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average weighted multiplex particiption.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Weighted Multiplex Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Weighted Multiplex Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Weighted Multiplex Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Weighted Multiplex Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Weighted Multiplex Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Weighted Multiplex Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Weighted Multiplex Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average weighted multiplex particiption.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Weighted Multiplex Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% WeightedMxPAv methods (constructor):
@@ -120,20 +120,20 @@ classdef WeightedMxPAv < WeightedMxP
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedMxPAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average weighted multiplex participation.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average weighted multiplex particiption.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Weighted Multiplex Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Weighted Multiplex Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Weighted Multiplex Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Weighted Multiplex Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Weighted Multiplex Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Weighted Multiplex Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Weighted Multiplex Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average weighted multiplex particiption.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Weighted Multiplex Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef WeightedMxPAv < WeightedMxP
 			prop = WeightedMxPAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedmxpav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average weighted multiplex participation.'  'DESCRIPTION (constant, string) is the description of the average weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the average weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the average weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the average weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the average weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			weightedmxpav_description_list = { 'ELCLASS (constant, string) is the class of the Average Weighted Multiplex Participation.'  'NAME (constant, string) is the name of the Average Weighted Multiplex Participation.'  'DESCRIPTION (constant, string) is the description of the Average Weighted Multiplex Participation.'  'TEMPLATE (parameter, item) is the template of the Average Weighted Multiplex Participation.'  'ID (data, string) is a few-letter code of the Average Weighted Multiplex Participation.'  'LABEL (metadata, string) is an extended label of the Average Weighted Multiplex Participation.'  'NOTES (metadata, string) are some specific notes about the Average Weighted Multiplex Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Weighted Multiplex Participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = weightedmxpav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef WeightedMxPAv < WeightedMxP
 				case 1 % WeightedMxPAv.ELCLASS
 					prop_default = 'WeightedMxPAv';
 				case 2 % WeightedMxPAv.NAME
-					prop_default = 'WeightedMxPAv';
+					prop_default = 'Average Weighted Multiplex Participation';
 				case 3 % WeightedMxPAv.DESCRIPTION
-					prop_default = 'The weighted multiplex participation of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
+					prop_default = 'The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
 				case 4 % WeightedMxPAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxPAv.getPropSettings(prop));
 				case 5 % WeightedMxPAv.ID
 					prop_default = 'WeightedMxPAv ID';
 				case 6 % WeightedMxPAv.LABEL
-					prop_default = 'WeightedMxPAv label';
+					prop_default = 'Average Weighted Multiplex Participation label';
 				case 7 % WeightedMxPAv.NOTES
-					prop_default = 'WeightedMxPAv notes';
+					prop_default = 'Average Weighted Multiplex Participation notes';
 				case 9 % WeightedMxPAv.SHAPE
 					prop_default = 1;
 				case 10 % WeightedMxPAv.SCOPE

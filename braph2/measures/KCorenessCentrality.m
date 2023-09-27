@@ -1,25 +1,25 @@
 classdef KCorenessCentrality < Measure
-	%KCorenessCentrality is the graph kcorenesscentrality.
+	%KCorenessCentrality is the graph K-Coreness Centrality.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The k-coreness centrality of a node is k if the node belongs to the k-core 
+	% The K-Coreness Centrality (KCorenessCentrality) of a node is k if the node belongs to the k-core 
 	% but not to the (k+1)-core.
 	%
 	% The list of KCorenessCentrality properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the kcorenesscentrality.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the kcorenesscentrality.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the kcorenesscentrality.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the kcorenesscentrality.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the kcorenesscentrality.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the kcorenesscentrality.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the K-Coreness Centrality.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the K-Coreness Centrality.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the K-Coreness Centrality.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the K-Coreness Centrality.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the K-Coreness Centrality.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the K-Coreness Centrality.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the K-Coreness Centrality.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the kcorenesscentrality.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the K-Coreness Centrality.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% KCorenessCentrality methods (constructor):
@@ -40,33 +40,33 @@ classdef KCorenessCentrality < Measure
 	%  unchecked - sets a property to NOT checked
 	%
 	% KCorenessCentrality methods (display):
-	%  tostring - string with information about the kcorenesscentrality
-	%  disp - displays information about the kcorenesscentrality
-	%  tree - displays the tree of the kcorenesscentrality
+	%  tostring - string with information about the k-coreness centrality
+	%  disp - displays information about the k-coreness centrality
+	%  tree - displays the tree of the k-coreness centrality
 	%
 	% KCorenessCentrality methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two kcorenesscentrality are equal (values, locked)
+	%  isequal - determines whether two k-coreness centrality are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the kcorenesscentrality
+	%  copy - copies the k-coreness centrality
 	%
 	% KCorenessCentrality methods (save/load, Static):
-	%  save - saves BRAPH2 kcorenesscentrality as b2 file
-	%  load - loads a BRAPH2 kcorenesscentrality from a b2 file
+	%  save - saves BRAPH2 k-coreness centrality as b2 file
+	%  load - loads a BRAPH2 k-coreness centrality from a b2 file
 	%
 	% KCorenessCentrality method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the kcorenesscentrality
+	%  encodeJSON - returns a JSON string encoding the k-coreness centrality
 	%
 	% KCorenessCentrality method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the kcorenesscentrality
+	%   decodeJSON - returns a JSON string encoding the k-coreness centrality
 	%
 	% KCorenessCentrality methods (inspection, Static):
-	%  getClass - returns the class of the kcorenesscentrality
+	%  getClass - returns the class of the k-coreness centrality
 	%  getSubclasses - returns all subclasses of KCorenessCentrality
-	%  getProps - returns the property list of the kcorenesscentrality
-	%  getPropNumber - returns the property number of the kcorenesscentrality
+	%  getProps - returns the property list of the k-coreness centrality
+	%  getPropNumber - returns the property number of the k-coreness centrality
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -110,7 +110,7 @@ classdef KCorenessCentrality < Measure
 	
 	methods % constructor
 		function m = KCorenessCentrality(varargin)
-			%KCorenessCentrality() creates a kcorenesscentrality.
+			%KCorenessCentrality() creates a k-coreness centrality.
 			%
 			% KCorenessCentrality(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -120,20 +120,20 @@ classdef KCorenessCentrality < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of KCorenessCentrality properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the kcorenesscentrality.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the kcorenesscentrality.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the kcorenesscentrality.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the kcorenesscentrality.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the kcorenesscentrality.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the kcorenesscentrality.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the K-Coreness Centrality.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the K-Coreness Centrality.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the K-Coreness Centrality.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the K-Coreness Centrality.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the K-Coreness Centrality.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the K-Coreness Centrality.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the K-Coreness Centrality.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the kcorenesscentrality.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the K-Coreness Centrality.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -143,12 +143,12 @@ classdef KCorenessCentrality < Measure
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the kcorenesscentrality.
+			%GETCLASS returns the class of the k-coreness centrality.
 			%
 			% CLASS = KCorenessCentrality.GETCLASS() returns the class 'KCorenessCentrality'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the kcorenesscentrality M.
+			%  CLASS = M.GETCLASS() returns the class of the k-coreness centrality M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('KCorenessCentrality') returns 'KCorenessCentrality'.
 			%
@@ -158,12 +158,12 @@ classdef KCorenessCentrality < Measure
 			m_class = 'KCorenessCentrality';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the kcorenesscentrality.
+			%GETSUBCLASSES returns all subclasses of the k-coreness centrality.
 			%
 			% LIST = KCorenessCentrality.GETSUBCLASSES() returns all subclasses of 'KCorenessCentrality'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the kcorenesscentrality M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the k-coreness centrality M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('KCorenessCentrality') returns all subclasses of 'KCorenessCentrality'.
 			%
@@ -175,16 +175,16 @@ classdef KCorenessCentrality < Measure
 			subclass_list = { 'KCorenessCentrality' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of kcorenesscentrality.
+			%GETPROPS returns the property list of k-coreness centrality.
 			%
-			% PROPS = KCorenessCentrality.GETPROPS() returns the property list of kcorenesscentrality
+			% PROPS = KCorenessCentrality.GETPROPS() returns the property list of k-coreness centrality
 			%  as a row vector.
 			%
 			% PROPS = KCorenessCentrality.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the kcorenesscentrality M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the k-coreness centrality M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('KCorenessCentrality'[, CATEGORY]) returns the property list of 'KCorenessCentrality'.
 			%
@@ -220,15 +220,15 @@ classdef KCorenessCentrality < Measure
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of kcorenesscentrality.
+			%GETPROPNUMBER returns the property number of k-coreness centrality.
 			%
-			% N = KCorenessCentrality.GETPROPNUMBER() returns the property number of kcorenesscentrality.
+			% N = KCorenessCentrality.GETPROPNUMBER() returns the property number of k-coreness centrality.
 			%
-			% N = KCorenessCentrality.GETPROPNUMBER(CATEGORY) returns the property number of kcorenesscentrality
+			% N = KCorenessCentrality.GETPROPNUMBER(CATEGORY) returns the property number of k-coreness centrality
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the kcorenesscentrality M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the k-coreness centrality M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('KCorenessCentrality') returns the property number of 'KCorenessCentrality'.
 			%
@@ -264,7 +264,7 @@ classdef KCorenessCentrality < Measure
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in kcorenesscentrality/error.
+			%EXISTSPROP checks whether property exists in k-coreness centrality/error.
 			%
 			% CHECK = KCorenessCentrality.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -302,7 +302,7 @@ classdef KCorenessCentrality < Measure
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in kcorenesscentrality/error.
+			%EXISTSTAG checks whether tag exists in k-coreness centrality/error.
 			%
 			% CHECK = KCorenessCentrality.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -468,7 +468,7 @@ classdef KCorenessCentrality < Measure
 			prop = KCorenessCentrality.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			kcorenesscentrality_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the kcorenesscentrality.'  'DESCRIPTION (constant, string) is the description of the kcorenesscentrality.'  'TEMPLATE (parameter, item) is the template of the kcorenesscentrality.'  'ID (data, string) is a few-letter code of the kcorenesscentrality.'  'LABEL (metadata, string) is an extended label of the kcorenesscentrality.'  'NOTES (metadata, string) are some specific notes about the kcorenesscentrality.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the kcorenesscentrality.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			kcorenesscentrality_description_list = { 'ELCLASS (constant, string) is the class of the K-Coreness Centrality.'  'NAME (constant, string) is the name of the K-Coreness Centrality.'  'DESCRIPTION (constant, string) is the description of the K-Coreness Centrality.'  'TEMPLATE (parameter, item) is the template of the K-Coreness Centrality.'  'ID (data, string) is a few-letter code of the K-Coreness Centrality.'  'LABEL (metadata, string) is an extended label of the K-Coreness Centrality.'  'NOTES (metadata, string) are some specific notes about the K-Coreness Centrality.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the K-Coreness Centrality.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = kcorenesscentrality_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef KCorenessCentrality < Measure
 				case 1 % KCorenessCentrality.ELCLASS
 					prop_default = 'KCorenessCentrality';
 				case 2 % KCorenessCentrality.NAME
-					prop_default = 'KCorenessCentrality';
+					prop_default = 'K-Coreness Centrality';
 				case 3 % KCorenessCentrality.DESCRIPTION
-					prop_default = 'The k-coreness centrality of a node is k if the node belongs to the k-core but not to the (k+1)-core.';
+					prop_default = 'The K-Coreness Centrality (KCorenessCentrality) of a node is k if the node belongs to the k-core but not to the (k+1)-core.';
 				case 4 % KCorenessCentrality.TEMPLATE
 					prop_default = Format.getFormatDefault(8, KCorenessCentrality.getPropSettings(prop));
 				case 5 % KCorenessCentrality.ID
 					prop_default = 'KCorenessCentrality ID';
 				case 6 % KCorenessCentrality.LABEL
-					prop_default = 'KCorenessCentrality label';
+					prop_default = 'K-Coreness Centrality label';
 				case 7 % KCorenessCentrality.NOTES
-					prop_default = 'KCorenessCentrality notes';
+					prop_default = 'K-Coreness Centrality notes';
 				case 9 % KCorenessCentrality.SHAPE
 					prop_default = 2;
 				case 10 % KCorenessCentrality.SCOPE

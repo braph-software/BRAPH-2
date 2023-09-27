@@ -1,43 +1,87 @@
 %% ¡header!
-Diameter < Measure (m, diameter) is the graph diameter.
+Diameter < Measure (m, diameter) is the graph Diameter.
 
 %%% ¡description!
 The diameter is the maximum eccentricity among the vertice within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.M
+%%%% ¡title!
+Diameter
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Diameter.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Diameter.
 %%%% ¡default!
 'Diameter'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the diameter.
+NAME (constant, string) is the name of the Diameter.
 %%%% ¡default!
 'Diameter'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the diameter.
+DESCRIPTION (constant, string) is the description of the Diameter.
 %%%% ¡default!
-'The diameter is the maximum eccentricity among the vertice within a layer.'
+'The Diameter is the maximum eccentricity among the vertice within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the diameter.
+TEMPLATE (parameter, item) is the template of the Diameter.
 %%%% !settings!
 'Diameter'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the diameter.
+ID (data, string) is a few-letter code of the Diameter.
 %%%% ¡default!
 'Diameter ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the diameter.
+LABEL (metadata, string) is an extended label of the Diameter.
 %%%% ¡default!
 'Diameter label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the diameter.
+NOTES (metadata, string) are some specific notes about the Diameter.
 %%%% ¡default!
 'Diameter notes'
 
@@ -62,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the diameter.
+M (result, cell) is the Diameter.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

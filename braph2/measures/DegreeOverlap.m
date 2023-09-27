@@ -1,25 +1,25 @@
 classdef DegreeOverlap < EdgeOverlap
-	%DegreeOverlap is the graph degree overlap.
+	%DegreeOverlap is the graph Degree Overlap.
 	% It is a subclass of <a href="matlab:help EdgeOverlap">EdgeOverlap</a>.
 	%
-	% The degree overlap is the number of edges connected to a node in all layers. 
+	% The Degree Overlap (DegreeOverlap) is the number of edges connected to a node in all layers. 
 	% Connection weights are ignored in calculations.
 	%
 	% The list of DegreeOverlap properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the degree overlap.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the degree overlap.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the degree overlap.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree overlap.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the degree overlap.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the degree overlap.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Degree Overlap.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Degree Overlap.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Degree Overlap.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Degree Overlap.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Degree Overlap.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Degree Overlap.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Degree Overlap.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the degree overlap.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Degree Overlap.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% DegreeOverlap methods (constructor):
@@ -120,20 +120,20 @@ classdef DegreeOverlap < EdgeOverlap
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of DegreeOverlap properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the degree overlap.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the degree overlap.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the degree overlap.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree overlap.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the degree overlap.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the degree overlap.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Degree Overlap.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Degree Overlap.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Degree Overlap.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Degree Overlap.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Degree Overlap.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Degree Overlap.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Degree Overlap.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the degree overlap.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Degree Overlap.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef DegreeOverlap < EdgeOverlap
 			prop = DegreeOverlap.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			degreeoverlap_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the degree overlap.'  'DESCRIPTION (constant, string) is the description of the degree overlap.'  'TEMPLATE (parameter, item) is the template of the degree overlap.'  'ID (data, string) is a few-letter code of the degree overlap.'  'LABEL (metadata, string) is an extended label of the degree overlap.'  'NOTES (metadata, string) are some specific notes about the degree overlap.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the degree overlap.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			degreeoverlap_description_list = { 'ELCLASS (constant, string) is the class of the Degree Overlap.'  'NAME (constant, string) is the name of the Degree Overlap.'  'DESCRIPTION (constant, string) is the description of the Degree Overlap.'  'TEMPLATE (parameter, item) is the template of the Degree Overlap.'  'ID (data, string) is a few-letter code of the Degree Overlap.'  'LABEL (metadata, string) is an extended label of the Degree Overlap.'  'NOTES (metadata, string) are some specific notes about the Degree Overlap.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Degree Overlap.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = degreeoverlap_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef DegreeOverlap < EdgeOverlap
 				case 1 % DegreeOverlap.ELCLASS
 					prop_default = 'DegreeOverlap';
 				case 2 % DegreeOverlap.NAME
-					prop_default = 'DegreeOverlap';
+					prop_default = 'Degree Overlap';
 				case 3 % DegreeOverlap.DESCRIPTION
-					prop_default = 'The degree overlap is the number of edges connected to a node in all layers. Connection weights are ignored in calculations.';
+					prop_default = 'The Degree Overlap (DegreeOverlap) is the number of edges connected to a node in all layers. Connection weights are ignored in calculations.';
 				case 4 % DegreeOverlap.TEMPLATE
 					prop_default = Format.getFormatDefault(8, DegreeOverlap.getPropSettings(prop));
 				case 5 % DegreeOverlap.ID
 					prop_default = 'DegreeOverlap ID';
 				case 6 % DegreeOverlap.LABEL
-					prop_default = 'DegreeOverlap label';
+					prop_default = 'Degree Overlap label';
 				case 7 % DegreeOverlap.NOTES
-					prop_default = 'DegreeOverlap notes';
+					prop_default = 'Degree Overlap notes';
 				case 9 % DegreeOverlap.SHAPE
 					prop_default = 2;
 				case 10 % DegreeOverlap.SCOPE

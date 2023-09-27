@@ -1,44 +1,88 @@
 %% ¡header!
-Transitivity < Triangles (m, transitivity) is the graph transitivity.
+Transitivity < Triangles (m, transitivity) is the graph Transitivity.
 
 %%% ¡description!
-The transitivity of a graph is the fraction of triangles to the number 
-of (unordered) triplets within a layer.
+The Transitivity of a graph is the fraction of triangles to the number 
+ of (unordered) triplets within a layer.
+
+ %% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.M
+%%%% ¡title!
+Transitivity
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Transitivity.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Transitivity.
 %%%% ¡default!
 'Transitivity'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the transitivity.
+NAME (constant, string) is the name of the Transitivity.
 %%%% ¡default!
 'Transitivity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the transitivity.
+DESCRIPTION (constant, string) is the description of the Transitivity.
 %%%% ¡default!
 'The transitivity of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the transitivity.
+TEMPLATE (parameter, item) is the template of the Transitivity.
 %%%% ¡settings!
 'Transitivity'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the transitivity.
+ID (data, string) is a few-letter code of the Transitivity.
 %%%% ¡default!
 'Transitivity ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the transitivity.
+LABEL (metadata, string) is an extended label of the Transitivity.
 %%%% ¡default!
 'Transitivity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the transitivity.
+NOTES (metadata, string) are some specific notes about the Transitivity.
 %%%% ¡default!
 'Transitivity notes'
 
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
-M (result, cell) is the transitivity.
+M (result, cell) is the Transitivity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

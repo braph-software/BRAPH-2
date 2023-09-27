@@ -1,25 +1,25 @@
 classdef PathLength < Measure
-	%PathLength is the graph pathlength.
+	%PathLength is the graph Path Length.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The pathlength is the average shortest pathlength of one node to all 
-	% other nodes within a layer.
+	% The Path Length is the average shortest pathlength of one node to all 
+	%  other nodes within a layer.
 	%
 	% The list of PathLength properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the pathlength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the pathlength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the pathlength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the pathlength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pathlength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pathlength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Path Length.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Path Length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Path Length.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Path Length.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Path Length.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Path Length.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Path Length.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the pathlength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Path Length.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 	%
@@ -127,20 +127,20 @@ classdef PathLength < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLength properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the pathlength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the pathlength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the pathlength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the pathlength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pathlength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pathlength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Path Length.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Path Length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Path Length.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Path Length.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Path Length.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Path Length.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Path Length.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the pathlength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Path Length.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 			%
@@ -476,7 +476,7 @@ classdef PathLength < Measure
 			prop = PathLength.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlength_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the pathlength.'  'DESCRIPTION (constant, string) is the description of the pathlength.'  'TEMPLATE (parameter, item) is the template of the pathlength.'  'ID (data, string) is a few-letter code of the pathlength.'  'LABEL (metadata, string) is an extended label of the pathlength.'  'NOTES (metadata, string) are some specific notes about the pathlength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the pathlength.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
+			pathlength_description_list = { 'ELCLASS (constant, string) is the class of the Path Length.'  'NAME (constant, string) is the name of the Path Length.'  'DESCRIPTION (constant, string) is the description of the Path Length.'  'TEMPLATE (parameter, item) is the template of the Path Length.'  'ID (data, string) is a few-letter code of the Path Length.'  'LABEL (metadata, string) is an extended label of the Path Length.'  'NOTES (metadata, string) are some specific notes about the Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
 			prop_description = pathlength_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -538,17 +538,17 @@ classdef PathLength < Measure
 				case 1 % PathLength.ELCLASS
 					prop_default = 'PathLength';
 				case 2 % PathLength.NAME
-					prop_default = 'PathLength';
+					prop_default = 'Path Length';
 				case 3 % PathLength.DESCRIPTION
-					prop_default = 'The pathlength is the average shortest pathlength of one node to all other nodes within a layer.';
+					prop_default = 'The Path Length is the average shortest path length of one node to all other nodes within a layer.';
 				case 4 % PathLength.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLength.getPropSettings(prop));
 				case 5 % PathLength.ID
 					prop_default = 'PathLength ID';
 				case 6 % PathLength.LABEL
-					prop_default = 'PathLength label';
+					prop_default = 'Path Length label';
 				case 7 % PathLength.NOTES
-					prop_default = 'PathLength notes';
+					prop_default = 'Path Length notes';
 				case 9 % PathLength.SHAPE
 					prop_default = 2;
 				case 10 % PathLength.SCOPE

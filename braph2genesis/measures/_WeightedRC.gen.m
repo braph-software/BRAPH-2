@@ -1,8 +1,8 @@
 %% ¡header!
-WeightedRC< Strength (m, weighted rich-club) is the graph weighted rich-club.
+WeightedRC < Strength (m, weighted rich-club) is the graph Weighted Rich-Club.
 
 %%% ¡description!
-The weighted rich-club coefficient of a node at level s is the fraction of the 
+The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the 
  edges weights that connect nodes of strength s or higher out of the 
  maxium number of edges weights that such nodes might share within a layer. 
  s is set by the user and it can be a vector containting all the 
@@ -32,7 +32,7 @@ Graph
 %%%% ¡id!
 WeightedRC.M
 %%%% ¡title!
-WeightedRC
+Weighted Rich-Club
 
 %%% ¡prop!
 %%%% ¡id!
@@ -55,39 +55,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Weighted Rich-Club.
 %%%% ¡default!
 'WeightedRC'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted rich-club.
+NAME (constant, string) is the name of the Weighted Rich-Club.
 %%%% ¡default!
-'WeightedRC'
+'Weighted Rich-Club'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted rich-club.
+DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
 %%%% ¡default!
-'The weighted rich-club coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.'
+'The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted rich-club.
+TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
 %%%% ¡settings!
 'WeightedRC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted rich-club.
+ID (data, string) is a few-letter code of the Weighted Rich-Club.
 %%%% ¡default!
 'WeightedRC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted rich-club.
+LABEL (metadata, string) is an extended label of the Weighted Rich-Club.
 %%%% ¡default!
-'WeightedRC label'
+'Weighted Rich-Club label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted rich-club.
+NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.
 %%%% ¡default!
-'WeightedRC notes'
+'Weighted Rich-Club notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -110,7 +110,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'MultiplexWU'};
 
 %%% ¡prop!
-M (result, cell) is the weighted rich-club.
+M (result, cell) is the Weighted Rich-Club.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

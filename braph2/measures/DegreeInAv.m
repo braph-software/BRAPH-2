@@ -1,24 +1,24 @@
 classdef DegreeInAv < DegreeIn
-	%DegreeInAv is the graph average in-degree.
+	%DegreeInAv is the graph Average In-Degree.
 	% It is a subclass of <a href="matlab:help DegreeIn">DegreeIn</a>.
 	%
-	% The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.
+	% The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.
 	%
 	% The list of DegreeInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Degree value.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% DegreeInAv methods (constructor):
@@ -119,20 +119,20 @@ classdef DegreeInAv < DegreeIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of DegreeInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the degree-inav value.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Degree value.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -467,7 +467,7 @@ classdef DegreeInAv < DegreeIn
 			prop = DegreeInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			degreeinav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average in-degree.'  'DESCRIPTION (constant, string) is the description of the average in-degree.'  'TEMPLATE (parameter, item) is the template of the average in-degree.'  'ID (data, string) is a few-letter code of the average in-degree.'  'LABEL (metadata, string) is an extended label of the average in-degree.'  'NOTES (metadata, string) are some specific notes about the average in-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the degree-inav value.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			degreeinav_description_list = { 'ELCLASS (constant, string) is the class of the Average In-Degree.'  'NAME (constant, string) is the name of the Average In-Degree.'  'DESCRIPTION (constant, string) is the description of the Average In-Degree.'  'TEMPLATE (parameter, item) is the template of the Average In-Degree.'  'ID (data, string) is a few-letter code of the Average In-Degree.'  'LABEL (metadata, string) is an extended label of the Average In-Degree.'  'NOTES (metadata, string) are some specific notes about the Average In-Degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average In-Degree value.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = degreeinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -525,17 +525,17 @@ classdef DegreeInAv < DegreeIn
 				case 1 % DegreeInAv.ELCLASS
 					prop_default = 'DegreeInAv';
 				case 2 % DegreeInAv.NAME
-					prop_default = 'DegreeInAv';
+					prop_default = 'Average In-Degree';
 				case 3 % DegreeInAv.DESCRIPTION
-					prop_default = 'The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.';
+					prop_default = 'The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.';
 				case 4 % DegreeInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, DegreeInAv.getPropSettings(prop));
 				case 5 % DegreeInAv.ID
 					prop_default = 'DegreeInAv ID';
 				case 6 % DegreeInAv.LABEL
-					prop_default = 'DegreeInAv label';
+					prop_default = 'Average In-Degree label';
 				case 7 % DegreeInAv.NOTES
-					prop_default = 'DegreeInAv notes';
+					prop_default = 'Average In-Degree notes';
 				case 9 % DegreeInAv.SHAPE
 					prop_default = 1;
 				case 10 % DegreeInAv.SCOPE

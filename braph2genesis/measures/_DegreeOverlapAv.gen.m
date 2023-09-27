@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeOverlapAv < DegreeOverlap (m, average average degree overlap) is the graph average degree overlap.
+DegreeOverlapAv < DegreeOverlap (m, average average degree overlap) is the graph Average Degree Overlap.
 
 %%% ¡description!
-The average degree overlap is the average of the number of edges connected 
+The Average Degree Overlap (DegreeOverlapAv) is the average of the number of edges connected 
 to a node in all layers. Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 DegreeOverlapAv.M
 %%%% ¡title!
-DegreeOverlapAv
+Average Degree Overlap
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Degree Overlap.
 %%%% ¡default!
 'DegreeOverlapAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average degree overlap.
+NAME (constant, string) is the name of the Average Degree Overlap.
 %%%% ¡default!
-'DegreeOverlapAv'
+'Average Degree Overlap'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average degree overlap.
+DESCRIPTION (constant, string) is the description of the Average Degree Overlap.
 %%%% ¡default!
-'The average degree overlap is the average of the number of edges connected to a node in all layers. Connection weights are ignored in calculations.'
+'The Average Degree Overlap (DegreeOverlapAv) is the average of the number of edges connected to a node in all layers. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average degree overlap.
+TEMPLATE (parameter, item) is the template of the Average Degree Overlap.
 %%%% ¡settings!
 'DegreeOverlapAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average degree overlap.
+ID (data, string) is a few-letter code of the Average Degree Overlap.
 %%%% ¡default!
 'DegreeOverlapAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average degree overlap.
+LABEL (metadata, string) is an extended label of the Average Degree Overlap.
 %%%% ¡default!
-'DegreeOverlapAv label'
+'Average Degree Overlap label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average degree overlap.
+NOTES (metadata, string) are some specific notes about the Average Degree Overlap.
 %%%% ¡default!
-'DegreeOverlapAv notes'
+'Average Degree Overlap notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'MultilayerWU' 'MultilayerBU' 'MultilayerBUD' 'MultilayerBUT' 'OrdMlBU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the average degree overlap.
+M (result, cell) is the Average Degree Overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

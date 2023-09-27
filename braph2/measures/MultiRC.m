@@ -1,27 +1,27 @@
 classdef MultiRC < Richness
-	%MultiRC is the graph multirichness.
+	%MultiRC is the graph Multirichness.
 	% It is a subclass of <a href="matlab:help Richness">Richness</a>.
 	%
-	% The multirichness of a node is the sum of the edges that connect nodes 
+	% The Multirichness (MultiRC) of a node is the sum of the edges that connect nodes 
 	%  of degree k or higher in all layers. The relevance of each layer is 
 	%  controlled by the coefficients c that are between 0 and 1; 
 	%  the default coefficients are (1/layernumber).
 	%
 	% The list of MultiRC properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multirichness.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multirichness.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multirichness.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multirichness.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multirichness.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multirichness.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multirichness.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multirichness.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multirichness.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multirichness.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multirichness.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multirichness.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multirichness.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
 	%
@@ -129,20 +129,20 @@ classdef MultiRC < Richness
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiRC properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multirichness.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multirichness.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multirichness.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multirichness.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multirichness.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multirichness.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multirichness.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multirichness.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multirichness.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multirichness.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multirichness.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multirichness.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multirichness.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
 			%
@@ -478,7 +478,7 @@ classdef MultiRC < Richness
 			prop = MultiRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multirc_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multirichness.'  'DESCRIPTION (constant, string) is the description of the multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the multirichness.'  'LABEL (metadata, string) is an extended label of the multirichness.'  'NOTES (metadata, string) are some specific notes about the multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
+			multirc_description_list = { 'ELCLASS (constant, string) is the class of the Multirichness.'  'NAME (constant, string) is the name of the Multirichness.'  'DESCRIPTION (constant, string) is the description of the Multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the Multirichness.'  'LABEL (metadata, string) is an extended label of the Multirichness.'  'NOTES (metadata, string) are some specific notes about the Multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
 			prop_description = multirc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -542,7 +542,7 @@ classdef MultiRC < Richness
 				case 2 % MultiRC.NAME
 					prop_default = 'Multirichness';
 				case 3 % MultiRC.DESCRIPTION
-					prop_default = 'The multirichness of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
+					prop_default = 'The Multirichness (MultiRC) of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
 				case 4 % MultiRC.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiRC.getPropSettings(prop));
 				case 5 % MultiRC.ID

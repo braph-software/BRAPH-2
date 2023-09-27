@@ -1,24 +1,24 @@
 classdef PathLengthOut < Measure
-	%PathLengthOut is the graph out-path length.
+	%PathLengthOut is the graph Out-Path Length.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The out-path length is the average shortest out-path lengths of one node to all other nodes without a layer.
+	% The Out-Path Length (PathLengthOut) is the average shortest out-path lengths of one node to all other nodes without a layer.
 	%
 	% The list of PathLengthOut properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-path length.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-path length.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-path length.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-path length.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-path length.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-path length.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-Path Length.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-Path Length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-Path Length.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-Path Length.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Path Length.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Path Length.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Path Length.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the out-path length.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Out-Path Length.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
 	%
@@ -126,20 +126,20 @@ classdef PathLengthOut < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthOut properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the out-path length.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the out-path length.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the out-path length.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the out-path length.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the out-path length.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the out-path length.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-Path Length.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-Path Length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-Path Length.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-Path Length.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Path Length.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Path Length.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Path Length.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the out-path length.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Out-Path Length.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
 			%
@@ -475,7 +475,7 @@ classdef PathLengthOut < Measure
 			prop = PathLengthOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthout_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the out-path length.'  'DESCRIPTION (constant, string) is the description of the out-path length.'  'TEMPLATE (parameter, item) is the template of the out-path length.'  'ID (data, string) is a few-letter code of the out-path length.'  'LABEL (metadata, string) is an extended label of the out-path length.'  'NOTES (metadata, string) are some specific notes about the out-path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the out-path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthOut algorithm' };
+			pathlengthout_description_list = { 'ELCLASS (constant, string) is the class of the Out-Path Length.'  'NAME (constant, string) is the name of the Out-Path Length.'  'DESCRIPTION (constant, string) is the description of the Out-Path Length.'  'TEMPLATE (parameter, item) is the template of the Out-Path Length.'  'ID (data, string) is a few-letter code of the Out-Path Length.'  'LABEL (metadata, string) is an extended label of the Out-Path Length.'  'NOTES (metadata, string) are some specific notes about the Out-Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Out-Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthOut algorithm' };
 			prop_description = pathlengthout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -537,17 +537,17 @@ classdef PathLengthOut < Measure
 				case 1 % PathLengthOut.ELCLASS
 					prop_default = 'PathLengthOut';
 				case 2 % PathLengthOut.NAME
-					prop_default = 'PathLengthOut';
+					prop_default = 'Out-Path Length';
 				case 3 % PathLengthOut.DESCRIPTION
-					prop_default = 'The out-path length is the average shortest out-path length of one node to all other nodes within a layer.';
+					prop_default = 'The Out-Path Length (PathLengthOut) is the average shortest out-path length of one node to all other nodes within a layer.';
 				case 4 % PathLengthOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthOut.getPropSettings(prop));
 				case 5 % PathLengthOut.ID
 					prop_default = 'PathLengthOut ID';
 				case 6 % PathLengthOut.LABEL
-					prop_default = 'PathLengthOut label';
+					prop_default = 'Out-Path Length label';
 				case 7 % PathLengthOut.NOTES
-					prop_default = 'PathLengthOut notes';
+					prop_default = 'Out-Path Length notes';
 				case 9 % PathLengthOut.SHAPE
 					prop_default = 2;
 				case 10 % PathLengthOut.SCOPE
@@ -678,19 +678,19 @@ classdef PathLengthOut < Measure
 					    switch lower(path_length_rule)
 					        case {'subgraphs'}
 					            for u = 1:1:N
-					                Du = distance_layer(:, u);
-					                out_path_length_layer(u) = mean(Du(Du~=Outf & Du~=0));
+					                Du = distance_layer(u, :);
+					                out_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
 					            end
 					            out_path_length_layer(isnan(out_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
-					        case {'harmonic'}
+					        case {'mean'}
 					            for u = 1:1:N
-					                Du = distance_layer(:, u);
-					                out_path_length_layer(u) = harmmean(Du(Du~=0));
-					            end
-					        otherwise  % 'default'
-					            for u = 1:1:N
-					                Du = distance_layer(:, u);
+					                Du = distance_layer(u, :);
 					                out_path_length_layer(u) = mean(Du(Du~=0));
+					            end
+					        otherwise  % 'harmonic' 'default'
+					            for u = 1:1:N
+					                Du = distance_layer(u, :);
+					                out_path_length_layer(u) = harmmean(Du(Du~=0));
 					            end
 					    end
 					    out_path_length(li) = {out_path_length_layer};

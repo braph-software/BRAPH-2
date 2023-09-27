@@ -1,8 +1,8 @@
 %% ¡header!
-Modularity < CommunityStructure (m, modularity) is the graph modularity.
+Modularity < CommunityStructure (m, modularity) is the graph Modularity.
 
 %%% ¡description!
-The modularity of a graph is the quality function Q of the resulting partition of the network.
+The Modularity of a graph is the quality function Q of the resulting partition of the network.
  
 %% ¡layout!
 
@@ -51,37 +51,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Modularity.
 %%%% ¡default!
 'Modularity'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the modularity.
+NAME (constant, string) is the name of the Modularity.
 %%%% ¡default!
 'Modularity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the modularity.
+DESCRIPTION (constant, string) is the description of the Modularity.
 %%%% ¡default!
-'The modularity of a graph is the quality function Q of the resulting partition of the network.'
+'The Modularity of a graph is the quality function Q of the resulting partition of the network.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the modularity.
+TEMPLATE (parameter, item) is the template of the Modularity.
 %%%% ¡settings!
 'Modularity'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the modularity.
+ID (data, string) is a few-letter code of the Modularity.
 %%%% ¡default!
 'Modularity ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the modularity.
+LABEL (metadata, string) is an extended label of the Modularity.
 %%%% ¡default!
 'Modularity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the modularity.
+NOTES (metadata, string) are some specific notes about the Modularity.
 %%%% ¡default!
 'Modularity notes'
 
@@ -106,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUT' 'MultigraphBUD'};
 
 %%% ¡prop!
-M (result, cell) is the modularity.
+M (result, cell) is the Modularity.
 %%%% ¡calculate!
 community_structure = calculateValue@CommunityStructure(m, prop);
 Q = {0};

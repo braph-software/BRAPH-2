@@ -1,25 +1,25 @@
 classdef OverlappingSInAv < OverlappingSIn
-	%OverlappingSInAv is the graph average overlapping in-strength.
+	%OverlappingSInAv is the graph Average Overlapping In-Strength.
 	% It is a subclass of <a href="matlab:help OverlappingSIn">OverlappingSIn</a>.
 	%
-	% The average overlapping in-strength of a graph is the average of the sum of the 
-	% in-strengths of a node in all layers.
+	% The Average Overlapping In-Strength (OverlappingSInAv) of a graph is the average of the sum of the 
+	%  in-strengths of a node in all layers.
 	%
 	% The list of OverlappingSInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping In-Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping In-Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Overlapping In-Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping In-Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping In-Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping In-Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping In-Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average overlapping in-strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping In-Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingSInAv methods (constructor):
@@ -120,20 +120,20 @@ classdef OverlappingSInAv < OverlappingSIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingSInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping In-Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping In-Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Overlapping In-Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping In-Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping In-Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping In-Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping In-Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average overlapping in-strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping In-Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef OverlappingSInAv < OverlappingSIn
 			prop = OverlappingSInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsinav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average overlapping in-strength.'  'DESCRIPTION (constant, string) is the description of the average overlapping in-strength.'  'TEMPLATE (parameter, item) is the template of the average overlapping in-strength.'  'ID (data, string) is a few-letter code of the average overlapping in-strength.'  'LABEL (metadata, string) is an extended label of the average overlapping in-strength.'  'NOTES (metadata, string) are some specific notes about the average overlapping in-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping in-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsinav_description_list = { 'ELCLASS (constant, string) is the class of the Average Overlapping In-Strength.'  'NAME (constant, string) is the name of the Average Overlapping In-Strength.'  'DESCRIPTION (constant, string) is the description of the Average Overlapping In-Strength.'  'TEMPLATE (parameter, item) is the template of the Average Overlapping In-Strength.'  'ID (data, string) is a few-letter code of the Average Overlapping In-Strength.'  'LABEL (metadata, string) is an extended label of the Average Overlapping In-Strength.'  'NOTES (metadata, string) are some specific notes about the Average Overlapping In-Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Overlapping In-Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef OverlappingSInAv < OverlappingSIn
 				case 1 % OverlappingSInAv.ELCLASS
 					prop_default = 'OverlappingSInAv';
 				case 2 % OverlappingSInAv.NAME
-					prop_default = 'OverlappingSInAv';
+					prop_default = 'Average Overlapping In-Strength';
 				case 3 % OverlappingSInAv.DESCRIPTION
-					prop_default = 'The average overlapping in-strength of a graph is the average of the sum of the in-strengths of a node in all layers.';
+					prop_default = 'The Average Overlapping In-Strength (OverlappingSInAv) of a graph is the average of the sum of the in-strengths of a node in all layers.';
 				case 4 % OverlappingSInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingSInAv.getPropSettings(prop));
 				case 5 % OverlappingSInAv.ID
 					prop_default = 'OverlappingSInAv ID';
 				case 6 % OverlappingSInAv.LABEL
-					prop_default = 'OverlappingSInAv label';
+					prop_default = 'Average Overlapping In-Strength label';
 				case 7 % OverlappingSInAv.NOTES
-					prop_default = 'OverlappingSInAv notes';
+					prop_default = 'Average Overlapping In-Strength notes';
 				case 9 % OverlappingSInAv.SHAPE
 					prop_default = 1;
 				case 10 % OverlappingSInAv.SCOPE

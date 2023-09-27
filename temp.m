@@ -165,7 +165,9 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     eval(['test_' el_class])
 % end
-% el_class_list = {'Degree' 'DegreeAv' 'Distance'}
+% 
+% el_class_list = {'RichClub'}; {'MultiplexKCor' 'RichClub'}
+% %el_class_list = Measure.getSubclasses();
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/measures';
@@ -173,6 +175,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
 %     create_test_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
+%     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep()])
 %     eval(['test_' el_class])
 % end
 

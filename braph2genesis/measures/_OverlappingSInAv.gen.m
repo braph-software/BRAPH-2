@@ -1,9 +1,9 @@
 %% ¡header!
-OverlappingSInAv < OverlappingSIn (m, average overlapping in-strength) is the graph average overlapping in-strength.
+OverlappingSInAv < OverlappingSIn (m, average overlapping in-strength) is the graph Average Overlapping In-Strength.
 
 %%% ¡description!
-The average overlapping in-strength of a graph is the average of the sum of the 
-in-strengths of a node in all layers. 
+The Average Overlapping In-Strength (OverlappingSInAv) of a graph is the average of the sum of the 
+ in-strengths of a node in all layers. 
 
 %% ¡layout!
 
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingSInAv.M
 %%%% ¡title!
-OverlappingSInAv
+Average Overlapping In-Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Overlapping In-Strength.
 %%%% ¡default!
 'OverlappingSInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average overlapping in-strength.
+NAME (constant, string) is the name of the Average Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSInAv'
+'Average Overlapping In-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average overlapping in-strength.
+DESCRIPTION (constant, string) is the description of the Average Overlapping In-Strength.
 %%%% ¡default!
-'The average overlapping in-strength of a graph is the average of the sum of the in-strengths of a node in all layers.'
+'The Average Overlapping In-Strength (OverlappingSInAv) of a graph is the average of the sum of the in-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average overlapping in-strength.
+TEMPLATE (parameter, item) is the template of the Average Overlapping In-Strength.
 %%%% ¡settings!
 'OverlappingSInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average overlapping in-strength.
+ID (data, string) is a few-letter code of the Average Overlapping In-Strength.
 %%%% ¡default!
 'OverlappingSInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average overlapping in-strength.
+LABEL (metadata, string) is an extended label of the Average Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSInAv label'
+'Average Overlapping In-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average overlapping in-strength.
+NOTES (metadata, string) are some specific notes about the Average Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSInAv notes'
+'Average Overlapping In-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultilayerWD' 'OrdMlWD' 'OrdMxWD'};
 
 %%% ¡prop!
-M (result, cell) is the average overlapping in-strength.
+M (result, cell) is the Average Overlapping In-Strength.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 overlapping_in_strength = calculateValue@OverlappingSIn(m, prop);

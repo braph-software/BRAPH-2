@@ -1,48 +1,92 @@
 %% ¡header!
-AssortInIn < Measure (m, in-in-assortativity) is the graph in-in-assortativity.
+AssortInIn < Measure (m, in-in-assortativity) is the graph In-In-Assortativity.
 
 %%% ¡description!
-The in-in-assortativity coefficient of a graph is the correlation coefficient between 
+The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between 
   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 The corresponding coefficient for directed and weighted networks is calculated by 
   using the weighted and directed variants of in-degree/in-strength.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.M
+%%%% ¡title!
+In-In-Assortativity
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+AssortInIn.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the In-In-Assortativity.
 %%%% ¡default!
 'AssortInIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the in-in-assortativity.
+NAME (constant, string) is the name of the In-In-Assortativity.
 %%%% ¡default!
-'InInAssortativity'
+'In-In-Assortativity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-in-assortativity.
+DESCRIPTION (constant, string) is the description of the In-In-Assortativity.
 %%%% ¡default!
-'The in-in-assortativity coefficient of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.'
+'The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-in-assortativity.
+TEMPLATE (parameter, item) is the template of the In-In-Assortativity.
 %%%% ¡settings!
 'AssortInIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-in-assortativity.
+ID (data, string) is a few-letter code of the In-In-Assortativity.
 %%%% ¡default!
 'AssortInIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-in-assortativity.
+LABEL (metadata, string) is an extended label of the In-In-Assortativity.
 %%%% ¡default!
-'InInAssortativity label'
+'In-In-Assortativity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-in-assortativity.
+NOTES (metadata, string) are some specific notes about the In-In-Assortativity.
 %%%% ¡default!
-'InInAssortativity notes'
+'In-In-Assortativity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -65,7 +109,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the in-in-assortativity.
+M (result, cell) is the In-In-Assortativity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

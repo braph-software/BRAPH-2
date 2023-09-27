@@ -1,8 +1,8 @@
 %% ¡header!
-WeightedEdgeOvlp < Measure (m, weighted edge overlap) is the graph weighted edge overlap.
+WeightedEdgeOvlp < Measure (m, weighted edge overlap) is the graph Weighted Edge Overlap.
 
 %%% ¡description!
-The weighted edge overlap of a graph is the average weight of an edge 
+The Weighted Edge Overlap (WeightedEdgeOvlp) of a graph is the average weight of an edge 
 across all layers.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 WeightedEdgeOvlp.M
 %%%% ¡title!
-WeightedEdgeOvlp
+Weighted Edge Overlap
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Weighted Edge Overlap.
 %%%% ¡default!
 'WeightedEdgeOvlp'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted edge overlap.
+NAME (constant, string) is the name of the Weighted Edge Overlap.
 %%%% ¡default!
-'WeightedEdgeOvlp'
+'Weighted Edge Overlap'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted edge overlap.
+DESCRIPTION (constant, string) is the description of the Weighted Edge Overlap.
 %%%% ¡default!
-'The weighted edge overlap of a graph is the average weight of an edge across all layers.'
+'The Weighted Edge Overlap (WeightedEdgeOvlp) of a graph is the average weight of an edge across all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted edge overlap.
+TEMPLATE (parameter, item) is the template of the Weighted Edge Overlap.
 %%%% ¡settings!
 'WeightedEdgeOvlp'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted edge overlap.
+ID (data, string) is a few-letter code of the Weighted Edge Overlap.
 %%%% ¡default!
 'WeightedEdgeOvlp ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted edge overlap.
+LABEL (metadata, string) is an extended label of the Weighted Edge Overlap.
 %%%% ¡default!
-'WeightedEdgeOvlp label'
+'Weighted Edge Overlap label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted edge overlap.
+NOTES (metadata, string) are some specific notes about the Weighted Edge Overlap.
 %%%% ¡default!
-'WeightedEdgeOvlp notes'
+'Weighted Edge Overlap notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'OrdMxWU' 'OrdMxWD' 'MultilayerWU' 'MultilayerWD' 'OrdMxWU' 'OrdMxWD'};
 
 %%% ¡prop!
-M (result, cell) is the weighted edge overlap.
+M (result, cell) is the Weighted Edge Overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

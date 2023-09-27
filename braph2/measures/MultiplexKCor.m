@@ -1,27 +1,27 @@
 classdef MultiplexKCor < Measure
-	%MultiplexKCor is the graph multiplex k-core.
+	%MultiplexKCor is the graph Multiplex K-Core.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
+	% The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
 	% k is set by the user; the default value is equal to 1.
 	%
 	% The list of MultiplexKCor properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex K-Core.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex K-Core.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex K-Core.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex K-Core.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex K-Core.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex K-Core.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex K-Core.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex K-Core.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
+	%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.
 	%
 	% MultiplexKCor methods (constructor):
 	%  MultiplexKCor - constructor
@@ -127,22 +127,22 @@ classdef MultiplexKCor < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexKCor properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex k-core.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex k-core.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex k-core.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex k-core.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex k-core.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex k-core.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex K-Core.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex K-Core.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex K-Core.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex K-Core.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex K-Core.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex K-Core.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex K-Core.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex k-core.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex K-Core.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
+			%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.
 			%
 			% See also Category, Format.
 			
@@ -476,7 +476,7 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexkcor_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex k-core.'  'DESCRIPTION (constant, string) is the description of the multiplex k-core.'  'TEMPLATE (parameter, item) is the template of the multiplex k-core.'  'ID (data, string) is a few-letter code of the multiplex k-core.'  'LABEL (metadata, string) is an extended label of the multiplex k-core.'  'NOTES (metadata, string) are some specific notes about the multiplex k-core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex k-core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold' };
+			multiplexkcor_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex K-Core.'  'NAME (constant, string) is the name of the Multiplex K-Core.'  'DESCRIPTION (constant, string) is the description of the Multiplex K-Core.'  'TEMPLATE (parameter, item) is the template of the Multiplex K-Core.'  'ID (data, string) is a few-letter code of the Multiplex K-Core.'  'LABEL (metadata, string) is an extended label of the Multiplex K-Core.'  'NOTES (metadata, string) are some specific notes about the Multiplex K-Core.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex K-Core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.' };
 			prop_description = multiplexkcor_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -538,17 +538,17 @@ classdef MultiplexKCor < Measure
 				case 1 % MultiplexKCor.ELCLASS
 					prop_default = 'MultiplexKCor';
 				case 2 % MultiplexKCor.NAME
-					prop_default = 'MultiplexKCore';
+					prop_default = 'Multiplex K-Core';
 				case 3 % MultiplexKCor.DESCRIPTION
-					prop_default = 'The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.';
+					prop_default = 'The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.';
 				case 4 % MultiplexKCor.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexKCor.getPropSettings(prop));
 				case 5 % MultiplexKCor.ID
 					prop_default = 'MultiplexKCor ID';
 				case 6 % MultiplexKCor.LABEL
-					prop_default = 'MultiplexKCore label';
+					prop_default = 'Multiplex K-Core label';
 				case 7 % MultiplexKCor.NOTES
-					prop_default = 'MultiplexKCore notes';
+					prop_default = 'Multiplex K-Core notes';
 				case 9 % MultiplexKCor.SHAPE
 					prop_default = 3;
 				case 10 % MultiplexKCor.SCOPE

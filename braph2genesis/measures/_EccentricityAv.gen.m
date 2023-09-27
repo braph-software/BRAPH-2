@@ -1,45 +1,95 @@
 %% ¡header!
-EccentricityAv < Eccentricity (m, average eccentricity) is the graph average eccentricity.
+EccentricityAv < Eccentricity (m, average eccentricity) is the graph Average Eccentricity.
 
 %%% ¡description!
-The average eccentricity of a graph is the sum of the nodal eccentricities divided by their number within a layer.
+The Average Eccentricity (EccentricityAv) of a graph is the sum of the nodal eccentricities divided by their number within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.RULE
+%%%% ¡title!
+EccentricityAv rule for calculation in a graph or its subgraph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.M
+%%%% ¡title!
+Average Eccentricity
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Eccentricity.
 %%%% ¡default!
 'EccentricityAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average eccentricity.
+NAME (constant, string) is the name of the Average Eccentricity.
 %%%% ¡default!
-'EccentricityAv'
+'Average Eccentricity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average eccentricity.
+DESCRIPTION (constant, string) is the description of the Average Eccentricity.
 %%%% ¡default!
-'The average eccentricity of a graph is the sum of the nodal eccentricities divided by their number within a layer.'
+'The Average Eccentricity (EccentricityAv) of a graph is the sum of the nodal eccentricities divided by their number within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average eccentricity.
+TEMPLATE (parameter, item) is the template of the Average Eccentricity.
 %%%% ¡settings!
 'EccentricityAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average eccentricity.
+ID (data, string) is a few-letter code of the Average Eccentricity.
 %%%% ¡default!
 'EccentricityAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average eccentricity.
+LABEL (metadata, string) is an extended label of the Average Eccentricity.
 %%%% ¡default!
-'EccentricityAv label'
+'Average Eccentricity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average eccentricity.
+NOTES (metadata, string) are some specific notes about the Average Eccentricity.
 %%%% ¡default!
-'EccentricityAv notes'
+'Average Eccentricity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -62,7 +112,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the average eccentricity.
+M (result, cell) is the Average Eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

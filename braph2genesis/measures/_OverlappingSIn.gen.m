@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingSIn < StrengthIn (m, overlapping in-strength) is the graph overlapping in-strength.
+OverlappingSIn < StrengthIn (m, overlapping in-strength) is the graph Overlapping In-Strength.
 
 %%% ¡description!
-The overlapping in-strength of a graph is the sum of the in-strengths of a 
+The Overlapping In-Strength of a graph is the sum of the in-strengths of a 
 node in all layers.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingSIn.M
 %%%% ¡title!
-OverlappingSIn
+Overlapping In-Strength
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Overlapping In-Strength.
 %%%% ¡default!
 'OverlappingSIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping in-strength.
+NAME (constant, string) is the name of the Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSIn'
+'Overlapping In-Strength'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping in-strength.
+DESCRIPTION (constant, string) is the description of the Overlapping In-Strength.
 %%%% ¡default!
-'The overlapping in-strength of a graph is the sum of the in-strengths of a node in all layers.'
+'The Overlapping In-Strength of a graph is the sum of the in-strengths of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping in-strength.
+TEMPLATE (parameter, item) is the template of the Overlapping In-Strength.
 %%%% ¡settings!
 'OverlappingSIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping in-strength.
+ID (data, string) is a few-letter code of the Overlapping In-Strength.
 %%%% ¡default!
 'OverlappingSIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping in-strength.
+LABEL (metadata, string) is an extended label of the Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSIn label'
+'Overlapping In-Strength label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping in-strength.
+NOTES (metadata, string) are some specific notes about the Overlapping In-Strength.
 %%%% ¡default!
-'OverlappingSIn notes'
+'Overlapping In-Strength notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping in-strength.
+M (result, cell) is the Overlapping In-Strength.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

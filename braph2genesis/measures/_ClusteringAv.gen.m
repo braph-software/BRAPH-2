@@ -1,8 +1,8 @@
 %% ¡header!
-ClusteringAv < Clustering (m, average clustering) is the graph average clustering.
+ClusteringAv < Clustering (m, average clustering) is the graph Average Clustering.
 
 %%% ¡description!
-The average clustering (ClusteringAv) of a graph is the average of the clustering 
+The Average Clustering (ClusteringAv) of a graph is the average of the clustering 
 coefficients of all nodes. Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -58,39 +58,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Clustering.
 %%%% ¡default!
 'ClusteringAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average clustering.
+NAME (constant, string) is the name of the Average Clustering.
 %%%% ¡default!
-'ClusteringAv'
+'Average Clustering'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average clustering.
+DESCRIPTION (constant, string) is the description of the Average Clustering.
 %%%% ¡default!
-'The average clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.'
+'The Average Clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average clustering.
+TEMPLATE (parameter, item) is the template of the Average Clustering.
 %%%% ¡settings!
 'ClusteringAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average clustering.
+ID (data, string) is a few-letter code of the Average Clustering.
 %%%% ¡default!
 'ClusteringAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average clustering.
+LABEL (metadata, string) is an extended label of the Average Clustering.
 %%%% ¡default!
-'ClusteringAv label'
+'Average Clustering label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average clustering.
+NOTES (metadata, string) are some specific notes about the Average Clustering.
 %%%% ¡default!
-'ClusteringAv notes'
+'Average Clustering notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -113,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the average clustering.
+M (result, cell) is the cell containing the Average Clustering.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 clustering  = calculateValue@Clustering(m, prop);

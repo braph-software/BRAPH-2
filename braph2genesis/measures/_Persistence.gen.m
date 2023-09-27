@@ -1,8 +1,8 @@
 %% ¡header!
-Persistence < MultilayerCommunity  (m, persistence) is the graph persistence.
+Persistence < MultilayerCommunity  (m, persistence) is the graph Persistence.
 
 %%% ¡description!
-The persistence of a multilayer network is calculated as the normalized 
+The Persistence of a multilayer network is calculated as the normalized 
 sum of the number of nodes that do not change community assignments. It 
 varies between 0 and 1. 
 In categorical multilayer networks, it is the sum over all pairs of layers 
@@ -53,41 +53,85 @@ Measure NOTES
 Persistence.COMPATIBLE_GRAPHS
 %%%% ¡title!
 Compatible Graphs
+  
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.M
+%%%% ¡title!
+Persistence
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Persistence.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Persistence.
 %%%% ¡default!
 'Persistence'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the persistence.
+NAME (constant, string) is the name of the Persistence.
 %%%% ¡default!
 'Persistence'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the persistence.
+DESCRIPTION (constant, string) is the description of the Persistence.
 %%%% ¡default!
-'The persistence of a multilayer network is calculated as the normalized sum of the number of nodes that do not change community assignments. It varies between 0 and 1. In categorical multilayer networks, it is the sum over all pairs of layers of the number of nodes that do not change community assignments, whereas in ordinal multilayer networks (e.g. temporal), it is the number of nodes that do not change community assignments between consecutive layers.'
+'The Persistence of a multilayer network is calculated as the normalized sum of the number of nodes that do not change community assignments. It varies between 0 and 1. In categorical multilayer networks, it is the sum over all pairs of layers of the number of nodes that do not change community assignments, whereas in ordinal multilayer networks (e.g. temporal), it is the number of nodes that do not change community assignments between consecutive layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the persistence.
+TEMPLATE (parameter, item) is the template of the Persistence.
 %%%% ¡settings!
 'Persistence'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the persistence.
+ID (data, string) is a few-letter code of the Persistence.
 %%%% ¡default!
 'Persistence ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the persistence.
+LABEL (metadata, string) is an extended label of the Persistence.
 %%%% ¡default!
 'Persistence label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the persistence.
+NOTES (metadata, string) are some specific notes about the Persistence.
 %%%% ¡default!
 'Persistence notes'
 
@@ -112,7 +156,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the categorical persistence.
+M (result, cell) is the categorical Persistence.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

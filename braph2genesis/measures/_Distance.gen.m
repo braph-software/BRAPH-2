@@ -1,8 +1,8 @@
 %% ¡header!
-Distance < Measure (m, distance) is the distance.
+Distance < Measure (m, distance) is the Distance.
 
 %%% ¡description!
-The distance of a graph is the shortest path between all pairs of nodes 
+The Distance of a graph is the shortest path between all pairs of nodes 
  within a layer of the graph.
 For weighted graphs, the distance is calculated with the Dijkstra algorithm
  using the inverse weight as the distance associated to the edge.
@@ -54,37 +54,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Distance.
 %%%% ¡default!
 'Distance'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the distance.
+NAME (constant, string) is the name of the Distance.
 %%%% ¡default!
 'Distance'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the distance.
+DESCRIPTION (constant, string) is the description of the Distance.
 %%%% ¡default!
-'The distance of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.'
+'The Distance of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the distance.
+TEMPLATE (parameter, item) is the template of the Distance.
 %%%% ¡settings!
 'Distance'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the distance.
+ID (data, string) is a few-letter code of the Distance.
 %%%% ¡default!
 'Distance ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the distance.
+LABEL (metadata, string) is an extended label of the Distance.
 %%%% ¡default!
 'Distance label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the distance.
+NOTES (metadata, string) are some specific notes about the Distance.
 %%%% ¡default!
 'Distance notes'
 
@@ -109,7 +109,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxBD' 'OrdMxBUD' 'OrdMxBU' 'OrdMxWD' 'OrdMxWU' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD' 'MultilayerWU' 'OrdMlWD' 'OrdMlWU' 'OrdMlBD' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'};
 
 %%% ¡prop!
-M (result, cell) is the distance.
+M (result, cell) is the Distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -1,25 +1,25 @@
 classdef Richness < Degree
-	%Richness is the graph richness.
+	%Richness is the graph Richness.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
-	% The richness of a node is the sum of the edges that connect nodes 
+	% The Richness of a node is the sum of the edges that connect nodes 
 	% of higher degree within a layer.
 	%
 	% The list of Richness properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richness.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richness.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richness.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richness.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richness.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richness.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Richness.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Richness.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Richness.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Richness.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Richness.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Richness.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Richness.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the richness.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Richness.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% Richness methods (constructor):
@@ -120,20 +120,20 @@ classdef Richness < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Richness properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richness.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richness.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richness.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richness.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richness.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richness.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Richness.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Richness.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Richness.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Richness.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Richness.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Richness.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Richness.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the richness.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Richness.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef Richness < Degree
 			prop = Richness.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			richness_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the richness.'  'DESCRIPTION (constant, string) is the description of the richness.'  'TEMPLATE (parameter, item) is the template of the richness.'  'ID (data, string) is a few-letter code of the richness.'  'LABEL (metadata, string) is an extended label of the richness.'  'NOTES (metadata, string) are some specific notes about the richness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the richness.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			richness_description_list = { 'ELCLASS (constant, string) is the class of the Richness.'  'NAME (constant, string) is the name of the Richness.'  'DESCRIPTION (constant, string) is the description of the Richness.'  'TEMPLATE (parameter, item) is the template of the Richness.'  'ID (data, string) is a few-letter code of the Richness.'  'LABEL (metadata, string) is an extended label of the Richness.'  'NOTES (metadata, string) are some specific notes about the Richness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Richness.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = richness_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,7 +528,7 @@ classdef Richness < Degree
 				case 2 % Richness.NAME
 					prop_default = 'Richness';
 				case 3 % Richness.DESCRIPTION
-					prop_default = 'The richness of a node is the sum of the edges that connect nodes of higher degree within a layer.';
+					prop_default = 'The Richness of a node is the sum of the edges that connect nodes of higher degree within a layer.';
 				case 4 % Richness.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Richness.getPropSettings(prop));
 				case 5 % Richness.ID

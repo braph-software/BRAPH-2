@@ -1,45 +1,89 @@
 %% ¡header!
-GlobalEfficiencyInAv < GlobalEfficiencyIn (m, average in-global efficiency) is the average graph in-global efficiency.
+GlobalEfficiencyInAv < GlobalEfficiencyIn (m, average in-global efficiency) is the graph Average In-Global Efficiency.
 
 %%% ¡description!
-The average in-global efficiency is the average inverse shortest in-path length within each layer. 
+The Average In-Global Efficiency (GlobalEfficiencyInAv) is the average inverse shortest in-path length within each layer. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.M
+%%%% ¡title!
+Average In-Global Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyInAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the graph Average In-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average in-global efficiency.
+NAME (constant, string) is the name of the graph Average In-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyInAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average graph in-global efficiency.
+DESCRIPTION (constant, string) is the description of the graph Average In-Global Efficiency.
 %%%% ¡default!
-'The average in-global efficiency is the average inverse shortest in-path length within each layer.'
+'The Average In-Global Efficiency (GlobalEfficiencyInAv) is the average inverse shortest in-path length within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average graph in-global efficiency.
+TEMPLATE (parameter, item) is the template of the graph Average In-Global Efficiency.
 %%%% ¡settings!
 'GlobalEfficiencyInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average graph in-global efficiency.
+ID (data, string) is a few-letter code of the graph Average In-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average graph in-global efficiency.
+LABEL (metadata, string) is an extended label of the graph Average In-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyInAv label'
+'Average In-Global Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average graph in-global efficiency.
+NOTES (metadata, string) are some specific notes about the graph Average In-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyInAv notes'
+'Average In-Global Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -62,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxBD' 'OrdMxWD'};
 
 %%% ¡prop!
-M (result, cell) is the average in-global efficiency.
+M (result, cell) is the Average In-Global Efficiency.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 L = g.get('LAYERNUMBER');

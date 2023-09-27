@@ -1,46 +1,96 @@
 %% ¡header!
-EccentricityInAv < EccentricityIn (m, average in-eccentricity) is the graph average in-eccentricity.
+EccentricityInAv < EccentricityIn (m, average in-eccentricity) is the graph Average In-Eccentricity.
 
 %%% ¡description!
-The average in-eccentricity of a node is the sum of the nodal 
+The Average In-Eccentricity (EccentricityInAv) of a node is the sum of the nodal 
 in-eccentricities divided by their number within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.RULE
+%%%% ¡title!
+In-Eccentricity rule for calculation in a graph or its subgraph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.M
+%%%% ¡title!
+Average In-Eccentricity
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityInAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average In-Eccentricity.
 %%%% ¡default!
 'EccentricityInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average in-eccentricity.
+NAME (constant, string) is the name of the Average In-Eccentricity.
 %%%% ¡default!
-'EccentricityInAv'
+'Average In-Eccentricity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average in-eccentricity.
+DESCRIPTION (constant, string) is the description of the Average In-Eccentricity.
 %%%% ¡default!
-'The average in-eccentricity of a node is the sum of the nodal in-eccentricities divided by their number within a layer.'
+'The Average In-Eccentricity (EccentricityInAv) of a node is the sum of the nodal in-eccentricities divided by their number within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average in-eccentricity.
+TEMPLATE (parameter, item) is the template of the Average In-Eccentricity.
 %%%% ¡settings!
 'EccentricityInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average in-eccentricity.
+ID (data, string) is a few-letter code of the Average In-Eccentricity.
 %%%% ¡default!
 'EccentricityInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average in-eccentricity.
+LABEL (metadata, string) is an extended label of the Average In-Eccentricity.
 %%%% ¡default!
-'EccentricityInAv label'
+'Average In-Eccentricity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average in-eccentricity.
+NOTES (metadata, string) are some specific notes about the Average In-Eccentricity.
 %%%% ¡default!
-'EccentricityInAv notes'
+'Average In-Eccentricity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -63,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'};
 
 %%% ¡prop!
-M (result, cell) is the average in-eccentricity.
+M (result, cell) is the Average In-Eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

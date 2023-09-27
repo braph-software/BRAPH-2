@@ -1,8 +1,8 @@
 %% ¡header!
-EdgeOverlap < Measure (m, edge overlap) is the graph edge overlap.
+EdgeOverlap < Measure (m, edge overlap) is the graph Edge Overlap.
 
 %%% ¡description!
-The edge overlap of a graph is the fraction of layers in which an edge between 
+The Edge Overlap (EdgeOverlap) of a graph is the fraction of layers in which an edge between 
 a pair of nodes exists. Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 EdgeOverlap.M
 %%%% ¡title!
-EdgeOverlap
+Edge Overlap
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Edge Overlap.
 %%%% ¡default!
 'EdgeOverlap'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the edge overlap.
+NAME (constant, string) is the name of the Edge Overlap.
 %%%% ¡default!
-'EdgeOverlap'
+'Edge Overlap'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the edge overlap.
+DESCRIPTION (constant, string) is the description of the Edge Overlap.
 %%%% ¡default!
-'The edge overlap of a graph is the fraction of layers in which an edge between a pair of nodes exists. Connection weights are ignored in calculations.'
+'The Edge Overlap (EdgeOverlap) of a graph is the fraction of layers in which an edge between a pair of nodes exists. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the edge overlap.
+TEMPLATE (parameter, item) is the template of the Edge Overlap.
 %%%% ¡settings!
 'EdgeOverlap'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the edge overlap.
+ID (data, string) is a few-letter code of the Edge Overlap.
 %%%% ¡default!
 'EdgeOverlap ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the edge overlap.
+LABEL (metadata, string) is an extended label of the Edge Overlap.
 %%%% ¡default!
-'EdgeOverlap label'
+'Edge Overlap label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the edge overlap.
+NOTES (metadata, string) are some specific notes about the Edge Overlap.
 %%%% ¡default!
-'EdgeOverlap notes'
+'Edge Overlap notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlWU' 'OrdMlBU' 'OrdMlBUT' 'OrdMlBUD'};
 
 %%% ¡prop!
-M (result, cell) is the edge overlap.
+M (result, cell) is the Edge Overlap.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

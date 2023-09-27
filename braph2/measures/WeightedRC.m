@@ -1,28 +1,28 @@
 classdef WeightedRC < Strength
-	%WeightedRC is the graph weighted rich-club.
+	%WeightedRC is the graph Weighted Rich-Club.
 	% It is a subclass of <a href="matlab:help Strength">Strength</a>.
 	%
-	% The weighted rich-club coefficient of a node at level s is the fraction of the 
+	% The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the 
 	%  edges weights that connect nodes of strength s or higher out of the 
 	%  maxium number of edges weights that such nodes might share within a layer. 
 	%  s is set by the user and it can be a vector containting all the 
 	%  strength thresholds; the default value is equal to 1.
 	%
 	% The list of WeightedRC properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted rich-club.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted rich-club.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted rich-club.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted rich-club.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted rich-club.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted rich-club.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Rich-Club.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Rich-Club.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Rich-Club.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Rich-Club.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted rich-club.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Rich-Club.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>WRC_PARAMETER</strong> 	WRC_PARAMETER (parameter, RVECTOR) is the threshold
 	%
@@ -130,20 +130,20 @@ classdef WeightedRC < Strength
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedRC properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted rich-club.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted rich-club.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted rich-club.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted rich-club.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted rich-club.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted rich-club.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Rich-Club.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Rich-Club.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Rich-Club.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Rich-Club.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted rich-club.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Rich-Club.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>WRC_PARAMETER</strong> 	WRC_PARAMETER (parameter, RVECTOR) is the threshold
 			%
@@ -479,7 +479,7 @@ classdef WeightedRC < Strength
 			prop = WeightedRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedrc_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the weighted rich-club.'  'DESCRIPTION (constant, string) is the description of the weighted rich-club.'  'TEMPLATE (parameter, item) is the template of the weighted rich-club.'  'ID (data, string) is a few-letter code of the weighted rich-club.'  'LABEL (metadata, string) is an extended label of the weighted rich-club.'  'NOTES (metadata, string) are some specific notes about the weighted rich-club.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted rich-club.'  'PFM (gui, item) contains the panel figure of the measure.'  'WRC_PARAMETER (parameter, RVECTOR) is the threshold' };
+			weightedrc_description_list = { 'ELCLASS (constant, string) is the class of the Weighted Rich-Club.'  'NAME (constant, string) is the name of the Weighted Rich-Club.'  'DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.'  'TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.'  'ID (data, string) is a few-letter code of the Weighted Rich-Club.'  'LABEL (metadata, string) is an extended label of the Weighted Rich-Club.'  'NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Weighted Rich-Club.'  'PFM (gui, item) contains the panel figure of the measure.'  'WRC_PARAMETER (parameter, RVECTOR) is the threshold' };
 			prop_description = weightedrc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -541,17 +541,17 @@ classdef WeightedRC < Strength
 				case 1 % WeightedRC.ELCLASS
 					prop_default = 'WeightedRC';
 				case 2 % WeightedRC.NAME
-					prop_default = 'WeightedRC';
+					prop_default = 'Weighted Rich-Club';
 				case 3 % WeightedRC.DESCRIPTION
-					prop_default = 'The weighted rich-club coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.';
+					prop_default = 'The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.';
 				case 4 % WeightedRC.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedRC.getPropSettings(prop));
 				case 5 % WeightedRC.ID
 					prop_default = 'WeightedRC ID';
 				case 6 % WeightedRC.LABEL
-					prop_default = 'WeightedRC label';
+					prop_default = 'Weighted Rich-Club label';
 				case 7 % WeightedRC.NOTES
-					prop_default = 'WeightedRC notes';
+					prop_default = 'Weighted Rich-Club notes';
 				case 9 % WeightedRC.SHAPE
 					prop_default = 2;
 				case 10 % WeightedRC.SCOPE

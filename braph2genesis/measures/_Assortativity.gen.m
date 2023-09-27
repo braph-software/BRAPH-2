@@ -1,8 +1,8 @@
 %% ¡header!
-Assortativity < Measure (m, assortativity) is the graph assortativity.
+Assortativity < Measure (m, assortativity) is the graph Assortativity.
 
 %%% ¡description!
-The Assortativity coefficient of a graph is the correlation coefficient 
+The Assortativity coefficient (Assortativity) of a graph is the correlation coefficient 
  between the degrees/strengths of all nodes on two opposite ends of an edge 
  within a layer.
 The corresponding coefficient for directed and weighted networks is 
@@ -55,37 +55,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the assortativity.
+ELCLASS (constant, string) is the class of the Assortativity.
 %%%% ¡default!
 'Assortativity'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the assortativity.
+NAME (constant, string) is the name of the Assortativity.
 %%%% ¡default!
 'Assortativity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the assortativity.
+DESCRIPTION (constant, string) is the description of the Assortativity.
 %%%% ¡default!
-'The Assortativity of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.'
+'The Assortativity coefficient (Assortativity) of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the assortativity.
+TEMPLATE (parameter, item) is the template of the Assortativity.
 %%%% ¡settings!
 'Assortativity'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the assortativity.
+ID (data, string) is a few-letter code of the Assortativity.
 %%%% ¡default!
 'Assortativity ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the assortativity.
+LABEL (metadata, string) is an extended label of the Assortativity.
 %%%% ¡default!
 'Assortativity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the assortativity.
+NOTES (metadata, string) are some specific notes about the Assortativity.
 %%%% ¡default!
 'Assortativity notes'
 

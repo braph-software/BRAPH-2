@@ -1,46 +1,90 @@
 %% ¡header!
-GlobalEfficiencyOut < Distance (m, out-global efficiency) is the graph out-global efficiency.
+GlobalEfficiencyOut < Distance (m, out-global efficiency) is the graph Out-Global Efficiency.
 
 %%% ¡description!
-The out-global efficiency is the average inverse shortest in-path length within each layer. 
+The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest in-path length within each layer. 
 It is inversely related to the characteristic in-path length.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.M
+%%%% ¡title!
+Out-Global Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyOut.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Out-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the out-global efficiency.
+NAME (constant, string) is the name of the Out-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOut'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the out-global efficiency.
+DESCRIPTION (constant, string) is the description of the Out-Global Efficiency.
 %%%% ¡default!
-'The out-global efficiency is the average inverse shortest out-path length within each layer. It is inversely related to the characteristic out-path length.'
+'The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest out-path length within each layer. It is inversely related to the characteristic out-path length.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the out-global efficiency.
+TEMPLATE (parameter, item) is the template of the Out-Global Efficiency.
 %%%% ¡settings!
 'GlobalEfficiencyOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the out-global efficiency.
+ID (data, string) is a few-letter code of the Out-Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the out-global efficiency.
+LABEL (metadata, string) is an extended label of the Out-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyOut label'
+'Out-Global Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the out-global efficiency.
+NOTES (metadata, string) are some specific notes about the Out-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyOut notes'
+'Out-Global Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxBD' 'OrdMxWD'};
 
 %%% ¡prop!
-M (result, cell) is the out-global efficiency.
+M (result, cell) is the Out-Global Efficiency.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

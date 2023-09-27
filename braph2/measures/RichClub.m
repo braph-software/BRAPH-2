@@ -1,27 +1,27 @@
 classdef RichClub < Degree
-	%RichClub is the graph richclub.
+	%RichClub is the graph Rich-Club.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
-	% The rich-club coefficient of a node at level k is the fraction of 
+	% The Rich-Club coefficient (RichClub) of a node at level k is the fraction of 
 	%  the edges that connect nodes of degree k or higher out of the 
 	%  maxium number of edges that such nodes might share within a 
 	%  layer. k is set by the user, the default value is equal to 1.
 	%
 	% The list of RichClub properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richclub.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richclub.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richclub.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richclub.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richclub.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richclub.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the richclub.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, scalar) 
 	%
@@ -43,33 +43,33 @@ classdef RichClub < Degree
 	%  unchecked - sets a property to NOT checked
 	%
 	% RichClub methods (display):
-	%  tostring - string with information about the richclub
-	%  disp - displays information about the richclub
-	%  tree - displays the tree of the richclub
+	%  tostring - string with information about the rich-club
+	%  disp - displays information about the rich-club
+	%  tree - displays the tree of the rich-club
 	%
 	% RichClub methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two richclub are equal (values, locked)
+	%  isequal - determines whether two rich-club are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the richclub
+	%  copy - copies the rich-club
 	%
 	% RichClub methods (save/load, Static):
-	%  save - saves BRAPH2 richclub as b2 file
-	%  load - loads a BRAPH2 richclub from a b2 file
+	%  save - saves BRAPH2 rich-club as b2 file
+	%  load - loads a BRAPH2 rich-club from a b2 file
 	%
 	% RichClub method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the richclub
+	%  encodeJSON - returns a JSON string encoding the rich-club
 	%
 	% RichClub method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the richclub
+	%   decodeJSON - returns a JSON string encoding the rich-club
 	%
 	% RichClub methods (inspection, Static):
-	%  getClass - returns the class of the richclub
+	%  getClass - returns the class of the rich-club
 	%  getSubclasses - returns all subclasses of RichClub
-	%  getProps - returns the property list of the richclub
-	%  getPropNumber - returns the property number of the richclub
+	%  getProps - returns the property list of the rich-club
+	%  getPropNumber - returns the property number of the rich-club
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -119,7 +119,7 @@ classdef RichClub < Degree
 	end
 	methods % constructor
 		function m = RichClub(varargin)
-			%RichClub() creates a richclub.
+			%RichClub() creates a rich-club.
 			%
 			% RichClub(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -129,20 +129,20 @@ classdef RichClub < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of RichClub properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the richclub.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the richclub.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the richclub.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the richclub.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the richclub.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the richclub.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the richclub.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, scalar) 
 			%
@@ -153,12 +153,12 @@ classdef RichClub < Degree
 	end
 	methods (Static) % inspection
 		function m_class = getClass()
-			%GETCLASS returns the class of the richclub.
+			%GETCLASS returns the class of the rich-club.
 			%
 			% CLASS = RichClub.GETCLASS() returns the class 'RichClub'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = M.GETCLASS() returns the class of the richclub M.
+			%  CLASS = M.GETCLASS() returns the class of the rich-club M.
 			%  CLASS = Element.GETCLASS(M) returns the class of 'M'.
 			%  CLASS = Element.GETCLASS('RichClub') returns 'RichClub'.
 			%
@@ -168,12 +168,12 @@ classdef RichClub < Degree
 			m_class = 'RichClub';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the richclub.
+			%GETSUBCLASSES returns all subclasses of the rich-club.
 			%
 			% LIST = RichClub.GETSUBCLASSES() returns all subclasses of 'RichClub'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = M.GETSUBCLASSES() returns all subclasses of the richclub M.
+			%  LIST = M.GETSUBCLASSES() returns all subclasses of the rich-club M.
 			%  LIST = Element.GETSUBCLASSES(M) returns all subclasses of 'M'.
 			%  LIST = Element.GETSUBCLASSES('RichClub') returns all subclasses of 'RichClub'.
 			%
@@ -185,16 +185,16 @@ classdef RichClub < Degree
 			subclass_list = { 'RichClub' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of richclub.
+			%GETPROPS returns the property list of rich-club.
 			%
-			% PROPS = RichClub.GETPROPS() returns the property list of richclub
+			% PROPS = RichClub.GETPROPS() returns the property list of rich-club
 			%  as a row vector.
 			%
 			% PROPS = RichClub.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the richclub M.
+			%  PROPS = M.GETPROPS([CATEGORY]) returns the property list of the rich-club M.
 			%  PROPS = Element.GETPROPS(M[, CATEGORY]) returns the property list of 'M'.
 			%  PROPS = Element.GETPROPS('RichClub'[, CATEGORY]) returns the property list of 'RichClub'.
 			%
@@ -230,15 +230,15 @@ classdef RichClub < Degree
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of richclub.
+			%GETPROPNUMBER returns the property number of rich-club.
 			%
-			% N = RichClub.GETPROPNUMBER() returns the property number of richclub.
+			% N = RichClub.GETPROPNUMBER() returns the property number of rich-club.
 			%
-			% N = RichClub.GETPROPNUMBER(CATEGORY) returns the property number of richclub
+			% N = RichClub.GETPROPNUMBER(CATEGORY) returns the property number of rich-club
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the richclub M.
+			%  N = M.GETPROPNUMBER([CATEGORY]) returns the property number of the rich-club M.
 			%  N = Element.GETPROPNUMBER(M) returns the property number of 'M'.
 			%  N = Element.GETPROPNUMBER('RichClub') returns the property number of 'RichClub'.
 			%
@@ -274,7 +274,7 @@ classdef RichClub < Degree
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in richclub/error.
+			%EXISTSPROP checks whether property exists in rich-club/error.
 			%
 			% CHECK = RichClub.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -312,7 +312,7 @@ classdef RichClub < Degree
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in richclub/error.
+			%EXISTSTAG checks whether tag exists in rich-club/error.
 			%
 			% CHECK = RichClub.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -478,7 +478,7 @@ classdef RichClub < Degree
 			prop = RichClub.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			richclub_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the richclub.'  'DESCRIPTION (constant, string) is the description of the richclub.'  'TEMPLATE (parameter, item) is the template of the richclub.'  'ID (data, string) is a few-letter code of the richclub.'  'LABEL (metadata, string) is an extended label of the richclub.'  'NOTES (metadata, string) are some specific notes about the richclub.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the richclub.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, scalar) ' };
+			richclub_description_list = { 'ELCLASS (constant, string) is the class of the Rich-Club.'  'NAME (constant, string) is the name of the Rich-Club.'  'DESCRIPTION (constant, string) is the description of the Rich-Club.'  'TEMPLATE (parameter, item) is the template of the Rich-Club.'  'ID (data, string) is a few-letter code of the Rich-Club.'  'LABEL (metadata, string) is an extended label of the Rich-Club.'  'NOTES (metadata, string) are some specific notes about the Rich-Club.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Rich-Club.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, scalar) ' };
 			prop_description = richclub_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -540,17 +540,17 @@ classdef RichClub < Degree
 				case 1 % RichClub.ELCLASS
 					prop_default = 'RichClub';
 				case 2 % RichClub.NAME
-					prop_default = 'RichClub';
+					prop_default = 'Rich-Club';
 				case 3 % RichClub.DESCRIPTION
-					prop_default = 'The rich-club coefficient of a node at level k is the fraction of the edges that connect nodes of degree k or higher out of the maxium number of edges that such nodes might share within a layer. k is set by the user, the default value is equal to 1.';
+					prop_default = 'The Rich-Club coefficient (RichClub) of a node at level k is the fraction of the edges that connect nodes of degree k or higher out of the maxium number of edges that such nodes might share within a layer. k is set by the user, the default value is equal to 1.';
 				case 4 % RichClub.TEMPLATE
 					prop_default = Format.getFormatDefault(8, RichClub.getPropSettings(prop));
 				case 5 % RichClub.ID
 					prop_default = 'RichClub ID';
 				case 6 % RichClub.LABEL
-					prop_default = 'RichClub label';
+					prop_default = 'Rich-Club label';
 				case 7 % RichClub.NOTES
-					prop_default = 'RichClub notes';
+					prop_default = 'Rich-Club notes';
 				case 9 % RichClub.SHAPE
 					prop_default = 1;
 				case 10 % RichClub.SCOPE

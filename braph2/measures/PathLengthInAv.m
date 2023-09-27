@@ -1,24 +1,24 @@
 classdef PathLengthInAv < PathLengthIn
-	%PathLengthInAv is the graph average in-path length.
+	%PathLengthInAv is the graph Average In-Path Length.
 	% It is a subclass of <a href="matlab:help PathLengthIn">PathLengthIn</a>.
 	%
-	% The average in-path length of a graph is the average of the sum of the in-path lengths within each layer.
+	% The Average In-Path Length (PathLengthInAv) of a graph is the average of the sum of the in-path lengths within each layer.
 	%
 	% The list of PathLengthInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-path length.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-path length.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-path length.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-path length.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-path length.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-path length.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Path Length.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Path Length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Path Length.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Path Length.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Path Length.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Path Length.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Path Length.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average in-path length.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Path Length.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 	%
@@ -120,20 +120,20 @@ classdef PathLengthInAv < PathLengthIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average in-path length.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average in-path length.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average in-path length.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average in-path length.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average in-path length.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average in-path length.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Path Length.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Path Length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Path Length.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Path Length.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Path Length.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Path Length.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Path Length.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average in-path length.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Path Length.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthIn algorithm
 			%
@@ -469,7 +469,7 @@ classdef PathLengthInAv < PathLengthIn
 			prop = PathLengthInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthinav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average in-path length.'  'DESCRIPTION (constant, string) is the description of the average in-path length.'  'TEMPLATE (parameter, item) is the template of the average in-path length.'  'ID (data, string) is a few-letter code of the average in-path length.'  'LABEL (metadata, string) is an extended label of the average in-path length.'  'NOTES (metadata, string) are some specific notes about the average in-path length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average in-path length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
+			pathlengthinav_description_list = { 'ELCLASS (constant, string) is the class of the Average In-Path Length.'  'NAME (constant, string) is the name of the Average In-Path Length.'  'DESCRIPTION (constant, string) is the description of the Average In-Path Length.'  'TEMPLATE (parameter, item) is the template of the Average In-Path Length.'  'ID (data, string) is a few-letter code of the Average In-Path Length.'  'LABEL (metadata, string) is an extended label of the Average In-Path Length.'  'NOTES (metadata, string) are some specific notes about the Average In-Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average In-Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthIn algorithm' };
 			prop_description = pathlengthinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,17 +527,17 @@ classdef PathLengthInAv < PathLengthIn
 				case 1 % PathLengthInAv.ELCLASS
 					prop_default = 'PathLengthInAv';
 				case 2 % PathLengthInAv.NAME
-					prop_default = 'PathLengthInAv';
+					prop_default = 'Average In-Path Length';
 				case 3 % PathLengthInAv.DESCRIPTION
-					prop_default = 'The average in-path length is the average shortest in-path length of one node to all other nodes within a layer.';
+					prop_default = 'The Average In-Path Length (PathLengthInAv) is the average shortest in-path length of one node to all other nodes within a layer.';
 				case 4 % PathLengthInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthInAv.getPropSettings(prop));
 				case 5 % PathLengthInAv.ID
 					prop_default = 'PathLengthInAv ID';
 				case 6 % PathLengthInAv.LABEL
-					prop_default = 'PathLengthInAv label';
+					prop_default = 'Average In-Path Length label';
 				case 7 % PathLengthInAv.NOTES
-					prop_default = 'PathLengthInAv notes';
+					prop_default = 'Average In-Path Length notes';
 				case 9 % PathLengthInAv.SHAPE
 					prop_default = 2;
 				case 10 % PathLengthInAv.SCOPE
@@ -650,14 +650,21 @@ classdef PathLengthInAv < PathLengthIn
 					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
-					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-					N = g.get('NODENUMBER');
 					L = g.get('LAYERNUMBER');
 					
 					in_path_length = calculateValue@PathLengthIn(m, prop);
 					in_path_length_av = cell(L, 1);
+					path_length_rule = m.get('RULE');
 					parfor li = 1:1:length(in_path_length_av)
-					    in_path_length_av(li) = {mean(in_path_length{li})};
+					    switch lower(path_length_rule)
+					        case {'subgraphs'}
+					            player = in_path_length{li};
+					            in_path_length_av(li) = {mean(player(player~=Inf))};
+					        case {'mean'}
+					            in_path_length_av(li) = {mean(in_path_length{li})};
+					        otherwise  % 'harmonic' 'default'
+					            in_path_length_av(li) = {harmmean(in_path_length{li})};
+					    end
 					end
 					value = in_path_length_av;
 					

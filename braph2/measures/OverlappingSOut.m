@@ -1,25 +1,25 @@
 classdef OverlappingSOut < StrengthOut
-	%OverlappingSOut is the graph overlapping out-strength.
+	%OverlappingSOut is the graph Overlapping Out-Strength.
 	% It is a subclass of <a href="matlab:help StrengthOut">StrengthOut</a>.
 	%
-	% The overlapping out-strength of a graph is the sum of the out-strengths of a 
-	% node in all layers.
+	% The Overlapping Out-Strength (OverlappingSOut) of a graph is the sum of the out-strengths of a 
+	%  node in all layers.
 	%
 	% The list of OverlappingSOut properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping out-strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping out-strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping out-strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping out-strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping out-strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping out-strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Out-Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Out-Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Out-Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Out-Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Out-Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Out-Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Out-Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping out-strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Out-Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingSOut methods (constructor):
@@ -120,20 +120,20 @@ classdef OverlappingSOut < StrengthOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingSOut properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the overlapping out-strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the overlapping out-strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the overlapping out-strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the overlapping out-strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the overlapping out-strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the overlapping out-strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Out-Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Out-Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Out-Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Out-Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Out-Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Out-Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Out-Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping out-strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Out-Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef OverlappingSOut < StrengthOut
 			prop = OverlappingSOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsout_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the overlapping out-strength.'  'DESCRIPTION (constant, string) is the description of the overlapping out-strength.'  'TEMPLATE (parameter, item) is the template of the overlapping out-strength.'  'ID (data, string) is a few-letter code of the overlapping out-strength.'  'LABEL (metadata, string) is an extended label of the overlapping out-strength.'  'NOTES (metadata, string) are some specific notes about the overlapping out-strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping out-strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsout_description_list = { 'ELCLASS (constant, string) is the class of the Overlapping Out-Strength.'  'NAME (constant, string) is the name of the Overlapping Out-Strength.'  'DESCRIPTION (constant, string) is the description of the Overlapping Out-Strength.'  'TEMPLATE (parameter, item) is the template of the Overlapping Out-Strength.'  'ID (data, string) is a few-letter code of the Overlapping Out-Strength.'  'LABEL (metadata, string) is an extended label of the Overlapping Out-Strength.'  'NOTES (metadata, string) are some specific notes about the Overlapping Out-Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Overlapping Out-Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef OverlappingSOut < StrengthOut
 				case 1 % OverlappingSOut.ELCLASS
 					prop_default = 'OverlappingSOut';
 				case 2 % OverlappingSOut.NAME
-					prop_default = 'OverlappingSOut';
+					prop_default = 'Overlapping Out-Strength';
 				case 3 % OverlappingSOut.DESCRIPTION
-					prop_default = 'The overlapping out-strength of a graph is the sum of the out-strengths of a node in all layers.';
+					prop_default = 'The Overlapping Out-Strength (OverlappingSOut) of a graph is the sum of the out-strengths of a node in all layers.';
 				case 4 % OverlappingSOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingSOut.getPropSettings(prop));
 				case 5 % OverlappingSOut.ID
 					prop_default = 'OverlappingSOut ID';
 				case 6 % OverlappingSOut.LABEL
-					prop_default = 'OverlappingSOut label';
+					prop_default = 'Overlapping Out-Strength label';
 				case 7 % OverlappingSOut.NOTES
-					prop_default = 'OverlappingSOut notes';
+					prop_default = 'Overlapping Out-Strength notes';
 				case 9 % OverlappingSOut.SHAPE
 					prop_default = 2;
 				case 10 % OverlappingSOut.SCOPE

@@ -1,25 +1,25 @@
 classdef WeightedMxPOut < Measure
-	%WeightedMxPOut is the graph weighted multiplex out-participation.
+	%WeightedMxPOut is the graph Weighted Multiplex Out-Participation.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The weighted multiplex out-participation of a graph is the nodal homogeneity 
+	% The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity 
 	%  of its number of outward neighbours across the layers.
 	%
 	% The list of WeightedMxPOut properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex out-particiption.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex out-particiption.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex out-particiption.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex out-particiption.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex out-particiption.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex out-particiption.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex Out-Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Multiplex Out-Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Multiplex Out-Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Multiplex Out-Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Multiplex Out-Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Multiplex Out-Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Multiplex Out-Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex out-particiption.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Multiplex Out-Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% WeightedMxPOut methods (constructor):
@@ -120,20 +120,20 @@ classdef WeightedMxPOut < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedMxPOut properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex out-particiption.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex out-particiption.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex out-particiption.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex out-particiption.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex out-particiption.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex out-particiption.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex Out-Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Multiplex Out-Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Multiplex Out-Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Multiplex Out-Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Multiplex Out-Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Multiplex Out-Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Multiplex Out-Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex out-particiption.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Multiplex Out-Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef WeightedMxPOut < Measure
 			prop = WeightedMxPOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedmxpout_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the weighted multiplex out-particiption.'  'DESCRIPTION (constant, string) is the description of the weighted multiplex out-particiption.'  'TEMPLATE (parameter, item) is the template of the weighted multiplex out-particiption.'  'ID (data, string) is a few-letter code of the weighted multiplex out-particiption.'  'LABEL (metadata, string) is an extended label of the weighted multiplex out-particiption.'  'NOTES (metadata, string) are some specific notes about the weighted multiplex out-particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted multiplex out-particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			weightedmxpout_description_list = { 'ELCLASS (constant, string) is the class of the Weighted Multiplex Out-Participation.'  'NAME (constant, string) is the name of the Weighted Multiplex Out-Participation.'  'DESCRIPTION (constant, string) is the description of the Weighted Multiplex Out-Participation.'  'TEMPLATE (parameter, item) is the template of the Weighted Multiplex Out-Participation.'  'ID (data, string) is a few-letter code of the Weighted Multiplex Out-Participation.'  'LABEL (metadata, string) is an extended label of the Weighted Multiplex Out-Participation.'  'NOTES (metadata, string) are some specific notes about the Weighted Multiplex Out-Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Weighted Multiplex Out-Participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = weightedmxpout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef WeightedMxPOut < Measure
 				case 1 % WeightedMxPOut.ELCLASS
 					prop_default = 'WeightedMxPOut';
 				case 2 % WeightedMxPOut.NAME
-					prop_default = 'WeightedMxPOut ';
+					prop_default = 'Weighted Multiplex Out-Participation ';
 				case 3 % WeightedMxPOut.DESCRIPTION
-					prop_default = 'The weighted multiplex out-participation of a graph is the nodal homogeneity of its number of outward neighbours across the layers.';
+					prop_default = 'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbours across the layers.';
 				case 4 % WeightedMxPOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxPOut.getPropSettings(prop));
 				case 5 % WeightedMxPOut.ID
 					prop_default = 'WeightedMxPOut ID';
 				case 6 % WeightedMxPOut.LABEL
-					prop_default = 'WeightedMxPOut label';
+					prop_default = 'Weighted Multiplex Out-Participation label';
 				case 7 % WeightedMxPOut.NOTES
-					prop_default = 'WeightedMxPOut notes';
+					prop_default = 'Weighted Multiplex Out-Participation notes';
 				case 9 % WeightedMxPOut.SHAPE
 					prop_default = 2;
 				case 10 % WeightedMxPOut.SCOPE

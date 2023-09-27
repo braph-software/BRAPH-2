@@ -11,7 +11,7 @@ Measure ID
 Measure NAME
 2
 Measure NOTES
-6
+7
 TOSTRING
 NaN
 SHAPE
@@ -21,14 +21,14 @@ NaN
 PARAMETRICITY
 NaN
 Compatible Graphs
-7
+8
 Graph
-3
-MultiplexRCS
 4
-Measure Plot
+Multiplex Rich-Club Strength
 5
+Measure Plot
+6
 PARAMETRIC_VALUE
 NaN
-WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
-NaN
+Multiplex Rich-Club Strength coefficients
+3

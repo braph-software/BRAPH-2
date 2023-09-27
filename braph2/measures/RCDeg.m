@@ -1,26 +1,26 @@
 classdef RCDeg < Degree
-	%RCDeg is the graph rich-club degree.
+	%RCDeg is the graph Rich-Club Degree.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
-	% The rich-club degree of a node at level k is the sum of 
+	% The Rich-Club Degree (RCDeg) of a node at level k is the sum of 
 	%  the edges that connect nodes of degree k or higher within a layer. 
 	%  k is set by the user; the default value is equal to 1.
 	%
 	% The list of RCDeg properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the rich-club degree.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Degree.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 	%
@@ -128,20 +128,20 @@ classdef RCDeg < Degree
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of RCDeg properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the rich-club degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the rich-club degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the rich-club degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the rich-club degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the rich-club degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the rich-club degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the rich-club degree.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Degree.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 			%
@@ -477,7 +477,7 @@ classdef RCDeg < Degree
 			prop = RCDeg.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			rcdeg_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the rich-club degree.'  'DESCRIPTION (constant, string) is the description of the rich-club degree.'  'TEMPLATE (parameter, item) is the template of the rich-club degree.'  'ID (data, string) is a few-letter code of the rich-club degree.'  'LABEL (metadata, string) is an extended label of the rich-club degree.'  'NOTES (metadata, string) are some specific notes about the rich-club degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the rich-club degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) ' };
+			rcdeg_description_list = { 'ELCLASS (constant, string) is the class of the Rich-Club Degree.'  'NAME (constant, string) is the name of the Rich-Club Degree.'  'DESCRIPTION (constant, string) is the description of the Rich-Club Degree.'  'TEMPLATE (parameter, item) is the template of the Rich-Club Degree.'  'ID (data, string) is a few-letter code of the Rich-Club Degree.'  'LABEL (metadata, string) is an extended label of the Rich-Club Degree.'  'NOTES (metadata, string) are some specific notes about the Rich-Club Degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Rich-Club Degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) ' };
 			prop_description = rcdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -539,17 +539,17 @@ classdef RCDeg < Degree
 				case 1 % RCDeg.ELCLASS
 					prop_default = 'RCDeg';
 				case 2 % RCDeg.NAME
-					prop_default = 'RCDeg';
+					prop_default = 'Rich-Club Degree';
 				case 3 % RCDeg.DESCRIPTION
-					prop_default = 'The rich-club degree of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.';
+					prop_default = 'The Rich-Club Degree (RCDeg) of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.';
 				case 4 % RCDeg.TEMPLATE
 					prop_default = Format.getFormatDefault(8, RCDeg.getPropSettings(prop));
 				case 5 % RCDeg.ID
 					prop_default = 'RCDeg ID';
 				case 6 % RCDeg.LABEL
-					prop_default = 'RCDeg label';
+					prop_default = 'Rich-Club Degree label';
 				case 7 % RCDeg.NOTES
-					prop_default = 'RCDeg notes';
+					prop_default = 'Rich-Club Degree notes';
 				case 9 % RCDeg.SHAPE
 					prop_default = 2;
 				case 10 % RCDeg.SCOPE

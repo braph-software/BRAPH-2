@@ -1,46 +1,90 @@
 %% ¡header!
-SCore < Measure (m, score) is the score.
+SCore < Measure (m, score) is the S-Core.
 
 %%% ¡description!
-The s-core of a graph is the largest subnetwork comprising nodes of strength 
+The S-Core (SCore) of a graph is the largest subnetwork comprising nodes of strength 
   s or higher. s is set by the user; the default value is equal to 1.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.M
+%%%% ¡title!
+S-Core
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+SCore.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the S-Core.
 %%%% ¡default!
 'SCore'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the score.
+NAME (constant, string) is the name of the S-Core.
 %%%% ¡default!
-'SCore'
+'S-Core'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the score.
+DESCRIPTION (constant, string) is the description of the S-Core.
 %%%% ¡default!
-'The s-core of a graph is the largest subnetwork comprising nodes of strength s or higher. s is set by the user; the default value is equal to 1.'
+'The S-Core (SCore) of a graph is the largest subnetwork comprising nodes of strength s or higher. s is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the score.
+TEMPLATE (parameter, item) is the template of the S-Core.
 %%%% ¡settings!
 'SCore'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the score.
+ID (data, string) is a few-letter code of the S-Core.
 %%%% ¡default!
 'SCore ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the score.
+LABEL (metadata, string) is an extended label of the S-Core.
 %%%% ¡default!
-'SCore label'
+'S-Core label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the score.
+NOTES (metadata, string) are some specific notes about the S-Core.
 %%%% ¡default!
-'SCore notes'
+'S-Core notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.BINODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphWU' 'MultiplexWD' 'MultiplexWU'};
 
 %%% ¡prop!
-M (result, cell) is the score.
+M (result, cell) is the S-Core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

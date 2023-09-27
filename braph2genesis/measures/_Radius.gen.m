@@ -1,43 +1,93 @@
 %% ¡header!
-Radius < Measure (m, radius) is the graph radius.
+Radius < Measure (m, radius) is the graph Radius.
 
 %%% ¡description!
-The radius is the minimum eccentricity among the vertice within a layer.
+The Radius is the minimum eccentricity among the vertice within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.RULE
+%%%% ¡title!
+Eccentricity rule for calculation in a graph or its subgraph
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.M
+%%%% ¡title!
+Radius
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Radius.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Radius.
 %%%% ¡default!
 'Radius'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the radius.
+NAME (constant, string) is the name of the Radius.
 %%%% ¡default!
 'Radius'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the radius.
+DESCRIPTION (constant, string) is the description of the Radius.
 %%%% ¡default!
-'The radius is the minimum eccentricity among the vertice within a layer.'
+'The Radius is the minimum eccentricity among the vertice within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the radius.
+TEMPLATE (parameter, item) is the template of the Radius.
 %%%% ¡settings!
 'Radius'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the radius.
+ID (data, string) is a few-letter code of the Radius.
 %%%% ¡default!
 'Radius ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the radius.
+LABEL (metadata, string) is an extended label of the Radius.
 %%%% ¡default!
 'Radius label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the radius.
+NOTES (metadata, string) are some specific notes about the Radius.
 %%%% ¡default!
 'Radius notes'
 
@@ -62,7 +112,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the radius.
+M (result, cell) is the Radius.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc

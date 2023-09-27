@@ -1,25 +1,25 @@
 classdef WeightedEdgeOvlp < Measure
-	%WeightedEdgeOvlp is the graph weighted edge overlap.
+	%WeightedEdgeOvlp is the graph Weighted Edge Overlap.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The weighted edge overlap of a graph is the average weight of an edge 
+	% The Weighted Edge Overlap (WeightedEdgeOvlp) of a graph is the average weight of an edge 
 	% across all layers.
 	%
 	% The list of WeightedEdgeOvlp properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted edge overlap.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted edge overlap.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted edge overlap.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted edge overlap.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted edge overlap.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted edge overlap.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Edge Overlap.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Edge Overlap.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Edge Overlap.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Edge Overlap.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Edge Overlap.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Edge Overlap.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Edge Overlap.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted edge overlap.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Edge Overlap.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% WeightedEdgeOvlp methods (constructor):
@@ -120,20 +120,20 @@ classdef WeightedEdgeOvlp < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedEdgeOvlp properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted edge overlap.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted edge overlap.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted edge overlap.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted edge overlap.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted edge overlap.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted edge overlap.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Edge Overlap.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Edge Overlap.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Edge Overlap.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Edge Overlap.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Edge Overlap.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Edge Overlap.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Edge Overlap.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted edge overlap.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Edge Overlap.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef WeightedEdgeOvlp < Measure
 			prop = WeightedEdgeOvlp.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightededgeovlp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the weighted edge overlap.'  'DESCRIPTION (constant, string) is the description of the weighted edge overlap.'  'TEMPLATE (parameter, item) is the template of the weighted edge overlap.'  'ID (data, string) is a few-letter code of the weighted edge overlap.'  'LABEL (metadata, string) is an extended label of the weighted edge overlap.'  'NOTES (metadata, string) are some specific notes about the weighted edge overlap.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted edge overlap.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			weightededgeovlp_description_list = { 'ELCLASS (constant, string) is the class of the Weighted Edge Overlap.'  'NAME (constant, string) is the name of the Weighted Edge Overlap.'  'DESCRIPTION (constant, string) is the description of the Weighted Edge Overlap.'  'TEMPLATE (parameter, item) is the template of the Weighted Edge Overlap.'  'ID (data, string) is a few-letter code of the Weighted Edge Overlap.'  'LABEL (metadata, string) is an extended label of the Weighted Edge Overlap.'  'NOTES (metadata, string) are some specific notes about the Weighted Edge Overlap.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Weighted Edge Overlap.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = weightededgeovlp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef WeightedEdgeOvlp < Measure
 				case 1 % WeightedEdgeOvlp.ELCLASS
 					prop_default = 'WeightedEdgeOvlp';
 				case 2 % WeightedEdgeOvlp.NAME
-					prop_default = 'WeightedEdgeOvlp';
+					prop_default = 'Weighted Edge Overlap';
 				case 3 % WeightedEdgeOvlp.DESCRIPTION
-					prop_default = 'The weighted edge overlap of a graph is the average weight of an edge across all layers.';
+					prop_default = 'The Weighted Edge Overlap (WeightedEdgeOvlp) of a graph is the average weight of an edge across all layers.';
 				case 4 % WeightedEdgeOvlp.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedEdgeOvlp.getPropSettings(prop));
 				case 5 % WeightedEdgeOvlp.ID
 					prop_default = 'WeightedEdgeOvlp ID';
 				case 6 % WeightedEdgeOvlp.LABEL
-					prop_default = 'WeightedEdgeOvlp label';
+					prop_default = 'Weighted Edge Overlap label';
 				case 7 % WeightedEdgeOvlp.NOTES
-					prop_default = 'WeightedEdgeOvlp notes';
+					prop_default = 'Weighted Edge Overlap notes';
 				case 9 % WeightedEdgeOvlp.SHAPE
 					prop_default = 3;
 				case 10 % WeightedEdgeOvlp.SCOPE

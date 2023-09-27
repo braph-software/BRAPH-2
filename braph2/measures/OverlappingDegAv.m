@@ -1,25 +1,25 @@
 classdef OverlappingDegAv < OverlappingDeg
-	%OverlappingDegAv is the graph average overlapping degree.
+	%OverlappingDegAv is the graph Average Overlapping Degree.
 	% It is a subclass of <a href="matlab:help OverlappingDeg">OverlappingDeg</a>.
 	%
-	% The average overlapping degree of a graph is the average of the sum of the 
+	% The Average Overlapping Degree (OverlappingDegAv) of a graph is the average of the sum of the 
 	% degrees of a node in all layers.
 	%
 	% The list of OverlappingDegAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping Degree.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping Degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average overlapping degree.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping Degree.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDegAv methods (constructor):
@@ -120,20 +120,20 @@ classdef OverlappingDegAv < OverlappingDeg
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingDegAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the averge overlapping degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping Degree.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping Degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the average overlapping degree.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping Degree.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef OverlappingDegAv < OverlappingDeg
 			prop = OverlappingDegAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdegav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the averge overlapping degree.'  'DESCRIPTION (constant, string) is the description of the average overlapping degree.'  'TEMPLATE (parameter, item) is the template of the average overlapping degree.'  'ID (data, string) is a few-letter code of the average overlapping degree.'  'LABEL (metadata, string) is an extended label of the average overlapping degree.'  'NOTES (metadata, string) are some specific notes about the average overlapping degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the average overlapping degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdegav_description_list = { 'ELCLASS (constant, string) is the class of the Average Overlapping Degree.'  'NAME (constant, string) is the name of the Average Overlapping Degree.'  'DESCRIPTION (constant, string) is the description of the average overlapping degree.'  'TEMPLATE (parameter, item) is the template of the Average Overlapping Degree.'  'ID (data, string) is a few-letter code of the Average Overlapping Degree.'  'LABEL (metadata, string) is an extended label of the Average Overlapping Degree.'  'NOTES (metadata, string) are some specific notes about the Average Overlapping Degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Overlapping Degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdegav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef OverlappingDegAv < OverlappingDeg
 				case 1 % OverlappingDegAv.ELCLASS
 					prop_default = 'OverlappingDegAv';
 				case 2 % OverlappingDegAv.NAME
-					prop_default = 'OverlappingDegreeAv';
+					prop_default = 'Average Overlapping Degree';
 				case 3 % OverlappingDegAv.DESCRIPTION
-					prop_default = 'The average overlapping degree of a graph is the sum of the degrees of a node in all layers.';
+					prop_default = 'The Average Overlapping Degree (OverlappingDegAv) of a graph is the sum of the degrees of a node in all layers.';
 				case 4 % OverlappingDegAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingDegAv.getPropSettings(prop));
 				case 5 % OverlappingDegAv.ID
 					prop_default = 'OverlappingDegAv ID';
 				case 6 % OverlappingDegAv.LABEL
-					prop_default = 'OverlappingDegreeAv label';
+					prop_default = 'Average Overlapping Degree label';
 				case 7 % OverlappingDegAv.NOTES
-					prop_default = 'OverlappingDegreeAv notes';
+					prop_default = 'Average Overlapping Degree notes';
 				case 9 % OverlappingDegAv.SHAPE
 					prop_default = 1;
 				case 10 % OverlappingDegAv.SCOPE

@@ -1,47 +1,91 @@
 %% ¡header!
-CorePeriphery < Richness (m, core-periphery) is the graph core-periphery.
+CorePeriphery < Richness (m, core-periphery) is the graph Core-Periphery.
 
 %%% ¡description!
-The core-periphery of a node is the value of the rank corresponding 
+The Core-Periphery (CorePeriphery) of a node is the value of the rank corresponding 
 to the maximum richness nodes. It returns 1 for a node belonging to the 
 core and zero otherwise. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.M
+%%%% ¡title!
+Core-Periphery
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+CorePeriphery.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Core-Periphery.
 %%%% ¡default!
 'CorePeriphery'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the core-periphery.
+NAME (constant, string) is the name of the Core-Periphery.
 %%%% ¡default!
-'CorePeriphery'
+'Core-Periphery'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the core-periphery.
+DESCRIPTION (constant, string) is the description of the Core-Periphery.
 %%%% ¡default!
-'The core-periphery of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.'
+'The Core-Periphery (CorePeriphery) of a node is the value of the rank corresponding to the maximum richness nodes. It returns 1 for a node belonging to the core and zero otherwise.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the core-periphery.
+TEMPLATE (parameter, item) is the template of the Core-Periphery.
 %%%% ¡settings!
 'CorePeriphery'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the core-periphery.
+ID (data, string) is a few-letter code of the Core-Periphery.
 %%%% ¡default!
 'CorePeriphery ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the core-periphery.
+LABEL (metadata, string) is an extended label of the Core-Periphery.
 %%%% ¡default!
-'CorePeriphery label'
+'Core-Periphery label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the core-periphery.
+NOTES (metadata, string) are some specific notes about the Core-Periphery.
 %%%% ¡default!
-'CorePeriphery notes'
+'Core-Periphery notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWD' 'OrdMlWD'} ;
 
 %%% ¡prop!
-M (result, cell) is the core-periphery.
+M (result, cell) is the Core-Periphery.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

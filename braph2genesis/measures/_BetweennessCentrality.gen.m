@@ -1,47 +1,91 @@
 %% ¡header!
-BetweennessCentrality < Measure (m, betweenness centrality) is the betweenness centrality.
+BetweennessCentrality < Measure (m, betweenness centrality) is the Betweenness Centrality.
 
 %%% ¡description!
-The betweenness centrality of a graph is the fraction of all shortest paths in the 
+The Betweenness Centrality of a graph is the fraction of all shortest paths in the 
 graph that pass through a given node. Nodes with high values of betweenness 
 centrality participate in a large number of shortest paths.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.M
+%%%% ¡title!
+Betweenness Centrality
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+BetweennessCentrality.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Betweenness Centrality.
 %%%% ¡default!
 'BetweennessCentrality'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the betweenness centrality.
+NAME (constant, string) is the name of the Betweenness Centrality.
 %%%% ¡default!
-'BetweennessCentrality'
+'Betweenness Centrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the betweenness centrality.
+DESCRIPTION (constant, string) is the description of the Betweenness Centrality.
 %%%% ¡default!
-'The betweenness centrality of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.'
+'The Betweenness Centrality of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the betweenness centrality.
+TEMPLATE (parameter, item) is the template of the Betweenness Centrality.
 %%%% ¡settings!
 'BetweennessCentrality'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the betweenness centrality.
+ID (data, string) is a few-letter code of the Betweenness Centrality.
 %%%% ¡default!
 'BetweennessCentrality ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the betweenness centrality.
+LABEL (metadata, string) is an extended label of the Betweenness Centrality.
 %%%% ¡default!
-'BetweennessCentrality label'
+'Betweenness Centrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the betweenness centrality.
+NOTES (metadata, string) are some specific notes about the Betweenness Centrality.
 %%%% ¡default!
-'BetweennessCentrality notes'
+'Betweenness Centrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphBU' 'GraphWD' 'GraphWU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexBD' 'MultiplexBU' 'MultiplexWD' 'MultiplexWU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing betweenness centrality.
+M (result, cell) is the cell containing Betweenness Centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

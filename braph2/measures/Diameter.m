@@ -1,24 +1,24 @@
 classdef Diameter < Measure
-	%Diameter is the graph diameter.
+	%Diameter is the graph Diameter.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The diameter is the maximum eccentricity among the vertice within a layer.
 	%
 	% The list of Diameter properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the diameter.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the diameter.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the diameter.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the diameter.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the diameter.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the diameter.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Diameter.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Diameter.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Diameter.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Diameter.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Diameter.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Diameter.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Diameter.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the diameter.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Diameter.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 	%
@@ -126,20 +126,20 @@ classdef Diameter < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Diameter properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the diameter.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the diameter.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the diameter.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the diameter.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the diameter.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the diameter.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Diameter.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Diameter.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Diameter.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Diameter.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Diameter.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Diameter.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Diameter.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the diameter.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Diameter.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
@@ -475,7 +475,7 @@ classdef Diameter < Measure
 			prop = Diameter.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			diameter_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the diameter.'  'DESCRIPTION (constant, string) is the description of the diameter.'  'TEMPLATE (parameter, item) is the template of the diameter.'  'ID (data, string) is a few-letter code of the diameter.'  'LABEL (metadata, string) is an extended label of the diameter.'  'NOTES (metadata, string) are some specific notes about the diameter.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the diameter.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			diameter_description_list = { 'ELCLASS (constant, string) is the class of the Diameter.'  'NAME (constant, string) is the name of the Diameter.'  'DESCRIPTION (constant, string) is the description of the Diameter.'  'TEMPLATE (parameter, item) is the template of the Diameter.'  'ID (data, string) is a few-letter code of the Diameter.'  'LABEL (metadata, string) is an extended label of the Diameter.'  'NOTES (metadata, string) are some specific notes about the Diameter.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Diameter.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
 			prop_description = diameter_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -537,7 +537,7 @@ classdef Diameter < Measure
 				case 2 % Diameter.NAME
 					prop_default = 'Diameter';
 				case 3 % Diameter.DESCRIPTION
-					prop_default = 'The diameter is the maximum eccentricity among the vertice within a layer.';
+					prop_default = 'The Diameter is the maximum eccentricity among the vertice within a layer.';
 				case 5 % Diameter.ID
 					prop_default = 'Diameter ID';
 				case 6 % Diameter.LABEL

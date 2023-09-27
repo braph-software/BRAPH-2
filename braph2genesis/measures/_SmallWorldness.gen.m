@@ -1,47 +1,97 @@
 %% ¡header!
-SmallWorldness < PathLengthAv (m, small-worldness) is the graph small-worldness.
+SmallWorldness < PathLengthAv (m, small-worldness) is the graph Small-Worldness.
 
 %%% ¡description!
-The small-worldness coefficient is the fraction of the clustering coefficient 
+The Small-Worldness (SmallWorldness) coefficient is the fraction of the clustering coefficient 
   and average path length of each layer and the clustering coefficient and 
   average path length of 100 random graphs.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.RULE
+%%%% ¡title!
+PathLength rule
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.M
+%%%% ¡title!
+Small-Worldness
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+SmallWorldness.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Small-Worldness.
 %%%% ¡default!
 'SmallWorldness'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the small-worldness.
+NAME (constant, string) is the name of the Small-Worldness.
 %%%% ¡default!
-'SmallWorldness'
+'Small-Worldness'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the small-worldness.
+DESCRIPTION (constant, string) is the description of the Small-Worldness.
 %%%% ¡default!
-'The small-worldness coefficient is the fraction of the clustering coefficient and average path length of each layer and the clustering coefficient and average path length of 100 random graphs.'
+'The Small-Worldness (SmallWorldness) coefficient is the fraction of the clustering coefficient and average path length of each layer and the clustering coefficient and average path length of 100 random graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the small-worldness.
+TEMPLATE (parameter, item) is the template of the Small-Worldness.
 %%%% ¡settings!
 'SmallWorldness'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the small-worldness.
+ID (data, string) is a few-letter code of the Small-Worldness.
 %%%% ¡default!
 'SmallWorldness ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the small-worldness.
+LABEL (metadata, string) is an extended label of the Small-Worldness.
 %%%% ¡default!
-'SmallWorldness label'
+'Small-Worldness label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the small-worldness.
+NOTES (metadata, string) are some specific notes about the Small-Worldness.
 %%%% ¡default!
-'SmallWorldness notes'
+'Small-Worldness notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -64,7 +114,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the small-worldness.
+M (result, cell) is the Small-Worldness.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 if isempty(g.get('A'))

@@ -1,26 +1,26 @@
 classdef SmallWorldness < PathLengthAv
-	%SmallWorldness is the graph small-worldness.
+	%SmallWorldness is the graph Small-Worldness.
 	% It is a subclass of <a href="matlab:help PathLengthAv">PathLengthAv</a>.
 	%
-	% The small-worldness coefficient is the fraction of the clustering coefficient 
+	% The Small-Worldness (SmallWorldness) coefficient is the fraction of the clustering coefficient 
 	%   and average path length of each layer and the clustering coefficient and 
 	%   average path length of 100 random graphs.
 	%
 	% The list of SmallWorldness properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the small-worldness.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the small-worldness.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the small-worldness.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the small-worldness.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the small-worldness.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the small-worldness.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Small-Worldness.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Small-Worldness.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Small-Worldness.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Small-Worldness.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Small-Worldness.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Small-Worldness.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Small-Worldness.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the small-worldness.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Small-Worldness.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 	%
@@ -122,20 +122,20 @@ classdef SmallWorldness < PathLengthAv
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of SmallWorldness properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the small-worldness.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the small-worldness.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the small-worldness.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the small-worldness.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the small-worldness.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the small-worldness.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Small-Worldness.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Small-Worldness.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Small-Worldness.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Small-Worldness.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Small-Worldness.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Small-Worldness.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Small-Worldness.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the small-worldness.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Small-Worldness.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the pathlength algorithm
 			%
@@ -471,7 +471,7 @@ classdef SmallWorldness < PathLengthAv
 			prop = SmallWorldness.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			smallworldness_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the small-worldness.'  'DESCRIPTION (constant, string) is the description of the small-worldness.'  'TEMPLATE (parameter, item) is the template of the small-worldness.'  'ID (data, string) is a few-letter code of the small-worldness.'  'LABEL (metadata, string) is an extended label of the small-worldness.'  'NOTES (metadata, string) are some specific notes about the small-worldness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the small-worldness.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
+			smallworldness_description_list = { 'ELCLASS (constant, string) is the class of the Small-Worldness.'  'NAME (constant, string) is the name of the Small-Worldness.'  'DESCRIPTION (constant, string) is the description of the Small-Worldness.'  'TEMPLATE (parameter, item) is the template of the Small-Worldness.'  'ID (data, string) is a few-letter code of the Small-Worldness.'  'LABEL (metadata, string) is an extended label of the Small-Worldness.'  'NOTES (metadata, string) are some specific notes about the Small-Worldness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Small-Worldness.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the pathlength algorithm' };
 			prop_description = smallworldness_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -529,17 +529,17 @@ classdef SmallWorldness < PathLengthAv
 				case 1 % SmallWorldness.ELCLASS
 					prop_default = 'SmallWorldness';
 				case 2 % SmallWorldness.NAME
-					prop_default = 'SmallWorldness';
+					prop_default = 'Small-Worldness';
 				case 3 % SmallWorldness.DESCRIPTION
-					prop_default = 'The small-worldness coefficient is the fraction of the clustering coefficient and average path length of each layer and the clustering coefficient and average path length of 100 random graphs.';
+					prop_default = 'The Small-Worldness (SmallWorldness) coefficient is the fraction of the clustering coefficient and average path length of each layer and the clustering coefficient and average path length of 100 random graphs.';
 				case 4 % SmallWorldness.TEMPLATE
 					prop_default = Format.getFormatDefault(8, SmallWorldness.getPropSettings(prop));
 				case 5 % SmallWorldness.ID
 					prop_default = 'SmallWorldness ID';
 				case 6 % SmallWorldness.LABEL
-					prop_default = 'SmallWorldness label';
+					prop_default = 'Small-Worldness label';
 				case 7 % SmallWorldness.NOTES
-					prop_default = 'SmallWorldness notes';
+					prop_default = 'Small-Worldness notes';
 				case 9 % SmallWorldness.SHAPE
 					prop_default = 1;
 				case 10 % SmallWorldness.SCOPE

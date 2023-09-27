@@ -1,27 +1,27 @@
 classdef MultiplexRCS < RCS
-	%MultiplexRCS is the graph multiplex rich-club strength.
+	%MultiplexRCS is the graph Multiplex Rich-Club Strength.
 	% It is a subclass of <a href="matlab:help RCS">RCS</a>.
 	%
-	% The multi rich-club strength of a node at level s is the sum of the 
+	% The Multiplex Rich-Club Strength (MultiplexRCS) of a node at level s is the sum of the 
 	%  weighted edges that connect nodes of strength s or higher in all layers. 
 	% The relevance of each layer is controlled by the coefficients c that are 
 	%  between 0 and 1; the default coefficients are (1/layernumber).
 	%
 	% The list of MultiplexRCS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Strength.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Strength.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) 
 	%  <strong>17</strong> <strong>WEIGHTED_MULTIRICHCLUB_COEFFICIENTS</strong> 	WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients
@@ -130,20 +130,20 @@ classdef MultiplexRCS < RCS
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexRCS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex rich-club strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex rich-club strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex rich-club strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Strength.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex rich-club strength.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Strength.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) 
 			%  <strong>17</strong> <strong>WEIGHTED_MULTIRICHCLUB_COEFFICIENTS</strong> 	WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients
@@ -480,7 +480,7 @@ classdef MultiplexRCS < RCS
 			prop = MultiplexRCS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexrcs_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex rich-club strength.'  'DESCRIPTION (constant, string) is the description of the multiplex rich-club strength.'  'TEMPLATE (parameter, item) is the template of the multiplex rich-club strength.'  'ID (data, string) is a few-letter code of the multiplex rich-club strength.'  'LABEL (metadata, string) is an extended label of the multiplex rich-club strength.'  'NOTES (metadata, string) are some specific notes about the multiplex rich-club strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex rich-club strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) '  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients' };
+			multiplexrcs_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.'  'NAME (constant, string) is the name of the Multiplex Rich-Club Strength.'  'DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.'  'TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.'  'ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.'  'LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.'  'NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex Rich-Club Strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) '  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients' };
 			prop_description = multiplexrcs_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -542,17 +542,17 @@ classdef MultiplexRCS < RCS
 				case 1 % Multiplex1
 					prop_default = 'MultiplexRCS';
 				case 2 % Multiplex2
-					prop_default = 'MultiplexRichClubStrength';
+					prop_default = 'Multiplex Rich-Club Strength';
 				case 3 % Multiplex3
-					prop_default = 'The multi rich-club strength of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
+					prop_default = 'The Multiplex Rich-Club Strength (MultiplexRCS) of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
 				case 4 % Multiplex4
 					prop_default = Format.getFormatDefault(8, MultiplexRCS.getPropSettings(prop));
 				case 5 % Multiplex5
 					prop_default = 'MultiplexRCS ID';
 				case 6 % Multiplex6
-					prop_default = 'MultiplexRichClubStrength label';
+					prop_default = 'Multiplex Rich-Club Strength label';
 				case 7 % Multiplex7
-					prop_default = 'MultiplexRichClubStrength notes';
+					prop_default = 'Multiplex Rich-Club Strength notes';
 				case 9 % Multiplex9
 					prop_default = 2;
 				case 10 % Multiplex10

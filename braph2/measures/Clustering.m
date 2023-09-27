@@ -1,27 +1,27 @@
 classdef Clustering < Triangles
-	%Clustering is the graph clustering.
+	%Clustering is the graph Clustering.
 	% It is a subclass of <a href="matlab:help Triangles">Triangles</a>.
 	%
-	% The clustering coefficient (Clustering) of a node is the fraction of triangles present 
+	% The Clustering coefficient (Clustering) of a node is the fraction of triangles present 
 	% around a node. The clustering coefficient is calculated as the ratio between 
 	% the number of triangles present around a node and the maximum number of 
 	% triangles that could possibly be formed around that node.
 	%
 	% The list of Clustering properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the clustering.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the clustering.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the clustering.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the clustering.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the clustering.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the clustering.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Clustering.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Clustering.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Clustering.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Clustering.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Clustering.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Clustering.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Clustering.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the clustering value.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Clustering value.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 	%
@@ -123,20 +123,20 @@ classdef Clustering < Triangles
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Clustering properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the clustering.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the clustering.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the clustering.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the clustering.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the clustering.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the clustering.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Clustering.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Clustering.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Clustering.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Clustering.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Clustering.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Clustering.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Clustering.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the clustering value.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Clustering value.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
@@ -472,7 +472,7 @@ classdef Clustering < Triangles
 			prop = Clustering.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			clustering_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the clustering.'  'DESCRIPTION (constant, string) is the description of the clustering.'  'TEMPLATE (parameter, item) is the template of the clustering.'  'ID (data, string) is a few-letter code of the clustering.'  'LABEL (metadata, string) is an extended label of the clustering.'  'NOTES (metadata, string) are some specific notes about the clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the clustering value.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
+			clustering_description_list = { 'ELCLASS (constant, string) is the class of the Clustering.'  'NAME (constant, string) is the name of the Clustering.'  'DESCRIPTION (constant, string) is the description of the Clustering.'  'TEMPLATE (parameter, item) is the template of the Clustering.'  'ID (data, string) is a few-letter code of the Clustering.'  'LABEL (metadata, string) is an extended label of the Clustering.'  'NOTES (metadata, string) are some specific notes about the Clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Clustering value.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
 			prop_description = clustering_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -532,7 +532,7 @@ classdef Clustering < Triangles
 				case 2 % Clustering.NAME
 					prop_default = 'Clustering';
 				case 3 % Clustering.DESCRIPTION
-					prop_default = 'The clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.';
+					prop_default = 'The Clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.';
 				case 4 % Clustering.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Clustering.getPropSettings(prop));
 				case 5 % Clustering.ID

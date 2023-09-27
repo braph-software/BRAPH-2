@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingDegOutAv < OverlappingDegOut (m, average overlapping out-degree) is the graph average overlapping out-degree.
+OverlappingDegOutAv < OverlappingDegOut (m, average overlapping out-degree) is the graph Average Overlapping Out-Degree.
 
 %%% ¡description!
-The average overlapping out-degree of a graph is the average of the sum of the 
+The Average Overlapping Out-Degree (OverlappingDegOutAv) of a graph is the average of the sum of the 
 out-degrees of a node in all layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingDegOutAv.M
 %%%% ¡title!
-OverlappingDegOutAv
+Average Overlapping Out-Degree
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Overlapping Out-Degree.
 %%%% ¡default!
 'OverlappingDegOutAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average overlapping out-degree.
+NAME (constant, string) is the name of the Average Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOutAv'
+'Average Overlapping Out-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average overlapping out-degree.
+DESCRIPTION (constant, string) is the description of the Average Overlapping Out-Degree.
 %%%% ¡default!
-'The average overlapping out-degree of a graph is the average of the sum of the out-degrees of a node in all layers.'
+'The Average Overlapping Out-Degree (OverlappingDegOutAv) of a graph is the average of the sum of the out-degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average overlapping out-degree.
+TEMPLATE (parameter, item) is the template of the Average Overlapping Out-Degree.
 %%%% ¡settings!
 'OverlappingDegOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average overlapping out-degree.
+ID (data, string) is a few-letter code of the Average Overlapping Out-Degree.
 %%%% ¡default!
 'OverlappingDegOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average overlapping out-degree.
+LABEL (metadata, string) is an extended label of the Average Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOutAv label'
+'Average Overlapping Out-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average overlapping out-degree.
+NOTES (metadata, string) are some specific notes about the Average Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOutAv notes'
+'Average Overlapping Out-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the average overlapping out-degree.
+M (result, cell) is the Average Overlapping Out-Degree.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
 overlapping_out_degree_av = calculateValue@OverlappingDegOut(m, prop);

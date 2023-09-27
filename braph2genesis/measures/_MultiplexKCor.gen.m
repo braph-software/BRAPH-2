@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexKCor < Measure (m,  multiplex k-core) is the graph multiplex k-core.
+MultiplexKCor < Measure (m,  multiplex k-core) is the graph Multiplex K-Core.
 
 %%% ¡description!
-The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
+The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
 k is set by the user; the default value is equal to 1.
 
 %% ¡layout!
@@ -21,6 +21,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+%%%% ¡title!
+Multiplex k-core threshold
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexKCor.G
 %%%% ¡title!
 Graph
@@ -29,7 +35,7 @@ Graph
 %%%% ¡id!
 MultiplexKCor.M
 %%%% ¡title!
-MultiplexKCor
+Multiplex K-Core
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +58,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex K-Core.
 %%%% ¡default!
 'MultiplexKCor'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex k-core.
+NAME (constant, string) is the name of the Multiplex K-Core.
 %%%% ¡default!
-'MultiplexKCore'
+'Multiplex K-Core'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex k-core.
+DESCRIPTION (constant, string) is the description of the Multiplex K-Core.
 %%%% ¡default!
-'The multiplex k-core of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.'
+'The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex k-core.
+TEMPLATE (parameter, item) is the template of the Multiplex K-Core.
 %%%% ¡settings!
 'MultiplexKCor'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex k-core.
+ID (data, string) is a few-letter code of the Multiplex K-Core.
 %%%% ¡default!
 'MultiplexKCor ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex k-core.
+LABEL (metadata, string) is an extended label of the Multiplex K-Core.
 %%%% ¡default!
-'MultiplexKCore label'
+'Multiplex K-Core label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex k-core.
+NOTES (metadata, string) are some specific notes about the Multiplex K-Core.
 %%%% ¡default!
-'MultiplexKCore notes'
+'Multiplex K-Core notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex k-core.
+M (result, cell) is the Multiplex K-Core.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -159,7 +165,7 @@ end
 %% ¡props!
 
 %%% ¡prop! 
-MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold
+MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.
 %%%% ¡default!
 1
 

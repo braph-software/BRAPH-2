@@ -1,46 +1,90 @@
 %% ¡header!
-EigenVectorCentrality < Measure (m, eigenvector centrality) is the graph eigenvector centrality.
+EigenVectorCentrality < Measure (m, eigenvector centrality) is the graph Eigenvector Centrality.
 
 %%% ¡description!
-The eigen vector centrality of a node is the ith element in the eigenvector corresponding 
+The Eigenvector Centrality (EigenVectorCentrality) of a node is the ith element in the eigenvector corresponding 
 to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.M
+%%%% ¡title!
+Eigen Vector Centrality
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EigenVectorCentrality.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Eigenvector Centrality.
 %%%% ¡default!
 'EigenVectorCentrality'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the eigenvector centrality.
+NAME (constant, string) is the name of the Eigenvector Centrality.
 %%%% ¡default!
-'EigenVectorCentrality'
+'Eigenvector Centrality'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the eigenvector centrality.
+DESCRIPTION (constant, string) is the description of the Eigenvector Centrality.
 %%%% ¡default!
-'The eigen vector centrality of a node is the ith element in the eigenvector corresponding to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.'
+'The Eigenvector Centrality (EigenVectorCentrality) of a node is the ith element in the eigenvector corresponding to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the eigenvector centrality.
+TEMPLATE (parameter, item) is the template of the Eigenvector Centrality.
 %%%% ¡settings!
 'EigenVectorCentrality'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the eigenvector centrality.
+ID (data, string) is a few-letter code of the Eigenvector Centrality.
 %%%% ¡default!
 'EigenVectorCentrality ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the eigenvector centrality.
+LABEL (metadata, string) is an extended label of the Eigenvector Centrality.
 %%%% ¡default!
-'EigenVectorCentrality label'
+'Eigenvector Centrality label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the eigenvector centrality.
+NOTES (metadata, string) are some specific notes about the Eigenvector Centrality.
 %%%% ¡default!
-'EigenVectorCentrality notes'
+'Eigenvector Centrality notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'} ;
 
 %%% ¡prop!
-M (result, cell) is the eigenvector centrality.
+M (result, cell) is the Eigenvector Centrality.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

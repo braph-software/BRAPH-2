@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexRCDeg < RCDeg (m, multi rich-club degree) is the graph multiplex rich-club degree.
+MultiplexRCDeg < RCDeg (m, multi rich-club degree) is the graph Multiplex Rich-Club Degree.
 
 %%% ¡description!
-The multi rich-club degree of a node at level k is the sum of 
+The Multiplex Rich-Club Degree (MultiplexRCDeg) of a node at level k is the sum of 
  the edges that connect nodes of degree k or higher in all layers. 
 The relevance of each layer is controlled by the coefficients c that are 
  between 0 and 1; the default coefficients are (1/layernumber).
@@ -23,6 +23,12 @@ Measure NAME
 
 %%% ¡prop!
 %%%% ¡id!
+MultiplexRCDeg.MULTIRICHCLUB_COEFFICIENTS
+%%%% ¡title!
+Multiplex Rich-Club Degree coefficients
+
+%%% ¡prop!
+%%%% ¡id!
 MultiplexRCDeg.G
 %%%% ¡title!
 Graph
@@ -31,7 +37,7 @@ Graph
 %%%% ¡id!
 MultiplexRCDeg.M
 %%%% ¡title!
-MultiplexRCDeg
+Multiplex Rich-Club Degree
 
 %%% ¡prop!
 %%%% ¡id!
@@ -54,39 +60,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Rich-Club Degree.
 %%%% ¡default!
 'MultiplexRCDeg'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex rich-club degree.
+NAME (constant, string) is the name of the Multiplex Rich-Club Degree.
 %%%% ¡default!
-'MultiplexRichClubDegree'
+'Multiplex Rich-Club Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex rich-club degree.
+DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Degree.
 %%%% ¡default!
-'The multi rich-club degree of a node at level k is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
+'The Multiplex Rich-Club Degree (MultiplexRCDeg) of a node at level k is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex rich-club degree.
+TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Degree.
 %%%% ¡settings!
 'MultiplexRCDeg'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex rich-club degree.
+ID (data, string) is a few-letter code of the Multiplex Rich-Club Degree.
 %%%% ¡default!
 'MultiplexRCDeg ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex rich-club degree.
+LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Degree.
 %%%% ¡default!
-'MultiplexRichClubDegree label'
+'Multiplex Rich-Club Degree label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the multiplex rich-club degree.
 %%%% ¡default!
-'MultiplexRichClubDegree notes'
+'Multiplex Rich-Club Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -109,7 +115,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUD' 'OrdMxBUT'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex rich-club degree.
+M (result, cell) is the Multiplex Rich-Club Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

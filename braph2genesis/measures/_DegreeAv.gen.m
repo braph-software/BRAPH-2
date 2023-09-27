@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeAv < Degree (m, average degree) is the graph average degree.
+DegreeAv < Degree (m, average degree) is the graph Average Degree.
 
 %%% ¡description!
-The average degree of a graph is the average of all number of edges 
+The Average Degree (DegreeAv) of a graph is the average of all number of edges 
 connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
@@ -53,39 +53,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Degree.
 %%%% ¡default!
 'DegreeAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average degree.
+NAME (constant, string) is the name of the Average Degree.
 %%%% ¡default!
 'DegreeAv'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average degree.
+DESCRIPTION (constant, string) is the description of the Average Degree.
 %%%% ¡default!
-'The average degree of a graph is the average of all number of edges connected to a node within a layer. Connection weights are ignored in calculations.'
+'The Average Degree (DegreeAv) of a graph is the average of all number of edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average degree.
+TEMPLATE (parameter, item) is the template of the Average Degree.
 %%%% ¡settings!
 'DegreeAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average degree.
+ID (data, string) is a few-letter code of the Average Degree.
 %%%% ¡default!
 'DegreeAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average degree.
+LABEL (metadata, string) is an extended label of the Average Degree.
 %%%% ¡default!
-'DegreeAv label'
+'Average Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average degree.
+NOTES (metadata, string) are some specific notes about the Average Degree.
 %%%% ¡default!
-'DegreeAv notes'
+'Average Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -108,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'};
 
 %%% ¡prop!
-M (result, cell) is the average degree.
+M (result, cell) is the Average Degree.
 %%%% ¡calculate!
 degree = calculateValue@Degree(m, prop);
 

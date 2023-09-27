@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingDegOut < DegreeOut (m, overlapping out-degree) is the graph overlapping out-degree.
+OverlappingDegOut < DegreeOut (m, overlapping out-degree) is the graph Overlapping Out-Degree.
 
 %%% ¡description!
-The overlapping out-degree of a graph is the sum of the out-degrees of a node 
+The Overlapping Out-Degree (OverlappingDegOut) of a graph is the sum of the out-degrees of a node 
 in all layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingDegOut.M
 %%%% ¡title!
-OverlappingDegOut
+Overlapping Out-Degree
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Overlapping Out-Degree.
 %%%% ¡default!
 'OverlappingDegOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping out-degree.
+NAME (constant, string) is the name of the Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOut'
+'Overlapping Out-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping out-degree.
+DESCRIPTION (constant, string) is the description of the Overlapping Out-Degree.
 %%%% ¡default!
-'The overlapping out-degree of a graph is the sum of the out-degrees of a node in all layers.'
+'The Overlapping Out-Degree (OverlappingDegOut) of a graph is the sum of the out-degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping out-degree.
+TEMPLATE (parameter, item) is the template of the Overlapping Out-Degree.
 %%%% ¡settings!
 'OverlappingDegOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping out-degree.
+ID (data, string) is a few-letter code of the Overlapping Out-Degree.
 %%%% ¡default!
 'OverlappingDegOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping out-degree.
+LABEL (metadata, string) is an extended label of the Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOut label'
+'Overlapping Out-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping out-degree.
+NOTES (metadata, string) are some specific notes about the Overlapping Out-Degree.
 %%%% ¡default!
-'OverlappingDegOut notes'
+'Overlapping Out-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping out-degree.
+M (result, cell) is the Overlapping Out-Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

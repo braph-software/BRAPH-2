@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeInAv < DegreeIn (m, average in-degree) is the graph average in-degree.
+DegreeInAv < DegreeIn (m, average in-degree) is the graph Average In-Degree.
 
 %%% ¡description!
-The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer. 
+The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer. 
 
 %% ¡layout!
 
@@ -51,39 +51,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average In-Degree.
 %%%% ¡default!
 'DegreeInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average in-degree.
+NAME (constant, string) is the name of the Average In-Degree.
 %%%% ¡default!
-'DegreeInAv'
+'Average In-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average in-degree.
+DESCRIPTION (constant, string) is the description of the Average In-Degree.
 %%%% ¡default!
-'The average in-degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.'
+'The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average in-degree.
+TEMPLATE (parameter, item) is the template of the Average In-Degree.
 %%%% ¡settings!
 'DegreeInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average in-degree.
+ID (data, string) is a few-letter code of the Average In-Degree.
 %%%% ¡default!
 'DegreeInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average in-degree.
+LABEL (metadata, string) is an extended label of the Average In-Degree.
 %%%% ¡default!
-'DegreeInAv label'
+'Average In-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average in-degree.
+NOTES (metadata, string) are some specific notes about the Average In-Degree.
 %%%% ¡default!
-'DegreeInAv notes'
+'Average In-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -106,7 +106,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the degree-inav value.
+M (result, cell) is the cell containing the Average In-Degree value.
 %%%% ¡calculate!
 in_degree = calculateValue@DegreeIn(m, prop);	
 g = m.get('G'); % graph from measure class

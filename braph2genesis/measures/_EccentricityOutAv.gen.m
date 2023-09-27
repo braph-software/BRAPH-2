@@ -1,46 +1,96 @@
 %% ¡header!
-EccentricityOutAv < EccentricityOut (m, average eccentricity) is the graph average out-eccentricity.
+EccentricityOutAv < EccentricityOut (m, average eccentricity) is the graph Average Out-Eccentricity.
 
 %%% ¡description!
-The average out-eccentricity of a node is the sum of the nodal 
+The Average Out-Eccentricity (EccentricityOutAv) of a node is the sum of the nodal 
 out-eccentricities divided by their number within a layer.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.RULE
+%%%% ¡title!
+Out-Eccentricity rule for calculation in a graph or its subgraph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.M
+%%%% ¡title!
+Average Out-Eccentricity
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EccentricityOutAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Out-Eccentricity.
 %%%% ¡default!
 'EccentricityOutAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average out-eccentricity.
+NAME (constant, string) is the name of the Average Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOutAv'
+'Average Out-Eccentricity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average out-eccentricity.
+DESCRIPTION (constant, string) is the description of the Average Out-Eccentricity.
 %%%% ¡default!
-'The average out-eccentricity of a node is the sum of the nodal out-eccentricities divided by their number within a layer.'
+'The Average Out-Eccentricity (EccentricityOutAv) of a node is the sum of the nodal out-eccentricities divided by their number within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average out-eccentricity.
+TEMPLATE (parameter, item) is the template of the Average Out-Eccentricity.
 %%%% ¡settings!
 'EccentricityOutAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average out-eccentricity.
+ID (data, string) is a few-letter code of the Average Out-Eccentricity.
 %%%% ¡default!
 'EccentricityOutAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average out-eccentricity.
+LABEL (metadata, string) is an extended label of the Average Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOutAv label'
+'Average Out-Eccentricity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average out-eccentricity.
+NOTES (metadata, string) are some specific notes about the Average Out-Eccentricity.
 %%%% ¡default!
-'EccentricityOutAv notes'
+'Average Out-Eccentricity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -63,7 +113,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'};
 
 %%% ¡prop!
-M (result, cell) is the average out-eccentricity.
+M (result, cell) is the Average Out-Eccentricity.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

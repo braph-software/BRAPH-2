@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexP < Measure (m, mxpart) is the graph multiplex participation.
+MultiplexP < Measure (m, mxpart) is the graph Multiplex Participation.
 
 %%% ¡description!
-The multiplex participation is the nodal homogeneity of the number of 
+The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of 
  neighbours of a node across the layers. 
 It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] 
  where L is the number of layers, ki(l) is the degree in the l-th 
@@ -34,7 +34,7 @@ Graph
 %%%% ¡id!
 MultiplexP.M
 %%%% ¡title!
-MultiplexP
+Multiplex Participation
 
 %%% ¡prop!
 %%%% ¡id!
@@ -57,39 +57,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Participation.
 %%%% ¡default!
 'MultiplexP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex participation.
+NAME (constant, string) is the name of the Multiplex Participation.
 %%%% ¡default!
 'MultiplexParticipation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex participation.
+DESCRIPTION (constant, string) is the description of the Multiplex Participation.
 %%%% ¡default!
-'The multiplex participation is the nodal homogeneity of the number of neighbours of a node across the layers. It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] where L is the number of layers, ki(l) is the degree in the l-th layer and oi is the overlapping degree of the node. Pi = 1 when the degree is the same in all layers and Pi = 0 when a node has non-zero degree in only one layer.'
+'The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of neighbours of a node across the layers. It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] where L is the number of layers, ki(l) is the degree in the l-th layer and oi is the overlapping degree of the node. Pi = 1 when the degree is the same in all layers and Pi = 0 when a node has non-zero degree in only one layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex participation.
+TEMPLATE (parameter, item) is the template of the Multiplex Participation.
 %%%% ¡settings!
 'MultiplexP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex participation.
+ID (data, string) is a few-letter code of the Multiplex Participation.
 %%%% ¡default!
 'MultiplexP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex participation.
+LABEL (metadata, string) is an extended label of the Multiplex Participation.
 %%%% ¡default!
-'MultiplexParticipation label'
+'Multiplex Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex participation.
+NOTES (metadata, string) are some specific notes about the Multiplex Participation.
 %%%% ¡default!
-'MultiplexParticipation notes'
+'Multiplex Participation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -112,7 +112,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex participation.
+M (result, cell) is the Multiplex Participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

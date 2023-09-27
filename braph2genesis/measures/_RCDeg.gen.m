@@ -1,47 +1,97 @@
 %% ¡header!
-RCDeg < Degree (m, rich-club degree) is the graph rich-club degree.
+RCDeg < Degree (m, rich-club degree) is the graph Rich-Club Degree.
 
 %%% ¡description!
-The rich-club degree of a node at level k is the sum of 
+The Rich-Club Degree (RCDeg) of a node at level k is the sum of 
  the edges that connect nodes of degree k or higher within a layer. 
  k is set by the user; the default value is equal to 1. 
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.PARAMETRIC_VALUE
+%%%% ¡title!
+Rich-Club Degree parameter (degree level)
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.M
+%%%% ¡title!
+Rich-Club Degree
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+RCDeg.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+  
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Rich-Club Degree.
 %%%% ¡default!
 'RCDeg'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the rich-club degree.
+NAME (constant, string) is the name of the Rich-Club Degree.
 %%%% ¡default!
-'RCDeg'
+'Rich-Club Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the rich-club degree.
+DESCRIPTION (constant, string) is the description of the Rich-Club Degree.
 %%%% ¡default!
-'The rich-club degree of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.'
+'The Rich-Club Degree (RCDeg) of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the rich-club degree.
+TEMPLATE (parameter, item) is the template of the Rich-Club Degree.
 %%%% ¡settings!
 'RCDeg'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the rich-club degree.
+ID (data, string) is a few-letter code of the Rich-Club Degree.
 %%%% ¡default!
 'RCDeg ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the rich-club degree.
+LABEL (metadata, string) is an extended label of the Rich-Club Degree.
 %%%% ¡default!
-'RCDeg label'
+'Rich-Club Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the rich-club degree.
+NOTES (metadata, string) are some specific notes about the Rich-Club Degree.
 %%%% ¡default!
-'RCDeg notes'
+'Rich-Club Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -54,7 +104,7 @@ SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
 Measure.UNILAYER
 
 %%% ¡prop!
-PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
+PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.PARAMETRIC__.
 %%%% ¡default!
 Measure.PARAMETRIC
 
@@ -64,7 +114,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};
 
 %%% ¡prop!
-M (result, cell) is the rich-club degree.
+M (result, cell) is the Rich-Club Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

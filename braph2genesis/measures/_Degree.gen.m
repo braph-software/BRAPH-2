@@ -1,9 +1,9 @@
 %% ¡header!
-Degree < Measure (m, degree) is the graph degree.
+Degree < Measure (m, degree) is the graph Degree.
 
 %%% ¡description!
-The degree of a node is the number of edges connected to the node within a layer. 
-Connection weights are ignored in calculations.
+The Degree of a node is the number of edges connected to the node within a layer. 
+ Connection weights are ignored in calculations.
 
 %% ¡layout!
 
@@ -52,37 +52,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Degree.
 %%%% ¡default!
 'Degree'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the degree.
+NAME (constant, string) is the name of the Degree.
 %%%% ¡default!
 'Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the degree.
+DESCRIPTION (constant, string) is the description of the Degree.
 %%%% ¡default!
-'The degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+'The Degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the degree.
+TEMPLATE (parameter, item) is the template of the Degree.
 %%%% ¡settings!
 'Degree'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the degree.
+ID (data, string) is a few-letter code of the Degree.
 %%%% ¡default!
 'Degree ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the degree.
+LABEL (metadata, string) is an extended label of the Degree.
 %%%% ¡default!
 'Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the degree.
+NOTES (metadata, string) are some specific notes about the Degree.
 %%%% ¡default!
 'Degree notes'
 
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'};
 
 %%% ¡prop!
-M (result, cell) is the degree.
+M (result, cell) is the Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

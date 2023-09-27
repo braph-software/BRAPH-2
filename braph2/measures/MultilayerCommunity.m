@@ -1,26 +1,26 @@
 classdef MultilayerCommunity < Measure
-	%MultilayerCommunity is the graph multilayer community structure.
+	%MultilayerCommunity is the graph Multilayer Community Structure.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The multilayer community structure of a multilayer graph is a subdivision of 
+	% The Multilayer Community Structure (MultilayerCommunity) of a multilayer graph is a subdivision of 
 	%  the network into non-overlapping groups of nodes which maximizes the number 
 	%  of within group edges, and minimizes the number of between group edges.
 	%
 	% The list of MultilayerCommunity properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multilayer community structure.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multilayer community structure.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multilayer community structure.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multilayer community structure.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multilayer community structure.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multilayer community structure.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multilayer Community Structure.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multilayer Community Structure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multilayer Community Structure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multilayer Community Structure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multilayer Community Structure.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
 	%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
@@ -170,20 +170,20 @@ classdef MultilayerCommunity < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultilayerCommunity properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multilayer community structure.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multilayer community structure.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multilayer community structure.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multilayer community structure.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multilayer community structure.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multilayer community structure.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multilayer Community Structure.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multilayer Community Structure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multilayer Community Structure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multilayer Community Structure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the triangles.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multilayer Community Structure.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
 			%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
@@ -526,7 +526,7 @@ classdef MultilayerCommunity < Measure
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multilayercommunity_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multilayer community structure.'  'DESCRIPTION (constant, string) is the description of the multilayer community structure.'  'TEMPLATE (parameter, item) is the template of the multilayer community structure.'  'ID (data, string) is a few-letter code of the multilayer community structure.'  'LABEL (metadata, string) is an extended label of the multilayer community structure.'  'NOTES (metadata, string) are some specific notes about the multilayer community structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
+			multilayercommunity_description_list = { 'ELCLASS (constant, string) is the class of the Multilayer Community Structure.'  'NAME (constant, string) is the name of the Multilayer Community Structure.'  'DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.'  'TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.'  'ID (data, string) is a few-letter code of the Multilayer Community Structure.'  'LABEL (metadata, string) is an extended label of the Multilayer Community Structure.'  'NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multilayer Community Structure.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
 			prop_description = multilayercommunity_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -616,17 +616,17 @@ classdef MultilayerCommunity < Measure
 				case 1 % MultilayerCommunity.ELCLASS
 					prop_default = 'MultilayerCommunity';
 				case 2 % MultilayerCommunity.NAME
-					prop_default = 'MultilayerCommunityStructure';
+					prop_default = 'Multilayer Community Structure';
 				case 3 % MultilayerCommunity.DESCRIPTION
-					prop_default = 'The multilayer community structure of a multilayer graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.';
+					prop_default = 'The Multilayer Community Structure (MultilayerCommunity) of a multilayer graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.';
 				case 4 % MultilayerCommunity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultilayerCommunity.getPropSettings(prop));
 				case 5 % MultilayerCommunity.ID
 					prop_default = 'MultilayerCommunity ID';
 				case 6 % MultilayerCommunity.LABEL
-					prop_default = 'MultilayerCommunityStructure label';
+					prop_default = 'Multilayer Community Structure label';
 				case 7 % MultilayerCommunity.NOTES
-					prop_default = 'MultilayerCommunityStructure notes';
+					prop_default = 'Multilayer Community Structure notes';
 				case 9 % MultilayerCommunity.SHAPE
 					prop_default = 2;
 				case 10 % MultilayerCommunity.SCOPE

@@ -1,8 +1,8 @@
 %% ¡header!
-MultilayerM < MultilayerCommunity  (m, multilayer modularity) is the graph multilayer modularity.
+MultilayerM < MultilayerCommunity  (m, multilayer modularity) is the graph Multilayer Modularity.
 
 %%% ¡description!
-The multilayer modularity of a multilayer graph is the multilayer 
+The Multilayer Modularity (MultilayerM) of a multilayer graph is the multilayer 
 quality function Q of the resulting partition of the multilayer network.  
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 MultilayerM.M
 %%%% ¡title!
-MultilayerM
+Multilayer Modularity
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multilayer Modularity.
 %%%% ¡default!
 'MultilayerM'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multilayer modularity.
+NAME (constant, string) is the name of the Multilayer Modularity.
 %%%% ¡default!
-'MultilayerModularity'
+'Multilayer Modularity'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multilayer modularity.
+DESCRIPTION (constant, string) is the description of the Multilayer Modularity.
 %%%% ¡default!
-'The multilayer modularity is the homogeneity of the number of inward neighbours of a node across the layers.'
+'The Multilayer Modularity (MultilayerM) is the homogeneity of the number of inward neighbours of a node across the layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multilayer modularity.
+TEMPLATE (parameter, item) is the template of the Multilayer Modularity.
 %%%% ¡settings!
 'MultilayerM'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multilayer modularity.
+ID (data, string) is a few-letter code of the Multilayer Modularity.
 %%%% ¡default!
 'MultilayerM ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multilayer modularity.
+LABEL (metadata, string) is an extended label of the Multilayer Modularity.
 %%%% ¡default!
-'MultilayerModularity label'
+'Multilayer Modularity label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multilayer modularity.
+NOTES (metadata, string) are some specific notes about the Multilayer Modularity.
 %%%% ¡default!
-'MultilayerModularity notes'
+'Multilayer Modularity notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the multilayer modularity.
+M (result, cell) is the Multilayer Modularity.
 %%%% ¡calculate!
 multilayer_community_structure = calculateValue@MultilayerCommunity(m, prop);
 Q = 0;

@@ -1,25 +1,25 @@
 classdef WeightedMxP < Measure
-	%WeightedMxP is the graph weighted multiplex participation.
+	%WeightedMxP is the graph Weighted Multiplex Participation.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The weighted multiplex participation of a graph is the nodal homogeneity 
+	% The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity 
 	%  of its number of neighbours across the layers.
 	%
 	% The list of WeightedMxP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Multiplex Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Multiplex Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Multiplex Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Multiplex Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Multiplex Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Multiplex Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Multiplex Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% WeightedMxP methods (constructor):
@@ -120,20 +120,20 @@ classdef WeightedMxP < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of WeightedMxP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the weighted multiplex particiption.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the weighted multiplex particiption.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the weighted multiplex particiption.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Multiplex Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Multiplex Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Multiplex Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Multiplex Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Multiplex Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Multiplex Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the weighted multiplex particiption.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Multiplex Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef WeightedMxP < Measure
 			prop = WeightedMxP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			weightedmxp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the weighted multiplex particiption.'  'DESCRIPTION (constant, string) is the description of the weighted multiplex particiption.'  'TEMPLATE (parameter, item) is the template of the weighted multiplex particiption.'  'ID (data, string) is a few-letter code of the weighted multiplex particiption.'  'LABEL (metadata, string) is an extended label of the weighted multiplex particiption.'  'NOTES (metadata, string) are some specific notes about the weighted multiplex particiption.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the weighted multiplex particiption.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			weightedmxp_description_list = { 'ELCLASS (constant, string) is the class of the Weighted Multiplex Participation.'  'NAME (constant, string) is the name of the Weighted Multiplex Participation.'  'DESCRIPTION (constant, string) is the description of the Weighted Multiplex Participation.'  'TEMPLATE (parameter, item) is the template of the Weighted Multiplex Participation.'  'ID (data, string) is a few-letter code of the Weighted Multiplex Participation.'  'LABEL (metadata, string) is an extended label of the Weighted Multiplex Participation.'  'NOTES (metadata, string) are some specific notes about the Weighted Multiplex Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Weighted Multiplex Participation.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = weightedmxp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef WeightedMxP < Measure
 				case 1 % WeightedMxP.ELCLASS
 					prop_default = 'WeightedMxP';
 				case 2 % WeightedMxP.NAME
-					prop_default = 'WeightedMxP';
+					prop_default = 'Weighted Multiplex Participation';
 				case 3 % WeightedMxP.DESCRIPTION
-					prop_default = 'The weighted multiplex participation of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
+					prop_default = 'The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
 				case 4 % WeightedMxP.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxP.getPropSettings(prop));
 				case 5 % WeightedMxP.ID
 					prop_default = 'WeightedMxP ID';
 				case 6 % WeightedMxP.LABEL
-					prop_default = 'WeightedMxP label';
+					prop_default = 'Weighted Multiplex Participation label';
 				case 7 % WeightedMxP.NOTES
-					prop_default = 'WeightedMxP notes';
+					prop_default = 'Weighted Multiplex Participation notes';
 				case 9 % WeightedMxP.SHAPE
 					prop_default = 2;
 				case 10 % WeightedMxP.SCOPE

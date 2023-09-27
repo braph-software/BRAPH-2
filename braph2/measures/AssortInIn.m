@@ -1,27 +1,27 @@
 classdef AssortInIn < Measure
-	%AssortInIn is the graph in-in-assortativity.
+	%AssortInIn is the graph In-In-Assortativity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The in-in-assortativity coefficient of a graph is the correlation coefficient between 
+	% The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between 
 	%   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 	% The corresponding coefficient for directed and weighted networks is calculated by 
 	%   using the weighted and directed variants of in-degree/in-strength.
 	%
 	% The list of AssortInIn properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-in-assortativity.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-in-assortativity.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-in-assortativity.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-in-assortativity.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-in-assortativity.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-in-assortativity.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-In-Assortativity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-In-Assortativity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-In-Assortativity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-In-Assortativity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-In-Assortativity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-In-Assortativity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-In-Assortativity.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-in-assortativity.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-In-Assortativity.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% AssortInIn methods (constructor):
@@ -122,20 +122,20 @@ classdef AssortInIn < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of AssortInIn properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the in-in-assortativity.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the in-in-assortativity.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the in-in-assortativity.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the in-in-assortativity.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the in-in-assortativity.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the in-in-assortativity.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-In-Assortativity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-In-Assortativity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-In-Assortativity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-In-Assortativity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-In-Assortativity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-In-Assortativity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-In-Assortativity.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the in-in-assortativity.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-In-Assortativity.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -470,7 +470,7 @@ classdef AssortInIn < Measure
 			prop = AssortInIn.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			assortinin_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the in-in-assortativity.'  'DESCRIPTION (constant, string) is the description of the in-in-assortativity.'  'TEMPLATE (parameter, item) is the template of the in-in-assortativity.'  'ID (data, string) is a few-letter code of the in-in-assortativity.'  'LABEL (metadata, string) is an extended label of the in-in-assortativity.'  'NOTES (metadata, string) are some specific notes about the in-in-assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the in-in-assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			assortinin_description_list = { 'ELCLASS (constant, string) is the class of the In-In-Assortativity.'  'NAME (constant, string) is the name of the In-In-Assortativity.'  'DESCRIPTION (constant, string) is the description of the In-In-Assortativity.'  'TEMPLATE (parameter, item) is the template of the In-In-Assortativity.'  'ID (data, string) is a few-letter code of the In-In-Assortativity.'  'LABEL (metadata, string) is an extended label of the In-In-Assortativity.'  'NOTES (metadata, string) are some specific notes about the In-In-Assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the In-In-Assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = assortinin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,17 +528,17 @@ classdef AssortInIn < Measure
 				case 1 % AssortInIn.ELCLASS
 					prop_default = 'AssortInIn';
 				case 2 % AssortInIn.NAME
-					prop_default = 'InInAssortativity';
+					prop_default = 'In-In-Assortativity';
 				case 3 % AssortInIn.DESCRIPTION
-					prop_default = 'The in-in-assortativity coefficient of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.';
+					prop_default = 'The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.';
 				case 4 % AssortInIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AssortInIn.getPropSettings(prop));
 				case 5 % AssortInIn.ID
 					prop_default = 'AssortInIn ID';
 				case 6 % AssortInIn.LABEL
-					prop_default = 'InInAssortativity label';
+					prop_default = 'In-In-Assortativity label';
 				case 7 % AssortInIn.NOTES
-					prop_default = 'InInAssortativity notes';
+					prop_default = 'In-In-Assortativity notes';
 				case 9 % AssortInIn.SHAPE
 					prop_default = 1;
 				case 10 % AssortInIn.SCOPE

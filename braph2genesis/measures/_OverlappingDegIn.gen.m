@@ -1,8 +1,8 @@
 %% ¡header!
-OverlappingDegIn < DegreeIn (m, overlapping in-degree) is the graph overlapping in-degree.
+OverlappingDegIn < DegreeIn (m, overlapping in-degree) is the graph Overlapping In-Degree.
 
 %%% ¡description!
-The overlapping in-degree of a graph is the sum of the in-degrees of a node 
+The Overlapping In-Degree (OverlappingDegIn) of a graph is the sum of the in-degrees of a node 
 in all layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 OverlappingDegIn.M
 %%%% ¡title!
-OverlappingDegIn
+Overlapping In-Degree
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Overlapping In-Degree.
 %%%% ¡default!
 'OverlappingDegIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the overlapping in-degree.
+NAME (constant, string) is the name of the Overlapping In-Degree.
 %%%% ¡default!
-'OverlappingInDegree'
+'Overlapping In-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the overlapping in-degree.
+DESCRIPTION (constant, string) is the description of the Overlapping In-Degree.
 %%%% ¡default!
-'The overlapping in-degree of a graph is the sum of the in-degrees of a node in all layers.'
+'The Overlapping In-Degree (OverlappingDegIn) of a graph is the sum of the in-degrees of a node in all layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the overlapping in-degree.
+TEMPLATE (parameter, item) is the template of the Overlapping In-Degree.
 %%%% ¡settings!
 'OverlappingDegIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the overlapping in-degree.
+ID (data, string) is a few-letter code of the Overlapping In-Degree.
 %%%% ¡default!
 'OverlappingDegIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the overlapping in-degree.
+LABEL (metadata, string) is an extended label of the Overlapping In-Degree.
 %%%% ¡default!
-'OverlappingInDegree label'
+'Overlapping In-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the overlapping in-degree.
+NOTES (metadata, string) are some specific notes about the Overlapping In-Degree.
 %%%% ¡default!
-'OverlappingInDegree notes'
+'Overlapping In-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the overlapping in-degree.
+M (result, cell) is the Overlapping In-Degree.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

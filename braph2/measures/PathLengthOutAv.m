@@ -1,24 +1,24 @@
 classdef PathLengthOutAv < PathLengthOut
-	%PathLengthOutAv is the graph average out-path length.
+	%PathLengthOutAv is the graph Average Out-Path Length.
 	% It is a subclass of <a href="matlab:help PathLengthOut">PathLengthOut</a>.
 	%
-	% The out-path length is the average shortest out-path lengths of one node to all other nodes without a layer.
+	% The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes without a layer.
 	%
 	% The list of PathLengthOutAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthOutAv.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthOutAv.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthOutAv.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthOutAv.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthOutAv.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthOutAv.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Path Length.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Path Length.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Path Length.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Path Length.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Path Length.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Path Length.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Path Length.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthOutAv.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Out-Path Length.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
 	%
@@ -120,20 +120,20 @@ classdef PathLengthOutAv < PathLengthOut
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of PathLengthOutAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the PathLengthOutAv.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the PathLengthOutAv.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the PathLengthOutAv.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the PathLengthOutAv.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the PathLengthOutAv.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the PathLengthOutAv.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Path Length.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Path Length.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Path Length.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Path Length.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Path Length.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Path Length.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Path Length.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the PathLengthOutAv.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Out-Path Length.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
 			%
@@ -469,7 +469,7 @@ classdef PathLengthOutAv < PathLengthOut
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pathlengthoutav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the PathLengthOutAv.'  'DESCRIPTION (constant, string) is the description of the PathLengthOutAv.'  'TEMPLATE (parameter, item) is the template of the PathLengthOutAv.'  'ID (data, string) is a few-letter code of the PathLengthOutAv.'  'LABEL (metadata, string) is an extended label of the PathLengthOutAv.'  'NOTES (metadata, string) are some specific notes about the PathLengthOutAv.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the PathLengthOutAv.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthOut algorithm' };
+			pathlengthoutav_description_list = { 'ELCLASS (constant, string) is the class of the Average Out-Path Length.'  'NAME (constant, string) is the name of the Average Out-Path Length.'  'DESCRIPTION (constant, string) is the description of the Average Out-Path Length.'  'TEMPLATE (parameter, item) is the template of the Average Out-Path Length.'  'ID (data, string) is a few-letter code of the Average Out-Path Length.'  'LABEL (metadata, string) is an extended label of the Average Out-Path Length.'  'NOTES (metadata, string) are some specific notes about the Average Out-Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average Out-Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthOut algorithm' };
 			prop_description = pathlengthoutav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -527,17 +527,17 @@ classdef PathLengthOutAv < PathLengthOut
 				case 1 % PathLengthOutAv.ELCLASS
 					prop_default = 'PathLengthOutAv';
 				case 2 % PathLengthOutAv.NAME
-					prop_default = 'PathLengthOutAv';
+					prop_default = 'Average Out-Path Length';
 				case 3 % PathLengthOutAv.DESCRIPTION
-					prop_default = 'The PathLengthOutAv is the average shortest PathLengthOutAv of one node to all other nodes within a layer.';
+					prop_default = 'The Average Out-Path Length (PathLengthOutAv) is the average shortest PathLengthOutAv of one node to all other nodes within a layer.';
 				case 4 % PathLengthOutAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthOutAv.getPropSettings(prop));
 				case 5 % PathLengthOutAv.ID
 					prop_default = 'PathLengthOutAv ID';
 				case 6 % PathLengthOutAv.LABEL
-					prop_default = 'PathLengthOutAv label';
+					prop_default = 'Average Out-Path Length label';
 				case 7 % PathLengthOutAv.NOTES
-					prop_default = 'PathLengthOutAv notes';
+					prop_default = 'Average Out-Path Length notes';
 				case 9 % PathLengthOutAv.SHAPE
 					prop_default = 2;
 				case 10 % PathLengthOutAv.SCOPE
@@ -650,14 +650,21 @@ classdef PathLengthOutAv < PathLengthOut
 					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
-					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-					N = g.get('NODENUMBER');
 					L = g.get('LAYERNUMBER');
 					
 					out_path_length = calculateValue@PathLengthOut(m, prop);
 					out_path_length_av = cell(L, 1);
+					path_length_rule = m.get('RULE');
 					parfor li = 1:1:length(out_path_length_av)
-					    out_path_length_av(li) = {mean(out_path_length{li})};
+					    switch lower(path_length_rule)
+					        case {'subgraphs'}
+					            player = out_path_length{li};
+					            out_path_length_av(li) = {mean(player(player~=Inf))};
+					        case {'mean'}
+					            out_path_length_av(li) = {mean(out_path_length{li})};
+					        otherwise  % 'harmonic' 'default'
+					            out_path_length_av(li) = {harmmean(out_path_length{li})};
+					    end
 					end
 					value = out_path_length_av;
 					

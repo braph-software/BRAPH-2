@@ -1,25 +1,25 @@
 classdef Participation < Measure
-	%Participation is the graph participation.
+	%Participation is the graph Participation.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The participation of a node is the ratio of edges that a node forms within 
-	% a single layer community to the total number of edges that forms within the whole single layer graph.
+	% The Participation of a node is the ratio of edges that a node forms within 
+	%  a single layer community to the total number of edges that forms within the whole single layer graph.
 	%
 	% The list of Participation properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the participation.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the participation.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the participation.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the participation.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the participation.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the participation.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Participation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Participation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Participation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Participation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Participation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Participation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Participation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the participation.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Participation.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>CI</strong> 	CI (parameter, MATRIX) 
 	%  <strong>17</strong> <strong>RULE</strong> 	RULE (parameter, option)
@@ -133,20 +133,20 @@ classdef Participation < Measure
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of Participation properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the participation.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the participation.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the participation.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the participation.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the participation.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the participation.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Participation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Participation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Participation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Participation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Participation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Participation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Participation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the participation.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Participation.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>CI</strong> 	CI (parameter, MATRIX) 
 			%  <strong>17</strong> <strong>RULE</strong> 	RULE (parameter, option)
@@ -483,7 +483,7 @@ classdef Participation < Measure
 			prop = Participation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			participation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the participation.'  'DESCRIPTION (constant, string) is the description of the participation.'  'TEMPLATE (parameter, item) is the template of the participation.'  'ID (data, string) is a few-letter code of the participation.'  'LABEL (metadata, string) is an extended label of the participation.'  'NOTES (metadata, string) are some specific notes about the participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the participation.'  'PFM (gui, item) contains the panel figure of the measure.'  'CI (parameter, MATRIX) '  'RULE (parameter, option)' };
+			participation_description_list = { 'ELCLASS (constant, string) is the class of the Participation.'  'NAME (constant, string) is the name of the Participation.'  'DESCRIPTION (constant, string) is the description of the Participation.'  'TEMPLATE (parameter, item) is the template of the Participation.'  'ID (data, string) is a few-letter code of the Participation.'  'LABEL (metadata, string) is an extended label of the Participation.'  'NOTES (metadata, string) are some specific notes about the Participation.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Participation.'  'PFM (gui, item) contains the panel figure of the measure.'  'CI (parameter, MATRIX) '  'RULE (parameter, option)' };
 			prop_description = participation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -551,7 +551,7 @@ classdef Participation < Measure
 				case 2 % Participation.NAME
 					prop_default = 'Participation';
 				case 3 % Participation.DESCRIPTION
-					prop_default = 'The participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.';
+					prop_default = 'The Participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.';
 				case 4 % Participation.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Participation.getPropSettings(prop));
 				case 5 % Participation.ID

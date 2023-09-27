@@ -1,45 +1,90 @@
 %% ¡header!
-EdgeNumDist < Measure (m, edge number distance) is the edge number distance.
+EdgeNumDist < Measure (m, edge number distance) is the Edge Number Distance.
 
 %%% ¡description!
-The edge distance number of a graph is the number of edges in the shortest 
+The Edge Number Distance (EdgeNumDist) of a graph is the number of edges in the shortest 
 weighted path between two nodes within a layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.M
+%%%% ¡title!
+Edge Number Distance
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+EdgeNumDist.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Edge Number Distance.
 %%%% ¡default!
 'EdgeNumDist'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the edge number distance.
+NAME (constant, string) is the name of the Edge Number Distance.
 %%%% ¡default!
-'EdgeNumberDistance'
+'Edge Number Distance'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the edge number distance.
+DESCRIPTION (constant, string) is the description of the Edge Number Distance.
 %%%% ¡default!
-'The edge distance number of a graph is the number of edges in the shortest weighted path between two nodes within a layer.'
+'The Edge Number Distance (EdgeNumDist) of a graph is the number of edges in the shortest weighted path between two nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the edge number distance.
+TEMPLATE (parameter, item) is the template of the Edge Number Distance.
 %%%% ¡settings!
 'EdgeNumDist'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the edge number distance.
+ID (data, string) is a few-letter code of the Edge Number Distance.
 %%%% ¡default!
 'EdgeNumDist ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the edge number distance.
+LABEL (metadata, string) is an extended label of the Edge Number Distance.
 %%%% ¡default!
-'EdgeNumberDistance label'
+'Edge Number Distance label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the edge number distance.
+NOTES (metadata, string) are some specific notes about the Edge Number Distance.
 %%%% ¡default!
-'EdgeNumberDistance notes'
+'Edge Number Distance notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.BINODAL__.
@@ -62,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphWU' 'MultiplexWD' 'MultiplexWU'};
 
 %%% ¡prop!
-M (result, cell) is the edge number distance.
+M (result, cell) is the Edge Number Distance.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

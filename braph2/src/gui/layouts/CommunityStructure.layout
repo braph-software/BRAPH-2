@@ -11,7 +11,7 @@ Measure ID
 Measure NAME
 2
 Measure NOTES
-6
+11
 TOSTRING
 NaN
 SHAPE
@@ -21,22 +21,22 @@ NaN
 PARAMETRICITY
 NaN
 Compatible Graphs
-7
+12
 Graph
-3
+8
 CommunityStructure
-4
+9
 Measure Plot
+10
+Community Structure algorithm (louvain, newman, fixed)
+3
+Gamma (resolution) parameter
+4
+Initial community affiliation vector (optional).
 5
-RULE
-NaN
-GAMMA
-NaN
-M0
-NaN
-LOUVAIN_OM
-NaN
-OM_TYPE
-NaN
+Custom objective matrix (Louvain, optional)
+6
+The objective-function type algorithm (Louvain)
+7
 QUALITY_FUNCTION
 NaN

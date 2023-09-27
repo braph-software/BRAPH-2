@@ -1,8 +1,8 @@
 %% ¡header!
-MultiplexPOut < Measure (m, multiplex out-participation) is the graph multiplex out-participation.
+MultiplexPOut < Measure (m, multiplex out-participation) is the graph Multiplex Out-Participation.
 
 %%% ¡description!
-The multiplex out-participation is the homogeneity of the number of outward 
+The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward 
  neighbours of a node across the layers.
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 MultiplexPOut.M
 %%%% ¡title!
-MultiplexPOut
+Multiplex Out-Participation
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Multiplex Out-Participation.
 %%%% ¡default!
 'MultiplexPOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multiplex out-participation.
+NAME (constant, string) is the name of the Multiplex Out-Participation.
 %%%% ¡default!
-'MultiplexOutParticipation'
+'Multiplex Out-Participation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multiplex out-participation.
+DESCRIPTION (constant, string) is the description of the Multiplex Out-Participation.
 %%%% ¡default!
-'The multiplex out-participation is the homogeneity of the number of outward neighbours of a node across the layers.'
+'The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward neighbours of a node across the layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multiplex out-participation.
+TEMPLATE (parameter, item) is the template of the Multiplex Out-Participation.
 %%%% ¡settings!
 'MultiplexPOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the multiplex out-participation.
+ID (data, string) is a few-letter code of the Multiplex Out-Participation.
 %%%% ¡default!
 'MultiplexPOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multiplex out-participation.
+LABEL (metadata, string) is an extended label of the Multiplex Out-Participation.
 %%%% ¡default!
-'MultiplexOutParticipation label'
+'Multiplex Out-Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multiplex out-participation.
+NOTES (metadata, string) are some specific notes about the Multiplex Out-Participation.
 %%%% ¡default!
-'MultiplexOutParticipation notes'
+'Multiplex Out-Participation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'MultiplexBD'};
 
 %%% ¡prop!
-M (result, cell) is the multiplex out-participation.
+M (result, cell) is the Multiplex Out-Participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

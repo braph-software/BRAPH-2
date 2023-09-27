@@ -1,45 +1,95 @@
 %% ¡header!
-PathLengthInAv < PathLengthIn (m, average in-path length) is the graph average in-path length.
+PathLengthInAv < PathLengthIn (m, average in-path length) is the graph Average In-Path Length.
 
 %%% ¡description!
-The average in-path length of a graph is the average of the sum of the in-path lengths within each layer. 
+The Average In-Path Length (PathLengthInAv) of a graph is the average of the sum of the in-path lengths within each layer. 
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.RULE
+%%%% ¡title!
+In-Path Length rule
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.M
+%%%% ¡title!
+Average In-Path Length
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+PathLengthInAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graph
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average In-Path Length.
 %%%% ¡default!
 'PathLengthInAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average in-path length.
+NAME (constant, string) is the name of the Average In-Path Length.
 %%%% ¡default!
-'PathLengthInAv'
+'Average In-Path Length'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average in-path length.
+DESCRIPTION (constant, string) is the description of the Average In-Path Length.
 %%%% ¡default!
-'The average in-path length is the average shortest in-path length of one node to all other nodes within a layer.'
+'The Average In-Path Length (PathLengthInAv) is the average shortest in-path length of one node to all other nodes within a layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average in-path length.
+TEMPLATE (parameter, item) is the template of the Average In-Path Length.
 %%%% ¡settings!
 'PathLengthInAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average in-path length.
+ID (data, string) is a few-letter code of the Average In-Path Length.
 %%%% ¡default!
 'PathLengthInAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average in-path length.
+LABEL (metadata, string) is an extended label of the Average In-Path Length.
 %%%% ¡default!
-'PathLengthInAv label'
+'Average In-Path Length label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average in-path length.
+NOTES (metadata, string) are some specific notes about the Average In-Path Length.
 %%%% ¡default!
-'PathLengthInAv notes'
+'Average In-Path Length notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -62,17 +112,24 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'}
 
 %%% ¡prop!
-M (result, cell) is the cell containing the average in-path length.
+M (result, cell) is the cell containing the Average In-Path Length.
 %%%% ¡calculate!
 g = m.get('G');  % graph from measure class
-A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
-N = g.get('NODENUMBER');
 L = g.get('LAYERNUMBER');
 
 in_path_length = calculateValue@PathLengthIn(m, prop);
 in_path_length_av = cell(L, 1);
+path_length_rule = m.get('RULE');
 parfor li = 1:1:length(in_path_length_av)
-    in_path_length_av(li) = {mean(in_path_length{li})};
+    switch lower(path_length_rule)
+        case {'subgraphs'}
+            player = in_path_length{li};
+            in_path_length_av(li) = {mean(player(player~=Inf))};
+        case {'mean'}
+            in_path_length_av(li) = {mean(in_path_length{li})};
+        otherwise  % 'harmonic' 'default'
+            in_path_length_av(li) = {harmmean(in_path_length{li})};
+    end
 end
 value = in_path_length_av;
 
@@ -95,17 +152,20 @@ B = [
     0  0  0  0  0
     ];
 
-known_in_path_length_av = {Inf};
+known_in_path_length_av = {harmmean([1.3333 1.3333 2 1.6000 Inf])};
 
 g = GraphBD('B', B);
 
 m_outside_g = PathLengthInAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_in_path_length_av), ...
+pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+known_in_path_length_av_round = cellfun(@(x) round(x, 3), known_in_path_length_av, 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'PathLengthInAv');
-assert(isequal(m_inside_g.get('M'), known_in_path_length_av), ...
+pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -129,23 +189,26 @@ B22 = [
       1  1  0  1  0;
       1  1  0  0  0;
       0  0  0  0  0
-       ];
+      ];
 B = {B11 B22};
-
-known_in_path_length = {
-                    Inf
-                    Inf
-                    };
+  
+known_in_path_length_av = {
+    harmmean([1.3333 1.3333 2 1.6000 Inf])
+    harmmean([1.3333 1.3333 2 1.6000 Inf])
+    };
 
 g = MultiplexBD('B', B);
 
 m_outside_g = PathLengthInAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_in_path_length), ...
+pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+known_in_path_length_av_round = cellfun(@(x) round(x, 3), known_in_path_length_av, 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'PathLengthInAv');
-assert(isequal(m_inside_g.get('M'), known_in_path_length), ...
+pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])
 
@@ -175,19 +238,22 @@ B21 = B12';
 B = {B11 B12;
      B21 B22};
 
-known_in_path_length = {
-                    Inf
-                    Inf
-                    };
+known_in_path_length_av = {
+    harmmean([1.3333 1.3333 2 1.6000 Inf])
+    harmmean([1.3333 1.3333 2 1.6000 Inf])
+    };
 
 g = OrdMlBD('B', B);
 
 m_outside_g = PathLengthInAv('G', g);
-assert(isequal(m_outside_g.get('M'), known_in_path_length), ...
+pl_answer = cellfun(@(x) round(x, 3), m_outside_g.get('M'), 'UniformOutput', false);
+known_in_path_length_av_round = cellfun(@(x) round(x, 3), known_in_path_length_av, 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 
 m_inside_g = g.get('MEASURE', 'PathLengthInAv');
-assert(isequal(m_inside_g.get('M'), known_in_path_length), ...
+pl_answer = cellfun(@(x) round(x, 3), m_inside_g.get('M'), 'UniformOutput', false);
+assert(isequal(pl_answer, known_in_path_length_av_round), ...
     [BRAPH2.STR ':PathLengthInAv:' BRAPH2.FAIL_TEST], ...
     [class(m_inside_g) ' is not being calculated correctly for ' class(g) '.'])

@@ -1,48 +1,92 @@
 %% ¡header!
-Flexibility < MultilayerCommunity (m, flexibility) is the graph flexibility.
+Flexibility < MultilayerCommunity (m, flexibility) is the graph Flexibility.
 
 %%% ¡description!
-The flexibility of each node in a multilayer network is calculated 
+The Flexibility of each node in a multilayer network is calculated 
 as the number of times that it changes community assignment, 
 normalized by the total possible number of changes. In ordered 
 multilayer networks (e.g. temporal, changes are possible only between 
 adjacent layers, whereas in categorical multilayer networks, 
 community assignment changes are possible between any pairs of layers.
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.M
+%%%% ¡title!
+Flexibility
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+Flexibility.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
+
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Flexibility.
 %%%% ¡default!
 'Flexibility'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the flexibility.
+NAME (constant, string) is the name of the Flexibility.
 %%%% ¡default!
 'Flexibility'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the flexibility.
+DESCRIPTION (constant, string) is the description of the Flexibility.
 %%%% ¡default!
-'The flexibility of each node in a multilayer network is calculated  as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.'
+'The Flexibility of each node in a multilayer network is calculated  as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the flexibility.
+TEMPLATE (parameter, item) is the template of the Flexibility.
 %%%% ¡settings!
 'Flexibility'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the flexibility.
+ID (data, string) is a few-letter code of the Flexibility.
 %%%% ¡default!
 'Flexibility ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the flexibility.
+LABEL (metadata, string) is an extended label of the Flexibility.
 %%%% ¡default!
 'Flexibility label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the flexibility.
+NOTES (metadata, string) are some specific notes about the Flexibility.
 %%%% ¡default!
 'Flexibility notes'
 
@@ -67,7 +111,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the flexibility.
+M (result, cell) is the Flexibility.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

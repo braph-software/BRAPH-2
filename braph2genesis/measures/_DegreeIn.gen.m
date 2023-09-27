@@ -1,8 +1,8 @@
 %% ¡header!
-DegreeIn < Measure (m, in-degree) is the graph in-degree.
+DegreeIn < Measure (m, in-degree) is the graph In-Degree.
 
 %%% ¡description!
-The in-degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. 
+The In-Degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the In-Degree.
 %%%% ¡default!
 'DegreeIn'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the in-degree.
+NAME (constant, string) is the name of the In-Degree.
 %%%% ¡default!
-'DegreeIn'
+'In-Degree'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the in-degree.
+DESCRIPTION (constant, string) is the description of the In-Degree.
 %%%% ¡default!
-'The in-degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. Connection weights are ignored in calculations.'
+'The In-Degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the in-degree.
+TEMPLATE (parameter, item) is the template of the In-Degree.
 %%%% ¡settings!
 'DegreeIn'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the in-degree.
+ID (data, string) is a few-letter code of the In-Degree.
 %%%% ¡default!
 'DegreeIn ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the in-degree.
+LABEL (metadata, string) is an extended label of the In-Degree.
 %%%% ¡default!
-'DegreeIn label'
+'In-Degree label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the in-degree.
+NOTES (metadata, string) are some specific notes about the In-Degree.
 %%%% ¡default!
-'DegreeIn notes'
+'In-Degree notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};
 
 %%% ¡prop!
-M (result, cell) is the cell containing the in-degree value.
+M (result, cell) is the cell containing the In-Degree value.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

@@ -11,7 +11,7 @@ Measure ID
 Measure NAME
 2
 Measure NOTES
-6
+7
 TOSTRING
 NaN
 SHAPE
@@ -21,12 +21,12 @@ NaN
 PARAMETRICITY
 NaN
 Compatible Graphs
-7
+8
 Graph
-3
-MultiplexCP
 4
-Measure Plot
+Multiplex Core-Periphery
 5
-MULTIRICHNESS_COEFFICIENTS
-NaN
+Measure Plot
+6
+Multirichness coefficients
+3

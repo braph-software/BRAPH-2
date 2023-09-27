@@ -1,9 +1,9 @@
 %% ¡header!
-Participation < Measure (m, participation) is the graph participation.
+Participation < Measure (m, participation) is the graph Participation.
 
 %%% ¡description!
-The participation of a node is the ratio of edges that a node forms within 
-a single layer community to the total number of edges that forms within the whole single layer graph.
+The Participation of a node is the ratio of edges that a node forms within 
+ a single layer community to the total number of edges that forms within the whole single layer graph.
 
 %% ¡layout!
 
@@ -52,37 +52,37 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Participation.
 %%%% ¡default!
 'Participation'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the participation.
+NAME (constant, string) is the name of the Participation.
 %%%% ¡default!
 'Participation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the participation.
+DESCRIPTION (constant, string) is the description of the Participation.
 %%%% ¡default!
-'The participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.'
+'The Participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the participation.
+TEMPLATE (parameter, item) is the template of the Participation.
 %%%% ¡settings!
 'Participation'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the participation.
+ID (data, string) is a few-letter code of the Participation.
 %%%% ¡default!
 'Participation ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the participation.
+LABEL (metadata, string) is an extended label of the Participation.
 %%%% ¡default!
 'Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the participation.
+NOTES (metadata, string) are some specific notes about the Participation.
 %%%% ¡default!
 'Participation notes'
 
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultiplexBU'};
 
 %%% ¡prop!
-M (result, cell) is the participation.
+M (result, cell) is the Participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

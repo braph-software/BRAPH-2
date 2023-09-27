@@ -1,8 +1,8 @@
 %% ¡header!
-WeightedMxPOut < Measure (m, weighted out-participation) is the graph weighted multiplex out-participation.
+WeightedMxPOut < Measure (m, weighted out-participation) is the graph Weighted Multiplex Out-Participation.
 
 %%% ¡description!
-The weighted multiplex out-participation of a graph is the nodal homogeneity 
+The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity 
  of its number of outward neighbours across the layers. 
 
 %% ¡layout!
@@ -29,7 +29,7 @@ Graph
 %%%% ¡id!
 WeightedMxPOut.M
 %%%% ¡title!
-WeightedMxPOut 
+Weighted Multiplex Out-Participation 
 
 %%% ¡prop!
 %%%% ¡id!
@@ -52,39 +52,39 @@ Compatible Graphs
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
 'WeightedMxPOut'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the weighted multiplex out-particiption.
+NAME (constant, string) is the name of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
-'WeightedMxPOut '
+'Weighted Multiplex Out-Participation '
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the weighted multiplex out-particiption.
+DESCRIPTION (constant, string) is the description of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
-'The weighted multiplex out-participation of a graph is the nodal homogeneity of its number of outward neighbours across the layers.'
+'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbours across the layers.'
  
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the weighted multiplex out-particiption.
+TEMPLATE (parameter, item) is the template of the Weighted Multiplex Out-Participation.
 %%%% ¡settings!
 'WeightedMxPOut'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the weighted multiplex out-particiption.
+ID (data, string) is a few-letter code of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
 'WeightedMxPOut ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the weighted multiplex out-particiption.
+LABEL (metadata, string) is an extended label of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
-'WeightedMxPOut label'
+'Weighted Multiplex Out-Participation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the weighted multiplex out-particiption.
+NOTES (metadata, string) are some specific notes about the Weighted Multiplex Out-Participation.
 %%%% ¡default!
-'WeightedMxPOut notes'
+'Weighted Multiplex Out-Participation notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -107,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'}
 
 %%% ¡prop!
-M (result, cell) is the weighted multiplex out-particiption.
+M (result, cell) is the Weighted Multiplex Out-Participation.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

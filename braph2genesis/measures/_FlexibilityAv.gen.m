@@ -1,46 +1,90 @@
 %% ¡header!
-FlexibilityAv < Flexibility (m, average flexibility) is the graph average flexibility.
+FlexibilityAv < Flexibility (m, average flexibility) is the graph Average Flexibility.
 
 %%% ¡description!
-The average flexibility of a multilayer graph is the average of the flexibility 
+The Average Flexibility (FlexibilityAv) of a multilayer graph is the average of the flexibility 
 of all nodes.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.M
+%%%% ¡title!
+Average Flexibility
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+FlexibilityAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Flexibility.
 %%%% ¡default!
 'FlexibilityAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average flexibility.
+NAME (constant, string) is the name of the Average Flexibility.
 %%%% ¡default!
 'FlexibilityAv '
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average flexibility.
+DESCRIPTION (constant, string) is the description of the Average Flexibility.
 %%%% ¡default!
-'The average flexibility of a multilayer graph is the average of the flexibility of all nodes.'
+'The Average Flexibility (FlexibilityAv) of a multilayer graph is the average of the flexibility of all nodes.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average flexibility.
+TEMPLATE (parameter, item) is the template of the Average Flexibility.
 %%%% ¡settings!
 'FlexibilityAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average flexibility.
+ID (data, string) is a few-letter code of the Average Flexibility.
 %%%% ¡default!
 'FlexibilityAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average flexibility.
+LABEL (metadata, string) is an extended label of the Average Flexibility.
 %%%% ¡default!
-'FlexibilityAv label'
+'Average Flexibility label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average flexibility.
+NOTES (metadata, string) are some specific notes about the Average Flexibility.
 %%%% ¡default!
-'FlexibilityAv notes'
+'Average Flexibility notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};
 
 %%% ¡prop!
-M (result, cell) is the average flexibility.
+M (result, cell) is the Average Flexibility.
 %%%% ¡calculate!
 flexibility_av = calculateValue@Flexibility(m, prop);
 flexibility_av = {mean(flexibility_av{1})};

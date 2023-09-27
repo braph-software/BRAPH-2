@@ -1,46 +1,90 @@
 %% ¡header!
-LocalEfficiency < Measure (m, local efficiency) is the graph local efficiency.
+LocalEfficiency < Measure (m, local efficiency) is the graph Local Efficiency.
 
 %%% ¡description!
-The local efficiency is the average inverse shortest path length with 
+The Local Efficiency (LocalEfficiency) is the average inverse shortest path length with 
   local nodes within each layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.M
+%%%% ¡title!
+Local Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+LocalEfficiency.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Local Efficiency.
 %%%% ¡default!
 'LocalEfficiency'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the local efficiency.
+NAME (constant, string) is the name of the Local Efficiency.
 %%%% ¡default!
-'LocalEfficiency'
+'Local Efficiency'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the local efficiency.
+DESCRIPTION (constant, string) is the description of the Local Efficiency.
 %%%% ¡default!
-'The local efficiency is the average inverse shortest path length with local nodes within each layer.'
+'The Local Efficiency (LocalEfficiency) is the average inverse shortest path length with local nodes within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the local efficiency.
+TEMPLATE (parameter, item) is the template of the Local Efficiency.
 %%%% ¡settings!
 'LocalEfficiency'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the local efficiency.
+ID (data, string) is a few-letter code of the Local Efficiency.
 %%%% ¡default!
 'LocalEfficiency ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the local efficiency.
+LABEL (metadata, string) is an extended label of the Local Efficiency.
 %%%% ¡default!
-'LocalEfficiency label'
+'Local Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the local efficiency.
+NOTES (metadata, string) are some specific notes about the Local Efficiency.
 %%%% ¡default!
-'LocalEfficiency notes'
+'Local Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -63,7 +107,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT'};
 
 %%% ¡prop!
-M (result, cell) is the local efficiency.
+M (result, cell) is the Local Efficiency.
 %%%% ¡calculate!
 g = m.get('G'); % graph from measure class
 A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)

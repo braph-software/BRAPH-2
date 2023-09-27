@@ -1,25 +1,25 @@
 classdef ClusteringAv < Clustering
-	%ClusteringAv is the graph average clustering.
+	%ClusteringAv is the graph Average Clustering.
 	% It is a subclass of <a href="matlab:help Clustering">Clustering</a>.
 	%
-	% The average clustering (ClusteringAv) of a graph is the average of the clustering 
+	% The Average Clustering (ClusteringAv) of a graph is the average of the clustering 
 	% coefficients of all nodes. Connection weights are ignored in calculations.
 	%
 	% The list of ClusteringAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average clustering.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average clustering.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average clustering.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average clustering.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average clustering.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average clustering.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Clustering.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Clustering.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Clustering.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Clustering.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Clustering.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Clustering.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Clustering.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average clustering.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Clustering.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 	%
@@ -121,20 +121,20 @@ classdef ClusteringAv < Clustering
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ClusteringAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average clustering.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average clustering.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average clustering.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average clustering.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average clustering.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average clustering.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Clustering.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Clustering.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Clustering.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Clustering.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Clustering.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Clustering.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Clustering.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the average clustering.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Clustering.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
@@ -470,7 +470,7 @@ classdef ClusteringAv < Clustering
 			prop = ClusteringAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			clusteringav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average clustering.'  'DESCRIPTION (constant, string) is the description of the average clustering.'  'TEMPLATE (parameter, item) is the template of the average clustering.'  'ID (data, string) is a few-letter code of the average clustering.'  'LABEL (metadata, string) is an extended label of the average clustering.'  'NOTES (metadata, string) are some specific notes about the average clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the average clustering.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
+			clusteringav_description_list = { 'ELCLASS (constant, string) is the class of the Average Clustering.'  'NAME (constant, string) is the name of the Average Clustering.'  'DESCRIPTION (constant, string) is the description of the Average Clustering.'  'TEMPLATE (parameter, item) is the template of the Average Clustering.'  'ID (data, string) is a few-letter code of the Average Clustering.'  'LABEL (metadata, string) is an extended label of the Average Clustering.'  'NOTES (metadata, string) are some specific notes about the Average Clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average Clustering.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
 			prop_description = clusteringav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,17 +528,17 @@ classdef ClusteringAv < Clustering
 				case 1 % ClusteringAv.ELCLASS
 					prop_default = 'ClusteringAv';
 				case 2 % ClusteringAv.NAME
-					prop_default = 'ClusteringAv';
+					prop_default = 'Average Clustering';
 				case 3 % ClusteringAv.DESCRIPTION
-					prop_default = 'The average clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.';
+					prop_default = 'The Average Clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.';
 				case 4 % ClusteringAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, ClusteringAv.getPropSettings(prop));
 				case 5 % ClusteringAv.ID
 					prop_default = 'ClusteringAv ID';
 				case 6 % ClusteringAv.LABEL
-					prop_default = 'ClusteringAv label';
+					prop_default = 'Average Clustering label';
 				case 7 % ClusteringAv.NOTES
-					prop_default = 'ClusteringAv notes';
+					prop_default = 'Average Clustering notes';
 				case 9 % ClusteringAv.SHAPE
 					prop_default = 1;
 				case 10 % ClusteringAv.SCOPE

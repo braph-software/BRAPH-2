@@ -1,46 +1,90 @@
 %% ¡header!
-GlobalEfficiencyAv < GlobalEfficiency (m, average global efficiency) is the graph average global efficiency.
+GlobalEfficiencyAv < GlobalEfficiency (m, average global efficiency) is the graph Average Global Efficiency.
 
 %%% ¡description!
-The average global efficiency (GlobalEfficiencyAv) is the average of the 
+The Average Global Efficiency (GlobalEfficiencyAv) is the average of the 
 global efficiency within each layer.
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.ID
+%%%% ¡title!
+Measure ID
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.LABEL
+%%%% ¡title!
+Measure NAME
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.G
+%%%% ¡title!
+Graph
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.M
+%%%% ¡title!
+Average Global Efficiency
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.PFM
+%%%% ¡title!
+Measure Plot
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.NOTES
+%%%% ¡title!
+Measure NOTES
+
+%%% ¡prop!
+%%%% ¡id!
+GlobalEfficiencyAv.COMPATIBLE_GRAPHS
+%%%% ¡title!
+Compatible Graphs
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the Average Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyAv'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the average global efficiency.
+NAME (constant, string) is the name of the Average Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyAv'
+'Average Global Efficiency'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the average global efficiency.
+DESCRIPTION (constant, string) is the description of the Average Global Efficiency.
 %%%% ¡default!
-'The average global efficiency (GlobalEfficiencyAv) is the average of the global efficiency within each layer.'
+'The Average Global Efficiency (GlobalEfficiencyAv) is the average of the global efficiency within each layer.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the average global efficiency.
+TEMPLATE (parameter, item) is the template of the Average Global Efficiency.
 %%%% ¡settings!
 'GlobalEfficiencyAv'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the average global efficiency.
+ID (data, string) is a few-letter code of the Average Global Efficiency.
 %%%% ¡default!
 'GlobalEfficiencyAv ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the average global efficiency.
+LABEL (metadata, string) is an extended label of the Average Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyAv label'
+'Average Global Efficiency label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the average global efficiency.
+NOTES (metadata, string) are some specific notes about the Average Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyAv notes'
+'Average Global Efficiency notes'
 
 %%% ¡prop!
 SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
@@ -64,7 +108,7 @@ COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 
 
 %%% ¡prop!
-M (result, cell) is the global efficiency.
+M (result, cell) is the Average Global Efficiency.
 %%%% ¡calculate!
 global_efficiency = calculateValue@GlobalEfficiency(m, prop);
 g = m.get('G');  % graph from measure class

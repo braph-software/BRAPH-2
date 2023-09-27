@@ -1,21 +1,21 @@
 classdef MultiplexCP < MultiRC
-	%MultiplexCP is the graph multiplex core-periphery.
+	%MultiplexCP is the graph Multiplex Core-Periphery.
 	% It is a subclass of <a href="matlab:help MultiRC">MultiRC</a>.
 	%
-	% The multiplex core-periphery of a node is the value of the rank corresponding 
+	% The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding 
 	%  to the maximum multirichness nodes. It returns 1 for a node belonging to the 
 	%  core and zero otherwise. The relevance of each layer is controlled by the 
 	%  multirichness coefficients that are between 0 and 1, and add up to one; 
 	%  the default coefficients are (1/layernumber).
 	%
 	% The list of MultiplexCP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex core-periphery.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex core-periphery.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex core-periphery.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex core-periphery.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex core-periphery.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex core-periphery.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Core-Periphery.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Core-Periphery.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -124,13 +124,13 @@ classdef MultiplexCP < MultiRC
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexCP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex core-periphery.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex core-periphery.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex core-periphery.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the multiplex core-periphery.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex core-periphery.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex core-periphery.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Core-Periphery.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Core-Periphery.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
@@ -473,7 +473,7 @@ classdef MultiplexCP < MultiRC
 			prop = MultiplexCP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexcp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex core-periphery.'  'DESCRIPTION (constant, string) is the description of the multiplex core-periphery.'  'TEMPLATE (parameter, item) is the template of the multiplex core-periphery.'  'ID (data, string) is a few-letter code of the multiplex core-periphery.'  'LABEL (metadata, string) is an extended label of the multiplex core-periphery.'  'NOTES (metadata, string) are some specific notes about the multiplex core-periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
+			multiplexcp_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.'  'NAME (constant, string) is the name of the Multiplex Core-Periphery.'  'DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.'  'TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.'  'ID (data, string) is a few-letter code of the Multiplex Core-Periphery.'  'LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.'  'NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
 			prop_description = multiplexcp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -531,17 +531,17 @@ classdef MultiplexCP < MultiRC
 				case 1 % MultiplexCP.ELCLASS
 					prop_default = 'MultiplexCP';
 				case 2 % MultiplexCP.NAME
-					prop_default = 'MultiplexCorePeriphery';
+					prop_default = 'Multiplex Core-Periphery';
 				case 3 % MultiplexCP.DESCRIPTION
-					prop_default = 'The multiplex core-periphery of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).';
+					prop_default = 'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).';
 				case 4 % MultiplexCP.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexCP.getPropSettings(prop));
 				case 5 % MultiplexCP.ID
 					prop_default = 'MultiplexCP ID';
 				case 6 % MultiplexCP.LABEL
-					prop_default = 'MultiplexCorePeriphery label';
+					prop_default = 'Multiplex Core-Periphery label';
 				case 7 % MultiplexCP.NOTES
-					prop_default = 'MultiplexCorePeriphery notes';
+					prop_default = 'Multiplex Core-Periphery notes';
 				case 9 % MultiplexCP.SHAPE
 					prop_default = 2;
 				case 10 % MultiplexCP.SCOPE

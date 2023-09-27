@@ -1,25 +1,25 @@
 classdef OverlappingDegInAv < OverlappingDegIn
-	%OverlappingDegInAv is the graph average overlapping in-degree.
+	%OverlappingDegInAv is the graph Average Overlapping In-Degree.
 	% It is a subclass of <a href="matlab:help OverlappingDegIn">OverlappingDegIn</a>.
 	%
-	% The average overlapping in-degree of a graph is the average of the sum of the 
+	% The Average Overlapping In-Degree (OverlappingDegInAv) of a graph is the average of the sum of the 
 	% in-degrees of a node in all layers.
 	%
 	% The list of OverlappingDegInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-degree.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping In-Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping In-Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Overlapping In-Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping In-Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping In-Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping In-Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping In-Degree.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping In-Degree.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 	%
 	% OverlappingDegInAv methods (constructor):
@@ -120,20 +120,20 @@ classdef OverlappingDegInAv < OverlappingDegIn
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of OverlappingDegInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the average overlapping in-degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the average overlapping in-degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the average overlapping in-degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the average overlapping in-degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the average overlapping in-degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the average overlapping in-degree.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Overlapping In-Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Overlapping In-Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Overlapping In-Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Overlapping In-Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Overlapping In-Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping In-Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping In-Degree.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the overlapping in-degree.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping In-Degree.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
@@ -468,7 +468,7 @@ classdef OverlappingDegInAv < OverlappingDegIn
 			prop = OverlappingDegInAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingdeginav_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the average overlapping in-degree.'  'DESCRIPTION (constant, string) is the description of the average overlapping in-degree.'  'TEMPLATE (parameter, item) is the template of the average overlapping in-degree.'  'ID (data, string) is a few-letter code of the average overlapping in-degree.'  'LABEL (metadata, string) is an extended label of the average overlapping in-degree.'  'NOTES (metadata, string) are some specific notes about the average overlapping in-degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the overlapping in-degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingdeginav_description_list = { 'ELCLASS (constant, string) is the class of the Average Overlapping In-Degree.'  'NAME (constant, string) is the name of the Average Overlapping In-Degree.'  'DESCRIPTION (constant, string) is the description of the Average Overlapping In-Degree.'  'TEMPLATE (parameter, item) is the template of the Average Overlapping In-Degree.'  'ID (data, string) is a few-letter code of the Average Overlapping In-Degree.'  'LABEL (metadata, string) is an extended label of the Average Overlapping In-Degree.'  'NOTES (metadata, string) are some specific notes about the Average Overlapping In-Degree.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Overlapping In-Degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingdeginav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -526,17 +526,17 @@ classdef OverlappingDegInAv < OverlappingDegIn
 				case 1 % OverlappingDegInAv.ELCLASS
 					prop_default = 'OverlappingDegInAv';
 				case 2 % OverlappingDegInAv.NAME
-					prop_default = 'OverlappingInDegreeAv';
+					prop_default = 'Average Overlapping In-Degree';
 				case 3 % OverlappingDegInAv.DESCRIPTION
-					prop_default = 'The average overlapping in-degree of a graph is the average of the sum of the in-degrees of a node in all layers.';
+					prop_default = 'The Average Overlapping In-Degree (OverlappingDegInAv) of a graph is the average of the sum of the in-degrees of a node in all layers.';
 				case 4 % OverlappingDegInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingDegInAv.getPropSettings(prop));
 				case 5 % OverlappingDegInAv.ID
 					prop_default = 'OverlappingDegInAv ID';
 				case 6 % OverlappingDegInAv.LABEL
-					prop_default = 'OverlappingInDegreeAv label';
+					prop_default = 'Average Overlapping In-Degree label';
 				case 7 % OverlappingDegInAv.NOTES
-					prop_default = 'OverlappingInDegreeAv notes';
+					prop_default = 'Average Overlapping In-Degree notes';
 				case 9 % OverlappingDegInAv.SHAPE
 					prop_default = 1;
 				case 10 % OverlappingDegInAv.SCOPE
