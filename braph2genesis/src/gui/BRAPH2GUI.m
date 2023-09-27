@@ -240,6 +240,19 @@ h_editfield = uieditfield( ...
     function cb_editfield(~, ~)
         % % %
 disp('cb_editfield')
+% % Prompt user for a query
+% userQuery = input('Enter your search query: ', 's');
+% 
+% % Convert user's query to regex pattern
+% % For simplicity, let's only convert * to .*
+% pattern = strrep(userQuery, '*', '.*');
+% 
+% % Search the text
+% if ~isempty(regexp(txt, pattern))
+%     disp('The text contains your query.');
+% else
+%     disp('The text does not contain your query.');
+% end
     end
 
 h_listbox = uilistbox( ...
