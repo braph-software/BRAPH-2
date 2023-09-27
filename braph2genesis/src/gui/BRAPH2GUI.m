@@ -232,7 +232,7 @@ h_button_about = uibutton( ...
 h_editfield = uieditfield( ...
     'Parent', f, ...
     'Tag', 'H_EDITFIELD', ...
-    'Tooltip', 'Write the keywords describing the pipeline you are looking for', ...
+    'Tooltip', 'Write the keywords describing the pipeline you are looking for (use * as a wildcard)', ...
     'FontSize', BRAPH2.FONTSIZE, ...
     'Position', [w(h_axes) .9*h(f) .95*w(f)-w(h_axes) 2*BRAPH2.FONTSIZE], ...
     'ValueChangedFcn', {@cb_editfield} ...
@@ -252,6 +252,36 @@ disp('cb_editfield')
 %     disp('The text contains your query.');
 % else
 %     disp('The text does not contain your query.');
+% end
+
+% % Sample text
+% txt = "The quick brown fox jumps over the lazy dog.";
+% 
+% % Get user's query
+% userQuery = input('Enter your space-separated search query (use * as a wildcard): ', 's');
+% 
+% % Split user's query into words
+% words = strsplit(userQuery);
+% 
+% % Initialize a flag to determine if all words (or patterns) are present
+% allWordsPresent = true;
+% 
+% % Check if each word or pattern is present in the text
+% for i = 1:length(words)
+%     % Convert * to its regex equivalent .*
+%     pattern = strrep(words{i}, '*', '.*');
+%     
+%     if isempty(regexp(txt, pattern, 'once'))
+%         allWordsPresent = false;
+%         break;
+%     end
+% end
+% 
+% % Display result
+% if allWordsPresent
+%     disp('The text contains all words/patterns from your query.');
+% else
+%     disp('Not all words/patterns from your query are present in the text.');
 % end
     end
 
