@@ -1,4 +1,4 @@
-%% Pipeline Classificatoin Cross-Validation Connectivity BUD
+%% Pipeline Classification Cross-Validation Connectivity BUD
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using binary undirected graph at fix densities obtained from connectivity data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

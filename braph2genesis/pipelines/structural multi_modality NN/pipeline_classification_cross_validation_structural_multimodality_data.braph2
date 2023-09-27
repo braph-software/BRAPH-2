@@ -1,4 +1,4 @@
-%% Pipeline Classificatoin Cross-Validation Structural Multimodality Data 
+%% Pipeline Classification Cross-Validation Structural Multimodality Data 
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifiers using structural multimodality data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).

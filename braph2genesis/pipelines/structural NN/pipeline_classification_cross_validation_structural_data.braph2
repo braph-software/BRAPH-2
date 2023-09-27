@@ -1,4 +1,4 @@
-%% Pipeline Classificatoin Cross-Validation Structural Data 
+%% Pipeline Classification Cross-Validation Structural Data 
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using structural data.
 % 1. It loads a brain atlas from an XLS file (e.g., destrieux_atlas.xlsx).

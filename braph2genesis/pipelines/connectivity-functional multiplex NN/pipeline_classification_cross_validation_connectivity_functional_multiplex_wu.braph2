@@ -1,4 +1,4 @@
-%% Pipeline Classificatoin Cross-Validation Connectivity-Functional Multiplex WU 
+%% Pipeline Classification Cross-Validation Connectivity-Functional Multiplex WU 
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using the adjacency matrix of weighted undirected graph obtained from connectivity-functional multiplex data.
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
