@@ -355,25 +355,12 @@ end
 update_listbox()
     function update_listbox()
         
-        keywords = get(h_editfield, 'Value');
-keywords % % %
+        input = get(h_editfield, 'Value');
+        keywords = strsplit(strtrim(input));
+keywords
         
         items = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
         itemsdata = cellfun(@(pipeline) pipeline.index, pipelines);
-
-% % Prompt user for a query
-% userQuery = input('Enter your search query: ', 's');
-% 
-% % Convert user's query to regex pattern
-% % For simplicity, let's only convert * to .*
-% pattern = strrep(userQuery, '*', '.*');
-% 
-% % Search the text
-% if ~isempty(regexp(txt, pattern))
-%     disp('The text contains your query.');
-% else
-%     disp('The text does not contain your query.');
-% end
 
 % % Sample text
 % txt = "The quick brown fox jumps over the lazy dog.";
