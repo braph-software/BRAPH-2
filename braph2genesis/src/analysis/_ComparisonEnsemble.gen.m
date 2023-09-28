@@ -67,9 +67,9 @@ Measure Comparison Plot
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonEnsemble.PFBG
+ComparisonEnsemble.PFB
 %%%% ¡title!
-Measure Comparison Brain Graph
+Measure Comparison Brain
 
 %% ¡props_update!
 
@@ -501,6 +501,7 @@ if isa(cp.getr('PFC'), 'NoValue')
             end
     end
 end
+
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
     'GUICLASS', 'GUIFig', ...
@@ -508,55 +509,54 @@ pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFC, ...
     varargin{:});
 
 %%% ¡prop!
-PFBG (gui, item) contains the panel figure of the brain graph.
-%%%% ¡_settings!
-% % % 'PFBrainGraphComparison'
-%%%% ¡_postprocessing!
-% % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
-% % %     if isa(cp.getr('PFBG'), 'NoValue')
-% % %         c = cp.get('C');
-% % %         g_dict = c.get('A1').get('G_DICT');
-% % %         if ~isempty(g_dict) && ~isa(g_dict, 'NoValue') && g_dict.length >= 1
-% % %             g = g_dict.getItem(1);
-% % %             if Graph.is_graph(g) % graph
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.memorize('PFBG').set('ME', cp, 'BA', ba_list{1})
-% % %                 else
-% % %                     cp.memorize('PFBG').set('ME', cp);
-% % %                 end
-% % %                 
-% % %             elseif Graph.is_multigraph(g) % multigraph BUD BUT
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
-% % %                 end
-% % %             elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_weighted(g) % multiplexWU
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp));
-% % %                 end
-% % %             elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_binary(g)
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp));
-% % %                 end
-% % %             end 
-% % %         else
-% % %             m.memorize('PFBG').set('ME', m)
-% % %         end
-% % %     end
-% % % end
-%%%% ¡_gui!
-% % % pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFBG, ...
-% % %     'GUICLASS', 'GUIFig', ...
-% % %     varargin{:});
+PFB (gui, item) contains the panel figure of the comparison.
+%%%% ¡settings!
+'ComparisonEnsembleBrainPF'
+%%%% ¡postprocessing!
+if isa(cp.getr('PFB'), 'NoValue')
+
+    measure = cp.get('MEASURE');
+    if isempty(cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT_LIST'))
+        brain_atlas = BrainAtlas();
+    else
+        brain_atlas = cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT', 1).get('BA');
+    end
+    switch Element.getPropDefault(measure, 'SHAPE')
+        case Measure.GLOBAL % __Measure.GLOBAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GS('CP', cp, 'BA', brain_atlas))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GU('CP', cp, 'BA', brain_atlas))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_GB('CP', cp, 'BA', brain_atlas))
+            end
+        case Measure.NODAL % __Measure.NODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NS('CP', cp, 'BA', brain_atlas))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NU('CP', cp, 'BA', brain_atlas))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_NB('CP', cp, 'BA', brain_atlas))
+            end
+        case Measure.BINODAL % __Measure.BINODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_BS('CP', cp, 'BA', brain_atlas))
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFB', ComparisonEnsembleBrainPF_BU('CP', cp, 'BA', brain_atlas))
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFB',ComparisonEnsembleBrainPF_BB('CP', cp, 'BA', brain_atlas))
+            end
+    end
+end
+
+%%%% ¡gui!
+pr = PanelPropItem('EL', cp, 'PROP', ComparisonEnsemble.PFB, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
+    varargin{:});
 
 %%% ¡prop!
 CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
@@ -659,4 +659,4 @@ value = {diff, p1, p2, ci_lower, ci_upper};
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonEnsemble.PFC ComparisonEnsemble.PFBG ComparisonEnsemble.CALCULATE_RESULTS]
+[ComparisonEnsemble.PFC ComparisonEnsemble.PFB ComparisonEnsemble.CALCULATE_RESULTS]

@@ -1,8 +1,8 @@
 %% ¡header!
-CompareEnsemblePP_CpDict < PanelProp (pr, comparison plot) plots the panel to manage the comparisons of an ensemble analysis.
+CompareEnsemblePP_CpDict < PanelProp (pr, comparison plot for ensemble analysis) plots the panel to manage the comparisons of an ensemble analysis.
 
 %%% ¡description!
-CompareEnsemblePP_CpDict plots the panel to manage the comparisons of an ensemble analysis.
+A Comparison Plot for Ensemble Analysis (CompareEnsemblePP_CpDict) plots the panel to manage the comparisons of an ensemble analysis.
 It is intended to be used only with the property CP_DICT of CompareEnsemble.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uitable, CompareEnsemble, ComparisonEnsemble
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the comparison panel.
+NAME (constant, string) is the name of the comparison panel for ensemble analysis.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the comparison panel.
+DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.
 %%%% ¡default!
-'CompareEnsemblePP_CpDict plots the panel to manage the comparisons of an ensemble analysis.'
+'A Comparison Plot for Ensemble Analysis (CompareEnsemblePP_CpDict) plots the panel to manage the comparisons of an ensemble analysis. It is intended to be used only with the property CP_DICT of CompareEnsemble.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the comparison panel.
+TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.
 %%%% ¡settings!
 'CompareEnsemblePP_CpDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the comparison panel.
+ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the comparison panel.
+LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the comparison panel.
+NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.
 %%%% ¡default!
 'CompareEnsemblePP_CpDict'
 
@@ -173,11 +173,11 @@ if value
             gui.get('SHOW')
         end
     end
-    
-    % figures for brain graph comparison figures
-    gui_bg_dict = pr.get('GUI_BG_DICT');
-    for i = 1:1:gui_bg_dict.get('LENGTH')
-        gui = gui_bg_dict.get('IT', i);
+
+    % figures for brain measures comparison figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('SHOW')
         end
@@ -206,11 +206,11 @@ if value
             gui.get('HIDE')
         end
     end
-    
-    % figures for measure figures
-    gui_bg_dict = pr.get('GUI_BG_DICT');
-    for i = 1:1:gui_bg_dict.get('LENGTH')
-        gui = gui_bg_dict.get('IT', i);
+
+    % figures for measure brain figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('HIDE')
         end
@@ -248,11 +248,11 @@ if value
             gui.get('CLOSE')
         end
     end
-    
-    % figures for measure figures
-    gui_bg_dict = pr.get('GUI_BG_DICT');
-    for i = 1:1:gui_bg_dict.get('LENGTH')
-        gui = gui_bg_dict.get('IT', i);
+
+    % figures for brain measures comparison figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end
@@ -368,13 +368,13 @@ menu_open_brains = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_OPEN_BRAINS', ...
     'Text', 'Brain Graphs Selected Comparisons ...', ...
-    'MenuSelectedFcn', {@cb_open_brains} ...
+    'MenuSelectedFcn', {@cb_open_mbrain} ...
     );
 menu_hide_brains = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_HIDE_BRAINS', ...
     'Text', 'Hide Selected Brain Graphs', ...
-	'MenuSelectedFcn', {@cb_hide_brains} ...
+	'MenuSelectedFcn', {@cb_hide_mbrain} ...
     );
 
 set(pr.get('TABLE'), 'ContextMenu', contextmenu)
@@ -561,47 +561,6 @@ function cb_hide_elements(~, ~)
         end
     end
 end
-function cb_open_brains(~, ~)
-    c = pr.get('EL');
-    g = c.get('A1').get('GRAPH_TEMPLATE');
-    m_list = g.get('COMPATIBLE_MEASURES');
-    
-    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
-    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
-
-    gui_bg_dict = pr.memorize('GUI_BG_DICT');
-    
-    selected = pr.get('SELECTED');
-	for s = 1:1:length(selected)
-        i = selected(s);
-        
-        measure = m_list{i}; % also key
-
-        cp = c.get('COMPARISON', measure);
-        
-        if ~gui_bg_dict.get('CONTAINS_KEY', measure)
-            gui = GUIFig( ...
-                'ID', measure, ... % this is the dictionary key
-                'PF', cp.get('PFBG'), ...
-                'POSITION', [ ...
-                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
-                    y0(f, 'normalized') ...
-                    w(f, 'normalized') * 3 ...
-                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
-                    ], ...
-                'WAITBAR', pr.getCallback('WAITBAR'), ...
-                'CLOSEREQ', false ...
-                );
-            gui_bg_dict.get('ADD', gui)
-        end
-        
-        gui = gui_bg_dict.get('IT', measure);
-        if ~gui.get('DRAWN')
-            gui.get('DRAW')
-        end
-        gui.get('SHOW')
-    end
-end
 function cb_hide_brains(~, ~)
     c = pr.get('EL');
     g = c.get('A1').get('GRAPH_TEMPLATE');
@@ -624,6 +583,70 @@ function cb_hide_brains(~, ~)
     end
 end
 
+function cb_open_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
+    m_list = g.get('COMPATIBLE_MEASURES');
+
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+
+        measure = m_list{i}; % also key
+
+        cp = c.get('COMPARISON', measure);
+
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', cp.get('PFB'), ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+
+function cb_hide_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('GRAPH_TEMPLATE');
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = m_list{i}; % also key
+        
+        if gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = gui_b_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
+
 %%% ¡prop!
 GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.
 %%%% ¡settings!
@@ -635,7 +658,7 @@ GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 'GUIElement'
 
 %%% ¡prop!
-GUI_BG_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
+GUI_B_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
 %%%% ¡settings!
 'GUIFig'
 
