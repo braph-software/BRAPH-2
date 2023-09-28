@@ -492,6 +492,8 @@ end
 function cb_open_elements(~, ~)
     a = pr.get('EL');    
     g = a.get('GRAPH_TEMPLATE'); % actual graph
+    g.memorize('A'); % memorizing A to get correct ALAYERLABELS
+    
     m_list = g.get('COMPATIBLE_MEASURES');
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 

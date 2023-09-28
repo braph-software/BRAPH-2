@@ -437,7 +437,7 @@ function cb_open_g_el(~, ~)
         g_key = g_key_list{i}; % key for graph
     
         if ~gui_g_dict.get('CONTAINS_KEY', g_key)
-            g_key = g_dict.get('IT', g_key); % actural graph
+            g = g_dict.get('IT', g_key); % actural graph
             gui = GUIElement( ...
                 'ID', g_key, ... % this is the dictionary key for graph
                 'PE', g, ... 

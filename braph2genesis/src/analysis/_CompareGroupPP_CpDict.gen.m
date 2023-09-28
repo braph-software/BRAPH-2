@@ -652,6 +652,7 @@ function cb_open_elements(~, ~)
         measure = m_list{i}; % also key
 
         cp = c.get('COMPARISON', measure);
+        cp.get('C').get('A1').memorize('G').memorize('A'); % memorizing A to get correct ALAYERLABELS
         
         if ~gui_cp_dict.get('CONTAINS_KEY', measure)
             gui = GUIElement( ...
