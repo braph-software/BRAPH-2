@@ -173,7 +173,14 @@ if value
             gui.get('SHOW')
         end
     end
-    
+    % figures for brain measures comparison figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
     % figures for brain graph comparison figures
     gui_bg_dict = pr.get('GUI_BG_DICT');
     for i = 1:1:gui_bg_dict.get('LENGTH')
@@ -206,7 +213,16 @@ if value
             gui.get('HIDE')
         end
     end
-    
+
+    % figures for measure figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+
     % figures for measure figures
     gui_bg_dict = pr.get('GUI_BG_DICT');
     for i = 1:1:gui_bg_dict.get('LENGTH')
@@ -244,6 +260,15 @@ if value
     gui_cp_dict = pr.get('GUI_CP_DICT');
     for i = 1:1:gui_cp_dict.get('LENGTH')
         gui = gui_cp_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+
+    % figures for measure figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end
@@ -449,6 +474,105 @@ function cb_calculate(~, ~)
 
 	pr.get('UPDATE');
 end
+function cb_open_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = m_list{i}; % also key
+
+        cp = c.get('COMPARISON', measure);
+        
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+			sub_list = c.get('A1').get('GR').get('SUB_DICT').get('IT_LIST');
+            sub = sub_list{1};
+            brain_atlas = sub.get('BA');
+
+            switch Element.getPropDefault(measure, 'SHAPE')
+                case Measure.GLOBAL % __Measure.GLOBAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mGBPF = ComparisonGroupBrainPF_GS('CP', cp, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mGBPF = ComparisonGroupBrainPF_GU('CP', cp, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mGBPF = ComparisonGroupBrainPF_GB('CP', cp, 'BA', brain_atlas);
+                    end
+                case Measure.NODAL % __Measure.NODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mGBPF = ComparisonGroupBrainPF_NS('CP', cp, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mGBPF = ComparisonGroupBrainPF_NU('CP', cp, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mGBPF = ComparisonGroupBrainPF_NB('CP', cp, 'BA', brain_atlas);
+                    end
+                case Measure.BINODAL % __Measure.BINODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mGBPF = ComparisonGroupBrainPF_BS('CP', cp, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mGBPF = omparisonGroupBrainPF_BU('CP', cp, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mGBPF = ComparisonGroupBrainPF_BB('CP', cp, 'BA', brain_atlas);
+                    end
+            end
+
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', mGBPF, ...
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                    y0(f, 'normalized') ...
+                    w(f, 'normalized') * 3 ...
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+        
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+
+function cb_hide_mbrain(~, ~)
+    c = pr.get('EL');
+    g = c.get('A1').get('G');
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+    
+        measure = m_list{i}; % also key
+    
+        if gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = gui_b_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
+
+
 function cb_open_plots(~, ~)
     c = pr.get('EL');
     g = c.get('A1').get('G');
@@ -645,6 +769,11 @@ GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.
 GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 %%%% ¡settings!
 'GUIElement'
+
+%%% ¡prop!
+GUI_B_DICT (gui, idict) contains the GUIs for the brain measures comparison figures.
+%%%% ¡settings!
+'GUIFig'
 
 %%% ¡prop!
 GUI_BG_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
