@@ -357,10 +357,6 @@ update_listbox()
         
         keywords = get(h_editfield, 'Value');
 keywords % % %
-
-        if isempty(keywords)
-            return
-        end
         
         items = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
         itemsdata = cellfun(@(pipeline) pipeline.index, pipelines);
