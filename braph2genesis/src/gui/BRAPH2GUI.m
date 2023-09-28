@@ -233,56 +233,13 @@ h_editfield = uieditfield( ...
     'Parent', f, ...
     'Tag', 'H_EDITFIELD', ...
     'Tooltip', 'Write the keywords describing the pipeline you are looking for (use * as a wildcard)', ...
+    'Placeholder', 'insert keywords', ...
     'FontSize', BRAPH2.FONTSIZE, ...
     'Position', [w(h_axes) .9*h(f) .95*w(f)-w(h_axes) 2*BRAPH2.FONTSIZE], ...
     'ValueChangedFcn', {@cb_editfield} ...
-    ); %#ok<NASGU>
+    );
     function cb_editfield(~, ~)
-        % % %
-disp('cb_editfield')
-% % Prompt user for a query
-% userQuery = input('Enter your search query: ', 's');
-% 
-% % Convert user's query to regex pattern
-% % For simplicity, let's only convert * to .*
-% pattern = strrep(userQuery, '*', '.*');
-% 
-% % Search the text
-% if ~isempty(regexp(txt, pattern))
-%     disp('The text contains your query.');
-% else
-%     disp('The text does not contain your query.');
-% end
-
-% % Sample text
-% txt = "The quick brown fox jumps over the lazy dog.";
-% 
-% % Get user's query
-% userQuery = input('Enter your space-separated search query (use * as a wildcard): ', 's');
-% 
-% % Split user's query into words
-% words = strsplit(userQuery);
-% 
-% % Initialize a flag to determine if all words (or patterns) are present
-% allWordsPresent = true;
-% 
-% % Check if each word or pattern is present in the text
-% for i = 1:length(words)
-%     % Convert * to its regex equivalent .*
-%     pattern = strrep(words{i}, '*', '.*');
-%     
-%     if isempty(regexp(txt, pattern, 'once'))
-%         allWordsPresent = false;
-%         break;
-%     end
-% end
-% 
-% % Display result
-% if allWordsPresent
-%     disp('The text contains all words/patterns from your query.');
-% else
-%     disp('Not all words/patterns from your query are present in the text.');
-% end
+        update_listbox()
     end
 
 h_listbox = uilistbox( ...
@@ -377,6 +334,7 @@ for i = 1:1:length(pipelines_dir_list)
             pipelines{index}.id = fileparts(file_name);
            
             txt = fileread(file_name);
+            pipelines{index}.txt = txt;
             
             header_marks = regexp(txt, '%%', 'all');
             header_txt = txt(header_marks(1):header_marks(2));
@@ -397,13 +355,72 @@ end
 update_listbox()
     function update_listbox()
         
+        keywords = get(h_editfield, 'Value');
+keywords % % %
+
+        if isempty(keywords)
+            return
+        end
+        
         items = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
         itemsdata = cellfun(@(pipeline) pipeline.index, pipelines);
-        
+
+% % Prompt user for a query
+% userQuery = input('Enter your search query: ', 's');
+% 
+% % Convert user's query to regex pattern
+% % For simplicity, let's only convert * to .*
+% pattern = strrep(userQuery, '*', '.*');
+% 
+% % Search the text
+% if ~isempty(regexp(txt, pattern))
+%     disp('The text contains your query.');
+% else
+%     disp('The text does not contain your query.');
+% end
+
+% % Sample text
+% txt = "The quick brown fox jumps over the lazy dog.";
+% 
+% % Get user's query
+% userQuery = input('Enter your space-separated search query (use * as a wildcard): ', 's');
+% 
+% % Split user's query into words
+% words = strsplit(userQuery);
+% 
+% % Initialize a flag to determine if all words (or patterns) are present
+% allWordsPresent = true;
+% 
+% % Check if each word or pattern is present in the text
+% for i = 1:length(words)
+%     % Convert * to its regex equivalent .*
+%     pattern = strrep(words{i}, '*', '.*');
+%     
+%     if isempty(regexp(txt, pattern, 'once'))
+%         allWordsPresent = false;
+%         break;
+%     end
+% end
+% 
+% % Display result
+% if allWordsPresent
+%     disp('The text contains all words/patterns from your query.');
+% else
+%     disp('Not all words/patterns from your query are present in the text.');
+% end
+
         set(h_listbox, ...
             'Value', {}, ...
             'Items', items, ...
             'ItemsData', itemsdata ...
+            )
+        set(h_label, ...
+            'Text', '', ...
+            'Position', [5 0 w(h_panel)-10 h(h_panel)] ...
+            ); 
+        set(h_button, ...
+            'Enable', 'off', ...
+            'Text', 'No selected pipeline' ...
             )
     end
 
