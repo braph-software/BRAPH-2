@@ -355,13 +355,21 @@ end
 update_listbox()
     function update_listbox()
         
-        input = get(h_editfield, 'Value');
-        keywords = strsplit(strtrim(input));
-keywords
-        
         items = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
         itemsdata = cellfun(@(pipeline) pipeline.index, pipelines);
 
+        input = get(h_editfield, 'Value');
+        keywords = cellfun(@(keyword) strrep(keyword, '*', '.*'), strsplit(strtrim(input), ' '), 'UniformOutput', false); % also convert * to its regex equivalent .*
+        
+        present_keywords = false(length(items), length(keywords));
+        for i = 1:1:length(items)
+            item = items{i}
+            for k = 1:1:length(keywords)
+                keyword = keywords{k}
+                
+            end
+        end
+        
 % % Sample text
 % txt = "The quick brown fox jumps over the lazy dog.";
 % 
