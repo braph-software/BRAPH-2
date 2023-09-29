@@ -3,7 +3,7 @@ CommunityStructure < Measure (m, community structure) is the graph Community Str
 
 %%% ¡description!
 The Community Structure (CommunityStructure) of a graph is a subdivision of the network into 
-non-overlapping groups of nodes which maximizes the number of whitin group 
+non-overlapping groups of nodes which maximizes the number of within group 
 edges, and minimizes the number of between group edges.
 
 %% ¡layout!
@@ -95,7 +95,7 @@ NAME (constant, string) is the name of the Community Structure.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Community Structure.
 %%%% ¡default!
-'The Community Structure (CommunityStructure) of a graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of whitin group edges, and minimizes the number of between group edges.'
+'The Community Structure (CommunityStructure) of a graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Community Structure.

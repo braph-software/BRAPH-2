@@ -2,7 +2,7 @@
 Diameter < Measure (m, diameter) is the graph Diameter.
 
 %%% ¡description!
-The diameter is the maximum eccentricity among the vertice within a layer.
+The diameter is the maximum eccentricity among the vertices within a layer.
 
 %% ¡layout!
 
@@ -63,7 +63,7 @@ NAME (constant, string) is the name of the Diameter.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Diameter.
 %%%% ¡default!
-'The Diameter is the maximum eccentricity among the vertice within a layer.'
+'The Diameter is the maximum eccentricity among the vertices within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Diameter.

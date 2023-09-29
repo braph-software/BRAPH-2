@@ -2,10 +2,10 @@
 RCS < Strength (m, rich-club strength) is the graph Rich-Club Strength.
 
 %%% ¡description!
-The Rich-Club Strength (RCS) of a node at level s is the sum of the weighted edges 
-  that connect nodes of strength s or higher within a layer. 
-  s is set by the user and it can be a vector containting all the strength thresholds 
-  the default value is equal to 1.
+The Rich-Club Strength (RCS) of a node at level PARAMETRIC_VALUE is the sum of the weighted edges 
+ that connect nodes of strength s or higher within a layer. 
+ PARAMETRIC_VALUE is set by the user and it can be a vector containing all the strength thresholds 
+ the default value is equal to 1.
 
 %% ¡layout!
 
@@ -72,7 +72,7 @@ NAME (constant, string) is the name of the Rich-Club Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Rich-Club Strength.
 %%%% ¡default!
-'The Rich-Club Strength (RCS) of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher within a layer. s is set by the user and it can be a vector containting all the strength thresholds the default value is equal to 1.'
+'The Rich-Club Strength (RCS) of a node at level PARAMETRIC_VALUE is the sum of the weighted edges that connect nodes of strength s or higher within a layer. PARAMETRIC_VALUE is set by the user and it can be a vector containing all the strength thresholds the default value is equal to 1.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Rich-Club Strength.
@@ -170,8 +170,9 @@ end
 value = rich_club_strength;
 
 %% ¡props!
+
 %%% ¡prop! 
-PARAMETRIC_VALUE (parameter, RVECTOR) 
+PARAMETRIC_VALUE (parameter, RVECTOR) is the strength level.
 %%%% ¡default!
 1
 

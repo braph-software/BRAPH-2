@@ -2,7 +2,7 @@
 Radius < Measure (m, radius) is the graph Radius.
 
 %%% ¡description!
-The Radius is the minimum eccentricity among the vertice within a layer.
+The Radius is the minimum eccentricity among the vertices within a layer.
 
 %% ¡layout!
 
@@ -69,7 +69,7 @@ NAME (constant, string) is the name of the Radius.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Radius.
 %%%% ¡default!
-'The Radius is the minimum eccentricity among the vertice within a layer.'
+'The Radius is the minimum eccentricity among the vertices within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Radius.

@@ -4,7 +4,7 @@ RichClub < Degree (m, rich-club) is the graph Rich-Club.
 %%% ¡description!
 The Rich-Club coefficient (RichClub) of a node at level k is the fraction of 
  the edges that connect nodes of degree k or higher out of the 
- maxium number of edges that such nodes might share within a 
+ maximum number of edges that such nodes might share within a 
  layer. k is set by the user, the default value is equal to 1.
 
 %% ¡layout!
@@ -72,7 +72,7 @@ NAME (constant, string) is the name of the Rich-Club.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Rich-Club.
 %%%% ¡default!
-'The Rich-Club coefficient (RichClub) of a node at level k is the fraction of the edges that connect nodes of degree k or higher out of the maxium number of edges that such nodes might share within a layer. k is set by the user, the default value is equal to 1.'
+'The Rich-Club coefficient (RichClub) of a node at level k is the fraction of the edges that connect nodes of degree k or higher out of the maximum number of edges that such nodes might share within a layer. k is set by the user, the default value is equal to 1.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Rich-Club.

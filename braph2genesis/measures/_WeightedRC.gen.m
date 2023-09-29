@@ -3,9 +3,9 @@ WeightedRC < Strength (m, weighted rich-club) is the graph Weighted Rich-Club.
 
 %%% ¡description!
 The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the 
- edges weights that connect nodes of strength s or higher out of the 
- maxium number of edges weights that such nodes might share within a layer. 
- s is set by the user and it can be a vector containting all the 
+ edges weights that connect nodes of strength WRC_PARAMETER or higher out of the 
+ maximum number of edges weights that such nodes might share within a layer. 
+ WRC_PARAMETER is set by the user and it can be a vector containing all the 
  strength thresholds; the default value is equal to 1.
 
 %% ¡layout!
@@ -67,7 +67,7 @@ NAME (constant, string) is the name of the Weighted Rich-Club.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
 %%%% ¡default!
-'The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maxium number of edges weights that such nodes might share within a layer. s is set by the user and it can be a vector containting all the strength thresholds; the default value is equal to 1.'
+'The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength WRC_PARAMETER or higher out of the maximum number of edges weights that such nodes might share within a layer. WRC_PARAMETER is set by the user and it can be a vector containing all the strength thresholds; the default value is equal to 1.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
@@ -169,7 +169,7 @@ value = weighted_rich_club;
 %% ¡props!
 
 %%% ¡prop! 
-WRC_PARAMETER (parameter, RVECTOR) is the threshold
+WRC_PARAMETER (parameter, RVECTOR) is the threshold.
 %%%% ¡default!
 1
 
