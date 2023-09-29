@@ -167,7 +167,7 @@ SHOW (query, logical) shows the figure containing the panel and, possibly, the i
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 if value
     % figure for graph plot
-    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
+    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
         pr.get('GUI_G_PL').get('SHOW')
     end
 
@@ -189,6 +189,15 @@ if value
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
         gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
+
+    % figures for brain figure
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('SHOW')
         end
@@ -223,6 +232,15 @@ if value
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
         gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+
+    % figures for brain figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('HIDE')
         end
@@ -266,6 +284,15 @@ if value
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
         gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+
+    % figures for brain figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end

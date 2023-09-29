@@ -138,9 +138,13 @@ SHOW (query, logical) shows the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 if value
-    % figure for graph data
-    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
-        pr.get('GUI_G_DICT').get('SHOW')
+    % Graph
+    gui_g_dict = pr.get('GUI_G_DICT');
+    for i = 1:1:gui_g_dict.get('LENGTH')
+        gui = gui_g_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
     end
 end
 
@@ -149,9 +153,13 @@ HIDE (query, logical) hides the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
 if value
-    % figure for graph data
-    if isa(pr.getr('GUI_G_DICT'), 'GUI') && pr.get('GUI_G_DICT').get('DRAWN')
-        pr.get('GUI_G_DICT').get('HIDE')
+    % Graph
+    gui_g_dict = pr.get('GUI_G_DICT');
+    for i = 1:1:gui_g_dict.get('LENGTH')
+        gui = gui_g_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
     end
 end
 
@@ -169,9 +177,13 @@ CLOSE (query, logical) closes the figure containing the panel and, possibly, the
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
 if value
-    % figure for graph data
-    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
-        pr.get('GUI_G_DICT').get('CLOSE')
+    % Graph
+    gui_g_dict = pr.get('GUI_G_DICT');
+    for i = 1:1:gui_g_dict.get('LENGTH')
+        gui = gui_g_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
     end
 end
 

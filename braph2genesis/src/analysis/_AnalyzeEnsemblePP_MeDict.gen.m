@@ -150,6 +150,7 @@ function set_table()
         end
     end
 end
+
 %%% ¡prop!
 REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
@@ -192,6 +193,15 @@ if value
             gui.get('SHOW')
         end
     end
+
+    % figures for measure data
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
 end
 
 %%% ¡prop!
@@ -222,6 +232,15 @@ if value
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
         gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+
+    % figures for measure data
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('HIDE')
         end
@@ -265,6 +284,15 @@ if value
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
         gui = gui_m_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+
+    % figures for measure data
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end
