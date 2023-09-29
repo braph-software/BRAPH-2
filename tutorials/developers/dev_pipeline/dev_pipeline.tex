@@ -1,0 +1,68 @@
+\documentclass{tufte-handout}
+\usepackage{../braph2_dev}
+%\geometry{showframe} % display margins for debugging page layout
+
+\title{Adapt a Pipeline Script}
+
+\author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+This is the developer tutorial for adapting a pipeline script. 
+In this tutorial, we will explain how to edit a \fn{*.braph2} file to change the steps of a pipeline in braph2genesis. Here, we will use as an example the pipeline \code{Pipeline Structural Multiplex Comparison BUD} (the pipeline for comparing two groups of subjects using structural multiplex data and binary undirected graphs at fixed densities) and adapt it in order to add a third group for structural multiplex.
+\end{abstract}
+
+\tableofcontents
+
+%%%%% %%%%% %%%%% %%%%% %%%%%
+\clearpage
+\section{Adaption of the pipeline}
+\subsection{Pipeline Structural Multiplex Comparison BUD}
+
+We will start by adapting in detail \code{Pipeline Structural Multiplex Comparison BUD}.
+
+\begin{lstlisting}[
+	label=cd:m:P_SMCBUD:all,
+	caption={
+		The pipeline for comparing two groups of subjects using structural multiplex data and binary undirected graphs at fixed densities.
+		}
+]
+%% Pipeline Structural Multiplex Comparison BUD ¥\circled{1}\circlednote{1}{specifies the name of the piepline.}¥
+
+% This is the pipeline script to compare two groups of subjects using structural multiplex data and binary undirected graphs at fixed densities. ¥\circled{2}\circlednote{2}{The descriptions for each step are annotated.}¥
+% 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
+% 2. It loads the data of two groups of subjects from two directories (e.g., ST_MP_group_1_XLS and ST_MP_group_2_XLS).
+% 3. It analyzes the first group using structural multiplex analyses (ST_MP) based on binary unidrected graphs at fixed densities (BUD).
+% 4. It analyzes the second group using the same parameters selected for the first group.
+% 5. It compares the results of the two analyses.
+
+%% Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); ¥\circled{3}\circlednote{3}{loads the brain atlas.}¥
+
+%% Groups
+gr1 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); ¥\circled{4}\circlednote{4}{loads group 1 from XLS.}¥
+gr2 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); ¥\circled{5}\circlednote{5}{loads group 2 from XLS.}¥
+gr3 = ImporterGroupSubjectST_MP_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); ¥\circled{6}\circlednote{6}{loads group 3 from XLS.}¥
+
+%% Analysis 1
+a_BUD1 = AnalyzeGroup_ST_MP_BUD('GR', gr1, 'DENSITIES', [10 20 30 40 50]); ¥\circled{7}\circlednote{7}{performs the graph analysis for group 1. The default value of \code{'DENSITIES'} is \code{[10 20 30 40 50]}.}¥
+
+%% Analysis 2
+a_BUD2 = AnalyzeGroup_ST_MP_BUD('GR', gr2, 'TEMPLATE', a_BUD1); ¥\circled{8}\circlednote{8}{performs the graph analysis for group 2 while maintaining the same template \code{'TEMPLATE'} with group 1 \code{'a\_BUD1'}.}¥
+
+%% Analysis 3
+a_BUD3 = AnalyzeGroup_ST_MP_BUD('GR', gr3, 'TEMPLATE', a_BUD1); ¥\circled{9}\circlednote{9}{performs the graph analysis for group 3 while maintaining the same template \code{'TEMPLATE'} with group 1 \code{'a\_BUD1'}.}¥
+
+%% Comparison
+c_BUD1 = CompareGroup('P', 1000, 'A1', a_BUD1, 'A2', a_BUD2, 'MEMORIZE', true); ¥\circled{10}\circlednote{10}{compares graph measures between the group 1 and group 2. The default value of the number of permutation test \code{'P'} is \code{1000}.}¥
+
+c_BUD2 = CompareGroup('P', 1000, 'A1', a_BUD1, 'A3', a_BUD3, 'MEMORIZE', true); ¥\circled{11}\circlednote{11}{compares graph measures between the group 1 and group 3.}¥
+
+c_BUD3 = CompareGroup('P', 1000, 'A2', a_BUD2, 'A3', a_BUD3, 'MEMORIZE', true); ¥\circled{12}\circlednote{12}{compares graph measures between the group 2 and group 3.}¥
+\end{lstlisting}
+
+\end{document}
