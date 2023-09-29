@@ -4,7 +4,7 @@ This section provides a comprehensive introduction to get started with BRAPH 2.0
 
 ## Getting Started
 
-The [Getting Started Tutorial](tutorials/general/tut_braph2.pdf) provides a comprehensive introduction to help you get started with BRAPH 2.0. This tutorial covers the essential steps and features of the software, guiding you through the process of installing BRAPH 2.0 and familiarizing yourself with its functionalities and analysis pipelines. Whether you are new to BRAPH or upgrading from a previous version, this tutorial will provide you with the necessary knowledge to begin your analyses.
+The [Getting Started Tutorial](tut_braph2/tut_braph2.pdf) provides a comprehensive introduction to help you get started with BRAPH 2.0. This tutorial covers the essential steps and features of the software, guiding you through the process of installing BRAPH 2.0 and familiarizing yourself with its functionalities and analysis pipelines. Whether you are new to BRAPH or upgrading from a previous version, this tutorial will provide you with the necessary knowledge to begin your analyses.
 
 ## Tutorials to Prepare Your Data in BRAPH 2
 
@@ -31,4 +31,4 @@ These tutorials explain how to organize and format the multilayer data types cur
 
 ### New Data Types
 
-Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved. However, note that if your specific data format is not currently supported by BRAPH 2.0, you may need to further develop the necessary functionalities (following the [Tutorial to Implement a new Subject](link-to-tutorial)) or consider opening an issue asking for the new functinality at [Feature Request](../../issues/new?template=feature_request.md).
+Additionally, BRAPH 2.0 allows users to incorporate new data types by following the provided guidelines, expanding the range of analyses and insights that can be achieved. However, note that if your specific data format is not currently supported by BRAPH 2.0, you may need to further develop the necessary functionalities (following the [Tutorial to Implement a new Subject](../developers/dev_subject/dev_subject.pdf)) or consider opening an issue asking for the new functionality at [Feature Request](../../../../issues/new/choose).
