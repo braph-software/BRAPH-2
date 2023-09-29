@@ -552,44 +552,76 @@ function cb_open_mbrain(~, ~)
         m = g.get('MEASURE', measure);
     
         if ~gui_b_dict.get('CONTAINS_KEY', measure)
-            
-            group = pr.get('EL').get('GR');
-            sub_list = group.get('SUB_DICT').get('IT_LIST');
-            sub = sub_list{1};
+            gr = pr.get('EL').get('GR');
+            if gr.get('SUB_DICT').get('LENGTH')
+                sub = gr.get('SUB_DICT').get('IT', 1);
+                brain_atlas = sub.get('BA');
+            else
+                brain_atlas = BrainAtlas();
+            end
             brain_atlas = sub.get('BA');
-            switch m.get('SHAPE')
+            % % %             switch m.get('SHAPE')
+            % % %                 case Measure.GLOBAL % __Measure.GLOBAL__
+            % % %                     switch m.get('SCOPE')
+            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+            % % %                             mGBPF = MeasureGroupBrainPF_GS('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
+            % % %                             mGBPF = MeasureGroupBrainPF_GU('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.BILAYER % __Measure.BILAYER__
+            % % %                             mGBPF = MeasureGroupBrainPF_GB('M', m, 'BA', brain_atlas);
+            % % %                     end
+            % % %                 case Measure.NODAL % __Measure.NODAL__
+            % % %                     switch m.get('SCOPE')
+            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+            % % %                             mGBPF = MeasureGroupBrainPF_NS('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
+            % % %                             mGBPF = MeasureGroupBrainPF_NU('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.BILAYER % __Measure.BILAYER__
+            % % %                             mGBPF = MeasureGroupBrainPF_NB('M', m, 'BA', brain_atlas);
+            % % %                     end
+            % % %                 case Measure.BINODAL % __Measure.BINODAL__
+            % % %                     switch m.get('SCOPE')
+            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+            % % %                             mGBPF = MeasureGroupBrainPF_BS('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
+            % % %                             mGBPF = MeasureGroupBrainPF_BU('M', m, 'BA', brain_atlas);
+            % % %                         case Measure.BILAYER % __Measure.BILAYER__
+            % % %                             mGBPF =  MeasureGroupBrainPF_BB('M', m, 'BA', brain_atlas);
+            % % %                     end
+            % % %             end
+            switch Element.getPropDefault(measure, 'SHAPE')
                 case Measure.GLOBAL % __Measure.GLOBAL__
-                    switch m.get('SCOPE')
+                    switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mGBPF = MeasureGroupBrainPF_GS('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_GS('M', m, 'BA', brain_atlas);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mGBPF = MeasureGroupBrainPF_GU('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_GU('M', m, 'BA', brain_atlas);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mGBPF = MeasureGroupBrainPF_GB('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_GB('M', m, 'BA', brain_atlas);
                     end
                 case Measure.NODAL % __Measure.NODAL__
-                    switch m.get('SCOPE')
+                    switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mGBPF = MeasureGroupBrainPF_NS('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_NS('M', m, 'BA', brain_atlas);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mGBPF = MeasureGroupBrainPF_NU('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_NU('M', m, 'BA', brain_atlas);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mGBPF = MeasureGroupBrainPF_NB('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_NB('M', m, 'BA', brain_atlas);
                     end
                 case Measure.BINODAL % __Measure.BINODAL__
-                    switch m.get('SCOPE')
+                    switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mGBPF = MeasureGroupBrainPF_BS('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_BS('M', m, 'BA', brain_atlas);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mGBPF = MeasureGroupBrainPF_BU('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_BU('M', m, 'BA', brain_atlas);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mGBPF =  MeasureGroupBrainPF_BB('M', m, 'BA', brain_atlas);
+                            mgbpf = MeasureGroupBrainPF_BB('M', m, 'BA', brain_atlas);
                     end
             end
-
+    
             gui = GUIFig( ...
                 'ID', measure, ... % this is the dictionary key
-                'PF', mGBPF, ... % check with yuwei
+                'PF', mgbpf, ...
                 'POSITION', [ ...
                 x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
                 y0(f, 'normalized') ...

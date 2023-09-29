@@ -375,6 +375,19 @@ menu_hide_elements = uimenu( ...
     'Text', 'Hide Selected Data', ...
 	'MenuSelectedFcn', {@cb_hide_elements} ...
     );
+menu_open_elements = uimenu( ...
+	'Separator', 'on', ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_OPEN_ELEMENTS', ...
+    'Text', 'Plot Selected Measures on Brain ...', ...
+    'MenuSelectedFcn', {@cb_open_mbrain} ...
+    );
+menu_hide_elements = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_ELEMENTS', ...
+    'Text', 'Hide Selected Brain-Plots', ...
+	'MenuSelectedFcn', {@cb_hide_mbrain} ...
+    );
 
 set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 
@@ -552,6 +565,107 @@ function cb_hide_elements(~, ~)
         end
     end
 end
+function cb_open_mbrain(~, ~)
+    a = pr.get('EL'); 
+    g = a.get('GRAPH_TEMPLATE'); % actual graph
+    g.memorize('A'); % memorizing A to get correct ALAYERLABELS
+    
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+    
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+    
+        measure = m_list{i}; % also key
+    
+        me = a.get('MEASUREENSEMBLE', measure);
+    
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+            gr = a.get('GR');
+            if gr.get('SUB_DICT').get('LENGTH')
+                sub = gr.get('SUB_DICT').get('IT', 1);
+                brain_atlas = sub.get('BA');
+            else
+                brain_atlas = BrainAtlas();
+            end
+
+            switch Element.getPropDefault(measure, 'SHAPE')
+                case Measure.GLOBAL % __Measure.GLOBAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mebpf = MeasureEnsembleBrainPF_GS('ME', me, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mebpf = MeasureEnsembleBrainPF_GU('ME', me, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mebpf = MeasureEnsembleBrainPF_GB('ME', me, 'BA', brain_atlas);
+                    end
+                case Measure.NODAL % __Measure.NODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mebpf = MeasureEnsembleBrainPF_NS('ME', me, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mebpf = MeasureEnsembleBrainPF_NU('ME', me, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mebpf = MeasureEnsembleBrainPF_NB('ME', me, 'BA', brain_atlas);
+                    end
+                case Measure.BINODAL % __Measure.BINODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mebpf = MeasureEnsembleBrainPF_BS('ME', me, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mebpf = MeasureEnsembleBrainPF_BU('ME', me, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mebpf = MeasureEnsembleBrainPF_BB('ME', me, 'BA', brain_atlas);
+                    end
+            end
+
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', mebpf, ... 
+                'POSITION', [ ...
+                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                y0(f, 'normalized') ...
+                w(f, 'normalized') * 3 ...
+                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+    
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
+end
+function cb_hide_mbrain(~, ~)
+    a = pr.get('EL'); 
+    g = a.get('GRAPH_TEMPLATE'); % actual graph
+    m_list = g.get('COMPATIBLE_MEASURES');
+    
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+    
+        measure = m_list{i}; % also key
+    
+        if gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = gui_b_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
 
 %%% ¡prop!
 GUI_G_PL (gui, item) contains the GUI for the graph figure.
@@ -572,6 +686,11 @@ GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
 GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 %%%% ¡settings!
 'GUIElement'
+
+%%% ¡prop!
+GUI_B_DICT (gui, idict) contains the GUIs for the brain surface.
+%%%% ¡settings!
+'GUIFig'
  
 %% ¡tests!
 
