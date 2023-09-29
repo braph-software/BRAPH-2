@@ -360,45 +360,19 @@ update_listbox()
 
         input = get(h_editfield, 'Value');
         keywords = cellfun(@(keyword) strrep(keyword, '*', '.*'), strsplit(strtrim(input), ' '), 'UniformOutput', false); % also convert * to its regex equivalent .*
+        keywords(cellfun('isempty', keywords)) = [];
         
-        present_keywords = false(length(items), length(keywords));
+        present_all_keywords = true(length(items));
         for i = 1:1:length(items)
-            item = items{i}
+            pipeline_txt = pipelines{i}.txt;
             for k = 1:1:length(keywords)
                 keyword = keywords{k}
                 
+                if isempty(regexp(pipeline_txt, keyword, 'once'));
+                    present_all_keywords(i, j) = false;
+                end
             end
         end
-        
-% % Sample text
-% txt = "The quick brown fox jumps over the lazy dog.";
-% 
-% % Get user's query
-% userQuery = input('Enter your space-separated search query (use * as a wildcard): ', 's');
-% 
-% % Split user's query into words
-% words = strsplit(userQuery);
-% 
-% % Initialize a flag to determine if all words (or patterns) are present
-% allWordsPresent = true;
-% 
-% % Check if each word or pattern is present in the text
-% for i = 1:length(words)
-%     % Convert * to its regex equivalent .*
-%     pattern = strrep(words{i}, '*', '.*');
-%     
-%     if isempty(regexp(txt, pattern, 'once'))
-%         allWordsPresent = false;
-%         break;
-%     end
-% end
-% 
-% % Display result
-% if allWordsPresent
-%     disp('The text contains all words/patterns from your query.');
-% else
-%     disp('Not all words/patterns from your query are present in the text.');
-% end
 
         set(h_listbox, ...
             'Value', {}, ...
