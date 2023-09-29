@@ -167,7 +167,7 @@ classdef BRAPH2
             %
             % See also forum, twitter.
             
-            url = ['https://' BRAPH2.WEB];
+            url = ['http://' BRAPH2.WEB];
             web(url);
         end
         function forum()
@@ -175,7 +175,7 @@ classdef BRAPH2
             %
             % See also web, twitter.
             
-            url = ['https://' BRAPH2.WEB '/forums/'];
+            url = ['http://' BRAPH2.WEB '/forums/'];
             web(url);
         end
         function twitter()
