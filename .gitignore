@@ -1,0 +1,11 @@
+.DS_Store
+
+*.asv
+
+*.synctex*
+*.log
+*.aux
+*.out
+*.toc
+
+braph2/pipelines/*/Example *
