@@ -24,7 +24,7 @@ classdef ComparisonEnsemble < ConcreteElement
 	%  <strong>15</strong> <strong>CIU</strong> 	CIU (result, cell) is the upper value of the 95%% confidence interval.
 	%  <strong>16</strong> <strong>QVALUE</strong> 	QVALUE (metadata, scalar) is the selected qvalue threshold.
 	%  <strong>17</strong> <strong>PFC</strong> 	PFC (gui, item) contains the panel figure of the comparison.
-	%  <strong>18</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+	%  <strong>18</strong> <strong>PFB</strong> 	PFB (gui, item) contains the panel figure of the comparison.
 	%  <strong>19</strong> <strong>CALCULATE_RESULTS</strong> 	CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
 	%
 	% ComparisonEnsemble methods (constructor):
@@ -161,10 +161,10 @@ classdef ComparisonEnsemble < ConcreteElement
 		PFC_CATEGORY = 9;
 		PFC_FORMAT = 8;
 		
-		PFBG = 18; %CET: Computational Efficiency Trick
-		PFBG_TAG = 'PFBG';
-		PFBG_CATEGORY = 9;
-		PFBG_FORMAT = 8;
+		PFB = 18; %CET: Computational Efficiency Trick
+		PFB_TAG = 'PFB';
+		PFB_CATEGORY = 9;
+		PFB_FORMAT = 8;
 		
 		CALCULATE_RESULTS = 19; %CET: Computational Efficiency Trick
 		CALCULATE_RESULTS_TAG = 'CALCULATE_RESULTS';
@@ -200,7 +200,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			%  <strong>15</strong> <strong>CIU</strong> 	CIU (result, cell) is the upper value of the 95%% confidence interval.
 			%  <strong>16</strong> <strong>QVALUE</strong> 	QVALUE (metadata, scalar) is the selected qvalue threshold.
 			%  <strong>17</strong> <strong>PFC</strong> 	PFC (gui, item) contains the panel figure of the comparison.
-			%  <strong>18</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+			%  <strong>18</strong> <strong>PFB</strong> 	PFB (gui, item) contains the panel figure of the comparison.
 			%  <strong>19</strong> <strong>CALCULATE_RESULTS</strong> 	CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
 			%
 			% See also Category, Format.
@@ -398,7 +398,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFB'  'CALCULATE_RESULTS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -431,7 +431,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFB'  'CALCULATE_RESULTS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -460,7 +460,7 @@ classdef ComparisonEnsemble < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				comparisonensemble_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' };
+				comparisonensemble_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFB'  'CALCULATE_RESULTS' };
 				tag = comparisonensemble_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -539,7 +539,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			prop = ComparisonEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisonensemble_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the results of an ensemble-based comparison.'  'DESCRIPTION (constant, string) is the description of the results of an ensemble-based comparison.'  'TEMPLATE (parameter, item) is the template of the results of an ensemble-based comparison.'  'ID (data, string) is a few-letter code for the results of an ensemble-based comparison.'  'LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.'  'NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.'  'TOSTRING (query, string) returns a string that represents the object.'  'MEASURE (parameter, class) is the measure class.'  'C (data, item) is the ensemble-based comparison.'  'DIFF (result, cell) is the ensemble comparison value.'  'P1 (result, cell) is the one-tailed p-value.'  'P2 (result, cell) is the two-tailed p-value.'  'CIL (result, cell) is the lower value of the 95%% confidence interval.'  'CIU (result, cell) is the upper value of the 95%% confidence interval.'  'QVALUE (metadata, scalar) is the selected qvalue threshold.'  'PFC (gui, item) contains the panel figure of the comparison.'  'PFBG (gui, item) contains the panel figure of the brain graph.'  'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.' };
+			comparisonensemble_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the results of an ensemble-based comparison.'  'DESCRIPTION (constant, string) is the description of the results of an ensemble-based comparison.'  'TEMPLATE (parameter, item) is the template of the results of an ensemble-based comparison.'  'ID (data, string) is a few-letter code for the results of an ensemble-based comparison.'  'LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.'  'NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.'  'TOSTRING (query, string) returns a string that represents the object.'  'MEASURE (parameter, class) is the measure class.'  'C (data, item) is the ensemble-based comparison.'  'DIFF (result, cell) is the ensemble comparison value.'  'P1 (result, cell) is the one-tailed p-value.'  'P2 (result, cell) is the two-tailed p-value.'  'CIL (result, cell) is the lower value of the 95%% confidence interval.'  'CIU (result, cell) is the upper value of the 95%% confidence interval.'  'QVALUE (metadata, scalar) is the selected qvalue threshold.'  'PFC (gui, item) contains the panel figure of the comparison.'  'PFB (gui, item) contains the panel figure of the comparison.'  'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.' };
 			prop_description = comparisonensemble_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -583,8 +583,8 @@ classdef ComparisonEnsemble < ConcreteElement
 					prop_settings = Format.getFormatSettings(11);
 				case 17 % ComparisonEnsemble.PFC
 					prop_settings = 'ComparisonEnsemblePF';
-				case 18 % ComparisonEnsemble.PFBG
-					prop_settings = Format.getFormatSettings(8);
+				case 18 % ComparisonEnsemble.PFB
+					prop_settings = 'ComparisonEnsembleBrainPF';
 				case 19 % ComparisonEnsemble.CALCULATE_RESULTS
 					prop_settings = Format.getFormatSettings(16);
 				case 4 % ComparisonEnsemble.TEMPLATE
@@ -634,7 +634,7 @@ classdef ComparisonEnsemble < ConcreteElement
 					prop_default = 0.05;
 				case 17 % ComparisonEnsemble.PFC
 					prop_default = Format.getFormatDefault(8, ComparisonEnsemble.getPropSettings(prop));
-				case 18 % ComparisonEnsemble.PFBG
+				case 18 % ComparisonEnsemble.PFB
 					prop_default = Format.getFormatDefault(8, ComparisonEnsemble.getPropSettings(prop));
 				case 19 % ComparisonEnsemble.CALCULATE_RESULTS
 					prop_default = Format.getFormatDefault(16, ComparisonEnsemble.getPropSettings(prop));
@@ -734,7 +734,7 @@ classdef ComparisonEnsemble < ConcreteElement
 					check = Format.checkFormat(11, value, ComparisonEnsemble.getPropSettings(prop));
 				case 17 % ComparisonEnsemble.PFC
 					check = Format.checkFormat(8, value, ComparisonEnsemble.getPropSettings(prop));
-				case 18 % ComparisonEnsemble.PFBG
+				case 18 % ComparisonEnsemble.PFB
 					check = Format.checkFormat(8, value, ComparisonEnsemble.getPropSettings(prop));
 				case 19 % ComparisonEnsemble.CALCULATE_RESULTS
 					check = Format.checkFormat(16, value, ComparisonEnsemble.getPropSettings(prop));
@@ -803,6 +803,46 @@ classdef ComparisonEnsemble < ConcreteElement
 					                    cp.set('PFC', ComparisonEnsemblePF_BU('CP', cp))
 					                case 3 % Measure.BILAYER
 					                    cp.set('PFC', ComparisonEnsemblePF_BB('CP', cp))
+					            end
+					    end
+					end
+					
+				case 18 % ComparisonEnsemble.PFB
+					if isa(cp.getr('PFB'), 'NoValue')
+					
+					    measure = cp.get('MEASURE');
+					    if isempty(cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT_LIST'))
+					        brain_atlas = BrainAtlas();
+					    else
+					        brain_atlas = cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT', 1).get('BA');
+					    end
+					    switch Element.getPropDefault(measure, 'SHAPE')
+					        case 1 % Measure.GLOBAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_GS('CP', cp, 'BA', brain_atlas))
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_GU('CP', cp, 'BA', brain_atlas))
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_GB('CP', cp, 'BA', brain_atlas))
+					            end
+					        case 2 % Measure.NODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_NS('CP', cp, 'BA', brain_atlas))
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_NU('CP', cp, 'BA', brain_atlas))
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_NB('CP', cp, 'BA', brain_atlas))
+					            end
+					        case 3 % Measure.BINODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_BS('CP', cp, 'BA', brain_atlas))
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFB', ComparisonEnsembleBrainPF_BU('CP', cp, 'BA', brain_atlas))
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFB',ComparisonEnsembleBrainPF_BB('CP', cp, 'BA', brain_atlas))
 					            end
 					    end
 					end
@@ -1301,6 +1341,12 @@ classdef ComparisonEnsemble < ConcreteElement
 					
 				case 17 % ComparisonEnsemble.PFC
 					pr = PanelPropItem('EL', cp, 'PROP', 17, ...
+					    'GUICLASS', 'GUIFig', ...
+						'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
+					    varargin{:});
+					
+				case 18 % ComparisonEnsemble.PFB
+					pr = PanelPropItem('EL', cp, 'PROP', 18, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
 					    varargin{:});

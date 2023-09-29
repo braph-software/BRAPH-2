@@ -1,4 +1,4 @@
-%% Pipeline Classificatoin Cross-Validation Connectivity WU 
+%% Pipeline Classification Cross-Validation Connectivity WU 
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using the adjacency matrix of weighted undirected graph obtained from connectivity data.
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
