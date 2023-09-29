@@ -97,13 +97,13 @@ function set_table()
     if isempty(a.getr(prop).get('IT_LIST'))
         m_list_already_calculated = {};
     else
-        m_list_already_calculated = cellfun(@(x) x.get('ELCLASS'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+        m_list_already_calculated = cellfun(@(x) x.get('ID'), a.get('ME_DICT').get('IT_LIST'), 'UniformOutput', false);
     end
     
     rowname = cell(length(m_list), 1);
     data = cell(length(m_list), 5);
     for mi = 1:1:length(m_list)
-        if any(cellfun(@(y) isequal(m_list{mi}, y), m_list_already_calculated)) && ~isa(g.get('MEASURE', m_list{mi}).getr('M'), 'NoValue')
+        if any(cellfun(@(y) isequal(m_list{mi}, y), m_list_already_calculated)) && ~isa(a.get('ME_DICT').get('IT', m_list{mi}).getr('M'), 'NoValue')
             rowname{mi} = 'C';
         else
             rowname{mi} = '';

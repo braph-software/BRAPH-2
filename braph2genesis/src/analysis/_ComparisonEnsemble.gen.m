@@ -61,6 +61,12 @@ Upper value of 95% confidence interval
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonEnsemble.QVALUE
+%%%% ¡title!
+QVALUE
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonEnsemble.PFC
 %%%% ¡title!
 Measure Comparison Plot
@@ -131,7 +137,12 @@ DIFF (result, cell) is the ensemble comparison value.
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{1}; % diff
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.DIFF, varargin{:});
@@ -197,7 +208,12 @@ P1 (result, cell) is the one-tailed p-value.
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{2}; % p1
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.P1, varargin{:});
@@ -263,7 +279,12 @@ P2 (result, cell) is the two-tailed p-value.
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{3}; % p2
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.P2, varargin{:});
@@ -329,7 +350,12 @@ CIL (result, cell) is the lower value of the 95%% confidence interval.
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{4}; % ci_lower
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.CIL, varargin{:});
@@ -395,7 +421,12 @@ CIU (result, cell) is the upper value of the 95%% confidence interval.
 results = cp.memorize('CALCULATE_RESULTS');
 value = results{5}; % ci_upper
 %%%% ¡gui!
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonEnsemble.CIU, varargin{:});

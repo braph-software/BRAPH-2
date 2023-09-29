@@ -124,7 +124,13 @@ end
 
 value = m_av;
 %%%% ¡gui!
-g = me.get('A').get('GRAPH_TEMPLATE');
+if me.get('A').get('G_DICT').get('LENGTH')
+    g = me.get('A').get('G_DICT').get('IT', 1);
+else
+    g = me.get('A').get('GRAPH_TEMPLATE');
+end
+g.memorize('A');
+
 measure = me.get('MEASURE');
 
 pr = PanelPropCell('EL', me, 'PROP', MeasureEnsemble.M, varargin{:});

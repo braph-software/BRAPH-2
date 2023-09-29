@@ -79,6 +79,7 @@ G_DICT (result, idict) is the graph ensemble obtained from this analysis.
 %%%% ¡settings!
 'Graph'
 %%%% ¡calculate!
+a.memorize('GRAPH_TEMPLATE');
 value = IndexedDictionary('IT_CLASS', 'Graph');
 %%%% ¡gui!
 pr = AnalyzeEnsemblePP_GDict('EL', a, 'PROP', AnalyzeEnsemble.G_DICT, ...
@@ -90,6 +91,7 @@ ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
 %%%% ¡settings!
 'MeasureEnsemble'
 %%%% ¡calculate!
+a.memorize('GRAPH_TEMPLATE');
 value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
 %%%% ¡gui!
 pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, ...

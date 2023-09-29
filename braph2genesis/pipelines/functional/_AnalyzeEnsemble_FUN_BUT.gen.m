@@ -231,6 +231,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_FUN_BUT.THRESHOLDS, 
     'MIN', -1, 'MAX', 1, ...
     'DEFAULT', AnalyzeEnsemble_FUN_BUT.getPropDefault('THRESHOLDS'), ...
     varargin{:});
+%%%% ¡postset!
+a.memorize('GRAPH_TEMPLATE').set('THRESHOLDS', a.getCallback('THRESHOLDS'));
 
 %% ¡tests!
 

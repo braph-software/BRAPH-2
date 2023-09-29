@@ -154,6 +154,8 @@ pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_BUD.DENSITIES, .
     'MIN', 0, 'MAX', 100, ...
     'DEFAULT', AnalyzeEnsemble_CON_BUD.getPropDefault('DENSITIES'), ...
     varargin{:});
+%%%% ¡postset!
+a.memorize('GRAPH_TEMPLATE').set('DENSITIES', a.getCallback('DENSITIES'));
 
 %% ¡tests!
 
