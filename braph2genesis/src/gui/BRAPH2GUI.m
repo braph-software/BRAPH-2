@@ -355,18 +355,18 @@ end
 update_listbox()
     function update_listbox()
         
-        items = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
-        itemsdata = cellfun(@(pipeline) pipeline.index, pipelines);
+        pipeline_labels = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
+        pipeline_indexes = cellfun(@(pipeline) pipeline.index, pipelines);
 
         input = get(h_editfield, 'Value');
         keywords = cellfun(@(keyword) strrep(keyword, '*', '.*'), strsplit(strtrim(input), ' '), 'UniformOutput', false); % also convert * to its regex equivalent .*
         keywords(cellfun('isempty', keywords)) = [];
 
-        present_all_keywords = true(length(items), 1);
+        present_all_keywords = true(length(pipeline_labels), 1);
         for p = 1:1:length(pipelines)
-            pipeline_txt = pipelines{p}.txt;
+            pipeline_txt = lower(pipelines{p}.txt);
             for k = 1:1:length(keywords)
-                keyword = keywords{k};
+                keyword = lower(keywords{k});
                 
                 if isempty(regexp(pipeline_txt, keyword, 'once'))
                     present_all_keywords(p) = false;
@@ -377,8 +377,8 @@ update_listbox()
 
         set(h_listbox, ...
             'Value', {}, ...
-            'Items', items(present_all_keywords), ...
-            'ItemsData', itemsdata(present_all_keywords) ...
+            'Items', pipeline_labels(present_all_keywords), ...
+            'ItemsData', pipeline_indexes(present_all_keywords) ...
             )
         set(h_label, ...
             'Text', '', ...
