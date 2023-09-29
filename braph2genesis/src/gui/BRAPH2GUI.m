@@ -320,8 +320,8 @@ pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % 
 pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
 
 pipelines = {};
-for i = 1:1:length(pipelines_dir_list)
-    pipeline_dir = fullfile(pipelines_dir_list(i).folder, pipelines_dir_list(i).name);
+for p = 1:1:length(pipelines_dir_list)
+    pipeline_dir = fullfile(pipelines_dir_list(p).folder, pipelines_dir_list(p).name);
     
     files = dir(pipeline_dir); % retrieves all files inside source directory
     for j = 1:1:length(files) % selects all files *.braph2
@@ -361,23 +361,24 @@ update_listbox()
         input = get(h_editfield, 'Value');
         keywords = cellfun(@(keyword) strrep(keyword, '*', '.*'), strsplit(strtrim(input), ' '), 'UniformOutput', false); % also convert * to its regex equivalent .*
         keywords(cellfun('isempty', keywords)) = [];
-        
-        present_all_keywords = true(length(items));
-        for i = 1:1:length(items)
-            pipeline_txt = pipelines{i}.txt;
+
+        present_all_keywords = true(length(items), 1);
+        for p = 1:1:length(pipelines)
+            pipeline_txt = pipelines{p}.txt;
             for k = 1:1:length(keywords)
-                keyword = keywords{k}
+                keyword = keywords{k};
                 
-                if isempty(regexp(pipeline_txt, keyword, 'once'));
-                    present_all_keywords(i, j) = false;
+                if isempty(regexp(pipeline_txt, keyword, 'once'))
+                    present_all_keywords(p) = false;
+                    break
                 end
             end
         end
 
         set(h_listbox, ...
             'Value', {}, ...
-            'Items', items, ...
-            'ItemsData', itemsdata ...
+            'Items', items(present_all_keywords), ...
+            'ItemsData', itemsdata(present_all_keywords) ...
             )
         set(h_label, ...
             'Text', '', ...
