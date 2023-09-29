@@ -49,6 +49,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
 	%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
 	%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+	%  <strong>44</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain surface.
 	%
 	% AnalyzeEnsemblePP_MeDict methods (constructor):
 	%  AnalyzeEnsemblePP_MeDict - constructor
@@ -178,6 +179,11 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		GUI_M_DICT_TAG = 'GUI_M_DICT';
 		GUI_M_DICT_CATEGORY = 9;
 		GUI_M_DICT_FORMAT = 10;
+		
+		GUI_B_DICT = 44; %CET: Computational Efficiency Trick
+		GUI_B_DICT_TAG = 'GUI_B_DICT';
+		GUI_B_DICT_CATEGORY = 9;
+		GUI_B_DICT_FORMAT = 10;
 	end
 	methods % constructor
 		function pr = AnalyzeEnsemblePP_MeDict(varargin)
@@ -234,6 +240,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
 			%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
 			%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+			%  <strong>44</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain surface.
 			%
 			% See also Category, Format.
 			
@@ -295,7 +302,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
 				return
 			end
 			
@@ -315,7 +322,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_list = 14;
 				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36 37 40 41 42 43];
+					prop_list = [9 13 25 26 36 37 40 41 42 43 44];
 				otherwise
 					prop_list = [];
 			end
@@ -341,7 +348,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 43;
+				prop_number = 44;
 				return
 			end
 			
@@ -361,7 +368,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_number = 1;
 				case 9 % Category.GUI
-					prop_number = 10;
+					prop_number = 11;
 				otherwise
 					prop_number = 0;
 			end
@@ -392,7 +399,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -430,7 +437,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -463,7 +470,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -492,7 +499,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				analyzeensemblepp_medict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT' };
+				analyzeensemblepp_medict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' };
 				tag = analyzeensemblepp_medict_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -519,7 +526,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9 };
+			analyzeensemblepp_medict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9  9 };
 			prop_category = analyzeensemblepp_medict_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -545,7 +552,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10 };
+			analyzeensemblepp_medict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10  10 };
 			prop_format = analyzeensemblepp_medict_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -571,7 +578,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			prop = AnalyzeEnsemblePP_MeDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemblepp_medict_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.' };
+			analyzeensemblepp_medict_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.'  'GUI_B_DICT (gui, idict) contains the GUIs for the brain surface.' };
 			prop_description = analyzeensemblepp_medict_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -613,6 +620,8 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					prop_settings = 'GUIFig';
 				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
 					prop_settings = 'GUIElement';
+				case 44 % AnalyzeEnsemblePP_MeDict.GUI_B_DICT
+					prop_settings = 'GUIFig';
 				case 4 % AnalyzeEnsemblePP_MeDict.TEMPLATE
 					prop_settings = 'AnalyzeEnsemblePP_MeDict';
 				otherwise
@@ -657,6 +666,8 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 				case 42 % AnalyzeEnsemblePP_MeDict.GUI_F_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
 				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
+					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
+				case 44 % AnalyzeEnsemblePP_MeDict.GUI_B_DICT
 					prop_default = Format.getFormatDefault(10, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
 				case 1 % AnalyzeEnsemblePP_MeDict.ELCLASS
 					prop_default = 'AnalyzeEnsemblePP_MeDict';
@@ -786,6 +797,8 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
 				case 43 % AnalyzeEnsemblePP_MeDict.GUI_M_DICT
 					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
+				case 44 % AnalyzeEnsemblePP_MeDict.GUI_B_DICT
+					check = Format.checkFormat(10, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
 				case 4 % AnalyzeEnsemblePP_MeDict.TEMPLATE
 					check = Format.checkFormat(8, value, AnalyzeEnsemblePP_MeDict.getPropSettings(prop));
 				otherwise
@@ -893,6 +906,19 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    'Text', 'Hide Selected Data', ...
 						'MenuSelectedFcn', {@cb_hide_elements} ...
 					    );
+					menu_open_elements = uimenu( ...
+						'Separator', 'on', ...
+					    'Parent', contextmenu, ...
+					    'Tag', 'MENU_OPEN_ELEMENTS', ...
+					    'Text', 'Plot Selected Measures on Brain ...', ...
+					    'MenuSelectedFcn', {@cb_open_mbrain} ...
+					    );
+					menu_hide_elements = uimenu( ...
+					    'Parent', contextmenu, ...
+					    'Tag', 'MENU_HIDE_ELEMENTS', ...
+					    'Text', 'Hide Selected Brain-Plots', ...
+						'MenuSelectedFcn', {@cb_hide_mbrain} ...
+					    );
 					
 					set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 					
@@ -960,6 +986,15 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					            gui.get('SHOW')
 					        end
 					    end
+					
+					    % figures for measure data
+					    gui_b_dict = pr.get('GUI_B_DICT');
+					    for i = 1:1:gui_b_dict.get('LENGTH')
+					        gui = gui_b_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('SHOW')
+					        end
+					    end
 					end
 					
 				case 17 % AnalyzeEnsemblePP_MeDict.HIDE
@@ -988,6 +1023,15 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    gui_m_dict = pr.get('GUI_M_DICT');
 					    for i = 1:1:gui_m_dict.get('LENGTH')
 					        gui = gui_m_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('HIDE')
+					        end
+					    end
+					
+					    % figures for measure data
+					    gui_b_dict = pr.get('GUI_B_DICT');
+					    for i = 1:1:gui_b_dict.get('LENGTH')
+					        gui = gui_b_dict.get('IT', i);
 					        if gui.get('DRAWN')
 					            gui.get('HIDE')
 					        end
@@ -1027,6 +1071,15 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 					    gui_m_dict = pr.get('GUI_M_DICT');
 					    for i = 1:1:gui_m_dict.get('LENGTH')
 					        gui = gui_m_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('CLOSE')
+					        end
+					    end
+					
+					    % figures for measure data
+					    gui_b_dict = pr.get('GUI_B_DICT');
+					    for i = 1:1:gui_b_dict.get('LENGTH')
+					        gui = gui_b_dict.get('IT', i);
 					        if gui.get('DRAWN')
 					            gui.get('CLOSE')
 					        end
@@ -1227,6 +1280,107 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			        end
 			    end
 			end
+			function cb_open_mbrain(~, ~)
+			    a = pr.get('EL'); 
+			    g = a.get('GRAPH_TEMPLATE'); % actual graph
+			    g.memorize('A'); % memorizing A to get correct ALAYERLABELS
+			    
+			    m_list = g.get('COMPATIBLE_MEASURES');
+			    
+			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+			    
+			    gui_b_dict = pr.memorize('GUI_B_DICT');
+			    selected = pr.get('SELECTED');
+			    for s = 1:1:length(selected)
+			        i = selected(s);
+			    
+			        measure = m_list{i}; % also key
+			    
+			        me = a.get('MEASUREENSEMBLE', measure);
+			    
+			        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+			            gr = a.get('GR');
+			            if gr.get('SUB_DICT').get('LENGTH')
+			                sub = gr.get('SUB_DICT').get('IT', 1);
+			                brain_atlas = sub.get('BA');
+			            else
+			                brain_atlas = BrainAtlas();
+			            end
+			
+			            switch Element.getPropDefault(measure, 'SHAPE')
+			                case 1 % Measure.GLOBAL
+			                    switch Element.getPropDefault(measure, 'SCOPE')
+			                        case 1 % Measure.SUPERGLOBAL
+			                            mebpf = MeasureEnsembleBrainPF_GS('ME', me, 'BA', brain_atlas);
+			                        case 2 % Measure.UNILAYER
+			                            mebpf = MeasureEnsembleBrainPF_GU('ME', me, 'BA', brain_atlas);
+			                        case 3 % Measure.BILAYER
+			                            mebpf = MeasureEnsembleBrainPF_GB('ME', me, 'BA', brain_atlas);
+			                    end
+			                case 2 % Measure.NODAL
+			                    switch Element.getPropDefault(measure, 'SCOPE')
+			                        case 1 % Measure.SUPERGLOBAL
+			                            mebpf = MeasureEnsembleBrainPF_NS('ME', me, 'BA', brain_atlas);
+			                        case 2 % Measure.UNILAYER
+			                            mebpf = MeasureEnsembleBrainPF_NU('ME', me, 'BA', brain_atlas);
+			                        case 3 % Measure.BILAYER
+			                            mebpf = MeasureEnsembleBrainPF_NB('ME', me, 'BA', brain_atlas);
+			                    end
+			                case 3 % Measure.BINODAL
+			                    switch Element.getPropDefault(measure, 'SCOPE')
+			                        case 1 % Measure.SUPERGLOBAL
+			                            mebpf = MeasureEnsembleBrainPF_BS('ME', me, 'BA', brain_atlas);
+			                        case 2 % Measure.UNILAYER
+			                            mebpf = MeasureEnsembleBrainPF_BU('ME', me, 'BA', brain_atlas);
+			                        case 3 % Measure.BILAYER
+			                            mebpf = MeasureEnsembleBrainPF_BB('ME', me, 'BA', brain_atlas);
+			                    end
+			            end
+			
+			            gui = GUIFig( ...
+			                'ID', measure, ... % this is the dictionary key
+			                'PF', mebpf, ... 
+			                'POSITION', [ ...
+			                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+			                y0(f, 'normalized') ...
+			                w(f, 'normalized') * 3 ...
+			                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+			                ], ...
+			                'WAITBAR', pr.getCallback('WAITBAR'), ...
+			                'CLOSEREQ', false ...
+			                );
+			            gui_b_dict.get('ADD', gui)
+			        end
+			    
+			        gui = gui_b_dict.get('IT', measure);
+			        if ~gui.get('DRAWN')
+			            gui.get('DRAW')
+			        end
+			        gui.get('SHOW')
+			    end
+			end
+			function cb_hide_mbrain(~, ~)
+			    a = pr.get('EL'); 
+			    g = a.get('GRAPH_TEMPLATE'); % actual graph
+			    m_list = g.get('COMPATIBLE_MEASURES');
+			    
+			    gui_b_dict = pr.memorize('GUI_B_DICT');
+			    
+			    selected = pr.get('SELECTED');
+			    for s = 1:1:length(selected)
+			        i = selected(s);
+			    
+			        measure = m_list{i}; % also key
+			    
+			        if gui_b_dict.get('CONTAINS_KEY', measure)
+			            gui = gui_b_dict.get('IT', measure);
+			            if gui.get('DRAWN')
+			                gui.get('HIDE')
+			            end
+			        end
+			    end
+			end
 			function set_table()
 			    a = pr.get('EL');
 			    prop = pr.get('PROP');
@@ -1241,13 +1395,13 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			    if isempty(a.getr(prop).get('IT_LIST'))
 			        m_list_already_calculated = {};
 			    else
-			        m_list_already_calculated = cellfun(@(x) x.get('ELCLASS'), g.get('M_DICT').get('IT_LIST'), 'UniformOutput', false);
+			        m_list_already_calculated = cellfun(@(x) x.get('ID'), a.get('ME_DICT').get('IT_LIST'), 'UniformOutput', false);
 			    end
 			    
 			    rowname = cell(length(m_list), 1);
 			    data = cell(length(m_list), 5);
 			    for mi = 1:1:length(m_list)
-			        if any(cellfun(@(y) isequal(m_list{mi}, y), m_list_already_calculated)) && ~isa(g.get('MEASURE', m_list{mi}).getr('M'), 'NoValue')
+			        if any(cellfun(@(y) isequal(m_list{mi}, y), m_list_already_calculated)) && ~isa(a.get('ME_DICT').get('IT', m_list{mi}).getr('M'), 'NoValue')
 			            rowname{mi} = 'C';
 			        else
 			            rowname{mi} = '';

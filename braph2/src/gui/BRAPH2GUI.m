@@ -354,6 +354,7 @@ end
 
 update_listbox()
     function update_listbox()
+        
         pipeline_labels = cellfun(@(pipeline) pipeline.label, pipelines, 'UniformOutput', false);
         pipeline_indexes = cellfun(@(pipeline) pipeline.index, pipelines);
 

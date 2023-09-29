@@ -1035,7 +1035,12 @@ classdef ComparisonEnsemble < ConcreteElement
 			
 			switch prop
 				case 11 % ComparisonEnsemble.DIFF
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+					    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+					else
+					    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					end
+					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 11, varargin{:});
@@ -1096,7 +1101,12 @@ classdef ComparisonEnsemble < ConcreteElement
 					end
 					
 				case 12 % ComparisonEnsemble.P1
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+					    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+					else
+					    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					end
+					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 12, varargin{:});
@@ -1157,7 +1167,12 @@ classdef ComparisonEnsemble < ConcreteElement
 					end
 					
 				case 13 % ComparisonEnsemble.P2
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+					    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+					else
+					    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					end
+					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 13, varargin{:});
@@ -1218,7 +1233,12 @@ classdef ComparisonEnsemble < ConcreteElement
 					end
 					
 				case 14 % ComparisonEnsemble.CIL
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+					    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+					else
+					    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					end
+					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 14, varargin{:});
@@ -1279,7 +1299,12 @@ classdef ComparisonEnsemble < ConcreteElement
 					end
 					
 				case 15 % ComparisonEnsemble.CIU
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+					    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+					else
+					    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+					end
+					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 15, varargin{:});

@@ -713,6 +713,30 @@ classdef AnalyzeEnsemble_FUN_MP_BUT < AnalyzeEnsemble
 			end
 		end
 	end
+	methods (Access=protected) % postset
+		function postset(a, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 20 % AnalyzeEnsemble_FUN_MP_BUT.THRESHOLDS
+					a.memorize('GRAPH_TEMPLATE').set('THRESHOLDS', a.getCallback('THRESHOLDS'));
+					
+				otherwise
+					if prop <= 14
+						postset@AnalyzeEnsemble(a, prop);
+					end
+			end
+		end
+	end
 	methods (Access=protected) % calculate value
 		function value = calculateValue(a, prop, varargin)
 			%CALCULATEVALUE calculates the value of a property.

@@ -898,18 +898,26 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 				case 16 % AnalyzeEnsemblePP_GDict.SHOW
 					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value
-					    % figure for graph data
-					    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
-					        pr.get('GUI_G_DICT').get('SHOW')
+					    % Graph
+					    gui_g_dict = pr.get('GUI_G_DICT');
+					    for i = 1:1:gui_g_dict.get('LENGTH')
+					        gui = gui_g_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('SHOW')
+					        end
 					    end
 					end
 					
 				case 17 % AnalyzeEnsemblePP_GDict.HIDE
 					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
-					    % figure for graph data
-					    if isa(pr.getr('GUI_G_DICT'), 'GUI') && pr.get('GUI_G_DICT').get('DRAWN')
-					        pr.get('GUI_G_DICT').get('HIDE')
+					    % Graph
+					    gui_g_dict = pr.get('GUI_G_DICT');
+					    for i = 1:1:gui_g_dict.get('LENGTH')
+					        gui = gui_g_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('HIDE')
+					        end
 					    end
 					end
 					
@@ -923,9 +931,13 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 				case 19 % AnalyzeEnsemblePP_GDict.CLOSE
 					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
-					    % figure for graph data
-					    if isa(pr.getr('GUI_G_DICT'), 'GUIElement') && pr.get('GUI_G_DICT').get('DRAWN')
-					        pr.get('GUI_G_DICT').get('CLOSE')
+					    % Graph
+					    gui_g_dict = pr.get('GUI_G_DICT');
+					    for i = 1:1:gui_g_dict.get('LENGTH')
+					        gui = gui_g_dict.get('IT', i);
+					        if gui.get('DRAWN')
+					            gui.get('CLOSE')
+					        end
 					    end
 					end
 					

@@ -733,6 +733,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 				case 12 % AnalyzeEnsemble.G_DICT
 					rng_settings_ = rng(); rng(a.getPropSeed(12), 'twister')
 					
+					a.memorize('GRAPH_TEMPLATE');
 					value = IndexedDictionary('IT_CLASS', 'Graph');
 					
 					rng(rng_settings_)
@@ -740,6 +741,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 				case 13 % AnalyzeEnsemble.ME_DICT
 					rng_settings_ = rng(); rng(a.getPropSeed(13), 'twister')
 					
+					a.memorize('GRAPH_TEMPLATE');
 					value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 9);
 					
 					rng(rng_settings_)

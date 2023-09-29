@@ -957,7 +957,7 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 					        min_size_value = min(size_value);
 					        max_size_value = max(size_value);
 					        if max_size_value == min_size_value
-					            normalized_size_value = max_bound;
+					            normalized_size_value = ones(size(size_value)) * max_bound;
 					        else
 					            normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
 					        end

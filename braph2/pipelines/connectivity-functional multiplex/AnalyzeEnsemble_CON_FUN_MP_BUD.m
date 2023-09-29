@@ -713,6 +713,30 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			end
 		end
 	end
+	methods (Access=protected) % postset
+		function postset(a, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+					a.memorize('GRAPH_TEMPLATE').set('DENSITIES', a.getCallback('DENSITIES'));
+					
+				otherwise
+					if prop <= 14
+						postset@AnalyzeEnsemble(a, prop);
+					end
+			end
+		end
+	end
 	methods (Access=protected) % calculate value
 		function value = calculateValue(a, prop, varargin)
 			%CALCULATEVALUE calculates the value of a property.

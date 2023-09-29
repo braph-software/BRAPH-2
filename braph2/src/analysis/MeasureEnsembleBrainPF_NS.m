@@ -1,13 +1,13 @@
-classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
-	%MeasureGroupBrainPF_NU is a plot of a nodal unilayer measure group brain.
-	% It is a subclass of <a href="matlab:help MeasureGroupBrainPF">MeasureGroupBrainPF</a>.
+classdef MeasureEnsembleBrainPF_NS < MeasureEnsembleBrainPF
+	%MeasureEnsembleBrainPF_NS is a plot of a nodal superglobal measure group brain.
+	% It is a subclass of <a href="matlab:help MeasureEnsembleBrainPF">MeasureEnsembleBrainPF</a>.
 	%
-	% A Panel Figure for a Brain Measure of Analyze Group (MeasureGroupBrainPF_NU ) manages the plot of the nodal unilayer measure
+	% A Panel Figure for a Brain Measure of Analyze Group (MeasureEnsembleBrainPF_NS) manages the plot of the nodal superglobal measure
 	%  ploted over the brain.  
-	% MeasureGroupBrainPF_NU utilizes the surface created from BrainAtlasPF to integrate 
-	%  the nodal unilayer meaure into the brain regions.
+	% MeasureEnsembleBrainPF_NS utilizes the surface created from BrainAtlasPF to integrate 
+	%  the nodal superglobal meaure into the brain regions.
 	%
-	% The list of MeasureGroupBrainPF_NU properties is:
+	% The list of MeasureEnsembleBrainPF_NS properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % %.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for measure group brain.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.
@@ -53,17 +53,17 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
 	%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
 	%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
-	%  <strong>46</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+	%  <strong>46</strong> <strong>ME</strong> 	ME (metadata, item) is the measure ensemble.
 	%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
 	%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
 	%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
 	%  <strong>50</strong> <strong>SIZE_SCALE</strong> 	SIZE_SCALE (figure, scalar) determines the scale of size effect.
 	%  <strong>51</strong> <strong>COLOR_DIFF</strong> 	COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.
 	%
-	% MeasureGroupBrainPF_NU methods (constructor):
-	%  MeasureGroupBrainPF_NU - constructor
+	% MeasureEnsembleBrainPF_NS methods (constructor):
+	%  MeasureEnsembleBrainPF_NS - constructor
 	%
-	% MeasureGroupBrainPF_NU methods:
+	% MeasureEnsembleBrainPF_NS methods:
 	%  set - sets values of a property
 	%  check - checks the values of all properties
 	%  getr - returns the raw value of a property
@@ -77,34 +77,34 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%  checked - sets a property to checked
 	%  unchecked - sets a property to NOT checked
 	%
-	% MeasureGroupBrainPF_NU methods (display):
-	%  tostring - string with information about the panel figure for nodal unilayer measure group brain
-	%  disp - displays information about the panel figure for nodal unilayer measure group brain
-	%  tree - displays the tree of the panel figure for nodal unilayer measure group brain
+	% MeasureEnsembleBrainPF_NS methods (display):
+	%  tostring - string with information about the panel figure for nodal superglobal measure group brain
+	%  disp - displays information about the panel figure for nodal superglobal measure group brain
+	%  tree - displays the tree of the panel figure for nodal superglobal measure group brain
 	%
-	% MeasureGroupBrainPF_NU methods (miscellanea):
+	% MeasureEnsembleBrainPF_NS methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel figure for nodal unilayer measure group brain are equal (values, locked)
+	%  isequal - determines whether two panel figure for nodal superglobal measure group brain are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel figure for nodal unilayer measure group brain
+	%  copy - copies the panel figure for nodal superglobal measure group brain
 	%
-	% MeasureGroupBrainPF_NU methods (save/load, Static):
-	%  save - saves BRAPH2 panel figure for nodal unilayer measure group brain as b2 file
-	%  load - loads a BRAPH2 panel figure for nodal unilayer measure group brain from a b2 file
+	% MeasureEnsembleBrainPF_NS methods (save/load, Static):
+	%  save - saves BRAPH2 panel figure for nodal superglobal measure group brain as b2 file
+	%  load - loads a BRAPH2 panel figure for nodal superglobal measure group brain from a b2 file
 	%
-	% MeasureGroupBrainPF_NU method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel figure for nodal unilayer measure group brain
+	% MeasureEnsembleBrainPF_NS method (JSON encode):
+	%  encodeJSON - returns a JSON string encoding the panel figure for nodal superglobal measure group brain
 	%
-	% MeasureGroupBrainPF_NU method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel figure for nodal unilayer measure group brain
+	% MeasureEnsembleBrainPF_NS method (JSON decode, Static):
+	%   decodeJSON - returns a JSON string encoding the panel figure for nodal superglobal measure group brain
 	%
-	% MeasureGroupBrainPF_NU methods (inspection, Static):
-	%  getClass - returns the class of the panel figure for nodal unilayer measure group brain
-	%  getSubclasses - returns all subclasses of MeasureGroupBrainPF_NU
-	%  getProps - returns the property list of the panel figure for nodal unilayer measure group brain
-	%  getPropNumber - returns the property number of the panel figure for nodal unilayer measure group brain
+	% MeasureEnsembleBrainPF_NS methods (inspection, Static):
+	%  getClass - returns the class of the panel figure for nodal superglobal measure group brain
+	%  getSubclasses - returns all subclasses of MeasureEnsembleBrainPF_NS
+	%  getProps - returns the property list of the panel figure for nodal superglobal measure group brain
+	%  getPropNumber - returns the property number of the panel figure for nodal superglobal measure group brain
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -117,14 +117,14 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%  getPropDefaultConditioned - returns the conditioned default value of a property
 	%  checkProp - checks whether a value has the correct format/error
 	%
-	% MeasureGroupBrainPF_NU methods (GUI):
+	% MeasureEnsembleBrainPF_NS methods (GUI):
 	%  getPanelProp - returns a prop panel
 	%
-	% MeasureGroupBrainPF_NU methods (GUI, Static):
+	% MeasureEnsembleBrainPF_NS methods (GUI, Static):
 	%  getGUIMenuImport - returns the importer menu
 	%  getGUIMenuExport - returns the exporter menu
 	%
-	% MeasureGroupBrainPF_NU methods (category, Static):
+	% MeasureEnsembleBrainPF_NS methods (category, Static):
 	%  getCategories - returns the list of categories
 	%  getCategoryNumber - returns the number of categories
 	%  existsCategory - returns whether a category exists/error
@@ -132,7 +132,7 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%  getCategoryName - returns the name of a category
 	%  getCategoryDescription - returns the description of a category
 	%
-	% MeasureGroupBrainPF_NU methods (format, Static):
+	% MeasureEnsembleBrainPF_NS methods (format, Static):
 	%  getFormats - returns the list of formats
 	%  getFormatNumber - returns the number of formats
 	%  existsFormat - returns whether a format exists/error
@@ -143,7 +143,7 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%  getFormatDefault - returns the default value for a format
 	%  checkFormat - returns whether a value format is correct/error
 	%
-	% To print full list of constants, click here <a href="matlab:metaclass = ?MeasureGroupBrainPF_NU; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">MeasureGroupBrainPF_NU constants</a>.
+	% To print full list of constants, click here <a href="matlab:metaclass = ?MeasureEnsembleBrainPF_NS; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">MeasureEnsembleBrainPF_NS constants</a>.
 	%
 	%
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
@@ -170,17 +170,17 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 		COLOR_DIFF_FORMAT = 5;
 	end
 	methods % constructor
-		function pf = MeasureGroupBrainPF_NU(varargin)
-			%MeasureGroupBrainPF_NU() creates a panel figure for nodal unilayer measure group brain.
+		function pf = MeasureEnsembleBrainPF_NS(varargin)
+			%MeasureEnsembleBrainPF_NS() creates a panel figure for nodal superglobal measure group brain.
 			%
-			% MeasureGroupBrainPF_NU(PROP, VALUE, ...) with property PROP initialized to VALUE.
+			% MeasureEnsembleBrainPF_NS(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
-			% MeasureGroupBrainPF_NU(TAG, VALUE, ...) with property TAG set to VALUE.
+			% MeasureEnsembleBrainPF_NS(TAG, VALUE, ...) with property TAG set to VALUE.
 			%
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of MeasureGroupBrainPF_NU properties is:
+			% The list of MeasureEnsembleBrainPF_NS properties is:
 			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % %.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for measure group brain.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.
@@ -226,7 +226,7 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
 			%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
 			%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
-			%  <strong>46</strong> <strong>M</strong> 	M (metadata, item) is the measure.
+			%  <strong>46</strong> <strong>ME</strong> 	ME (metadata, item) is the measure ensemble.
 			%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
 			%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
 			%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
@@ -235,57 +235,57 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% See also Category, Format.
 			
-			pf = pf@MeasureGroupBrainPF(varargin{:});
+			pf = pf@MeasureEnsembleBrainPF(varargin{:});
 		end
 	end
 	methods (Static) % inspection
 		function pf_class = getClass()
-			%GETCLASS returns the class of the panel figure for nodal unilayer measure group brain.
+			%GETCLASS returns the class of the panel figure for nodal superglobal measure group brain.
 			%
-			% CLASS = MeasureGroupBrainPF_NU.GETCLASS() returns the class 'MeasureGroupBrainPF_NU'.
+			% CLASS = MeasureEnsembleBrainPF_NS.GETCLASS() returns the class 'MeasureEnsembleBrainPF_NS'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PF.GETCLASS() returns the class of the panel figure for nodal unilayer measure group brain PF.
+			%  CLASS = PF.GETCLASS() returns the class of the panel figure for nodal superglobal measure group brain PF.
 			%  CLASS = Element.GETCLASS(PF) returns the class of 'PF'.
-			%  CLASS = Element.GETCLASS('MeasureGroupBrainPF_NU') returns 'MeasureGroupBrainPF_NU'.
+			%  CLASS = Element.GETCLASS('MeasureEnsembleBrainPF_NS') returns 'MeasureEnsembleBrainPF_NS'.
 			%
-			% Note that the Element.GETCLASS(PF) and Element.GETCLASS('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETCLASS(PF) and Element.GETCLASS('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			
-			pf_class = 'MeasureGroupBrainPF_NU';
+			pf_class = 'MeasureEnsembleBrainPF_NS';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel figure for nodal unilayer measure group brain.
+			%GETSUBCLASSES returns all subclasses of the panel figure for nodal superglobal measure group brain.
 			%
-			% LIST = MeasureGroupBrainPF_NU.GETSUBCLASSES() returns all subclasses of 'MeasureGroupBrainPF_NU'.
+			% LIST = MeasureEnsembleBrainPF_NS.GETSUBCLASSES() returns all subclasses of 'MeasureEnsembleBrainPF_NS'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure for nodal unilayer measure group brain PF.
+			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel figure for nodal superglobal measure group brain PF.
 			%  LIST = Element.GETSUBCLASSES(PF) returns all subclasses of 'PF'.
-			%  LIST = Element.GETSUBCLASSES('MeasureGroupBrainPF_NU') returns all subclasses of 'MeasureGroupBrainPF_NU'.
+			%  LIST = Element.GETSUBCLASSES('MeasureEnsembleBrainPF_NS') returns all subclasses of 'MeasureEnsembleBrainPF_NS'.
 			%
-			% Note that the Element.GETSUBCLASSES(PF) and Element.GETSUBCLASSES('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETSUBCLASSES(PF) and Element.GETSUBCLASSES('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'MeasureGroupBrainPF_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'MeasureEnsembleBrainPF_NS' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel figure for nodal unilayer measure group brain.
+			%GETPROPS returns the property list of panel figure for nodal superglobal measure group brain.
 			%
-			% PROPS = MeasureGroupBrainPF_NU.GETPROPS() returns the property list of panel figure for nodal unilayer measure group brain
+			% PROPS = MeasureEnsembleBrainPF_NS.GETPROPS() returns the property list of panel figure for nodal superglobal measure group brain
 			%  as a row vector.
 			%
-			% PROPS = MeasureGroupBrainPF_NU.GETPROPS(CATEGORY) returns the property list 
+			% PROPS = MeasureEnsembleBrainPF_NS.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure for nodal unilayer measure group brain PF.
+			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel figure for nodal superglobal measure group brain PF.
 			%  PROPS = Element.GETPROPS(PF[, CATEGORY]) returns the property list of 'PF'.
-			%  PROPS = Element.GETPROPS('MeasureGroupBrainPF_NU'[, CATEGORY]) returns the property list of 'MeasureGroupBrainPF_NU'.
+			%  PROPS = Element.GETPROPS('MeasureEnsembleBrainPF_NS'[, CATEGORY]) returns the property list of 'MeasureEnsembleBrainPF_NS'.
 			%
-			% Note that the Element.GETPROPS(PF) and Element.GETPROPS('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPS(PF) and Element.GETPROPS('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropNumber, Category.
@@ -319,19 +319,19 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel figure for nodal unilayer measure group brain.
+			%GETPROPNUMBER returns the property number of panel figure for nodal superglobal measure group brain.
 			%
-			% N = MeasureGroupBrainPF_NU.GETPROPNUMBER() returns the property number of panel figure for nodal unilayer measure group brain.
+			% N = MeasureEnsembleBrainPF_NS.GETPROPNUMBER() returns the property number of panel figure for nodal superglobal measure group brain.
 			%
-			% N = MeasureGroupBrainPF_NU.GETPROPNUMBER(CATEGORY) returns the property number of panel figure for nodal unilayer measure group brain
+			% N = MeasureEnsembleBrainPF_NS.GETPROPNUMBER(CATEGORY) returns the property number of panel figure for nodal superglobal measure group brain
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure for nodal unilayer measure group brain PF.
+			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel figure for nodal superglobal measure group brain PF.
 			%  N = Element.GETPROPNUMBER(PF) returns the property number of 'PF'.
-			%  N = Element.GETPROPNUMBER('MeasureGroupBrainPF_NU') returns the property number of 'MeasureGroupBrainPF_NU'.
+			%  N = Element.GETPROPNUMBER('MeasureEnsembleBrainPF_NS') returns the property number of 'MeasureEnsembleBrainPF_NS'.
 			%
-			% Note that the Element.GETPROPNUMBER(PF) and Element.GETPROPNUMBER('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPNUMBER(PF) and Element.GETPROPNUMBER('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getProps, Category.
@@ -365,27 +365,27 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel figure for nodal unilayer measure group brain/error.
+			%EXISTSPROP checks whether property exists in panel figure for nodal superglobal measure group brain/error.
 			%
-			% CHECK = MeasureGroupBrainPF_NU.EXISTSPROP(PROP) checks whether the property PROP exists.
+			% CHECK = MeasureEnsembleBrainPF_NS.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PF.EXISTSPROP(PROP) checks whether PROP exists for PF.
 			%  CHECK = Element.EXISTSPROP(PF, PROP) checks whether PROP exists for PF.
-			%  CHECK = Element.EXISTSPROP(MeasureGroupBrainPF_NU, PROP) checks whether PROP exists for MeasureGroupBrainPF_NU.
+			%  CHECK = Element.EXISTSPROP(MeasureEnsembleBrainPF_NS, PROP) checks whether PROP exists for MeasureEnsembleBrainPF_NS.
 			%
 			% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT exist.
-			%  Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%  Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PF.EXISTSPROP(PROP) throws error if PROP does NOT exist for PF.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%  Element.EXISTSPROP(PF, PROP) throws error if PROP does NOT exist for PF.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
-			%  Element.EXISTSPROP(MeasureGroupBrainPF_NU, PROP) throws error if PROP does NOT exist for MeasureGroupBrainPF_NU.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
+			%  Element.EXISTSPROP(MeasureEnsembleBrainPF_NS, PROP) throws error if PROP does NOT exist for MeasureEnsembleBrainPF_NS.
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%
-			% Note that the Element.EXISTSPROP(PF) and Element.EXISTSPROP('MeasureGroupBrainPF_NU')
+			% Note that the Element.EXISTSPROP(PF) and Element.EXISTSPROP('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
@@ -396,47 +396,47 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput' '\n' ...
-					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MeasureGroupBrainPF_NU.'] ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput' '\n' ...
+					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MeasureEnsembleBrainPF_NS.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel figure for nodal unilayer measure group brain/error.
+			%EXISTSTAG checks whether tag exists in panel figure for nodal superglobal measure group brain/error.
 			%
-			% CHECK = MeasureGroupBrainPF_NU.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
+			% CHECK = MeasureEnsembleBrainPF_NS.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PF.EXISTSTAG(TAG) checks whether TAG exists for PF.
 			%  CHECK = Element.EXISTSTAG(PF, TAG) checks whether TAG exists for PF.
-			%  CHECK = Element.EXISTSTAG(MeasureGroupBrainPF_NU, TAG) checks whether TAG exists for MeasureGroupBrainPF_NU.
+			%  CHECK = Element.EXISTSTAG(MeasureEnsembleBrainPF_NS, TAG) checks whether TAG exists for MeasureEnsembleBrainPF_NS.
 			%
 			% Element.EXISTSTAG(TAG) throws an error if the TAG does NOT exist.
-			%  Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%  Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PF.EXISTSTAG(TAG) throws error if TAG does NOT exist for PF.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%  Element.EXISTSTAG(PF, TAG) throws error if TAG does NOT exist for PF.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
-			%  Element.EXISTSTAG(MeasureGroupBrainPF_NU, TAG) throws error if TAG does NOT exist for MeasureGroupBrainPF_NU.
-			%   Error id: [BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
+			%  Element.EXISTSTAG(MeasureEnsembleBrainPF_NS, TAG) throws error if TAG does NOT exist for MeasureEnsembleBrainPF_NS.
+			%   Error id: [BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			%
-			% Note that the Element.EXISTSTAG(PF) and Element.EXISTSTAG('MeasureGroupBrainPF_NU')
+			% Note that the Element.EXISTSTAG(PF) and Element.EXISTSTAG('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'M'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput' '\n' ...
-					'The value ' tag ' is not a valid tag for MeasureGroupBrainPF_NU.'] ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput' '\n' ...
+					'The value ' tag ' is not a valid tag for MeasureEnsembleBrainPF_NS.'] ...
 					)
 			end
 		end
@@ -451,17 +451,17 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PROPERTY = PF.GETPROPPROP(POINTER) returns property number of POINTER of PF.
-			%  PROPERTY = Element.GETPROPPROP(MeasureGroupBrainPF_NU, POINTER) returns property number of POINTER of MeasureGroupBrainPF_NU.
-			%  PROPERTY = PF.GETPROPPROP(MeasureGroupBrainPF_NU, POINTER) returns property number of POINTER of MeasureGroupBrainPF_NU.
+			%  PROPERTY = Element.GETPROPPROP(MeasureEnsembleBrainPF_NS, POINTER) returns property number of POINTER of MeasureEnsembleBrainPF_NS.
+			%  PROPERTY = PF.GETPROPPROP(MeasureEnsembleBrainPF_NS, POINTER) returns property number of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPPROP(PF) and Element.GETPROPPROP('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPPROP(PF) and Element.GETPROPPROP('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropFormat, getPropTag, getPropCategory, getPropDescription,
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'M'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -477,10 +477,10 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  TAG = PF.GETPROPTAG(POINTER) returns tag of POINTER of PF.
-			%  TAG = Element.GETPROPTAG(MeasureGroupBrainPF_NU, POINTER) returns tag of POINTER of MeasureGroupBrainPF_NU.
-			%  TAG = PF.GETPROPTAG(MeasureGroupBrainPF_NU, POINTER) returns tag of POINTER of MeasureGroupBrainPF_NU.
+			%  TAG = Element.GETPROPTAG(MeasureEnsembleBrainPF_NS, POINTER) returns tag of POINTER of MeasureEnsembleBrainPF_NS.
+			%  TAG = PF.GETPROPTAG(MeasureEnsembleBrainPF_NS, POINTER) returns tag of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPTAG(PF) and Element.GETPROPTAG('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPTAG(PF) and Element.GETPROPTAG('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropSettings, getPropCategory, getPropFormat,
@@ -490,8 +490,8 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measuregroupbrainpf_nu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'M'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' };
-				tag = measuregroupbrainpf_nu_tag_list{pointer}; % prop = pointer
+				measureensemblebrainpf_ns_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' };
+				tag = measureensemblebrainpf_ns_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -505,20 +505,20 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CATEGORY = PF.GETPROPCATEGORY(POINTER) returns category of POINTER of PF.
-			%  CATEGORY = Element.GETPROPCATEGORY(MeasureGroupBrainPF_NU, POINTER) returns category of POINTER of MeasureGroupBrainPF_NU.
-			%  CATEGORY = PF.GETPROPCATEGORY(MeasureGroupBrainPF_NU, POINTER) returns category of POINTER of MeasureGroupBrainPF_NU.
+			%  CATEGORY = Element.GETPROPCATEGORY(MeasureEnsembleBrainPF_NS, POINTER) returns category of POINTER of MeasureEnsembleBrainPF_NS.
+			%  CATEGORY = PF.GETPROPCATEGORY(MeasureEnsembleBrainPF_NS, POINTER) returns category of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPCATEGORY(PF) and Element.GETPROPCATEGORY('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPCATEGORY(PF) and Element.GETPROPCATEGORY('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also Category, getPropProp, getPropTag, getPropSettings,
 			%  getPropFormat, getPropDescription, getPropDefault, checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measuregroupbrainpf_nu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8  2  6  8  8  8  8 };
-			prop_category = measuregroupbrainpf_nu_category_list{prop};
+			measureensemblebrainpf_ns_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8  2  6  8  8  8  8 };
+			prop_category = measureensemblebrainpf_ns_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -531,20 +531,20 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  FORMAT = PF.GETPROPFORMAT(POINTER) returns format of POINTER of PF.
-			%  FORMAT = Element.GETPROPFORMAT(MeasureGroupBrainPF_NU, POINTER) returns format of POINTER of MeasureGroupBrainPF_NU.
-			%  FORMAT = PF.GETPROPFORMAT(MeasureGroupBrainPF_NU, POINTER) returns format of POINTER of MeasureGroupBrainPF_NU.
+			%  FORMAT = Element.GETPROPFORMAT(MeasureEnsembleBrainPF_NS, POINTER) returns format of POINTER of MeasureEnsembleBrainPF_NS.
+			%  FORMAT = PF.GETPROPFORMAT(MeasureEnsembleBrainPF_NS, POINTER) returns format of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPFORMAT(PF) and Element.GETPROPFORMAT('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPFORMAT(PF) and Element.GETPROPFORMAT('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropCategory,
 			%  getPropDescription, getPropSettings, getPropDefault, checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measuregroupbrainpf_nu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10  8  1  11  5  11  5 };
-			prop_format = measuregroupbrainpf_nu_format_list{prop};
+			measureensemblebrainpf_ns_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10  8  1  11  5  11  5 };
+			prop_format = measureensemblebrainpf_ns_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -557,20 +557,20 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DESCRIPTION = PF.GETPROPDESCRIPTION(POINTER) returns description of POINTER of PF.
-			%  DESCRIPTION = Element.GETPROPDESCRIPTION(MeasureGroupBrainPF_NU, POINTER) returns description of POINTER of MeasureGroupBrainPF_NU.
-			%  DESCRIPTION = PF.GETPROPDESCRIPTION(MeasureGroupBrainPF_NU, POINTER) returns description of POINTER of MeasureGroupBrainPF_NU.
+			%  DESCRIPTION = Element.GETPROPDESCRIPTION(MeasureEnsembleBrainPF_NS, POINTER) returns description of POINTER of MeasureEnsembleBrainPF_NS.
+			%  DESCRIPTION = PF.GETPROPDESCRIPTION(MeasureEnsembleBrainPF_NS, POINTER) returns description of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPDESCRIPTION(PF) and Element.GETPROPDESCRIPTION('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPDESCRIPTION(PF) and Element.GETPROPDESCRIPTION('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory,
 			%  getPropFormat, getPropSettings, getPropDefault, checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measuregroupbrainpf_nu_description_list = { 'ELCLASS (constant, string) is the class of the % % %.'  'NAME (constant, string) is the name of the panel figure for measure group brain.'  'DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.'  'TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.'  'ID (data, string) is a few-letter code for the panel figure for measure group brain.'  'LABEL (metadata, string) is an extended label of the panel figure for measure group brain.'  'NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.'  'LAYER (figure, scalar) is the layer number of the nodal measure.'  'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.'  'SIZE_SCALE (figure, scalar) determines the scale of size effect.'  'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.' };
-			prop_description = measuregroupbrainpf_nu_description_list{prop};
+			measureensemblebrainpf_ns_description_list = { 'ELCLASS (constant, string) is the class of the % % %.'  'NAME (constant, string) is the name of the panel figure for measure group brain.'  'DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.'  'TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.'  'ID (data, string) is a few-letter code for the panel figure for measure group brain.'  'LABEL (metadata, string) is an extended label of the panel figure for measure group brain.'  'NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.'  'ME (metadata, item) is the measure ensemble.'  'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.'  'LAYER (figure, scalar) is the layer number of the nodal measure.'  'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.'  'SIZE_SCALE (figure, scalar) determines the scale of size effect.'  'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.' };
+			prop_description = measureensemblebrainpf_ns_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -583,105 +583,105 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  SETTINGS = PF.GETPROPSETTINGS(POINTER) returns settings of POINTER of PF.
-			%  SETTINGS = Element.GETPROPSETTINGS(MeasureGroupBrainPF_NU, POINTER) returns settings of POINTER of MeasureGroupBrainPF_NU.
-			%  SETTINGS = PF.GETPROPSETTINGS(MeasureGroupBrainPF_NU, POINTER) returns settings of POINTER of MeasureGroupBrainPF_NU.
+			%  SETTINGS = Element.GETPROPSETTINGS(MeasureEnsembleBrainPF_NS, POINTER) returns settings of POINTER of MeasureEnsembleBrainPF_NS.
+			%  SETTINGS = PF.GETPROPSETTINGS(MeasureEnsembleBrainPF_NS, POINTER) returns settings of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPSETTINGS(PF) and Element.GETPROPSETTINGS('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPSETTINGS(PF) and Element.GETPROPSETTINGS('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory, getPropFormat,
 			%  getPropDescription, getPropDefault, checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 48 % MeasureGroupBrainPF_NU.LAYER
+				case 48 % MeasureEnsembleBrainPF_NS.LAYER
 					prop_settings = Format.getFormatSettings(11);
-				case 49 % MeasureGroupBrainPF_NU.SIZE_DIFF
+				case 49 % MeasureEnsembleBrainPF_NS.SIZE_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case 50 % MeasureGroupBrainPF_NU.SIZE_SCALE
+				case 50 % MeasureEnsembleBrainPF_NS.SIZE_SCALE
 					prop_settings = Format.getFormatSettings(11);
-				case 51 % MeasureGroupBrainPF_NU.COLOR_DIFF
+				case 51 % MeasureEnsembleBrainPF_NS.COLOR_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case 4 % MeasureGroupBrainPF_NU.TEMPLATE
-					prop_settings = 'MeasureGroupBrainPF_NU';
+				case 4 % MeasureEnsembleBrainPF_NS.TEMPLATE
+					prop_settings = 'MeasureEnsembleBrainPF_NS';
 				otherwise
-					prop_settings = getPropSettings@MeasureGroupBrainPF(prop);
+					prop_settings = getPropSettings@MeasureEnsembleBrainPF(prop);
 			end
 		end
 		function prop_default = getPropDefault(pointer)
 			%GETPROPDEFAULT returns the default value of a property.
 			%
-			% DEFAULT = MeasureGroupBrainPF_NU.GETPROPDEFAULT(PROP) returns the default 
+			% DEFAULT = MeasureEnsembleBrainPF_NS.GETPROPDEFAULT(PROP) returns the default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = MeasureGroupBrainPF_NU.GETPROPDEFAULT(TAG) returns the default 
+			% DEFAULT = MeasureEnsembleBrainPF_NS.GETPROPDEFAULT(TAG) returns the default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PF.GETPROPDEFAULT(POINTER) returns the default value of POINTER of PF.
-			%  DEFAULT = Element.GETPROPDEFAULT(MeasureGroupBrainPF_NU, POINTER) returns the default value of POINTER of MeasureGroupBrainPF_NU.
-			%  DEFAULT = PF.GETPROPDEFAULT(MeasureGroupBrainPF_NU, POINTER) returns the default value of POINTER of MeasureGroupBrainPF_NU.
+			%  DEFAULT = Element.GETPROPDEFAULT(MeasureEnsembleBrainPF_NS, POINTER) returns the default value of POINTER of MeasureEnsembleBrainPF_NS.
+			%  DEFAULT = PF.GETPROPDEFAULT(MeasureEnsembleBrainPF_NS, POINTER) returns the default value of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPDEFAULT(PF) and Element.GETPROPDEFAULT('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPDEFAULT(PF) and Element.GETPROPDEFAULT('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings, 
 			%  getPropCategory, getPropFormat, getPropDescription, checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 48 % MeasureGroupBrainPF_NU.LAYER
+				case 48 % MeasureEnsembleBrainPF_NS.LAYER
 					prop_default = 1;
-				case 49 % MeasureGroupBrainPF_NU.SIZE_DIFF
+				case 49 % MeasureEnsembleBrainPF_NS.SIZE_DIFF
 					prop_default = 'on';
-				case 50 % MeasureGroupBrainPF_NU.SIZE_SCALE
+				case 50 % MeasureEnsembleBrainPF_NS.SIZE_SCALE
 					prop_default = 10;
-				case 51 % MeasureGroupBrainPF_NU.COLOR_DIFF
+				case 51 % MeasureEnsembleBrainPF_NS.COLOR_DIFF
 					prop_default = 'on';
-				case 1 % MeasureGroupBrainPF_NU.ELCLASS
-					prop_default = 'MeasureGroupBrainPF_NU';
-				case 2 % MeasureGroupBrainPF_NU.NAME
+				case 1 % MeasureEnsembleBrainPF_NS.ELCLASS
+					prop_default = 'MeasureEnsembleBrainPF_NS';
+				case 2 % MeasureEnsembleBrainPF_NS.NAME
 					prop_default = 'Panel Figure for Measure Group Brain';
-				case 3 % MeasureGroupBrainPF_NU.DESCRIPTION
-					prop_default = 'A Panel Figure for a Brain Measure of Analyze Group (MeasureGroupBrainPF_NU) manages the plot of the nodal unilayer measure ploted over the brain. MeasureGroupBrainPF_NU  utilizes the surface created from BrainAtlasPF to integrate the nodal unilayer meaure into the brain regions.';
-				case 4 % MeasureGroupBrainPF_NU.TEMPLATE
-					prop_default = Format.getFormatDefault(8, MeasureGroupBrainPF_NU.getPropSettings(prop));
-				case 5 % MeasureGroupBrainPF_NU.ID
-					prop_default = 'MeasureGroupBrainPF_NU ID';
-				case 6 % MeasureGroupBrainPF_NU.LABEL
-					prop_default = 'MeasureGroupBrainPF_NU label';
-				case 7 % MeasureGroupBrainPF_NU.NOTES
-					prop_default = 'MeasureGroupBrainPF_NU notes';
+				case 3 % MeasureEnsembleBrainPF_NS.DESCRIPTION
+					prop_default = 'A Panel Figure for a Brain Measure of Analyze Group (MeasureEnsembleBrainPF_NS ) manages the plot of the nodal superglobal measure ploted over the brain. MeasureEnsembleBrainPF_NS  utilizes the surface created from BrainAtlasPF to integrate the nodal superglobal meaure into the brain regions.';
+				case 4 % MeasureEnsembleBrainPF_NS.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
+				case 5 % MeasureEnsembleBrainPF_NS.ID
+					prop_default = 'MeasureEnsembleBrainPF_NS ID';
+				case 6 % MeasureEnsembleBrainPF_NS.LABEL
+					prop_default = 'MeasureEnsembleBrainPF_NS label';
+				case 7 % MeasureEnsembleBrainPF_NS.NOTES
+					prop_default = 'MeasureEnsembleBrainPF_NS notes';
 				otherwise
-					prop_default = getPropDefault@MeasureGroupBrainPF(prop);
+					prop_default = getPropDefault@MeasureEnsembleBrainPF(prop);
 			end
 		end
 		function prop_default = getPropDefaultConditioned(pointer)
 			%GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
 			%
-			% DEFAULT = MeasureGroupBrainPF_NU.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
+			% DEFAULT = MeasureEnsembleBrainPF_NS.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = MeasureGroupBrainPF_NU.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
+			% DEFAULT = MeasureEnsembleBrainPF_NS.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PF.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of PF.
-			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(MeasureGroupBrainPF_NU, POINTER) returns the conditioned default value of POINTER of MeasureGroupBrainPF_NU.
-			%  DEFAULT = PF.GETPROPDEFAULTCONDITIONED(MeasureGroupBrainPF_NU, POINTER) returns the conditioned default value of POINTER of MeasureGroupBrainPF_NU.
+			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(MeasureEnsembleBrainPF_NS, POINTER) returns the conditioned default value of POINTER of MeasureEnsembleBrainPF_NS.
+			%  DEFAULT = PF.GETPROPDEFAULTCONDITIONED(MeasureEnsembleBrainPF_NS, POINTER) returns the conditioned default value of POINTER of MeasureEnsembleBrainPF_NS.
 			%
-			% Note that the Element.GETPROPDEFAULTCONDITIONED(PF) and Element.GETPROPDEFAULTCONDITIONED('MeasureGroupBrainPF_NU')
+			% Note that the Element.GETPROPDEFAULTCONDITIONED(PF) and Element.GETPROPDEFAULTCONDITIONED('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also conditioning, getPropDefault, getPropProp, getPropTag, 
 			%  getPropSettings, getPropCategory, getPropFormat, getPropDescription, 
 			%  checkProp.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
-			prop_default = MeasureGroupBrainPF_NU.conditioning(prop, MeasureGroupBrainPF_NU.getPropDefault(prop));
+			prop_default = MeasureEnsembleBrainPF_NS.conditioning(prop, MeasureEnsembleBrainPF_NS.getPropDefault(prop));
 		end
 	end
 	methods (Static) % checkProp
@@ -694,43 +694,43 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CHECK = PF.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of PF.
-			%  CHECK = Element.CHECKPROP(MeasureGroupBrainPF_NU, PROP, VALUE) checks VALUE format for PROP of MeasureGroupBrainPF_NU.
-			%  CHECK = PF.CHECKPROP(MeasureGroupBrainPF_NU, PROP, VALUE) checks VALUE format for PROP of MeasureGroupBrainPF_NU.
+			%  CHECK = Element.CHECKPROP(MeasureEnsembleBrainPF_NS, PROP, VALUE) checks VALUE format for PROP of MeasureEnsembleBrainPF_NS.
+			%  CHECK = PF.CHECKPROP(MeasureEnsembleBrainPF_NS, PROP, VALUE) checks VALUE format for PROP of MeasureEnsembleBrainPF_NS.
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MeasureGroupBrainPF_NU:WrongInput
+			%  Error id: BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: BRAPH2:MeasureGroupBrainPF_NU:WrongInput
-			%  Element.CHECKPROP(MeasureGroupBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureGroupBrainPF_NU.
-			%   Error id: BRAPH2:MeasureGroupBrainPF_NU:WrongInput
-			%  PF.CHECKPROP(MeasureGroupBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureGroupBrainPF_NU.
-			%   Error id: BRAPH2:MeasureGroupBrainPF_NU:WrongInput]
+			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput
+			%  Element.CHECKPROP(MeasureEnsembleBrainPF_NS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsembleBrainPF_NS.
+			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput
+			%  PF.CHECKPROP(MeasureEnsembleBrainPF_NS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsembleBrainPF_NS.
+			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NS:WrongInput]
 			% 
-			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('MeasureGroupBrainPF_NU')
+			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('MeasureEnsembleBrainPF_NS')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropSettings,
 			% getPropCategory, getPropFormat, getPropDescription, getPropDefault.
 			
-			prop = MeasureGroupBrainPF_NU.getPropProp(pointer);
+			prop = MeasureEnsembleBrainPF_NS.getPropProp(pointer);
 			
 			switch prop
-				case 48 % MeasureGroupBrainPF_NU.LAYER
-					check = Format.checkFormat(11, value, MeasureGroupBrainPF_NU.getPropSettings(prop));
-				case 49 % MeasureGroupBrainPF_NU.SIZE_DIFF
-					check = Format.checkFormat(5, value, MeasureGroupBrainPF_NU.getPropSettings(prop));
-				case 50 % MeasureGroupBrainPF_NU.SIZE_SCALE
-					check = Format.checkFormat(11, value, MeasureGroupBrainPF_NU.getPropSettings(prop));
-				case 51 % MeasureGroupBrainPF_NU.COLOR_DIFF
-					check = Format.checkFormat(5, value, MeasureGroupBrainPF_NU.getPropSettings(prop));
-				case 4 % MeasureGroupBrainPF_NU.TEMPLATE
-					check = Format.checkFormat(8, value, MeasureGroupBrainPF_NU.getPropSettings(prop));
+				case 48 % MeasureEnsembleBrainPF_NS.LAYER
+					check = Format.checkFormat(11, value, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
+				case 49 % MeasureEnsembleBrainPF_NS.SIZE_DIFF
+					check = Format.checkFormat(5, value, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
+				case 50 % MeasureEnsembleBrainPF_NS.SIZE_SCALE
+					check = Format.checkFormat(11, value, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
+				case 51 % MeasureEnsembleBrainPF_NS.COLOR_DIFF
+					check = Format.checkFormat(5, value, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
+				case 4 % MeasureEnsembleBrainPF_NS.TEMPLATE
+					check = Format.checkFormat(8, value, MeasureEnsembleBrainPF_NS.getPropSettings(prop));
 				otherwise
 					if prop <= 47
-						check = checkProp@MeasureGroupBrainPF(prop, value);
+						check = checkProp@MeasureEnsembleBrainPF(prop, value);
 					end
 			end
 			
@@ -738,9 +738,9 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureGroupBrainPF_NU:' 'WrongInput' '\n' ...
-					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasureGroupBrainPF_NU.getPropTag(prop) ' (' MeasureGroupBrainPF_NU.getFormatTag(MeasureGroupBrainPF_NU.getPropFormat(prop)) ').'] ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsembleBrainPF_NS:' 'WrongInput' '\n' ...
+					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasureEnsembleBrainPF_NS.getPropTag(prop) ' (' MeasureEnsembleBrainPF_NS.getFormatTag(MeasureEnsembleBrainPF_NS.getPropFormat(prop)) ').'] ...
 					)
 			end
 		end
@@ -759,21 +759,21 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%  checkValue.
 			
 			switch prop
-				case 48 % MeasureGroupBrainPF_NU.LAYER
+				case 48 % MeasureEnsembleBrainPF_NS.LAYER
 					pf.get('SETUP');
 					
-				case 49 % MeasureGroupBrainPF_NU.SIZE_DIFF
+				case 49 % MeasureEnsembleBrainPF_NS.SIZE_DIFF
 					pf.get('SETUP');
 					
-				case 50 % MeasureGroupBrainPF_NU.SIZE_SCALE
+				case 50 % MeasureEnsembleBrainPF_NS.SIZE_SCALE
 					pf.get('SETUP');
 					
-				case 51 % MeasureGroupBrainPF_NU.COLOR_DIFF
+				case 51 % MeasureEnsembleBrainPF_NS.COLOR_DIFF
 					pf.get('SETUP');
 					
 				otherwise
 					if prop <= 47
-						postset@MeasureGroupBrainPF(pf, prop);
+						postset@MeasureEnsembleBrainPF(pf, prop);
 					end
 			end
 		end
@@ -795,9 +795,8 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 47 % MeasureGroupBrainPF_NU.SETUP
-					m = pf.get('M');
-					g =  m.get('G');
+				case 47 % MeasureEnsembleBrainPF_NS.SETUP
+					me = pf.get('ME');
 					
 					% get brain region related list
 					sph_list = pf.get('SPH_DICT').get('IT_LIST');
@@ -807,16 +806,12 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 					
 					% get the value to show on the surface
 					layer = pf.get('LAYER');
-					m_values = m.get('M');
+					m_values = me.get('M');
 					if isempty(m_values)
 					    value = {};
 					    return
 					end
 					m_value = m_values{layer};
-					if isempty(m_value)
-					    value = {};
-					    return
-					end
 					
 					size_diff = pf.get('SIZE_DIFF');
 					switch size_diff
@@ -895,7 +890,7 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 					
 				otherwise
 					if prop <= 47
-						value = calculateValue@MeasureGroupBrainPF(pf, prop, varargin{:});
+						value = calculateValue@MeasureEnsembleBrainPF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
 					end

@@ -2,7 +2,7 @@ classdef MeasureGroupBrainPF_NS < MeasureGroupBrainPF
 	%MeasureGroupBrainPF_NS is a plot of a nodal superglobal measure group brain.
 	% It is a subclass of <a href="matlab:help MeasureGroupBrainPF">MeasureGroupBrainPF</a>.
 	%
-	% A Panel Figure for a Brain Measure of Analyze Group (MeasureGroupBrainPF_NS ) manages the plot of the nodal superglobal measure
+	% A Panel Figure for a Brain Measure of Analyze Group (MeasureGroupBrainPF_NS) manages the plot of the nodal superglobal measure
 	%  ploted over the brain.  
 	% MeasureGroupBrainPF_NS utilizes the surface created from BrainAtlasPF to integrate 
 	%  the nodal superglobal meaure into the brain regions.
@@ -826,7 +826,7 @@ classdef MeasureGroupBrainPF_NS < MeasureGroupBrainPF
 					        min_size_value = min(size_value);
 					        max_size_value = max(size_value);
 					        if max_size_value == min_size_value
-					            normalized_size_value = max_bound;
+					            normalized_size_value = ones(size(size_value)) * max_bound;
 					        else
 					            normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
 					        end
@@ -858,7 +858,7 @@ classdef MeasureGroupBrainPF_NS < MeasureGroupBrainPF
 					        min_size_value = min(size_value);
 					        max_size_value = max(size_value);
 					        if max_size_value == min_size_value
-					            normalized_size_value = max_bound;
+					            normalized_size_value = ones(size(size_value)) * max_bound;
 					        else
 					            normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
 					        end
