@@ -354,7 +354,9 @@ end
             pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
             notes = regexprep(notes, 'PDF: /tutorials/pipelines/\w+/\w+\.pdf', '');
 % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
-            
+% system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
+% system(['start "" "' pdfPath '"']);
+
             pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
             notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
 % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
