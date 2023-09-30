@@ -39,7 +39,7 @@ co_gr = CombineGroups_CON_FUN_MP( ...
 gr = co_gr.get('GR_CON_FUN_MP');
 
 %% Analysis CON FUN MP BUD
-densities = 50:50:100;
+densities = 5;
 a_BUD = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
     'GR', gr, ...
     'DENSITIES', densities ...
@@ -72,7 +72,7 @@ d = NNDataset( ...
 
 %% Create a regressor cross-validation
 nne_template = NNRegressorMLP_Evaluator('P', 2);
-nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance
