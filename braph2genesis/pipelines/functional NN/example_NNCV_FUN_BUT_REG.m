@@ -21,7 +21,7 @@ im_gr = ImporterGroupSubjectFUN_XLS( ...
 gr = im_gr.get('GR');
 
 %% Analysis FUN BUT
-thresholds = .5:.5:1;
+thresholds = .7;
 graph_temp = MultigraphBUT('THRESHOLDS', thresholds);
 a_BUT = AnalyzeEnsemble_FUN_BUT( ...
     'GRAPH_TEMPLATE', graph_temp, ...
@@ -54,7 +54,7 @@ d = NNDataset( ...
 
 %% Create a regressor cross-validation
 nne_template = NNRegressorMLP_Evaluator('P', 2);
-nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance
