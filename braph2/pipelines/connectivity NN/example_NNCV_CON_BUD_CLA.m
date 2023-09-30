@@ -36,7 +36,7 @@ im_gr3 = ImporterGroupSubjectCON_XLS( ...
 gr3 = im_gr3.get('GR');
 
 %% Analysis CON WU
-densities = 5;
+densities = 50:50:100;
 graph_temp = MultigraphBUD('DENSITIES', densities);
 a_BUD1 = AnalyzeEnsemble_CON_BUD( ...
     'GRAPH_TEMPLATE', graph_temp, ...
@@ -115,7 +115,7 @@ d3 = NNDataset( ...
 
 %% Create a classifier cross-validation
 nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance
