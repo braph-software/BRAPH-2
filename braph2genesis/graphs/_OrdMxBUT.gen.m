@@ -286,7 +286,7 @@ ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
 5
 
 %%% ¡prop!
-RANDOMIZATION (query, cell) is the attempts to rewire each edge.
+RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
 %%%% ¡calculate!
 rng(g.get('RANDOM_SEED'), 'twister')
 
