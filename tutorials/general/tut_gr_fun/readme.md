@@ -10,11 +10,18 @@ This Tutorial explains how to prepare and work with this kind of data.
 > **Figure 1. GUI for a group of subjects with functional data.**
 > Full graphical user interface to upload a group of subjects with functional data in BRAPH 2.0.
 
+## Generation of Example Data
+
+If you don't have the `Example data FUN XLS` folder inside `functional`, then you can generate it by running the commands referenced below.
+
+```matlab
+test_ImporterGroupSubjectFUN_XLS  % generates the example functional XLS data folder.
+test_ImporterGroupSubjectFUN_TXT  % generates the example functional TXT data folder.
+```
+
 ## Open the GUI
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
-
-You can also open the GUI and upload the brain functional data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the data as shown in Figure 2a-f.
 
 > ![Upload the data of a group of subjects](fig02.jpg)
 > 
@@ -25,22 +32,19 @@ You can also open the GUI and upload the brain functional data using the command
 > To upload the test functional data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `functional`, **e** `Example data FUN XLS`, and **f** select the folder containing the functional values of one group `FUN_Group_1_XLS`.
  
-Commands to open the GUI and upload the brain functional data:
-
-```matlab
-gr = Group('SUB_CLASS', 'SubjectFUN');  % creates a new object Group to use functional values for assessing connectivity i.e., SubjectFUN.
-
-gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
-gui.get('DRAW');  % draws the GUI.
-gui.get('SHOW');  % shows the GUI.
-```
-
-Moreover, if you don't have the `Example data FUN XLS` folder inside `functional`, then you can generate it by running the commands referenced below.
-
-```matlab
-test_ImporterGroupSubjectFUN_XLS  % generates the example functional XLS data folder.
-test_ImporterGroupSubjectFUN_TXT  % generates the example functional TXT data folder.
-```
+> **GUI launch from command line**
+> 
+> You can also open the GUI and upload the brain functional data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In this case, you can upload the data as shown in Figure 2a-f.
+> 
+> Commands to open the GUI and upload the brain functional data:
+> 
+> ```matlab
+> gr = Group('SUB_CLASS', 'SubjectFUN');  % creates a new object Group to use functional values for assessing connectivity i.e., SubjectFUN.
+> 
+> gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
+> gui.get('DRAW');  % draws the GUI.
+> gui.get('SHOW');  % shows the GUI.
+> ```
 
 ## Visualize the Group Data
 
