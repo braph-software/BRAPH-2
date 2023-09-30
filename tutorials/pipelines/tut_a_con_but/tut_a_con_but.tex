@@ -18,7 +18,7 @@ In this tutorial, we will upload a file containing the pipeline with the differe
 \fig{figure*}
 	{fig:01}
 	{\includegraphics{fig01.jpg}}
-	{GUI for working with the pipeline to compare two groups of subjects with \emph{connectivity data} using binary undirected graphs at fixed thresholds.}
+	{GUI for working with the pipeline to compare two groups of subjects with \emph{connectivity data} using binary undirected graphs at fixed thresholds}
 	{
 	Full graphical user interface to perform group comparisons with \emph{connectivity data} in BRAPH~2.0. 
 	}
@@ -76,95 +76,130 @@ After you loaded the brain atlas, you can upload the \emph{connectivity data} fo
 	{\bf b} Data for group 1 is uploaded. {\bf c} Data for group 2 is uploaded.
 	}
 
-\section{Step 3: Analysing the Data of Group 1}
- 
-After you have loaded the data for both groups, you can analyze the data of your first group by clicking on \fn{Analyze Group 1} (\Figref{fig:04}a-b). A new interface will be shown that allows you to pre-calculate network measures for each group and explore them. First of all, you can specify the parameters for constructing the graph from the connectivity group data (\Figref{fig:04}c). Especially, in the thresholds section, you can specify the thresholds by filling in “[0.4 0.6 0.8]” or “0.4:0.2:0.8”, in this tutorial we keep the default thresholds. Then, in order to visualize the list of measures you can press "C", in the panel \fn{Group-averaged Measures} (\Figref{fig:04}d), and a new table with all compatible measures will appear (\Figref{fig:04}e). 
+\section{Step 3: Analyzing the Data of Group 1}
 
-Importantly, the parameters you select for this analysis (graph and measures parameters) will be fixed for the analysis of the second group and for the group comparisons.
+Once you have loaded the data for both groups, you can begin analyzing the data for your first group by clicking on \fn{Analyze Group 1} (\Figref{fig:04}a). 
+This action will open a new interface called \fn{Analyze Ensemble}, which allows you to pre-calculate network measures for each group and explore them. 
+Before these network measures are calculated, it is important to ensure two key aspects: (1) the measures are configured with the rules or parameters you desire (note that not all measures have rules or parameters), and (2) the graph is constructed based on the specified thresholds.
 
-	\fig{figure}
-	{fig:04}
-	{
-	\includegraphics{fig04.jpg}
-	}
-	{Analyze the Group Data}
-	{
-	{\bf a} Click on \fn{Analyze Group 1} in the pipeline's GUI.
-        {\bf b} After clicking on \fn{Analyze Group 1} in the pipeline's GUI, a new window will appear where first you can select the parameters for the graph construction {\bf c}, in this pipeline you should specify new or accept the default thresholds. Then, in order to visualize the list of measures you can press "C", in the panel \fn{Group-averaged Measures} {\bf d}, and a new table with all compatible measures will appear {\bf e}. 
-	}
+Importantly, the parameters you select for this analysis, including both graph and measures parameters, will remain fixed for the analysis of the second group and for group comparisons. Let's guide you through the process of preparing these parameters for both measures and graphs.
 
-	\fig{figure}
-	{fig:05}
-	{
+\subsection{Setting Rules for Measures}
+
+To configure the measures, start by clicking on \fn{Graph Template} (\Figref{fig:04}b). This will open a new interface for graph template settings. 
+Scroll down to find the \fn{Graph MEASURES} section. 
+By clicking the 'C' button, all compatible measures will be displayed in a table. 
+For example, you can select the \fn{Community Structure} measure and then right-click at the top of the table (\Figref{fig:04}c). 
+In the right-click menu, choose “Data Selected Measures.” 
+This will open the measure window, allowing you to specify the rules or parameters (\Figref{fig:04}d).
+
+\subsection{Setting Parameters for Graphs}
+
+After configuring the rules for the measures, return to the \fn{Analyze Ensemble} interface (\Figref{fig:04}e). 
+In the \fn{THRESHOLDS} section, you can define the thresholds by entering values like “[0.4 0.5 0.6 0.7]” or “0.4:0.1:0.7”. 
+In this tutorial, we will stick with the default thresholds. 
+In brain connectivity analysis, threshold values dictate the required connection strength between different brain regions for them to be considered “connected” in a binary undirected graph. 
+Adjusting these thresholds allows you to explore varying levels of brain connectivity, providing insights into how regions communicate at different threshold settings.
+
+\fig{figure}
+{fig:04}
+{
+\includegraphics{fig04.jpg}
+}
+{Configuring Measure Rules and Parameters Before Calculation}
+{
+{\bf a} To initiate the analysis of data for group 1, click on \fn{Analyze Group 1}.
+{\bf b} Access the graph template settings by clicking on \fn{GRAPH TEMPLATE}, opening a new interface.
+{\bf c} Inside this interface, you'll find the \fn{Graph MEASURES} panel. Click the 'C' button to reveal a table displaying all compatible measures. Select the \fn{Community Structure} measure and then right-click at the top of the table. In the right-click menu, choose “Data Selected Measures.”
+{\bf d} The measure window that opens allows you to define the rules or parameters for the \fn{Community Structure} measure.
+{\bf e} After configuring the measure rules, return to the \fn{Analyze Ensemble} interface to set the thresholds.
+}
+
+	
+\fig{figure}{fig:05}{
 	\includegraphics{fig05.jpg}
-	}
-	{Check and set the rules and/or parameters of a measure before its calculation (TBD for CON BUT)}
-	{
-	{\bf a} Click on \fn{Data Selected Measures} after selecting the measure.
-	{\bf b} This new window shows the array of values for the measure, in this case \fn{Core-Periphery}.
- 	{\bf c} This new window shows the array of values for the measure, in this case \fn{Core-Periphery}.
-  	{\bf d} After the calculation of the measure, a new table appears with the measure results, and the rule is blocked (in blue).
-	}
+}{Analyzing the Group Data}{
+	{\bf a} Locate the \fn{Group-averaged MEASURES} panel and click the 'C' button to 		reveal a table of compatible measures. Choose the \fn{Community Structure} measure, right-click it, and select “Calculate Selected Measures” to perform the calculation.
+	{\bf b} To visualize the results, right-click at the top of the table and choose \fn{Plot Selected Measures on Brain} in the Analyze Ensemble interface. This action opens a brain surface with the \fn{Community Structure} plotted.
+	{\bf c} Explore different views by clicking the “Axial dorsal” button in the brain surface toolbar.
+	{\bf d} Adjust visualization settings by clicking on the “Settings Panel Figure” button in the same toolbar.
+	{\bf e} Customize and save plot visualizations within the settings menu.
+}
  
- After setting these parameters, you can calculate some graph measures (\Figref{fig:05}). First of all, you need to ensure the measure is using the rule or parameter that you wish (not all measures have rules or parameters). As an example, we can select the measure \fn{Core-Periphery} and right-click on the top of the table (\Figref{fig:05}a), in the \fn{GRAPH $\&$ MEASURES} panel, and press “Data Selected Measures”. 
- Next, the measure window will appear, allowing you to choose the rules or parameters (\Figref{fig:05}b). In this instance, the rule applies to the calculation of triangles in directed graphs. However, since we're working with an undirected graph, we will keep the default option (\Figref{fig:05}b).
-After the rule is set, you can calculate the measure by pressing the "C" (\Figref{fig:05}c) and the results will appear in a new table within the same panel (\Figref{fig:05}d). Also notice that after the measure is calculated, the rule is blocked (\Figref{fig:05}d).
- 
- If you want to visualize the results, select the measure and press \fn{Plot Selected Measures on Brain} in the analysis' GUI (\Figref{fig:06}a). In settings (\Figref{fig:06}b), you can change the visualization of the plots and save them. 
- 
+After configuring these parameters, you can proceed to calculate specific graph measures (\Figref{fig:05}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:05}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the 'C' button, you will see a table displaying all compatible measures.
+
+As an illustrative example, let's select the \fn{Community Structure} measure, for which we previously set the rule to \fn{louvain}. Right-click at the top of the table and choose “Calculate Selected Measures.” Once the calculation is complete, you will notice a \fn{C} appearing in front of the \fn{Community Structure}, indicating that this measure has been calculated.
+
+If you wish to visualize the results, right-click at the top of the table and select \fn{Plot Selected Measures on Brain} within the Analyze Ensemble interface (\Figref{fig:05}b). This action will open a brain surface with the \fn{Community Structure} plotted on it.
+
+Within the toolbar of the brain surface interface, you can explore various views.
+ For instance, by clicking on the “Axial dorsal” button (\Figref{fig:05}c), you will get the same view as shown in \Figref{fig:05}. Additionally, clicking on the “Settings Panel Figure” button (\Figref{fig:05}d) in the same toolbar allows you to adjust different visualization settings.
+
+For instance, within the settings menu (\Figref{fig:05}e), you can disable the size effect, resulting in the same fashion as shown in \Figref{fig:05}d. Within the settings menu, you can customize the visualization of the plots and save them for reference.
+
+Finally, when you right-click in the \fn{Group-averaged MEASURES} panel, you'll find other options to explore, such as \fn{Plot Selected Measures} (which generates a line plot for the selected measure at different thresholds and/or different nodes) and \fn{Data Selected Measure} (providing the calculated values of the selected measures). These options can also be saved for your convenience.
+
+\section{Step 4: Analyzing the Data of Group 2}
+
+After completing the analysis of Group 1, you can seamlessly transition to analyzing the second group by simply clicking on \fn{Analyze Group 2} (\Figref{fig:06}a). You will notice that in the newly opened window (\Figref{fig:06}b-d), the parameters you previously selected for Group 1, both for graph and measure settings, are already preselected and fixed for this analysis. 
+
+If you happen to realize that some of the options you previously selected for Group 1 are not the ones you'd like for this analysis, you have the flexibility to reset the analysis parameters for Group 1. You can achieve this by clicking on the checkbox marked with a 'C' (\Figref{fig:06}e) next to the settings of Group 1.
+
+
 	\fig{figure}
 	{fig:06}
 	{
 	\includegraphics{fig06.jpg}
 	}
-	{Visualize a connectivity measure in a brain plot (Figure TBD for CON BUT)}
+	{Parameters blocked in Analysis of Group 2}
 	{
-	{\bf a} Click on \fn{Plot Selected Measures on Brain} in the analysis' GUI.
-        {\bf b} In the new window, press the button settings to obtain further visualization options of the results.
-        {\bf c} Press on Measures to show the values of \fn{Core-Periphery}. The size of the spheres and the color are proportional to the measure's value.   
+	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
+	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property, such as the {\bf d} \fn{THRESHOLDS}, are blocked since they are intended to be the same as the ones set in the analysis of group 1. You have the flexibility to reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf e}.
 	}
  
- Finally, when you do right click, in the \fn{GRAPH $\&$ MEASURES} panel, there are other options you can explore such as \fn{Plot Graph Plot} (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
-  
-\section{Step 4: Analysing the Data of Group 2}
+\section{Step 5: Comparing Groups}
 
-After the analysis of Group 1, you can proceed with the analysis of the second group by clicking on \fn{Analyze Group 2} (\Figref{fig:07}a). You will notice that, in the new window that is shown (\Figref{fig:07}b-d), the parameters you selected for group 1 are already selected and fixed for this analysis (both graph and measure parameters). If you realize that some of the options you previously selected are not the ones you would like, you can reset the analysis parameters of Group 1 by clicking on the C checkbox next to it.
+After thoroughly exploring the network measures for each group, it's time to move on to their statistical comparison. To initiate this process, click on \fn{Compare Groups} (\Figref{fig:07}a).
+
+In the new window, you have several options to configure the analysis according to your research needs. First, you can choose whether to enable a progress bar and verbose functions while the analysis is running. This can help you monitor the progress of the analysis. You can also specify how many permutations you want to use to assess differences between groups (\Figref{fig:07}b).
+
+If your groups are not independent and represent the same subjects at different points in time, you can select the longitudinal comparison option. This option will permute the values within each subject, considering their temporal relationship (\Figref{fig:07}b).
+
+For computational efficiency during this tutorial, we've set the number of permutations to 10. However, for your research analysis, we recommend using a more extensive number, such as 1000 or 10000 permutations, to ensure robust results.
+
+Next, you can select the specific graph measures you wish to compare between the groups. To do this, click on “C” in the \fn{COMPARISONS} section (\Figref{fig:07}c). Once you've chosen all the measures of interest, right-click and select \fn{Calculate Selected Comparisons}.
+
+If you've enabled the progress bar and verbose functions, two additional windows will appear to display the progress of the comparison calculations. Finally, there's an option in this GUI to save intermediate results during the permutations, which can be helpful for further analysis.
 
 	\fig{figure}
 	{fig:07}
 	{
 	\includegraphics{fig07.jpg}
 	}
-	{Parameters blocked in Analysis of Group 2 (Figure TBD for CON BUT)}
-	{
-	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
-	{\bf b} In this new window, you can see that the graph properties such as \fn{Correlation rule} and \fn{Negative weights rule} are blocked since they are the same as the ones set in the analysis of group 1. If you select a measure, in this case \fn{Clustering}, and press \fn{Data Selected Measures} {\bf c}, you can observe that the measure's rules and parameters are also set in case you calculated the measures in analysis 1, and if not, you can set the rule by pressing at the "@" {\bf d}.
-	}
- 
-\section{Step 5: Comparing Groups}
-
-Once you have explored the network measures for each group, you can proceed with their statistical comparison. To do this, you should click on \fn{Compare Groups} (\Figref{fig:08}a) and in the new window select if you want a waiting bar and verbose functions ON while you wait for the analysis to finish, as well as how many permutations you want to use to assess differences between groups ({\Figref{fig:08}b}), and if the groups are not independent but represent the same subjects in two different points in time, you can select the longitudinal comparison option, which will permute the values within each subject ({\Figref{fig:08}b}). We set the permutations to 10 for computational time purposes ({\Figref{fig:08}c}), but for your research analysis we recommend using 1000 or 10000 permutations. Finally, you can select the graph measures you want to compare between groups and once you have selected all the measures you are interested in, you should right click and select \fn{Calculate all selected comparisons} ({\Figref{fig:08}d}). If you turn ON the wait bar and verbose functions, two window bars will open that show you at which point in time the comparison calculation is. There is one last option on this GUI that you can select to save intermediate results during the permutations.
-	\fig{figure}
-	{fig:08}
-	{
-	\includegraphics{fig08.jpg}
-	}
-	{Compare the Group Data (Figure TBD for CON BUT)}
+	{Compare the Group Data}
 	{
 	{\bf a} Click on \fn{Compare Groups} in the pipeline's GUI.
 	{\bf b} In this new window, you can select what to turn ON/OFF the wait bar and verbose functions, you can change the number of permutations, and whether to perform a longitudinal group comparison. We set the number of permutations to 10 for this tutorial {\bf c}. Finally, you can calculate the comparison of some graph measures between groups {\bf d}.
 	}
  
-To obtain the results from the measure/s comparison, select the measures in the \fn{GRAPH $\&$ MEASURES} panel and press \fn{Data Selected Comparisons}({\Figref{fig:09}a}), and a new window will open ({\Figref{fig:09}b}) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
+To obtain the results from the measure's comparison, select the measures in the \fn{COMPARISONS} panel and press \fn{Data Selected Comparisons}({\Figref{fig:07}d}), and a new window will open where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
  	\fig{figure}
-	{fig:09}
+	{fig:08}
 	{
-	\includegraphics{fig09.jpg}
+	\includegraphics{fig08.jpg}
 	}
-	{Visualize the comparison results in a table (Figure TBD for CON BUT)}
+	{Visualize the comparison results in a brain surface}
 	{
-	{\bf a} Click on \fn{Data Selected Comparisons} in the Comparisons panel.
-	{\bf b} In this new window, you can see the results from the comparison: the difference values between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
+	{\bf a} Click on \fn{Brain Graph Selected Comparison} in the Comparisons panel.
+	{\bf b} In this new window, you'll see the comparison results, with positive values in red and negative values in blue on the brain surface.
+{\bf c} You can customize and save plot visualizations within the settings menu.
 	}
+
+If you wish to visualize the results, simply right-click at the top of the table and select \fn{Brain Graph Selected Comparison} within the Compare Ensemble interface (\Figref{fig:08}a). This action will open a brain surface displaying the difference between these two groups in terms of the \fn{Degree} data.
+
+Within the brain surface interface's toolbar, you have various options to explore. For example, by clicking on the “Axial dorsal” button (\Figref{fig:08}b), you can access the same view depicted in \Figref{fig:08}. Additionally, the “Settings Panel Figure” button in the same toolbar allows you to fine-tune different visualization settings.
+
+For further customization, within the settings menu (\Figref{fig:08}c), you can activate the \fn{FDR CORRECTION} feature to control for multiple comparisons and reduce the likelihood of obtaining false positive results when assessing the significance of connectivity measures across multiple brain regions. You can also utilize the settings menu to personalize the visualization of your plots and save them for future reference.
+
 \end{document}
