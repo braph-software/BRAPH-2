@@ -9,11 +9,18 @@ For *structural data*, we will upload a file containing the structural values fo
 > **Figure 1. GUI for a group of subjects with structural data.**
 > Full graphical user interface to upload a group of subjects with structural data in BRAPH 2.0.
 
+## Generation of Example Data
+
+If you don't have the `Example data ST XLS` folder inside `structural`, then you can generate it by running the commands referenced below.
+
+```matlab
+test_ImporterGroupSubjectST_XLS  % generates the example structural XLS data folder.
+test_ImporterGroupSubjectST_TXT  % generates the example structural TXT data folder.
+```
+
 ## Open the GUI
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
-
-You can also open the GUI and upload the brain structural data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the data as shown in Figure 2a-f.
 
 > ![Upload the data of a group of subjects](fig02.jpg)
 > 
@@ -24,21 +31,19 @@ You can also open the GUI and upload the brain structural data using the command
 >	To upload the test structural data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `structural`, **e** `Example data ST XLS`, and **f** select the structural values of one group `ST_Group_1_XLS`.
 
-Commands to open the GUI and upload the brain structural data:
-
-```matlab
-gr = Group('SUB_CLASS', 'SubjectST');  % creates a new object Group to use structural values for assessing connectivity i.e., SubjectST.
-
-gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
-gui.get('DRAW');  % draws the GUI.
-gui.get('SHOW');  % shows the GUI.
-```
-Moreover, if you don't have the `Example data ST XLS` folder inside `structural`, then you can generate it by running the commands referenced below.
-
-```matlab
-test_ImporterGroupSubjectST_XLS  % generates the example structural XLS data folder.
-test_ImporterGroupSubjectST_TXT  % generates the example structural TXT data folder.
-```
+> **GUI launch from command line**
+>
+> You can also open the GUI and upload the brain structural data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In this case, you can upload the data as shown in Figure 2a-f.
+> 
+> Commands to open the GUI and upload the brain structural data:
+> 
+> ```matlab
+> gr = Group('SUB_CLASS', 'SubjectST');  % creates a new object Group to use structural values for assessing connectivity i.e., SubjectST.
+> 
+> gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
+> gui.get('DRAW');  % draws the GUI.
+> gui.get('SHOW');  % shows the GUI.
+> ```
 
 ## Visualize the Group Data
 
