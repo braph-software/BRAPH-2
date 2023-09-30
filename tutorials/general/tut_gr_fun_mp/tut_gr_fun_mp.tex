@@ -15,7 +15,7 @@ For \emph{functional multiplex data}, we will upload a folder containing the fun
 
 \tableofcontents
 
-\fig{figure*}
+\fig{figure}
 	{fig:01}
 	{\includegraphics{fig01.jpg}}
 	{GUI for a group of subjects with functional multiplex data}
@@ -24,11 +24,24 @@ For \emph{functional multiplex data}, we will upload a folder containing the fun
 	}
 
 \clearpage
+\section{Generation of Example Data}
+
+If you don't have the \fn{Example data FUN\_MP XLS} folder inside \fn{functional multiplex}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
+
+\begin{lstlisting}[
+	label=cd:exampledata,
+	caption={
+		{\bf Code to generate the example data folder.}
+		This code can be used in the MatLab command line to generate the \fn{Example data FUN$\_$MP XLS} folder to the \fn{functional multiplex} pipeline folder.
+	}
+]
+test_ImporterGroupSubjectFUN_MP_XLS ¥\circled{1}\circlednote{1}{generates the example functional multiplex XLS data folder.}¥
+test_ImporterGroupSubjectFUN_MP_TXT ¥\circled{2}\circlednote{2}{generates the example functional multiplex TXT data folder.}¥
+\end{lstlisting}
+
 \section{Open the GUI}
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (\Figref{fig:02}c-f) after clicking ``Load Group''. 
-
-You can also open the GUI and upload the brain functional multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In that case, you can upload the data as shown in \Figref{fig:02}a-f.
 
 \fig{figure}
 	{fig:02}
@@ -44,6 +57,10 @@ You can also open the GUI and upload the brain functional multiplex data using t
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{functional multiplex},  {\bf e} \fn{Example data FUN\_MP XLS}, and {\bf f} select the folder with functional multiplex values of one group \fn{FUN\_MP\_Group\_1\_XLS}.
 	}
 
+\begin{tcolorbox}[
+	title=GUI launch from command line
+]
+You can also open the GUI and upload the brain functional multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In this case, you can upload the data as shown in \Figref{fig:02}a-f.
 %
 \begin{lstlisting}[
 	label=cd:launch,
@@ -52,26 +69,13 @@ You can also open the GUI and upload the brain functional multiplex data using t
 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with functional multiplex data without having to open a pipeline.
 	}
 ]
-gr = Group('SUB_CLASS', 'SubjectFUN_MP'); ¥\circled{1}\circlednote{1}{creates a new object \code{Group} to use functional multiplex values for assessing connectivity i.e., \code{SubjectFUN$\_$MP}.}¥
+gr = Group('SUB_CLASS', 'SubjectFUN_MP');
 
-gui = GUIElement('PE', gr); ¥\circled{2}\circlednote{2}{creates a GUI to upload the group data.}¥
-gui.get('DRAW')¥\circled{3}\circlednote{3}{draws the GUI.}¥
-gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
+gui = GUIElement('PE', gr);
+gui.get('DRAW')
+gui.get('SHOW')
 \end{lstlisting}
-
-Moreover, if you don't have the \fn{Example data FUN\_MP XLS} folder inside \fn{functional multiplex}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
-
-\begin{lstlisting}[
-	label=cd:exampledata,
-	caption={
-		{\bf Code to generate the example data folder.}
-		This code can be used in the MatLab command line to generate the \fn{Example data FUN$\_$MP XLS} folder to the \fn{functional multiplex} pipeline folder.
-	}
-]
-test_ImporterGroupSubjectFUN_MP_XLS ¥\circled{1}\circlednote{1}{generates the example functional multiplex XLS data folder.}¥
-test_ImporterGroupSubjectFUN_MP_TXT ¥\circled{2}\circlednote{2}{generates the example functional multiplex TXT data folder.}¥
-\end{lstlisting}
-
+\end{tcolorbox}
 
 \section{Visualize the Group Data}
 

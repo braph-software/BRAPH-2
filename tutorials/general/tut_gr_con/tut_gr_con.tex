@@ -25,11 +25,24 @@ This Tutorial explains how to prepare and work with this kind of data.
 	}
 
 \clearpage
+\section{Generation of Example Data}
+
+If you don't have the \fn{Example data CON XLS} folder inside \fn{connectivity}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
+%
+\begin{lstlisting}[
+	label=cd:exampledata,
+	caption={
+		{\bf Code to generate the example data folder.}
+		This code can be used in the MatLab command line to generate the \fn{Example data CON XLS} folder to the \fn{connectivity} pipeline folder.
+	}
+]
+test_ImporterGroupSubjectCON_XLS ¥\circled{1}\circlednote{1}{generates the example connectivity XLS data folder.}¥
+test_ImporterGroupSubjectCON_TXT ¥\circled{2}\circlednote{2}{generates the example connectivity TXT data folder.}¥
+\end{lstlisting}
+
 \section{Open the GUI}
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (\Figref{fig:02}c-f) after clicking ``Load Group''. 
-
-You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In that case, you can upload the data as shown in \Figref{fig:02}a-f.
 
 \fig{figure}
 	{fig:02}
@@ -45,6 +58,10 @@ You can also open the GUI and upload the brain connectivity data using the comma
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{connectivity},  {\bf e} \fn{Example data CON XLS}, and {\bf f} select the folder containing the connectivity matrices of one group \fn{CON\_Group\_1\_XLS}.
 	}
 
+\begin{tcolorbox}[
+	title=GUI launch from command line
+]
+You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In this case, you can upload the data as shown in \Figref{fig:02}a-f.
 %
 \begin{lstlisting}[
 	label=cd:launch,
@@ -53,25 +70,13 @@ You can also open the GUI and upload the brain connectivity data using the comma
 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with connectivity data without having to open a pipeline.
 	}
 ]
-gr = Group('SUB_CLASS', 'SubjectCON'); ¥\circled{1}\circlednote{1}{creates a new object \code{Group} with subjects with connectivity data, i.e., \code{SubjectCON}.}¥
+gr = Group('SUB_CLASS', 'SubjectCON');
 
-gui = GUIElement('PE', gr); ¥\circled{2}\circlednote{2}{creates a GUI to upload the group data.}¥
-gui.get('DRAW')¥\circled{3}\circlednote{3}{draws the GUI.}¥
-gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
+gui = GUIElement('PE', gr);
+gui.get('DRAW')
+gui.get('SHOW')
 \end{lstlisting}
-
-Moreover, if you don't have the \fn{Example data CON XLS} folder inside \fn{connectivity}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
-
-\begin{lstlisting}[
-	label=cd:exampledata,
-	caption={
-		{\bf Code to generate the example data folder.}
-		This code can be used in the MatLab command line to generate the \fn{Example data CON XLS} folder to the \fn{connectivity} pipeline folder.
-	}
-]
-test_ImporterGroupSubjectCON_XLS ¥\circled{1}\circlednote{1}{generates the example connectivity XLS data folder.}¥
-test_ImporterGroupSubjectCON_TXT ¥\circled{2}\circlednote{2}{generates the example connectivity TXT data folder.}¥
-\end{lstlisting}
+\end{tcolorbox}
 
 \section{Visualize the Group Data}
 
