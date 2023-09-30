@@ -320,34 +320,48 @@ pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % 
 pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
 
 pipelines = {};
-for p = 1:1:length(pipelines_dir_list)
-    pipeline_dir = fullfile(pipelines_dir_list(p).folder, pipelines_dir_list(p).name);
+for dir_number = 1:1:length(pipelines_dir_list)
+    pipeline_dir = fullfile(pipelines_dir_list(dir_number).folder, pipelines_dir_list(dir_number).name);
     
     files = dir(pipeline_dir); % retrieves all files inside source directory
     for j = 1:1:length(files) % selects all files *.braph2
         file_name = fullfile(files(j).folder, files(j).name);
         if length(file_name) > 7 && strcmp(file_name(end-6:end), '.braph2')
-            index = length(pipelines) + 1;
+            p = length(pipelines) + 1;
             
-            pipelines{index}.index = index; %#ok<*AGROW>
-            pipelines{index}.file_name = file_name;
-            pipelines{index}.id = fileparts(file_name);
+            pipelines{p}.index = p; %#ok<*AGROW>
+            pipelines{p}.file_name = file_name;
+            pipelines{p}.id = fileparts(file_name);
            
             txt = fileread(file_name);
-            pipelines{index}.txt = txt;
+            pipelines{p}.txt = txt;
             
             header_marks = regexp(txt, '%%', 'all');
             header_txt = txt(header_marks(1):header_marks(2));
             header_newlines = regexp(header_txt, newline(), 'all');
             
-            pipelines{index}.label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
+            pipelines{p}.label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
             
             notes = strtrim(header_txt(header_newlines(1) + 4:end - 1));
             notes_newlines = regexp(notes, newline(), 'all');
             for k = length(notes_newlines):-1:1
                 notes = [notes(1:notes_newlines(k)) strtrim(notes(notes_newlines(k) + 2:end))]; % eliminates % but not newline
             end
-            pipelines{index}.notes = notes;
+
+if p == 5
+    a = 1+1;
+end
+            pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
+            notes = regexprep(notes, 'PDF: /tutorials/pipelines/\w+/\w+\.pdf', '');
+% notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
+            
+            pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
+            notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
+% notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
+
+% notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
+
+            pipelines{p}.notes = strtrim(notes);
         end
     end
 end
@@ -363,13 +377,13 @@ update_listbox()
         keywords(cellfun('isempty', keywords)) = [];
 
         present_all_keywords = true(length(pipeline_labels), 1);
-        for p = 1:1:length(pipelines)
-            pipeline_txt = lower(pipelines{p}.txt);
+        for dir_number = 1:1:length(pipelines)
+            pipeline_txt = lower(pipelines{dir_number}.txt);
             for k = 1:1:length(keywords)
                 keyword = lower(keywords{k});
                 
                 if isempty(regexp(pipeline_txt, keyword, 'once'))
-                    present_all_keywords(p) = false;
+                    present_all_keywords(dir_number) = false;
                     break
                 end
             end
