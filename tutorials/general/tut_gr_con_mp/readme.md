@@ -9,11 +9,18 @@ For *connectivity multiplex data*, a connectivity matrix per subject is already 
 > **Figure 1. GUI for a group of subjects with connectivity multiplex data.**
 > Full graphical user interface to upload a group of subjects with connectivity multiplex data in BRAPH 2.0.
 
+## Generation of Example Data
+
+If you don't have the `Example data CON_MP XLS` folder inside `connectivity multiplex`, then you can generate it by running the commands referenced below.
+
+```matlab
+test_ImporterGroupSubjectCON_MP_XLS  % generates the example connectivity multiplex XLS data folder.
+test_ImporterGroupSubjectCON_MP_TXT  % generates the example connectivity multiplex TXT data folder.
+```
+
 ## Open the GUI
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
-
-You can also open the GUI and upload the brain connectivity multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In that case, you can upload the data as shown in Figure 2a-f.
 
 > ![Upload the data of a group of subjects](fig02.jpg)
 > 
@@ -24,22 +31,19 @@ You can also open the GUI and upload the brain connectivity multiplex data using
 > To upload the test connectivity multiplex data:
 > **c-f** navigate to the BRAPH 2.0 folder `pipelines`, **d** `connectivity multiplex`, **e** `Example data CON_MP XLS`, and **f** select the folder containing the connectivity matrices of one group `CON_MP_Group_1_XLS`.
 
-Commands to open the GUI and upload the brain connectivity multiplex data:
-
-```matlab
-gr = Group('SUB_CLASS', 'SubjectCON_MP');  % creates a new object Group with subjects with connectivity multiplex data, i.e., SubjectCON_MP.
-
-gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
-gui.get('DRAW');  % draws the GUI.
-gui.get('SHOW');  % shows the GUI.
-```
-
-Moreover, if you don't have the `Example data CON_MP XLS` folder inside `connectivity multiplex`, then you can generate it by running the commands referenced below.
-
-```matlab
-test_ImporterGroupSubjectCON_MP_XLS  % generates the example connectivity multiplex XLS data folder.
-test_ImporterGroupSubjectCON_MP_TXT  % generates the example connectivity multiplex TXT data folder.
-```
+> **GUI launch from command line**
+>
+> You can also open the GUI and upload the brain connectivity multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands referenced below. In this case, you can upload the data as shown in Figure 2a-f.
+> 
+> Commands to open the GUI and upload the brain connectivity multiplex data:
+> 
+> ```matlab
+> gr = Group('SUB_CLASS', 'SubjectCON_MP');  % creates a new object Group with subjects with connectivity multiplex data, i.e., SubjectCON_MP.
+> 
+> gui = GUIElement('PE', gr);  % creates a GUI to upload the group data.
+> gui.get('DRAW');  % draws the GUI.
+> gui.get('SHOW');  % shows the GUI.
+> ```
 
 ## Visualize the Group Data
 
