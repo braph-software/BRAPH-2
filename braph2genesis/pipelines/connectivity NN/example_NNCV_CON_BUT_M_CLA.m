@@ -37,7 +37,7 @@ im_gr3 = ImporterGroupSubjectCON_XLS( ...
 gr3 = im_gr3.get('GR');
 
 %% Analysis CON BUT
-thresholds = 0.1:.1:.2;
+thresholds = .7;
 graph_temp = MultigraphBUT('THRESHOLDS', thresholds);
 a_BUT1 = AnalyzeEnsemble_CON_BUT( ...
     'GRAPH_TEMPLATE', graph_temp, ...
@@ -128,7 +128,7 @@ d3 = NNDataset( ...
 
 %% Create a classifier cross-validation
 nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance

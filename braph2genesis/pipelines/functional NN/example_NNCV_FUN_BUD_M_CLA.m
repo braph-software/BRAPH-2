@@ -37,7 +37,7 @@ im_gr3 = ImporterGroupSubjectFUN_XLS( ...
 gr3 = im_gr3.get('GR');
 
 %% Analysis FUN BUD
-densities = 50:50:100;
+densities = 5;
 graph_temp = MultigraphBUD('DENSITIES', densities);
 a_BUD1 = AnalyzeEnsemble_FUN_BUD( ...
     'GRAPH_TEMPLATE', graph_temp, ...
@@ -128,7 +128,7 @@ d3 = NNDataset( ...
 
 %% Create a classifier cross-validation
 nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance
