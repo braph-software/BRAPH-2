@@ -15,14 +15,14 @@
 	\includegraphics{fig01_02.jpg}
 	\includegraphics{fig01_03.jpg}
 	}
-	{Figure examples.}
+	{Figure examples}
 	{
 	Examples of displays of \code{Community Structure} with functional data binarized at fixed densities obtained using BRAPH 2.
 	}
 
 \begin{abstract}
 \noindent
-This tutorial shows how to perform a network analysis using \emph{functional data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}), where a functional file containing activation signals for each brain region is available for each subject, as in functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects at fixed densities, which correspond, for example, to fixed percentages of strongest connections to be included in the analysis (e.g. fixing the analysis at 10\% allows assessing the 10\% strongest connections in the network).  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
+This tutorial shows how to perform a network analysis using \emph{functional data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_fun}{Group of Subjects with Functional Data}), where a functional file containing activation signals for each brain region is available for each subject, as in functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects at fixed densities, which correspond, for example, to fixed percentages of strongest connections to be included in the analysis (e.g. fixing the analysis at 10\% allows assessing the 10\% strongest connections in the network).  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
 \end{abstract}
 
 \tableofcontents
@@ -44,7 +44,7 @@ test_ImporterGroupSubjectFUN_XLS
 
 \section{Open the GUI}
 
-The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Functional Comparison BUD}, as shown in \Figref{fig:02}
+The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Functional Comparison BUD}, as shown in \Figref{fig:02}.
 
 \fig{figure}
 	{fig:02}
@@ -104,14 +104,14 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 	{
 	Steps to upload the brain atlas:
 	{\bf a} Click on \fn{Load Atlas} from the pipeline GUI.
-	{\bf b} Navigate to the BRAPH~2.0 folder \fn{atlases} and select one of the atlas files, in this example the \fn{atlas.xlsx}. 
+	{\bf b} Navigate to the BRAPH~2.0 folder \fn{atlases} and select one of the atlas files, in this example the \fn{aal90_atlas.xlsx}. 
 	{\bf c} You can visualize the brain atlas by pressing \fn{Plot Brain Atlas}. 
 	}
  
 \clearpage
 \section{Step 2: Load the Functional Group Data}
 
-After you loaded the brain atlas, you can upload the \emph{functional data} for each group as shown in \Figref{fig:05}. A new interface will be shown containing the data for the group you just selected. You can open each subject’s functional matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Functional Data}).
+After you loaded the brain atlas, you can upload the \emph{functional data} for each group as shown in \Figref{fig:05}. A new interface will be shown containing the data for the group you just selected. You can open each subject’s functional matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_fun}{Group of Subjects with Functional Data}).
 
 \fig{figure*}
 	{fig:05}
@@ -129,7 +129,7 @@ After you loaded the brain atlas, you can upload the \emph{functional data} for 
 \clearpage
 \section{Step 3: Analyzing the Data of Group 1}
 
-Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on \fn{Analyze Group 1} (\Figref{fig:05}a). 
+Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on \fn{Analyze Group 1} (\Figref{fig:06}a). 
 This will open a new interface called \fn{Analyze Ensemble}, which allows you to calculate and visualize graph measures for the first group. 
 Before these network measures are calculated, it is important to ensure the following things: 
 \begin{enumerate}
@@ -142,12 +142,12 @@ Importantly, the parameters you select at the beginning will remain fixed for th
 
 \subsection{Setting Analysis Parameters}
 
-In the \fn{Analyze Ensemble} interface (\Figref{fig:06}), you can configure the analysis parameters.
+In the \fn{Analyze Ensemble} interface (\Figref{fig:06}b), you can configure the analysis parameters.
 In the \code{densities} section, you can define the densities by entering values like \code{5:1:20} (you can also use any other valid mathematical expression, such as \code{5 10 15 20 15}, or \code{5 10:2:20}).
-In the \code{repetition time} section, you can include the repetition time with which your images were acquired, for example to analyze the data only within a fraction of the repetition time.
-In the \code{min frequency} and \code{max frequency}, you can edit the values to analyze your data within a certain frequency bans such as in the case of EEG or MEG data.
+In the \code{REPETITION TIME [s]} section, you can include the repetition time with which your images were acquired, for example to analyze the data only within a fraction of the repetition time.
+In the \code{MIN FREQUENCY [Hz]} and \code{MAX FREQUENCY [Hz]}, you can edit the values to analyze your data within a certain frequency band such as in the case of EEG or MEG data.
 In the \code{correlation rule}, you can select the type of correlation you want to run using the brain activation signals between brain areas. 
-Finally, in the \code{negative weights rule}, you should decide if you want to set the negative weights to zero, their absolute values or exclude them from the analysis since graph theory measures are not defined for negative weights.
+Finally, in the \code{NEGATIVE WEIGHTS RULE}, you should decide if you want to set the negative weights to zero, their absolute values or exclude them from the analysis since graph theory measures are not defined for negative weights.
 
 \fig{figure}
 	{fig:06}
@@ -163,7 +163,7 @@ Finally, in the \code{negative weights rule}, you should decide if you want to s
 \subsection{Setting Graph Parameters}
 
 To configure the graph parameters, you click on the section \code{GRAPH \& MEASURE PARAMETERS} (\Figref{fig:07}). This will open a new interface for graph template settings. 
-In brain functional analysis, density values dictate the required connection strength between different brain regions for them to be considered “connected” in a binary undirected graph. 
+In brain functional analysis, density values dictate the required connection density between different brain regions for them to be considered “connected” in a binary undirected graph. 
 Adjusting these densities allows you to explore varying levels of brain functional connectivity, providing insights into how regions communicate at different density settings.
 
 \fig{figure*}
@@ -182,7 +182,7 @@ The available parameters are:
 	\item \code{SYMMETRIZATION RULE} determines how to symmetrize the matrix.
 	\item \code{NEGATIVE EDGE RULE} determines how to remove the negative edges.
 	\item \code{NORMALIZATION RULE} determines how to normalize the weights between 0 and 1.
-	\item \code{densities} determines the densities. \emph{This cannot be set here. It is set in the previous step.}
+	\item \code{DENSITIES [0\% ... 100\%]} determines the densities. \emph{This cannot be set here. It is set in the previous step.}
 	\item \code{RANDOMIZE ON/OFF} determines whether to randomize the graph. \emph{Typically not used}
 	\item \code{RANDOM SEED} is the randomization seed. \emph{Typically not used}
 	\item \code{RANDOMIZATION ATTEMPTS PER EDGE} is the attempts to rewire each edge. \emph{Typically not used}
@@ -210,7 +210,7 @@ This will open the measure window, allowing you to specify the rules or paramete
 \clearpage
 \subsection{Calculate Measures}
  
-After configuring the parameters, you can proceed to calculate specific graph measures (\Figref{fig:06}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:06}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the 'C' button, you will see a table displaying all measures.
+After configuring the parameters, you can proceed to calculate specific graph measures (\Figref{fig:09}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:09}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the 'C' button, you will see a table displaying all measures.
 
 \fig{figure*}
 	{fig:09}
