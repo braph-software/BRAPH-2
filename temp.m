@@ -1376,7 +1376,7 @@ close all; delete(findall(0, 'type', 'figure')); clear all
 %     eval(['test_' el_class])
 % end
 
-% el_class_list = {'MeasureEnsemblePF_NU' 'MeasureEnsemblePF_GU' 'MeasureEnsemblePF_BU' 'MeasureEnsemblePF_GS'} % {'AnalyzeEnsemblePP_MeDict' 'CompareEnsemblePP_CpDict'} % {'AnalyzeEnsemble' 'MeasureEnsemble' 'CompareEnsemble' 'ComparisonEnsemble' 'MeasureEnsemblePF' 'MeasureEnsemblePF_BS' 'MeasureEnsemblePF_NB' 'MeasureEnsemblePF_GB' 'MeasureEnsemblePF_BB' 'MeasureEnsemblePF_NS' 'MeasureEnsemblePF_NU' 'MeasureEnsemblePF_GU' 'MeasureEnsemblePF_BU' 'MeasureEnsemblePF_GS'}
+% el_class_list = {'ComparisonEnsembleBrainPF_BB' 'ComparisonEnsembleBrainPF_BS' 'ComparisonEnsembleBrainPF_BU' 'ComparisonEnsembleBrainPF_GB' 'ComparisonEnsembleBrainPF_GS' 'ComparisonEnsembleBrainPF_GU' 'ComparisonEnsembleBrainPF_NB'} % {'MeasureEnsemblePF_NU' 'MeasureEnsemblePF_GU' 'MeasureEnsemblePF_BU' 'MeasureEnsemblePF_GS'} % {'AnalyzeEnsemblePP_MeDict' 'CompareEnsemblePP_CpDict' 'AnalyzeEnsemble' 'MeasureEnsemble' 'CompareEnsemble' 'ComparisonEnsemble' 'MeasureEnsemblePF' 'MeasureEnsemblePF_BS' 'MeasureEnsemblePF_NB' 'MeasureEnsemblePF_GB' 'MeasureEnsemblePF_BB' 'MeasureEnsemblePF_NS' 'MeasureEnsemblePF_NU' 'MeasureEnsemblePF_GU' 'MeasureEnsemblePF_BU' 'MeasureEnsemblePF_GS'}
 % for i = 1:1:length(el_class_list)
 %     el_class = el_class_list{i};
 %     el_path = '/src/analysis';

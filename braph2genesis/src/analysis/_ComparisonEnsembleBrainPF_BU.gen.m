@@ -65,7 +65,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonEnsembleBrainPF_BU.PARENT ComparisonEnsembleBrainPF_BU.H ComparisonEnsembleBrainPF_BU.ST_POSITION ComparisonEnsembleBrainPF_BU.ST_AXIS ComparisonEnsembleBrainPF_BU.ST_AREA ComparisonEnsembleBrainPF_BU.ST_LINE_DIFF ComparisonEnsembleBrainPF_BU.ST_LINE_CIL ComparisonEnsembleBrainPF_BU.ST_LINE_CIU ComparisonEnsembleBrainPF_BU.ST_TITLE ComparisonEnsembleBrainPF_BU.ST_XLABEL ComparisonEnsembleBrainPF_BU.ST_YLABEL] 
+[ComparisonEnsembleBrainPF_BU.PARENT ComparisonEnsembleBrainPF_BU.H ComparisonEnsembleBrainPF_BU.ST_POSITION ComparisonEnsembleBrainPF_BU.ST_AXIS ComparisonEnsembleBrainPF_BU.ST_SURFACE ComparisonEnsembleBrainPF_BU.ST_AMBIENT] 
 
 %%% ¡warning_off!
 true
@@ -75,6 +75,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':ComparisonEnsembleBrainPF_BU'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 5)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':ComparisonEnsembleBrainPF_BU'])

@@ -39,7 +39,7 @@ co_gr = CombineGroups_CON_FUN_MP( ...
 gr = co_gr.get('GR_CON_FUN_MP');
 
 %% Analysis CON FUN MP BUT
-thresholds = .7:.1:.9;
+thresholds = .7;
 a_BUT = AnalyzeEnsemble_CON_FUN_MP_BUT( ...
     'GR', gr, ...
     'THRESHOLDS', thresholds ...
@@ -72,7 +72,7 @@ d = NNDataset( ...
 
 %% Create a regressor cross-validation
 nne_template = NNRegressorMLP_Evaluator('P', 2);
-nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNRegressorMLP_CrossValidation('D', {d}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance

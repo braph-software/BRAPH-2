@@ -84,7 +84,7 @@ co_gr3 = CombineGroups_CON_FUN_MP( ...
 gr3 = co_gr3.get('GR_CON_FUN_MP');
 
 %% Analysis CON BUD
-densities = 5:5:15;
+densities = 5;
 
 a_BUD1 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
     'GR', gr1, ...
@@ -177,7 +177,7 @@ d3 = NNDataset( ...
 
 %% Create a classifier cross-validation
 nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 5, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv.get('TRAIN');
 
 %% Evaluate the performance

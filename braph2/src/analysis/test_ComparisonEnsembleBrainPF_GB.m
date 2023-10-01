@@ -500,7 +500,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsembleBrainPF_GB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_AREA ComparisonEnsembleBrainPF_GB.ST_LINE_DIFF ComparisonEnsembleBrainPF_GB.ST_LINE_CIL ComparisonEnsembleBrainPF_GB.ST_LINE_CIU ComparisonEnsembleBrainPF_GB.ST_TITLE ComparisonEnsembleBrainPF_GB.ST_XLABEL ComparisonEnsembleBrainPF_GB.ST_YLABEL])
+		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_SURFACE ComparisonEnsembleBrainPF_GB.ST_AMBIENT])
 			continue
 		end
 	 
@@ -653,7 +653,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsembleBrainPF_GB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_AREA ComparisonEnsembleBrainPF_GB.ST_LINE_DIFF ComparisonEnsembleBrainPF_GB.ST_LINE_CIL ComparisonEnsembleBrainPF_GB.ST_LINE_CIU ComparisonEnsembleBrainPF_GB.ST_TITLE ComparisonEnsembleBrainPF_GB.ST_XLABEL ComparisonEnsembleBrainPF_GB.ST_YLABEL])
+		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_SURFACE ComparisonEnsembleBrainPF_GB.ST_AMBIENT])
 			continue
 		end
 	 
@@ -756,7 +756,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:ComparisonEnsembleBrainPF_GB.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_AREA ComparisonEnsembleBrainPF_GB.ST_LINE_DIFF ComparisonEnsembleBrainPF_GB.ST_LINE_CIL ComparisonEnsembleBrainPF_GB.ST_LINE_CIU ComparisonEnsembleBrainPF_GB.ST_TITLE ComparisonEnsembleBrainPF_GB.ST_XLABEL ComparisonEnsembleBrainPF_GB.ST_YLABEL])
+			if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_SURFACE ComparisonEnsembleBrainPF_GB.ST_AMBIENT])
 				continue
 			end
 	 
@@ -1605,7 +1605,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsembleBrainPF_GB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_AREA ComparisonEnsembleBrainPF_GB.ST_LINE_DIFF ComparisonEnsembleBrainPF_GB.ST_LINE_CIL ComparisonEnsembleBrainPF_GB.ST_LINE_CIU ComparisonEnsembleBrainPF_GB.ST_TITLE ComparisonEnsembleBrainPF_GB.ST_XLABEL ComparisonEnsembleBrainPF_GB.ST_YLABEL])
+		if any(prop == [ComparisonEnsembleBrainPF_GB.PARENT ComparisonEnsembleBrainPF_GB.H ComparisonEnsembleBrainPF_GB.ST_POSITION ComparisonEnsembleBrainPF_GB.ST_AXIS ComparisonEnsembleBrainPF_GB.ST_SURFACE ComparisonEnsembleBrainPF_GB.ST_AMBIENT])
 			continue
 		end
 	 
@@ -1806,7 +1806,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	warning('off', [BRAPH2.STR ':ComparisonEnsembleBrainPF_GB'])
 	
 	warning('off', [BRAPH2.STR ':ComparisonEnsembleBrainPF_GB'])
-	assert(length(findall(0, 'type', 'figure')) == 1)
+	assert(length(findall(0, 'type', 'figure')) == 5)
 	delete(findall(0, 'type', 'figure'))
 	warning('on', [BRAPH2.STR ':ComparisonEnsembleBrainPF_GB'])
 	
