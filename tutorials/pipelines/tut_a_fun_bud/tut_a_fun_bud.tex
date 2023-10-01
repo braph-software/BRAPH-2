@@ -15,10 +15,12 @@ This tutorial shows how to perform a network analysis using \emph{functional dat
 
 \tableofcontents
 
-\fig{figure}
+\fig{figure*}
 	{fig:01}
 	{
-	%\includegraphics{fig01.jpg}
+	\includegraphics{fig01_01.jpg}
+	\includegraphics{fig01_02.jpg}
+	\includegraphics{fig01_03.jpg}
 	}
 	{GUI for working with the pipeline to compare two groups of subjects with \emph{functional data} at fixed densities}
 	{
@@ -155,7 +157,7 @@ Finally, in the \code{negative weights rule}, you should decide if you want to s
 	{Configuring analysis parameters}
 	{
 	{\bf a} To initiate the analysis of data for group 1, click on \fn{Analyze Group 1}.
-	{\bf b} You define the densities in the\code{densities} section.
+	{\bf b} You define the densities in the \code{densities} section.
 	}
 
 \subsection{Setting Graph Parameters}
@@ -178,7 +180,7 @@ Adjusting these densities allows you to explore varying levels of brain function
 The available parameters are:
 \begin{itemize}
 	\item \code{SYMMETRIZATION RULE} determines how to symmetrize the matrix.
-	\item \code{NEGATIVE EDGE RULE}determines how to remove the negative edges.
+	\item \code{NEGATIVE EDGE RULE} determines how to remove the negative edges.
 	\item \code{NORMALIZATION RULE} determines how to normalize the weights between 0 and 1.
 	\item \code{densities} determines the densities. \emph{This cannot be set here. It is set in the previous step.}
 	\item \code{RANDOMIZE ON/OFF} determines whether to randomize the graph. \emph{Typically not used}
