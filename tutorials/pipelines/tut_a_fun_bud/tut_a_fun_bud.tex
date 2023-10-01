@@ -8,22 +8,24 @@
 
 \maketitle
 
+\fig{marginfigure}
+	{fig:01}
+	{
+	\includegraphics{fig01_01.jpg}
+	\includegraphics{fig01_02.jpg}
+	\includegraphics{fig01_03.jpg}
+	}
+	{Figure examples.}
+	{
+	Examples of displays of \code{Community Structure} with functional data binarized at fixed densities obtained using BRAPH 2.
+	}
+
 \begin{abstract}
 \noindent
 This tutorial shows how to perform a network analysis using \emph{functional data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}), where a functional file containing activation signals for each brain region is available for each subject, as in functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects at fixed densities, which correspond, for example, to fixed percentages of strongest connections to be included in the analysis (e.g. fixing the analysis at 10\% allows assessing the 10\% strongest connections in the network).  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
 \end{abstract}
 
 \tableofcontents
-
-\fig{figure}
-	{fig:01}
-	{
-	%\includegraphics{fig01.jpg}
-	}
-	{GUI for working with the pipeline to compare two groups of subjects with \emph{functional data} at fixed densities}
-	{
-	Example of the graphical user interface to perform group comparisons with \emph{functional data} binarized at fixed densities.
-	}
 
 \clearpage
 \section{Generate Example Data}
@@ -155,7 +157,7 @@ Finally, in the \code{negative weights rule}, you should decide if you want to s
 	{Configuring analysis parameters}
 	{
 	{\bf a} To initiate the analysis of data for group 1, click on \fn{Analyze Group 1}.
-	{\bf b} You define the densities in the\code{densities} section.
+	{\bf b} You define the densities in the \code{densities} section.
 	}
 
 \subsection{Setting Graph Parameters}
@@ -178,7 +180,7 @@ Adjusting these densities allows you to explore varying levels of brain function
 The available parameters are:
 \begin{itemize}
 	\item \code{SYMMETRIZATION RULE} determines how to symmetrize the matrix.
-	\item \code{NEGATIVE EDGE RULE}determines how to remove the negative edges.
+	\item \code{NEGATIVE EDGE RULE} determines how to remove the negative edges.
 	\item \code{NORMALIZATION RULE} determines how to normalize the weights between 0 and 1.
 	\item \code{densities} determines the densities. \emph{This cannot be set here. It is set in the previous step.}
 	\item \code{RANDOMIZE ON/OFF} determines whether to randomize the graph. \emph{Typically not used}
@@ -282,7 +284,7 @@ If you have enabled the progress bar and verbose functions, two additional windo
  
 To obtain the results from the comparisons, select the measures in the \code{COMPARISONS} panel and press \code{Data Selected Comparisons}({\Figref{fig:11}d}), and a new window will open where we can check the value of the difference between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
- \fig{figure*}
+ \fig{figure}
 	{fig:12}
 	{
 	\includegraphics{fig12a.jpg}
