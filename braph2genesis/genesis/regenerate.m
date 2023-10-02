@@ -9,7 +9,6 @@ function regenerate(el_path, el_class_list, varargin)
 % REGENERATE(EL_PATH, EL_CLASS_LIST, PROPERTY, VALUE, ...) determines how
 %  to regenerate the elements, its layout, and its unit test.
 %  Admissible properties are:
-%       Clear             - clears the workspace (default: true)
 %       CreateElement     - creates the element (default: true)
 %       DoubleCompilation - double compilation of the element for optimization (default: true)
 %       CreateLayout      - creates the layout (default: true)
@@ -19,22 +18,19 @@ function regenerate(el_path, el_class_list, varargin)
 % Some errors can be thrown, if some elements are still in use and/or
 %  memory. In these cases, clear the workspace by executing explicitly
 %
-%  <a href="matlab:close all; delete(findall(0, 'type', 'figure')); clear all">close all; delete(findall(0, 'type', 'figure')); clear all</a>
+%  <a href="matlab:close all; delete(findall(0, 'type', 'figure')); clear all; disp('cleared')">close all; delete(findall(0, 'type', 'figure')); clear all</a>
+%
+% Importantly, whenever a new element is added or the props of an element
+%  are altered (e.g., renamed, moved, added), it is necessary to recompile
+%  BRAPH2 with <a href="matlab:braph2genesis">braph2genesis</a>.
 %
 % See also create_Element, create_layout, create_test_Element, hard_code_constants.
 
-clear_flag = get_from_varargin(true, 'Clear', varargin);
 create_element_flag = get_from_varargin(true, 'CreateElement', varargin);
 double_compilation_flag = get_from_varargin(true, 'DoubleCompilation', varargin);
 create_layout_flag = get_from_varargin(true, 'CreateLayout', varargin);
 create_test_flag = get_from_varargin(true, 'CreateTest', varargin);
 test_flag = get_from_varargin(true, 'UnitTest', varargin);
-
-if clear_flag
-    close all
-    delete(findall(0, 'type', 'figure'))
-    clear all
-end
 
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
