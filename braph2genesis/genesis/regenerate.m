@@ -32,9 +32,12 @@ create_layout_flag = get_from_varargin(true, 'CreateLayout', varargin);
 create_test_flag = get_from_varargin(true, 'CreateTest', varargin);
 test_flag = get_from_varargin(true, 'UnitTest', varargin);
 
-% % % Add try-catch to manage cases where the elements are in use. Ask the reader to clear the workspace
-
 for i = 1:1:length(el_class_list)
+
+    % % % Add try-catch to manage errors:
+    % % % - cases where the elements do not exist. Communicate error to the user
+    % % % - cases where the elements are in use. Ask the user to clear the workspace
+    
     el_class = el_class_list{i};
     if create_element_flag
         delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
