@@ -32,6 +32,8 @@ create_layout_flag = get_from_varargin(true, 'CreateLayout', varargin);
 create_test_flag = get_from_varargin(true, 'CreateTest', varargin);
 test_flag = get_from_varargin(true, 'UnitTest', varargin);
 
+% % % Add try-catch to manage cases where the elements are in use. Ask the reader to clear the workspace
+
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     if create_element_flag
