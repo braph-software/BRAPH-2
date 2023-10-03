@@ -1,12 +1,8 @@
 # BRAPH 2.0 — Contributors
-
-![Giovanni Volpe](figures/giovanni_volpe.png)
-<br>
-Dr. Giovanni Volpe
-
-![Joanna Pereira](figures/joana_pereira.png)
-<br>
-Dr. Joanna B. Pereira
+|   | Second Header |
+| ------------- | ------------- |
+| ![Giovanni Volpe](figures/giovanni_volpe.png)  | Dr. Giovanni Volpe <br> giovanni.volpe@physics.gu.se  |
+| ![Joanna Pereira](figures/joana_pereira.png)  | Dr. Joanna B. Pereira <br> joana.pereira@ki.se |
 
 ![Emiliano Gomez](figures/emiliano_gomez.png)
 <br>
