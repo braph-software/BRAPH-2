@@ -544,7 +544,7 @@ classdef OverlappingS < Strength
 				case 11 % OverlappingS.PARAMETRICITY
 					prop_default = 2;
 				case 12 % OverlappingS.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 				otherwise
 					prop_default = getPropDefault@Strength(prop);
 			end
