@@ -1399,7 +1399,8 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
         indices = {indices1; indices2; indices3; indices4; indices5};
         gr1_ts1 = cell(1, N_subjects_group1); % layer 1
         gr1_ts2 = cell(1, N_subjects_group1); % layer 2
-        gr_name1 = 'CON_FUN_MP_Group1_XLS';
+        gr_name1_1 = 'CON_Group1_XLS';
+        gr_name1_2 = 'FUN_Group1_XLS';
         vois1 = [
             {{'Subject ID'} {'Age'} {'Sex'}}
             {{} {} cell2str(sex_options)}
@@ -1453,25 +1454,25 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
         end
         % Create the tables - functional layer
         %tables_gr11 = cell(size(gr1_ts1));
-        mkdir([data_dir filesep() 'Functional' filesep() gr_name1]);
+        mkdir([data_dir filesep() 'Functional' filesep() gr_name1_2]);
         for i_tab = 1:1:N_subjects_group1
             T_gr11 = array2table(gr1_ts1{i_tab});
             %tables_gr11{i_tab} = T_gr11;
-            file_name = [data_dir filesep() 'Functional' filesep() gr_name1 filesep() sub_id{i_tab} '.xlsx'];
+            file_name = [data_dir filesep() 'Functional' filesep() gr_name1_2 filesep() sub_id{i_tab} '.xlsx'];
             writetable(T_gr11, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
         end
         
         % Create the tables - connectivity layer
         %tables_gr12 = cell(size(gr1_ts2));
-        mkdir([data_dir filesep() 'Connectivity' filesep() gr_name1]);
+        mkdir([data_dir filesep() 'Connectivity' filesep() gr_name1_1]);
         for i_tab = 1:1:N_subjects_group1
             T_gr12 = array2table(gr1_ts2{i_tab});
             %tables_gr12{i_tab} = T_gr12;
-            file_name = [data_dir filesep() 'Connectivity' filesep() gr_name1 filesep() sub_id{i_tab} '.xlsx'];
+            file_name = [data_dir filesep() 'Connectivity' filesep() gr_name1_1 filesep() sub_id{i_tab} '.xlsx'];
             writetable(T_gr12, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
         end
-        writetable(table(vois1), [data_dir filesep() 'Connectivity' filesep() gr_name1 '.vois.xlsx'], 'WriteVariableNames', false)
-        writetable(table(vois1), [data_dir filesep() 'Functional' filesep() gr_name1 '.vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois1), [data_dir filesep() 'Connectivity' filesep() gr_name1_1 '.vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois1), [data_dir filesep() 'Functional' filesep() gr_name1_2 '.vois.xlsx'], 'WriteVariableNames', false)
         
         % Group 2
         % initialize values for the WS model
@@ -1483,7 +1484,8 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
         indices = {indices1; indices2};
         gr2_ts1 = cell(1, N_subjects_group2); % layer 1
         gr2_ts2 = cell(1, N_subjects_group2); % layer 2
-        gr2_name = 'CON_FUN_MP_Group2_XLS';
+        gr2_name1 = 'CON_Group2_XLS';
+        gr2_name2 = 'FUN_Group2_XLS';
         vois2 = [
             {{'Subject ID'} {'Age'} {'Sex'}}
             {{} {} cell2str(sex_options)}
@@ -1544,25 +1546,25 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
         end
         % Create the tables - functional layer
         %tables_gr11 = cell(size(gr2_ts1));
-        mkdir([data_dir filesep() 'Functional' filesep() gr2_name]);
+        mkdir([data_dir filesep() 'Functional' filesep() gr2_name2]);
         for i_tab = N_subjects_group1+1:1:N_subjects_group1 + N_subjects_group2
             T_gr21 = array2table(gr2_ts1{i_tab});
             %tables_gr21{i_tab} = T_gr21;
-            file_name = [data_dir filesep() 'Functional' filesep() gr2_name filesep() sub_id{i_tab} '.xlsx'];
+            file_name = [data_dir filesep() 'Functional' filesep() gr2_name2 filesep() sub_id{i_tab} '.xlsx'];
             writetable(T_gr21, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
         end
         
         % Create the tables - connectivity layer
         %tables_gr12 = cell(size(gr2_ts2));
-        mkdir([data_dir filesep() 'Connectivity' filesep() gr2_name]);
+        mkdir([data_dir filesep() 'Connectivity' filesep() gr2_name1]);
         for i_tab = N_subjects_group1+1:1:N_subjects_group1 + N_subjects_group2
             T_gr22 = array2table(gr2_ts2{i_tab});
             %tables_gr22{i_tab} = T_gr22;
-            file_name = [data_dir filesep() 'Connectivity' filesep() gr2_name filesep() sub_id{i_tab} '.xlsx'];
+            file_name = [data_dir filesep() 'Connectivity' filesep() gr2_name1 filesep() sub_id{i_tab} '.xlsx'];
             writetable(T_gr22, file_name, 'WriteRowNames', false, 'WriteVariableNames', false)
         end
-        writetable(table(vois2), [data_dir filesep() 'Connectivity' filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
-        writetable(table(vois2), [data_dir filesep() 'Functional' filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois2), [data_dir filesep() 'Connectivity' filesep() gr2_name1 '.vois.xlsx'], 'WriteVariableNames', false)
+        writetable(table(vois2), [data_dir filesep() 'Functional' filesep() gr2_name2 '.vois.xlsx'], 'WriteVariableNames', false)
         
         % reset RNG
         rng(rng_settings_)
@@ -1571,18 +1573,18 @@ end
 
 %% Test 13: Basic functioning
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-    im_ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx']);
+    im_ba = ImporterBrainAtlasXLS('FILE', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx']);
     ba = im_ba.get('BA');
     
-    im_gr_CON = ImporterGroupSubjectCON_MP_XLS( ...
-        'DIRECTORY', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'Connectivity' filesep 'CON_FUN_MP_Group_1_XLS'], ...
+    im_gr_CON = ImporterGroupSubjectCON_XLS( ...
+        'DIRECTORY', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'Connectivity' filesep 'CON_Group1_XLS'], ...
         'BA', ba, ...
         'WAITBAR', true ...
         );
     gr_CON = im_gr_CON.get('GR');
     
-    im_gr_FUN = ImporterGroupSubjectFUN_TXT( ...
-        'DIRECTORY', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'Functional' filesep 'CON_FUN_MP_Group_1_XLS'], ...
+    im_gr_FUN = ImporterGroupSubjectFUN_XLS( ...
+        'DIRECTORY', [fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'Functional' filesep 'FUN_Group1_XLS'], ...
         'BA', ba, ...
         'WAITBAR', true ...
         );
