@@ -92,7 +92,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps: 
 	{
 	Steps to upload the brain atlas:
 	{\bf a} Click on \fn{Load Atlas} from the pipeline GUI.
-	{\bf b} Navigate to the BRAPH~2.0 folder \fn{pipelines\_structural} and select the atlas file \fn{atlas.xlsx} that would be used in this example. You can also plot the brain atlas by pressing \fn{Plot Brain Atlas}. 
+	{\bf b} Navigate to the \fn{./braph2/pipelines/structural/Example data ST XLS} and select the atlas file \fn{atlas.xlsx} that would be used in this example. You can also plot the brain atlas by pressing \fn{Plot Brain Atlas}. 
 	}
  
 \section{Step 2: Load the Structural Group Data}
@@ -111,11 +111,25 @@ the subject, right click, and select “Open selection” (for more information 
 	{\bf b} Data for group 1 is uploaded. {\bf c} Data for group 2 is uploaded.
 	}
 
-\section{Step 3: Analysing the Data of Group 1}
+\section{Step 3: Analyzing the Data of Group 1}
  
-After you have loaded the data for both groups, you can analyze the data of your first group by clicking on \fn{Analyze Group 1} (\Figref{fig:05}a-b). A new interface will be shown that allows you to pre-calculate network measures for each group and explore them. First of all, you can specify the parameters for constructing the graph from the structural group data (\Figref{fig:05}c): you can select the statistical test to calculate correlations in structural values between pairs of brain regions (\Figref{fig:05}d), and you can decide how you want to analyze the negative weights from the correlation (\Figref{fig:05}e). 
 
-Importantly, the parameters you select for this analysis (graph and measures parameters) will be fixed for the analysis of the second group and for the group comparisons.
+Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on \fn{Analyze Group 1} (\Figref{fig:05}a-b). 
+This will open a new interface called \fn{Analyze Ensemble}, which allows you to calculate and visualize graph measures for the first group. 
+Before these network measures are calculated, it is important to ensure the following things: 
+\begin{enumerate}
+	\item The analysis parameters are set correctly.
+	\item The graph parameters are set correctly.
+	\item The measures are configured with the parameters you desire (note that not all measures have parameters).
+\end{enumerate}
+
+Importantly, the parameters you select at the beginning will remain fixed for the rest of pipeline (including the analysis of the second group and the comparison between groups). We will now guide you through the process of preparing these parameters for both measures and graphs. It is important to keep in mind that the default parameters should work well for most cases.
+
+\subsection{Setting Analysis Parameters}
+
+
+First of all, you can specify the parameters for constructing the graph from the structural group data (\Figref{fig:05}c).In the \code{CORRELATION RULE} section, you can select the statistical test to calculate correlations in structural values between pairs of brain regions (\Figref{fig:05}d).
+In the \code{NEGATIVE WEIGHTS RULE} you can decide how you want to analyze the negative weights from the correlation (\Figref{fig:05}e). 
 
 	\fig{figure}
 	{fig:05}
@@ -128,21 +142,31 @@ Importantly, the parameters you select for this analysis (graph and measures par
         {\bf b} After clicking on \fn{Analyze Group 1} in the pipeline's GUI, a new window will appear where first you can select the parameters for the graph construction {\bf c}. In this pipeline, you can select the statistical test to be used for the correlations {\bf d}, and what you want to do with the negative correlation weights {\bf e}.
 	}
 
-	\fig{figure}
-	{fig:06}
-	{
-	\includegraphics{fig06.jpg}
-	}
-	{Check and set the rules and/or parameters of a measure before its calculation}
-	{
-	{\bf a} Click on \fn{Data Selected Measures} after selecting the measure.
-	{\bf b} This new window shows the array of values for the measure, in this case \fn{Clustering}.
- 	{\bf c} This new window shows the array of values for the measure, in this case \fn{Clustering}.
-  	{\bf d} After the calculation of the measure, a new table appears with the measure results, and the rule is blocked (in blue).
-	}
  
+\subsection{Setting Measure Parameters}
+
  After setting these parameters, you can calculate some graph measures (\Figref{fig:06}). First of all, you need to ensure the measure is using the rule or parameter that you wish (not all measures have rules or parameters). As an example, we can select the measure \fn{Clustering} and right-click on the top of the table (\Figref{fig:06}a), in the \fn{GRAPH $\&$ MEASURES} panel, and press “Data Selected Measures”. 
- Next, the measure window will appear, allowing you to choose the rules or parameters (\Figref{fig:06}b). In this instance, the rule applies to the calculation of triangles in directed graphs. However, since we're working with an undirected graph, we will keep the default option (\Figref{fig:06}b).
+ Next, the measure window will appear, allowing you to choose the rules or parameters (\Figref{fig:06}b). 
+ 
+ The available parameters are:
+ \begin{itemize}
+ 	\item \code{Triangle rule for directed graphs} the rule applies to the calculation of triangles in directed graphs. However, since we're working with an undirected graph, we will keep the default option (\Figref{fig:06}b).
+ \end{itemize}
+ 
+\fig{figure}
+ {fig:06}
+ {
+ 	\includegraphics{fig06.jpg}
+ }
+ {Check and set the rules and/or parameters of a measure before its calculation}
+ {
+ 	{\bf a} Click on \fn{Data Selected Measures} after selecting the measure.
+ 	{\bf b} This new window shows the array of values for the measure, in this case \fn{Clustering}.
+ 	{\bf c} This new window shows the array of values for the measure, in this case \fn{Clustering}.
+ 	{\bf d} After the calculation of the measure, a new table appears with the measure results, and the rule is blocked (in blue).
+ }
+ 
+\subsection{Calculate Measures}
 After the rule is set, you can calculate the measure by pressing the "C" (\Figref{fig:06}c) and the results will appear in a new table within the same panel (\Figref{fig:06}d). Also notice that after the measure is calculated, the rule is blocked (\Figref{fig:06}d).
  
  If you want to visualize the results, select the measure and press \fn{Plot Selected Measures on Brain} in the analysis' GUI (\Figref{fig:07}a). In settings (\Figref{fig:07}b-c), you can change the visualization of the plots and save them. 
@@ -160,7 +184,7 @@ After the rule is set, you can calculate the measure by pressing the "C" (\Figre
  
  Finally, when you do right click, in the \fn{GRAPH $\&$ MEASURES} panel, there are other options you can explore such as \fn{Plot Graph Plot} (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
   
-\section{Step 4: Analysing the Data of Group 2}
+\section{Step 4: Analyzing the Data of Group 2}
 
 After the analysis of group 1, you can proceed with the analysis of the second group by clicking on \fn{Analyze Group 2} (\Figref{fig:08}a). You will notice that, in the new window that is shown (\Figref{fig:08}b-d), the parameters you selected for group 1 are already selected and fixed for this analysis (both graph and measure parameters). If you realize that some of the options you previously selected are not the ones you would like, you can reset the analysis parameters of group 1 by clicking on the C checkbox next to it.
 
