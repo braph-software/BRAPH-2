@@ -41,9 +41,15 @@ To install BRAPH 2.0, follow these steps:
 
 10. Explore the [BRAPH 2.0 Tutorials](tutorials).
 
-| Matlab Version        | Mac     | Windows  | Linux |
-| :------------- |:-------------:| :-----:| :-----: |
-| *R2022a*      | &check; | &check; | &check; |
+### Compatibility with MatLab Releases and Operative Systems
+A &check; indicates that we have unit tested the current release BRAPH 2.0 on the indicated Matlab release and operative system.
+
+| Matlab Version        | Mac     | Win    | Linux   |
+| :-------------------: | :-----: | :-----:| :-----: |
+| R2022a                | ?       | ?      | ?       |
+| R2022b                | ?       | ?      | ?       |
+| R2023a                | ?       | ?      | ?       |
+| R2023b                | ?       | ?      | ?       |
 
 ### Use Cases & Analysis Pipelines
 
