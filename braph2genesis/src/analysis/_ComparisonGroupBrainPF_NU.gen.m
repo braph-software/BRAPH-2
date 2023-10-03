@@ -248,6 +248,10 @@ if isempty(diffs)
     return
 end
 diff = diffs{layer};
+if isempty(diff)
+    value = {};
+    return
+end
 p2s = cp.get('P2');
 p2 = p2s{layer};
 
@@ -303,7 +307,7 @@ switch size_diff
         max_bound = 1.0;
         min_size_value = min(size_value);
         max_size_value = max(size_value);
-        if max_size_value == min_size_value
+        if isequal(max_size_value, min_size_value)
             normalized_size_value = ones(size(size_value)) * max_bound;
         else
             normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
@@ -371,6 +375,8 @@ LAYER (figure, scalar) is the layer number of the nodal measure.
 1
 %%%% ¡postset!
 pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupBrainPF_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
