@@ -41,6 +41,10 @@ To install BRAPH 2.0, follow these steps:
 
 10. Explore the [BRAPH 2.0 Tutorials](tutorials).
 
+| Matlab Version        | Mac     | Windows  | Linux |
+| :------------- |:-------------:| :-----:| :-----: |
+| *R2022a*      | true | true | true |
+
 ### Use Cases & Analysis Pipelines
 
 BRAPH 2.0 provides a range of analysis pipelines that can be used for various use cases in brain connectivity analysis. For detailed information about these analysis pipelines, including their functionalities and step-by-step instructions, refer to the [BRAPH 2.0 Pipeline Tutorials](tutorials/pipelines). Here are some possible use cases of BRAPH 2.0:
