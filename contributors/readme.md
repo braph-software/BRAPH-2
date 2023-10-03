@@ -2,8 +2,7 @@
 |   |  |
 | ------------- | ------------- |
 | ![Giovanni Volpe](figures/giovanni_volpe.png)  | Dr. Giovanni Volpe <br> Department of Physics, University of Gothenburg, <br> 412 96 Gothenburg, Sweden <br> giovanni.volpe@physics.gu.se  |
-| ![Joanna Pereira](figures/joana_pereira.png)  | Dr. Joanna B. Pereira <br> Department of Neurobiology, Care Sciences and Society <br>
-Karolinska Institutet, Stockholm, Sweden <br> joana.pereira@ki.se |
+| ![Joanna Pereira](figures/joana_pereira.png)  | Dr. Joanna B. Pereira <br> Department of Neurobiology, Care Sciences and Society <br> Karolinska Institutet, Stockholm, Sweden <br> joana.pereira@ki.se |
 
 
 ![Emiliano Gomez](figures/emiliano_gomez.png)
