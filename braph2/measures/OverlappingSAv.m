@@ -14,9 +14,9 @@ classdef OverlappingSAv < OverlappingS
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping Strength.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping Strength.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape 2.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope 2.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure 2.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping Strength.
@@ -128,9 +128,9 @@ classdef OverlappingSAv < OverlappingS
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Overlapping Strength.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Overlapping Strength.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape 2.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope 2.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure 2.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Overlapping Strength.
@@ -468,7 +468,7 @@ classdef OverlappingSAv < OverlappingS
 			prop = OverlappingSAv.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			overlappingsav_description_list = { 'ELCLASS (constant, string) is the class of the Average Overlapping Strength.'  'NAME (constant, string) is the name of the Average Overlapping Strength.'  'DESCRIPTION (constant, string) is the description of the Average Overlapping Strength.'  'TEMPLATE (parameter, item) is the template of the Average Overlapping Strength.'  'ID (data, string) is a few-letter code of the Average Overlapping Strength.'  'LABEL (metadata, string) is an extended label of the Average Overlapping Strength.'  'NOTES (metadata, string) are some specific notes about the Average Overlapping Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Overlapping Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			overlappingsav_description_list = { 'ELCLASS (constant, string) is the class of the Average Overlapping Strength.'  'NAME (constant, string) is the name of the Average Overlapping Strength.'  'DESCRIPTION (constant, string) is the description of the Average Overlapping Strength.'  'TEMPLATE (parameter, item) is the template of the Average Overlapping Strength.'  'ID (data, string) is a few-letter code of the Average Overlapping Strength.'  'LABEL (metadata, string) is an extended label of the Average Overlapping Strength.'  'NOTES (metadata, string) are some specific notes about the Average Overlapping Strength.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape 2.'  'SCOPE (constant, scalar) is the measure scope 2.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure 2.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Overlapping Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = overlappingsav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -494,7 +494,7 @@ classdef OverlappingSAv < OverlappingS
 			prop = OverlappingSAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 4 % OverlappingSAv.TEMPLATE
+				case OverlappingSAv.TEMPLATE % __OverlappingSAv.TEMPLATE__
 					prop_settings = 'OverlappingSAv';
 				otherwise
 					prop_settings = getPropSettings@OverlappingS(prop);
@@ -523,27 +523,27 @@ classdef OverlappingSAv < OverlappingS
 			prop = OverlappingSAv.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 1 % OverlappingSAv.ELCLASS
+				case OverlappingSAv.ELCLASS % __OverlappingSAv.ELCLASS__
 					prop_default = 'OverlappingSAv';
-				case 2 % OverlappingSAv.NAME
+				case OverlappingSAv.NAME % __OverlappingSAv.NAME__
 					prop_default = 'Average Overlapping Strength';
-				case 3 % OverlappingSAv.DESCRIPTION
+				case OverlappingSAv.DESCRIPTION % __OverlappingSAv.DESCRIPTION__
 					prop_default = 'The Average Overlapping Strength (OverlappingSAv) of a graph is the average of the sum of the strengths of a node in all layers.';
-				case 4 % OverlappingSAv.TEMPLATE
+				case OverlappingSAv.TEMPLATE % __OverlappingSAv.TEMPLATE__
 					prop_default = Format.getFormatDefault(8, OverlappingSAv.getPropSettings(prop));
-				case 5 % OverlappingSAv.ID
+				case OverlappingSAv.ID % __OverlappingSAv.ID__
 					prop_default = 'OverlappingSAv ID';
-				case 6 % OverlappingSAv.LABEL
+				case OverlappingSAv.LABEL % __OverlappingSAv.LABEL__
 					prop_default = 'Average Overlapping Strength label';
-				case 7 % OverlappingSAv.NOTES
+				case OverlappingSAv.NOTES % __OverlappingSAv.NOTES__
 					prop_default = 'Average Overlapping Strength notes';
-				case 9 % OverlappingSAv.SHAPE
+				case OverlappingSAv.SHAPE % __OverlappingSAv.SHAPE__
 					prop_default = 1;
-				case 10 % OverlappingSAv.SCOPE
+				case OverlappingSAv.SCOPE % __OverlappingSAv.SCOPE__
 					prop_default = 1;
-				case 11 % OverlappingSAv.PARAMETRICITY
+				case OverlappingSAv.PARAMETRICITY % __OverlappingSAv.PARAMETRICITY__
 					prop_default = 2;
-				case 12 % OverlappingSAv.COMPATIBLE_GRAPHS
+				case OverlappingSAv.COMPATIBLE_GRAPHS % __OverlappingSAv.COMPATIBLE_GRAPHS__
 					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 				otherwise
 					prop_default = getPropDefault@OverlappingS(prop);
@@ -609,7 +609,7 @@ classdef OverlappingSAv < OverlappingS
 			prop = OverlappingSAv.getPropProp(pointer);
 			
 			switch prop
-				case 4 % OverlappingSAv.TEMPLATE
+				case OverlappingSAv.TEMPLATE % __OverlappingSAv.TEMPLATE__
 					check = Format.checkFormat(8, value, OverlappingSAv.getPropSettings(prop));
 				otherwise
 					if prop <= 15
@@ -645,8 +645,8 @@ classdef OverlappingSAv < OverlappingS
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % OverlappingSAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case OverlappingSAv.M % __OverlappingSAv.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(OverlappingSAv.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					overlapping_strength = calculateValue@OverlappingS(m, prop);
