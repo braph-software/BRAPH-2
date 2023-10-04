@@ -312,22 +312,23 @@ h_menu_pip_clone = uimenu( ...
     function cb_tut_web(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-        disp('TUT WEB')
+disp('TUT WEB')
     end
     function cb_tut_pdf(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-        disp('TUT PDF')
+disp('TUT PDF')
     end
     function cb_pip_edit(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-        disp('PIP EDIT')
+disp('PIP EDIT')
+        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
     end
     function cb_pip_clone(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-        disp('PIP CLONE')
+disp('PIP CLONE')
     end
 
 h_label = uilabel( ...
@@ -423,9 +424,7 @@ end
                     pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
                     notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
         % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
-        
-        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
-        
+                
                     pipelines{p}.notes = strtrim(notes);
                 end
             end
