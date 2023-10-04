@@ -310,9 +310,7 @@ APARTITIONLABELS (query, stringlist) returns the partition labels for A.
 %%%% ¡calculate!
 apartitionlabels = g.get('PARTITIONLABELS');
 if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('DENSITIES') % ensures that it's not unecessarily calculated
-    densities = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
-    apartitionlabels = {};
-    apartitionlabels = densities;
+    apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
 end
 value = apartitionlabels;
 
