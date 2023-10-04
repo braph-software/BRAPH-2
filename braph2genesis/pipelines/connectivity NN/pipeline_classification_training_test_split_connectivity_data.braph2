@@ -1,11 +1,15 @@
 %% Pipeline Classification Training-Test Split Connectivity Data
 
 % This is the pipeline script to train a multi-layer perceptron classifier using connectivity data.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads data for three groups of subjects from the directories (e.g., CON_Group_1_XLS, CON_Group_2_XLS, and CON_Group_3_XLS) containing XLS files for each subject.
 % 3. It splits the dataset into training and test datasets for all of the groups, respectively.
 % 4. It trains the classifier using the training dataset.
 % 5. It evaluates the performance of the trained classifier using both the training and test dataset.
+
+% PDF: /tutorials/pipelines/tut_nn_clss_con_wu/tut_nn_clss_con_wu.pdf
+% README: /tutorials/pipelines/tut_nn_clss_con_wu/readme.md
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas
