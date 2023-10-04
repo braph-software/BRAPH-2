@@ -310,15 +310,23 @@ h_menu_pip_clone = uimenu( ...
     'MenuSelectedFcn', {@cb_pip_clone} ...
     );
     function cb_tut_web(~, ~)
+        pipeline = pipelines{get(h_listbox, 'Value')};
+
         disp('TUT WEB')
     end
     function cb_tut_pdf(~, ~)
+        pipeline = pipelines{get(h_listbox, 'Value')};
+
         disp('TUT PDF')
     end
     function cb_pip_edit(~, ~)
+        pipeline = pipelines{get(h_listbox, 'Value')};
+
         disp('PIP EDIT')
     end
     function cb_pip_clone(~, ~)
+        pipeline = pipelines{get(h_listbox, 'Value')};
+
         disp('PIP CLONE')
     end
 
