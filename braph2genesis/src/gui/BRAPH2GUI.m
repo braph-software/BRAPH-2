@@ -12,7 +12,7 @@ function f_out = BRAPH2GUI()
 f = uifigure( ...
     'Tag', 'F', ...
     'Visible', 'off', ...
-    'WindowStyle', 'modal', ...
+    'WindowStyle', 'normal', ...
     'Resize', 'off', ...
     'Icon', 'braph2icon_64px.png', ...
     'Name', BRAPH2.NAME, ...
@@ -322,8 +322,7 @@ disp('TUT PDF')
     function cb_pip_edit(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-disp('PIP EDIT')
-        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
+        edit(pipeline.file_name)
     end
     function cb_pip_clone(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
@@ -383,6 +382,8 @@ pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, 
 
 pipelines = get_pipelines();
     function pipelines = get_pipelines()
+        pipelines = {};
+
         for dir_number = 1:1:length(pipelines_dir_list)
         
             pipeline_dir = fullfile(pipelines_dir_list(dir_number).folder, pipelines_dir_list(dir_number).name);
@@ -425,6 +426,8 @@ end
                     notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
         % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
                 
+        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
+
                     pipelines{p}.notes = strtrim(notes);
                 end
             end
