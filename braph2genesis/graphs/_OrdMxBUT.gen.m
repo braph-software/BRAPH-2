@@ -286,7 +286,9 @@ APARTITIONLABELS (query, stringlist) returns the partition labels for A.
 %%%% ¡calculate!
 apartitionlabels = g.get('PARTITIONLABELS');
 if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('THRESHOLDS') % ensures that it's not unecessarily calculated
-    apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+    thresholds = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+    apartitionlabels = {};
+    apartitionlabels = thresholds;
 end
 value = apartitionlabels;
 
