@@ -1,11 +1,15 @@
 %% Pipeline Classification Training-Test Split Functional Data
 
 % This is the pipeline script to train a multi-layer perceptron classifier using FUN data.
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads data for three groups of subjects from the directories (e.g., FUN_Group_1_XLS, FUN_Group_2_XLS, and FUN_Group_3_XLS) FUNtaining XLS files for each subject.
 % 3. It splits the dataset into training and test datasets for all of the groups, respectively.
 % 4. It trains the classifier using the training dataset.
 % 5. It evaluates the performance of the trained classifier using both the training and test dataset.
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

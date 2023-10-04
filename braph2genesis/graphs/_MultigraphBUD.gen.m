@@ -23,15 +23,9 @@ Graph NAME
 
 %%% ¡prop!
 %%%% ¡id!
-MultigraphBUD.LAYERTICKS
+MultigraphBUD.PARTITIONLABELS
 %%%% ¡title!
-LAYERS ticks
-
-%%% ¡prop!
-%%%% ¡id!
-MultigraphBUD.LAYERLABELS
-%%%% ¡title!
-LAYERS labels
+PARTITION labels
 
 %%% ¡prop!
 %%%% ¡id!
@@ -120,7 +114,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the binary undirected multigraph with fixed densities.
 %%%% ¡default!
 'MultigraphBUD'
 
@@ -236,14 +230,23 @@ l = g.get('LAYERNUMBER');
 densities = g.get('DENSITIES');
 value = ones(1, length(densities)) * l / length(densities);
 
+% %%% ¡prop!
+% ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+% %%%% ¡calculate!
+% alayerlabels = g.get('LAYERLABELS');
+% if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
+%     alayerlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
+% end
+% value = alayerlabels;
+
 %%% ¡prop!
-ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
 %%%% ¡calculate!
-alayerlabels = g.get('LAYERLABELS');
-if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
-    alayerlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('DENSITIES') % ensures that it's not unecessarily calculated
+    apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
 end
-value = alayerlabels;
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
