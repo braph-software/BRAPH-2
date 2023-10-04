@@ -1,5 +1,5 @@
 %% ¡header!
-MultilayerBUD < MultilayerWU (g, multilayer binary undirected with fixed densities graph) is a multilayer binary undirected with fixed densities graph.
+MultilayerBUD < MultilayerWU (g, multilayer binary undirected with fixed densities graph) is a binary undirected multilayer graph with fixed densities.
 %%% ¡description!
 In a multilayer binary undirected with fixed densities (BUD) graph, the layers 
  are those of binary undirected (BU) multilayer graphs derived from the same 
@@ -37,6 +37,12 @@ LAYERS ticks
 MultilayerBUD.LAYERLABELS
 %%%% ¡title!
 LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerBUD.PARTITIONLABELS
+%%%% ¡title!
+PARTITION labels
 
 %%% ¡prop!
 %%%% ¡id!
@@ -131,27 +137,27 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the binary undirected multilayer graph with fixed densities.
 %%%% ¡default!
 'MultilayerBUD'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the binary undirected multilayer with fixed densities.
+NAME (constant, string) is the name of the binary undirected multilayer graph with fixed densities.
 %%%% ¡default!
 'MultilayerBUD'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the binary undirected multilayer with fixed densities.
+DESCRIPTION (constant, string) is the description of the binary undirected multilayer graph with fixed densities.
 %%%% ¡default!
 'In a multilayer binary undirected with fixed densities (BUD) graph, the layers are those of binary undirected (BU) multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities. Layerswithin the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the binary undirected multilayer with fixed densities.
+TEMPLATE (parameter, item) is the template of the binary undirected multilayer graph with fixed densities.
 %%%% ¡settings!
 'MultilayerBUD'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the binary undirected multilayer with fixed densities.
+ID (data, string) is a few-letter code for the binary undirected multilayer graph with fixed densities.
 %%%% ¡default!
 'MultilayerBUD ID'
 
@@ -161,7 +167,7 @@ LABEL (metadata, string) is an extended label of the binary undirected multilaye
 'MultilayerBUD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the binary undirected multilayer with fixed densities.
+NOTES (metadata, string) are some specific notes about the binary undirected multilayer graph with fixed densities.
 %%%% ¡default!
 'MultilayerBUD notes'
 
@@ -293,11 +299,22 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(densities)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, [blayerlabels{j} '|' densities{i}]];
+            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' densities{i}]];
         end
     end
 end
 value = alayerlabels;
+
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('DENSITIES') % ensures that it's not unecessarily calculated
+    densities = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
+    apartitionlabels = {};
+    apartitionlabels = densities;
+end
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
