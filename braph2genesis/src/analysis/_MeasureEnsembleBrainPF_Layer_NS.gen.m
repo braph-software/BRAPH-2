@@ -1,8 +1,8 @@
 %% ¡header!
-MeasureEnsembleBrainPF_Layer_NU < PanelProp (pr, panel property node) plots the panel to select a node.
+MeasureEnsembleBrainPF_Layer_NS < PanelProp (pr, panel property node) plots the panel to select a node.
 
 %%% ¡description!
-MeasureEnsembleBrainPF_Layer_NU plots the panel to select a node from a drop-down list.
+ComparisonGroupPF_NxPP_Node plots the panel to select a node from a drop-down list.
 It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
 
 %%% ¡seealso!
@@ -76,23 +76,13 @@ if value
     pf = pr.get('EL');
     NODE = pr.get('PROP');
     
-    g_dict = pf.get('CP').get('C').get('A1').get('G_DICT');
-    if g_dict.get('LENGTH')
-        g = g_dict.get('IT', 1);
-    else
-        g = pf.get('CP').get('C').get('A1').get('GRAPH_TEMPLATE');
-    end
-    keys = g.get('ALAYERLABELS');
-
-    if isempty(keys)
-        set(pr.get('DROPDOWN'), 'Enable', 'off')
-    else
-        set(pr.get('DROPDOWN'), ...
-            'Items', keys, ...
-            'ItemsData', [1:1:length(keys)], ...
-            'Value', pf.get(NODE) ...
-            )
-    end
+    keys = pf.get('CP').get('C').get('A1').get('G').get('DENSITIES');
+    
+    set(pr.get('DROPDOWN'), ...
+        'Items', keys, ...
+        'ItemsData', [1:1:length(keys)], ...
+        'Value', pf.get(NODE) ...
+        )
 
     prop_value = pf.getr(NODE);
     if pf.isLocked(NODE) || isa(prop_value, 'Callback')
