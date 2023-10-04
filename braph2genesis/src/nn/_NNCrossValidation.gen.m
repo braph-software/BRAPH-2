@@ -120,10 +120,55 @@ else
 end
 
 %%% ¡prop!
+D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% d = nncv.get('D_LIST_IT', index) returns the NNDataset at the specified 
+%  index from the D_LIST property.
+if isempty(varargin)
+    value = NNDataset();
+    return
+end
+index = varargin{1};
+
+d_list = nncv.get('D_LIST');
+
+value = d_list{index};
+
+%%% ¡prop!
 NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
 
 %%% ¡prop!
+NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% nn = nncv.get('NN_LIST_IT', index) returns the NNBase at the specified 
+%  index from the NN_LIST property.
+if isempty(varargin)
+    value = NNBase();
+    return
+end
+index = varargin{1};
+
+nn_list = nncv.get('NN_LIST');
+
+value = nn_list{index};
+
+%%% ¡prop!
 EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
+
+%%% ¡prop!
+EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% nne = nncv.get('EVALUATOR_LIST_IT', index) returns the NNEvaluator at the specified 
+%  index from the EVALUATOR_LIST property.
+if isempty(varargin)
+    value = NNEvaluator();
+    return
+end
+index = varargin{1};
+
+nne_list = nncv.get('EVALUATOR_LIST');
+
+value = nne_list{index};
 
 %%% ¡prop!
 EPOCHS (parameter, scalar) is the maximum number of epochs.

@@ -285,7 +285,19 @@ else
     value = {average_fi};
 end
 %%%% ¡gui!
-pr = NNClassifierMLP_CrossValidationPP_FI('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+input_datasets = nncv.get('D');
+input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
+dp_class = input_dataset.get('DP_CLASS');
+graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
+
+if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+    pr = NNClassifierMLP_CrossValidationPP_FI_Graph('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    pr = NNClassifierMLP_CrossValidationPP_FI_Measure('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+else % DATA input
+    pr = NNClassifierMLP_CrossValidationPP_FI_Data('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+end
 
 %% ¡tests!
 

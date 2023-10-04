@@ -1,8 +1,8 @@
 %% ¡header!
-NNClassifierMLP_CrossValidationPP_FI < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+NNClassifierMLP_CrossValidationPP_FI_Data < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
 
 %%% ¡description!
-A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI) plots the panel for a CELL prop with a table and two sliders.
+A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Data) plots the panel for a CELL prop with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -24,9 +24,9 @@ uitable, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the cell prop panel.
+ELCLASS (constant, string) is the % % % .
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI'
+'NNClassifierMLP_CrossValidationPP_FI_Data'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the cell prop panel.
@@ -36,27 +36,27 @@ NAME (constant, string) is the name of the cell prop panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cell prop panel.
 %%%% ¡default!
-'A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Data) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the cell prop panel.
 %%%% ¡settings!
-'NNClassifierMLP_CrossValidationPP_FI'
+'NNClassifierMLP_CrossValidationPP_FI_Data'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI ID'
+'NNClassifierMLP_CrossValidationPP_FI_Data ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI label'
+'NNClassifierMLP_CrossValidationPP_FI_Data label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI notes'
+'NNClassifierMLP_CrossValidationPP_FI_Data notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -96,53 +96,17 @@ if value
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    dp_class = el.get('D').get('IT', 1).get.get('DP_CLASS');
-    graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
-    measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
-
-    if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-        g = el.get('D').get('DP_DICT').get('IT', 1).get('G');
-        if g.get('LAYERNUMBER') == 1
-            pr.set('TABLE_HEIGHT', s(40), ...
-                'XSLIDERSHOW', false, ...
-                'YSLIDERSHOW', false, ...
-                'ROWNAME', g.getCallback('ANODELABELS'), ...
-                'COLUMNNAME', g.getCallback('ANODELABELS'), ...
-                varargin{:} ...
-                );
-        else % multilayer
-            pr.set('TABLE_HEIGHT', s(40), ...
-                'XYSLIDERLOCK', true, ...
-                'XSLIDERSHOW', false, ...
-                'YSLIDERSHOW', true, ...
-                'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-                'YSLIDERWIDTH', s(5), ...
-                'ROWNAME', g.getCallback('ANODELABELS'), ...
-                'COLUMNNAME', g.getCallback('ANODELABELS'), ...
-                varargin{:});
-        end
-    elseif any(strcmp(dp_class, masure_dp_classes)) % MEASURE input
-        % % % m_list = el.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
-        % % % pr = PanelPropCell('EL', g, 'PROP', MultigraphBUD.A, ...
-        % % %     'TABLE_HEIGHT', s(40), ...
-        % % %     'XYSLIDERLOCK', true, ...
-        % % %     'XSLIDERSHOW', false, ...
-        % % %     'YSLIDERSHOW', true, ...
-        % % %     'YSLIDERLABELS', m_list, ...
-        % % %     'YSLIDERWIDTH', s(5), ...
-        % % %     'ROWNAME', g.getCallback('ANODELABELS'), ...
-        % % %     'COLUMNNAME', g.getCallback('ANODELABELS'), ...
-        % % %     varargin{:});
-    else % DATA input
-        sub = el.get('D').get('DP_DICT').get('IT', 1).get('SUB');
-        pr.set('TABLE_HEIGHT', s(40), ...
-            'XSLIDERSHOW', true, ...
-            'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
-            'YSLIDERSHOW', false, ...
-            'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-            'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-            varargin{:});
-    end
+    input_datasets = el.get('D');
+    input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list 
+    
+    sub = input_dataset.get('DP_DICT').get('IT', 1).get('SUB');
+    pr.set('TABLE_HEIGHT', s(40), ...
+        'XSLIDERSHOW', true, ...
+        'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
+        'YSLIDERSHOW', false, ...
+        'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+        'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
+        varargin{:});
 
     rowname = pr.get('ROWNAME');
     if isempty(rowname)
@@ -181,8 +145,8 @@ end
 function value = set_sliders_and_get_value()
     value_vectored = el.get(prop);
     
-    cell_template = el.get('NN_LIST').get('IT', 1).get('INPUT', el.get('D_LIST').get('ÍT', 1))
-    value = pr.get('MAP_TO_CELL', value_vectored, cell_template);
+    cell_template = el.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('INPUT');
+    value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
 
     if isempty(value)
         set(pr.get('XSLIDER'), ...
@@ -223,11 +187,6 @@ function value = set_sliders_and_get_value()
         value = value{R + 1 - get(pr.get('YSLIDER'), 'Value'), get(pr.get('XSLIDER'), 'Value')};
     end
 end
-% % %     function pval = get_p_value()
-% % %         value = el.get('P2');
-% % %         [R, ~] = size(value);
-% % %         pval = value{R + 1 - get(pr.get('YSLIDER'), 'Value'), get(pr.get('XSLIDER'), 'Value')};
-% % %     end
 
 %%% ¡prop!
 REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
@@ -356,8 +315,8 @@ function cb_yslider(~, ~)
         prop = pr.get('PROP');
         value_vectored = el.get(prop);
 
-        cell_template = el.get('NN_LIST').get('IT', 1).get('INPUT', el.get('D_LIST').get('ÍT', 1))
-        value = pr.get('MAP_TO_CELL', value_vectored, cell_template);
+        cell_template = el.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('INPUT');
+        value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
 
         [R, C] = size(value);
         
@@ -519,10 +478,12 @@ for i = 1:numel(cell_template)
     end
 end
 
+value = mappedCellArray;
+
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNClassifierMLP_CrossValidationPP_FI.PARENT NNClassifierMLP_CrossValidationPP_FI.H NNClassifierMLP_CrossValidationPP_FI.LISTENER_CB NNClassifierMLP_CrossValidationPP_FI.HEIGHT NNClassifierMLP_CrossValidationPP_FI.XSLIDER NNClassifierMLP_CrossValidationPP_FI.YSLIDER NNClassifierMLP_CrossValidationPP_FI.TABLE NNClassifierMLP_CrossValidationPP_FI.CONTEXTMENU]
+[NNClassifierMLP_CrossValidationPP_FI_Data.PARENT NNClassifierMLP_CrossValidationPP_FI_Data.H NNClassifierMLP_CrossValidationPP_FI_Data.LISTENER_CB NNClassifierMLP_CrossValidationPP_FI_Data.HEIGHT NNClassifierMLP_CrossValidationPP_FI_Data.XSLIDER NNClassifierMLP_CrossValidationPP_FI_Data.YSLIDER NNClassifierMLP_CrossValidationPP_FI_Data.TABLE NNClassifierMLP_CrossValidationPP_FI_Data.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -531,7 +492,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI'])
+warning('off', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Data'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI'])
+warning('on', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Data'])
