@@ -310,12 +310,12 @@ h_menu_pip_clone = uimenu( ...
     'MenuSelectedFcn', {@cb_pip_clone} ...
     );
     function cb_tut_web(~, ~)
-        pipeline = pipelines{get(h_listbox, 'Value')};
+        pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
 
 disp('TUT WEB')
     end
     function cb_tut_pdf(~, ~)
-        pipeline = pipelines{get(h_listbox, 'Value')};
+        pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
 
 disp('TUT PDF')
     end
@@ -327,7 +327,27 @@ disp('TUT PDF')
     function cb_pip_clone(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
 
-disp('PIP CLONE')
+
+        pip = ImporterPipelineBRAPH2( ...
+            'FILE', pipeline.file_name, ...
+            'WAITBAR', true ...
+            ).get('PIP');
+        
+        [path, name, ext] = fileparts(pipeline.file_name);
+        ExporterPipelineBRAPH2( ...
+            'PIP', pip, ...
+            'FILE', [path filesep() 'cloned_' name ext], ...
+            'WAITBAR', true ...
+            ).get('SAVE')
+
+% % %         cloned_file_name = [path filesep() 'cloned_' name ext];
+% % %         copyfile(pipeline.file_name, cloned_file_name);
+% % % 
+% % %         edit(cloned_file_name)
+
+        % ensures that the nre pipeline is loaded
+        pipelines = get_pipelines();
+        update_listbox()
     end
 
 h_label = uilabel( ...
