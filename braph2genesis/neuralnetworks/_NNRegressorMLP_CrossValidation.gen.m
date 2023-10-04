@@ -93,6 +93,12 @@ Neural Network Evaluator List
 
 %%% ¡prop!
 %%%% ¡id!
+NNRegressorMLP_CrossValidation.PFSP
+%%%% ¡title!
+Scatter Plot
+
+%%% ¡prop!
+%%%% ¡id!
 NNRegressorMLP_CrossValidation.AV_CORR
 %%%% ¡title!
 Average of Correlation Coefficient
@@ -336,6 +342,20 @@ else
     average_fi = average_fi / numel(all_fi);
     value = {average_fi};
 end
+
+%%% ¡prop!
+PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
+%%%% ¡settings!
+'NNRegressorMLP_CrossValidationPF_Scatter'
+%%%% ¡postprocessing!
+if isa(nncv.getr('PFSP'), 'NoValue')
+    nncv.set('PFSP', NNRegressorMLP_CrossValidationPF_Scatter('NNCV', nncv));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Scatter Plot'], ...
+    varargin{:});
 
 %% ¡tests!
 
