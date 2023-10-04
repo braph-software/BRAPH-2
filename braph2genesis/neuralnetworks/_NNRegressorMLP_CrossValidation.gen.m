@@ -75,12 +75,6 @@ Template for Neural Network Evaluator
 
 %%% ¡prop!
 %%%% ¡id!
-NNRegressorMLP_CrossValidation.D
-%%%% ¡title!
-DATASET
-
-%%% ¡prop!
-%%%% ¡id!
 NNRegressorMLP_CrossValidation.D_LIST
 %%%% ¡title!
 Dataset List

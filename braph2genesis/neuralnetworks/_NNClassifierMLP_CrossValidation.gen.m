@@ -75,12 +75,6 @@ Template for Neural Network Evaluator
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.D
-%%%% ¡title!
-DATASET
-
-%%% ¡prop!
-%%%% ¡id!
 NNClassifierMLP_CrossValidation.D_LIST
 %%%% ¡title!
 Dataset List
@@ -290,6 +284,8 @@ else
     average_fi = average_fi / numel(all_fi);
     value = {average_fi};
 end
+%%%% ¡gui!
+pr = NNClassifierMLP_CrossValidationPP_FI('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
 
 %% ¡tests!
 
