@@ -83,7 +83,7 @@ if isfolder(fileparts(file))
         '%' newline() ...
         ];
 
-    notes = cellfun(@(x) ['% ' strtrim(x) newline()], cellstr(pip.get('NOTES')), 'UniformOutput', false);
+    notes = cellfun(@(x) ['% ' strtrim(x) newline()], str2cell(pip.get('NOTES')), 'UniformOutput', false);
     for i = 1:1:length(notes)
         txt = [txt notes{i}];
     end
