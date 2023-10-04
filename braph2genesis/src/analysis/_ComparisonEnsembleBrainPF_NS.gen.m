@@ -222,6 +222,10 @@ if isempty(diffs)
     return
 end
 diff = diffs{layer};
+if isempty(diff)
+    value = {};
+    return
+end
 p2s = cp.get('P2');
 p2 = p2s{layer};
 
@@ -336,6 +340,8 @@ LAYER (figure, scalar) is the layer number of the nodal measure.
 1
 %%%% ¡postset!
 pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonEnsembleBrainPF_Layer_NS('EL', pf, 'PROP', ComparisonEnsembleBrainPF_NS.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
