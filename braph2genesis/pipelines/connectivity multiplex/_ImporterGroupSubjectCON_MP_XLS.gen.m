@@ -21,7 +21,7 @@ Group, SubjectCON_MP, ExporterGroupSubjectCON_MP_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the CON MP subject group importer from XLS/XLSX.
 %%%% ¡default!
 'ImporterGroupSubjectCON_MP_XLS'
 

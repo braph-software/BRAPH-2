@@ -59,7 +59,7 @@ ELCLASS (constant, string) is the class of the Average Overlapping Strength.
 %%% ¡prop!
 NAME (constant, string) is the name of the Average Overlapping Strength.
 %%%% ¡default!
-'OverlappingSAv'
+'Average Overlapping Strength'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Overlapping Strength.
@@ -104,7 +104,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
+{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
 M (result, cell) is the Average Overlapping Strength.

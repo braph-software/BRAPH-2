@@ -104,7 +104,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
+{'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'}
 
 %%% ¡prop!
 M (result, cell) is the Overlapping Strength.

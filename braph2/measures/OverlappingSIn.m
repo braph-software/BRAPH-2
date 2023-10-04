@@ -544,7 +544,7 @@ classdef OverlappingSIn < StrengthIn
 				case 11 % OverlappingSIn.PARAMETRICITY
 					prop_default = 2;
 				case 12 % OverlappingSIn.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};;
+					prop_default = {'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 				otherwise
 					prop_default = getPropDefault@StrengthIn(prop);
 			end
