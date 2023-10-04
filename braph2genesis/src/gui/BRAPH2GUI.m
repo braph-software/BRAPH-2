@@ -372,54 +372,57 @@ pipelines_contents = dir(fullfile(braph2_dir, 'pipelines'));  % get the folder c
 pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
 pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
 
-pipelines = {};
-for dir_number = 1:1:length(pipelines_dir_list)
-    pipeline_dir = fullfile(pipelines_dir_list(dir_number).folder, pipelines_dir_list(dir_number).name);
-    
-    files = dir(pipeline_dir); % retrieves all files inside source directory
-    for j = 1:1:length(files) % selects all files *.braph2
-        file_name = fullfile(files(j).folder, files(j).name);
-        if length(file_name) > 7 && strcmp(file_name(end-6:end), '.braph2')
-            p = length(pipelines) + 1;
+pipelines = get_pipelines();
+    function pipelines = get_pipelines()
+        for dir_number = 1:1:length(pipelines_dir_list)
+        
+            pipeline_dir = fullfile(pipelines_dir_list(dir_number).folder, pipelines_dir_list(dir_number).name);
             
-            pipelines{p}.index = p; %#ok<*AGROW>
-            pipelines{p}.file_name = file_name;
-            pipelines{p}.id = fileparts(file_name);
-           
-            txt = fileread(file_name);
-            pipelines{p}.txt = txt;
-            
-            header_marks = regexp(txt, '%%', 'all');
-            header_txt = txt(header_marks(1):header_marks(2));
-            header_newlines = regexp(header_txt, newline(), 'all');
-            
-            pipelines{p}.label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
-            
-            notes = strtrim(header_txt(header_newlines(1) + 4:end - 1));
-            notes_newlines = regexp(notes, newline(), 'all');
-            for k = length(notes_newlines):-1:1
-                notes = [notes(1:notes_newlines(k)) strtrim(notes(notes_newlines(k) + 2:end))]; % eliminates % but not newline
-            end
-
+            files = dir(pipeline_dir); % retrieves all files inside source directory
+            for j = 1:1:length(files) % selects all files *.braph2
+                file_name = fullfile(files(j).folder, files(j).name);
+                if length(file_name) > 7 && strcmp(file_name(end-6:end), '.braph2')
+                    p = length(pipelines) + 1;
+                    
+                    pipelines{p}.index = p; %#ok<*AGROW>
+                    pipelines{p}.file_name = file_name;
+                    pipelines{p}.id = fileparts(file_name);
+                   
+                    txt = fileread(file_name);
+                    pipelines{p}.txt = txt;
+                    
+                    header_marks = regexp(txt, '%%', 'all');
+                    header_txt = txt(header_marks(1):header_marks(2));
+                    header_newlines = regexp(header_txt, newline(), 'all');
+                    
+                    pipelines{p}.label = strtrim(header_txt(3:header_newlines(1))); % eliminates %%
+                    
+                    notes = strtrim(header_txt(header_newlines(1) + 4:end - 1));
+                    notes_newlines = regexp(notes, newline(), 'all');
+                    for k = length(notes_newlines):-1:1
+                        notes = [notes(1:notes_newlines(k)) strtrim(notes(notes_newlines(k) + 2:end))]; % eliminates % but not newline
+                    end
+        
 if p == 5
-    a = 1+1;
+    a = 1 + 1; %#ok<NASGU> 
 end
-            pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
-            notes = regexprep(notes, 'PDF: /tutorials/pipelines/\w+/\w+\.pdf', '');
-% notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
-% system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
-% system(['start "" "' pdfPath '"']);
-
-            pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
-            notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
-% notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
-
-% notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
-
-            pipelines{p}.notes = strtrim(notes);
+                    pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
+                    notes = regexprep(notes, 'PDF: /tutorials/pipelines/\w+/\w+\.pdf', '');
+        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
+        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
+        % system(['start "" "' pdfPath '"']);
+        
+                    pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
+                    notes = regexprep(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', '');
+        % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
+        
+        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
+        
+                    pipelines{p}.notes = strtrim(notes);
+                end
+            end
         end
     end
-end
 
 update_listbox()
     function update_listbox()
