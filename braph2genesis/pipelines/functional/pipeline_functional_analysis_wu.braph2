@@ -1,6 +1,6 @@
 %% Pipeline Functional Analysis WU
 
-% This is the pipeline script to analyze a group of subjects using functional data and a weighted undirected graph.y
+% This is the pipeline script to analyze a group of subjects using functional data and a weighted undirected graph.
 % The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
