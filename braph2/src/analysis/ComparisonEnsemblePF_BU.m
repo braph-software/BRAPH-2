@@ -742,7 +742,11 @@ classdef ComparisonEnsemblePF_BU < ComparisonEnsemblePF
 			switch prop
 				case 27 % ComparisonEnsemblePF_BU.SETUP
 					cp = pf.get('CP');
-					g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+                    if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+                        g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+                    else
+                        g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+                    end
 					
 					x = g.get('ALAYERTICKS');
 					
