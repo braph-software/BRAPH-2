@@ -729,9 +729,12 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			
 			switch prop
 				case 27 % MeasureEnsemblePF_BU.SETUP
-					me = pf.get('ME');
-					g = me.get('A').get('GRAPH_TEMPLATE');
-					
+                    me = pf.get('ME');
+                    if me.get('A').get('G_DICT').get('LENGTH')
+                        g = me.get('A').get('G_DICT').get('IT', 1);
+                    else
+                        g = me.get('A').get('GRAPH_TEMPLATE');
+                    end
 					x = g.get('ALAYERTICKS');
 					
 					nodes = pf.get('NODES');

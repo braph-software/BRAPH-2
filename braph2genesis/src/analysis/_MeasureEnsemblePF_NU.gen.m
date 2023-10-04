@@ -122,7 +122,11 @@ NOTES (metadata, string) are some specific notes about the panel figure nodal un
 SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 me = pf.get('ME');
-g = me.get('A').get('GRAPH_TEMPLATE');
+if me.get('A').get('G_DICT').get('LENGTH')
+    g = me.get('A').get('G_DICT').get('IT', 1);
+else
+    g = me.get('A').get('GRAPH_TEMPLATE');
+end
 
 x = g.get('ALAYERTICKS');
 
