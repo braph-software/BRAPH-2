@@ -199,6 +199,12 @@ LAYERS labels
 
 %%% ¡prop!
 %%%% ¡id!
+Graph.PARTITIONLABELS
+%%%% ¡title!
+LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
 Graph.NODENUMBER
 %%%% ¡title!
 NODES number
@@ -336,6 +342,14 @@ LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 ALAYERLABELS (query, stringlist) returns the layer labels for A.
 %%%% ¡calculate!
 value = g.get('LAYERLABELS');
+
+%%% ¡prop!
+PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+value = g.get('PARTITIONLABELS');
 
 %%% ¡prop!
 NODELABELS (metadata, stringlist) are the node labels provided by the user.
