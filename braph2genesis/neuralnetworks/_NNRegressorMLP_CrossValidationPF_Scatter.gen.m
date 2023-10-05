@@ -11,6 +11,18 @@ ComparisonEnsemble
 
 %%% ¡prop!
 %%%% ¡id!
+NNRegressorMLP_CrossValidationPF_Scatter.PREDICTIONS
+%%%% ¡title!
+PREDICTIONS
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_CrossValidationPF_Scatter.PREDICTION_DICT
+%%%% ¡title!
+PREDICTION PLOTS
+
+%%% ¡prop!
+%%%% ¡id!
 NNRegressorMLP_CrossValidationPF_Scatter.ID
 %%%% ¡title!
 Scatter Plot ID
@@ -50,12 +62,6 @@ PANEL POSITION
 NNRegressorMLP_CrossValidationPF_Scatter.ST_AXIS
 %%%% ¡title!
 AXIS
-
-%%% ¡prop!
-%%%% ¡id!
-NNRegressorMLP_CrossValidationPF_Scatter.ST_LINE_PREDICTION
-%%%% ¡title!
-PREDICTION
 
 %%% ¡prop!
 %%%% ¡id!
@@ -128,9 +134,7 @@ if value
     pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.H_AXES).get('SETUP')
     pf.memorize('LISTENER_ST_AXIS');
     
-    pf.memorize('H_LINE_PREDICTION')
-    pf.memorize('ST_LINE_PREDICTION').set('PANEL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.H_LINE_PREDICTION).get('SETUP')
-	pf.memorize('LISTENER_ST_LINE_PREDICTION');
+    pf.memorize('H_PREDICTIONS')
     
     pf.memorize('H_LINE_BASE')
     pf.memorize('ST_LINE_BASE').set('PANEL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.H_LINE_BASE).get('SETUP')
@@ -157,8 +161,7 @@ if value
 
     pf.set('LISTENER_ST_AXIS', Element.getNoValue())
  
-    pf.set('H_LINE_PREDICTION', Element.getNoValue())
-    pf.set('LISTENER_ST_LINE_PREDICTION', Element.getNoValue())
+    pf.set('H_PREDICTIONS', Element.getNoValue())
 
     pf.set('H_LINE_BASE', Element.getNoValue())
     pf.set('LISTENER_ST_LINE_BASE', Element.getNoValue())
@@ -201,13 +204,13 @@ if check_graphics(toolbar, 'uitoolbar')
     tool_separator_2 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
     
     % Prediction Line
-    tool_line_prediction = uitoggletool(toolbar, ...
-        'Tag', 'TOOL.Line_Diff', ...
-        'State', pf.get('ST_LINE_PREDICTION').get('VISIBLE'), ...
-        'Tooltip', 'Show Prediction plot', ...
+    tool_predictions = uitoggletool(toolbar, ...
+        'Tag', 'TOOL.Predictions', ...
+        'State', pf.get('PREDICTIONS'), ...
+        'Tooltip', 'Show Prediction plots', ...
         'CData', imresize(imread('icon_line.png'), [24 24]), ... % % % make icon 16x16
-        'OnCallback', {@cb_line_prediction, true}, ...
-        'OffCallback', {@cb_line_prediction, false});
+        'OnCallback', {@cb_predictions, true}, ...
+        'OffCallback', {@cb_predictions, false});
 
     % Base Line
     tool_line_base = uitoggletool(toolbar, ...
@@ -222,7 +225,7 @@ if check_graphics(toolbar, 'uitoolbar')
         tool_separator_1, ...
         tool_axis, tool_grid, ... 
         tool_separator_2, ... 
-        tool_line_prediction, tool_line_base ...
+        tool_predictions, tool_line_base ...
         };
 else
     value = {};
@@ -240,11 +243,8 @@ function cb_grid(~, ~, grid) % (src, event)
     % triggers the update of ST_AXIS
     pf.set('ST_AXIS', pf.get('ST_AXIS'))
 end
-function cb_line_predcition(~, ~, visible) % (src, event)
-	pf.get('ST_LINE_PREDICTION').set('VISIBLE', visible)
-
-    % triggers the update of ST_LINE_DIFF
-    pf.set('ST_LINE_PREDICTION', pf.get('ST_LINE_PREDICTION'))
+function cb_predictions(~, ~, visible) % (src, event)
+	pf.set('PREDICTIONS', visible)
 end
 function cb_line_base(~, ~, visible) % (src, event)
 	pf.get('ST_LINE_BASE').set('VISIBLE', visible)
@@ -311,11 +311,15 @@ NNCV (metadata, item) is the ensemble-based comparison.
 SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
 %%%% ¡calculate!
 nncv = pf.get('NNCV');
-predictions = cellfun(@(nn, nne) nn.get('PREDICT', nne.get('D')), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
 
-pf.memorize('ST_LINE_PREDICTION').set('X', predictions, 'Y', ground_truth)
-pf.memorize('ST_LINE_BASE').set('X', [min(predictions) max(predictions)], 'Y', [min(predictions) max(predictions)])
+pf.memorize('H_PREDICTIONS');
+
+predictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+predictions = predictions{:};
+ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+ground_truth = ground_truth{:};
+
+pf.memorize('ST_LINE_BASE').set('X', [min(ground_truth, [], 'all') max(ground_truth, [], 'all')], 'Y', [min(predictions, [], 'all') max(predictions, [], 'all')])
 
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
@@ -340,6 +344,78 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%%% ¡prop!
+H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.
+%%%% ¡calculate!
+targets = pf.memorize('NNCV').get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+L = length(targets);
+h_predictions = cell(1, L);
+for i = 1:1:L
+    h_predictions{i} = plot(pf.get('H_AXES'), [0], [0], 'x');
+end
+value = h_predictions;
+
+%%% ¡prop!
+PREDICTIONS (figure, logical) determines whether the prediction plot are shown.
+%%%% ¡default!
+true
+%%%% ¡postset!
+if ~pf.get('PREDICTIONS') % false
+    h_predictions = pf.get('H_PREDICTIONS');
+    for i = 1:1:length(h_predictions)
+        set(h_predictions{i}, 'Visible', false)
+    end
+else % true
+    % triggers the update of SPH_DICT
+    pf.set('PREDICTION_DICT', pf.get('PREDICTION_DICT'))
+end
+
+% update state of toggle tool
+toolbar = pf.get('H_TOOLBAR');
+if check_graphics(toolbar, 'uitoolbar')
+    set(findobj(toolbar, 'Tag', 'TOOL.Predictions'), 'State', pf.get('PREDICTIONS'))
+end
+
+%%% ¡prop!
+PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
+%%%% ¡settings!
+'SettingsLine'
+%%%% ¡postset!
+if pf.get('PREDICTIONS') && ~isa(pf.getr('NNCV'), 'NoValue')
+    nncv = pf.get('NNCV');
+    targets = nncv.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+    predictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    predictions = predictions{:};
+    ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    ground_truth = ground_truth{:};
+
+    if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && length(targets) > 0
+        for i = 1:1:length(targets)
+            target = targets{i};
+            prediction_st_lines{i} = SettingsLine( ...
+                'ID', target, ...
+                'X', predictions(:, i), ...
+                'Y', ground_truth(:, i), ...
+                'I', i, ...
+                'PANEL', pf, ...
+                'PROP', NNRegressorMLP_CrossValidationPF_Scatter.H_PREDICTIONS, ...
+                'LINESTYLE', 'none', ...
+                'VISIBLE', true ...
+                );
+        end
+        pf.get('PREDICTION_DICT').set('IT_LIST', prediction_st_lines)
+    end
+    
+    for i = 1:1:length(targets)
+        pf.get('PREDICTION_DICT').get('IT', i).get('SETUP')
+    end
+end
+%%%% ¡gui!
+pr = PanelPropIDictTable('EL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.PREDICTION_DICT, ...
+    'COLS', [PanelPropIDictTable.SELECTOR SettingsLine.VISIBLE SettingsLine.SYMBOL SettingsLine.SYMBOLSIZE SettingsLine.EDGECOLOR SettingsLine.FACECOLOR], ...
+    varargin{:});
+
 
 %%% ¡prop!
 H_LINE_PREDICTION (evanescent, handle) is the handle for the prediction line.
@@ -388,7 +464,7 @@ function cb_listener_st_line_base(~, ~)
     if pf.get('DRAWN')
         toolbar = pf.get('H_TOOLBAR');
         if check_graphics(toolbar, 'uitoolbar')
-            set(findobj(toolbar, 'Tag', 'TOOL.Line_Base'), 'State', pf.get('ST_LINE_Base').get('VISIBLE'))
+            set(findobj(toolbar, 'Tag', 'TOOL.Line_Base'), 'State', pf.get('ST_LINE_BASE').get('VISIBLE'))
         end
     end
 end
