@@ -445,7 +445,7 @@ pipelines = get_pipelines();
                     end
                     
                     pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
-                    notes = regexprep(notes, ['PDF:.*' newline()], '');
+                    notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
         
                     pipelines{p}.md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once');
                     notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
