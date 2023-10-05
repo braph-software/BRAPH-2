@@ -6,49 +6,6 @@ classdef SubjectPP_VOIDict < PanelProp
 	%  numeric editfields and drop-down lists.
 	% It is intended to be used with the property VOI_DICT of Subject.
 	%
-	% The list of SubjectPP_VOIDict properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the VOI prop panel.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the VOI prop panel.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the VOI prop panel.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the VOI prop panel.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the VOI prop panel.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the VOI prop panel.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the VOI prop panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>HEIGHT_MIN</strong> 	HEIGHT_MIN (gui, scalar) is the default (minumum) height.
-	%  <strong>37</strong> <strong>HEIGHT_VOI_EDITFIELD</strong> 	HEIGHT_VOI_EDITFIELD (gui, scalar) is the height of each VOI editfield.
-	%  <strong>38</strong> <strong>HEIGHT_VOI_DROPDOWN</strong> 	HEIGHT_VOI_DROPDOWN (gui, scalar) is the height of each VOI drop-down list.
-	%  <strong>39</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfields between active and inactive appearance when not editable.
-	%  <strong>40</strong> <strong>HANDLES_VOI</strong> 	HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.
-	%  <strong>41</strong> <strong>LABELS_VOI</strong> 	LABELS_VOI (evanescent, handlelist) is the list of VOI labels.
-	%
 	% SubjectPP_VOIDict methods (constructor):
 	%  SubjectPP_VOIDict - constructor
 	%
@@ -138,35 +95,35 @@ classdef SubjectPP_VOIDict < PanelProp
 	% See also Subject, uieditfield, uidropdown.
 	
 	properties (Constant) % properties
-		HEIGHT_MIN = 36; %CET: Computational Efficiency Trick
+		HEIGHT_MIN = PanelProp.getPropNumber() + 1;
 		HEIGHT_MIN_TAG = 'HEIGHT_MIN';
-		HEIGHT_MIN_CATEGORY = 9;
-		HEIGHT_MIN_FORMAT = 11;
+		HEIGHT_MIN_CATEGORY = Category.GUI;
+		HEIGHT_MIN_FORMAT = Format.SCALAR;
 		
-		HEIGHT_VOI_EDITFIELD = 37; %CET: Computational Efficiency Trick
+		HEIGHT_VOI_EDITFIELD = PanelProp.getPropNumber() + 2;
 		HEIGHT_VOI_EDITFIELD_TAG = 'HEIGHT_VOI_EDITFIELD';
-		HEIGHT_VOI_EDITFIELD_CATEGORY = 9;
-		HEIGHT_VOI_EDITFIELD_FORMAT = 11;
+		HEIGHT_VOI_EDITFIELD_CATEGORY = Category.GUI;
+		HEIGHT_VOI_EDITFIELD_FORMAT = Format.SCALAR;
 		
-		HEIGHT_VOI_DROPDOWN = 38; %CET: Computational Efficiency Trick
+		HEIGHT_VOI_DROPDOWN = PanelProp.getPropNumber() + 3;
 		HEIGHT_VOI_DROPDOWN_TAG = 'HEIGHT_VOI_DROPDOWN';
-		HEIGHT_VOI_DROPDOWN_CATEGORY = 9;
-		HEIGHT_VOI_DROPDOWN_FORMAT = 11;
+		HEIGHT_VOI_DROPDOWN_CATEGORY = Category.GUI;
+		HEIGHT_VOI_DROPDOWN_FORMAT = Format.SCALAR;
 		
-		ENABLE = 39; %CET: Computational Efficiency Trick
+		ENABLE = PanelProp.getPropNumber() + 4;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		HANDLES_VOI = 40; %CET: Computational Efficiency Trick
+		HANDLES_VOI = PanelProp.getPropNumber() + 5;
 		HANDLES_VOI_TAG = 'HANDLES_VOI';
-		HANDLES_VOI_CATEGORY = 7;
-		HANDLES_VOI_FORMAT = 19;
+		HANDLES_VOI_CATEGORY = Category.EVANESCENT;
+		HANDLES_VOI_FORMAT = Format.HANDLELIST;
 		
-		LABELS_VOI = 41; %CET: Computational Efficiency Trick
+		LABELS_VOI = PanelProp.getPropNumber() + 6;
 		LABELS_VOI_TAG = 'LABELS_VOI';
-		LABELS_VOI_CATEGORY = 7;
-		LABELS_VOI_FORMAT = 19;
+		LABELS_VOI_CATEGORY = Category.EVANESCENT;
+		LABELS_VOI_FORMAT = Format.HANDLELIST;
 	end
 	methods % constructor
 		function pr = SubjectPP_VOIDict(varargin)
@@ -179,48 +136,6 @@ classdef SubjectPP_VOIDict < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SubjectPP_VOIDict properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the VOI prop panel.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the VOI prop panel.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the VOI prop panel.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the VOI prop panel.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the VOI prop panel.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the VOI prop panel.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the VOI prop panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>HEIGHT_MIN</strong> 	HEIGHT_MIN (gui, scalar) is the default (minumum) height.
-			%  <strong>37</strong> <strong>HEIGHT_VOI_EDITFIELD</strong> 	HEIGHT_VOI_EDITFIELD (gui, scalar) is the height of each VOI editfield.
-			%  <strong>38</strong> <strong>HEIGHT_VOI_DROPDOWN</strong> 	HEIGHT_VOI_DROPDOWN (gui, scalar) is the height of each VOI drop-down list.
-			%  <strong>39</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfields between active and inactive appearance when not editable.
-			%  <strong>40</strong> <strong>HANDLES_VOI</strong> 	HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.
-			%  <strong>41</strong> <strong>LABELS_VOI</strong> 	LABELS_VOI (evanescent, handlelist) is the list of VOI labels.
 			%
 			% See also Category, Format.
 			
@@ -258,7 +173,7 @@ classdef SubjectPP_VOIDict < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SubjectPP_VOIDict' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SubjectPP_VOIDict', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of VOI prop panel.
@@ -279,32 +194,62 @@ classdef SubjectPP_VOIDict < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
+				prop_list = [ ...
+					PanelProp.getProps() ...
+						SubjectPP_VOIDict.HEIGHT_MIN ...
+						SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD ...
+						SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN ...
+						SubjectPP_VOIDict.ENABLE ...
+						SubjectPP_VOIDict.HANDLES_VOI ...
+						SubjectPP_VOIDict.LABELS_VOI ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 40 41];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36 37 38 39];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelProp.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelProp.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelProp.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelProp.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelProp.getProps(Category.EVANESCENT) ...
+						SubjectPP_VOIDict.HANDLES_VOI ...
+						SubjectPP_VOIDict.LABELS_VOI ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelProp.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelProp.getProps(Category.GUI) ...
+						SubjectPP_VOIDict.HEIGHT_MIN ...
+						SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD ...
+						SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN ...
+						SubjectPP_VOIDict.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -325,33 +270,7 @@ classdef SubjectPP_VOIDict < PanelProp
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 41;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 12;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 8;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SubjectPP_VOIDict.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in VOI prop panel/error.
@@ -379,14 +298,14 @@ classdef SubjectPP_VOIDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SubjectPP_VOIDict.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput'], ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SubjectPP_VOIDict.'] ...
 					)
 			end
@@ -417,14 +336,15 @@ classdef SubjectPP_VOIDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'HEIGHT_MIN'  'HEIGHT_VOI_EDITFIELD'  'HEIGHT_VOI_DROPDOWN'  'ENABLE'  'HANDLES_VOI'  'LABELS_VOI' })); %CET: Computational Efficiency Trick
+			subjectpp_voidict_tag_list = cellfun(@(x) SubjectPP_VOIDict.getPropTag(x), num2cell(SubjectPP_VOIDict.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, subjectpp_voidict_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput'], ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SubjectPP_VOIDict.'] ...
 					)
 			end
@@ -450,7 +370,8 @@ classdef SubjectPP_VOIDict < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'HEIGHT_MIN'  'HEIGHT_VOI_EDITFIELD'  'HEIGHT_VOI_DROPDOWN'  'ENABLE'  'HANDLES_VOI'  'LABELS_VOI' })); % tag = pointer %CET: Computational Efficiency Trick
+				subjectpp_voidict_tag_list = cellfun(@(x) SubjectPP_VOIDict.getPropTag(x), num2cell(SubjectPP_VOIDict.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, subjectpp_voidict_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -478,9 +399,24 @@ classdef SubjectPP_VOIDict < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				subjectpp_voidict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'HEIGHT_MIN'  'HEIGHT_VOI_EDITFIELD'  'HEIGHT_VOI_DROPDOWN'  'ENABLE'  'HANDLES_VOI'  'LABELS_VOI' };
-				tag = subjectpp_voidict_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SubjectPP_VOIDict.HEIGHT_MIN
+						tag = SubjectPP_VOIDict.HEIGHT_MIN_TAG;
+					case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+						tag = SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD_TAG;
+					case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+						tag = SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN_TAG;
+					case SubjectPP_VOIDict.ENABLE
+						tag = SubjectPP_VOIDict.ENABLE_TAG;
+					case SubjectPP_VOIDict.HANDLES_VOI
+						tag = SubjectPP_VOIDict.HANDLES_VOI_TAG;
+					case SubjectPP_VOIDict.LABELS_VOI
+						tag = SubjectPP_VOIDict.LABELS_VOI_TAG;
+					otherwise
+						tag = getPropTag@PanelProp(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -505,9 +441,22 @@ classdef SubjectPP_VOIDict < PanelProp
 			
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subjectpp_voidict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  9  9  7  7 };
-			prop_category = subjectpp_voidict_category_list{prop};
+			switch prop
+				case SubjectPP_VOIDict.HEIGHT_MIN
+					prop_category = SubjectPP_VOIDict.HEIGHT_MIN_CATEGORY;
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+					prop_category = SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD_CATEGORY;
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+					prop_category = SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN_CATEGORY;
+				case SubjectPP_VOIDict.ENABLE
+					prop_category = SubjectPP_VOIDict.ENABLE_CATEGORY;
+				case SubjectPP_VOIDict.HANDLES_VOI
+					prop_category = SubjectPP_VOIDict.HANDLES_VOI_CATEGORY;
+				case SubjectPP_VOIDict.LABELS_VOI
+					prop_category = SubjectPP_VOIDict.LABELS_VOI_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelProp(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -531,9 +480,22 @@ classdef SubjectPP_VOIDict < PanelProp
 			
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subjectpp_voidict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  11  11  11  4  19  19 };
-			prop_format = subjectpp_voidict_format_list{prop};
+			switch prop
+				case SubjectPP_VOIDict.HEIGHT_MIN
+					prop_format = SubjectPP_VOIDict.HEIGHT_MIN_FORMAT;
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+					prop_format = SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD_FORMAT;
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+					prop_format = SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN_FORMAT;
+				case SubjectPP_VOIDict.ENABLE
+					prop_format = SubjectPP_VOIDict.ENABLE_FORMAT;
+				case SubjectPP_VOIDict.HANDLES_VOI
+					prop_format = SubjectPP_VOIDict.HANDLES_VOI_FORMAT;
+				case SubjectPP_VOIDict.LABELS_VOI
+					prop_format = SubjectPP_VOIDict.LABELS_VOI_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelProp(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -557,9 +519,48 @@ classdef SubjectPP_VOIDict < PanelProp
 			
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subjectpp_voidict_description_list = { 'ELCLASS (constant, string) is the class of the VOI prop panel.'  'NAME (constant, string) is the name of the VOI prop panel.'  'DESCRIPTION (constant, string) is the description of the VOI prop panel.'  'TEMPLATE (parameter, item) is the template of the VOI prop panel.'  'ID (data, string) is a few-letter code for the VOI prop panel.'  'LABEL (metadata, string) is an extended label of the VOI prop panel.'  'NOTES (metadata, string) are some specific notes about the VOI prop panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'HEIGHT_MIN (gui, scalar) is the default (minumum) height.'  'HEIGHT_VOI_EDITFIELD (gui, scalar) is the height of each VOI editfield.'  'HEIGHT_VOI_DROPDOWN (gui, scalar) is the height of each VOI drop-down list.'  'ENABLE (gui, logical) switches the editfields between active and inactive appearance when not editable.'  'HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.'  'LABELS_VOI (evanescent, handlelist) is the list of VOI labels.' };
-			prop_description = subjectpp_voidict_description_list{prop};
+			switch prop
+				case SubjectPP_VOIDict.HEIGHT_MIN
+					prop_description = 'HEIGHT_MIN (gui, scalar) is the default (minumum) height.';
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+					prop_description = 'HEIGHT_VOI_EDITFIELD (gui, scalar) is the height of each VOI editfield.';
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+					prop_description = 'HEIGHT_VOI_DROPDOWN (gui, scalar) is the height of each VOI drop-down list.';
+				case SubjectPP_VOIDict.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the editfields between active and inactive appearance when not editable.';
+				case SubjectPP_VOIDict.HANDLES_VOI
+					prop_description = 'HANDLES_VOI (evanescent, handlelist) is the list of VOI numeric editfields and drop-down lists.';
+				case SubjectPP_VOIDict.LABELS_VOI
+					prop_description = 'LABELS_VOI (evanescent, handlelist) is the list of VOI labels.';
+				case SubjectPP_VOIDict.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the VOI prop panel.';
+				case SubjectPP_VOIDict.NAME
+					prop_description = 'NAME (constant, string) is the name of the VOI prop panel.';
+				case SubjectPP_VOIDict.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the VOI prop panel.';
+				case SubjectPP_VOIDict.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the VOI prop panel.';
+				case SubjectPP_VOIDict.ID
+					prop_description = 'ID (data, string) is a few-letter code for the VOI prop panel.';
+				case SubjectPP_VOIDict.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the VOI prop panel.';
+				case SubjectPP_VOIDict.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the VOI prop panel.';
+				case SubjectPP_VOIDict.EL
+					prop_description = 'EL (data, item) is the element.';
+				case SubjectPP_VOIDict.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case SubjectPP_VOIDict.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case SubjectPP_VOIDict.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
+				case SubjectPP_VOIDict.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case SubjectPP_VOIDict.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@PanelProp(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -583,22 +584,22 @@ classdef SubjectPP_VOIDict < PanelProp
 			
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SubjectPP_VOIDict.HEIGHT_MIN
-					prop_settings = Format.getFormatSettings(11);
-				case 37 % SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
-					prop_settings = Format.getFormatSettings(11);
-				case 38 % SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
-					prop_settings = Format.getFormatSettings(11);
-				case 39 % SubjectPP_VOIDict.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 40 % SubjectPP_VOIDict.HANDLES_VOI
-					prop_settings = Format.getFormatSettings(19);
-				case 41 % SubjectPP_VOIDict.LABELS_VOI
-					prop_settings = Format.getFormatSettings(19);
-				case 4 % SubjectPP_VOIDict.TEMPLATE
+			switch prop
+				case SubjectPP_VOIDict.HEIGHT_MIN
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SubjectPP_VOIDict.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SubjectPP_VOIDict.HANDLES_VOI
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case SubjectPP_VOIDict.LABELS_VOI
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case SubjectPP_VOIDict.TEMPLATE
 					prop_settings = 'SubjectPP_VOIDict';
-				case 23 % SubjectPP_VOIDict.EL
+				case SubjectPP_VOIDict.EL
 					prop_settings = 'Subject';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -626,37 +627,37 @@ classdef SubjectPP_VOIDict < PanelProp
 			
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SubjectPP_VOIDict.HEIGHT_MIN
-					prop_default = 24;
-				case 37 % SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
-					prop_default = 24;
-				case 38 % SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
-					prop_default = 24;
-				case 39 % SubjectPP_VOIDict.ENABLE
+			switch prop
+				case SubjectPP_VOIDict.HEIGHT_MIN
+					prop_default = s(2);
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
+					prop_default = s(2);
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
+					prop_default = s(2);
+				case SubjectPP_VOIDict.ENABLE
 					prop_default = true;
-				case 40 % SubjectPP_VOIDict.HANDLES_VOI
-					prop_default = Format.getFormatDefault(19, SubjectPP_VOIDict.getPropSettings(prop));
-				case 41 % SubjectPP_VOIDict.LABELS_VOI
-					prop_default = Format.getFormatDefault(19, SubjectPP_VOIDict.getPropSettings(prop));
-				case 1 % SubjectPP_VOIDict.ELCLASS
+				case SubjectPP_VOIDict.HANDLES_VOI
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.LABELS_VOI
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.ELCLASS
 					prop_default = 'SubjectPP_VOIDict';
-				case 2 % SubjectPP_VOIDict.NAME
+				case SubjectPP_VOIDict.NAME
 					prop_default = 'VOI Prop Panel';
-				case 3 % SubjectPP_VOIDict.DESCRIPTION
+				case SubjectPP_VOIDict.DESCRIPTION
 					prop_default = 'A VOI Prop Panel (SubjectPP_VOIDict) plots a VOI (variables of interest) dictionary using numeric editfields and drop-down lists. It is intended to be used with the property VOI_DICT of Subject.';
-				case 4 % SubjectPP_VOIDict.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SubjectPP_VOIDict.getPropSettings(prop));
-				case 5 % SubjectPP_VOIDict.ID
+				case SubjectPP_VOIDict.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.ID
 					prop_default = 'SubjectPP_VOIDict ID';
-				case 6 % SubjectPP_VOIDict.LABEL
+				case SubjectPP_VOIDict.LABEL
 					prop_default = 'SubjectPP_VOIDict label';
-				case 7 % SubjectPP_VOIDict.NOTES
+				case SubjectPP_VOIDict.NOTES
 					prop_default = 'SubjectPP_VOIDict notes';
-				case 23 % SubjectPP_VOIDict.EL
-					prop_default = Format.getFormatDefault(8, SubjectPP_VOIDict.getPropSettings(prop));
-				case 24 % SubjectPP_VOIDict.PROP
-					prop_default = 9;
+				case SubjectPP_VOIDict.EL
+					prop_default = Format.getFormatDefault(Format.ITEM, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.PROP
+					prop_default = Subject.VOI_DICT;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -702,15 +703,15 @@ classdef SubjectPP_VOIDict < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SubjectPP_VOIDict:WrongInput
+			%  Error id: €BRAPH2.STR€:SubjectPP_VOIDict:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:SubjectPP_VOIDict:WrongInput
+			%   Error id: €BRAPH2.STR€:SubjectPP_VOIDict:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SubjectPP_VOIDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SubjectPP_VOIDict.
-			%   Error id: BRAPH2:SubjectPP_VOIDict:WrongInput
+			%   Error id: €BRAPH2.STR€:SubjectPP_VOIDict:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(SubjectPP_VOIDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SubjectPP_VOIDict.
-			%   Error id: BRAPH2:SubjectPP_VOIDict:WrongInput]
+			%   Error id: €BRAPH2.STR€:SubjectPP_VOIDict:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('SubjectPP_VOIDict')
 			%  are less computationally efficient.
@@ -721,24 +722,24 @@ classdef SubjectPP_VOIDict < PanelProp
 			prop = SubjectPP_VOIDict.getPropProp(pointer);
 			
 			switch prop
-				case 36 % SubjectPP_VOIDict.HEIGHT_MIN
-					check = Format.checkFormat(11, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 37 % SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD
-					check = Format.checkFormat(11, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 38 % SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN
-					check = Format.checkFormat(11, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 39 % SubjectPP_VOIDict.ENABLE
-					check = Format.checkFormat(4, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 40 % SubjectPP_VOIDict.HANDLES_VOI
-					check = Format.checkFormat(19, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 41 % SubjectPP_VOIDict.LABELS_VOI
-					check = Format.checkFormat(19, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 4 % SubjectPP_VOIDict.TEMPLATE
-					check = Format.checkFormat(8, value, SubjectPP_VOIDict.getPropSettings(prop));
-				case 23 % SubjectPP_VOIDict.EL
-					check = Format.checkFormat(8, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.HEIGHT_MIN % __SubjectPP_VOIDict.HEIGHT_MIN__
+					check = Format.checkFormat(Format.SCALAR, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD % __SubjectPP_VOIDict.HEIGHT_VOI_EDITFIELD__
+					check = Format.checkFormat(Format.SCALAR, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN % __SubjectPP_VOIDict.HEIGHT_VOI_DROPDOWN__
+					check = Format.checkFormat(Format.SCALAR, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.ENABLE % __SubjectPP_VOIDict.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.HANDLES_VOI % __SubjectPP_VOIDict.HANDLES_VOI__
+					check = Format.checkFormat(Format.HANDLELIST, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.LABELS_VOI % __SubjectPP_VOIDict.LABELS_VOI__
+					check = Format.checkFormat(Format.HANDLELIST, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.TEMPLATE % __SubjectPP_VOIDict.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SubjectPP_VOIDict.getPropSettings(prop));
+				case SubjectPP_VOIDict.EL % __SubjectPP_VOIDict.EL__
+					check = Format.checkFormat(Format.ITEM, value, SubjectPP_VOIDict.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -747,8 +748,8 @@ classdef SubjectPP_VOIDict < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput'], ...
-					['BRAPH2' ':SubjectPP_VOIDict:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SubjectPP_VOIDict:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SubjectPP_VOIDict.getPropTag(prop) ' (' SubjectPP_VOIDict.getFormatTag(SubjectPP_VOIDict.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -759,19 +760,19 @@ classdef SubjectPP_VOIDict < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 40 % SubjectPP_VOIDict.HANDLES_VOI
+				case SubjectPP_VOIDict.HANDLES_VOI % __SubjectPP_VOIDict.HANDLES_VOI__
 					sub = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -785,7 +786,7 @@ classdef SubjectPP_VOIDict < PanelProp
 					            'Parent', pr.memorize('H'), ... % H = p for Panel
 					            'Tag', ['DROPDOWN ' int2str(i)], ... 
 					            'Items', voi.get('CATEGORIES'), ...
-					            'FontSize', 12, ...
+					            'FontSize', BRAPH2.FONTSIZE, ...
 					            'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
 					            'ValueChangedFcn', {@cb_voi_dropdown}, ...
 					            'UserData', i ...
@@ -796,7 +797,7 @@ classdef SubjectPP_VOIDict < PanelProp
 					        editfield = uieditfield('numeric', ...
 					            'Parent', pr.memorize('H'), ... % H = p for Panel
 					            'Tag', ['EDITFIELD ' int2str(i)], ...
-					            'FontSize', 12, ... 
+					            'FontSize', BRAPH2.FONTSIZE, ... 
 					            'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
 					            'ValueChangedFcn', {@cb_voi_editfield}, ...
 					            'UserData', i ...
@@ -808,7 +809,7 @@ classdef SubjectPP_VOIDict < PanelProp
 					
 					value = handles_voi;
 					
-				case 41 % SubjectPP_VOIDict.LABELS_VOI
+				case SubjectPP_VOIDict.LABELS_VOI % __SubjectPP_VOIDict.LABELS_VOI__
 					sub = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -821,7 +822,7 @@ classdef SubjectPP_VOIDict < PanelProp
 					        'Parent', pr.memorize('H'), ...
 					        'Tag', ['LABEL ' int2str(i)], ...
 					        'Interpreter', 'html', ...
-					        'FontSize', 12, ...
+					        'FontSize', BRAPH2.FONTSIZE, ...
 					        'HorizontalAlignment', 'right', ... 
 					        'Tooltip', [num2str(sub.getPropProp(prop)) ' ' sub.getPropDescription(prop)], ...
 					        'BackgroundColor', pr.get('BKGCOLOR') ...
@@ -830,15 +831,15 @@ classdef SubjectPP_VOIDict < PanelProp
 					
 					value = labels_voi;
 					
-				case 20 % SubjectPP_VOIDict.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case SubjectPP_VOIDict.X_DRAW % __SubjectPP_VOIDict.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('HANDLES_VOI')
 					    pr.memorize('LABELS_VOI')
 					end
 					
-				case 21 % SubjectPP_VOIDict.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case SubjectPP_VOIDict.UPDATE % __SubjectPP_VOIDict.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    sub = pr.get('EL');
 					
@@ -885,8 +886,8 @@ classdef SubjectPP_VOIDict < PanelProp
 					    pr.set('HEIGHT', height)
 					end
 					
-				case 22 % SubjectPP_VOIDict.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case SubjectPP_VOIDict.REDRAW % __SubjectPP_VOIDict.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 						w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
@@ -901,33 +902,33 @@ classdef SubjectPP_VOIDict < PanelProp
 					        voi = voi_dict.get('IT', i);
 					        
 					        label = labels_voi{i};
-					        set(label, 'Position', [4 h+4 .30*w_p-8 21])
+					        set(label, 'Position', [s(.3) h+s(.3) .30*w_p-s(.6) s(1.75)])
 					        
 					        if isa(voi, 'VOICategoric')
 					            dropdown = handles_voi{i};
 					            
-					            set(dropdown, 'Position', [.30*w_p h+4 .65*w_p 21])
+					            set(dropdown, 'Position', [.30*w_p h+s(.3) .65*w_p s(1.75)])
 					
 					            h = h + pr.get('HEIGHT_VOI_DROPDOWN');
 					        else % isa(voi, 'VOINumeric')
 					            editfield = handles_voi{i};
 					            
-					            set(editfield, 'Position', [.30*w_p h+4 .45*w_p 21])
+					            set(editfield, 'Position', [.30*w_p h+s(.3) .45*w_p s(1.75)])
 					            
 					            h = h + pr.get('HEIGHT_VOI_EDITFIELD');
 					        end
 					    end
 					end
 					
-				case 18 % SubjectPP_VOIDict.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case SubjectPP_VOIDict.DELETE % __SubjectPP_VOIDict.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('HANDLES_VOI', Element.getNoValue())
 					    pr.set('LABELS_VOI', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

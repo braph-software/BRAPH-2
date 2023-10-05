@@ -183,8 +183,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 el_class = el;
                 % assert( ...
                 %     exist(el_class, 'class') == 8, ...
-                %     ['BRAPH2' ':Element:' 'WrongInput'], ...
-                %     ['BRAPH2' ':Element:' 'WrongInput' ' ' ...
+                %     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT], ...
+                %     [BRAPH2.STR ':Element:' BRAPH2.WRONG_INPUT ' ' ...
                 %     'The value ' tostring(el, 100, '...') ' is not a valid class name.'] ...
                 %     )
                 %CET
@@ -306,7 +306,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % Element.EXISTSPROP(PROP) throws an error if the PROP does NOT
             %  exist.
-            %  Error id: BRAPH2:Element:WrongInput
+            %  Error id: €BRAPH2.STR€:Element:€BRAPH2.WRONG_INPUT€
             %
             % Alternative forms to call this method are:
             %  EL.EXISTSPROP(PROP) throws error if PROP does NOT exist for EL.
@@ -334,8 +334,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 check_out = check;
             elseif ~check
                 error( ...
-                    ['BRAPH2' ':' Element.getClass(el) ':' 'WrongInput'], ...
-                    ['BRAPH2' ':' Element.getClass(el) ':' 'WrongInput' '\n' ...
+                    [BRAPH2.STR ':' Element.getClass(el) ':' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':' Element.getClass(el) ':' BRAPH2.WRONG_INPUT '\n' ...
                     'The value ' tostring(prop) ' is not a valid prop for ' Element.getClass(el) '.'] ...
                     )
             end
@@ -351,15 +351,15 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  CHECK = Element.EXISTSTAG(CLASS, TAG) checks tag TAG for CLASS.
             %
             % Element.EXISTSTAG(TAG) throws an error if the TAG NOT exist.
-            %  Error id: BRAPH2:Element:WrongInput
+            %  Error id: €BRAPH2.STR€:Element:€BRAPH2.WRONG_INPUT€
             %
             % Alternative forms to call this method are:
             %  EL.EXISTSTAG(TAG) throws error if TAG does NOT exist for EL.
             %   Error id: [BRAPH2:Element:WrongInput]
             %  Element.EXISTSTAG(EL, TAG) throws error if TAG does NOT
-            %   exist for EL. Error id: BRAPH2:<CLASS>:WrongInput
+            %   exist for EL. Error id: €BRAPH2.STR€:<CLASS>:€BRAPH2.WRONG_INPUT€
             %  Element.EXISTSTAG(CLASS, TAG) throws error if TAG does NOT
-            %   exist for CLASS. Error id: BRAPH2:<CLASS>:WrongInput
+            %   exist for CLASS. Error id: €BRAPH2.STR€:<CLASS>:€BRAPH2.WRONG_INPUT€
             %
             % Note that the Element.EXISTSTAG(EL) and Element.EXISTSTAG(CLASS) 
             %  are less computationally efficient. 
@@ -379,8 +379,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 check_out = check;
             elseif ~check
                 error( ...
-                    ['BRAPH2' ':' Element.getClass(el) ':' 'WrongInput'], ...
-                    ['BRAPH2' ':' Element.getClass(el) ':' 'WrongInput' '\n' ...
+                    [BRAPH2.STR ':' Element.getClass(el) ':' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':' Element.getClass(el) ':' BRAPH2.WRONG_INPUT '\n' ...
                     'The value ''' tag ''' is not a valid tag for ' Element.getClass(el) '.'] ...
                     )
             end
@@ -647,9 +647,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             
             if ~isa(el.props{prop}.callback, 'Callback')
                 cb = Callback('EL', el, 'PROP', prop);
-                cb.props{1}.locked = true;
-                cb.props{2}.locked = true;
-                cb.props{3}.locked = true;
+                cb.props{Callback.EL}.locked = true;
+                cb.props{Callback.PROP}.locked = true;
+                cb.props{Callback.TAG}.locked = true;
                 el.props{prop}.callback = cb;
             end
             
@@ -707,18 +707,18 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  3.   If a property is checked, it is <strong>FORMAT CHECKED</strong> before proceeding
             %       to its setting by calling <a href="matlab:help Format.checkFormat">Format.checkFormat</a>. 
             %       If the check fails, the property is not set and an error is thrown.
-            %       Error id: BRAPH2:<Element Class>:WrongInput
+            %       Error id: €BRAPH2.STR€:<Element Class>:€BRAPH2.WRONG_INPUT€
             %  4.   <strong>SET</strong>
             %           If the property is of category PARAMETER, DATA, FIGURE, or GUI,
             %            the value is set only if the property is unlocked. If an
             %            attempt is made to set a locked property, no setting occurs
             %            and a warning is thrown.
-            %            Warning id: BRAPH2:<Element Class>
+            %            Warning id: €BRAPH2.STR€:<Element Class>
             %
             %           If the value is a Callback, a warning is thrown if the element,
             %            property number and/or settings of the callback do not
             %            coincide with those of the property.
-            %            Warning id: BRAPH2:<Element Class>
+            %            Warning id: €BRAPH2.STR€:<Element Class>
             %
             %           If the property is of category RESULT, QUERY or EVANESCENT, the
             %            value can only be set to Element.getNoValue().
@@ -731,7 +731,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  7.   If ANY property is checked, the method Element.check() is called
             %       after all settings are made and the consistency of the values of
             %       all properties is <strong>CHECKED</strong>. If the check fails an error is thrown.
-            %       Error id: BRAPH2:<Element Class>:WrongInput
+            %       Error id: €BRAPH2.STR€:<Element Class>:€BRAPH2.WRONG_INPUT€
             %
             % Note that, when BRAPH2.CHECKED = false, no checks are performed.
             %
@@ -756,7 +756,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 value = varargin{i+1};
                 
                 switch el.getPropCategory(prop)
-                    case 2 % Category.METADATA
+                    case Category.METADATA % __Category.METADATA__
                         value = el.conditioning(prop, value);
                         
                         value = el.preset(prop, value);
@@ -769,7 +769,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
 
                         el.postset(prop); 
                         
-                    case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+                    case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
                         if ~el.isLocked(prop)
                             if isa(value, 'Callback')
                                 if el.getPropFormat(prop) ~= value.get('EL').getPropFormat(value.get('PROP'))
@@ -806,33 +806,33 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             end
                         else
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ... 
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ... 
                                 'Attempt to set the values of a LOCKED property (' el.getPropTag(prop) '), which was obviously not done.\n' ...
                                 'Hopefully this won''t create problems, but your code shouldn''t let this happen!'] ...
                                 )                            
                         end
 
-                    case {5 6 7} % {Category.RESULT Category.QUERY Category.EVANESCENT}
+                    case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
                         if isa(value, 'NoValue')
                             el.props{prop}.value = Element.getNoValue();
                         else
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ...
                                 'Rightfully unsuccessful attempt to set a ' Category.getCategoryName(el.getPropCategory(prop)) ...
                                 ' property (' el.getPropTag(prop) ') to a value.\n' ...
                                 'Probably not a problem, but shouldn''t happen with well-written code!'] ...
                                 )
                         end
-                    case 1 % Category.CONSTANT
+                    case Category.CONSTANT % __Category.CONSTANT__
                         if isa(value, 'NoValue')
                             el.props{prop}.value = Element.getNoValue();
                         else
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ...
-                                'Rightfully unsuccessful attempt to set a ' Category.getCategoryName(1) ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ...
+                                'Rightfully unsuccessful attempt to set a ' Category.getCategoryName(Category.CONSTANT) ...
                                 ' property (' el.getPropTag(prop) ') to a value.\n' ...
                                 'Probably not a problem, but shouldn''t happen with well-written code!'] ...
                                 )
@@ -850,8 +850,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 if ~check
                     el.props = props_backup; % restore props backup
                     error( ...
-                        ['BRAPH2' ':' class(el) ':' 'WrongInput'], ...
-                        ['BRAPH2' ':' class(el) ':' 'WrongInput' '\n' ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT], ...
+                        [BRAPH2.STR ':' class(el) ':' BRAPH2.WRONG_INPUT '\n' ...
                         msg '\n' ...
                         'The value of this ' class(el) ' has been restored, \n' ...
                         'so you can keep on working if you are using command line. \n' ...
@@ -881,7 +881,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % CHECK(EL) checks the values of all properties of element EL and thorws an
             %  error if the check fails.
-            %  Error id: BRAPH2:<Element Class>:ErrorFunc
+            %  Error id: €BRAPH2.STR€:<Element Class>:€BRAPH2.ERR_FUNC€
             %
             % See also isChecked, checked, unchecked, set, get, getr, memorize.
 
@@ -891,7 +891,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 if el.isChecked(prop)
                     value = el.getr(prop);
                     switch el.getPropCategory(prop)
-                        case 2 % Category.METADATA
+                        case Category.METADATA % __Category.METADATA__
                             if ~isa(value, 'NoValue')
                                 [value_check, value_msg] = el.checkValue(prop, value);
                             else % NoValue
@@ -899,7 +899,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
 
-                        case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+                        case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
                             while isa(value, 'Callback')
                                 value = value.get('EL').get(value.get('PROP'));
                             end
@@ -910,7 +910,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
 
-                        case {5 6 7} % {Category.RESULT Category.QUERY Category.EVANESCENT}
+                        case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
                             if ~isa(value, 'NoValue')
                                 [value_check, value_msg] = el.checkValue(prop, value);
                             else % NoValue
@@ -918,7 +918,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 value_msg = '';
                             end
                             
-                        case 1 % Category.CONSTANT
+                        case Category.CONSTANT % __Category.CONSTANT__
                             value_check = true;
                             value_msg = '';
                     end
@@ -937,8 +937,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 element_msg = msg;
             elseif ~check
                 error( ...
-                    ['BRAPH2' ':' el.getClass() ':' 'ErrorFunc'], ...
-                    ['BRAPH2' ':' el.getClass() ':' 'ErrorFunc' '\n' ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.ERR_FUNC], ...
+                    [BRAPH2.STR ':' el.getClass() ':' BRAPH2.ERR_FUNC '\n' ...
                     msg] ...
                     )
             end
@@ -976,7 +976,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  after the calculation calling the function <a href="matlab:help Element.check">check</a>.
             %  if the check fails, it resets the property to NoValue, returns NoValue,
             %  does not lock the property, and throws a warning.
-            %  Warning id: BRAPH2:<Element Class>
+            %  Warning id: €BRAPH2.STR€:<Element Class>
             %
             % VALUE = GET(EL, QUERY, VARARGIN) can be used with VARARGIN for properties
             %  of category QUERY. VARARGIN will be ignored for properties of other
@@ -992,24 +992,24 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             value = el.getr(prop);
 
             switch el.getPropCategory(prop)
-                case 1 % Category.CONSTANT
+                case Category.CONSTANT % __Category.CONSTANT__
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     end
                     
-                case 2 % Category.METADATA
+                case Category.METADATA % __Category.METADATA__
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     end
 
-                case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+                case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
                     if isa(value, 'NoValue')
                         value = el.getPropDefaultConditioned(prop);
                     elseif isa(value, 'Callback')
                         value = value.get('EL').get(value.get('PROP'));
                     end
 
-                case 5 % Category.RESULT
+                case Category.RESULT % __Category.RESULT__
                     if isa(value, 'NoValue')
 
                         % backup properties (if prop is checked)
@@ -1032,8 +1032,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.props = props_backup; % restore props backup
                                 value = el.props{prop}.value; % value is also set to the original NoValue()
                                 warning( ...
-                                    ['BRAPH2' ':' class(el)], ...
-                                    ['BRAPH2' ':' class(el) '\n' ...
+                                    [BRAPH2.STR ':' class(el)], ...
+                                    [BRAPH2.STR ':' class(el) '\n' ...
                                     msg '\n' ...
                                     'The value of this ' class(el) ' has been restored,\n' ...
                                     'but there might be problems, so better you check your code!'] ...
@@ -1042,7 +1042,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         end
                     end
                     
-                case 6 % Category.QUERY
+                case Category.QUERY % __Category.QUERY__
                     if isa(value, 'NoValue')
 
                         % backup properties (if prop is checked)
@@ -1061,8 +1061,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.props = props_backup; % restore props backup
                                 value = el.props{prop}.value; % value is also set to the original NoValue()
                                 warning( ...
-                                    ['BRAPH2' ':' class(el)], ...
-                                    ['BRAPH2' ':' class(el) '\n' ...
+                                    [BRAPH2.STR ':' class(el)], ...
+                                    [BRAPH2.STR ':' class(el) '\n' ...
                                     msg '\n' ...
                                     'The value of this ' class(el) ' has been restored,\n' ...
                                     'but there might be problems, so better you check your code!'] ...
@@ -1070,10 +1070,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             end
                         end
                         
-                        if el.getPropCategory(prop) == 7
+                        if el.getPropCategory(prop) == Category.EVANESCENT
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ...
                                 'The EVANESCENT property ' el.getPropTag(pointer) ' has NOT been memorized.\n' ...
                                 'While not necessarily an error, EVANESCENT properties are generally supposed to be memorized at first use.\n' ...
                                 'If this behavior is intended, consider enclosing the command between warning off and warning on.'] ...
@@ -1081,7 +1081,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                         end
                     end
                     
-                case 7 % Category.EVANESCENT
+                case Category.EVANESCENT % __Category.EVANESCENT__
                     if isa(value, 'NoValue')
 
                         % backup properties (if prop is checked)
@@ -1100,8 +1100,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.props = props_backup; % restore props backup
                                 value = el.props{prop}.value; % value is also set to the original NoValue()
                                 warning( ...
-                                    ['BRAPH2' ':' class(el)], ...
-                                    ['BRAPH2' ':' class(el) '\n' ...
+                                    [BRAPH2.STR ':' class(el)], ...
+                                    [BRAPH2.STR ':' class(el) '\n' ...
                                     msg '\n' ...
                                     'The value of this ' class(el) ' has been restored,\n' ...
                                     'but there might be problems, so better you check your code!'] ...
@@ -1109,10 +1109,10 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             end
                         end
                         
-                        if el.getPropCategory(prop) == 7
+                        if el.getPropCategory(prop) == Category.EVANESCENT
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ...
                                 'The EVANESCENT property ' el.getPropTag(pointer) ' has NOT been memorized.\n' ...
                                 'While not necessarily an error, EVANESCENT properties are generally supposed to be memorized at first use.\n' ...
                                 'If this behavior is intended, consider enclosing the command between warning off and warning on.'] ...
@@ -1142,7 +1142,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  Callback.
             %
             % If a property of category QUERY is memorized, a warning is thrown. 
-            %  Warning id: BRAPH2:<Element Class>
+            %  Warning id: €BRAPH2.STR€:<Element Class>
             % QUERY properties are generally not supposed to be memorized. If such
             %  behavior is intended, consider enclosing the command between warning off
             %  and warning on.
@@ -1162,14 +1162,14 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             else
                 if isa(el.props{prop}.value, 'NoValue')
                     switch el.getPropCategory(prop)
-                        case 5 % Category.RESULT
+                        case Category.RESULT % __Category.RESULT__
                             % calculates the value
                             el.props{prop}.value = el.get(prop);
                             
                             % notify event result memorized
                             notify(el, 'PropMemorized', EventPropMemorized(el, prop))
                             
-                        case 6 % Category.QUERY
+                        case Category.QUERY % __Category.QUERY__
                             % calculates the value
                             el.props{prop}.value = el.get(prop);
                             
@@ -1177,27 +1177,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             notify(el, 'PropMemorized', EventPropMemorized(el, prop))
                             
                             warning( ...
-                                ['BRAPH2' ':' class(el)], ...
-                                ['BRAPH2' ':' class(el) '\n' ...
+                                [BRAPH2.STR ':' class(el)], ...
+                                [BRAPH2.STR ':' class(el) '\n' ...
                                 'The QUERY property ' el.getPropTag(prop) ' has been memorized.\n' ...
                                 'While not necessarily an error, QUERY properties are generally not supposed to be memorized.\n' ...
                                 'If this behavior is intended, consider enclosing the command between warning off and warning on.'] ...
                                 )
                             
-                        case 7 % Category.EVANESCENT
+                        case Category.EVANESCENT % __Category.EVANESCENT__
                             % calculates the value
-                            backup_warning_state = warning('off', ['BRAPH2' ':' class(el)]); % to avoid the warning when memorizing an EVANESCENT property
+                            backup_warning_state = warning('off', [BRAPH2.STR ':' class(el)]); % to avoid the warning when memorizing an EVANESCENT property
                             el.props{prop}.value = el.get(prop);
                             warning(backup_warning_state)
                             
                             % notify event evanescent memorized
                             notify(el, 'PropMemorized', EventPropMemorized(el, prop))
                             
-                        case {2 3 4 8 9} % {Category.METADATA Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+                        case {Category.METADATA Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.METADATA__ __Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
                             % sets the value
                             el.set(prop, el.getPropDefault(prop))
                             
-                        case 1 % Category.CONSTANT
+                        case Category.CONSTANT % __Category.CONSTANT__
                             % retrieves the conitioned default value
                             el.props{prop}.value = el.getPropDefaultConditioned(prop);
                     end
@@ -1255,7 +1255,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  It only locks properties of category PARAMETER, DATA, FIGURE, and GUI 
             % If an attempt is made to lock a property of another category, no locking
             %  occurs and a warning is thrown. 
-            %  Warning id: BRAPH2:<Element Class>
+            %  Warning id: €BRAPH2.STR€:<Element Class>
             %
             % LOCK(EL, POINTER, 'Iterative', false) only locks the property but do not
             %  iteratively lock the corresponding element(s) (if ITEM, ITEMLIST, or
@@ -1268,13 +1268,13 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % See also isLocked, EventPropLocked.
 
             if nargin < 2
-                for prop = [el.getProps(3) el.getProps(4)]
+                for prop = [el.getProps(Category.PARAMETER) el.getProps(Category.DATA)]
                     el.lock(prop)
                 end
             else
                 prop = el.getPropProp(pointer);
                 
-                if any(el.getPropCategory(prop) == [3 4 8 9])
+                if any(el.getPropCategory(prop) == [Category.PARAMETER Category.DATA Category.FIGURE Category.GUI])
                     if ~el.isLocked(prop)
                         el.props{prop}.locked = true;
 
@@ -1292,8 +1292,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     end
                 else
                     warning( ...
-                        ['BRAPH2' ':' class(el)], ...
-                        ['BRAPH2' ':' class(el) '\n' ...
+                        [BRAPH2.STR ':' class(el)], ...
+                        [BRAPH2.STR ':' class(el) '\n' ...
                         'Rightfully unsuccessful attempt to lock a ' Category.getCategoryName(el.getPropCategory(pointer)) ...
                         ' property (' el.getPropTag(pointer) ').\n' ...
                         'Probably not a problem, but shouldn''t happen with well-written code!'] ...
@@ -1741,8 +1741,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                             return % check = false;
                         else 
                             for prop = 1:1:el1_list{i}.getPropNumber()
-                                if  el1_list{i}.getPropCategory(prop) ~= 7 ... % Category.EVANESCENT
-                                        && all(el1_list{i}.getPropFormat(prop) ~= [8 9 10]) ... % [Format.ITEM Format.ITEMLIST Format.IDICT]
+                                if  el1_list{i}.getPropCategory(prop) ~= Category.EVANESCENT ... % __Category.EVANESCENT__
+                                        && all(el1_list{i}.getPropFormat(prop) ~= [Format.ITEM Format.ITEMLIST Format.IDICT]) ... % [__Format.ITEM__ __Format.ITEMLIST__ __Format.IDICT__]
                                         && ~isa(el1_list{i}.getr(prop), 'Callback')
                                     if ~isequaln(el1_list{i}.getr(prop), el2_list{i}.getr(prop)) ...
                                             || el1_list{i}.isLocked(prop) ~= el2_list{i}.isLocked(prop)
@@ -1786,7 +1786,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % fills in handle props
             for i = 1:1:length(el_list)
                 for prop = 1:1:el_list{i}.getPropNumber()
-                    if el_list{i}.getPropCategory(prop) == 7
+                    if el_list{i}.getPropCategory(prop) == Category.EVANESCENT
                         % reinitializes evanescent properties
                         
                         el_copy_list{i}.props{prop}.value = Element.getNoValue();
@@ -1852,7 +1852,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 drawnow()
 
                 el = el.copy();
-                build = 5;
+                build = BRAPH2.BUILD;
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
                 save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');
@@ -1949,32 +1949,32 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                     elseif isa(value, 'Callback')
                         struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
                     else
-                        if el.getPropCategory(prop) == 7 % Category.EVANESCENT % set to NoValue
+                        if el.getPropCategory(prop) == Category.EVANESCENT % __Category.EVANESCENT__ % set to NoValue
                             struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
                         else
                             switch el.getPropFormat(prop)
-                                case 1 % Format.EMPTY
+                                case Format.EMPTY % __Format.EMPTY__
                                     struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                                case {2 5 6 23 24} % {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE}
+                                case {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE} % {__Format.STRING__ __Format.OPTION__ __Format.CLASS__ __Format.MARKER__ __Format.LINE__}
                                     struct{i}.props{prop}.value = regexprep(tostring(value), '''', '''''');
-                                case {4 11 12 13 14 15 20 21 22} % {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE}
+                                case {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE} % {__Format.LOGICAL__ __Format.SCALAR__ __Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__ __Format.COLOR__ __Format.ALPHA__ __Format.SIZE__}
                                     struct{i}.props{prop}.value = mat2str(value);
-                                case {7 3} % {Format.CLASSLIST Format.STRINGLIST}
+                                case {Format.CLASSLIST Format.STRINGLIST} % {__Format.CLASSLIST__ __Format.STRINGLIST__}
                                     json_str = '{';
                                     for j = 1:1:length(value)
                                         json_str = [json_str ' ''' value{j} ''' ']; %#ok<AGROW>
                                     end
                                     json_str = [json_str '}']; %#ok<AGROW>
                                     struct{i}.props{prop}.value = json_str;
-                                case {8 10} % {Format.ITEM Format.IDICT}
+                                case {Format.ITEM Format.IDICT} % {__Format.ITEM__ __Format.IDICT__}
                                     struct{i}.props{prop}.value = find(cellfun(@(x) value == x, el_list));
-                                case 9 % Format.ITEMLIST
+                                case Format.ITEMLIST % __Format.ITEMLIST__
                                     indices = zeros(1, length(value));
                                     for j = 1:1:length(value)
                                         indices(j) = find(cellfun(@(x) value{j} == x, el_list));
                                     end
                                     struct{i}.props{prop}.value = indices;
-                                case 16 % Format.CELL
+                                case Format.CELL % __Format.CELL__
                                     json_str = '{';
                                     for j = 1:1:size(value, 1)
                                         for k = 1:1:size(value, 2)
@@ -1989,9 +1989,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                     end
                                     json_str = [json_str '}']; %#ok<AGROW>
                                     struct{i}.props{prop}.value = json_str;
-                                case 17 % Format.NET % set to NoValue
+                                case Format.NET % __Format.NET__ % set to NoValue
                                     struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
-                                case {18 19} % {Format.HANDLE Format.HANDLELIST} % set to NoValue
+                                case {Format.HANDLE Format.HANDLELIST} % {__Format.HANDLE__ __Format.HANDLELIST__} % set to NoValue
                                     struct{i}.props{prop}.value = find(cellfun(@(x) Element.getNoValue() == x, el_list));
                             end
                         end
@@ -2045,27 +2045,27 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 for prop = 1:1:el.getPropNumber()
                     value = struct{i}.props(prop).value;
                     if isnumeric(value)
-                        if ~isequal(el.getPropFormat(prop), 9) || (numel(value) == 1 && isa(el_list{value}, 'NoValue')) % case {Format.ITEM Format.IDICT}
+                        if ~isequal(el.getPropFormat(prop), Format.ITEMLIST) || (numel(value) == 1 && isa(el_list{value}, 'NoValue')) % case {__Format.ITEM__ __Format.IDICT__}
                             el.props{prop}.value = el_list{value};
-                        else % case Format.ITEMLIST
+                        else % case __Format.ITEMLIST__
                             indices = value;
                             el.props{prop}.value = el_list(indices)';
                         end
                     else
                         switch el.getPropFormat(prop)
-                            case 1 % Format.EMPTY
+                            case Format.EMPTY % __Format.EMPTY__
                                 el.props{prop}.value = eval(value);
-                            case {2 5 6 23 24} % {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE}
+                            case {Format.STRING Format.OPTION Format.CLASS Format.MARKER Format.LINE} % {__Format.STRING__ __Format.OPTION__ __Format.CLASS__ __Format.MARKER__ __Format.LINE__}
                                 el.props{prop}.value = eval(value(2:end-1));
-                            case {4 11 12 13 14 15 20 21 22} % {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE}
+                            case {Format.LOGICAL Format.SCALAR Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX Format.COLOR Format.ALPHA Format.SIZE} % {__Format.LOGICAL__ __Format.SCALAR__ __Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__ __Format.COLOR__ __Format.ALPHA__ __Format.SIZE__}
                                 el.props{prop}.value = eval(value);
-                            case {7 3} % {Format.CLASSLIST Format.STRINGLIST}
+                            case {Format.CLASSLIST Format.STRINGLIST} % {__Format.CLASSLIST__ __Format.STRINGLIST__}
                                 el.props{prop}.value = eval(value);
-                            case 16 % Format.CELL
+                            case Format.CELL % __Format.CELL__
                                 el.props{prop}.value = eval(value);
-                            case 17 % Format.NET
+                            case Format.NET % __Format.NET__
                                 el.props{prop}.value = Element.getNoValue(); % NET properties are not saved
-                            case {18 19} % {Format.HANDLE Format.HANDLELIST}
+                            case {Format.HANDLE Format.HANDLELIST} % {__Format.HANDLE__ __Format.HANDLELIST__}
                                 el.props{prop}.value = Element.getNoValue(); % HANDLE and HANDLELIST properties are not saved
                         end
                     end
@@ -2102,126 +2102,126 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  PanelPropString, PanelPropStringList.
 
             switch el.getPropFormat(prop)
-                case 1 % Format.EMPTY
+                case Format.EMPTY % __Format.EMPTY__
                     pr = PanelProp( ... 
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 2 % Format.STRING
+                case Format.STRING % __Format.STRING__
                     pr = PanelPropString( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 3 % Format.STRINGLIST
+                case Format.STRINGLIST % __Format.STRINGLIST__
                     pr = PanelPropStringList( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 4 % Format.LOGICAL
+                case Format.LOGICAL % __Format.LOGICAL__
                     pr = PanelPropLogical( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 5 % Format.OPTION
+                case Format.OPTION % __Format.OPTION__
                     pr = PanelPropOption( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 6 % Format.CLASS
+                case Format.CLASS % __Format.CLASS__
                     pr = PanelPropClass( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 7 % Format.CLASSLIST
+                case Format.CLASSLIST % __Format.CLASSLIST__
                     pr = PanelPropClassList( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 8 % Format.ITEM
+                case Format.ITEM % __Format.ITEM__
                     pr = PanelPropItem( ... 
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 9 % Format.ITEMLIST
+                case Format.ITEMLIST % __Format.ITEMLIST__
                     pr = PanelPropItemList( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 10 % Format.IDICT
+                case Format.IDICT % __Format.IDICT__
                     pr = PanelPropIDict( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 11 % Format.SCALAR
+                case Format.SCALAR % __Format.SCALAR__
                     pr = PanelPropScalar( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 12 % Format.RVECTOR
+                case Format.RVECTOR % __Format.RVECTOR__
                     pr = PanelPropMatrix( ... 
                         'EL', el, ...
                         'PROP', prop, ... 
                         'ROWNAME', {}, ...
                         varargin{:});
-                case 13 % Format.CVECTOR
+                case Format.CVECTOR % __Format.CVECTOR__
                     pr = PanelPropMatrix( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         'COLUMNNAME', {}, ...
                         varargin{:});
-                case 14 % Format.MATRIX
+                case Format.MATRIX % __Format.MATRIX__
                     pr = PanelPropMatrix( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 15 % Format.SMATRIX
+                case Format.SMATRIX % __Format.SMATRIX__
                     pr = PanelPropMatrix( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 16 % Format.CELL
+                case Format.CELL % __Format.CELL__
                     pr = PanelPropCell( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 17 % Format.NET
+                case Format.NET % __Format.NET__
                     pr = PanelPropNet( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 18 % Format.HANDLE
-                    warning([BRAPH2.STR ':Element'], [BRAPH2.STR ':Element \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
+                case Format.HANDLE % __Format.HANDLE__
+                    %%%__WARN_TBI__
 % % %                     pr = PanelPropHandle( ...
 % % %                         'EL', el, ...
 % % %                         'PROP', prop, ...
 % % %                         varargin{:});
-                case 19 % Format.HANDLELIST
-                    warning([BRAPH2.STR ':Element'], [BRAPH2.STR ':Element \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
+                case Format.HANDLELIST % __Format.HANDLELIST__
+                    %%%__WARN_TBI__
 % % %                     pr = PanelPropHandleList( ...
 % % %                         'EL', el, ...
 % % %                         'PROP', prop, ...
 % % %                         varargin{:});
-                case 20 % Format.COLOR
+                case Format.COLOR % __Format.COLOR__
                     pr = PanelPropColor( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 21 % Format.ALPHA
+                case Format.ALPHA % __Format.ALPHA__
                     pr = PanelPropAlpha( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 22 % Format.SIZE
+                case Format.SIZE % __Format.SIZE__
                     pr = PanelPropSize( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 23 % Format.MARKER
+                case Format.MARKER % __Format.MARKER__
                     pr = PanelPropMarker( ...
                         'EL', el, ...
                         'PROP', prop, ...
                         varargin{:});
-                case 24 % Format.LINE
+                case Format.LINE % __Format.LINE__
                     pr = PanelPropLine( ...
                         'EL', el, ...
                         'PROP', prop, ...

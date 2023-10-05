@@ -4,17 +4,6 @@ classdef Exporter < ConcreteElement
 	%
 	% An Exporter is the base class for the exporter of an element (ConcreteElement) to a file.
 	%
-	% The list of Exporter properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%
 	% Exporter methods (constructor):
 	%  Exporter - constructor
 	%
@@ -104,10 +93,10 @@ classdef Exporter < ConcreteElement
 	% See also ConcreteElement, Importer.
 	
 	properties (Constant) % properties
-		WAITBAR = 9; %CET: Computational Efficiency Trick
+		WAITBAR = ConcreteElement.getPropNumber() + 1;
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = 9;
-		WAITBAR_FORMAT = 4;
+		WAITBAR_CATEGORY = Category.GUI;
+		WAITBAR_FORMAT = Format.LOGICAL;
 	end
 	methods % constructor
 		function ex = Exporter(varargin)
@@ -120,16 +109,6 @@ classdef Exporter < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Exporter properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the exporter.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the exporter.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the exporter.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the exporter.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%
 			% See also Category, Format.
 			
@@ -167,7 +146,7 @@ classdef Exporter < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Exporter'  'ExporterGroupSubjectCON_TXT'  'ExporterGroupSubjectCON_XLS'  'ExporterGroupSubjectCON_MP_TXT'  'ExporterGroupSubjectCON_MP_XLS'  'ExporterGroupSubjectFUN_TXT'  'ExporterGroupSubjectFUN_XLS'  'ExporterGroupSubjectFUN_MP_TXT'  'ExporterGroupSubjectFUN_MP_XLS'  'ExporterGroupSubjectST_TXT'  'ExporterGroupSubjectST_XLS'  'ExporterGroupSubjectST_MP_TXT'  'ExporterGroupSubjectST_MP_XLS'  'ExporterBrainAtlasTXT'  'ExporterBrainAtlasXLS'  'ExporterPipelineBRAPH2' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Exporter', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of exporter to a file.
@@ -188,28 +167,52 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						Exporter.WAITBAR ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						Exporter.WAITBAR ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -230,29 +233,7 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 9;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Exporter.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in exporter to a file/error.
@@ -280,14 +261,14 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Exporter.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Exporter:' 'WrongInput'], ...
-					['BRAPH2' ':Exporter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Exporter.'] ...
 					)
 			end
@@ -318,14 +299,15 @@ classdef Exporter < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); %CET: Computational Efficiency Trick
+			exporter_tag_list = cellfun(@(x) Exporter.getPropTag(x), num2cell(Exporter.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, exporter_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Exporter:' 'WrongInput'], ...
-					['BRAPH2' ':Exporter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Exporter.'] ...
 					)
 			end
@@ -351,7 +333,8 @@ classdef Exporter < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' })); % tag = pointer %CET: Computational Efficiency Trick
+				exporter_tag_list = cellfun(@(x) Exporter.getPropTag(x), num2cell(Exporter.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, exporter_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -379,9 +362,14 @@ classdef Exporter < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				exporter_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR' };
-				tag = exporter_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case Exporter.WAITBAR
+						tag = Exporter.WAITBAR_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -406,9 +394,12 @@ classdef Exporter < ConcreteElement
 			
 			prop = Exporter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exporter_category_list = { 1  1  1  3  4  2  2  6  9 };
-			prop_category = exporter_category_list{prop};
+			switch prop
+				case Exporter.WAITBAR
+					prop_category = Exporter.WAITBAR_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -432,9 +423,12 @@ classdef Exporter < ConcreteElement
 			
 			prop = Exporter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exporter_format_list = { 2  2  2  8  2  2  2  2  4 };
-			prop_format = exporter_format_list{prop};
+			switch prop
+				case Exporter.WAITBAR
+					prop_format = Exporter.WAITBAR_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -458,9 +452,26 @@ classdef Exporter < ConcreteElement
 			
 			prop = Exporter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exporter_description_list = { 'ELCLASS (constant, string) is the class of the exporter.'  'NAME (constant, string) is the name of the exporter.'  'DESCRIPTION (constant, string) is the description of the exporter.'  'TEMPLATE (parameter, item) is the template of the exporter.'  'ID (data, string) is a few-letter code for the exporter.'  'LABEL (metadata, string) is an extended label of the exporter.'  'NOTES (metadata, string) are some specific notes about the exporter.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
-			prop_description = exporter_description_list{prop};
+			switch prop
+				case Exporter.WAITBAR
+					prop_description = 'WAITBAR (gui, logical) detemines whether to show the waitbar.';
+				case Exporter.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the exporter.';
+				case Exporter.NAME
+					prop_description = 'NAME (constant, string) is the name of the exporter.';
+				case Exporter.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the exporter.';
+				case Exporter.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the exporter.';
+				case Exporter.ID
+					prop_description = 'ID (data, string) is a few-letter code for the exporter.';
+				case Exporter.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the exporter.';
+				case Exporter.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the exporter.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -484,10 +495,10 @@ classdef Exporter < ConcreteElement
 			
 			prop = Exporter.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Exporter.WAITBAR
-					prop_settings = Format.getFormatSettings(4);
-				case 4 % Exporter.TEMPLATE
+			switch prop
+				case Exporter.WAITBAR
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case Exporter.TEMPLATE
 					prop_settings = 'Exporter';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -515,22 +526,22 @@ classdef Exporter < ConcreteElement
 			
 			prop = Exporter.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Exporter.WAITBAR
-					prop_default = Format.getFormatDefault(4, Exporter.getPropSettings(prop));
-				case 1 % Exporter.ELCLASS
+			switch prop
+				case Exporter.WAITBAR
+					prop_default = Format.getFormatDefault(Format.LOGICAL, Exporter.getPropSettings(prop));
+				case Exporter.ELCLASS
 					prop_default = 'Exporter';
-				case 2 % Exporter.NAME
+				case Exporter.NAME
 					prop_default = 'Exporter';
-				case 3 % Exporter.DESCRIPTION
+				case Exporter.DESCRIPTION
 					prop_default = 'An Exporter is the base class for the exporter of an element (ConcreteElement) to a file.';
-				case 4 % Exporter.TEMPLATE
-					prop_default = Format.getFormatDefault(8, Exporter.getPropSettings(prop));
-				case 5 % Exporter.ID
+				case Exporter.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, Exporter.getPropSettings(prop));
+				case Exporter.ID
 					prop_default = 'Exporter ID';
-				case 6 % Exporter.LABEL
+				case Exporter.LABEL
 					prop_default = 'Exporter label';
-				case 7 % Exporter.NOTES
+				case Exporter.NOTES
 					prop_default = 'Exporter notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -577,15 +588,15 @@ classdef Exporter < ConcreteElement
 			% 
 			% EX.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Exporter:WrongInput
+			%  Error id: €BRAPH2.STR€:Exporter:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  EX.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of EX.
-			%   Error id: BRAPH2:Exporter:WrongInput
+			%   Error id: €BRAPH2.STR€:Exporter:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Exporter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Exporter.
-			%   Error id: BRAPH2:Exporter:WrongInput
+			%   Error id: €BRAPH2.STR€:Exporter:€BRAPH2.WRONG_INPUT€
 			%  EX.CHECKPROP(Exporter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Exporter.
-			%   Error id: BRAPH2:Exporter:WrongInput]
+			%   Error id: €BRAPH2.STR€:Exporter:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(EX) and Element.CHECKPROP('Exporter')
 			%  are less computationally efficient.
@@ -596,12 +607,12 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			switch prop
-				case 9 % Exporter.WAITBAR
-					check = Format.checkFormat(4, value, Exporter.getPropSettings(prop));
-				case 4 % Exporter.TEMPLATE
-					check = Format.checkFormat(8, value, Exporter.getPropSettings(prop));
+				case Exporter.WAITBAR % __Exporter.WAITBAR__
+					check = Format.checkFormat(Format.LOGICAL, value, Exporter.getPropSettings(prop));
+				case Exporter.TEMPLATE % __Exporter.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, Exporter.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -610,8 +621,8 @@ classdef Exporter < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Exporter:' 'WrongInput'], ...
-					['BRAPH2' ':Exporter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Exporter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Exporter.getPropTag(prop) ' (' Exporter.getFormatTag(Exporter.getPropFormat(prop)) ').'] ...
 					)
 			end

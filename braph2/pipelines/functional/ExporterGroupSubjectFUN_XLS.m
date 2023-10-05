@@ -12,21 +12,6 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 	%  The 1st row contains the headers, the 2nd row a string with the categorical
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
-	% The list of ExporterGroupSubjectFUN_XLS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN subject group exporter in XLSX.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN subject group exporter in XLSX.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN subject group exporter in XLSX.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group exporter in XLSX.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group exporter in XLSX.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group exporter in XLSX.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with functional data.
-	%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.
-	%  <strong>12</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.
-	%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with functional data in XLSX files in the selected directory.
-	%
 	% ExporterGroupSubjectFUN_XLS methods (constructor):
 	%  ExporterGroupSubjectFUN_XLS - constructor
 	%
@@ -116,25 +101,25 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 	% See also Group, SunbjectFUN, ImporterGroupSubjectFUN_XLS.
 	
 	properties (Constant) % properties
-		GR = 10; %CET: Computational Efficiency Trick
+		GR = Exporter.getPropNumber() + 1;
 		GR_TAG = 'GR';
-		GR_CATEGORY = 4;
-		GR_FORMAT = 8;
+		GR_CATEGORY = Category.DATA;
+		GR_FORMAT = Format.ITEM;
 		
-		DIRECTORY = 11; %CET: Computational Efficiency Trick
+		DIRECTORY = Exporter.getPropNumber() + 2;
 		DIRECTORY_TAG = 'DIRECTORY';
-		DIRECTORY_CATEGORY = 4;
-		DIRECTORY_FORMAT = 2;
+		DIRECTORY_CATEGORY = Category.DATA;
+		DIRECTORY_FORMAT = Format.STRING;
 		
-		PUT_DIR = 12; %CET: Computational Efficiency Trick
+		PUT_DIR = Exporter.getPropNumber() + 3;
 		PUT_DIR_TAG = 'PUT_DIR';
-		PUT_DIR_CATEGORY = 6;
-		PUT_DIR_FORMAT = 8;
+		PUT_DIR_CATEGORY = Category.QUERY;
+		PUT_DIR_FORMAT = Format.ITEM;
 		
-		SAVE = 13; %CET: Computational Efficiency Trick
+		SAVE = Exporter.getPropNumber() + 4;
 		SAVE_TAG = 'SAVE';
-		SAVE_CATEGORY = 5;
-		SAVE_FORMAT = 1;
+		SAVE_CATEGORY = Category.RESULT;
+		SAVE_FORMAT = Format.EMPTY;
 	end
 	methods % constructor
 		function ex = ExporterGroupSubjectFUN_XLS(varargin)
@@ -147,20 +132,6 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ExporterGroupSubjectFUN_XLS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the FUN subject group exporter in XLSX.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the FUN subject group exporter in XLSX.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the FUN subject group exporter in XLSX.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group exporter in XLSX.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group exporter in XLSX.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group exporter in XLSX.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with functional data.
-			%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.
-			%  <strong>12</strong> <strong>PUT_DIR</strong> 	PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.
-			%  <strong>13</strong> <strong>SAVE</strong> 	SAVE (result, empty) saves the group of subjects with functional data in XLSX files in the selected directory.
 			%
 			% See also Category, Format.
 			
@@ -198,7 +169,7 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ExporterGroupSubjectFUN_XLS' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('ExporterGroupSubjectFUN_XLS', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of exporter of FUN subject group in XLSX.
@@ -219,30 +190,58 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [ ...
+					Exporter.getProps() ...
+						ExporterGroupSubjectFUN_XLS.GR ...
+						ExporterGroupSubjectFUN_XLS.DIRECTORY ...
+						ExporterGroupSubjectFUN_XLS.PUT_DIR ...
+						ExporterGroupSubjectFUN_XLS.SAVE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 10 11];
-				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = [8 12];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Exporter.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Exporter.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Exporter.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Exporter.getProps(Category.DATA) ...
+						ExporterGroupSubjectFUN_XLS.GR ...
+						ExporterGroupSubjectFUN_XLS.DIRECTORY ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Exporter.getProps(Category.RESULT) ...
+						ExporterGroupSubjectFUN_XLS.SAVE ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Exporter.getProps(Category.QUERY) ...
+						ExporterGroupSubjectFUN_XLS.PUT_DIR ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Exporter.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Exporter.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Exporter.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -263,31 +262,7 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 13;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(ExporterGroupSubjectFUN_XLS.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in exporter of FUN subject group in XLSX/error.
@@ -315,14 +290,14 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == ExporterGroupSubjectFUN_XLS.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput'], ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ExporterGroupSubjectFUN_XLS.'] ...
 					)
 			end
@@ -353,14 +328,15 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); %CET: Computational Efficiency Trick
+			exportergroupsubjectfun_xls_tag_list = cellfun(@(x) ExporterGroupSubjectFUN_XLS.getPropTag(x), num2cell(ExporterGroupSubjectFUN_XLS.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, exportergroupsubjectfun_xls_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput'], ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for ExporterGroupSubjectFUN_XLS.'] ...
 					)
 			end
@@ -386,7 +362,8 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' })); % tag = pointer %CET: Computational Efficiency Trick
+				exportergroupsubjectfun_xls_tag_list = cellfun(@(x) ExporterGroupSubjectFUN_XLS.getPropTag(x), num2cell(ExporterGroupSubjectFUN_XLS.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, exportergroupsubjectfun_xls_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -414,9 +391,20 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				exportergroupsubjectfun_xls_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'DIRECTORY'  'PUT_DIR'  'SAVE' };
-				tag = exportergroupsubjectfun_xls_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case ExporterGroupSubjectFUN_XLS.GR
+						tag = ExporterGroupSubjectFUN_XLS.GR_TAG;
+					case ExporterGroupSubjectFUN_XLS.DIRECTORY
+						tag = ExporterGroupSubjectFUN_XLS.DIRECTORY_TAG;
+					case ExporterGroupSubjectFUN_XLS.PUT_DIR
+						tag = ExporterGroupSubjectFUN_XLS.PUT_DIR_TAG;
+					case ExporterGroupSubjectFUN_XLS.SAVE
+						tag = ExporterGroupSubjectFUN_XLS.SAVE_TAG;
+					otherwise
+						tag = getPropTag@Exporter(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -441,9 +429,18 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exportergroupsubjectfun_xls_category_list = { 1  1  1  3  4  2  2  6  9  4  4  6  5 };
-			prop_category = exportergroupsubjectfun_xls_category_list{prop};
+			switch prop
+				case ExporterGroupSubjectFUN_XLS.GR
+					prop_category = ExporterGroupSubjectFUN_XLS.GR_CATEGORY;
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY
+					prop_category = ExporterGroupSubjectFUN_XLS.DIRECTORY_CATEGORY;
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR
+					prop_category = ExporterGroupSubjectFUN_XLS.PUT_DIR_CATEGORY;
+				case ExporterGroupSubjectFUN_XLS.SAVE
+					prop_category = ExporterGroupSubjectFUN_XLS.SAVE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Exporter(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -467,9 +464,18 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exportergroupsubjectfun_xls_format_list = { 2  2  2  8  2  2  2  2  4  8  2  8  1 };
-			prop_format = exportergroupsubjectfun_xls_format_list{prop};
+			switch prop
+				case ExporterGroupSubjectFUN_XLS.GR
+					prop_format = ExporterGroupSubjectFUN_XLS.GR_FORMAT;
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY
+					prop_format = ExporterGroupSubjectFUN_XLS.DIRECTORY_FORMAT;
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR
+					prop_format = ExporterGroupSubjectFUN_XLS.PUT_DIR_FORMAT;
+				case ExporterGroupSubjectFUN_XLS.SAVE
+					prop_format = ExporterGroupSubjectFUN_XLS.SAVE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Exporter(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -493,9 +499,32 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			exportergroupsubjectfun_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the FUN subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the FUN subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the FUN subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the FUN subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the FUN subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with functional data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.'  'SAVE (result, empty) saves the group of subjects with functional data in XLSX files in the selected directory.' };
-			prop_description = exportergroupsubjectfun_xls_description_list{prop};
+			switch prop
+				case ExporterGroupSubjectFUN_XLS.GR
+					prop_description = 'GR (data, item) is a group of subjects with functional data.';
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY
+					prop_description = 'DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.';
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR
+					prop_description = 'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.';
+				case ExporterGroupSubjectFUN_XLS.SAVE
+					prop_description = 'SAVE (result, empty) saves the group of subjects with functional data in XLSX files in the selected directory.';
+				case ExporterGroupSubjectFUN_XLS.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case ExporterGroupSubjectFUN_XLS.NAME
+					prop_description = 'NAME (constant, string) is the name of the FUN subject group exporter in XLSX.';
+				case ExporterGroupSubjectFUN_XLS.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the FUN subject group exporter in XLSX.';
+				case ExporterGroupSubjectFUN_XLS.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the FUN subject group exporter in XLSX.';
+				case ExporterGroupSubjectFUN_XLS.ID
+					prop_description = 'ID (data, string) is a few-letter code for the FUN subject group exporter in XLSX.';
+				case ExporterGroupSubjectFUN_XLS.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the FUN subject group exporter in XLSX.';
+				case ExporterGroupSubjectFUN_XLS.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the FUN subject group exporter in XLSX.';
+				otherwise
+					prop_description = getPropDescription@Exporter(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -519,15 +548,15 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ExporterGroupSubjectFUN_XLS.GR
+			switch prop
+				case ExporterGroupSubjectFUN_XLS.GR
 					prop_settings = 'Group';
-				case 11 % ExporterGroupSubjectFUN_XLS.DIRECTORY
-					prop_settings = Format.getFormatSettings(2);
-				case 12 % ExporterGroupSubjectFUN_XLS.PUT_DIR
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR
 					prop_settings = 'ExporterGroupSubjectFUN_XLS';
-				case 13 % ExporterGroupSubjectFUN_XLS.SAVE
-					prop_settings = Format.getFormatSettings(1);
+				case ExporterGroupSubjectFUN_XLS.SAVE
+					prop_settings = Format.getFormatSettings(Format.EMPTY);
 				otherwise
 					prop_settings = getPropSettings@Exporter(prop);
 			end
@@ -554,26 +583,26 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ExporterGroupSubjectFUN_XLS.GR
+			switch prop
+				case ExporterGroupSubjectFUN_XLS.GR
 					prop_default = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
-				case 11 % ExporterGroupSubjectFUN_XLS.DIRECTORY
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY
 					prop_default = [fileparts(which('test_braph2')) filesep 'default_group_subjects_FUN_most_likely_to_be_erased'];
-				case 12 % ExporterGroupSubjectFUN_XLS.PUT_DIR
-					prop_default = Format.getFormatDefault(8, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
-				case 13 % ExporterGroupSubjectFUN_XLS.SAVE
-					prop_default = Format.getFormatDefault(1, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
-				case 1 % ExporterGroupSubjectFUN_XLS.ELCLASS
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR
+					prop_default = Format.getFormatDefault(Format.ITEM, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.SAVE
+					prop_default = Format.getFormatDefault(Format.EMPTY, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.ELCLASS
 					prop_default = 'ExporterGroupSubjectFUN_XLS';
-				case 2 % ExporterGroupSubjectFUN_XLS.NAME
+				case ExporterGroupSubjectFUN_XLS.NAME
 					prop_default = 'ExporterGroupSubjectFUN_XLS';
-				case 3 % ExporterGroupSubjectFUN_XLS.DESCRIPTION
+				case ExporterGroupSubjectFUN_XLS.DESCRIPTION
 					prop_default = 'ExporterGroupSubjectFUN_XLS exports a group of subjects with functional data to a series of XLSX files. The variables of interest (if existing) are saved in another XLSX file.';
-				case 5 % ExporterGroupSubjectFUN_XLS.ID
+				case ExporterGroupSubjectFUN_XLS.ID
 					prop_default = 'ExporterGroupSubjectFUN_XLS ID';
-				case 6 % ExporterGroupSubjectFUN_XLS.LABEL
+				case ExporterGroupSubjectFUN_XLS.LABEL
 					prop_default = 'ExporterGroupSubjectFUN_XLS label';
-				case 7 % ExporterGroupSubjectFUN_XLS.NOTES
+				case ExporterGroupSubjectFUN_XLS.NOTES
 					prop_default = 'ExporterGroupSubjectFUN_XLS notes';
 				otherwise
 					prop_default = getPropDefault@Exporter(prop);
@@ -620,15 +649,15 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			% 
 			% EX.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ExporterGroupSubjectFUN_XLS:WrongInput
+			%  Error id: €BRAPH2.STR€:ExporterGroupSubjectFUN_XLS:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  EX.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of EX.
-			%   Error id: BRAPH2:ExporterGroupSubjectFUN_XLS:WrongInput
+			%   Error id: €BRAPH2.STR€:ExporterGroupSubjectFUN_XLS:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(ExporterGroupSubjectFUN_XLS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ExporterGroupSubjectFUN_XLS.
-			%   Error id: BRAPH2:ExporterGroupSubjectFUN_XLS:WrongInput
+			%   Error id: €BRAPH2.STR€:ExporterGroupSubjectFUN_XLS:€BRAPH2.WRONG_INPUT€
 			%  EX.CHECKPROP(ExporterGroupSubjectFUN_XLS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ExporterGroupSubjectFUN_XLS.
-			%   Error id: BRAPH2:ExporterGroupSubjectFUN_XLS:WrongInput]
+			%   Error id: €BRAPH2.STR€:ExporterGroupSubjectFUN_XLS:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(EX) and Element.CHECKPROP('ExporterGroupSubjectFUN_XLS')
 			%  are less computationally efficient.
@@ -639,19 +668,19 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			prop = ExporterGroupSubjectFUN_XLS.getPropProp(pointer);
 			
 			switch prop
-				case 10 % ExporterGroupSubjectFUN_XLS.GR
-					check = Format.checkFormat(8, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.GR % __ExporterGroupSubjectFUN_XLS.GR__
+					check = Format.checkFormat(Format.ITEM, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
 					if check
-						check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectFUN', [], [], true))); % Format.checkFormat(8, value) already checked
+						check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectFUN', [], [], true))); % Format.checkFormat(Format.ITEM, value) already checked
 					end
-				case 11 % ExporterGroupSubjectFUN_XLS.DIRECTORY
-					check = Format.checkFormat(2, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
-				case 12 % ExporterGroupSubjectFUN_XLS.PUT_DIR
-					check = Format.checkFormat(8, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
-				case 13 % ExporterGroupSubjectFUN_XLS.SAVE
-					check = Format.checkFormat(1, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.DIRECTORY % __ExporterGroupSubjectFUN_XLS.DIRECTORY__
+					check = Format.checkFormat(Format.STRING, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR % __ExporterGroupSubjectFUN_XLS.PUT_DIR__
+					check = Format.checkFormat(Format.ITEM, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
+				case ExporterGroupSubjectFUN_XLS.SAVE % __ExporterGroupSubjectFUN_XLS.SAVE__
+					check = Format.checkFormat(Format.EMPTY, value, ExporterGroupSubjectFUN_XLS.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= Exporter.getPropNumber()
 						check = checkProp@Exporter(prop, value);
 					end
 			end
@@ -660,8 +689,8 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput'], ...
-					['BRAPH2' ':ExporterGroupSubjectFUN_XLS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ExporterGroupSubjectFUN_XLS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ExporterGroupSubjectFUN_XLS.getPropTag(prop) ' (' ExporterGroupSubjectFUN_XLS.getFormatTag(ExporterGroupSubjectFUN_XLS.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -672,27 +701,27 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % ExporterGroupSubjectFUN_XLS.PUT_DIR
+				case ExporterGroupSubjectFUN_XLS.PUT_DIR % __ExporterGroupSubjectFUN_XLS.PUT_DIR__
 					directory = uigetdir('Select directory');
 					if ischar(directory) && isfolder(directory)
 						ex.set('DIRECTORY', directory);
 					end
 					value = ex;
 					
-				case 13 % ExporterGroupSubjectFUN_XLS.SAVE
-					rng_settings_ = rng(); rng(ex.getPropSeed(13), 'twister')
+				case ExporterGroupSubjectFUN_XLS.SAVE % __ExporterGroupSubjectFUN_XLS.SAVE__
+					rng_settings_ = rng(); rng(ex.getPropSeed(ExporterGroupSubjectFUN_XLS.SAVE), 'twister')
 					
 					directory = ex.get('DIRECTORY');
 					
@@ -765,7 +794,7 @@ classdef ExporterGroupSubjectFUN_XLS < Exporter
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= Exporter.getPropNumber()
 						value = calculateValue@Exporter(ex, prop, varargin{:});
 					else
 						value = calculateValue@Element(ex, prop, varargin{:});

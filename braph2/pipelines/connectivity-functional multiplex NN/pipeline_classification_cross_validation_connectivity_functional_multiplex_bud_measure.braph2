@@ -1,11 +1,16 @@
 %% Pipeline Classification Cross-Validation Connectivity-Functional Multiplex BUD Measure  
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using the graph measures with binary undirected graph at fix densities obtained from connectivity-functional multiplex data.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI). 
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2.1 It loads the connectivity data of two groups of subjects from three directories (e.g., CON_Group1_XLS, CON_Group2_XLS, and CON_Group3_XLS) containing XLS files of each subject.
 % 2.2 It loads the functional data of two groups of subjects from three directories (e.g., CON_Group1_XLS, CON_Group2_XLS, and CON_Group3_XLS) containing XLS files of each subject.
 % 3. It analyzes these groups using connectivity-functional analyses (CON-FUN) based on binary undirected multiplex at fix densities (MultiplexBUD).
 % 4. It executes the cross-validation process.
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

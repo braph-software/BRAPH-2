@@ -4,22 +4,6 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 	%
 	% This graph analysis uses connectivity data and analyzes them using weighted directed graphs.
 	%
-	% The list of AnalyzeEnsemble_CON_WD properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-	%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.
-	%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-	%
 	% AnalyzeEnsemble_CON_WD methods (constructor):
 	%  AnalyzeEnsemble_CON_WD - constructor
 	%
@@ -119,21 +103,6 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeEnsemble_CON_WD properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON.
-			%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.
-			%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 			%
 			% See also Category, Format.
 			
@@ -171,7 +140,7 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeEnsemble_CON_WD' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('AnalyzeEnsemble_CON_WD', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graph analysis with connectivity data.
@@ -192,30 +161,50 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [ ...
+					AnalyzeEnsemble.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 11];
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = [12 13];
-				case 6 % Category.QUERY
-					prop_list = [8 14];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						AnalyzeEnsemble.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -236,31 +225,7 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 14;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 2;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(AnalyzeEnsemble_CON_WD.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graph analysis with connectivity data/error.
@@ -288,14 +253,14 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == AnalyzeEnsemble_CON_WD.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeEnsemble_CON_WD.'] ...
 					)
 			end
@@ -326,14 +291,15 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); %CET: Computational Efficiency Trick
+			analyzeensemble_con_wd_tag_list = cellfun(@(x) AnalyzeEnsemble_CON_WD.getPropTag(x), num2cell(AnalyzeEnsemble_CON_WD.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, analyzeensemble_con_wd_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeEnsemble_CON_WD.'] ...
 					)
 			end
@@ -359,7 +325,8 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); % tag = pointer %CET: Computational Efficiency Trick
+				analyzeensemble_con_wd_tag_list = cellfun(@(x) AnalyzeEnsemble_CON_WD.getPropTag(x), num2cell(AnalyzeEnsemble_CON_WD.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, analyzeensemble_con_wd_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -387,9 +354,12 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				analyzeensemble_con_wd_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' };
-				tag = analyzeensemble_con_wd_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@AnalyzeEnsemble(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -414,9 +384,10 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wd_category_list = { 1  1  1  3  4  2  2  6  9  4  3  5  5  6 };
-			prop_category = analyzeensemble_con_wd_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -440,9 +411,10 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wd_format_list = { 2  2  2  8  2  2  2  2  4  8  8  10  10  8 };
-			prop_format = analyzeensemble_con_wd_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -466,9 +438,32 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_wd_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.'  'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.'  'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.'  'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.'  'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.'  'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.' };
-			prop_description = analyzeensemble_con_wd_description_list{prop};
+			switch prop
+				case AnalyzeEnsemble_CON_WD.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case AnalyzeEnsemble_CON_WD.NAME
+					prop_description = 'NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.ID
+					prop_description = 'ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.';
+				case AnalyzeEnsemble_CON_WD.GR
+					prop_description = 'GR (data, item) is the subject group, which also defines the subject class SubjectCON.';
+				case AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
+					prop_description = 'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.';
+				case AnalyzeEnsemble_CON_WD.G_DICT
+					prop_description = 'G_DICT (result, idict) is the graph (GraphWD) ensemble obtained from this analysis.';
+				case AnalyzeEnsemble_CON_WD.ME_DICT
+					prop_description = 'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.';
+				otherwise
+					prop_description = getPropDescription@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -492,12 +487,12 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % AnalyzeEnsemble_CON_WD.TEMPLATE
+			switch prop
+				case AnalyzeEnsemble_CON_WD.TEMPLATE
 					prop_settings = 'AnalyzeEnsemble_CON_WD';
-				case 11 % AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
+				case AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
 					prop_settings = 'GraphWD';
-				case 12 % AnalyzeEnsemble_CON_WD.G_DICT
+				case AnalyzeEnsemble_CON_WD.G_DICT
 					prop_settings = 'GraphWD';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeEnsemble(prop);
@@ -525,27 +520,27 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % AnalyzeEnsemble_CON_WD.ELCLASS
+			switch prop
+				case AnalyzeEnsemble_CON_WD.ELCLASS
 					prop_default = 'AnalyzeEnsemble_CON_WD';
-				case 2 % AnalyzeEnsemble_CON_WD.NAME
+				case AnalyzeEnsemble_CON_WD.NAME
 					prop_default = 'AnalyzeEnsemble_CON_WD';
-				case 3 % AnalyzeEnsemble_CON_WD.DESCRIPTION
+				case AnalyzeEnsemble_CON_WD.DESCRIPTION
 					prop_default = 'This ensemble-based graph analysis (AnalyzeEnsemble_CON_WD) analyzes connectivity data using weighted directed graphs.';
-				case 4 % AnalyzeEnsemble_CON_WD.TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
-				case 5 % AnalyzeEnsemble_CON_WD.ID
+				case AnalyzeEnsemble_CON_WD.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.ID
 					prop_default = 'AnalyzeEnsemble_CON_WD ID';
-				case 6 % AnalyzeEnsemble_CON_WD.LABEL
+				case AnalyzeEnsemble_CON_WD.LABEL
 					prop_default = 'AnalyzeEnsemble_CON_WD label';
-				case 7 % AnalyzeEnsemble_CON_WD.NOTES
+				case AnalyzeEnsemble_CON_WD.NOTES
 					prop_default = 'AnalyzeEnsemble_CON_WD notes';
-				case 10 % AnalyzeEnsemble_CON_WD.GR
+				case AnalyzeEnsemble_CON_WD.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON');
-				case 11 % AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble_CON_WD.G_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.G_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeEnsemble(prop);
 			end
@@ -591,15 +586,15 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			% 
 			% A.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeEnsemble_CON_WD:WrongInput
+			%  Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_WD:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  A.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of A.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_WD:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_WD:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(AnalyzeEnsemble_CON_WD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble_CON_WD.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_WD:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_WD:€BRAPH2.WRONG_INPUT€
 			%  A.CHECKPROP(AnalyzeEnsemble_CON_WD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble_CON_WD.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_WD:WrongInput]
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_WD:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(A) and Element.CHECKPROP('AnalyzeEnsemble_CON_WD')
 			%  are less computationally efficient.
@@ -610,14 +605,14 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_WD.getPropProp(pointer);
 			
 			switch prop
-				case 4 % AnalyzeEnsemble_CON_WD.TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
-				case 11 % AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble_CON_WD.G_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.TEMPLATE % __AnalyzeEnsemble_CON_WD.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE % __AnalyzeEnsemble_CON_WD.GRAPH_TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_WD.G_DICT % __AnalyzeEnsemble_CON_WD.G_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeEnsemble_CON_WD.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= AnalyzeEnsemble.getPropNumber()
 						check = checkProp@AnalyzeEnsemble(prop, value);
 					end
 			end
@@ -626,8 +621,8 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_WD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_WD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeEnsemble_CON_WD.getPropTag(prop) ' (' AnalyzeEnsemble_CON_WD.getFormatTag(AnalyzeEnsemble_CON_WD.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -638,20 +633,20 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % AnalyzeEnsemble_CON_WD.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(12), 'twister')
+				case AnalyzeEnsemble_CON_WD.G_DICT % __AnalyzeEnsemble_CON_WD.G_DICT__
+					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeEnsemble_CON_WD.G_DICT), 'twister')
 					
 					g_dict = IndexedDictionary('IT_CLASS', 'GraphWD');
 					gr = a.get('GR');
@@ -677,7 +672,7 @@ classdef AnalyzeEnsemble_CON_WD < AnalyzeEnsemble
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= AnalyzeEnsemble.getPropNumber()
 						value = calculateValue@AnalyzeEnsemble(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});

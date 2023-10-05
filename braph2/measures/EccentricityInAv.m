@@ -5,24 +5,6 @@ classdef EccentricityInAv < EccentricityIn
 	% The Average In-Eccentricity (EccentricityInAv) of a node is the sum of the nodal 
 	% in-eccentricities divided by their number within a layer.
 	%
-	% The list of EccentricityInAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Eccentricity.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Eccentricity.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Eccentricity.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Eccentricity.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Eccentricity.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Eccentricity.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Eccentricity.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average In-Eccentricity.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
-	%
 	% EccentricityInAv methods (constructor):
 	%  EccentricityInAv - constructor
 	%
@@ -120,23 +102,6 @@ classdef EccentricityInAv < EccentricityIn
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of EccentricityInAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Eccentricity.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Eccentricity.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Eccentricity.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Eccentricity.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Eccentricity.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Eccentricity.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Eccentricity.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average In-Eccentricity.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
 			% See also Category, Format.
 			
@@ -174,7 +139,7 @@ classdef EccentricityInAv < EccentricityIn
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'EccentricityInAv' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('EccentricityInAv', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average in-eccentricity.
@@ -195,30 +160,50 @@ classdef EccentricityInAv < EccentricityIn
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					EccentricityIn.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						EccentricityIn.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						EccentricityIn.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -239,31 +224,7 @@ classdef EccentricityInAv < EccentricityIn
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(EccentricityInAv.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average in-eccentricity/error.
@@ -291,14 +252,14 @@ classdef EccentricityInAv < EccentricityIn
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == EccentricityInAv.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput'], ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for EccentricityInAv.'] ...
 					)
 			end
@@ -329,14 +290,15 @@ classdef EccentricityInAv < EccentricityIn
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			eccentricityinav_tag_list = cellfun(@(x) EccentricityInAv.getPropTag(x), num2cell(EccentricityInAv.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, eccentricityinav_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput'], ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for EccentricityInAv.'] ...
 					)
 			end
@@ -362,7 +324,8 @@ classdef EccentricityInAv < EccentricityIn
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				eccentricityinav_tag_list = cellfun(@(x) EccentricityInAv.getPropTag(x), num2cell(EccentricityInAv.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, eccentricityinav_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -390,9 +353,12 @@ classdef EccentricityInAv < EccentricityIn
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				eccentricityinav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
-				tag = eccentricityinav_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@EccentricityIn(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -417,9 +383,10 @@ classdef EccentricityInAv < EccentricityIn
 			
 			prop = EccentricityInAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			eccentricityinav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = eccentricityinav_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@EccentricityIn(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -443,9 +410,10 @@ classdef EccentricityInAv < EccentricityIn
 			
 			prop = EccentricityInAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			eccentricityinav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
-			prop_format = eccentricityinav_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@EccentricityIn(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -469,9 +437,34 @@ classdef EccentricityInAv < EccentricityIn
 			
 			prop = EccentricityInAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			eccentricityinav_description_list = { 'ELCLASS (constant, string) is the class of the Average In-Eccentricity.'  'NAME (constant, string) is the name of the Average In-Eccentricity.'  'DESCRIPTION (constant, string) is the description of the Average In-Eccentricity.'  'TEMPLATE (parameter, item) is the template of the Average In-Eccentricity.'  'ID (data, string) is a few-letter code of the Average In-Eccentricity.'  'LABEL (metadata, string) is an extended label of the Average In-Eccentricity.'  'NOTES (metadata, string) are some specific notes about the Average In-Eccentricity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average In-Eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
-			prop_description = eccentricityinav_description_list{prop};
+			switch prop
+				case EccentricityInAv.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Average In-Eccentricity.';
+				case EccentricityInAv.NAME
+					prop_description = 'NAME (constant, string) is the name of the Average In-Eccentricity.';
+				case EccentricityInAv.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Average In-Eccentricity.';
+				case EccentricityInAv.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Average In-Eccentricity.';
+				case EccentricityInAv.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Average In-Eccentricity.';
+				case EccentricityInAv.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Average In-Eccentricity.';
+				case EccentricityInAv.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Average In-Eccentricity.';
+				case EccentricityInAv.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
+				case EccentricityInAv.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case EccentricityInAv.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case EccentricityInAv.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case EccentricityInAv.M
+					prop_description = 'M (result, cell) is the Average In-Eccentricity.';
+				otherwise
+					prop_description = getPropDescription@EccentricityIn(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -495,8 +488,8 @@ classdef EccentricityInAv < EccentricityIn
 			
 			prop = EccentricityInAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % EccentricityInAv.TEMPLATE
+			switch prop
+				case EccentricityInAv.TEMPLATE
 					prop_settings = 'EccentricityInAv';
 				otherwise
 					prop_settings = getPropSettings@EccentricityIn(prop);
@@ -524,28 +517,28 @@ classdef EccentricityInAv < EccentricityIn
 			
 			prop = EccentricityInAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % EccentricityInAv.ELCLASS
+			switch prop
+				case EccentricityInAv.ELCLASS
 					prop_default = 'EccentricityInAv';
-				case 2 % EccentricityInAv.NAME
+				case EccentricityInAv.NAME
 					prop_default = 'Average In-Eccentricity';
-				case 3 % EccentricityInAv.DESCRIPTION
+				case EccentricityInAv.DESCRIPTION
 					prop_default = 'The Average In-Eccentricity (EccentricityInAv) of a node is the sum of the nodal in-eccentricities divided by their number within a layer.';
-				case 4 % EccentricityInAv.TEMPLATE
-					prop_default = Format.getFormatDefault(8, EccentricityInAv.getPropSettings(prop));
-				case 5 % EccentricityInAv.ID
+				case EccentricityInAv.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, EccentricityInAv.getPropSettings(prop));
+				case EccentricityInAv.ID
 					prop_default = 'EccentricityInAv ID';
-				case 6 % EccentricityInAv.LABEL
+				case EccentricityInAv.LABEL
 					prop_default = 'Average In-Eccentricity label';
-				case 7 % EccentricityInAv.NOTES
+				case EccentricityInAv.NOTES
 					prop_default = 'Average In-Eccentricity notes';
-				case 9 % EccentricityInAv.SHAPE
-					prop_default = 1;
-				case 10 % EccentricityInAv.SCOPE
-					prop_default = 2;
-				case 11 % EccentricityInAv.PARAMETRICITY
-					prop_default = 2;
-				case 12 % EccentricityInAv.COMPATIBLE_GRAPHS
+				case EccentricityInAv.SHAPE
+					prop_default = Measure.GLOBAL;
+				case EccentricityInAv.SCOPE
+					prop_default = Measure.UNILAYER;
+				case EccentricityInAv.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case EccentricityInAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'};;
 				otherwise
 					prop_default = getPropDefault@EccentricityIn(prop);
@@ -592,15 +585,15 @@ classdef EccentricityInAv < EccentricityIn
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:EccentricityInAv:WrongInput
+			%  Error id: €BRAPH2.STR€:EccentricityInAv:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:EccentricityInAv:WrongInput
+			%   Error id: €BRAPH2.STR€:EccentricityInAv:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(EccentricityInAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of EccentricityInAv.
-			%   Error id: BRAPH2:EccentricityInAv:WrongInput
+			%   Error id: €BRAPH2.STR€:EccentricityInAv:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(EccentricityInAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of EccentricityInAv.
-			%   Error id: BRAPH2:EccentricityInAv:WrongInput]
+			%   Error id: €BRAPH2.STR€:EccentricityInAv:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('EccentricityInAv')
 			%  are less computationally efficient.
@@ -611,10 +604,10 @@ classdef EccentricityInAv < EccentricityIn
 			prop = EccentricityInAv.getPropProp(pointer);
 			
 			switch prop
-				case 4 % EccentricityInAv.TEMPLATE
-					check = Format.checkFormat(8, value, EccentricityInAv.getPropSettings(prop));
+				case EccentricityInAv.TEMPLATE % __EccentricityInAv.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, EccentricityInAv.getPropSettings(prop));
 				otherwise
-					if prop <= 16
+					if prop <= EccentricityIn.getPropNumber()
 						check = checkProp@EccentricityIn(prop, value);
 					end
 			end
@@ -623,8 +616,8 @@ classdef EccentricityInAv < EccentricityIn
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput'], ...
-					['BRAPH2' ':EccentricityInAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':EccentricityInAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' EccentricityInAv.getPropTag(prop) ' (' EccentricityInAv.getFormatTag(EccentricityInAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -635,20 +628,20 @@ classdef EccentricityInAv < EccentricityIn
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % EccentricityInAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case EccentricityInAv.M % __EccentricityInAv.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(EccentricityInAv.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -667,7 +660,7 @@ classdef EccentricityInAv < EccentricityIn
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 16
+					if prop <= EccentricityIn.getPropNumber()
 						value = calculateValue@EccentricityIn(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

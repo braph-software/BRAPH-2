@@ -1,11 +1,16 @@
 %% Pipeline Regression Cross-Validation Connectivity-Functional Multiplex WU Measures 
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron regressor using the graph measures obtained from weighted undirected graph with connectivity-functional multiplex data.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI). 
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2.1 It loads the connectivity data of a group of subjects from the directory (e.g., CON_Group_XLS) containing XLS files of each subject.
 % 2.2 It loads the functional data of a group of subjects from te directory (e.g., CON_Group_XLS) containing XLS files of each subject.
 % 3. It analyzes the group using connectivity-functional analyses (CON-FUN) weighted undirected multiplex (MultiplexWU).
 % 4. It executes the cross-validation process.
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

@@ -11,8 +11,6 @@ classdef (Sealed=true) NoValue < Element
 	% constructor NoValue(). 
 	% No element can be a subclass of NoValue.
 	%
-	% NoValue has no properties.
-	%
 	% NoValue methods (constructor):
 	%  NoValue - constructor
 	%
@@ -112,7 +110,6 @@ classdef (Sealed=true) NoValue < Element
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% NoValue has no properties.
 			%
 			% See also Category, Format.
 			
@@ -150,7 +147,7 @@ classdef (Sealed=true) NoValue < Element
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NoValue' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NoValue', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of NoValue.
@@ -171,16 +168,50 @@ classdef (Sealed=true) NoValue < Element
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [];
+				prop_list = [ ...
+					Element.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Element.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Element.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Element.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Element.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Element.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Element.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Element.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Element.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Element.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -201,17 +232,7 @@ classdef (Sealed=true) NoValue < Element
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 0;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NoValue.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in NoValue/error.
@@ -239,14 +260,14 @@ classdef (Sealed=true) NoValue < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 0 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NoValue.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NoValue:' 'WrongInput'], ...
-					['BRAPH2' ':NoValue:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NoValue.'] ...
 					)
 			end
@@ -277,14 +298,15 @@ classdef (Sealed=true) NoValue < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, {})); %CET: Computational Efficiency Trick
+			novalue_tag_list = cellfun(@(x) NoValue.getPropTag(x), num2cell(NoValue.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, novalue_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NoValue:' 'WrongInput'], ...
-					['BRAPH2' ':NoValue:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NoValue.'] ...
 					)
 			end
@@ -310,7 +332,8 @@ classdef (Sealed=true) NoValue < Element
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, {})); % tag = pointer %CET: Computational Efficiency Trick
+				novalue_tag_list = cellfun(@(x) NoValue.getPropTag(x), num2cell(NoValue.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, novalue_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -338,9 +361,10 @@ classdef (Sealed=true) NoValue < Element
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				novalue_tag_list = {}; % will throw an error if called
-				tag = novalue_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -365,9 +389,8 @@ classdef (Sealed=true) NoValue < Element
 			
 			prop = NoValue.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			novalue_category_list = {};
-			prop_category = novalue_category_list{prop};
+			switch prop
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -391,9 +414,8 @@ classdef (Sealed=true) NoValue < Element
 			
 			prop = NoValue.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			novalue_format_list = {};
-			prop_format = novalue_format_list{prop};
+			switch prop
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -417,9 +439,8 @@ classdef (Sealed=true) NoValue < Element
 			
 			prop = NoValue.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			novalue_description_list = {};
-			prop_description = novalue_description_list{prop};
+			switch prop
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -443,7 +464,7 @@ classdef (Sealed=true) NoValue < Element
 			
 			prop = NoValue.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
+			switch prop
 			end
 		end
 		function prop_default = getPropDefault(pointer)
@@ -468,7 +489,7 @@ classdef (Sealed=true) NoValue < Element
 			
 			prop = NoValue.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
+			switch prop
 			end
 		end
 		function prop_default = getPropDefaultConditioned(pointer)
@@ -506,8 +527,8 @@ classdef (Sealed=true) NoValue < Element
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of 2,
-			%  3, 4, 8 and 9.
+			% Conditioning is only used for props of Category.METADATA,
+			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -529,15 +550,15 @@ classdef (Sealed=true) NoValue < Element
 			% 
 			% NV.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NoValue:WrongInput
+			%  Error id: €BRAPH2.STR€:NoValue:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NV.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NV.
-			%   Error id: BRAPH2:NoValue:WrongInput
+			%   Error id: €BRAPH2.STR€:NoValue:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NoValue, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NoValue.
-			%   Error id: BRAPH2:NoValue:WrongInput
+			%   Error id: €BRAPH2.STR€:NoValue:€BRAPH2.WRONG_INPUT€
 			%  NV.CHECKPROP(NoValue, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NoValue.
-			%   Error id: BRAPH2:NoValue:WrongInput]
+			%   Error id: €BRAPH2.STR€:NoValue:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(NV) and Element.CHECKPROP('NoValue')
 			%  are less computationally efficient.
@@ -554,8 +575,8 @@ classdef (Sealed=true) NoValue < Element
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NoValue:' 'WrongInput'], ...
-					['BRAPH2' ':NoValue:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NoValue:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NoValue.getPropTag(prop) ' (' NoValue.getFormatTag(NoValue.getPropFormat(prop)) ').'] ...
 					)
 			end

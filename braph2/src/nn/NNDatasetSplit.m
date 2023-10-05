@@ -7,20 +7,6 @@ classdef NNDatasetSplit < ConcreteElement
 	% For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}.
 	% Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).
 	%
-	% The list of NNDatasetSplit properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network data.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network data.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network data.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network data.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
-	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-	%  <strong>11</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.
-	%  <strong>12</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
-	%
 	% NNDatasetSplit methods (constructor):
 	%  NNDatasetSplit - constructor
 	%
@@ -110,25 +96,25 @@ classdef NNDatasetSplit < ConcreteElement
 	% See also NNDataset, NNDatasetCombine.
 	
 	properties (Constant) % properties
-		D = 9; %CET: Computational Efficiency Trick
+		D = ConcreteElement.getPropNumber() + 1;
 		D_TAG = 'D';
-		D_CATEGORY = 4;
-		D_FORMAT = 8;
+		D_CATEGORY = Category.DATA;
+		D_FORMAT = Format.ITEM;
 		
-		SPLIT = 10; %CET: Computational Efficiency Trick
+		SPLIT = ConcreteElement.getPropNumber() + 2;
 		SPLIT_TAG = 'SPLIT';
-		SPLIT_CATEGORY = 4;
-		SPLIT_FORMAT = 16;
+		SPLIT_CATEGORY = Category.DATA;
+		SPLIT_FORMAT = Format.CELL;
 		
-		D_LIST = 11; %CET: Computational Efficiency Trick
+		D_LIST = ConcreteElement.getPropNumber() + 3;
 		D_LIST_TAG = 'D_LIST';
-		D_LIST_CATEGORY = 5;
-		D_LIST_FORMAT = 9;
+		D_LIST_CATEGORY = Category.RESULT;
+		D_LIST_FORMAT = Format.ITEMLIST;
 		
-		D_LIST_IT = 12; %CET: Computational Efficiency Trick
+		D_LIST_IT = ConcreteElement.getPropNumber() + 4;
 		D_LIST_IT_TAG = 'D_LIST_IT';
-		D_LIST_IT_CATEGORY = 6;
-		D_LIST_IT_FORMAT = 8;
+		D_LIST_IT_CATEGORY = Category.QUERY;
+		D_LIST_IT_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function dsp = NNDatasetSplit(varargin)
@@ -141,19 +127,6 @@ classdef NNDatasetSplit < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of NNDatasetSplit properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network data.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network data.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network data.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network data.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
-			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-			%  <strong>11</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.
-			%  <strong>12</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
 			%
 			% See also Category, Format.
 			
@@ -191,7 +164,7 @@ classdef NNDatasetSplit < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNDatasetSplit' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NNDatasetSplit', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of splitter of a neural network data.
@@ -212,28 +185,58 @@ classdef NNDatasetSplit < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						NNDatasetSplit.D ...
+						NNDatasetSplit.SPLIT ...
+						NNDatasetSplit.D_LIST ...
+						NNDatasetSplit.D_LIST_IT ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 9 10];
-				case 5 % Category.RESULT
-					prop_list = 11;
-				case 6 % Category.QUERY
-					prop_list = [8 12];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						NNDatasetSplit.D ...
+						NNDatasetSplit.SPLIT ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						NNDatasetSplit.D_LIST ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						NNDatasetSplit.D_LIST_IT ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -254,29 +257,7 @@ classdef NNDatasetSplit < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 12;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NNDatasetSplit.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in splitter of a neural network data/error.
@@ -304,14 +285,14 @@ classdef NNDatasetSplit < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NNDatasetSplit.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput'], ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNDatasetSplit.'] ...
 					)
 			end
@@ -342,14 +323,15 @@ classdef NNDatasetSplit < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'SPLIT'  'D_LIST'  'D_LIST_IT' })); %CET: Computational Efficiency Trick
+			nndatasetsplit_tag_list = cellfun(@(x) NNDatasetSplit.getPropTag(x), num2cell(NNDatasetSplit.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, nndatasetsplit_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput'], ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NNDatasetSplit.'] ...
 					)
 			end
@@ -375,7 +357,8 @@ classdef NNDatasetSplit < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'SPLIT'  'D_LIST'  'D_LIST_IT' })); % tag = pointer %CET: Computational Efficiency Trick
+				nndatasetsplit_tag_list = cellfun(@(x) NNDatasetSplit.getPropTag(x), num2cell(NNDatasetSplit.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, nndatasetsplit_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -403,9 +386,20 @@ classdef NNDatasetSplit < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				nndatasetsplit_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'SPLIT'  'D_LIST'  'D_LIST_IT' };
-				tag = nndatasetsplit_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case NNDatasetSplit.D
+						tag = NNDatasetSplit.D_TAG;
+					case NNDatasetSplit.SPLIT
+						tag = NNDatasetSplit.SPLIT_TAG;
+					case NNDatasetSplit.D_LIST
+						tag = NNDatasetSplit.D_LIST_TAG;
+					case NNDatasetSplit.D_LIST_IT
+						tag = NNDatasetSplit.D_LIST_IT_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -430,9 +424,18 @@ classdef NNDatasetSplit < ConcreteElement
 			
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatasetsplit_category_list = { 1  1  1  3  4  2  2  6  4  4  5  6 };
-			prop_category = nndatasetsplit_category_list{prop};
+			switch prop
+				case NNDatasetSplit.D
+					prop_category = NNDatasetSplit.D_CATEGORY;
+				case NNDatasetSplit.SPLIT
+					prop_category = NNDatasetSplit.SPLIT_CATEGORY;
+				case NNDatasetSplit.D_LIST
+					prop_category = NNDatasetSplit.D_LIST_CATEGORY;
+				case NNDatasetSplit.D_LIST_IT
+					prop_category = NNDatasetSplit.D_LIST_IT_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -456,9 +459,18 @@ classdef NNDatasetSplit < ConcreteElement
 			
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatasetsplit_format_list = { 2  2  2  8  2  2  2  2  8  16  9  8 };
-			prop_format = nndatasetsplit_format_list{prop};
+			switch prop
+				case NNDatasetSplit.D
+					prop_format = NNDatasetSplit.D_FORMAT;
+				case NNDatasetSplit.SPLIT
+					prop_format = NNDatasetSplit.SPLIT_FORMAT;
+				case NNDatasetSplit.D_LIST
+					prop_format = NNDatasetSplit.D_LIST_FORMAT;
+				case NNDatasetSplit.D_LIST_IT
+					prop_format = NNDatasetSplit.D_LIST_IT_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -482,9 +494,32 @@ classdef NNDatasetSplit < ConcreteElement
 			
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatasetsplit_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the splitter of a neural network data.'  'DESCRIPTION (constant, string) is the description of the splitter of a neural network data.'  'TEMPLATE (parameter, item) is the template of the splitter of a neural network data.'  'ID (data, string) is a few-letter code for the splitter of a neural network data.'  'LABEL (metadata, string) is an extended label of the splitter of a neural network data.'  'NOTES (metadata, string) are some specific notes about the splitter of a neural network data.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is a dataset for neural network analysis.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.' };
-			prop_description = nndatasetsplit_description_list{prop};
+			switch prop
+				case NNDatasetSplit.D
+					prop_description = 'D (data, item) is a dataset for neural network analysis.';
+				case NNDatasetSplit.SPLIT
+					prop_description = 'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.';
+				case NNDatasetSplit.D_LIST
+					prop_description = 'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.';
+				case NNDatasetSplit.D_LIST_IT
+					prop_description = 'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.';
+				case NNDatasetSplit.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case NNDatasetSplit.NAME
+					prop_description = 'NAME (constant, string) is the name of the splitter of a neural network data.';
+				case NNDatasetSplit.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the splitter of a neural network data.';
+				case NNDatasetSplit.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the splitter of a neural network data.';
+				case NNDatasetSplit.ID
+					prop_description = 'ID (data, string) is a few-letter code for the splitter of a neural network data.';
+				case NNDatasetSplit.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the splitter of a neural network data.';
+				case NNDatasetSplit.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the splitter of a neural network data.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -508,16 +543,16 @@ classdef NNDatasetSplit < ConcreteElement
 			
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % NNDatasetSplit.D
+			switch prop
+				case NNDatasetSplit.D
 					prop_settings = 'NNDataset';
-				case 10 % NNDatasetSplit.SPLIT
-					prop_settings = Format.getFormatSettings(16);
-				case 11 % NNDatasetSplit.D_LIST
-					prop_settings = Format.getFormatSettings(9);
-				case 12 % NNDatasetSplit.D_LIST_IT
-					prop_settings = Format.getFormatSettings(8);
-				case 4 % NNDatasetSplit.TEMPLATE
+				case NNDatasetSplit.SPLIT
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case NNDatasetSplit.D_LIST
+					prop_settings = Format.getFormatSettings(Format.ITEMLIST);
+				case NNDatasetSplit.D_LIST_IT
+					prop_settings = Format.getFormatSettings(Format.ITEM);
+				case NNDatasetSplit.TEMPLATE
 					prop_settings = 'NNDatasetSplit';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -545,28 +580,28 @@ classdef NNDatasetSplit < ConcreteElement
 			
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % NNDatasetSplit.D
+			switch prop
+				case NNDatasetSplit.D
 					prop_default = NNDataset('DP_CLASS', 'NNDataPoint', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint'));
-				case 10 % NNDatasetSplit.SPLIT
-					prop_default = Format.getFormatDefault(16, NNDatasetSplit.getPropSettings(prop));
-				case 11 % NNDatasetSplit.D_LIST
-					prop_default = Format.getFormatDefault(9, NNDatasetSplit.getPropSettings(prop));
-				case 12 % NNDatasetSplit.D_LIST_IT
-					prop_default = Format.getFormatDefault(8, NNDatasetSplit.getPropSettings(prop));
-				case 1 % NNDatasetSplit.ELCLASS
+				case NNDatasetSplit.SPLIT
+					prop_default = Format.getFormatDefault(Format.CELL, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.D_LIST
+					prop_default = Format.getFormatDefault(Format.ITEMLIST, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.D_LIST_IT
+					prop_default = Format.getFormatDefault(Format.ITEM, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.ELCLASS
 					prop_default = 'NNDatasetSplit';
-				case 2 % NNDatasetSplit.NAME
+				case NNDatasetSplit.NAME
 					prop_default = 'NNDatasetSplit';
-				case 3 % NNDatasetSplit.DESCRIPTION
+				case NNDatasetSplit.DESCRIPTION
 					prop_default = 'A dataset splitter (NNDatasetSplit) allows users to split a given dataset into multiple smaller datasets, each forming a partition. The splitting can be achieved by providing either specific indices or proportions for the datapoints in each partitioned dataset. For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}. Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).';
-				case 4 % NNDatasetSplit.TEMPLATE
-					prop_default = Format.getFormatDefault(8, NNDatasetSplit.getPropSettings(prop));
-				case 5 % NNDatasetSplit.ID
+				case NNDatasetSplit.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.ID
 					prop_default = 'NNDatasetSplit ID';
-				case 6 % NNDatasetSplit.LABEL
+				case NNDatasetSplit.LABEL
 					prop_default = 'NNDatasetSplit label';
-				case 7 % NNDatasetSplit.NOTES
+				case NNDatasetSplit.NOTES
 					prop_default = 'NNDatasetSplit notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -613,15 +648,15 @@ classdef NNDatasetSplit < ConcreteElement
 			% 
 			% DSP.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NNDatasetSplit:WrongInput
+			%  Error id: €BRAPH2.STR€:NNDatasetSplit:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DSP.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of DSP.
-			%   Error id: BRAPH2:NNDatasetSplit:WrongInput
+			%   Error id: €BRAPH2.STR€:NNDatasetSplit:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NNDatasetSplit, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDatasetSplit.
-			%   Error id: BRAPH2:NNDatasetSplit:WrongInput
+			%   Error id: €BRAPH2.STR€:NNDatasetSplit:€BRAPH2.WRONG_INPUT€
 			%  DSP.CHECKPROP(NNDatasetSplit, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDatasetSplit.
-			%   Error id: BRAPH2:NNDatasetSplit:WrongInput]
+			%   Error id: €BRAPH2.STR€:NNDatasetSplit:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(DSP) and Element.CHECKPROP('NNDatasetSplit')
 			%  are less computationally efficient.
@@ -632,18 +667,18 @@ classdef NNDatasetSplit < ConcreteElement
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
 			switch prop
-				case 9 % NNDatasetSplit.D
-					check = Format.checkFormat(8, value, NNDatasetSplit.getPropSettings(prop));
-				case 10 % NNDatasetSplit.SPLIT
-					check = Format.checkFormat(16, value, NNDatasetSplit.getPropSettings(prop));
-				case 11 % NNDatasetSplit.D_LIST
-					check = Format.checkFormat(9, value, NNDatasetSplit.getPropSettings(prop));
-				case 12 % NNDatasetSplit.D_LIST_IT
-					check = Format.checkFormat(8, value, NNDatasetSplit.getPropSettings(prop));
-				case 4 % NNDatasetSplit.TEMPLATE
-					check = Format.checkFormat(8, value, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.D % __NNDatasetSplit.D__
+					check = Format.checkFormat(Format.ITEM, value, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.SPLIT % __NNDatasetSplit.SPLIT__
+					check = Format.checkFormat(Format.CELL, value, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.D_LIST % __NNDatasetSplit.D_LIST__
+					check = Format.checkFormat(Format.ITEMLIST, value, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.D_LIST_IT % __NNDatasetSplit.D_LIST_IT__
+					check = Format.checkFormat(Format.ITEM, value, NNDatasetSplit.getPropSettings(prop));
+				case NNDatasetSplit.TEMPLATE % __NNDatasetSplit.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, NNDatasetSplit.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -652,8 +687,8 @@ classdef NNDatasetSplit < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput'], ...
-					['BRAPH2' ':NNDatasetSplit:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDatasetSplit:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNDatasetSplit.getPropTag(prop) ' (' NNDatasetSplit.getFormatTag(NNDatasetSplit.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -673,7 +708,7 @@ classdef NNDatasetSplit < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 10 % NNDatasetSplit.SPLIT
+				case NNDatasetSplit.SPLIT % __NNDatasetSplit.SPLIT__
 					value = dsp.get('SPLIT');
 					if all(cellfun(@isscalar, value)) & sum(cell2mat(value)) <= 1 & sum(cell2mat(value)) > 0 
 					    num_sub = dsp.get('D').get('DP_DICT').get('LENGTH');
@@ -697,7 +732,7 @@ classdef NNDatasetSplit < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						postset@ConcreteElement(dsp, prop);
 					end
 			end
@@ -708,20 +743,20 @@ classdef NNDatasetSplit < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % NNDatasetSplit.D_LIST
-					rng_settings_ = rng(); rng(dsp.getPropSeed(11), 'twister')
+				case NNDatasetSplit.D_LIST % __NNDatasetSplit.D_LIST__
+					rng_settings_ = rng(); rng(dsp.getPropSeed(NNDatasetSplit.D_LIST), 'twister')
 					
 					d = dsp.get('D');
 					dp_list = d.get('DP_DICT').get('IT_LIST');
@@ -735,7 +770,7 @@ classdef NNDatasetSplit < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 12 % NNDatasetSplit.D_LIST_IT
+				case NNDatasetSplit.D_LIST_IT % __NNDatasetSplit.D_LIST_IT__
 					% d = dsp.get('D_LIST_IT', index) returns the NNDataset at the specified 
 					%  index from the D_LIST property.
 					if isempty(varargin)
@@ -749,7 +784,7 @@ classdef NNDatasetSplit < ConcreteElement
 					value = d_list{index};
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						value = calculateValue@ConcreteElement(dsp, prop, varargin{:});
 					else
 						value = calculateValue@Element(dsp, prop, varargin{:});
@@ -774,11 +809,11 @@ classdef NNDatasetSplit < ConcreteElement
 			msg = ['Error while checking ' tostring(dsp) ' ' dsp.getPropTag(prop) '.'];
 			
 			switch prop
-				case 10 % NNDatasetSplit.SPLIT
+				case NNDatasetSplit.SPLIT % __NNDatasetSplit.SPLIT__
 					check = all(cellfun(@(x) all(round(x) == x & all(x <= dsp.get('D').get('DP_DICT').get('LENGTH'))), dsp.get('SPLIT')));
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						[check, msg] = checkValue@ConcreteElement(dsp, prop, value);
 					end
 			end

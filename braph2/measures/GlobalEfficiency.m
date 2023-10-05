@@ -5,23 +5,6 @@ classdef GlobalEfficiency < Distance
 	% The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. 
 	% It is inversely related to the characteristic path length.
 	%
-	% The list of GlobalEfficiency properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Global Efficiency.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Global Efficiency.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Global Efficiency.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Global Efficiency.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Global Efficiency.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Global Efficiency.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Global Efficiency.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%
 	% GlobalEfficiency methods (constructor):
 	%  GlobalEfficiency - constructor
 	%
@@ -119,22 +102,6 @@ classdef GlobalEfficiency < Distance
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of GlobalEfficiency properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Global Efficiency.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Global Efficiency.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Global Efficiency.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Global Efficiency.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Global Efficiency.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Global Efficiency.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Global Efficiency.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -172,7 +139,7 @@ classdef GlobalEfficiency < Distance
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'GlobalEfficiency'  'GlobalEfficiencyAv' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('GlobalEfficiency', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of global efficiency.
@@ -193,30 +160,50 @@ classdef GlobalEfficiency < Distance
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+				prop_list = [ ...
+					Distance.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Distance.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Distance.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Distance.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Distance.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Distance.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Distance.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Distance.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Distance.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Distance.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -237,31 +224,7 @@ classdef GlobalEfficiency < Distance
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 15;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(GlobalEfficiency.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in global efficiency/error.
@@ -289,14 +252,14 @@ classdef GlobalEfficiency < Distance
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == GlobalEfficiency.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput'], ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for GlobalEfficiency.'] ...
 					)
 			end
@@ -327,14 +290,15 @@ classdef GlobalEfficiency < Distance
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			globalefficiency_tag_list = cellfun(@(x) GlobalEfficiency.getPropTag(x), num2cell(GlobalEfficiency.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, globalefficiency_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput'], ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for GlobalEfficiency.'] ...
 					)
 			end
@@ -360,7 +324,8 @@ classdef GlobalEfficiency < Distance
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				globalefficiency_tag_list = cellfun(@(x) GlobalEfficiency.getPropTag(x), num2cell(GlobalEfficiency.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, globalefficiency_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -388,9 +353,12 @@ classdef GlobalEfficiency < Distance
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				globalefficiency_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
-				tag = globalefficiency_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@Distance(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -415,9 +383,10 @@ classdef GlobalEfficiency < Distance
 			
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			globalefficiency_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
-			prop_category = globalefficiency_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@Distance(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -441,9 +410,10 @@ classdef GlobalEfficiency < Distance
 			
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			globalefficiency_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
-			prop_format = globalefficiency_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@Distance(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -467,9 +437,34 @@ classdef GlobalEfficiency < Distance
 			
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			globalefficiency_description_list = { 'ELCLASS (constant, string) is the class of the Global Efficiency.'  'NAME (constant, string) is the name of the Global Efficiency.'  'DESCRIPTION (constant, string) is the description of the Global Efficiency.'  'TEMPLATE (parameter, item) is the template of the Global Efficiency.'  'ID (data, string) is a few-letter code of the degree.'  'LABEL (metadata, string) is an extended label of the Global Efficiency.'  'NOTES (metadata, string) are some specific notes about the Global Efficiency.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Global Efficiency.'  'PFM (gui, item) contains the panel figure of the measure.' };
-			prop_description = globalefficiency_description_list{prop};
+			switch prop
+				case GlobalEfficiency.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Global Efficiency.';
+				case GlobalEfficiency.NAME
+					prop_description = 'NAME (constant, string) is the name of the Global Efficiency.';
+				case GlobalEfficiency.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Global Efficiency.';
+				case GlobalEfficiency.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Global Efficiency.';
+				case GlobalEfficiency.ID
+					prop_description = 'ID (data, string) is a few-letter code of the degree.';
+				case GlobalEfficiency.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Global Efficiency.';
+				case GlobalEfficiency.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Global Efficiency.';
+				case GlobalEfficiency.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case GlobalEfficiency.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case GlobalEfficiency.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case GlobalEfficiency.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case GlobalEfficiency.M
+					prop_description = 'M (result, cell) is the Global Efficiency.';
+				otherwise
+					prop_description = getPropDescription@Distance(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -493,8 +488,8 @@ classdef GlobalEfficiency < Distance
 			
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % GlobalEfficiency.TEMPLATE
+			switch prop
+				case GlobalEfficiency.TEMPLATE
 					prop_settings = 'GlobalEfficiency';
 				otherwise
 					prop_settings = getPropSettings@Distance(prop);
@@ -522,28 +517,28 @@ classdef GlobalEfficiency < Distance
 			
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % GlobalEfficiency.ELCLASS
+			switch prop
+				case GlobalEfficiency.ELCLASS
 					prop_default = 'GlobalEfficiency';
-				case 2 % GlobalEfficiency.NAME
+				case GlobalEfficiency.NAME
 					prop_default = 'Global Efficiency';
-				case 3 % GlobalEfficiency.DESCRIPTION
+				case GlobalEfficiency.DESCRIPTION
 					prop_default = 'The Global Efficiency (GlobalEfficiency) is the average inverse shortest path length within each layer. It is inversely related to the characteristic path length.';
-				case 4 % GlobalEfficiency.TEMPLATE
-					prop_default = Format.getFormatDefault(8, GlobalEfficiency.getPropSettings(prop));
-				case 5 % GlobalEfficiency.ID
+				case GlobalEfficiency.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, GlobalEfficiency.getPropSettings(prop));
+				case GlobalEfficiency.ID
 					prop_default = 'GlobalEfficiency ID';
-				case 6 % GlobalEfficiency.LABEL
+				case GlobalEfficiency.LABEL
 					prop_default = 'Global Efficiency label';
-				case 7 % GlobalEfficiency.NOTES
+				case GlobalEfficiency.NOTES
 					prop_default = 'Global Efficiency notes';
-				case 9 % GlobalEfficiency.SHAPE
-					prop_default = 2;
-				case 10 % GlobalEfficiency.SCOPE
-					prop_default = 2;
-				case 11 % GlobalEfficiency.PARAMETRICITY
-					prop_default = 2;
-				case 12 % GlobalEfficiency.COMPATIBLE_GRAPHS
+				case GlobalEfficiency.SHAPE
+					prop_default = Measure.NODAL;
+				case GlobalEfficiency.SCOPE
+					prop_default = Measure.UNILAYER;
+				case GlobalEfficiency.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case GlobalEfficiency.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'};
 				otherwise
 					prop_default = getPropDefault@Distance(prop);
@@ -590,15 +585,15 @@ classdef GlobalEfficiency < Distance
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:GlobalEfficiency:WrongInput
+			%  Error id: €BRAPH2.STR€:GlobalEfficiency:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:GlobalEfficiency:WrongInput
+			%   Error id: €BRAPH2.STR€:GlobalEfficiency:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(GlobalEfficiency, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GlobalEfficiency.
-			%   Error id: BRAPH2:GlobalEfficiency:WrongInput
+			%   Error id: €BRAPH2.STR€:GlobalEfficiency:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(GlobalEfficiency, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GlobalEfficiency.
-			%   Error id: BRAPH2:GlobalEfficiency:WrongInput]
+			%   Error id: €BRAPH2.STR€:GlobalEfficiency:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('GlobalEfficiency')
 			%  are less computationally efficient.
@@ -609,10 +604,10 @@ classdef GlobalEfficiency < Distance
 			prop = GlobalEfficiency.getPropProp(pointer);
 			
 			switch prop
-				case 4 % GlobalEfficiency.TEMPLATE
-					check = Format.checkFormat(8, value, GlobalEfficiency.getPropSettings(prop));
+				case GlobalEfficiency.TEMPLATE % __GlobalEfficiency.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, GlobalEfficiency.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= Distance.getPropNumber()
 						check = checkProp@Distance(prop, value);
 					end
 			end
@@ -621,8 +616,8 @@ classdef GlobalEfficiency < Distance
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput'], ...
-					['BRAPH2' ':GlobalEfficiency:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':GlobalEfficiency:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' GlobalEfficiency.getPropTag(prop) ' (' GlobalEfficiency.getFormatTag(GlobalEfficiency.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -633,20 +628,20 @@ classdef GlobalEfficiency < Distance
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % GlobalEfficiency.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case GlobalEfficiency.M % __GlobalEfficiency.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(GlobalEfficiency.M), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -667,7 +662,7 @@ classdef GlobalEfficiency < Distance
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= Distance.getPropNumber()
 						value = calculateValue@Distance(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

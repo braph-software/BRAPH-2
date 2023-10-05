@@ -8,58 +8,6 @@ classdef SettingsTextPP < SettingsPP
 	%  interpreter, horizontal and vertical alignment.
 	% It works for all categories.
 	%
-	% The list of SettingsTextPP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the prop panel for text settings.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the prop panel for text settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the prop panel for text settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the prop panel for text settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the prop panel for text settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the prop panel for text settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the prop panel for text settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel for text settings.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>37</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
-	%  <strong>38</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
-	%  <strong>39</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
-	%  <strong>40</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
-	%  <strong>41</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
-	%  <strong>42</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
-	%  <strong>43</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
-	%  <strong>44</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
-	%  <strong>45</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
-	%  <strong>46</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
-	%  <strong>47</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
-	%  <strong>48</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
-	%  <strong>49</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
-	%  <strong>50</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
-	%
 	% SettingsTextPP methods (constructor):
 	%  SettingsTextPP - constructor
 	%
@@ -149,80 +97,80 @@ classdef SettingsTextPP < SettingsPP
 	% See also SettingsText, uieditfield, uipushbutton, uislider.
 	
 	properties (Constant) % properties
-		ENABLE = 36; %CET: Computational Efficiency Trick
+		ENABLE = SettingsPP.getPropNumber() + 1;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		EDITFIELD_X = 37; %CET: Computational Efficiency Trick
+		EDITFIELD_X = SettingsPP.getPropNumber() + 2;
 		EDITFIELD_X_TAG = 'EDITFIELD_X';
-		EDITFIELD_X_CATEGORY = 7;
-		EDITFIELD_X_FORMAT = 18;
+		EDITFIELD_X_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_X_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_Y = 38; %CET: Computational Efficiency Trick
+		EDITFIELD_Y = SettingsPP.getPropNumber() + 3;
 		EDITFIELD_Y_TAG = 'EDITFIELD_Y';
-		EDITFIELD_Y_CATEGORY = 7;
-		EDITFIELD_Y_FORMAT = 18;
+		EDITFIELD_Y_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_Y_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_Z = 39; %CET: Computational Efficiency Trick
+		EDITFIELD_Z = SettingsPP.getPropNumber() + 4;
 		EDITFIELD_Z_TAG = 'EDITFIELD_Z';
-		EDITFIELD_Z_CATEGORY = 7;
-		EDITFIELD_Z_FORMAT = 18;
+		EDITFIELD_Z_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_Z_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_TXT = 40; %CET: Computational Efficiency Trick
+		EDITFIELD_TXT = SettingsPP.getPropNumber() + 5;
 		EDITFIELD_TXT_TAG = 'EDITFIELD_TXT';
-		EDITFIELD_TXT_CATEGORY = 7;
-		EDITFIELD_TXT_FORMAT = 18;
+		EDITFIELD_TXT_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_TXT_FORMAT = Format.HANDLE;
 		
-		BUTTON_FONTCOLOR = 41; %CET: Computational Efficiency Trick
+		BUTTON_FONTCOLOR = SettingsPP.getPropNumber() + 6;
 		BUTTON_FONTCOLOR_TAG = 'BUTTON_FONTCOLOR';
-		BUTTON_FONTCOLOR_CATEGORY = 7;
-		BUTTON_FONTCOLOR_FORMAT = 18;
+		BUTTON_FONTCOLOR_CATEGORY = Category.EVANESCENT;
+		BUTTON_FONTCOLOR_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_FONTSIZE = 42; %CET: Computational Efficiency Trick
+		EDITFIELD_FONTSIZE = SettingsPP.getPropNumber() + 7;
 		EDITFIELD_FONTSIZE_TAG = 'EDITFIELD_FONTSIZE';
-		EDITFIELD_FONTSIZE_CATEGORY = 7;
-		EDITFIELD_FONTSIZE_FORMAT = 18;
+		EDITFIELD_FONTSIZE_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_FONTSIZE_FORMAT = Format.HANDLE;
 		
-		SLIDER_FONTSIZE = 43; %CET: Computational Efficiency Trick
+		SLIDER_FONTSIZE = SettingsPP.getPropNumber() + 8;
 		SLIDER_FONTSIZE_TAG = 'SLIDER_FONTSIZE';
-		SLIDER_FONTSIZE_CATEGORY = 7;
-		SLIDER_FONTSIZE_FORMAT = 18;
+		SLIDER_FONTSIZE_CATEGORY = Category.EVANESCENT;
+		SLIDER_FONTSIZE_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_ROTATION = 44; %CET: Computational Efficiency Trick
+		EDITFIELD_ROTATION = SettingsPP.getPropNumber() + 9;
 		EDITFIELD_ROTATION_TAG = 'EDITFIELD_ROTATION';
-		EDITFIELD_ROTATION_CATEGORY = 7;
-		EDITFIELD_ROTATION_FORMAT = 18;
+		EDITFIELD_ROTATION_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_ROTATION_FORMAT = Format.HANDLE;
 		
-		SLIDER_ROTATION = 45; %CET: Computational Efficiency Trick
+		SLIDER_ROTATION = SettingsPP.getPropNumber() + 10;
 		SLIDER_ROTATION_TAG = 'SLIDER_ROTATION';
-		SLIDER_ROTATION_CATEGORY = 7;
-		SLIDER_ROTATION_FORMAT = 18;
+		SLIDER_ROTATION_CATEGORY = Category.EVANESCENT;
+		SLIDER_ROTATION_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_FONTNAME = 46; %CET: Computational Efficiency Trick
+		EDITFIELD_FONTNAME = SettingsPP.getPropNumber() + 11;
 		EDITFIELD_FONTNAME_TAG = 'EDITFIELD_FONTNAME';
-		EDITFIELD_FONTNAME_CATEGORY = 7;
-		EDITFIELD_FONTNAME_FORMAT = 18;
+		EDITFIELD_FONTNAME_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_FONTNAME_FORMAT = Format.HANDLE;
 		
-		DROPDOWN_FONTWEIGHT = 47; %CET: Computational Efficiency Trick
+		DROPDOWN_FONTWEIGHT = SettingsPP.getPropNumber() + 12;
 		DROPDOWN_FONTWEIGHT_TAG = 'DROPDOWN_FONTWEIGHT';
-		DROPDOWN_FONTWEIGHT_CATEGORY = 7;
-		DROPDOWN_FONTWEIGHT_FORMAT = 18;
+		DROPDOWN_FONTWEIGHT_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_FONTWEIGHT_FORMAT = Format.HANDLE;
 		
-		DROPDOWN_INTERPRETER = 48; %CET: Computational Efficiency Trick
+		DROPDOWN_INTERPRETER = SettingsPP.getPropNumber() + 13;
 		DROPDOWN_INTERPRETER_TAG = 'DROPDOWN_INTERPRETER';
-		DROPDOWN_INTERPRETER_CATEGORY = 7;
-		DROPDOWN_INTERPRETER_FORMAT = 18;
+		DROPDOWN_INTERPRETER_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_INTERPRETER_FORMAT = Format.HANDLE;
 		
-		DROPDOWN_HALIGN = 49; %CET: Computational Efficiency Trick
+		DROPDOWN_HALIGN = SettingsPP.getPropNumber() + 14;
 		DROPDOWN_HALIGN_TAG = 'DROPDOWN_HALIGN';
-		DROPDOWN_HALIGN_CATEGORY = 7;
-		DROPDOWN_HALIGN_FORMAT = 18;
+		DROPDOWN_HALIGN_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_HALIGN_FORMAT = Format.HANDLE;
 		
-		DROPDOWN_VALIGN = 50; %CET: Computational Efficiency Trick
+		DROPDOWN_VALIGN = SettingsPP.getPropNumber() + 15;
 		DROPDOWN_VALIGN_TAG = 'DROPDOWN_VALIGN';
-		DROPDOWN_VALIGN_CATEGORY = 7;
-		DROPDOWN_VALIGN_FORMAT = 18;
+		DROPDOWN_VALIGN_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_VALIGN_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = SettingsTextPP(varargin)
@@ -235,57 +183,6 @@ classdef SettingsTextPP < SettingsPP
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SettingsTextPP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the prop panel for text settings.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the prop panel for text settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the prop panel for text settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the prop panel for text settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the prop panel for text settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the prop panel for text settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the prop panel for text settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the property panel.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel for text settings.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>37</strong> <strong>EDITFIELD_X</strong> 	EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.
-			%  <strong>38</strong> <strong>EDITFIELD_Y</strong> 	EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.
-			%  <strong>39</strong> <strong>EDITFIELD_Z</strong> 	EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.
-			%  <strong>40</strong> <strong>EDITFIELD_TXT</strong> 	EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.
-			%  <strong>41</strong> <strong>BUTTON_FONTCOLOR</strong> 	BUTTON_FONTCOLOR (evanescent, handle) is the text color button.
-			%  <strong>42</strong> <strong>EDITFIELD_FONTSIZE</strong> 	EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.
-			%  <strong>43</strong> <strong>SLIDER_FONTSIZE</strong> 	SLIDER_FONTSIZE (evanescent, handle) is the font size slider.
-			%  <strong>44</strong> <strong>EDITFIELD_ROTATION</strong> 	EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.
-			%  <strong>45</strong> <strong>SLIDER_ROTATION</strong> 	SLIDER_ROTATION (evanescent, handle) is the rotation slider.
-			%  <strong>46</strong> <strong>EDITFIELD_FONTNAME</strong> 	EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.
-			%  <strong>47</strong> <strong>DROPDOWN_FONTWEIGHT</strong> 	DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.
-			%  <strong>48</strong> <strong>DROPDOWN_INTERPRETER</strong> 	DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.
-			%  <strong>49</strong> <strong>DROPDOWN_HALIGN</strong> 	DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.
-			%  <strong>50</strong> <strong>DROPDOWN_VALIGN</strong> 	DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.
 			%
 			% See also Category, Format.
 			
@@ -323,7 +220,7 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SettingsTextPP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SettingsTextPP', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel for text settings.
@@ -344,32 +241,80 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50];
+				prop_list = [ ...
+					SettingsPP.getProps() ...
+						SettingsTextPP.ENABLE ...
+						SettingsTextPP.EDITFIELD_X ...
+						SettingsTextPP.EDITFIELD_Y ...
+						SettingsTextPP.EDITFIELD_Z ...
+						SettingsTextPP.EDITFIELD_TXT ...
+						SettingsTextPP.BUTTON_FONTCOLOR ...
+						SettingsTextPP.EDITFIELD_FONTSIZE ...
+						SettingsTextPP.SLIDER_FONTSIZE ...
+						SettingsTextPP.EDITFIELD_ROTATION ...
+						SettingsTextPP.SLIDER_ROTATION ...
+						SettingsTextPP.EDITFIELD_FONTNAME ...
+						SettingsTextPP.DROPDOWN_FONTWEIGHT ...
+						SettingsTextPP.DROPDOWN_INTERPRETER ...
+						SettingsTextPP.DROPDOWN_HALIGN ...
+						SettingsTextPP.DROPDOWN_VALIGN ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39 40 41 42 43 44 45 46 47 48 49 50];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						SettingsPP.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						SettingsPP.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						SettingsPP.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.EVANESCENT) ...
+						SettingsTextPP.EDITFIELD_X ...
+						SettingsTextPP.EDITFIELD_Y ...
+						SettingsTextPP.EDITFIELD_Z ...
+						SettingsTextPP.EDITFIELD_TXT ...
+						SettingsTextPP.BUTTON_FONTCOLOR ...
+						SettingsTextPP.EDITFIELD_FONTSIZE ...
+						SettingsTextPP.SLIDER_FONTSIZE ...
+						SettingsTextPP.EDITFIELD_ROTATION ...
+						SettingsTextPP.SLIDER_ROTATION ...
+						SettingsTextPP.EDITFIELD_FONTNAME ...
+						SettingsTextPP.DROPDOWN_FONTWEIGHT ...
+						SettingsTextPP.DROPDOWN_INTERPRETER ...
+						SettingsTextPP.DROPDOWN_HALIGN ...
+						SettingsTextPP.DROPDOWN_VALIGN ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						SettingsPP.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						SettingsPP.getProps(Category.GUI) ...
+						SettingsTextPP.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -390,33 +335,7 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 50;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 24;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SettingsTextPP.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in prop panel for text settings/error.
@@ -444,14 +363,14 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 50 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SettingsTextPP.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsTextPP.'] ...
 					)
 			end
@@ -482,14 +401,15 @@ classdef SettingsTextPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); %CET: Computational Efficiency Trick
+			settingstextpp_tag_list = cellfun(@(x) SettingsTextPP.getPropTag(x), num2cell(SettingsTextPP.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settingstextpp_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsTextPP.'] ...
 					)
 			end
@@ -515,7 +435,8 @@ classdef SettingsTextPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' })); % tag = pointer %CET: Computational Efficiency Trick
+				settingstextpp_tag_list = cellfun(@(x) SettingsTextPP.getPropTag(x), num2cell(SettingsTextPP.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settingstextpp_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -543,9 +464,42 @@ classdef SettingsTextPP < SettingsPP
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settingstextpp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD_X'  'EDITFIELD_Y'  'EDITFIELD_Z'  'EDITFIELD_TXT'  'BUTTON_FONTCOLOR'  'EDITFIELD_FONTSIZE'  'SLIDER_FONTSIZE'  'EDITFIELD_ROTATION'  'SLIDER_ROTATION'  'EDITFIELD_FONTNAME'  'DROPDOWN_FONTWEIGHT'  'DROPDOWN_INTERPRETER'  'DROPDOWN_HALIGN'  'DROPDOWN_VALIGN' };
-				tag = settingstextpp_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SettingsTextPP.ENABLE
+						tag = SettingsTextPP.ENABLE_TAG;
+					case SettingsTextPP.EDITFIELD_X
+						tag = SettingsTextPP.EDITFIELD_X_TAG;
+					case SettingsTextPP.EDITFIELD_Y
+						tag = SettingsTextPP.EDITFIELD_Y_TAG;
+					case SettingsTextPP.EDITFIELD_Z
+						tag = SettingsTextPP.EDITFIELD_Z_TAG;
+					case SettingsTextPP.EDITFIELD_TXT
+						tag = SettingsTextPP.EDITFIELD_TXT_TAG;
+					case SettingsTextPP.BUTTON_FONTCOLOR
+						tag = SettingsTextPP.BUTTON_FONTCOLOR_TAG;
+					case SettingsTextPP.EDITFIELD_FONTSIZE
+						tag = SettingsTextPP.EDITFIELD_FONTSIZE_TAG;
+					case SettingsTextPP.SLIDER_FONTSIZE
+						tag = SettingsTextPP.SLIDER_FONTSIZE_TAG;
+					case SettingsTextPP.EDITFIELD_ROTATION
+						tag = SettingsTextPP.EDITFIELD_ROTATION_TAG;
+					case SettingsTextPP.SLIDER_ROTATION
+						tag = SettingsTextPP.SLIDER_ROTATION_TAG;
+					case SettingsTextPP.EDITFIELD_FONTNAME
+						tag = SettingsTextPP.EDITFIELD_FONTNAME_TAG;
+					case SettingsTextPP.DROPDOWN_FONTWEIGHT
+						tag = SettingsTextPP.DROPDOWN_FONTWEIGHT_TAG;
+					case SettingsTextPP.DROPDOWN_INTERPRETER
+						tag = SettingsTextPP.DROPDOWN_INTERPRETER_TAG;
+					case SettingsTextPP.DROPDOWN_HALIGN
+						tag = SettingsTextPP.DROPDOWN_HALIGN_TAG;
+					case SettingsTextPP.DROPDOWN_VALIGN
+						tag = SettingsTextPP.DROPDOWN_VALIGN_TAG;
+					otherwise
+						tag = getPropTag@SettingsPP(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -570,9 +524,40 @@ classdef SettingsTextPP < SettingsPP
 			
 			prop = SettingsTextPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstextpp_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7  7  7  7  7 };
-			prop_category = settingstextpp_category_list{prop};
+			switch prop
+				case SettingsTextPP.ENABLE
+					prop_category = SettingsTextPP.ENABLE_CATEGORY;
+				case SettingsTextPP.EDITFIELD_X
+					prop_category = SettingsTextPP.EDITFIELD_X_CATEGORY;
+				case SettingsTextPP.EDITFIELD_Y
+					prop_category = SettingsTextPP.EDITFIELD_Y_CATEGORY;
+				case SettingsTextPP.EDITFIELD_Z
+					prop_category = SettingsTextPP.EDITFIELD_Z_CATEGORY;
+				case SettingsTextPP.EDITFIELD_TXT
+					prop_category = SettingsTextPP.EDITFIELD_TXT_CATEGORY;
+				case SettingsTextPP.BUTTON_FONTCOLOR
+					prop_category = SettingsTextPP.BUTTON_FONTCOLOR_CATEGORY;
+				case SettingsTextPP.EDITFIELD_FONTSIZE
+					prop_category = SettingsTextPP.EDITFIELD_FONTSIZE_CATEGORY;
+				case SettingsTextPP.SLIDER_FONTSIZE
+					prop_category = SettingsTextPP.SLIDER_FONTSIZE_CATEGORY;
+				case SettingsTextPP.EDITFIELD_ROTATION
+					prop_category = SettingsTextPP.EDITFIELD_ROTATION_CATEGORY;
+				case SettingsTextPP.SLIDER_ROTATION
+					prop_category = SettingsTextPP.SLIDER_ROTATION_CATEGORY;
+				case SettingsTextPP.EDITFIELD_FONTNAME
+					prop_category = SettingsTextPP.EDITFIELD_FONTNAME_CATEGORY;
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT
+					prop_category = SettingsTextPP.DROPDOWN_FONTWEIGHT_CATEGORY;
+				case SettingsTextPP.DROPDOWN_INTERPRETER
+					prop_category = SettingsTextPP.DROPDOWN_INTERPRETER_CATEGORY;
+				case SettingsTextPP.DROPDOWN_HALIGN
+					prop_category = SettingsTextPP.DROPDOWN_HALIGN_CATEGORY;
+				case SettingsTextPP.DROPDOWN_VALIGN
+					prop_category = SettingsTextPP.DROPDOWN_VALIGN_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@SettingsPP(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -596,9 +581,40 @@ classdef SettingsTextPP < SettingsPP
 			
 			prop = SettingsTextPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstextpp_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18  18  18  18  18 };
-			prop_format = settingstextpp_format_list{prop};
+			switch prop
+				case SettingsTextPP.ENABLE
+					prop_format = SettingsTextPP.ENABLE_FORMAT;
+				case SettingsTextPP.EDITFIELD_X
+					prop_format = SettingsTextPP.EDITFIELD_X_FORMAT;
+				case SettingsTextPP.EDITFIELD_Y
+					prop_format = SettingsTextPP.EDITFIELD_Y_FORMAT;
+				case SettingsTextPP.EDITFIELD_Z
+					prop_format = SettingsTextPP.EDITFIELD_Z_FORMAT;
+				case SettingsTextPP.EDITFIELD_TXT
+					prop_format = SettingsTextPP.EDITFIELD_TXT_FORMAT;
+				case SettingsTextPP.BUTTON_FONTCOLOR
+					prop_format = SettingsTextPP.BUTTON_FONTCOLOR_FORMAT;
+				case SettingsTextPP.EDITFIELD_FONTSIZE
+					prop_format = SettingsTextPP.EDITFIELD_FONTSIZE_FORMAT;
+				case SettingsTextPP.SLIDER_FONTSIZE
+					prop_format = SettingsTextPP.SLIDER_FONTSIZE_FORMAT;
+				case SettingsTextPP.EDITFIELD_ROTATION
+					prop_format = SettingsTextPP.EDITFIELD_ROTATION_FORMAT;
+				case SettingsTextPP.SLIDER_ROTATION
+					prop_format = SettingsTextPP.SLIDER_ROTATION_FORMAT;
+				case SettingsTextPP.EDITFIELD_FONTNAME
+					prop_format = SettingsTextPP.EDITFIELD_FONTNAME_FORMAT;
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT
+					prop_format = SettingsTextPP.DROPDOWN_FONTWEIGHT_FORMAT;
+				case SettingsTextPP.DROPDOWN_INTERPRETER
+					prop_format = SettingsTextPP.DROPDOWN_INTERPRETER_FORMAT;
+				case SettingsTextPP.DROPDOWN_HALIGN
+					prop_format = SettingsTextPP.DROPDOWN_HALIGN_FORMAT;
+				case SettingsTextPP.DROPDOWN_VALIGN
+					prop_format = SettingsTextPP.DROPDOWN_VALIGN_FORMAT;
+				otherwise
+					prop_format = getPropFormat@SettingsPP(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -622,9 +638,68 @@ classdef SettingsTextPP < SettingsPP
 			
 			prop = SettingsTextPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstextpp_description_list = { 'ELCLASS (constant, string) is the class of the prop panel for text settings.'  'NAME (constant, string) is the name of the prop panel for text settings.'  'DESCRIPTION (constant, string) is the description of the prop panel for text settings.'  'TEMPLATE (parameter, item) is the template of the prop panel for text settings.'  'ID (data, string) is a few-letter code for the prop panel for text settings.'  'LABEL (metadata, string) is an extended label of the prop panel for text settings.'  'NOTES (metadata, string) are some specific notes about the prop panel for text settings.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the property panel.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel for text settings.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.'  'EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.'  'EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.'  'EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.'  'BUTTON_FONTCOLOR (evanescent, handle) is the text color button.'  'EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.'  'SLIDER_FONTSIZE (evanescent, handle) is the font size slider.'  'EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.'  'SLIDER_ROTATION (evanescent, handle) is the rotation slider.'  'EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.'  'DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.'  'DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.'  'DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.'  'DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.' };
-			prop_description = settingstextpp_description_list{prop};
+			switch prop
+				case SettingsTextPP.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.';
+				case SettingsTextPP.EDITFIELD_X
+					prop_description = 'EDITFIELD_X (evanescent, handle) is the text value edit field for the X property.';
+				case SettingsTextPP.EDITFIELD_Y
+					prop_description = 'EDITFIELD_Y (evanescent, handle) is the text value edit field for the Y property.';
+				case SettingsTextPP.EDITFIELD_Z
+					prop_description = 'EDITFIELD_Z (evanescent, handle) is the text value edit field for the Z property.';
+				case SettingsTextPP.EDITFIELD_TXT
+					prop_description = 'EDITFIELD_TXT (evanescent, handle) is the text value edit field for the TXT property.';
+				case SettingsTextPP.BUTTON_FONTCOLOR
+					prop_description = 'BUTTON_FONTCOLOR (evanescent, handle) is the text color button.';
+				case SettingsTextPP.EDITFIELD_FONTSIZE
+					prop_description = 'EDITFIELD_FONTSIZE (evanescent, handle) is the font size edit field.';
+				case SettingsTextPP.SLIDER_FONTSIZE
+					prop_description = 'SLIDER_FONTSIZE (evanescent, handle) is the font size slider.';
+				case SettingsTextPP.EDITFIELD_ROTATION
+					prop_description = 'EDITFIELD_ROTATION (evanescent, handle) is the rotation edit field.';
+				case SettingsTextPP.SLIDER_ROTATION
+					prop_description = 'SLIDER_ROTATION (evanescent, handle) is the rotation slider.';
+				case SettingsTextPP.EDITFIELD_FONTNAME
+					prop_description = 'EDITFIELD_FONTNAME (evanescent, handle) is the text value edit field for the FONTNAME property.';
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT
+					prop_description = 'DROPDOWN_FONTWEIGHT (evanescent, handle) is the font weight dropdown.';
+				case SettingsTextPP.DROPDOWN_INTERPRETER
+					prop_description = 'DROPDOWN_INTERPRETER (evanescent, handle) is the interpreter dropdown.';
+				case SettingsTextPP.DROPDOWN_HALIGN
+					prop_description = 'DROPDOWN_HALIGN (evanescent, handle) is the horizontal alignment dropdown.';
+				case SettingsTextPP.DROPDOWN_VALIGN
+					prop_description = 'DROPDOWN_VALIGN (evanescent, handle) is the vertical alignment dropdown.';
+				case SettingsTextPP.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the prop panel for text settings.';
+				case SettingsTextPP.NAME
+					prop_description = 'NAME (constant, string) is the name of the prop panel for text settings.';
+				case SettingsTextPP.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the prop panel for text settings.';
+				case SettingsTextPP.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the prop panel for text settings.';
+				case SettingsTextPP.ID
+					prop_description = 'ID (data, string) is a few-letter code for the prop panel for text settings.';
+				case SettingsTextPP.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the prop panel for text settings.';
+				case SettingsTextPP.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the prop panel for text settings.';
+				case SettingsTextPP.EL
+					prop_description = 'EL (data, item) is the element.';
+				case SettingsTextPP.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case SettingsTextPP.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the prop panel for text settings.';
+				case SettingsTextPP.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case SettingsTextPP.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the property panel.';
+				case SettingsTextPP.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case SettingsTextPP.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@SettingsPP(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -648,38 +723,38 @@ classdef SettingsTextPP < SettingsPP
 			
 			prop = SettingsTextPP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsTextPP.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 37 % SettingsTextPP.EDITFIELD_X
-					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsTextPP.EDITFIELD_Y
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsTextPP.EDITFIELD_Z
-					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsTextPP.EDITFIELD_TXT
-					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsTextPP.BUTTON_FONTCOLOR
-					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsTextPP.EDITFIELD_FONTSIZE
-					prop_settings = Format.getFormatSettings(18);
-				case 43 % SettingsTextPP.SLIDER_FONTSIZE
-					prop_settings = Format.getFormatSettings(18);
-				case 44 % SettingsTextPP.EDITFIELD_ROTATION
-					prop_settings = Format.getFormatSettings(18);
-				case 45 % SettingsTextPP.SLIDER_ROTATION
-					prop_settings = Format.getFormatSettings(18);
-				case 46 % SettingsTextPP.EDITFIELD_FONTNAME
-					prop_settings = Format.getFormatSettings(18);
-				case 47 % SettingsTextPP.DROPDOWN_FONTWEIGHT
-					prop_settings = Format.getFormatSettings(18);
-				case 48 % SettingsTextPP.DROPDOWN_INTERPRETER
-					prop_settings = Format.getFormatSettings(18);
-				case 49 % SettingsTextPP.DROPDOWN_HALIGN
-					prop_settings = Format.getFormatSettings(18);
-				case 50 % SettingsTextPP.DROPDOWN_VALIGN
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % SettingsTextPP.TEMPLATE
+			switch prop
+				case SettingsTextPP.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SettingsTextPP.EDITFIELD_X
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_Y
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_Z
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_TXT
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.BUTTON_FONTCOLOR
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_FONTSIZE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.SLIDER_FONTSIZE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_ROTATION
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.SLIDER_ROTATION
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.EDITFIELD_FONTNAME
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.DROPDOWN_INTERPRETER
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.DROPDOWN_HALIGN
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.DROPDOWN_VALIGN
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsTextPP.TEMPLATE
 					prop_settings = 'SettingsTextPP';
 				otherwise
 					prop_settings = getPropSettings@SettingsPP(prop);
@@ -707,57 +782,57 @@ classdef SettingsTextPP < SettingsPP
 			
 			prop = SettingsTextPP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsTextPP.ENABLE
+			switch prop
+				case SettingsTextPP.ENABLE
 					prop_default = true;
-				case 37 % SettingsTextPP.EDITFIELD_X
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 38 % SettingsTextPP.EDITFIELD_Y
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 39 % SettingsTextPP.EDITFIELD_Z
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 40 % SettingsTextPP.EDITFIELD_TXT
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 41 % SettingsTextPP.BUTTON_FONTCOLOR
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 42 % SettingsTextPP.EDITFIELD_FONTSIZE
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 43 % SettingsTextPP.SLIDER_FONTSIZE
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 44 % SettingsTextPP.EDITFIELD_ROTATION
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 45 % SettingsTextPP.SLIDER_ROTATION
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 46 % SettingsTextPP.EDITFIELD_FONTNAME
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 47 % SettingsTextPP.DROPDOWN_FONTWEIGHT
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 48 % SettingsTextPP.DROPDOWN_INTERPRETER
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 49 % SettingsTextPP.DROPDOWN_HALIGN
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 50 % SettingsTextPP.DROPDOWN_VALIGN
-					prop_default = Format.getFormatDefault(18, SettingsTextPP.getPropSettings(prop));
-				case 1 % SettingsTextPP.ELCLASS
+				case SettingsTextPP.EDITFIELD_X
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_Y
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_Z
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_TXT
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.BUTTON_FONTCOLOR
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_FONTSIZE
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.SLIDER_FONTSIZE
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_ROTATION
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.SLIDER_ROTATION
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_FONTNAME
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_INTERPRETER
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_HALIGN
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_VALIGN
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.ELCLASS
 					prop_default = 'SettingsTextPP';
-				case 2 % SettingsTextPP.NAME
+				case SettingsTextPP.NAME
 					prop_default = 'Prop Panel for Text Settings';
-				case 3 % SettingsTextPP.DESCRIPTION
+				case SettingsTextPP.DESCRIPTION
 					prop_default = 'A Prop Panel for Text Settings (SettingsTextPP) plots the panel for text settings, including text, x, y, and z position, font color, size, rotation and weight, interpreter, horizontal and vertical alignment. It works for all categories.';
-				case 4 % SettingsTextPP.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SettingsTextPP.getPropSettings(prop));
-				case 5 % SettingsTextPP.ID
+				case SettingsTextPP.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.ID
 					prop_default = 'SettingsTextPP ID';
-				case 6 % SettingsTextPP.LABEL
+				case SettingsTextPP.LABEL
 					prop_default = 'SettingsTextPP label';
-				case 7 % SettingsTextPP.NOTES
+				case SettingsTextPP.NOTES
 					prop_default = 'SettingsTextPP notes';
-				case 23 % SettingsTextPP.EL
+				case SettingsTextPP.EL
 					prop_default = MeasurePF();
-				case 24 % SettingsTextPP.PROP
-					prop_default = 35;
-				case 25 % SettingsTextPP.HEIGHT
-					prop_default = 111;
+				case SettingsTextPP.PROP
+					prop_default = MeasurePF.ST_TITLE;
+				case SettingsTextPP.HEIGHT
+					prop_default = s(9.2);
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
 			end
@@ -803,15 +878,15 @@ classdef SettingsTextPP < SettingsPP
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SettingsTextPP:WrongInput
+			%  Error id: €BRAPH2.STR€:SettingsTextPP:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:SettingsTextPP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsTextPP:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SettingsTextPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsTextPP.
-			%   Error id: BRAPH2:SettingsTextPP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsTextPP:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(SettingsTextPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsTextPP.
-			%   Error id: BRAPH2:SettingsTextPP:WrongInput]
+			%   Error id: €BRAPH2.STR€:SettingsTextPP:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('SettingsTextPP')
 			%  are less computationally efficient.
@@ -822,40 +897,40 @@ classdef SettingsTextPP < SettingsPP
 			prop = SettingsTextPP.getPropProp(pointer);
 			
 			switch prop
-				case 36 % SettingsTextPP.ENABLE
-					check = Format.checkFormat(4, value, SettingsTextPP.getPropSettings(prop));
-				case 37 % SettingsTextPP.EDITFIELD_X
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 38 % SettingsTextPP.EDITFIELD_Y
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 39 % SettingsTextPP.EDITFIELD_Z
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 40 % SettingsTextPP.EDITFIELD_TXT
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 41 % SettingsTextPP.BUTTON_FONTCOLOR
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 42 % SettingsTextPP.EDITFIELD_FONTSIZE
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 43 % SettingsTextPP.SLIDER_FONTSIZE
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 44 % SettingsTextPP.EDITFIELD_ROTATION
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 45 % SettingsTextPP.SLIDER_ROTATION
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 46 % SettingsTextPP.EDITFIELD_FONTNAME
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 47 % SettingsTextPP.DROPDOWN_FONTWEIGHT
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 48 % SettingsTextPP.DROPDOWN_INTERPRETER
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 49 % SettingsTextPP.DROPDOWN_HALIGN
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 50 % SettingsTextPP.DROPDOWN_VALIGN
-					check = Format.checkFormat(18, value, SettingsTextPP.getPropSettings(prop));
-				case 4 % SettingsTextPP.TEMPLATE
-					check = Format.checkFormat(8, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.ENABLE % __SettingsTextPP.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_X % __SettingsTextPP.EDITFIELD_X__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_Y % __SettingsTextPP.EDITFIELD_Y__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_Z % __SettingsTextPP.EDITFIELD_Z__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_TXT % __SettingsTextPP.EDITFIELD_TXT__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.BUTTON_FONTCOLOR % __SettingsTextPP.BUTTON_FONTCOLOR__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_FONTSIZE % __SettingsTextPP.EDITFIELD_FONTSIZE__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.SLIDER_FONTSIZE % __SettingsTextPP.SLIDER_FONTSIZE__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_ROTATION % __SettingsTextPP.EDITFIELD_ROTATION__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.SLIDER_ROTATION % __SettingsTextPP.SLIDER_ROTATION__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.EDITFIELD_FONTNAME % __SettingsTextPP.EDITFIELD_FONTNAME__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT % __SettingsTextPP.DROPDOWN_FONTWEIGHT__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_INTERPRETER % __SettingsTextPP.DROPDOWN_INTERPRETER__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_HALIGN % __SettingsTextPP.DROPDOWN_HALIGN__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.DROPDOWN_VALIGN % __SettingsTextPP.DROPDOWN_VALIGN__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsTextPP.getPropSettings(prop));
+				case SettingsTextPP.TEMPLATE % __SettingsTextPP.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SettingsTextPP.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -864,8 +939,8 @@ classdef SettingsTextPP < SettingsPP
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsTextPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsTextPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsTextPP.getPropTag(prop) ' (' SettingsTextPP.getFormatTag(SettingsTextPP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -876,75 +951,75 @@ classdef SettingsTextPP < SettingsPP
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % SettingsTextPP.EDITFIELD_X
+				case SettingsTextPP.EDITFIELD_X % __SettingsTextPP.EDITFIELD_X__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_X', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('X')) ' ' el.get(prop).getPropDescription('X')], ...
 					    'ValueChangedFcn', {@cb_editfield_x} ...
 					    );
 					
 					value = editfield;
 					
-				case 38 % SettingsTextPP.EDITFIELD_Y
+				case SettingsTextPP.EDITFIELD_Y % __SettingsTextPP.EDITFIELD_Y__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_Y', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('Y')) ' ' el.get(prop).getPropDescription('Y')], ...
 					    'ValueChangedFcn', {@cb_editfield_y} ...
 					    );
 					
 					value = editfield;
 					
-				case 39 % SettingsTextPP.EDITFIELD_Z
+				case SettingsTextPP.EDITFIELD_Z % __SettingsTextPP.EDITFIELD_Z__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_Z', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('Z')) ' ' el.get(prop).getPropDescription('Z')], ...
 					    'ValueChangedFcn', {@cb_editfield_Z} ...
 					    );
 					
 					value = editfield;
 					
-				case 40 % SettingsTextPP.EDITFIELD_TXT
+				case SettingsTextPP.EDITFIELD_TXT % __SettingsTextPP.EDITFIELD_TXT__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield = uieditfield( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_TXT', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('TXT')) ' ' el.get(prop).getPropDescription('TXT')], ...
 					    'ValueChangedFcn', {@cb_editfield_txt} ...
 					    );
 					
 					value = editfield;
 					
-				case 41 % SettingsTextPP.BUTTON_FONTCOLOR
+				case SettingsTextPP.BUTTON_FONTCOLOR % __SettingsTextPP.BUTTON_FONTCOLOR__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					button_fontcolor = uibutton( ...
@@ -958,7 +1033,7 @@ classdef SettingsTextPP < SettingsPP
 					    );
 					value = button_fontcolor;
 					
-				case 42 % SettingsTextPP.EDITFIELD_FONTSIZE
+				case SettingsTextPP.EDITFIELD_FONTSIZE % __SettingsTextPP.EDITFIELD_FONTSIZE__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_fontsize = uieditfield('numeric', ...
@@ -966,26 +1041,26 @@ classdef SettingsTextPP < SettingsPP
 					    'Tag', 'EDITFIELD_FONTSIZE', ...
 					    'Limits', [0 100], ...
 					    'LowerLimitInclusive', 'off', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FONTSIZE')) ' ' el.get(prop).getPropDescription('FONTSIZE')], ...
 					    'ValueChangedFcn', {@cb_editfield_fontsize} ...
 					    );
 					value = editfield_fontsize;
 					
-				case 43 % SettingsTextPP.SLIDER_FONTSIZE
+				case SettingsTextPP.SLIDER_FONTSIZE % __SettingsTextPP.SLIDER_FONTSIZE__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_fontsize = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_FONTSIZE', ...
 					    'Limits', [0 100], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FONTSIZE')) ' ' el.get(prop).getPropDescription('FONTSIZE')], ...
 					    'ValueChangedFcn', {@cb_slider_fontsize} ...
 					    );
 					value = slider_fontsize;
 					
-				case 44 % SettingsTextPP.EDITFIELD_ROTATION
+				case SettingsTextPP.EDITFIELD_ROTATION % __SettingsTextPP.EDITFIELD_ROTATION__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_rotation = uieditfield('numeric', ...
@@ -993,40 +1068,40 @@ classdef SettingsTextPP < SettingsPP
 					    'Tag', 'EDITFIELD_ROTATION', ...
 					    'Limits', [-180 180], ...
 					    'LowerLimitInclusive', 'on', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('ROTATION')) ' ' el.get(prop).getPropDescription('ROTATION')], ...
 					    'ValueChangedFcn', {@cb_editfield_rotation} ...
 					    );
 					value = editfield_rotation;
 					
-				case 45 % SettingsTextPP.SLIDER_ROTATION
+				case SettingsTextPP.SLIDER_ROTATION % __SettingsTextPP.SLIDER_ROTATION__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_rotation = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_ROTATION', ...
 					    'Limits', [-180 180], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('ROTATION')) ' ' el.get(prop).getPropDescription('ROTATION')], ...
 					    'ValueChangedFcn', {@cb_slider_rotation} ...
 					    );
 					value = slider_rotation;
 					
-				case 46 % SettingsTextPP.EDITFIELD_FONTNAME
+				case SettingsTextPP.EDITFIELD_FONTNAME % __SettingsTextPP.EDITFIELD_FONTNAME__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					editfield_fontname = uieditfield( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_FONTNAME', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FONTNAME')) ' ' el.get(prop).getPropDescription('FONTNAME')], ...
 					    'ValueChangedFcn', {@cb_editfield_fontname} ...
 					    );
 					
 					value = editfield_fontname;
 					
-				case 47 % SettingsTextPP.DROPDOWN_FONTWEIGHT
+				case SettingsTextPP.DROPDOWN_FONTWEIGHT % __SettingsTextPP.DROPDOWN_FONTWEIGHT__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1034,14 +1109,14 @@ classdef SettingsTextPP < SettingsPP
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_FONTWEIGHT', ...
 					    'Items', el.get(prop).getPropSettings('FONTWEIGHT'), ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FONTWEIGHT')) ' ' el.get(prop).getPropDescription('FONTWEIGHT')], ...
 					    'ValueChangedFcn', {@cb_dropdown_fontweight} ...
 					    );
 					
 					value = dropdown_fontweight;
 					
-				case 48 % SettingsTextPP.DROPDOWN_INTERPRETER
+				case SettingsTextPP.DROPDOWN_INTERPRETER % __SettingsTextPP.DROPDOWN_INTERPRETER__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1049,14 +1124,14 @@ classdef SettingsTextPP < SettingsPP
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_INTERPRETER', ...
 					    'Items', el.get(prop).getPropSettings('INTERPRETER'), ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('INTERPRETER')) ' ' el.get(prop).getPropDescription('INTERPRETER')], ...
 					    'ValueChangedFcn', {@cb_dropdown_interpreter} ...
 					    );
 					
 					value = dropdown_interpreter;
 					
-				case 49 % SettingsTextPP.DROPDOWN_HALIGN
+				case SettingsTextPP.DROPDOWN_HALIGN % __SettingsTextPP.DROPDOWN_HALIGN__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1064,14 +1139,14 @@ classdef SettingsTextPP < SettingsPP
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_HALIGN', ...
 					    'Items', el.get(prop).getPropSettings('HALIGN'), ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('HALIGN')) ' ' el.get(prop).getPropDescription('HALIGN')], ...
 					    'ValueChangedFcn', {@cb_dropdown_halign} ...
 					    );
 					
 					value = dropdown_halign;
 					
-				case 50 % SettingsTextPP.DROPDOWN_VALIGN
+				case SettingsTextPP.DROPDOWN_VALIGN % __SettingsTextPP.DROPDOWN_VALIGN__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1079,15 +1154,15 @@ classdef SettingsTextPP < SettingsPP
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_VALIGN', ...
 					    'Items', el.get(prop).getPropSettings('VALIGN'), ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('VALIGN')) ' ' el.get(prop).getPropDescription('VALIGN')], ...
 					    'ValueChangedFcn', {@cb_dropdown_valign} ...
 					    );
 					
 					value = dropdown_valign;
 					
-				case 20 % SettingsTextPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case SettingsTextPP.X_DRAW % __SettingsTextPP.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('EDITFIELD_X')
 					    pr.memorize('EDITFIELD_Y')
@@ -1107,8 +1182,8 @@ classdef SettingsTextPP < SettingsPP
 					    pr.memorize('DROPDOWN_VALIGN')
 					end
 					
-				case 21 % SettingsTextPP.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case SettingsTextPP.UPDATE % __SettingsTextPP.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -1154,7 +1229,7 @@ classdef SettingsTextPP < SettingsPP
 					    end
 					
 					    switch el.getPropCategory(prop)
-					        case 2
+					        case Category.METADATA
 					            set(pr.get('EDITFIELD_X'), 'Value', el.get(prop).get('X'))
 					            set(pr.get('EDITFIELD_Y'), 'Value', el.get(prop).get('Y'))
 					            set(pr.get('EDITFIELD_Z'), 'Value', el.get(prop).get('Z'))
@@ -1172,7 +1247,7 @@ classdef SettingsTextPP < SettingsPP
 					            set(pr.get('DROPDOWN_HALIGN'), 'Value', el.get(prop).get('HALIGN'))
 					            set(pr.get('DROPDOWN_VALIGN'), 'Value', el.get(prop).get('VALIGN'))
 					            
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            set(pr.get('EDITFIELD_X'), 'Value', el.get(prop).get('X'))
 					            set(pr.get('EDITFIELD_Y'), 'Value', el.get(prop).get('Y'))
 					            set(pr.get('EDITFIELD_Z'), 'Value', el.get(prop).get('Z'))
@@ -1252,7 +1327,7 @@ classdef SettingsTextPP < SettingsPP
 					                set(pr.get('DROPDOWN_VALIGN'), 'Enable', 'off')
 					            end
 					            
-					        case 5
+					        case Category.RESULT
 					            value = el.getr(prop);
 					            
 					            if isa(value, 'NoValue')
@@ -1391,31 +1466,31 @@ classdef SettingsTextPP < SettingsPP
 					    end
 					end
 					
-				case 22 % SettingsTextPP.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case SettingsTextPP.REDRAW % __SettingsTextPP.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 						w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					
-					    set(pr.get('EDITFIELD_X'),   'Position', [4           74   .10*w_p     21])
-					    set(pr.get('EDITFIELD_Y'),   'Position', [8+.10*w_p   74   .10*w_p     21])
-					    set(pr.get('EDITFIELD_Z'),   'Position', [11+.20*w_p   74   .10*w_p     21])
-					    set(pr.get('EDITFIELD_TXT'), 'Position', [15+.30*w_p  74  .60*w_p     21])
+					    set(pr.get('EDITFIELD_X'),   'Position', [s(.3)           s(6.1)   .10*w_p     s(1.75)])
+					    set(pr.get('EDITFIELD_Y'),   'Position', [s(.6)+.10*w_p   s(6.1)   .10*w_p     s(1.75)])
+					    set(pr.get('EDITFIELD_Z'),   'Position', [s(.9)+.20*w_p   s(6.1)   .10*w_p     s(1.75)])
+					    set(pr.get('EDITFIELD_TXT'), 'Position', [s(1.2)+.30*w_p  s(6.1)  .60*w_p     s(1.75)])
 					    
-					    set(pr.get('BUTTON_FONTCOLOR'),   'Position', [4            39  .20*w_p   21])
-					    set(pr.get('EDITFIELD_FONTSIZE'), 'Position', [8+.20*w_p	39  .15*w_p   21])
-					    set(pr.get('SLIDER_FONTSIZE'),    'Position', [11+.35*w_p	57 .20*w_p   3]) % the height of a slider cannot be changed
-					    set(pr.get('EDITFIELD_ROTATION'), 'Position', [18+.55*w_p	39  .15*w_p   21])
-					    set(pr.get('SLIDER_ROTATION'),    'Position', [22+.70*w_p	57 .20*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('BUTTON_FONTCOLOR'),   'Position', [s(.3)            s(3.2)  .20*w_p   s(1.7)])
+					    set(pr.get('EDITFIELD_FONTSIZE'), 'Position', [s(.6)+.20*w_p	s(3.2)  .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_FONTSIZE'),    'Position', [s(.9)+.35*w_p	s(4.75) .20*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('EDITFIELD_ROTATION'), 'Position', [s(1.5)+.55*w_p	s(3.2)  .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_ROTATION'),    'Position', [s(1.8)+.70*w_p	s(4.75) .20*w_p   3]) % the height of a slider cannot be changed
 					    
-					    set(pr.get('EDITFIELD_FONTNAME'),   'Position', [4          4   .20*w_p     21])    
-					    set(pr.get('DROPDOWN_FONTWEIGHT'),  'Position', [8+.20*w_p  4   .18*w_p     21])    
-					    set(pr.get('DROPDOWN_INTERPRETER'), 'Position', [11+.38*w_p  4   .18*w_p     21])    
-					    set(pr.get('DROPDOWN_HALIGN'),      'Position', [15+.56*w_p	4   .18*w_p     21])    
-					    set(pr.get('DROPDOWN_VALIGN'),      'Position', [18+.74*w_p	4   .18*w_p     21])    
+					    set(pr.get('EDITFIELD_FONTNAME'),   'Position', [s(.3)          s(.3)   .20*w_p     s(1.75)])    
+					    set(pr.get('DROPDOWN_FONTWEIGHT'),  'Position', [s(.6)+.20*w_p  s(.3)   .18*w_p     s(1.75)])    
+					    set(pr.get('DROPDOWN_INTERPRETER'), 'Position', [s(.9)+.38*w_p  s(.3)   .18*w_p     s(1.75)])    
+					    set(pr.get('DROPDOWN_HALIGN'),      'Position', [s(1.2)+.56*w_p	s(.3)   .18*w_p     s(1.75)])    
+					    set(pr.get('DROPDOWN_VALIGN'),      'Position', [s(1.5)+.74*w_p	s(.3)   .18*w_p     s(1.75)])    
 					end
 					
-				case 18 % SettingsTextPP.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case SettingsTextPP.DELETE % __SettingsTextPP.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('EDITFIELD_X', Element.getNoValue())
 					    pr.set('EDITFIELD_Y', Element.getNoValue())
@@ -1436,7 +1511,7 @@ classdef SettingsTextPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

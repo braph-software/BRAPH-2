@@ -1,12 +1,17 @@
 %% Pipeline Classification Training-Test Split Connectivity-Functional Multiplex Data
 
 % This is the pipeline script to train a multi-layer perceptron classifier using connectivity-functional multiplex data.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI). 
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2.1 It loads the connectivity data of two groups of subjects from three directories (e.g., CON_Group1_XLS, CON_Group2_XLS, and CON_Group3_XLS) containing XLS files of each subject.
 % 2.2 It loads the functional data of two groups of subjects from three directories (e.g., CON_Group1_XLS, CON_Group2_XLS, and CON_Group3_XLS) containing XLS files of each subject.
 % 3. It splits the dataset into training and test datasets for all of the groups, respectively.
 % 4. It trains the classifier using the training dataset.
 % 5. It evaluates the performance of the trained classifier using both the training and test dataset.
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

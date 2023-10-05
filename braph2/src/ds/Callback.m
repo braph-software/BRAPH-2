@@ -6,12 +6,6 @@ classdef (Sealed=true) Callback < Element
 	% by its properties EL and PROP/TAG.
 	% No element can be a subclass of Callback.
 	%
-	% The list of Callback properties is:
-	%  <strong>1</strong> <strong>EL</strong> 	EL (data, item) is the callback element.
-	%  <strong>2</strong> <strong>PROP</strong> 	PROP (data, scalar) is the callback property number.
-	%  <strong>3</strong> <strong>TAG</strong> 	TAG (data, string) is the callback property tag.
-	%  <strong>4</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%
 	% Callback methods (constructor):
 	%  Callback - constructor
 	%
@@ -101,25 +95,25 @@ classdef (Sealed=true) Callback < Element
 	% See also Element.
 	
 	properties (Constant) % properties
-		EL = 1; %CET: Computational Efficiency Trick
+		EL = Element.getPropNumber() + 1;
 		EL_TAG = 'EL';
-		EL_CATEGORY = 4;
-		EL_FORMAT = 8;
+		EL_CATEGORY = Category.DATA;
+		EL_FORMAT = Format.ITEM;
 		
-		PROP = 2; %CET: Computational Efficiency Trick
+		PROP = Element.getPropNumber() + 2;
 		PROP_TAG = 'PROP';
-		PROP_CATEGORY = 4;
-		PROP_FORMAT = 11;
+		PROP_CATEGORY = Category.DATA;
+		PROP_FORMAT = Format.SCALAR;
 		
-		TAG = 3; %CET: Computational Efficiency Trick
+		TAG = Element.getPropNumber() + 3;
 		TAG_TAG = 'TAG';
-		TAG_CATEGORY = 4;
-		TAG_FORMAT = 2;
+		TAG_CATEGORY = Category.DATA;
+		TAG_FORMAT = Format.STRING;
 		
-		TOSTRING = 4; %CET: Computational Efficiency Trick
+		TOSTRING = Element.getPropNumber() + 4;
 		TOSTRING_TAG = 'TOSTRING';
-		TOSTRING_CATEGORY = 6;
-		TOSTRING_FORMAT = 2;
+		TOSTRING_CATEGORY = Category.QUERY;
+		TOSTRING_FORMAT = Format.STRING;
 	end
 	methods % constructor
 		function cb = Callback(varargin)
@@ -132,11 +126,6 @@ classdef (Sealed=true) Callback < Element
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Callback properties is:
-			%  <strong>1</strong> <strong>EL</strong> 	EL (data, item) is the callback element.
-			%  <strong>2</strong> <strong>PROP</strong> 	PROP (data, scalar) is the callback property number.
-			%  <strong>3</strong> <strong>TAG</strong> 	TAG (data, string) is the callback property tag.
-			%  <strong>4</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%
 			% See also Category, Format.
 			
@@ -174,7 +163,7 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Callback' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Callback', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of callback.
@@ -195,20 +184,58 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4];
+				prop_list = [ ...
+					Element.getProps() ...
+						Callback.EL ...
+						Callback.PROP ...
+						Callback.TAG ...
+						Callback.TOSTRING ...
+						];
 				return
 			end
 			
 			switch category
-				case 4 % Category.DATA
-					prop_list = [1 2 3];
-				case 6 % Category.QUERY
-					prop_list = 4;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Element.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Element.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Element.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Element.getProps(Category.DATA) ...
+						Callback.EL ...
+						Callback.PROP ...
+						Callback.TAG ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Element.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Element.getProps(Category.QUERY) ...
+						Callback.TOSTRING ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Element.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Element.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Element.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -229,21 +256,7 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 4;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Callback.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in callback/error.
@@ -271,14 +284,14 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 4 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Callback.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Callback:' 'WrongInput'], ...
-					['BRAPH2' ':Callback:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Callback.'] ...
 					)
 			end
@@ -309,14 +322,15 @@ classdef (Sealed=true) Callback < Element
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'EL'  'PROP'  'TAG'  'TOSTRING' })); %CET: Computational Efficiency Trick
+			callback_tag_list = cellfun(@(x) Callback.getPropTag(x), num2cell(Callback.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, callback_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Callback:' 'WrongInput'], ...
-					['BRAPH2' ':Callback:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Callback.'] ...
 					)
 			end
@@ -342,7 +356,8 @@ classdef (Sealed=true) Callback < Element
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'EL'  'PROP'  'TAG'  'TOSTRING' })); % tag = pointer %CET: Computational Efficiency Trick
+				callback_tag_list = cellfun(@(x) Callback.getPropTag(x), num2cell(Callback.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, callback_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -370,9 +385,18 @@ classdef (Sealed=true) Callback < Element
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				callback_tag_list = { 'EL'  'PROP'  'TAG'  'TOSTRING' };
-				tag = callback_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case Callback.EL
+						tag = Callback.EL_TAG;
+					case Callback.PROP
+						tag = Callback.PROP_TAG;
+					case Callback.TAG
+						tag = Callback.TAG_TAG;
+					case Callback.TOSTRING
+						tag = Callback.TOSTRING_TAG;
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -397,9 +421,16 @@ classdef (Sealed=true) Callback < Element
 			
 			prop = Callback.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			callback_category_list = { 4  4  4  6 };
-			prop_category = callback_category_list{prop};
+			switch prop
+				case Callback.EL
+					prop_category = Callback.EL_CATEGORY;
+				case Callback.PROP
+					prop_category = Callback.PROP_CATEGORY;
+				case Callback.TAG
+					prop_category = Callback.TAG_CATEGORY;
+				case Callback.TOSTRING
+					prop_category = Callback.TOSTRING_CATEGORY;
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -423,9 +454,16 @@ classdef (Sealed=true) Callback < Element
 			
 			prop = Callback.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			callback_format_list = { 8  11  2  2 };
-			prop_format = callback_format_list{prop};
+			switch prop
+				case Callback.EL
+					prop_format = Callback.EL_FORMAT;
+				case Callback.PROP
+					prop_format = Callback.PROP_FORMAT;
+				case Callback.TAG
+					prop_format = Callback.TAG_FORMAT;
+				case Callback.TOSTRING
+					prop_format = Callback.TOSTRING_FORMAT;
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -449,9 +487,16 @@ classdef (Sealed=true) Callback < Element
 			
 			prop = Callback.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			callback_description_list = { 'EL (data, item) is the callback element.'  'PROP (data, scalar) is the callback property number.'  'TAG (data, string) is the callback property tag.'  'TOSTRING (query, string) returns a string that represents the object.' };
-			prop_description = callback_description_list{prop};
+			switch prop
+				case Callback.EL
+					prop_description = 'EL (data, item) is the callback element.';
+				case Callback.PROP
+					prop_description = 'PROP (data, scalar) is the callback property number.';
+				case Callback.TAG
+					prop_description = 'TAG (data, string) is the callback property tag.';
+				case Callback.TOSTRING
+					prop_description = 'TOSTRING (query, string) returns a string that represents the object.';
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -475,15 +520,15 @@ classdef (Sealed=true) Callback < Element
 			
 			prop = Callback.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % Callback.EL
+			switch prop
+				case Callback.EL
 					prop_settings = 'ConcreteElement';
-				case 2 % Callback.PROP
-					prop_settings = Format.getFormatSettings(11);
-				case 3 % Callback.TAG
-					prop_settings = Format.getFormatSettings(2);
-				case 4 % Callback.TOSTRING
-					prop_settings = Format.getFormatSettings(2);
+				case Callback.PROP
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case Callback.TAG
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case Callback.TOSTRING
+					prop_settings = Format.getFormatSettings(Format.STRING);
 			end
 		end
 		function prop_default = getPropDefault(pointer)
@@ -508,15 +553,15 @@ classdef (Sealed=true) Callback < Element
 			
 			prop = Callback.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % Callback.EL
-					prop_default = Format.getFormatDefault(8, Callback.getPropSettings(prop));
-				case 2 % Callback.PROP
-					prop_default = Format.getFormatDefault(11, Callback.getPropSettings(prop));
-				case 3 % Callback.TAG
-					prop_default = Format.getFormatDefault(2, Callback.getPropSettings(prop));
-				case 4 % Callback.TOSTRING
-					prop_default = Format.getFormatDefault(2, Callback.getPropSettings(prop));
+			switch prop
+				case Callback.EL
+					prop_default = Format.getFormatDefault(Format.ITEM, Callback.getPropSettings(prop));
+				case Callback.PROP
+					prop_default = Format.getFormatDefault(Format.SCALAR, Callback.getPropSettings(prop));
+				case Callback.TAG
+					prop_default = Format.getFormatDefault(Format.STRING, Callback.getPropSettings(prop));
+				case Callback.TOSTRING
+					prop_default = Format.getFormatDefault(Format.STRING, Callback.getPropSettings(prop));
 			end
 		end
 		function prop_default = getPropDefaultConditioned(pointer)
@@ -554,8 +599,8 @@ classdef (Sealed=true) Callback < Element
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of 2,
-			%  3, 4, 8 and 9.
+			% Conditioning is only used for props of Category.METADATA,
+			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -577,15 +622,15 @@ classdef (Sealed=true) Callback < Element
 			% 
 			% CB.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Callback:WrongInput
+			%  Error id: €BRAPH2.STR€:Callback:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CB.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of CB.
-			%   Error id: BRAPH2:Callback:WrongInput
+			%   Error id: €BRAPH2.STR€:Callback:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Callback, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Callback.
-			%   Error id: BRAPH2:Callback:WrongInput
+			%   Error id: €BRAPH2.STR€:Callback:€BRAPH2.WRONG_INPUT€
 			%  CB.CHECKPROP(Callback, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Callback.
-			%   Error id: BRAPH2:Callback:WrongInput]
+			%   Error id: €BRAPH2.STR€:Callback:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(CB) and Element.CHECKPROP('Callback')
 			%  are less computationally efficient.
@@ -596,22 +641,22 @@ classdef (Sealed=true) Callback < Element
 			prop = Callback.getPropProp(pointer);
 			
 			switch prop
-				case 1 % Callback.EL
-					check = Format.checkFormat(8, value, Callback.getPropSettings(prop));
-				case 2 % Callback.PROP
-					check = Format.checkFormat(11, value, Callback.getPropSettings(prop));
-				case 3 % Callback.TAG
-					check = Format.checkFormat(2, value, Callback.getPropSettings(prop));
-				case 4 % Callback.TOSTRING
-					check = Format.checkFormat(2, value, Callback.getPropSettings(prop));
+				case Callback.EL % __Callback.EL__
+					check = Format.checkFormat(Format.ITEM, value, Callback.getPropSettings(prop));
+				case Callback.PROP % __Callback.PROP__
+					check = Format.checkFormat(Format.SCALAR, value, Callback.getPropSettings(prop));
+				case Callback.TAG % __Callback.TAG__
+					check = Format.checkFormat(Format.STRING, value, Callback.getPropSettings(prop));
+				case Callback.TOSTRING % __Callback.TOSTRING__
+					check = Format.checkFormat(Format.STRING, value, Callback.getPropSettings(prop));
 			end
 			
 			if nargout == 1
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Callback:' 'WrongInput'], ...
-					['BRAPH2' ':Callback:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Callback:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Callback.getPropTag(prop) ' (' Callback.getFormatTag(Callback.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -631,14 +676,14 @@ classdef (Sealed=true) Callback < Element
 			%  checkValue.
 			
 			switch prop
-				case 2 % Callback.PROP
+				case Callback.PROP % __Callback.PROP__
 					el = cb.get('EL');
 					prop = cb.get('PROP');
 					if ~strcmp(cb.get('TAG'), el.getPropTag(prop))
 					    cb.set('TAG', el.getPropTag(prop));
 					end
 					
-				case 3 % Callback.TAG
+				case Callback.TAG % __Callback.TAG__
 					el = cb.get('EL');
 					tag = cb.get('TAG');
 					if cb.get('PROP') ~= el.getPropProp(tag)
@@ -653,19 +698,19 @@ classdef (Sealed=true) Callback < Element
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 4 % Callback.TOSTRING
+				case Callback.TOSTRING % __Callback.TOSTRING__
 					value = cb.tostring();
 					
 				otherwise

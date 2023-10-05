@@ -7,24 +7,6 @@ classdef Clustering < Triangles
 	% the number of triangles present around a node and the maximum number of 
 	% triangles that could possibly be formed around that node.
 	%
-	% The list of Clustering properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Clustering.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Clustering.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Clustering.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Clustering.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Clustering.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Clustering.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Clustering.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Clustering value.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
-	%
 	% Clustering methods (constructor):
 	%  Clustering - constructor
 	%
@@ -122,23 +104,6 @@ classdef Clustering < Triangles
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Clustering properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Clustering.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Clustering.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Clustering.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Clustering.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Clustering.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Clustering.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Clustering.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Clustering value.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
 			% See also Category, Format.
 			
@@ -176,7 +141,7 @@ classdef Clustering < Triangles
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Clustering'  'ClusteringAv' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Clustering', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of clustering.
@@ -197,30 +162,50 @@ classdef Clustering < Triangles
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					Triangles.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Triangles.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Triangles.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Triangles.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Triangles.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Triangles.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Triangles.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Triangles.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Triangles.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Triangles.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -241,31 +226,7 @@ classdef Clustering < Triangles
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Clustering.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in clustering/error.
@@ -293,14 +254,14 @@ classdef Clustering < Triangles
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Clustering.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Clustering:' 'WrongInput'], ...
-					['BRAPH2' ':Clustering:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Clustering.'] ...
 					)
 			end
@@ -331,14 +292,15 @@ classdef Clustering < Triangles
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			clustering_tag_list = cellfun(@(x) Clustering.getPropTag(x), num2cell(Clustering.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, clustering_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Clustering:' 'WrongInput'], ...
-					['BRAPH2' ':Clustering:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Clustering.'] ...
 					)
 			end
@@ -364,7 +326,8 @@ classdef Clustering < Triangles
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				clustering_tag_list = cellfun(@(x) Clustering.getPropTag(x), num2cell(Clustering.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, clustering_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -392,9 +355,12 @@ classdef Clustering < Triangles
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				clustering_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
-				tag = clustering_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@Triangles(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -419,9 +385,10 @@ classdef Clustering < Triangles
 			
 			prop = Clustering.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			clustering_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = clustering_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@Triangles(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -445,9 +412,10 @@ classdef Clustering < Triangles
 			
 			prop = Clustering.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			clustering_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
-			prop_format = clustering_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@Triangles(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -471,9 +439,34 @@ classdef Clustering < Triangles
 			
 			prop = Clustering.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			clustering_description_list = { 'ELCLASS (constant, string) is the class of the Clustering.'  'NAME (constant, string) is the name of the Clustering.'  'DESCRIPTION (constant, string) is the description of the Clustering.'  'TEMPLATE (parameter, item) is the template of the Clustering.'  'ID (data, string) is a few-letter code of the Clustering.'  'LABEL (metadata, string) is an extended label of the Clustering.'  'NOTES (metadata, string) are some specific notes about the Clustering.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Clustering value.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
-			prop_description = clustering_description_list{prop};
+			switch prop
+				case Clustering.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Clustering.';
+				case Clustering.NAME
+					prop_description = 'NAME (constant, string) is the name of the Clustering.';
+				case Clustering.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Clustering.';
+				case Clustering.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Clustering.';
+				case Clustering.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Clustering.';
+				case Clustering.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Clustering.';
+				case Clustering.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Clustering.';
+				case Clustering.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case Clustering.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case Clustering.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case Clustering.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case Clustering.M
+					prop_description = 'M (result, cell) is the cell containing the Clustering value.';
+				otherwise
+					prop_description = getPropDescription@Triangles(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -497,8 +490,8 @@ classdef Clustering < Triangles
 			
 			prop = Clustering.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % Clustering.TEMPLATE
+			switch prop
+				case Clustering.TEMPLATE
 					prop_settings = 'Clustering';
 				otherwise
 					prop_settings = getPropSettings@Triangles(prop);
@@ -526,29 +519,29 @@ classdef Clustering < Triangles
 			
 			prop = Clustering.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % Clustering.ELCLASS
+			switch prop
+				case Clustering.ELCLASS
 					prop_default = 'Clustering';
-				case 2 % Clustering.NAME
+				case Clustering.NAME
 					prop_default = 'Clustering';
-				case 3 % Clustering.DESCRIPTION
+				case Clustering.DESCRIPTION
 					prop_default = 'The Clustering coefficient (Clustering) of a node is the fraction of triangles present around a node. The clustering coefficient is calculated as the ratio between the number of triangles present around a node and the maximum number of triangles that could possibly be formed around that node.';
-				case 4 % Clustering.TEMPLATE
-					prop_default = Format.getFormatDefault(8, Clustering.getPropSettings(prop));
-				case 5 % Clustering.ID
+				case Clustering.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, Clustering.getPropSettings(prop));
+				case Clustering.ID
 					prop_default = 'Clustering ID';
-				case 6 % Clustering.LABEL
+				case Clustering.LABEL
 					prop_default = 'Clustering label';
-				case 7 % Clustering.NOTES
+				case Clustering.NOTES
 					prop_default = 'Clustering notes';
-				case 9 % Clustering.SHAPE
-					prop_default = 2;
-				case 10 % Clustering.SCOPE
-					prop_default = 2;
-				case 11 % Clustering.PARAMETRICITY
-					prop_default = 2;
-				case 12 % Clustering.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};;
+				case Clustering.SHAPE
+					prop_default = Measure.NODAL;
+				case Clustering.SCOPE
+					prop_default = Measure.UNILAYER;
+				case Clustering.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case Clustering.COMPATIBLE_GRAPHS
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};
 				otherwise
 					prop_default = getPropDefault@Triangles(prop);
 			end
@@ -594,15 +587,15 @@ classdef Clustering < Triangles
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Clustering:WrongInput
+			%  Error id: €BRAPH2.STR€:Clustering:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:Clustering:WrongInput
+			%   Error id: €BRAPH2.STR€:Clustering:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Clustering, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Clustering.
-			%   Error id: BRAPH2:Clustering:WrongInput
+			%   Error id: €BRAPH2.STR€:Clustering:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(Clustering, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Clustering.
-			%   Error id: BRAPH2:Clustering:WrongInput]
+			%   Error id: €BRAPH2.STR€:Clustering:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Clustering')
 			%  are less computationally efficient.
@@ -613,10 +606,10 @@ classdef Clustering < Triangles
 			prop = Clustering.getPropProp(pointer);
 			
 			switch prop
-				case 4 % Clustering.TEMPLATE
-					check = Format.checkFormat(8, value, Clustering.getPropSettings(prop));
+				case Clustering.TEMPLATE % __Clustering.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, Clustering.getPropSettings(prop));
 				otherwise
-					if prop <= 16
+					if prop <= Triangles.getPropNumber()
 						check = checkProp@Triangles(prop, value);
 					end
 			end
@@ -625,8 +618,8 @@ classdef Clustering < Triangles
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Clustering:' 'WrongInput'], ...
-					['BRAPH2' ':Clustering:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Clustering:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Clustering.getPropTag(prop) ' (' Clustering.getFormatTag(Clustering.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -637,20 +630,20 @@ classdef Clustering < Triangles
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % Clustering.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case Clustering.M % __Clustering.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(Clustering.M), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
@@ -663,7 +656,7 @@ classdef Clustering < Triangles
 					            
 					parfor li = 1:1:L
 					    Aii = A{li, li};
-					    if directionality_type == 2              
+					    if directionality_type == Graph.UNDIRECTED              
 					        degree = Degree('G', g).get('M');
 					        clustering_layer = 2 * triangles{li} ./ (degree{li} .* (degree{li} - 1));
 					
@@ -693,7 +686,7 @@ classdef Clustering < Triangles
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 16
+					if prop <= Triangles.getPropNumber()
 						value = calculateValue@Triangles(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

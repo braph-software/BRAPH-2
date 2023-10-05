@@ -62,7 +62,7 @@ end
 if ~exist(target_dir, 'dir') 
     time_start = tic;
 
-    [target_dir, source_dir] = genesis(target_dir, [], 2, false);
+    [target_dir, source_dir] = genesis(target_dir, [], 1, false);
 
     addpath(target_dir)
 

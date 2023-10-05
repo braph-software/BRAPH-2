@@ -18,8 +18,8 @@ KFOLDS
 NaN
 SPLIT
 NaN
-DATASET
-11
+D
+NaN
 Template for Neural Network Regressor
 9
 Template for Neural Network Evaluator
@@ -29,11 +29,17 @@ NaN
 DCO
 NaN
 Dataset List
-12
+11
+D_LIST_IT
+NaN
 Neural Network Regressor List
-13
+12
+NN_LIST_IT
+NaN
 Neural Network Evaluator List
-14
+13
+EVALUATOR_LIST_IT
+NaN
 Training EPOCHS
 5
 Training BATCH
@@ -62,3 +68,5 @@ Average of Root Mean Squared Error
 19
 Average of Feature Importance
 21
+Scatter Plot
+14

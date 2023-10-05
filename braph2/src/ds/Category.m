@@ -52,49 +52,49 @@ classdef Category < handle
     %
     % Category properties (Constant):
     %
-    %  CONSTANT = 1
-    %  CONSTANT_TAG = 'c'
-    %  CONSTANT_NAME = 'constant'
+    %  CONSTANT = Category.CONSTANT
+    %  CONSTANT_TAG = Category.CONSTANT_TAG
+    %  CONSTANT_NAME = Category.CONSTANT_NAME
     %  CONSTANT_DESCRIPTION
     %
-    %  METADATA = 2
-    %  METADATA_TAG = 'c'
-    %  METADATA_NAME = 'constant'
+    %  METADATA = Category.METADATA
+    %  METADATA_TAG = Category.CONSTANT_TAG
+    %  METADATA_NAME = Category.CONSTANT_NAME
     %  METADATA_DESCRIPTION
     %
-    %  PARAMETER = 3
-    %  PARAMETER_TAG = 'c'
-    %  PARAMETER_NAME = 'constant'
+    %  PARAMETER = Category.PARAMETER
+    %  PARAMETER_TAG = Category.CONSTANT_TAG
+    %  PARAMETER_NAME = Category.CONSTANT_NAME
     %  PARAMETER_DESCRIPTION
     % 
-    %  DATA = 4
-    %  DATA_TAG = 'c'
-    %  DATA_NAME = 1
+    %  DATA = Category.DATA
+    %  DATA_TAG = Category.CONSTANT_TAG
+    %  DATA_NAME = Category.CONSTANT
     %  DATA_DESCRIPTION
     % 
-    %  RESULT = 5
-    %  RESULT_TAG = 'r'
-    %  RESULT_NAME = 'result'
+    %  RESULT = Category.RESULT
+    %  RESULT_TAG = Category.RESULT_TAG
+    %  RESULT_NAME = Category.RESULT_NAME
     %  RESULT_DESCRIPTION
     %
-    %  QUERY = 6
-    %  QUERY_TAG = 'q'
-    %  QUERY_NAME = 'query'
+    %  QUERY = Category.QUERY
+    %  QUERY_TAG = Category.QUERY_TAG
+    %  QUERY_NAME = Category.QUERY_NAME
     %  QUERY_DESCRIPTION
     %
-    %  EVANESCENT = 7
-    %  EVANESCENT_TAG = 'e'
-    %  EVANESCENT_NAME = 'evanescent'
+    %  EVANESCENT = Category.EVANESCENT
+    %  EVANESCENT_TAG = Category.EVANESCENT_TAG
+    %  EVANESCENT_NAME = Category.EVANESCENT_NAME
     %  EVANESCENT_DESCRIPTION
     %
-    %  FIGURE = 8
-    %  FIGURE_TAG = 'f'
-    %  FIGURE_NAME = 'figure'
+    %  FIGURE = Category.FIGURE
+    %  FIGURE_TAG = Category.FIGURE_TAG
+    %  FIGURE_NAME = Category.FIGURE_NAME
     %  FIGURE_DESCRIPTION
     %
-    %  GUI = 9
-    %  GUI_TAG = 'g'
-    %  GUI_NAME = 'gui'
+    %  GUI = Category.GUI
+    %  GUI_TAG = Category.GUI_TAG
+    %  GUI_NAME = Category.GUI_NAME
     %  GUI_DESCRIPTION
     %
     % Category methods (Static):
@@ -162,21 +162,21 @@ classdef Category < handle
             % See also getCategoryNumber, existsCategory.
             
             categories = [ ...
-                1 ...
-                2 ...
-                3 ...
-                4 ...
-                5 ...
-                6 ...
-                7 ...
-                8 ...
-                9 ...
+                Category.CONSTANT ...
+                Category.METADATA ...
+                Category.PARAMETER ...
+                Category.DATA ...
+                Category.RESULT ...
+                Category.QUERY ...
+                Category.EVANESCENT ...
+                Category.FIGURE ...
+                Category.GUI ...
                 ];
         end
         function category_number = getCategoryNumber()
             %GETCATEGORYNUMBER returns the number of categories.
             %
-            % N = GETCATEGORYNUMBER() returns the number of categories (9).
+            % N = GETCATEGORYNUMBER() returns the number of categories (Category.getCategoryNumber()).
             %
             % See also getCategories, existsCategory.
             
@@ -188,18 +188,18 @@ classdef Category < handle
             % CHECK = EXISTSCATEGORY(CATEGORY) returns whether CATEGORY exists.
             %
             % EXISTSCATEGORY(CATEGORY) throws an error if CATEGORY does not exist.
-            %  Error id: BRAPH2:Category:WrongInput
+            %  Error id: €BRAPH2.STR€:Category:€BRAPH2.WRONG_INPUT€
             %
             % See also getCategories, getCategoryNumber.
             
-            check = category >= 1 && category <= 9 && round(category) == category; 
+            check = category >= 1 && category <= Category.getCategoryNumber() && round(category) == category; 
 
             if nargout == 1
                 check_out = check;
             elseif ~check
                 error( ...
-                    ['BRAPH2' ':Category:' 'WrongInput'], ...
-                    ['BRAPH2' ':Category:' 'WrongInput' '\n' ...
+                    [BRAPH2.STR ':Category:' BRAPH2.WRONG_INPUT], ...
+                    [BRAPH2.STR ':Category:' BRAPH2.WRONG_INPUT '\n' ...
                     'The value ' tostring(category) ' is not a valid category.\n' ...
                     'Admissible values are ' char(join(cellfun(@(x) int2str(x), ...
                     num2cell(Category.getCategories()), 'UniformOutput', false))) '.'] ...
@@ -217,24 +217,24 @@ classdef Category < handle
             % See also getCategories, getCategoryName, getCategoryDescription.
 
             switch category
-                case 1 % Category.CONSTANT
-                    category_tag = 'c';
-                case 2 % Category.METADATA
-                    category_tag = 'm';
-                case 3 % Category.PARAMETER
-                    category_tag = 'p';
-                case 4 % Category.DATA
-                    category_tag = 'd';
-                case 5 % Category.RESULT
-                    category_tag = 'r';
-                case 6 % Category.QUERY
-                    category_tag = 'q';
-                case 7 % Category.EVANESCENT
-                    category_tag = 'e';
-                case 8 % Category.FIGURE
-                    category_tag = 'f';
-                case 9 % Category.GUI
-                    category_tag = 'g';
+                case Category.CONSTANT % __Category.CONSTANT__
+                    category_tag = Category.CONSTANT_TAG;
+                case Category.METADATA % __Category.METADATA__
+                    category_tag = Category.METADATA_TAG;
+                case Category.PARAMETER % __Category.PARAMETER__
+                    category_tag = Category.PARAMETER_TAG;
+                case Category.DATA % __Category.DATA__
+                    category_tag = Category.DATA_TAG;
+                case Category.RESULT % __Category.RESULT__
+                    category_tag = Category.RESULT_TAG;
+                case Category.QUERY % __Category.QUERY__
+                    category_tag = Category.QUERY_TAG;
+                case Category.EVANESCENT % __Category.EVANESCENT__
+                    category_tag = Category.EVANESCENT_TAG;
+                case Category.FIGURE % __Category.FIGURE__
+                    category_tag = Category.FIGURE_TAG;
+                case Category.GUI % __Category.GUI__
+                    category_tag = Category.GUI_TAG;
                 otherwise
                     Category.existsCategory(category) % error because category does not exist
             end
@@ -250,24 +250,24 @@ classdef Category < handle
             % See also getCategories, getCategoryTag, getCategoryDescription.
 
             switch category
-                case 1 % Category.CONSTANT
-                    category_name = 'constant';
-                case 2 % Category.METADATA
-                    category_name = 'metadata';
-                case 3 % Category.PARAMETER
-                    category_name = 'parameter';
-                case 4 % Category.DATA
-                    category_name = 'data';
-                case 5 % Category.RESULT
-                    category_name = 'result';
-                case 6 % Category.QUERY
-                    category_name = 'query';
-                case 7 % Category.EVANESCENT
-                    category_name = 'evanescent';
-                case 8 % Category.FIGURE
-                    category_name = 'figure';
-                case 9 % Category.GUI
-                    category_name = 'gui';
+                case Category.CONSTANT % __Category.CONSTANT__
+                    category_name = Category.CONSTANT_NAME;
+                case Category.METADATA % __Category.METADATA__
+                    category_name = Category.METADATA_NAME;
+                case Category.PARAMETER % __Category.PARAMETER__
+                    category_name = Category.PARAMETER_NAME;
+                case Category.DATA % __Category.DATA__
+                    category_name = Category.DATA_NAME;
+                case Category.RESULT % __Category.RESULT__
+                    category_name = Category.RESULT_NAME;
+                case Category.QUERY % __Category.QUERY__
+                    category_name = Category.QUERY_NAME;
+                case Category.EVANESCENT % __Category.EVANESCENT__
+                    category_name = Category.EVANESCENT_NAME;
+                case Category.FIGURE % __Category.FIGURE__
+                    category_name = Category.FIGURE_NAME;
+                case Category.GUI % __Category.GUI__
+                    category_name = Category.GUI_NAME;
                 otherwise
                     Category.existsCategory(category) % error because category does not exist
             end
@@ -283,24 +283,24 @@ classdef Category < handle
             % See also getCategories, getCategoryTag, getCategoryName.
 
             switch category
-                case 1 % Category.CONSTANT
-                    category_description = 'Static constant equal for all instances of the element (allows incoming and outgoing callbacks, implicitly cloned).';
-                case 2 % Category.METADATA
-                    category_description = 'Metadata NOT used in the calculation of the results (does not allow callbacks, not cloned).';
-                case 3 % Category.PARAMETER
-                    category_description = 'Parameter used to calculate the results of the element (allows incoming and outgoing callbacks, cloned, locked when a result is calculated).';
-                case 4 % Category.DATA
-                    category_description = 'Data used to calculate the results of the element (can be NoResult when not set, allows incoming and outgoing callbacks, not cloned, locked when a result is calculated).';
-                case 5 % Category.RESULT
-                    category_description = 'Result calculated by the element using parameters and data; its calculation locks the element (can be NoResult when not calculated, does not allow callbacks).';
-                case 6 % Category.QUERY
-                    category_description = 'Query result calculated by the element; its calculation does NOT lock the element.';
-                case 7 % Category.EVANESCENT
-                    category_description = 'Evanescent variable calculated at runtime, typically employed for handles to GUI components (can be NoValue when not calculated, does not allow callbacks).';
-                case 8 % Category.FIGURE
-                    category_description = 'Parameter used to plot the results in a figure (allows incoming and outgoing callbacks, not cloned, not lockable).';
-                case 9 % Category.GUI
-                    category_description = 'Parameter used by the graphical user interface (allows incoming and outgoing callbacks, not cloned, not lockable).';
+                case Category.CONSTANT % __Category.CONSTANT__
+                    category_description = Category.CONSTANT_DESCRIPTION;
+                case Category.METADATA % __Category.METADATA__
+                    category_description = Category.METADATA_DESCRIPTION;
+                case Category.PARAMETER % __Category.PARAMETER__
+                    category_description = Category.PARAMETER_DESCRIPTION;
+                case Category.DATA % __Category.DATA__
+                    category_description = Category.DATA_DESCRIPTION;
+                case Category.RESULT % __Category.RESULT__
+                    category_description = Category.RESULT_DESCRIPTION;
+                case Category.QUERY % __Category.QUERY__
+                    category_description = Category.QUERY_DESCRIPTION;
+                case Category.EVANESCENT % __Category.EVANESCENT__
+                    category_description = Category.EVANESCENT_DESCRIPTION;
+                case Category.FIGURE % __Category.FIGURE__
+                    category_description = Category.FIGURE_DESCRIPTION;
+                case Category.GUI % __Category.GUI__
+                    category_description = Category.GUI_DESCRIPTION;
                 otherwise
                     Category.existsCategory(category) % error because category does not exist
             end

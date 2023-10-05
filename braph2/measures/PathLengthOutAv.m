@@ -4,24 +4,6 @@ classdef PathLengthOutAv < PathLengthOut
 	%
 	% The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes without a layer.
 	%
-	% The list of PathLengthOutAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Path Length.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Path Length.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Path Length.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Path Length.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Path Length.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Path Length.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Path Length.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Out-Path Length.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
-	%
 	% PathLengthOutAv methods (constructor):
 	%  PathLengthOutAv - constructor
 	%
@@ -119,23 +101,6 @@ classdef PathLengthOutAv < PathLengthOut
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PathLengthOutAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Path Length.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Path Length.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Path Length.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Path Length.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Path Length.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Path Length.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Path Length.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Out-Path Length.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the PathLengthOut algorithm
 			%
 			% See also Category, Format.
 			
@@ -173,7 +138,7 @@ classdef PathLengthOutAv < PathLengthOut
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PathLengthOutAv' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PathLengthOutAv', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average out-path length.
@@ -194,30 +159,50 @@ classdef PathLengthOutAv < PathLengthOut
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					PathLengthOut.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PathLengthOut.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PathLengthOut.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -238,31 +223,7 @@ classdef PathLengthOutAv < PathLengthOut
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PathLengthOutAv.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average out-path length/error.
@@ -290,14 +251,14 @@ classdef PathLengthOutAv < PathLengthOut
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PathLengthOutAv.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PathLengthOutAv.'] ...
 					)
 			end
@@ -328,14 +289,15 @@ classdef PathLengthOutAv < PathLengthOut
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			pathlengthoutav_tag_list = cellfun(@(x) PathLengthOutAv.getPropTag(x), num2cell(PathLengthOutAv.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, pathlengthoutav_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PathLengthOutAv.'] ...
 					)
 			end
@@ -361,7 +323,8 @@ classdef PathLengthOutAv < PathLengthOut
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				pathlengthoutav_tag_list = cellfun(@(x) PathLengthOutAv.getPropTag(x), num2cell(PathLengthOutAv.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, pathlengthoutav_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -389,9 +352,12 @@ classdef PathLengthOutAv < PathLengthOut
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				pathlengthoutav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
-				tag = pathlengthoutav_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@PathLengthOut(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -416,9 +382,10 @@ classdef PathLengthOutAv < PathLengthOut
 			
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			pathlengthoutav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = pathlengthoutav_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@PathLengthOut(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -442,9 +409,10 @@ classdef PathLengthOutAv < PathLengthOut
 			
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			pathlengthoutav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
-			prop_format = pathlengthoutav_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@PathLengthOut(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -468,9 +436,34 @@ classdef PathLengthOutAv < PathLengthOut
 			
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			pathlengthoutav_description_list = { 'ELCLASS (constant, string) is the class of the Average Out-Path Length.'  'NAME (constant, string) is the name of the Average Out-Path Length.'  'DESCRIPTION (constant, string) is the description of the Average Out-Path Length.'  'TEMPLATE (parameter, item) is the template of the Average Out-Path Length.'  'ID (data, string) is a few-letter code of the Average Out-Path Length.'  'LABEL (metadata, string) is an extended label of the Average Out-Path Length.'  'NOTES (metadata, string) are some specific notes about the Average Out-Path Length.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average Out-Path Length.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the PathLengthOut algorithm' };
-			prop_description = pathlengthoutav_description_list{prop};
+			switch prop
+				case PathLengthOutAv.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Average Out-Path Length.';
+				case PathLengthOutAv.NAME
+					prop_description = 'NAME (constant, string) is the name of the Average Out-Path Length.';
+				case PathLengthOutAv.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Average Out-Path Length.';
+				case PathLengthOutAv.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Average Out-Path Length.';
+				case PathLengthOutAv.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Average Out-Path Length.';
+				case PathLengthOutAv.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Average Out-Path Length.';
+				case PathLengthOutAv.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Average Out-Path Length.';
+				case PathLengthOutAv.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case PathLengthOutAv.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case PathLengthOutAv.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case PathLengthOutAv.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case PathLengthOutAv.M
+					prop_description = 'M (result, cell) is the cell containing the Average Out-Path Length.';
+				otherwise
+					prop_description = getPropDescription@PathLengthOut(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -494,8 +487,8 @@ classdef PathLengthOutAv < PathLengthOut
 			
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % PathLengthOutAv.TEMPLATE
+			switch prop
+				case PathLengthOutAv.TEMPLATE
 					prop_settings = 'PathLengthOutAv';
 				otherwise
 					prop_settings = getPropSettings@PathLengthOut(prop);
@@ -523,28 +516,28 @@ classdef PathLengthOutAv < PathLengthOut
 			
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % PathLengthOutAv.ELCLASS
+			switch prop
+				case PathLengthOutAv.ELCLASS
 					prop_default = 'PathLengthOutAv';
-				case 2 % PathLengthOutAv.NAME
+				case PathLengthOutAv.NAME
 					prop_default = 'Average Out-Path Length';
-				case 3 % PathLengthOutAv.DESCRIPTION
+				case PathLengthOutAv.DESCRIPTION
 					prop_default = 'The Average Out-Path Length (PathLengthOutAv) is the average shortest PathLengthOutAv of one node to all other nodes within a layer.';
-				case 4 % PathLengthOutAv.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PathLengthOutAv.getPropSettings(prop));
-				case 5 % PathLengthOutAv.ID
+				case PathLengthOutAv.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PathLengthOutAv.getPropSettings(prop));
+				case PathLengthOutAv.ID
 					prop_default = 'PathLengthOutAv ID';
-				case 6 % PathLengthOutAv.LABEL
+				case PathLengthOutAv.LABEL
 					prop_default = 'Average Out-Path Length label';
-				case 7 % PathLengthOutAv.NOTES
+				case PathLengthOutAv.NOTES
 					prop_default = 'Average Out-Path Length notes';
-				case 9 % PathLengthOutAv.SHAPE
-					prop_default = 2;
-				case 10 % PathLengthOutAv.SCOPE
-					prop_default = 2;
-				case 11 % PathLengthOutAv.PARAMETRICITY
-					prop_default = 2;
-				case 12 % PathLengthOutAv.COMPATIBLE_GRAPHS
+				case PathLengthOutAv.SHAPE
+					prop_default = Measure.NODAL;
+				case PathLengthOutAv.SCOPE
+					prop_default = Measure.UNILAYER;
+				case PathLengthOutAv.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case PathLengthOutAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphBD' 'GraphWD' 'MultiplexBD' 'MultiplexWD' 'MultilayerBD' 'OrdMlBD'};
 				otherwise
 					prop_default = getPropDefault@PathLengthOut(prop);
@@ -591,15 +584,15 @@ classdef PathLengthOutAv < PathLengthOut
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PathLengthOutAv:WrongInput
+			%  Error id: €BRAPH2.STR€:PathLengthOutAv:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:PathLengthOutAv:WrongInput
+			%   Error id: €BRAPH2.STR€:PathLengthOutAv:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PathLengthOutAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PathLengthOutAv.
-			%   Error id: BRAPH2:PathLengthOutAv:WrongInput
+			%   Error id: €BRAPH2.STR€:PathLengthOutAv:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(PathLengthOutAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PathLengthOutAv.
-			%   Error id: BRAPH2:PathLengthOutAv:WrongInput]
+			%   Error id: €BRAPH2.STR€:PathLengthOutAv:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('PathLengthOutAv')
 			%  are less computationally efficient.
@@ -610,10 +603,10 @@ classdef PathLengthOutAv < PathLengthOut
 			prop = PathLengthOutAv.getPropProp(pointer);
 			
 			switch prop
-				case 4 % PathLengthOutAv.TEMPLATE
-					check = Format.checkFormat(8, value, PathLengthOutAv.getPropSettings(prop));
+				case PathLengthOutAv.TEMPLATE % __PathLengthOutAv.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PathLengthOutAv.getPropSettings(prop));
 				otherwise
-					if prop <= 16
+					if prop <= PathLengthOut.getPropNumber()
 						check = checkProp@PathLengthOut(prop, value);
 					end
 			end
@@ -622,8 +615,8 @@ classdef PathLengthOutAv < PathLengthOut
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':PathLengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PathLengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PathLengthOutAv.getPropTag(prop) ' (' PathLengthOutAv.getFormatTag(PathLengthOutAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -634,20 +627,20 @@ classdef PathLengthOutAv < PathLengthOut
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % PathLengthOutAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case PathLengthOutAv.M % __PathLengthOutAv.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(PathLengthOutAv.M), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					L = g.get('LAYERNUMBER');
@@ -671,7 +664,7 @@ classdef PathLengthOutAv < PathLengthOut
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 16
+					if prop <= PathLengthOut.getPropNumber()
 						value = calculateValue@PathLengthOut(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});
