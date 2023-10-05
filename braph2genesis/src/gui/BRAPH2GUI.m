@@ -447,7 +447,7 @@ pipelines = get_pipelines();
         % system(['start "" "' pdfPath '"']);
         
                     pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
-                    notes = regexprep(notes, 'README:.*' newline()], '');
+                    notes = regexprep(notes, ['README:.*' newline()], '');
         % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
                 
         % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
