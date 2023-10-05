@@ -1,5 +1,6 @@
 \documentclass[justified]{tufte-handout}
 \usepackage{../braph2_tut}
+\usepackage{tcolorbox}
 %\geometry{showframe} % display margins for debugging page layout
 
 \title{Pipeline for Comparison of Connectivity-Functional Multiplex Data using Weighted Undirected graphs}
@@ -178,4 +179,115 @@ The available parameters are:
 	\item \code{RANDOMIZATION ATTEMPTS PER EDGE} is the attempts to rewire each edge. \emph{Typically not used}
 \end{itemize}
 
-\end{document}
+\subsection{Setting Measure Parameters}
+
+Now, after pressing \code{GRAPH TEMPLATE} (\Figref{fig:07}a), if you scroll down to find the \code{Graph MEASURES} section, click on the \code{C} button, all compatible measures will be displayed in a table. 
+For example, you can select the \code{Multiplex Core-Periphery} measure and then right-click at the top of the table (\Figref{fig:07}b). In the right-click menu, choose \code{Data Selected Measures}. 
+This will open the measure window, allowing you to specify the rules or parameters (\Figref{fig:07}c).
+
+\fig{figure*}
+	{fig:07}
+	{
+	\includegraphics{fig07.jpg}
+	}
+	{Configuring Measure Parameters}
+	{
+        {\bf a}
+	{\bf b} Expanding the \code{Graph MEASURES} panel, by clicking on the \code{C} button, reveals a table displaying all compatible measures. 
+	Select the \code{Multiplex Core-Periphery} measure and then right-click at the top of the table. In the right-click menu, choose \code{Data Selected Measures}.
+	{\bf c} The measure window that opens allows you to define the parameters for the \code{Multiplex Core-Periphery} measure. Select the \code{louvain} algorithm to calculate it.
+    {\bf d}
+	}
+
+\clearpage
+\subsection{Calculate Measures}
+ 
+After configuring the parameters, you can proceed to calculate specific graph measures (\Figref{fig:08}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:08}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the 'C' button, you will see a table displaying all measures.
+
+\fig{figure*}
+	{fig:08}
+	{
+	\includegraphics{fig08.jpg}
+	}
+	{Analyzing the Group Data}
+	{
+	{\bf a} Locate the \code{Group-averaged MEASURES} panel and click the \code{C} button to see all available measures. Choose the \code{Multiplex Core-Periphery} measure, right-click it, and select \code{Calculate Selected Measures} to perform the calculation.
+	{\bf b} To visualize the results, right-click on the top of the table and choose \code{Plot Selected Measures on Brain} in the Analyze Ensemble interface. This action opens a brain surface with the \code{Multiplex Core-Periphery} plotted.
+	{\bf c} Explore different views such as the \code{Axial dorsal} button in the brain surface toolbar.
+	{\bf d} Adjust visualization settings by clicking on the \code{Settings Panel Figure} button in the same toolbar.
+	{\bf e} Customize and save plot visualizations within the settings menu. Here, we turned off the option to show the spheres corresponding to the nodes of each community with different sizes.
+	}
+
+As an example, let us select the \code{Multiplex Core-Periphery} measure, for which we previously set the rule to \code{louvain}. Right-click at the top of the table and choose \code{Calculate Selected Measures}. Once the calculation is complete, you will notice a \code{C} appearing in front of the \code{Multiplex Core-Periphery} row, indicating that this measure has been calculated.
+
+If you wish to visualize the results, right-click on the top of the table and select \code{Plot Selected Measures on Brain} within the Analyze Ensemble interface (\Figref{fig:08}). This will open a brain surface with the \fn{Multiplex Core-Periphery} plotted on it.
+
+Within the toolbar of the brain surface interface, you can explore various views.
+For instance, by clicking on the \code{Axial dorsal} button (\Figref{fig:08}c), you will get the same view as shown in \Figref{fig:08}d. Additionally, clicking on the \code{Settings Panel Figure} button (\Figref{fig:09}e) in the same toolbar allows you to adjust different visualization settings.
+
+For instance, within the settings menu (\Figref{fig:08}e), you can disable the size effect, resulting in the same kind of figure as shown in \Figref{fig:08}d. Within the settings menu, you can customize the visualization of the plots and save them for reference.
+
+Finally, when you right-click in the \code{Group-averaged MEASURES} panel, you will find other options to explore, such as \code{Plot Selected Measures} (which generates a line plot for the selected measure at different thresholds and/or different nodes) and \code{Data Selected Measure} (providing the calculated values of the selected measures). These options can also be saved for further analyses outside BRAPH 2.0.
+
+\section{Step 4: Analyzing the Data of Group 2}
+
+After completing the analysis of the first group, you can analyze the second group by simply clicking on \code{Analyze Group 2} (\Figref{fig:09}a). You will notice that in the new GUI (\Figref{fig:09}b-d), the parameters you previously selected for the first group are already preselected and fixed for this analysis. 
+
+\fig{figure*}
+	{fig:09}
+	{
+	\includegraphics{fig09.jpg}
+	}
+	{Parameters blocked in the Analysis of Group 2}
+	{
+	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
+	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property {\bf d} \fn{THRESHOLDS}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf e}.
+	}
+	
+If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a \code{C} (\Figref{fig:09}e) near the analysis of the first group.
+ 
+\clearpage
+\section{Step 5: Comparing Groups}
+
+After exploring the network measures for each group, you can proceed to their statistical comparison by clicking on \code{Compare Groups} (\Figref{fig:10}a).
+
+\fig{figure}
+	{fig:10}
+	{
+	\includegraphics{fig10.jpg}
+	}
+	{Compare the groups}
+	{
+	{\bf a} Click on \code{Compare Groups} in the pipeline's GUI.
+	{\bf b} In this new window, you can select to turn ON/OFF the wait bar and verbose functions, you can change the number of permutations, and whether to perform a longitudinal group comparison. We set the number of permutations to 10 for this tutorial {\bf c}. Finally, you can calculate the comparisons of some graph measures between groups {\bf d}.
+	}
+	
+In the new window, you have several options to configure the analysis. First, you can choose whether to enable a progress bar and verbose functions while the analysis is running, which can help you monitor the progress of the analysis. You can also specify how many permutations you want to use to assess differences between groups (\Figref{fig:10}b).
+
+If your groups are not independent and represent the same subjects assessed in different points in time, you can select the longitudinal comparison option. This option will permute the values within each subject, considering their temporal relationship (\Figref{fig:10}b).
+
+For computational efficiency, in this tutorial we have set the number of permutations to 10. However, for your research analysis, we recommend using a higher number, such as 1000 or 10000 permutations, to ensure the results are robust.
+
+Next, you can select the specific graph measures you wish to compare between the groups. To do this, click on \code{C} in the \code{COMPARISONS} section (\Figref{fig:10}c). Once you have chosen all the measures of interest, right-click and select \code{Calculate Selected Comparisons}.
+
+If you have enabled the progress bar and verbose functions, two additional windows will appear to display the progress of the comparison calculations. Finally, there is an option in this GUI to save intermediate results during the permutations, which can be helpful for further analysis.
+ 
+To obtain the results from the comparisons, select the measures in the \code{COMPARISONS} panel and press \code{Data Selected Comparisons} ({\Figref{fig:10}d}), and a new window will open where we can check the value of the difference between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
+
+ \fig{figure*}
+	{fig:11}
+	{
+	\includegraphics{fig11.jpg}
+	}
+	{Visualize the group comparison results on a brain surface}
+	{
+	{\bf a} Click on \fn{Brain Graph Selected Comparison} in the Comparisons panel.
+	{\bf b} In this new window, you will see the comparison results, with positive values in red and negative values in blue on the brain surface.
+{\bf c} You can customize this visualization using the settings menu.
+	}
+
+If you wish to visualize the results, right-click at the top of the table and select \code{Brain Graph Selected Comparison} within the Compare Ensemble interface (\Figref{fig:11}a). This action will open a brain surface displaying the difference between these two groups in terms of the \fn{Degree} data or any other nodal measure you have calculated.
+
+Within the brain surface interface's toolbar, you have various options to explore. For example, by clicking on the “Axial dorsal” button (\Figref{fig:11}b), you can access the same view depicted in \Figref{fig:11}. Additionally, the “Settings Panel Figure” button in the same toolbar allows you to fine-tune different visualization settings.
+
+For further customization, within the settings menu (\Figref{fig:11}c), you can activate the \code{FDR CORRECTION} feature to control for multiple comparisons and reduce the chance of false positive results when assessing the significance of connectivity measures across multiple brain regions. You can also use the settings menu to personalize the visualization of your plots and save them.
