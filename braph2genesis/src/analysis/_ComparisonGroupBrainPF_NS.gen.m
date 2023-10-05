@@ -83,12 +83,6 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupBrainPF_NS.NODE
-%%%% ¡title!
-NODE SELECTION
-
-%%% ¡prop!
-%%%% ¡id!
 ComparisonGroupBrainPF_NS.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -207,6 +201,7 @@ LABEL (metadata, string) is an extended label of the panel figure nodal superglo
 NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal group comparison on brain surface figure.
 %%%% ¡default!
 'ComparisonGroupBrainPF_NS notes'
+
 %%% ¡prop!
 DRAW (query, logical) draws the figure brain atlas.
 %%%% ¡calculate!
@@ -360,18 +355,13 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal group comparison on brain surface figure.
-%%%% ¡gui!
-pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.NODE);
-
-%%% ¡prop!
 LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡default!
 1
 %%%% ¡postset!
 pf.get('SETUP');
 %%%% ¡gui!
-pr = ComparisonGroupBrainPF_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.LAYER);
+pr = ComparisonGroupBrainPF_Layer_NS('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
