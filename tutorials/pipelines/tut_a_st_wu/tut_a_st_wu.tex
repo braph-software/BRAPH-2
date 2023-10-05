@@ -2,7 +2,7 @@
 \usepackage{../braph2_tut}
 %\geometry{showframe} % display margins for debugging page layout
 
-\title{Pipeline for Comparison of Weighted Structural Data between Groups of Subjects}
+\title{Comparison of Weighted Structural Data using WU}
 
 \begin{document}
 
@@ -10,15 +10,15 @@
 
 \begin{abstract}
 \noindent
-In this tutorial, we will upload a file containing the pipeline with the different steps to compare two groups of subjects using \emph{structural data} (check tutorial \emph{Group of Subjects with Structural Data}) and weighted undirected graphs. This Tutorial explains how to perform group analyses and comparisons with this kind of data.
+This tutorial shows how to perform a network analysis using \emph{structural data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_st}{Group of Subjects with Structural Data}), where one connectivity matrix per group is calculated, as in T1-weighted imaging, static arterial spin labelling and positron emission tomography Step by step, this pipeline guides you to compare the data from two groups of subjects using their unthresholded weighted matrices, which correspond, for example, to correlation coefficients in cortical thickness, blood perfusion or glucose metabolism. You will also be able to generate publication-quality figures.
 \end{abstract}
-
 \tableofcontents
 
+% This figure should be changed -> substitute by nice brain figures
 \fig{figure*}
 	{fig:01}
 	{\includegraphics{fig01.jpg}}
-	{GUI for working with the pipeline to compare two groups of subjects with \emph{structural data} using a weighted undirected analysis (Figure TBD)}
+	{GUI for working with the pipeline to compare two groups of subjects with \emph{structural data} using a weighted undirected analysis (Figure 1)}
 	{
 	Full graphical user interface to perform group comparisons with \emph{structural data} in BRAPH~2.0. 
 	}
@@ -47,8 +47,9 @@ gui.get('SHOW') ¥\circled{4}\circlednote{4}{shows the GUI.}¥
 Once the pipeline is uploaded, you can see a GUI that contains different steps: to upload a brain atlas, to upload the structural data of two groups, analyze them, and finally, to compare the groups (\Figref{fig:02}a). 
 
 \section{Step 1: Load the Brain Atlas}
-\Figref{fig:02} shows how to upload and plot the brain atlas that you used to extract the \emph{structural data} for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the \emph{Brain Atlas} tutorial.
+\Figref{fig:02} shows how to upload and plot the brain atlas that you used to extract the \emph{structural data} for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba}{Brain Atlas} tutorial.
 
+% This figure should be changed -> remove b
 \fig{figure*}
 	{fig:02}
 	{
@@ -63,23 +64,24 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps: 
  
 \section{Step 2: Load the Structural Group Data}
 
-After you loaded the brain atlas, you can upload the \emph{structural data} for each group as shown in \Figref{fig:03}. A new interface will be shown containing the data for the group you just selected. You can open each subject’s structural values by selecting
-the subject, right click, and select “Open selection” (for more information check tutorial \emph{Group of Subjects with Structural Data}).
-	
+After you loaded the brain atlas, you can upload the \emph{structural data} for each group as in \Figref{fig:03}. A new interface will be shown containing the data for the group you just selected. You can open each subject’s structural values by selecting the subject, right click, and select “Open selection” (for more information check the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_st}{Group of Subjects with Structural Data}).	
+
+% This figure should be changed -> c should have Open Selection
 	\fig{figure}
 	{fig:03}
 	{
 	\includegraphics{fig03.jpg}
 	}
-	{Loading the Groups Data}
+	{Loading the Group Data}
 	{
+	% change this legend
 	{\bf a} From the pipeline GUI, click on \fn{Load Group ST 1 XLS} to load the data of group 1, and \fn{Load Group ST 2 XLS} to load the data of group 2.
 	{\bf b} Data for group 1 is uploaded. {\bf c} Data for group 2 is uploaded.
 	}
 
 \section{Step 3: Analysing the Data of Group 1}
  
-After you have loaded the data for both groups, you can analyze the data of your first group by clicking on \fn{Analyze Group 1} (\Figref{fig:04}a-b). A new interface will be shown that allows you to pre-calculate network measures for each group and explore them. First of all, you can specify the parameters for constructing the graph from the structural group data (\Figref{fig:04}c): you can select the statistical test to calculate correlations in structural values between pairs of brain regions (\Figref{fig:04}d), and you can decide how you want to analyze the negative weights from the correlation (\Figref{fig:04}e). 
+After you have loaded the data for both groups, you can analyze the data of your first group by clicking on \fn{Analyze Group 1} (\Figref{fig:04}a-b). A new interface will be shown that allows you to pre-calculate network measures for this group and explore them. First of all, you can specify the parameters for constructing the graph from the structural group data (\Figref{fig:04}c): you can select the statistical test to calculate correlations in structural values between pairs of brain regions (\Figref{fig:04}d), and you can decide how you want to analyze the negative weights from the correlations (\Figref{fig:04}e). 
 
 Importantly, the parameters you select for this analysis (graph and measures parameters) will be fixed for the analysis of the second group and for the group comparisons.
 
@@ -94,12 +96,13 @@ Importantly, the parameters you select for this analysis (graph and measures par
         {\bf b} After clicking on \fn{Analyze Group 1} in the pipeline's GUI, a new window will appear where first you can select the parameters for the graph construction {\bf c}. In this pipeline, you can select the statistical test to be used for the correlations {\bf d}, and what you want to do with the negative correlation weights {\bf e}.
 	}
 
+%revise description of figure
 	\fig{figure}
 	{fig:05}
 	{
 	\includegraphics{fig05.jpg}
 	}
-	{Check and set the rules and/or parameters of a measure before its calculation}
+	{Setting Analysis Parameters}
 	{
 	{\bf a} Click on \fn{Data Selected Measures} after selecting the measure.
 	{\bf b} This new window shows the array of values for the measure, in this case \fn{Clustering}.
@@ -143,7 +146,7 @@ After the analysis of group 1, you can proceed with the analysis of the second g
  
 \section{Step 5: Comparing Groups}
 
-Once you have explored the network measures for each group, you can proceed with their statistical comparison. To do this, you should click on \fn{Compare Groups} (\Figref{fig:08}a) and in the new window select if you want a waiting bar and verbose functions ON while you wait for the analysis to finish, as well as how many permutations you want to use to assess differences between groups ({\Figref{fig:08}b}), and if the groups are not independent but represent the same subjects in two different points in time, you can select the longitudinal comparison option, which will permute the values within each subject ({\Figref{fig:08}b}). We set the permutations to 10 for computational time purposes ({\Figref{fig:08}c}), but for your research analysis we recommend using 1000 or 10000 permutations. Finally, you can select the graph measures you want to compare between groups and once you have selected all the measures you are interested in, you should right click and select \fn{Calculate all selected comparisons} ({\Figref{fig:08}d}). If you turn ON the wait bar and verbose functions, two window bars will open that show you at which point in time the comparison calculation is. There is one last option on this GUI that you can select to save intermediate results during the permutations.
+Once you have explored the network measures for each group, you can proceed with their statistical comparison. To do this, you should click on \fn{Compare Groups} (\Figref{fig:08}a) and in the new window select if you want a waiting bar and verbose functions ON while you wait for the analysis to finish, as well as how many permutations you want to use to assess differences between groups ({\Figref{fig:08}b}). If the groups are not independent but represent the same subjects in two different points in time, you can select the longitudinal comparison option, which will permute the values within each subject ({\Figref{fig:08}b}). We set the permutations to 10 for computational time purposes ({\Figref{fig:08}c}), but for your research analysis we recommend using 1000 or 10000 permutations to guarantee the results are robust. Finally, you can select the graph measures you want to compare between groups and once you have selected all the measures you are interested in, you should right click and select \fn{Calculate all selected comparisons} ({\Figref{fig:08}d}). If you turn ON the wait bar and verbose functions, two window bars will open that show you at which point in time the comparison calculation is. There is one last option on this GUI that you can select to save intermediate results during the permutations.
 	\fig{figure}
 	{fig:08}
 	{
