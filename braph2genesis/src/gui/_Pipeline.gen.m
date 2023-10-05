@@ -109,7 +109,7 @@ NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡default!
 'Pipeline notes'
 %%%% ¡gui!
-pr = PanelPropStringTextArea('EL', pip, 'PROP', Pipeline.NOTES, 'HEIGHT', s(10), varargin{:});
+pr = PipelinePP_Notes('EL', pip, 'PROP', Pipeline.NOTES, varargin{:});
 
 %% ¡props!
 
