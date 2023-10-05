@@ -11,7 +11,6 @@ classdef BRAPH2
     %  AUTHORS          - BRAPH2 authors
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
-    %  GITHUB           - BRAPH2 GitHub repository
     %  TWITTER          - BRAPH2 twitter handle
     %  MATLAB_VERSION   - Minimal MatLab version (9.12)
     %  MATLAB_RELEASE   - Minimal MatLab release (2022a)
@@ -74,7 +73,6 @@ classdef BRAPH2
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
-        GITHUB = 'github.com/braph-software/BRAPH-2' % GitHub repository
         TWITTER = 'braph2software' % BRAPH2 twitter handle
         MATLAB_VERSION = '9.12' % Minimal MatLab version (9.12)
         MATLAB_RELEASE = '(2022a)' % Minimal MatLab release (2022a)
