@@ -278,18 +278,17 @@ h_menu_pip_clone = uimenu( ...
     'MenuSelectedFcn', {@cb_pip_clone} ...
     );
     function cb_tut_web(~, ~)
-        pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
+        pipeline = pipelines{get(h_listbox, 'Value')};
 
-disp('TUT WEB')
-        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
-        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
-        % system(['start "" "' pdfPath '"']);
+        web([BRAPH2.GITHUB '/tree/develop' pipeline.md]);
     end
     function cb_tut_pdf(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
 
 disp('TUT PDF')
-        % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
+        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
+        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
+        % system(['start "" "' pdfPath '"']);
     end
     function cb_pip_edit(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
@@ -448,7 +447,7 @@ pipelines = get_pipelines();
                     pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
                     notes = regexprep(notes, ['PDF:.*' newline()], '');
         
-                    pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
+                    pipelines{p}.md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once');
                     notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 
                     pipelines{p}.notes = strtrim(notes);
