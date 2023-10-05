@@ -916,7 +916,7 @@ classdef MeasureEnsembleBrainPF_NS < MeasureEnsembleBrainPF
 			
 			switch prop
 				case 48 % MeasureEnsembleBrainPF_NS.LAYER
-					pr = MeasureEnsembleBrainPF_Layer_NS('EL', pf, 'PROP', 48);
+					pr = MeasureEnsembleBrainPF_xSPP_Layer('EL', pf, 'PROP', 48);
 					
 				otherwise
 					pr = getPanelProp@MeasureEnsembleBrainPF(pf, prop, varargin{:});

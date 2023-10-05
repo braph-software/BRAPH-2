@@ -1,18 +1,18 @@
-classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
-	%ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a node.
+classdef MeasureGroupBrainPF_xUPP_Layer < PanelProp
+	%MeasureGroupBrainPF_xUPP_Layer plots the panel to select a LAYER.
 	% It is a subclass of <a href="matlab:help PanelProp">PanelProp</a>.
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a layer from a drop-down list.
-	% It is supposed to be used with the property Layer of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
+	% MeasureGroupBrainPF_xUPP_Layer plots the panel to select a LAYER from a drop-down list.
+	% It is supposed to be used with the property LAYER of MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, or MeasureGroupBrainPF_GU.
 	%
-	% The list of ComparisonEnsembleBrainPF_Layer_NU properties is:
+	% The list of MeasureGroupBrainPF_xUPP_Layer properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property layer.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property Layer.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property Layer.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property LAYER.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property LAYER.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property LAYER.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property LAYER.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property LAYER.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property LAYER.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
@@ -41,12 +41,12 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
 	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
 	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown for the node.
+	%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown for the LAYER.
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (constructor):
-	%  ComparisonEnsembleBrainPF_Layer_NU - constructor
+	% MeasureGroupBrainPF_xUPP_Layer methods (constructor):
+	%  MeasureGroupBrainPF_xUPP_Layer - constructor
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods:
+	% MeasureGroupBrainPF_xUPP_Layer methods:
 	%  set - sets values of a property
 	%  check - checks the values of all properties
 	%  getr - returns the raw value of a property
@@ -60,34 +60,34 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	%  checked - sets a property to checked
 	%  unchecked - sets a property to NOT checked
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (display):
-	%  tostring - string with information about the panel property node
-	%  disp - displays information about the panel property node
-	%  tree - displays the tree of the panel property node
+	% MeasureGroupBrainPF_xUPP_Layer methods (display):
+	%  tostring - string with information about the panel property LAYER
+	%  disp - displays information about the panel property LAYER
+	%  tree - displays the tree of the panel property LAYER
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (miscellanea):
+	% MeasureGroupBrainPF_xUPP_Layer methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel property node are equal (values, locked)
+	%  isequal - determines whether two panel property LAYER are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel property node
+	%  copy - copies the panel property LAYER
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (save/load, Static):
-	%  save - saves BRAPH2 panel property node as b2 file
-	%  load - loads a BRAPH2 panel property node from a b2 file
+	% MeasureGroupBrainPF_xUPP_Layer methods (save/load, Static):
+	%  save - saves BRAPH2 panel property LAYER as b2 file
+	%  load - loads a BRAPH2 panel property LAYER from a b2 file
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel property node
+	% MeasureGroupBrainPF_xUPP_Layer method (JSON encode):
+	%  encodeJSON - returns a JSON string encoding the panel property LAYER
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel property node
+	% MeasureGroupBrainPF_xUPP_Layer method (JSON decode, Static):
+	%   decodeJSON - returns a JSON string encoding the panel property LAYER
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (inspection, Static):
-	%  getClass - returns the class of the panel property node
-	%  getSubclasses - returns all subclasses of ComparisonEnsembleBrainPF_Layer_NU
-	%  getProps - returns the property list of the panel property node
-	%  getPropNumber - returns the property number of the panel property node
+	% MeasureGroupBrainPF_xUPP_Layer methods (inspection, Static):
+	%  getClass - returns the class of the panel property LAYER
+	%  getSubclasses - returns all subclasses of MeasureGroupBrainPF_xUPP_Layer
+	%  getProps - returns the property list of the panel property LAYER
+	%  getPropNumber - returns the property number of the panel property LAYER
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -100,14 +100,14 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	%  getPropDefaultConditioned - returns the conditioned default value of a property
 	%  checkProp - checks whether a value has the correct format/error
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (GUI):
+	% MeasureGroupBrainPF_xUPP_Layer methods (GUI):
 	%  getPanelProp - returns a prop panel
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (GUI, Static):
+	% MeasureGroupBrainPF_xUPP_Layer methods (GUI, Static):
 	%  getGUIMenuImport - returns the importer menu
 	%  getGUIMenuExport - returns the exporter menu
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (category, Static):
+	% MeasureGroupBrainPF_xUPP_Layer methods (category, Static):
 	%  getCategories - returns the list of categories
 	%  getCategoryNumber - returns the number of categories
 	%  existsCategory - returns whether a category exists/error
@@ -115,7 +115,7 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	%  getCategoryName - returns the name of a category
 	%  getCategoryDescription - returns the description of a category
 	%
-	% ComparisonEnsembleBrainPF_Layer_NU methods (format, Static):
+	% MeasureGroupBrainPF_xUPP_Layer methods (format, Static):
 	%  getFormats - returns the list of formats
 	%  getFormatNumber - returns the number of formats
 	%  existsFormat - returns whether a format exists/error
@@ -126,10 +126,10 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	%  getFormatDefault - returns the default value for a format
 	%  checkFormat - returns whether a value format is correct/error
 	%
-	% To print full list of constants, click here <a href="matlab:metaclass = ?ComparisonEnsembleBrainPF_Layer_NU; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">ComparisonEnsembleBrainPF_Layer_NU constants</a>.
+	% To print full list of constants, click here <a href="matlab:metaclass = ?MeasureGroupBrainPF_xUPP_Layer; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">MeasureGroupBrainPF_xUPP_Layer constants</a>.
 	%
 	%
-	% See also uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_NB.
+	% See also uidropdown, GUI, MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, MeasureGroupBrainPF_GU.
 	
 	properties (Constant) % properties
 		DROPDOWN = 36; %CET: Computational Efficiency Trick
@@ -138,24 +138,24 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 		DROPDOWN_FORMAT = 18;
 	end
 	methods % constructor
-		function pr = ComparisonEnsembleBrainPF_Layer_NU(varargin)
-			%ComparisonEnsembleBrainPF_Layer_NU() creates a panel property node.
+		function pr = MeasureGroupBrainPF_xUPP_Layer(varargin)
+			%MeasureGroupBrainPF_xUPP_Layer() creates a panel property LAYER.
 			%
-			% ComparisonEnsembleBrainPF_Layer_NU(PROP, VALUE, ...) with property PROP initialized to VALUE.
+			% MeasureGroupBrainPF_xUPP_Layer(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
-			% ComparisonEnsembleBrainPF_Layer_NU(TAG, VALUE, ...) with property TAG set to VALUE.
+			% MeasureGroupBrainPF_xUPP_Layer(TAG, VALUE, ...) with property TAG set to VALUE.
 			%
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ComparisonEnsembleBrainPF_Layer_NU properties is:
+			% The list of MeasureGroupBrainPF_xUPP_Layer properties is:
 			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property layer.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property Layer.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property Layer.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property LAYER.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property LAYER.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property LAYER.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property LAYER.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property LAYER.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property LAYER.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
@@ -184,7 +184,7 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
 			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
 			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown for the node.
+			%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the dropdown for the LAYER.
 			%
 			% See also Category, Format.
 			
@@ -193,52 +193,52 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 	end
 	methods (Static) % inspection
 		function pr_class = getClass()
-			%GETCLASS returns the class of the panel property node.
+			%GETCLASS returns the class of the panel property LAYER.
 			%
-			% CLASS = ComparisonEnsembleBrainPF_Layer_NU.GETCLASS() returns the class 'ComparisonEnsembleBrainPF_Layer_NU'.
+			% CLASS = MeasureGroupBrainPF_xUPP_Layer.GETCLASS() returns the class 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PR.GETCLASS() returns the class of the panel property node PR.
+			%  CLASS = PR.GETCLASS() returns the class of the panel property LAYER PR.
 			%  CLASS = Element.GETCLASS(PR) returns the class of 'PR'.
-			%  CLASS = Element.GETCLASS('ComparisonEnsembleBrainPF_Layer_NU') returns 'ComparisonEnsembleBrainPF_Layer_NU'.
+			%  CLASS = Element.GETCLASS('MeasureGroupBrainPF_xUPP_Layer') returns 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
-			% Note that the Element.GETCLASS(PR) and Element.GETCLASS('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETCLASS(PR) and Element.GETCLASS('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			
-			pr_class = 'ComparisonEnsembleBrainPF_Layer_NU';
+			pr_class = 'MeasureGroupBrainPF_xUPP_Layer';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel property node.
+			%GETSUBCLASSES returns all subclasses of the panel property LAYER.
 			%
-			% LIST = ComparisonEnsembleBrainPF_Layer_NU.GETSUBCLASSES() returns all subclasses of 'ComparisonEnsembleBrainPF_Layer_NU'.
+			% LIST = MeasureGroupBrainPF_xUPP_Layer.GETSUBCLASSES() returns all subclasses of 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the panel property node PR.
+			%  LIST = PR.GETSUBCLASSES() returns all subclasses of the panel property LAYER PR.
 			%  LIST = Element.GETSUBCLASSES(PR) returns all subclasses of 'PR'.
-			%  LIST = Element.GETSUBCLASSES('ComparisonEnsembleBrainPF_Layer_NU') returns all subclasses of 'ComparisonEnsembleBrainPF_Layer_NU'.
+			%  LIST = Element.GETSUBCLASSES('MeasureGroupBrainPF_xUPP_Layer') returns all subclasses of 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
-			% Note that the Element.GETSUBCLASSES(PR) and Element.GETSUBCLASSES('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETSUBCLASSES(PR) and Element.GETSUBCLASSES('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ComparisonEnsembleBrainPF_Layer_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'MeasureGroupBrainPF_xUPP_Layer' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel property node.
+			%GETPROPS returns the property list of panel property LAYER.
 			%
-			% PROPS = ComparisonEnsembleBrainPF_Layer_NU.GETPROPS() returns the property list of panel property node
+			% PROPS = MeasureGroupBrainPF_xUPP_Layer.GETPROPS() returns the property list of panel property LAYER
 			%  as a row vector.
 			%
-			% PROPS = ComparisonEnsembleBrainPF_Layer_NU.GETPROPS(CATEGORY) returns the property list 
+			% PROPS = MeasureGroupBrainPF_xUPP_Layer.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the panel property node PR.
+			%  PROPS = PR.GETPROPS([CATEGORY]) returns the property list of the panel property LAYER PR.
 			%  PROPS = Element.GETPROPS(PR[, CATEGORY]) returns the property list of 'PR'.
-			%  PROPS = Element.GETPROPS('ComparisonEnsembleBrainPF_Layer_NU'[, CATEGORY]) returns the property list of 'ComparisonEnsembleBrainPF_Layer_NU'.
+			%  PROPS = Element.GETPROPS('MeasureGroupBrainPF_xUPP_Layer'[, CATEGORY]) returns the property list of 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
-			% Note that the Element.GETPROPS(PR) and Element.GETPROPS('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPS(PR) and Element.GETPROPS('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropNumber, Category.
@@ -272,19 +272,19 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel property node.
+			%GETPROPNUMBER returns the property number of panel property LAYER.
 			%
-			% N = ComparisonEnsembleBrainPF_Layer_NU.GETPROPNUMBER() returns the property number of panel property node.
+			% N = MeasureGroupBrainPF_xUPP_Layer.GETPROPNUMBER() returns the property number of panel property LAYER.
 			%
-			% N = ComparisonEnsembleBrainPF_Layer_NU.GETPROPNUMBER(CATEGORY) returns the property number of panel property node
+			% N = MeasureGroupBrainPF_xUPP_Layer.GETPROPNUMBER(CATEGORY) returns the property number of panel property LAYER
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the panel property node PR.
+			%  N = PR.GETPROPNUMBER([CATEGORY]) returns the property number of the panel property LAYER PR.
 			%  N = Element.GETPROPNUMBER(PR) returns the property number of 'PR'.
-			%  N = Element.GETPROPNUMBER('ComparisonEnsembleBrainPF_Layer_NU') returns the property number of 'ComparisonEnsembleBrainPF_Layer_NU'.
+			%  N = Element.GETPROPNUMBER('MeasureGroupBrainPF_xUPP_Layer') returns the property number of 'MeasureGroupBrainPF_xUPP_Layer'.
 			%
-			% Note that the Element.GETPROPNUMBER(PR) and Element.GETPROPNUMBER('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPNUMBER(PR) and Element.GETPROPNUMBER('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getProps, Category.
@@ -318,27 +318,27 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel property node/error.
+			%EXISTSPROP checks whether property exists in panel property LAYER/error.
 			%
-			% CHECK = ComparisonEnsembleBrainPF_Layer_NU.EXISTSPROP(PROP) checks whether the property PROP exists.
+			% CHECK = MeasureGroupBrainPF_xUPP_Layer.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PR.EXISTSPROP(PROP) checks whether PROP exists for PR.
 			%  CHECK = Element.EXISTSPROP(PR, PROP) checks whether PROP exists for PR.
-			%  CHECK = Element.EXISTSPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP) checks whether PROP exists for ComparisonEnsembleBrainPF_Layer_NU.
+			%  CHECK = Element.EXISTSPROP(MeasureGroupBrainPF_xUPP_Layer, PROP) checks whether PROP exists for MeasureGroupBrainPF_xUPP_Layer.
 			%
 			% Element.EXISTSPROP(PROP) throws an error if the PROP does NOT exist.
-			%  Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%  Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PR.EXISTSPROP(PROP) throws error if PROP does NOT exist for PR.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%  Element.EXISTSPROP(PR, PROP) throws error if PROP does NOT exist for PR.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
-			%  Element.EXISTSPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP) throws error if PROP does NOT exist for ComparisonEnsembleBrainPF_Layer_NU.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
+			%  Element.EXISTSPROP(MeasureGroupBrainPF_xUPP_Layer, PROP) throws error if PROP does NOT exist for MeasureGroupBrainPF_xUPP_Layer.
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%
-			% Note that the Element.EXISTSPROP(PR) and Element.EXISTSPROP('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.EXISTSPROP(PR) and Element.EXISTSPROP('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
@@ -349,34 +349,34 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput' '\n' ...
-					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonEnsembleBrainPF_Layer_NU.'] ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput' '\n' ...
+					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MeasureGroupBrainPF_xUPP_Layer.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel property node/error.
+			%EXISTSTAG checks whether tag exists in panel property LAYER/error.
 			%
-			% CHECK = ComparisonEnsembleBrainPF_Layer_NU.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
+			% CHECK = MeasureGroupBrainPF_xUPP_Layer.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
 			% Alternative forms to call this method are:
 			%  CHECK = PR.EXISTSTAG(TAG) checks whether TAG exists for PR.
 			%  CHECK = Element.EXISTSTAG(PR, TAG) checks whether TAG exists for PR.
-			%  CHECK = Element.EXISTSTAG(ComparisonEnsembleBrainPF_Layer_NU, TAG) checks whether TAG exists for ComparisonEnsembleBrainPF_Layer_NU.
+			%  CHECK = Element.EXISTSTAG(MeasureGroupBrainPF_xUPP_Layer, TAG) checks whether TAG exists for MeasureGroupBrainPF_xUPP_Layer.
 			%
 			% Element.EXISTSTAG(TAG) throws an error if the TAG does NOT exist.
-			%  Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%  Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%
 			% Alternative forms to call this method are:
 			%  PR.EXISTSTAG(TAG) throws error if TAG does NOT exist for PR.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%  Element.EXISTSTAG(PR, TAG) throws error if TAG does NOT exist for PR.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
-			%  Element.EXISTSTAG(ComparisonEnsembleBrainPF_Layer_NU, TAG) throws error if TAG does NOT exist for ComparisonEnsembleBrainPF_Layer_NU.
-			%   Error id: [BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
+			%  Element.EXISTSTAG(MeasureGroupBrainPF_xUPP_Layer, TAG) throws error if TAG does NOT exist for MeasureGroupBrainPF_xUPP_Layer.
+			%   Error id: [BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			%
-			% Note that the Element.EXISTSTAG(PR) and Element.EXISTSTAG('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.EXISTSTAG(PR) and Element.EXISTSTAG('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getProps, existsTag.
@@ -387,9 +387,9 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput' '\n' ...
-					'The value ' tag ' is not a valid tag for ComparisonEnsembleBrainPF_Layer_NU.'] ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput' '\n' ...
+					'The value ' tag ' is not a valid tag for MeasureGroupBrainPF_xUPP_Layer.'] ...
 					)
 			end
 		end
@@ -404,10 +404,10 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PROPERTY = PR.GETPROPPROP(POINTER) returns property number of POINTER of PR.
-			%  PROPERTY = Element.GETPROPPROP(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns property number of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  PROPERTY = PR.GETPROPPROP(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns property number of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  PROPERTY = Element.GETPROPPROP(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns property number of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  PROPERTY = PR.GETPROPPROP(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns property number of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPPROP(PR) and Element.GETPROPPROP('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPPROP(PR) and Element.GETPROPPROP('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropFormat, getPropTag, getPropCategory, getPropDescription,
@@ -430,10 +430,10 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  TAG = PR.GETPROPTAG(POINTER) returns tag of POINTER of PR.
-			%  TAG = Element.GETPROPTAG(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns tag of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  TAG = PR.GETPROPTAG(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns tag of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  TAG = Element.GETPROPTAG(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns tag of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  TAG = PR.GETPROPTAG(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns tag of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPTAG(PR) and Element.GETPROPTAG('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPTAG(PR) and Element.GETPROPTAG('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropSettings, getPropCategory, getPropFormat,
@@ -443,8 +443,8 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				comparisonensemblebrainpf_layer_nu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' };
-				tag = comparisonensemblebrainpf_layer_nu_tag_list{pointer}; % prop = pointer
+				measuregroupbrainpf_xupp_layer_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN' };
+				tag = measuregroupbrainpf_xupp_layer_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -458,20 +458,20 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CATEGORY = PR.GETPROPCATEGORY(POINTER) returns category of POINTER of PR.
-			%  CATEGORY = Element.GETPROPCATEGORY(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns category of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  CATEGORY = PR.GETPROPCATEGORY(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns category of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  CATEGORY = Element.GETPROPCATEGORY(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns category of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  CATEGORY = PR.GETPROPCATEGORY(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns category of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPCATEGORY(PR) and Element.GETPROPCATEGORY('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPCATEGORY(PR) and Element.GETPROPCATEGORY('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also Category, getPropProp, getPropTag, getPropSettings,
 			%  getPropFormat, getPropDescription, getPropDefault, checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisonensemblebrainpf_layer_nu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7 };
-			prop_category = comparisonensemblebrainpf_layer_nu_category_list{prop};
+			measuregroupbrainpf_xupp_layer_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7 };
+			prop_category = measuregroupbrainpf_xupp_layer_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -484,20 +484,20 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  FORMAT = PR.GETPROPFORMAT(POINTER) returns format of POINTER of PR.
-			%  FORMAT = Element.GETPROPFORMAT(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns format of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  FORMAT = PR.GETPROPFORMAT(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns format of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  FORMAT = Element.GETPROPFORMAT(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns format of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  FORMAT = PR.GETPROPFORMAT(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns format of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPFORMAT(PR) and Element.GETPROPFORMAT('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPFORMAT(PR) and Element.GETPROPFORMAT('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropCategory,
 			%  getPropDescription, getPropSettings, getPropDefault, checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisonensemblebrainpf_layer_nu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18 };
-			prop_format = comparisonensemblebrainpf_layer_nu_format_list{prop};
+			measuregroupbrainpf_xupp_layer_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18 };
+			prop_format = measuregroupbrainpf_xupp_layer_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -510,20 +510,20 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DESCRIPTION = PR.GETPROPDESCRIPTION(POINTER) returns description of POINTER of PR.
-			%  DESCRIPTION = Element.GETPROPDESCRIPTION(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns description of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  DESCRIPTION = PR.GETPROPDESCRIPTION(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns description of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  DESCRIPTION = Element.GETPROPDESCRIPTION(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns description of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  DESCRIPTION = PR.GETPROPDESCRIPTION(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns description of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPDESCRIPTION(PR) and Element.GETPROPDESCRIPTION('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPDESCRIPTION(PR) and Element.GETPROPDESCRIPTION('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory,
 			%  getPropFormat, getPropSettings, getPropDefault, checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisonensemblebrainpf_layer_nu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel property layer.'  'DESCRIPTION (constant, string) is the description of the panel property node.'  'TEMPLATE (parameter, item) is the template of the panel property Layer.'  'ID (data, string) is a few-letter code for the panel property Layer.'  'LABEL (metadata, string) is an extended label of the panel property node.'  'NOTES (metadata, string) are some specific notes about the panel property node.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN (evanescent, handle) is the dropdown for the node.' };
-			prop_description = comparisonensemblebrainpf_layer_nu_description_list{prop};
+			measuregroupbrainpf_xupp_layer_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel property LAYER.'  'DESCRIPTION (constant, string) is the description of the panel property LAYER.'  'TEMPLATE (parameter, item) is the template of the panel property LAYER.'  'ID (data, string) is a few-letter code for the panel property LAYER.'  'LABEL (metadata, string) is an extended label of the panel property LAYER.'  'NOTES (metadata, string) are some specific notes about the panel property LAYER.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN (evanescent, handle) is the dropdown for the LAYER.' };
+			prop_description = measuregroupbrainpf_xupp_layer_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -536,22 +536,22 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  SETTINGS = PR.GETPROPSETTINGS(POINTER) returns settings of POINTER of PR.
-			%  SETTINGS = Element.GETPROPSETTINGS(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns settings of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  SETTINGS = PR.GETPROPSETTINGS(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns settings of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  SETTINGS = Element.GETPROPSETTINGS(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns settings of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  SETTINGS = PR.GETPROPSETTINGS(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns settings of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPSETTINGS(PR) and Element.GETPROPSETTINGS('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPSETTINGS(PR) and Element.GETPROPSETTINGS('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropProp, getPropTag, getPropCategory, getPropFormat,
 			%  getPropDescription, getPropDefault, checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN % __ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_xUPP_Layer.DROPDOWN
 					prop_settings = Format.getFormatSettings(18);
-				case ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE % __ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE__
-					prop_settings = 'ComparisonEnsembleBrainPF_Layer_NU';
+				case 4 % MeasureGroupBrainPF_xUPP_Layer.TEMPLATE
+					prop_settings = 'MeasureGroupBrainPF_xUPP_Layer';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
 			end
@@ -559,47 +559,47 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 		function prop_default = getPropDefault(pointer)
 			%GETPROPDEFAULT returns the default value of a property.
 			%
-			% DEFAULT = ComparisonEnsembleBrainPF_Layer_NU.GETPROPDEFAULT(PROP) returns the default 
+			% DEFAULT = MeasureGroupBrainPF_xUPP_Layer.GETPROPDEFAULT(PROP) returns the default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = ComparisonEnsembleBrainPF_Layer_NU.GETPROPDEFAULT(TAG) returns the default 
+			% DEFAULT = MeasureGroupBrainPF_xUPP_Layer.GETPROPDEFAULT(TAG) returns the default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PR.GETPROPDEFAULT(POINTER) returns the default value of POINTER of PR.
-			%  DEFAULT = Element.GETPROPDEFAULT(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns the default value of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  DEFAULT = PR.GETPROPDEFAULT(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns the default value of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  DEFAULT = Element.GETPROPDEFAULT(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns the default value of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  DEFAULT = PR.GETPROPDEFAULT(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns the default value of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPDEFAULT(PR) and Element.GETPROPDEFAULT('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPDEFAULT(PR) and Element.GETPROPDEFAULT('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also getPropDefaultConditioned, getPropProp, getPropTag, getPropSettings, 
 			%  getPropCategory, getPropFormat, getPropDescription, checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN % __ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN__
-					prop_default = Format.getFormatDefault(18, ComparisonEnsembleBrainPF_Layer_NU.getPropSettings(prop));
-				case ComparisonEnsembleBrainPF_Layer_NU.ELCLASS % __ComparisonEnsembleBrainPF_Layer_NU.ELCLASS__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU';
-				case ComparisonEnsembleBrainPF_Layer_NU.NAME % __ComparisonEnsembleBrainPF_Layer_NU.NAME__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU';
-				case ComparisonEnsembleBrainPF_Layer_NU.DESCRIPTION % __ComparisonEnsembleBrainPF_Layer_NU.DESCRIPTION__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.';
-				case ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE % __ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE__
-					prop_default = Format.getFormatDefault(8, ComparisonEnsembleBrainPF_Layer_NU.getPropSettings(prop));
-				case ComparisonEnsembleBrainPF_Layer_NU.ID % __ComparisonEnsembleBrainPF_Layer_NU.ID__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU ID';
-				case ComparisonEnsembleBrainPF_Layer_NU.LABEL % __ComparisonEnsembleBrainPF_Layer_NU.LABEL__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU label';
-				case ComparisonEnsembleBrainPF_Layer_NU.NOTES % __ComparisonEnsembleBrainPF_Layer_NU.NOTES__
-					prop_default = 'ComparisonEnsembleBrainPF_Layer_NU notes';
-				case ComparisonEnsembleBrainPF_Layer_NU.EL % __ComparisonEnsembleBrainPF_Layer_NU.EL__
-					prop_default = ComparisonGroupPF_NS();
-				case ComparisonEnsembleBrainPF_Layer_NU.PROP % __ComparisonEnsembleBrainPF_Layer_NU.PROP__
-					prop_default = 46;
-				case ComparisonEnsembleBrainPF_Layer_NU.HEIGHT % __ComparisonEnsembleBrainPF_Layer_NU.HEIGHT__
+				case 36 % MeasureGroupBrainPF_xUPP_Layer.DROPDOWN
+					prop_default = Format.getFormatDefault(18, MeasureGroupBrainPF_xUPP_Layer.getPropSettings(prop));
+				case 1 % MeasureGroupBrainPF_xUPP_Layer.ELCLASS
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer';
+				case 2 % MeasureGroupBrainPF_xUPP_Layer.NAME
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer';
+				case 3 % MeasureGroupBrainPF_xUPP_Layer.DESCRIPTION
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer plots the panel to select a LAYER from a drop-down list. It is supposed to be used with the property LAYER of MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, or MeasureGroupBrainPF_GU.';
+				case 4 % MeasureGroupBrainPF_xUPP_Layer.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MeasureGroupBrainPF_xUPP_Layer.getPropSettings(prop));
+				case 5 % MeasureGroupBrainPF_xUPP_Layer.ID
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer ID';
+				case 6 % MeasureGroupBrainPF_xUPP_Layer.LABEL
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer label';
+				case 7 % MeasureGroupBrainPF_xUPP_Layer.NOTES
+					prop_default = 'MeasureGroupBrainPF_xUPP_Layer notes';
+				case 23 % MeasureGroupBrainPF_xUPP_Layer.EL
+					prop_default = MeasureGroupBrainPF_NU();
+				case 24 % MeasureGroupBrainPF_xUPP_Layer.PROP
+					prop_default = 48;
+				case 25 % MeasureGroupBrainPF_xUPP_Layer.HEIGHT
 					prop_default = 48;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
@@ -608,27 +608,27 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 		function prop_default = getPropDefaultConditioned(pointer)
 			%GETPROPDEFAULTCONDITIONED returns the conditioned default value of a property.
 			%
-			% DEFAULT = ComparisonEnsembleBrainPF_Layer_NU.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
+			% DEFAULT = MeasureGroupBrainPF_xUPP_Layer.GETPROPDEFAULTCONDITIONED(PROP) returns the conditioned default 
 			%  value of the property PROP.
 			%
-			% DEFAULT = ComparisonEnsembleBrainPF_Layer_NU.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
+			% DEFAULT = MeasureGroupBrainPF_xUPP_Layer.GETPROPDEFAULTCONDITIONED(TAG) returns the conditioned default 
 			%  value of the property with tag TAG.
 			%
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(POINTER) returns the conditioned default value of POINTER of PR.
-			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns the conditioned default value of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
-			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(ComparisonEnsembleBrainPF_Layer_NU, POINTER) returns the conditioned default value of POINTER of ComparisonEnsembleBrainPF_Layer_NU.
+			%  DEFAULT = Element.GETPROPDEFAULTCONDITIONED(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns the conditioned default value of POINTER of MeasureGroupBrainPF_xUPP_Layer.
+			%  DEFAULT = PR.GETPROPDEFAULTCONDITIONED(MeasureGroupBrainPF_xUPP_Layer, POINTER) returns the conditioned default value of POINTER of MeasureGroupBrainPF_xUPP_Layer.
 			%
-			% Note that the Element.GETPROPDEFAULTCONDITIONED(PR) and Element.GETPROPDEFAULTCONDITIONED('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.GETPROPDEFAULTCONDITIONED(PR) and Element.GETPROPDEFAULTCONDITIONED('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also conditioning, getPropDefault, getPropProp, getPropTag, 
 			%  getPropSettings, getPropCategory, getPropFormat, getPropDescription, 
 			%  checkProp.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
-			prop_default = ComparisonEnsembleBrainPF_Layer_NU.conditioning(prop, ComparisonEnsembleBrainPF_Layer_NU.getPropDefault(prop));
+			prop_default = MeasureGroupBrainPF_xUPP_Layer.conditioning(prop, MeasureGroupBrainPF_xUPP_Layer.getPropDefault(prop));
 		end
 	end
 	methods (Static) % checkProp
@@ -641,34 +641,34 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CHECK = PR.CHECKPROP(POINTER, VALUE) checks VALUE format for PROP of PR.
-			%  CHECK = Element.CHECKPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP, VALUE) checks VALUE format for PROP of ComparisonEnsembleBrainPF_Layer_NU.
-			%  CHECK = PR.CHECKPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP, VALUE) checks VALUE format for PROP of ComparisonEnsembleBrainPF_Layer_NU.
+			%  CHECK = Element.CHECKPROP(MeasureGroupBrainPF_xUPP_Layer, PROP, VALUE) checks VALUE format for PROP of MeasureGroupBrainPF_xUPP_Layer.
+			%  CHECK = PR.CHECKPROP(MeasureGroupBrainPF_xUPP_Layer, PROP, VALUE) checks VALUE format for PROP of MeasureGroupBrainPF_xUPP_Layer.
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput
+			%  Error id: BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput
-			%  Element.CHECKPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonEnsembleBrainPF_Layer_NU.
-			%   Error id: BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput
-			%  PR.CHECKPROP(ComparisonEnsembleBrainPF_Layer_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonEnsembleBrainPF_Layer_NU.
-			%   Error id: BRAPH2:ComparisonEnsembleBrainPF_Layer_NU:WrongInput]
+			%   Error id: BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput
+			%  Element.CHECKPROP(MeasureGroupBrainPF_xUPP_Layer, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureGroupBrainPF_xUPP_Layer.
+			%   Error id: BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput
+			%  PR.CHECKPROP(MeasureGroupBrainPF_xUPP_Layer, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureGroupBrainPF_xUPP_Layer.
+			%   Error id: BRAPH2:MeasureGroupBrainPF_xUPP_Layer:WrongInput]
 			% 
-			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('ComparisonEnsembleBrainPF_Layer_NU')
+			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('MeasureGroupBrainPF_xUPP_Layer')
 			%  are less computationally efficient.
 			%
 			% See also Format, getPropProp, getPropTag, getPropSettings,
 			% getPropCategory, getPropFormat, getPropDescription, getPropDefault.
 			
-			prop = ComparisonEnsembleBrainPF_Layer_NU.getPropProp(pointer);
+			prop = MeasureGroupBrainPF_xUPP_Layer.getPropProp(pointer);
 			
 			switch prop
-				case ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN % __ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN__
-					check = Format.checkFormat(18, value, ComparisonEnsembleBrainPF_Layer_NU.getPropSettings(prop));
-				case ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE % __ComparisonEnsembleBrainPF_Layer_NU.TEMPLATE__
-					check = Format.checkFormat(8, value, ComparisonEnsembleBrainPF_Layer_NU.getPropSettings(prop));
+				case 36 % MeasureGroupBrainPF_xUPP_Layer.DROPDOWN
+					check = Format.checkFormat(18, value, MeasureGroupBrainPF_xUPP_Layer.getPropSettings(prop));
+				case 4 % MeasureGroupBrainPF_xUPP_Layer.TEMPLATE
+					check = Format.checkFormat(8, value, MeasureGroupBrainPF_xUPP_Layer.getPropSettings(prop));
 				otherwise
 					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
@@ -679,9 +679,9 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonEnsembleBrainPF_Layer_NU:' 'WrongInput' '\n' ...
-					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonEnsembleBrainPF_Layer_NU.getPropTag(prop) ' (' ComparisonEnsembleBrainPF_Layer_NU.getFormatTag(ComparisonEnsembleBrainPF_Layer_NU.getPropFormat(prop)) ').'] ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureGroupBrainPF_xUPP_Layer:' 'WrongInput' '\n' ...
+					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasureGroupBrainPF_xUPP_Layer.getPropTag(prop) ' (' MeasureGroupBrainPF_xUPP_Layer.getFormatTag(MeasureGroupBrainPF_xUPP_Layer.getPropFormat(prop)) ').'] ...
 					)
 			end
 		end
@@ -703,7 +703,7 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN % __ComparisonEnsembleBrainPF_Layer_NU.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_xUPP_Layer.DROPDOWN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -717,25 +717,19 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 					
 					value = dropdown;
 					
-				case ComparisonEnsembleBrainPF_Layer_NU.X_DRAW % __ComparisonEnsembleBrainPF_Layer_NU.X_DRAW__
+				case 20 % MeasureGroupBrainPF_xUPP_Layer.X_DRAW
 					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('DROPDOWN')
 					end
 					
-				case ComparisonEnsembleBrainPF_Layer_NU.UPDATE % __ComparisonEnsembleBrainPF_Layer_NU.UPDATE__
+				case 21 % MeasureGroupBrainPF_xUPP_Layer.UPDATE
 					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    pf = pr.get('EL');
-					    NODE = pr.get('PROP');
-					    
-					    g_dict = pf.get('CP').get('C').get('A1').get('G_DICT');
-					    if g_dict.get('LENGTH')
-					        g = g_dict.get('IT', 1);
-					    else
-					        g = pf.get('CP').get('C').get('A1').get('GRAPH_TEMPLATE');
-					    end
-					    keys = g.get('APARTITIONLABELS');
+					    LAYER = pr.get('PROP');
+					    g = pf.get('M').get('G');
+					    keys = g.get('ALAYERLABELS');
 					
 					    if isempty(keys)
 					        set(pr.get('DROPDOWN'), 'Enable', 'off')
@@ -743,17 +737,17 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 					        set(pr.get('DROPDOWN'), ...
 					            'Items', keys, ...
 					            'ItemsData', [1:1:length(keys)], ...
-					            'Value', pf.get(NODE) ...
+					            'Value', pf.get(LAYER) ...
 					            )
 					    end
 					
-					    prop_value = pf.getr(NODE);
-					    if pf.isLocked(NODE) || isa(prop_value, 'Callback')
+					    prop_value = pf.getr(LAYER);
+					    if pf.isLocked(LAYER) || isa(prop_value, 'Callback')
 					        set(pr.get('DROPDOWN'), 'Enable', 'off')
 					    end
 					end
 					
-				case ComparisonEnsembleBrainPF_Layer_NU.REDRAW % __ComparisonEnsembleBrainPF_Layer_NU.REDRAW__
+				case 22 % MeasureGroupBrainPF_xUPP_Layer.REDRAW
 					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
@@ -761,7 +755,7 @@ classdef ComparisonEnsembleBrainPF_Layer_NU < PanelProp
 					    set(pr.get('DROPDOWN'), 'Position', [4 4 .70*w_p 21])
 					end
 					
-				case ComparisonEnsembleBrainPF_Layer_NU.DELETE % __ComparisonEnsembleBrainPF_Layer_NU.DELETE__
+				case 18 % MeasureGroupBrainPF_xUPP_Layer.DELETE
 					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('DROPDOWN', Element.getNoValue())

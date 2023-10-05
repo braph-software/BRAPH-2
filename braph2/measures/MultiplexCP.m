@@ -24,7 +24,7 @@ classdef MultiplexCP < MultiRC
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex core-periphery.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
+	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 	%
 	% MultiplexCP methods (constructor):
 	%  MultiplexCP - constructor
@@ -139,7 +139,7 @@ classdef MultiplexCP < MultiRC
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the multiplex core-periphery.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
+			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 			%
 			% See also Category, Format.
 			
@@ -473,7 +473,7 @@ classdef MultiplexCP < MultiRC
 			prop = MultiplexCP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexcp_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.'  'NAME (constant, string) is the name of the Multiplex Core-Periphery.'  'DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.'  'TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.'  'ID (data, string) is a few-letter code of the Multiplex Core-Periphery.'  'LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.'  'NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).' };
+			multiplexcp_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Core-Periphery.'  'NAME (constant, string) is the name of the Multiplex Core-Periphery.'  'DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.'  'TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.'  'ID (data, string) is a few-letter code of the Multiplex Core-Periphery.'  'LABEL (metadata, string) is an extended label of the Multiplex Core-Periphery.'  'NOTES (metadata, string) are some specific notes about the Multiplex Core-Periphery.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the multiplex core-periphery.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).' };
 			prop_description = multiplexcp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

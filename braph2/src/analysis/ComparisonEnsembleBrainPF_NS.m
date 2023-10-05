@@ -1007,7 +1007,7 @@ classdef ComparisonEnsembleBrainPF_NS < ComparisonEnsembleBrainPF
 			
 			switch prop
 				case 48 % ComparisonEnsembleBrainPF_NS.LAYER
-					pr = ComparisonEnsembleBrainPF_Layer_NS('EL', pf, 'PROP', 48);
+					pr = ComparisonEnsembleBrainPF_xSPP_Layer('EL', pf, 'PROP', 48);
 					
 				otherwise
 					pr = getPanelProp@ComparisonEnsembleBrainPF(pf, prop, varargin{:});
