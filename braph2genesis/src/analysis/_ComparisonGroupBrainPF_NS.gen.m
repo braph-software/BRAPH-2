@@ -355,6 +355,11 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
+NODE (figure, scalar) is the node number of the nodal group comparison on brain surface figure.
+%%%% ¡gui!
+pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.NODE);
+
+%%% ¡prop!
 LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡default!
 1
