@@ -286,7 +286,7 @@ h_menu_pip_clone = uimenu( ...
         pipeline = pipelines{get(h_listbox, 'Value')};
 
         if ismac()
-            system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipeline.pdf])
+            system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipeline.pdf]);
         elseif isunix()
             system(['start "" "' fileparts(fileparts(which('braph2'))) pipeline.pdf '"']);
         elseif ispc()
