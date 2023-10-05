@@ -149,6 +149,11 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 	% See also ComparisonGroup.
 	
 	properties (Constant) % properties
+		NODE = 48; %CET: Computational Efficiency Trick
+		NODE_TAG = 'NODE';
+		NODE_CATEGORY = 8;
+		NODE_FORMAT = 11;
+		
 		LAYER = 49; %CET: Computational Efficiency Trick
 		LAYER_TAG = 'LAYER';
 		LAYER_CATEGORY = 8;
@@ -608,6 +613,8 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 			prop = ComparisonGroupBrainPF_NS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 48 % ComparisonGroupBrainPF_NS.NODE
+					prop_settings = Format.getFormatSettings(11);
 				case 49 % ComparisonGroupBrainPF_NS.LAYER
 					prop_settings = Format.getFormatSettings(11);
 				case 50 % ComparisonGroupBrainPF_NS.SIZE_DIFF
@@ -649,6 +656,8 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 			prop = ComparisonGroupBrainPF_NS.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 48 % ComparisonGroupBrainPF_NS.NODE
+					prop_default = Format.getFormatDefault(11, ComparisonGroupBrainPF_NS.getPropSettings(prop));
 				case 49 % ComparisonGroupBrainPF_NS.LAYER
 					prop_default = 1;
 				case 50 % ComparisonGroupBrainPF_NS.SIZE_DIFF
@@ -739,6 +748,8 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 			prop = ComparisonGroupBrainPF_NS.getPropProp(pointer);
 			
 			switch prop
+				case 48 % ComparisonGroupBrainPF_NS.NODE
+					check = Format.checkFormat(11, value, ComparisonGroupBrainPF_NS.getPropSettings(prop));
 				case 49 % ComparisonGroupBrainPF_NS.LAYER
 					check = Format.checkFormat(11, value, ComparisonGroupBrainPF_NS.getPropSettings(prop));
 				case 50 % ComparisonGroupBrainPF_NS.SIZE_DIFF
@@ -887,10 +898,6 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 					    return
 					end
 					diff = diffs{layer};
-					if isempty(diff)
-					    value = {};
-					    return
-					end
 					p2s = cp.get('P2');
 					p2 = p2s{layer};
 					
@@ -946,7 +953,7 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 					        max_bound = 1.0;
 					        min_size_value = min(size_value);
 					        max_size_value = max(size_value);
-					        if isequal(max_size_value, min_size_value)
+					        if max_size_value == min_size_value
 					            normalized_size_value = ones(size(size_value)) * max_bound;
 					        else
 					            normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
@@ -1024,8 +1031,8 @@ classdef ComparisonGroupBrainPF_NS < ComparisonGroupBrainPF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 49 % ComparisonGroupBrainPF_NS.LAYER
-					pr = ComparisonGroupBrainPF_Layer_NS('EL', pf, 'PROP', 49);
+				case 48 % ComparisonGroupBrainPF_NS.NODE
+					pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', 48);
 					
 				otherwise
 					pr = getPanelProp@ComparisonGroupBrainPF(pf, prop, varargin{:});

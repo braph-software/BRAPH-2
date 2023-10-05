@@ -902,30 +902,4 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 		end
 	end
-	methods % GUI
-		function pr = getPanelProp(pf, prop, varargin)
-			%GETPANELPROP returns a prop panel.
-			%
-			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
-			%
-			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
-			%  of the panel prop.
-			%
-			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
-			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
-			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
-			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
-			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
-			%  PanelPropString, PanelPropStringList.
-			
-			switch prop
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
-					pr = MeasureEnsembleBrainPF_Layer_NU('EL', pf, 'PROP', 48);
-					
-				otherwise
-					pr = getPanelProp@MeasureEnsembleBrainPF(pf, prop, varargin{:});
-					
-			end
-		end
-	end
 end
