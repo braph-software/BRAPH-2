@@ -239,6 +239,7 @@ h_editfield = uieditfield( ...
     'ValueChangedFcn', {@cb_editfield} ...
     );
     function cb_editfield(~, ~)
+        pipelines = get_pipelines();
         update_listbox()
     end
 
@@ -438,12 +439,9 @@ pipelines = get_pipelines();
                     for k = length(notes_newlines):-1:1
                         notes = [notes(1:notes_newlines(k)) strtrim(notes(notes_newlines(k) + 2:end))]; % eliminates % but not newline
                     end
-        
-if p == 5
-    a = 1 + 1; %#ok<NASGU> 
-end
+                    
                     pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
-                    notes = regexprep(notes, 'PDF: /tutorials/pipelines/\w+/\w+\.pdf', '');
+                    notes = regexprep(notes, 'PDF:.*$', '');
         % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
         % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
         % system(['start "" "' pdfPath '"']);
