@@ -160,7 +160,7 @@ end
 %% ¡props!
 
 %%% ¡prop! 
-MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
+MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 %%%% ¡default!
 [0]
 
