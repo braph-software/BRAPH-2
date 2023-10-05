@@ -1,8 +1,8 @@
 %% ¡header!
-ComparisonGroupBrainPF_Layer < PanelProp (pr, panel property node) plots the panel to select a node.
+ComparisonEnsembleBrainPF_Layer_NU < PanelProp (pr, panel property node) plots the panel to select a node.
 
 %%% ¡description!
-ComparisonGroupBrainPF_Layer plots the panel to select a layer from a drop-down list.
+ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a layer from a drop-down list.
 It is supposed to be used with the property Layer of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
 
 %%% ¡seealso!
@@ -13,47 +13,47 @@ uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_N
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'ComparisonGroupBrainPF_Layer'
+'ComparisonEnsembleBrainPF_Layer_NU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel property layer.
 %%%% ¡default!
-'ComparisonGroupBrainPF_Layer'
+'ComparisonEnsembleBrainPF_Layer_NU'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel property node.
 %%%% ¡default!
-'ComparisonGroupBrainPF_Layer plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
+'ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel property Layer.
 %%%% ¡settings!
-'ComparisonGroupBrainPF_Layer'
+'ComparisonEnsembleBrainPF_Layer_NU'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel property Layer.
 %%%% ¡default!
-'ComparisonGroupBrainPF_Layer ID'
+'ComparisonEnsembleBrainPF_Layer_NU ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel property node.
 %%%% ¡default!
-'ComparisonGroupPF_NxPP_Node label'
+'ComparisonEnsembleBrainPF_Layer_NU label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel property node.
 %%%% ¡default!
-'ComparisonGroupPF_NxPP_Node notes'
+'ComparisonEnsembleBrainPF_Layer_NU notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-ComparisonGroupPF_NU()
+ComparisonGroupPF_NS()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-ComparisonGroupPF_NU.NODE
+ComparisonGroupPF_NS.NODE
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
@@ -75,9 +75,16 @@ value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warn
 if value
     pf = pr.get('EL');
     NODE = pr.get('PROP');
+    
+    g_dict = pf.get('CP').get('C').get('A1').get('G_DICT');
+    if g_dict.get('LENGTH')
+        g = g_dict.get('IT', 1);
+    else
+        g = pf.get('CP').get('C').get('A1').get('GRAPH_TEMPLATE');
+    end
+    keys = g.get('APARTITIONLABELS');
 
-    keys = pf.get('CP').get('C').get('A1').get('G').get('ALAYERLABELS');
-    if isempty(keys) % ST WU
+    if isempty(keys)
         set(pr.get('DROPDOWN'), 'Enable', 'off')
     else
         set(pr.get('DROPDOWN'), ...

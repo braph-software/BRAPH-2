@@ -238,14 +238,14 @@ if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not
 end
 value = alayerlabels;
 
-% %%% ¡prop!
-% APARTITIONLABELS (query, stringlist) returns the partition labels for A.
-% %%%% ¡calculate!
-% apartitionlabels = g.get('PARTITIONLABELS');
-% if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('THRESHOLDS') % ensures that it's not unecessarily calculated
-%     apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
-% end
-% value = apartitionlabels;
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
+    apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+end
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

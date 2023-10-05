@@ -1,8 +1,8 @@
 %% ¡header!
-MeasureEnsembleBrainPF_Layer_NS < PanelProp (pr, panel property node) plots the panel to select a node.
+MeasureEnsembleBrainPF_Layer_NU < PanelProp (pr, panel property node) plots the panel to select a node.
 
 %%% ¡description!
-MeasureEnsembleBrainPF_Layer_NS plots the panel to select a node from a drop-down list.
+MeasureEnsembleBrainPF_Layer_NU plots the panel to select a node from a drop-down list.
 It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
 
 %%% ¡seealso!
@@ -82,7 +82,7 @@ if value
     else
         g = pf.get('ME').get('A').get('GRAPH_TEMPLATE');
     end
-    keys = g.get('APARTITIONLABELS');
+    keys = g.get('ALAYERLABELS');
 
     if isempty(keys)
         set(pr.get('DROPDOWN'), 'Enable', 'off')
