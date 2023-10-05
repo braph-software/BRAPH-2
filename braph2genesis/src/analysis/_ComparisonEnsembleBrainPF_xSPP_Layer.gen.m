@@ -1,59 +1,59 @@
 %% ¡header!
-ComparisonEnsembleBrainPF_Layer_NU < PanelProp (pr, panel property node) plots the panel to select a node.
+ComparisonEnsembleBrainPF_xSPP_Layer < PanelProp (pr, panel property layer) plots the panel to select a layer.
 
 %%% ¡description!
-ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a layer from a drop-down list.
-It is supposed to be used with the property Layer of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
+ComparisonEnsembleBrainPF_xSPP_Layer plots the panel to select a layer from a drop-down list.
+It is supposed to be used with the property Layer of ComparisonEnsembleBrainPF_NS, ComparisonEnsembleBrainPF_BS, or ComparisonEnsembleBrainPF_GS.
 
 %%% ¡seealso!
-uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_NB
+uidropdown, GUI,  ComparisonEnsembleBrainPF_NS, ComparisonEnsembleBrainPF_BS, ComparisonEnsembleBrainPF_GS.
 
 %% ¡props_update!
 
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU'
+'ComparisonEnsembleBrainPF_xSPP_Layer'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel property layer.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU'
+'ComparisonEnsembleBrainPF_xSPP_Layer'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel property node.
+DESCRIPTION (constant, string) is the description of the panel property layer.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
+'ComparisonEnsembleBrainPF_xSPP_Layer plots the panel to select a layer from a drop-down list. It is supposed to be used with the property LAYER of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel property Layer.
 %%%% ¡settings!
-'ComparisonEnsembleBrainPF_Layer_NU'
+'ComparisonEnsembleBrainPF_xSPP_Layer'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel property Layer.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU ID'
+'ComparisonEnsembleBrainPF_xSPP_Layer ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel property node.
+LABEL (metadata, string) is an extended label of the panel property layer.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU label'
+'ComparisonEnsembleBrainPF_xSPP_Layer label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel property node.
+NOTES (metadata, string) are some specific notes about the panel property layer.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer_NU notes'
+'ComparisonEnsembleBrainPF_xSPP_Layer notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-ComparisonGroupPF_NS()
+ComparisonEnsembleBrainPF_NS()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-ComparisonGroupPF_NS.NODE
+ComparisonEnsembleBrainPF_NS.LAYER
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
@@ -74,7 +74,7 @@ UPDATE (query, logical) updates the content and permissions of the editfield.
 value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 if value
     pf = pr.get('EL');
-    NODE = pr.get('PROP');
+    LAYER = pr.get('PROP');
     
     g_dict = pf.get('CP').get('C').get('A1').get('G_DICT');
     if g_dict.get('LENGTH')
@@ -90,12 +90,12 @@ if value
         set(pr.get('DROPDOWN'), ...
             'Items', keys, ...
             'ItemsData', [1:1:length(keys)], ...
-            'Value', pf.get(NODE) ...
+            'Value', pf.get(LAYER) ...
             )
     end
 
-    prop_value = pf.getr(NODE);
-    if pf.isLocked(NODE) || isa(prop_value, 'Callback')
+    prop_value = pf.getr(LAYER);
+    if pf.isLocked(LAYER) || isa(prop_value, 'Callback')
         set(pr.get('DROPDOWN'), 'Enable', 'off')
     end
 end
@@ -121,7 +121,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-DROPDOWN (evanescent, handle) is the dropdown for the node.
+DROPDOWN (evanescent, handle) is the dropdown for the layer.
 %%%% ¡calculate!
 el = pr.get('EL');
 prop = pr.get('PROP');
@@ -143,7 +143,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonGroupPF_NxPP_Node.DRAW ComparisonGroupPF_NxPP_Node.PARENT ComparisonGroupPF_NxPP_Node.H ComparisonGroupPF_NxPP_Node.UPDATE ComparisonGroupPF_NxPP_Node.LISTENER_CB ComparisonGroupPF_NxPP_Node.DROPDOWN]
+[ComparisonEnsembleBrainPF_xSPP_Layer.DRAW ComparisonEnsembleBrainPF_xSPP_Layer.PARENT ComparisonEnsembleBrainPF_xSPP_Layer.H ComparisonEnsembleBrainPF_xSPP_Layer.UPDATE ComparisonEnsembleBrainPF_xSPP_Layer.LISTENER_CB ComparisonEnsembleBrainPF_xSPP_Layer.DROPDOWN]
 
 %%% ¡warning_off!
 true
@@ -152,7 +152,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':ComparisonGroupPF_NxPP_Node'])
+warning('off', [BRAPH2.STR ':ComparisonEnsembleBrainPF_xSPP_Layer'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':ComparisonGroupPF_NxPP_Node'])
+warning('on', [BRAPH2.STR ':ComparisonEnsembleBrainPF_xSPP_Layer'])
