@@ -83,6 +83,12 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonGroupBrainPF_NU.NODE
+%%%% ¡title!
+NODE SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonGroupBrainPF_NU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -355,13 +361,22 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
+NODE (figure, scalar) is the node number of the nodal group comparison on brain surface figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP')
+%%%% ¡gui!
+pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.NODE);
+
+%%% ¡prop!
 LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡default!
 1
 %%%% ¡postset!
 pf.get('SETUP');
 %%%% ¡gui!
-pr = ComparisonGroupBrainPF_Layer_NU('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
+pr = ComparisonGroupBrainPF_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
