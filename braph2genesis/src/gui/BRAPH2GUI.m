@@ -283,12 +283,15 @@ h_menu_pip_clone = uimenu( ...
         web([BRAPH2.GITHUB '/tree/develop' pipeline.md]);
     end
     function cb_tut_pdf(~, ~)
-        pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
+        pipeline = pipelines{get(h_listbox, 'Value')};
 
-disp('TUT PDF')
-        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
-        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
-        % system(['start "" "' pdfPath '"']);
+        if ismac()
+            system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipline.pdf])
+        elseif isunix()
+            system(['start "" "' fileparts(fileparts(which('braph2'))) pipline.pdf '"']);
+        elseif ispc()
+            system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pipeline.pdf, '/', '\\') '"']);
+        end
     end
     function cb_pip_edit(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
