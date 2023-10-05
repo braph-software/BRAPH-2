@@ -1,59 +1,59 @@
 %% ¡header!
-MeasureGroupBrainPF_xUPP_Layer < PanelProp (pr, panel property LAYER) plots the panel to select a LAYER.
+ComparisonGroupPF_NxPP_Node < PanelProp (pr, panel property node) plots the panel to select a node.
 
 %%% ¡description!
-MeasureGroupBrainPF_xUPP_Layer plots the panel to select a LAYER from a drop-down list.
-It is supposed to be used with the property LAYER of MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, or MeasureGroupBrainPF_GU.
+ComparisonGroupPF_NxPP_Node plots the panel to select a node from a drop-down list.
+It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
 
 %%% ¡seealso!
-uidropdown, GUI, MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, MeasureGroupBrainPF_GU
+uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_NB
 
 %% ¡props_update!
 
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel property LAYER.
+NAME (constant, string) is the name of the panel property node.
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel property LAYER.
+DESCRIPTION (constant, string) is the description of the panel property node.
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer plots the panel to select a LAYER from a drop-down list. It is supposed to be used with the property LAYER of MeasureGroupBrainPF_NU, MeasureGroupBrainPF_BU, or MeasureGroupBrainPF_GU.'
+'ComparisonGroupPF_NxPP_Node plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel property LAYER.
+TEMPLATE (parameter, item) is the template of the panel property node.
 %%%% ¡settings!
-'MeasureGroupBrainPF_xUPP_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel property LAYER.
+ID (data, string) is a few-letter code for the panel property node.
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer ID'
+'ComparisonGroupPF_NxPP_Node ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel property LAYER.
+LABEL (metadata, string) is an extended label of the panel property node.
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer label'
+'ComparisonGroupPF_NxPP_Node label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel property LAYER.
+NOTES (metadata, string) are some specific notes about the panel property node.
 %%%% ¡default!
-'MeasureGroupBrainPF_xUPP_Layer notes'
+'ComparisonGroupPF_NxPP_Node notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-MeasureGroupBrainPF_NU()
+ComparisonGroupPF_NU()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-MeasureGroupBrainPF_NU.LAYER
+ComparisonGroupPF_NU.NODE
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
@@ -74,22 +74,18 @@ UPDATE (query, logical) updates the content and permissions of the editfield.
 value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 if value
     pf = pr.get('EL');
-    LAYER = pr.get('PROP');
-    g = pf.get('M').get('G');
-    keys = g.get('ALAYERLABELS');
+    NODE = pr.get('PROP');
+    
+    keys = pf.get('CP').get('C').get('A1').get('G').get('ANODELABELS');
+    
+    set(pr.get('DROPDOWN'), ...
+        'Items', keys, ...
+        'ItemsData', [1:1:length(keys)], ...
+        'Value', pf.get(NODE) ...
+        )
 
-    if isempty(keys)
-        set(pr.get('DROPDOWN'), 'Enable', 'off')
-    else
-        set(pr.get('DROPDOWN'), ...
-            'Items', keys, ...
-            'ItemsData', [1:1:length(keys)], ...
-            'Value', pf.get(LAYER) ...
-            )
-    end
-
-    prop_value = pf.getr(LAYER);
-    if pf.isLocked(LAYER) || isa(prop_value, 'Callback')
+    prop_value = pf.getr(NODE);
+    if pf.isLocked(NODE) || isa(prop_value, 'Callback')
         set(pr.get('DROPDOWN'), 'Enable', 'off')
     end
 end
@@ -115,7 +111,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-DROPDOWN (evanescent, handle) is the dropdown for the LAYER.
+DROPDOWN (evanescent, handle) is the dropdown for the node.
 %%%% ¡calculate!
 el = pr.get('EL');
 prop = pr.get('PROP');
@@ -137,7 +133,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[MeasureGroupBrainPF_xUPP_Layer.DRAW MeasureGroupBrainPF_xUPP_Layer.PARENT MeasureGroupBrainPF_xUPP_Layer.H MeasureGroupBrainPF_xUPP_Layer.UPDATE MeasureGroupBrainPF_xUPP_Layer.LISTENER_CB MeasureGroupBrainPF_xUPP_Layer.DROPDOWN]
+[ComparisonGroupPF_NxPP_Node.DRAW ComparisonGroupPF_NxPP_Node.PARENT ComparisonGroupPF_NxPP_Node.H ComparisonGroupPF_NxPP_Node.UPDATE ComparisonGroupPF_NxPP_Node.LISTENER_CB ComparisonGroupPF_NxPP_Node.DROPDOWN]
 
 %%% ¡warning_off!
 true
@@ -146,7 +142,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':MeasureGroupBrainPF_xUPP_Layer'])
+warning('off', [BRAPH2.STR ':ComparisonGroupPF_NxPP_Node'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':MeasureGroupBrainPF_xUPP_Layer'])
+warning('on', [BRAPH2.STR ':ComparisonGroupPF_NxPP_Node'])

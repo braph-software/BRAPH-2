@@ -361,7 +361,7 @@ LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡postset!
 pf.get('SETUP');
 %%%% ¡gui!
-pr = ComparisonGroupBrainPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
+pr = ComparisonGroupBrainPF_Layer_NU('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
