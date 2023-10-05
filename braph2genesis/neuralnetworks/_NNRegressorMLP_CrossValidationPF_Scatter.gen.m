@@ -308,18 +308,45 @@ NNCV (metadata, item) is the ensemble-based comparison.
 'NNRegressorMLP_CrossValidation'
 
 %%% ¡prop!
+PREDICTIONS_VALUE (metadata, item) is the predictions value.
+%%%% ¡postprocessing!
+if pr.getr('PREDICTIONS_VALUE') && ~isa(pf.get('NNCV'), 'NoValue')
+    nncv = pf.get('NNCV');
+    redictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    predictions = cell2mat(predictions);
+end
+
+%%% ¡prop!
+GROUNDTRUTH_VALUE (metadata, item) is the ground truth value.
+%%%% ¡postprocessing!
+if pr.getr('GROUNDTRUTH_VALUE') && ~isa(pf.get('NNCV'), 'NoValue')
+    nncv = pf.get('NNCV');
+    ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    ground_truth = cell2mat(ground_truth);
+end
+
+%%% ¡prop!
 SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
 %%%% ¡calculate!
 nncv = pf.get('NNCV');
 
 pf.memorize('H_PREDICTIONS');
 
-predictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-predictions = predictions{:};
-ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-ground_truth = ground_truth{:};
+predictions = pf.memorize('PREDICTIONS_VALUE');
+ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
 
-pf.memorize('ST_LINE_BASE').set('X', [min(ground_truth, [], 'all') max(ground_truth, [], 'all')], 'Y', [min(predictions, [], 'all') max(predictions, [], 'all')])
+if pf.get('PREDICTIONS')
+    pred_st_list = pf.get('PREDICTION_DICT').get('IT_LIST')
+    visible_status = find(cellfun(@(pred_st_line) pred_st_line.get('VISIBLE') , pred_st_list,'UniformOutput', false) == 1);
+    if any(visible_status)
+        baseline_X = pred_st_list{visible_status(1)}.get('X');
+        baseline_Y = pred_st_list{visible_status(1)}.get('Y');
+    else
+        baseline_X = [0];
+        baseline_Y = [0];
+    end
+    pf.memorize('ST_LINE_BASE').set('X', [min(baseline_X) max(baseline_X)], 'Y', [min(baseline_Y) max(baseline_Y)])
+end
 
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
@@ -377,20 +404,18 @@ if check_graphics(toolbar, 'uitoolbar')
     set(findobj(toolbar, 'Tag', 'TOOL.Predictions'), 'State', pf.get('PREDICTIONS'))
 end
 
+pf.get('SETUP');
+
 %%% ¡prop!
 PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡postset!
 if pf.get('PREDICTIONS') && ~isa(pf.getr('NNCV'), 'NoValue')
-    nncv = pf.get('NNCV');
-    targets = nncv.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('TARGET_IDS');
-    predictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-    predictions = predictions{:};
-    ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-    ground_truth = ground_truth{:};
+    predictions = pf.memorize('PREDICTIONS_VALUE');
+    ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
 
-    if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && length(targets) > 0
+    if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && length(ground_truth) > 0
         for i = 1:1:length(targets)
             target = targets{i};
             prediction_st_lines{i} = SettingsLine( ...
@@ -401,47 +426,21 @@ if pf.get('PREDICTIONS') && ~isa(pf.getr('NNCV'), 'NoValue')
                 'PANEL', pf, ...
                 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.H_PREDICTIONS, ...
                 'LINESTYLE', 'none', ...
-                'VISIBLE', true ...
+                'VISIBLE', false ...
                 );
         end
         pf.get('PREDICTION_DICT').set('IT_LIST', prediction_st_lines)
     end
-    
     for i = 1:1:length(targets)
         pf.get('PREDICTION_DICT').get('IT', i).get('SETUP')
     end
 end
+pf.get('SETUP');
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.PREDICTION_DICT, ...
+    'HEIGHT', [30], ...
     'COLS', [PanelPropIDictTable.SELECTOR SettingsLine.VISIBLE SettingsLine.SYMBOL SettingsLine.SYMBOLSIZE SettingsLine.EDGECOLOR SettingsLine.FACECOLOR], ...
     varargin{:});
-
-
-%%% ¡prop!
-H_LINE_PREDICTION (evanescent, handle) is the handle for the prediction line.
-%%%% ¡calculate!
-value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
-
-%%% ¡prop!
-ST_LINE_PREDICTION (figure, item) determines the line settings.
-%%%% ¡settings!
-'SettingsLine'
-%%%% ¡gui!
-pr = SettingsLinePP('EL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.ST_LINE_PREDICTION, varargin{:});
-
-%%% ¡prop!
-LISTENER_ST_LINE_PREDICTION (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-%%%% ¡calculate!
-value = listener(pf.get('ST_LINE_PREDICTION'), 'PropSet', @cb_listener_st_line_prediction); 
-%%%% ¡calculate_callbacks!
-function cb_listener_st_line_prediction(~, ~)
-    if pf.get('DRAWN')
-        toolbar = pf.get('H_TOOLBAR');
-        if check_graphics(toolbar, 'uitoolbar')
-            set(findobj(toolbar, 'Tag', 'TOOL.Line_Prediction'), 'State', pf.get('ST_LINE_PREDICTION').get('VISIBLE'))
-        end
-    end
-end
 
 %%% ¡prop!
 H_LINE_BASE (evanescent, handle) is the handle for the ensemble-based comparison line.
