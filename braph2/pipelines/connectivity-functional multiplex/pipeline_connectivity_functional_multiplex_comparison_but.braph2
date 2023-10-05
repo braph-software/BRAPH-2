@@ -1,12 +1,17 @@
 %% Pipeline Connectivity-Functional Multiplex Comparison BUT
 
 % This is the pipeline script to compare two groups of subjects using connectivity-functional multiplex data and binary undirected graphs at fixed thresholds.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI). 
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2.1 It loads the connectivity data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 2.2 It loads the functional data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 3. It analyzes the first group using connectivity-functional multiplex analyses (CON_FUN_MP) based on binary undirected graphs at fixed thresholds (BUT).
 % 4. It analyzes the second group using the same parameters selected for the first group.
 % 5. It compares the results of the two analyses.
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

@@ -691,13 +691,13 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			switch prop
 				case 27 % MeasureEnsemblePF_GU.SETUP
-                    me = pf.get('ME');
-                    if me.get('A').get('G_DICT').get('LENGTH')
-                        g = me.get('A').get('G_DICT').get('IT', 1);
-                    else
-                        g = me.get('A').get('GRAPH_TEMPLATE');
-                    end
-                    
+					me = pf.get('ME');
+					if me.get('A').get('G_DICT').get('LENGTH')
+					    g = me.get('A').get('G_DICT').get('IT', 1);
+					else
+					    g = me.get('A').get('GRAPH_TEMPLATE');
+					end
+					
 					x = g.get('ALAYERTICKS');
 					
 					m = cell2mat(me.get('M'))';

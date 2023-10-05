@@ -1,10 +1,15 @@
 %% Pipeline Connectivity-Functional Multiplex Analysis WU
 
 % This is the pipeline script to analyze a group of subjects using connectivity-functional multiplex data and weighted undirected graphs.
+% The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI). 
+% The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
 % 2.1 It loads the connectivity data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 2.2 It loads the functional data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 3. It analyzes the data using connectivity-functional multiplex analysis (CON_FUN_MP) based on weighted undirected graphs (WU).
+
+% PDF: 
+% README: 
 
 %% Brain Atlas
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a Brain Atlas XLS % Brain Atlas

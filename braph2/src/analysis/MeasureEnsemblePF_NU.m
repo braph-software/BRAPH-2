@@ -730,11 +730,11 @@ classdef MeasureEnsemblePF_NU < MeasureEnsemblePF
 			switch prop
 				case 27 % MeasureEnsemblePF_NU.SETUP
 					me = pf.get('ME');
-                    if me.get('A').get('G_DICT').get('LENGTH')
-                        g = me.get('A').get('G_DICT').get('IT', 1);
-                    else
-                        g = me.get('A').get('GRAPH_TEMPLATE');
-                    end 
+					if me.get('A').get('G_DICT').get('LENGTH')
+					    g = me.get('A').get('G_DICT').get('IT', 1);
+					else
+					    g = me.get('A').get('GRAPH_TEMPLATE');
+					end
 					
 					x = g.get('ALAYERTICKS');
 					

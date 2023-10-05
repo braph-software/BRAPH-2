@@ -1852,7 +1852,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 drawnow()
 
                 el = el.copy();
-                build = 5;
+                build = 6;
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
                 save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');

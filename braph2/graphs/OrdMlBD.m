@@ -10,6 +10,45 @@ classdef OrdMlBD < Graph
 	% On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and binarized.
 	% On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.
 	%
+	% The list of OrdMlBD properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multilayer binary directed graph.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multilayer binary directed graph.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multilayer binary directed graph.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multilayer binary directed graph.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER__.
+	%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+	%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).
+	%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+	%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+	%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+	%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+	%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+	%  <strong>18</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+	%  <strong>19</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+	%  <strong>20</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+	%  <strong>21</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+	%  <strong>22</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+	%  <strong>23</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+	%  <strong>24</strong> <strong>A</strong> 	A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.
+	%  <strong>25</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+	%  <strong>26</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+	%  <strong>27</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+	%  <strong>28</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+	%  <strong>29</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+	%  <strong>30</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+	%  <strong>31</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+	%  <strong>32</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+	%  <strong>33</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+	%  <strong>34</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multilayer adjacency matrices.
+	%  <strong>35</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+	%  <strong>36</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+	%  <strong>37</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
+	%
 	% OrdMlBD methods (constructor):
 	%  OrdMlBD - constructor
 	%
@@ -97,25 +136,25 @@ classdef OrdMlBD < Graph
 	%
 	
 	properties (Constant) % properties
-		B = Graph.getPropNumber() + 1;
+		B = 34; %CET: Computational Efficiency Trick
 		B_TAG = 'B';
-		B_CATEGORY = Category.DATA;
-		B_FORMAT = Format.CELL;
+		B_CATEGORY = 4;
+		B_FORMAT = 16;
 		
-		SEMIPOSITIVIZE_RULE = Graph.getPropNumber() + 2;
+		SEMIPOSITIVIZE_RULE = 35; %CET: Computational Efficiency Trick
 		SEMIPOSITIVIZE_RULE_TAG = 'SEMIPOSITIVIZE_RULE';
-		SEMIPOSITIVIZE_RULE_CATEGORY = Category.PARAMETER;
-		SEMIPOSITIVIZE_RULE_FORMAT = Format.OPTION;
+		SEMIPOSITIVIZE_RULE_CATEGORY = 3;
+		SEMIPOSITIVIZE_RULE_FORMAT = 5;
 		
-		ATTEMPTSPEREDGE = Graph.getPropNumber() + 3;
+		ATTEMPTSPEREDGE = 36; %CET: Computational Efficiency Trick
 		ATTEMPTSPEREDGE_TAG = 'ATTEMPTSPEREDGE';
-		ATTEMPTSPEREDGE_CATEGORY = Category.PARAMETER;
-		ATTEMPTSPEREDGE_FORMAT = Format.SCALAR;
+		ATTEMPTSPEREDGE_CATEGORY = 3;
+		ATTEMPTSPEREDGE_FORMAT = 11;
 		
-		RANDOMIZATION = Graph.getPropNumber() + 4;
+		RANDOMIZATION = 37; %CET: Computational Efficiency Trick
 		RANDOMIZATION_TAG = 'RANDOMIZATION';
-		RANDOMIZATION_CATEGORY = Category.QUERY;
-		RANDOMIZATION_FORMAT = Format.CELL;
+		RANDOMIZATION_CATEGORY = 6;
+		RANDOMIZATION_FORMAT = 16;
 	end
 	methods % constructor
 		function g = OrdMlBD(varargin)
@@ -128,6 +167,44 @@ classdef OrdMlBD < Graph
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of OrdMlBD properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multilayer binary directed graph.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multilayer binary directed graph.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multilayer binary directed graph.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multilayer binary directed graph.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER__.
+			%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+			%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).
+			%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+			%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+			%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+			%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+			%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+			%  <strong>18</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+			%  <strong>19</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+			%  <strong>20</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+			%  <strong>21</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+			%  <strong>22</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+			%  <strong>23</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+			%  <strong>24</strong> <strong>A</strong> 	A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.
+			%  <strong>25</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+			%  <strong>26</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+			%  <strong>27</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+			%  <strong>28</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+			%  <strong>29</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+			%  <strong>30</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+			%  <strong>31</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+			%  <strong>32</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+			%  <strong>33</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+			%  <strong>34</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multilayer adjacency matrices.
+			%  <strong>35</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+			%  <strong>36</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+			%  <strong>37</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
 			%
 			% See also Category, Format.
 			
@@ -165,7 +242,7 @@ classdef OrdMlBD < Graph
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('OrdMlBD', [], [], true);
+			subclass_list = { 'OrdMlBD' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ordinal multilayer binary directed graph.
@@ -186,58 +263,30 @@ classdef OrdMlBD < Graph
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Graph.getProps() ...
-						OrdMlBD.B ...
-						OrdMlBD.SEMIPOSITIVIZE_RULE ...
-						OrdMlBD.ATTEMPTSPEREDGE ...
-						OrdMlBD.RANDOMIZATION ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Graph.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Graph.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Graph.getProps(Category.PARAMETER) ...
-						OrdMlBD.SEMIPOSITIVIZE_RULE ...
-						OrdMlBD.ATTEMPTSPEREDGE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Graph.getProps(Category.DATA) ...
-						OrdMlBD.B ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Graph.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Graph.getProps(Category.QUERY) ...
-						OrdMlBD.RANDOMIZATION ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Graph.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Graph.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Graph.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 30];
+				case 2 % Category.METADATA
+					prop_list = [6 7 14 16 18 20];
+				case 3 % Category.PARAMETER
+					prop_list = [4 22 23 35 36];
+				case 4 % Category.DATA
+					prop_list = [5 34];
+				case 5 % Category.RESULT
+					prop_list = [24 26 27 28 29];
+				case 6 % Category.QUERY
+					prop_list = [8 10 11 12 13 15 17 19 21 25 31 37];
+				case 9 % Category.GUI
+					prop_list = [32 33];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -258,7 +307,31 @@ classdef OrdMlBD < Graph
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(OrdMlBD.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 37;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 5;
+				case 2 % Category.METADATA
+					prop_number = 6;
+				case 3 % Category.PARAMETER
+					prop_number = 5;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 12;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in ordinal multilayer binary directed graph/error.
@@ -286,14 +359,14 @@ classdef OrdMlBD < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == OrdMlBD.getProps());
+			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for OrdMlBD.'] ...
 					)
 			end
@@ -324,15 +397,14 @@ classdef OrdMlBD < Graph
 			%
 			% See also getProps, existsTag.
 			
-			ordmlbd_tag_list = cellfun(@(x) OrdMlBD.getPropTag(x), num2cell(OrdMlBD.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, ordmlbd_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for OrdMlBD.'] ...
 					)
 			end
@@ -358,8 +430,7 @@ classdef OrdMlBD < Graph
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				ordmlbd_tag_list = cellfun(@(x) OrdMlBD.getPropTag(x), num2cell(OrdMlBD.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, ordmlbd_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -387,20 +458,9 @@ classdef OrdMlBD < Graph
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case OrdMlBD.B
-						tag = OrdMlBD.B_TAG;
-					case OrdMlBD.SEMIPOSITIVIZE_RULE
-						tag = OrdMlBD.SEMIPOSITIVIZE_RULE_TAG;
-					case OrdMlBD.ATTEMPTSPEREDGE
-						tag = OrdMlBD.ATTEMPTSPEREDGE_TAG;
-					case OrdMlBD.RANDOMIZATION
-						tag = OrdMlBD.RANDOMIZATION_TAG;
-					otherwise
-						tag = getPropTag@Graph(prop);
-				end
+				%CET: Computational Efficiency Trick
+				ordmlbd_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' };
+				tag = ordmlbd_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -425,18 +485,9 @@ classdef OrdMlBD < Graph
 			
 			prop = OrdMlBD.getPropProp(pointer);
 			
-			switch prop
-				case OrdMlBD.B
-					prop_category = OrdMlBD.B_CATEGORY;
-				case OrdMlBD.SEMIPOSITIVIZE_RULE
-					prop_category = OrdMlBD.SEMIPOSITIVIZE_RULE_CATEGORY;
-				case OrdMlBD.ATTEMPTSPEREDGE
-					prop_category = OrdMlBD.ATTEMPTSPEREDGE_CATEGORY;
-				case OrdMlBD.RANDOMIZATION
-					prop_category = OrdMlBD.RANDOMIZATION_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmlbd_category_list = { 1  1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9  4  3  3  6 };
+			prop_category = ordmlbd_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -460,18 +511,9 @@ classdef OrdMlBD < Graph
 			
 			prop = OrdMlBD.getPropProp(pointer);
 			
-			switch prop
-				case OrdMlBD.B
-					prop_format = OrdMlBD.B_FORMAT;
-				case OrdMlBD.SEMIPOSITIVIZE_RULE
-					prop_format = OrdMlBD.SEMIPOSITIVIZE_RULE_FORMAT;
-				case OrdMlBD.ATTEMPTSPEREDGE
-					prop_format = OrdMlBD.ATTEMPTSPEREDGE_FORMAT;
-				case OrdMlBD.RANDOMIZATION
-					prop_format = OrdMlBD.RANDOMIZATION_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmlbd_format_list = { 2  2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8  16  5  11  16 };
+			prop_format = ordmlbd_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -495,48 +537,9 @@ classdef OrdMlBD < Graph
 			
 			prop = OrdMlBD.getPropProp(pointer);
 			
-			switch prop
-				case OrdMlBD.B
-					prop_description = 'B (data, cell) is the input cell containing the multilayer adjacency matrices.';
-				case OrdMlBD.SEMIPOSITIVIZE_RULE
-					prop_description = 'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.';
-				case OrdMlBD.ATTEMPTSPEREDGE
-					prop_description = 'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.';
-				case OrdMlBD.RANDOMIZATION
-					prop_description = 'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.';
-				case OrdMlBD.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
-				case OrdMlBD.NAME
-					prop_description = 'NAME (constant, string) is the name of the ordinal multilayer binary directed graph.';
-				case OrdMlBD.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.';
-				case OrdMlBD.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.';
-				case OrdMlBD.ID
-					prop_description = 'ID (data, string) is a few-letter code for the ordinal multilayer binary directed graph.';
-				case OrdMlBD.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the ordinal multilayer binary directed graph.';
-				case OrdMlBD.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the ordinal multilayer binary directed graph.';
-				case OrdMlBD.GRAPH_TYPE
-					prop_description = 'GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER__.';
-				case OrdMlBD.CONNECTIVITY_TYPE
-					prop_description = 'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.BINARY__ * ones(layernumber).';
-				case OrdMlBD.DIRECTIONALITY_TYPE
-					prop_description = 'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.DIRECTED__ * ones(layernumber).';
-				case OrdMlBD.SELFCONNECTIVITY_TYPE
-					prop_description = 'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__ on the diagonal and __Graph.SELFCONNECTED__ off diagonal.';
-				case OrdMlBD.NEGATIVITY_TYPE
-					prop_description = 'NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).';
-				case OrdMlBD.A
-					prop_description = 'A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.';
-				case OrdMlBD.ALAYERLABELS
-					prop_description = 'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.';
-				case OrdMlBD.COMPATIBLE_MEASURES
-					prop_description = 'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.';
-				otherwise
-					prop_description = getPropDescription@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmlbd_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ordinal multilayer binary directed graph.'  'DESCRIPTION (constant, string) is the description of the ordinal multilayer binary directed graph.'  'TEMPLATE (parameter, item) is the template of the ordinal multilayer binary directed graph.'  'ID (data, string) is a few-letter code for the ordinal multilayer binary directed graph.'  'LABEL (metadata, string) is an extended label of the ordinal multilayer binary directed graph.'  'NOTES (metadata, string) are some specific notes about the ordinal multilayer binary directed graph.'  'TOSTRING (query, string) returns a string that represents the object.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER__.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the within-layer binary adjacency matrices of the multilayer binary directed graph and the ordinal connections between layers.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multilayer adjacency matrices.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
+			prop_description = ordmlbd_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -560,16 +563,16 @@ classdef OrdMlBD < Graph
 			
 			prop = OrdMlBD.getPropProp(pointer);
 			
-			switch prop
-				case OrdMlBD.B
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case OrdMlBD.SEMIPOSITIVIZE_RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 34 % OrdMlBD.B
+					prop_settings = Format.getFormatSettings(16);
+				case 35 % OrdMlBD.SEMIPOSITIVIZE_RULE
 					prop_settings = {'zero', 'absolute'};
-				case OrdMlBD.ATTEMPTSPEREDGE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case OrdMlBD.RANDOMIZATION
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case OrdMlBD.TEMPLATE
+				case 36 % OrdMlBD.ATTEMPTSPEREDGE
+					prop_settings = Format.getFormatSettings(11);
+				case 37 % OrdMlBD.RANDOMIZATION
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % OrdMlBD.TEMPLATE
 					prop_settings = 'OrdMlBD';
 				otherwise
 					prop_settings = getPropSettings@Graph(prop);
@@ -597,33 +600,33 @@ classdef OrdMlBD < Graph
 			
 			prop = OrdMlBD.getPropProp(pointer);
 			
-			switch prop
-				case OrdMlBD.B
+			switch prop %CET: Computational Efficiency Trick
+				case 34 % OrdMlBD.B
 					prop_default = {[] []; [] []};
-				case OrdMlBD.SEMIPOSITIVIZE_RULE
-					prop_default = Format.getFormatDefault(Format.OPTION, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.ATTEMPTSPEREDGE
+				case 35 % OrdMlBD.SEMIPOSITIVIZE_RULE
+					prop_default = Format.getFormatDefault(5, OrdMlBD.getPropSettings(prop));
+				case 36 % OrdMlBD.ATTEMPTSPEREDGE
 					prop_default = 5;
-				case OrdMlBD.RANDOMIZATION
-					prop_default = Format.getFormatDefault(Format.CELL, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.ELCLASS
+				case 37 % OrdMlBD.RANDOMIZATION
+					prop_default = Format.getFormatDefault(16, OrdMlBD.getPropSettings(prop));
+				case 1 % OrdMlBD.ELCLASS
 					prop_default = 'OrdMlBD';
-				case OrdMlBD.NAME
+				case 2 % OrdMlBD.NAME
 					prop_default = 'OrdMlBD';
-				case OrdMlBD.DESCRIPTION
+				case 3 % OrdMlBD.DESCRIPTION
 					prop_default = 'In an ordinal multilayer binary directed (BD) graph, layers could have different number  of nodes with within-layer directed edges. Edges can be either 0 (absence of connection)  or 1 (existence of connection). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.';
-				case OrdMlBD.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.ID
+				case 4 % OrdMlBD.TEMPLATE
+					prop_default = Format.getFormatDefault(8, OrdMlBD.getPropSettings(prop));
+				case 5 % OrdMlBD.ID
 					prop_default = 'OrdMlBD ID';
-				case OrdMlBD.LABEL
+				case 6 % OrdMlBD.LABEL
 					prop_default = 'OrdMlBD label';
-				case OrdMlBD.NOTES
+				case 7 % OrdMlBD.NOTES
 					prop_default = 'OrdMlBD notes';
-				case OrdMlBD.GRAPH_TYPE
-					prop_default = Graph.ORDERED_MULTILAYER;
-				case OrdMlBD.COMPATIBLE_MEASURES
-					prop_default = getCompatibleMeasures('OrdMlBD');
+				case 9 % OrdMlBD.GRAPH_TYPE
+					prop_default = 5;
+				case 30 % OrdMlBD.COMPATIBLE_MEASURES
+					prop_default = { 'Distance'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOutAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end
@@ -669,15 +672,15 @@ classdef OrdMlBD < Graph
 			% 
 			% G.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:OrdMlBD:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:OrdMlBD:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  G.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of G.
-			%   Error id: €BRAPH2.STR€:OrdMlBD:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OrdMlBD:WrongInput
 			%  Element.CHECKPROP(OrdMlBD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMlBD.
-			%   Error id: €BRAPH2.STR€:OrdMlBD:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OrdMlBD:WrongInput
 			%  G.CHECKPROP(OrdMlBD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMlBD.
-			%   Error id: €BRAPH2.STR€:OrdMlBD:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:OrdMlBD:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(G) and Element.CHECKPROP('OrdMlBD')
 			%  are less computationally efficient.
@@ -688,18 +691,18 @@ classdef OrdMlBD < Graph
 			prop = OrdMlBD.getPropProp(pointer);
 			
 			switch prop
-				case OrdMlBD.B % __OrdMlBD.B__
-					check = Format.checkFormat(Format.CELL, value, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.SEMIPOSITIVIZE_RULE % __OrdMlBD.SEMIPOSITIVIZE_RULE__
-					check = Format.checkFormat(Format.OPTION, value, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.ATTEMPTSPEREDGE % __OrdMlBD.ATTEMPTSPEREDGE__
-					check = Format.checkFormat(Format.SCALAR, value, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.RANDOMIZATION % __OrdMlBD.RANDOMIZATION__
-					check = Format.checkFormat(Format.CELL, value, OrdMlBD.getPropSettings(prop));
-				case OrdMlBD.TEMPLATE % __OrdMlBD.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, OrdMlBD.getPropSettings(prop));
+				case 34 % OrdMlBD.B
+					check = Format.checkFormat(16, value, OrdMlBD.getPropSettings(prop));
+				case 35 % OrdMlBD.SEMIPOSITIVIZE_RULE
+					check = Format.checkFormat(5, value, OrdMlBD.getPropSettings(prop));
+				case 36 % OrdMlBD.ATTEMPTSPEREDGE
+					check = Format.checkFormat(11, value, OrdMlBD.getPropSettings(prop));
+				case 37 % OrdMlBD.RANDOMIZATION
+					check = Format.checkFormat(16, value, OrdMlBD.getPropSettings(prop));
+				case 4 % OrdMlBD.TEMPLATE
+					check = Format.checkFormat(8, value, OrdMlBD.getPropSettings(prop));
 				otherwise
-					if prop <= Graph.getPropNumber()
+					if prop <= 33
 						check = checkProp@Graph(prop, value);
 					end
 			end
@@ -708,8 +711,8 @@ classdef OrdMlBD < Graph
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMlBD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMlBD:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' OrdMlBD.getPropTag(prop) ' (' OrdMlBD.getFormatTag(OrdMlBD.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -720,19 +723,19 @@ classdef OrdMlBD < Graph
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case OrdMlBD.RANDOMIZATION % __OrdMlBD.RANDOMIZATION__
+				case 37 % OrdMlBD.RANDOMIZATION
 					rng(g.get('RANDOM_SEED'), 'twister')
 					
 					if isempty(varargin)
@@ -753,41 +756,41 @@ classdef OrdMlBD < Graph
 					end
 					value = A;
 					
-				case OrdMlBD.CONNECTIVITY_TYPE % __OrdMlBD.CONNECTIVITY_TYPE__
+				case 10 % OrdMlBD.CONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.BINARY * ones(layernumber);
+					value = 2 * ones(layernumber);
 					
-				case OrdMlBD.DIRECTIONALITY_TYPE % __OrdMlBD.DIRECTIONALITY_TYPE__
+				case 11 % OrdMlBD.DIRECTIONALITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.DIRECTED * ones(layernumber);
+					value =  ones(layernumber);
 					
-				case OrdMlBD.SELFCONNECTIVITY_TYPE % __OrdMlBD.SELFCONNECTIVITY_TYPE__
+				case 12 % OrdMlBD.SELFCONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.SELFCONNECTED * ones(layernumber);
-					value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
+					value = 2 * ones(layernumber);
+					value(1:layernumber+1:end) = 1;
 					
-				case OrdMlBD.NEGATIVITY_TYPE % __OrdMlBD.NEGATIVITY_TYPE__
+				case 13 % OrdMlBD.NEGATIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.NONNEGATIVE * ones(layernumber);
+					value =  ones(layernumber);
 					
-				case OrdMlBD.A % __OrdMlBD.A__
-					rng_settings_ = rng(); rng(g.getPropSeed(OrdMlBD.A), 'twister')
+				case 24 % OrdMlBD.A
+					rng_settings_ = rng(); rng(g.getPropSeed(24), 'twister')
 					
 					B = g.get('B'); %#ok<PROPLC>
 					L = length(B); %#ok<PROPLC> % number of layers
@@ -813,7 +816,7 @@ classdef OrdMlBD < Graph
 					
 					rng(rng_settings_)
 					
-				case OrdMlBD.ALAYERLABELS % __OrdMlBD.ALAYERLABELS__
+				case 17 % OrdMlBD.ALAYERLABELS
 					alayerlabels = g.get('LAYERLABELS');
 					if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
 					    alayerlabels = cellfun(@num2str, num2cell([1:1:g.get('LAYERNUMBER')]), 'uniformoutput', false);
@@ -821,7 +824,7 @@ classdef OrdMlBD < Graph
 					value = alayerlabels;
 					
 				otherwise
-					if prop <= Graph.getPropNumber()
+					if prop <= 33
 						value = calculateValue@Graph(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -847,25 +850,25 @@ classdef OrdMlBD < Graph
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case OrdMlBD.B % __OrdMlBD.B__
-					pr = PanelPropCell('EL', g, 'PROP', OrdMlBD.B, ...
-					    'TABLE_HEIGHT', s(40), ...
+				case 34 % OrdMlBD.B
+					pr = PanelPropCell('EL', g, 'PROP', 34, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', g.get('LAYERLABELS'), ...
-					    'XSLIDERHEIGHT', s(3.5), ...
+					    'XSLIDERHEIGHT', 42, ...
 					    'YSLIDERSHOW', false, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});
 					
-				case OrdMlBD.A % __OrdMlBD.A__
-					pr = PanelPropCell('EL', g, 'PROP', OrdMlBD.A, ...
-					    'TABLE_HEIGHT', s(40), ...
+				case 24 % OrdMlBD.A
+					pr = PanelPropCell('EL', g, 'PROP', 24, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'XYSLIDERLOCK', true, ... 
 					    'XSLIDERSHOW', false, ...
 					    'YSLIDERSHOW', true, ...
 					    'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					    'YSLIDERWIDTH', s(5), ...
+					    'YSLIDERWIDTH', 60, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});

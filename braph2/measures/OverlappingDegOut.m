@@ -544,7 +544,7 @@ classdef OverlappingDegOut < DegreeOut
 				case 11 % OverlappingDegOut.PARAMETRICITY
 					prop_default = 2;
 				case 12 % OverlappingDegOut.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};
+					prop_default = {'MultiplexWD' 'MultiplexBD' 'MultilayerWD' 'MultilayerBD' 'OrdMxBD' 'OrdMxWD' 'OrdMlBD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@DegreeOut(prop);
 			end

@@ -548,7 +548,7 @@ classdef Clustering < Triangles
 				case 11 % Clustering.PARAMETRICITY
 					prop_default = 2;
 				case 12 % Clustering.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};;
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};
 				otherwise
 					prop_default = getPropDefault@Triangles(prop);
 			end
