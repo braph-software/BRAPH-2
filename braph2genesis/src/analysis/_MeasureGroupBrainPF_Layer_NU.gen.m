@@ -1,9 +1,9 @@
 %% ¡header!
-ComparisonEnsembleBrainPF_Layer < PanelProp (pr, panel property node) plots the panel to select a node.
+MeasureGroupBrainPF_Layer_NU < PanelProp (pr, panel property node) plots the panel to select a node.
 
 %%% ¡description!
-ComparisonEnsembleBrainPF_Layer plots the panel to select a layer from a drop-down list.
-It is supposed to be used with the property Layer of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
+MeasureGroupBrainPF_Layer_NU plots the panel to select a node from a drop-down list.
+It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.
 
 %%% ¡seealso!
 uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_NB
@@ -13,27 +13,27 @@ uidropdown, GUI, ComparisonGroupPF_NU, ComparisonGroupPF_NS, ComparisonGroupPF_N
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel property layer.
+NAME (constant, string) is the name of the panel property node.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel property node.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
+'ComparisonGroupPF_NxPP_Node plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel property Layer.
+TEMPLATE (parameter, item) is the template of the panel property node.
 %%%% ¡settings!
-'ComparisonEnsembleBrainPF_Layer'
+'ComparisonGroupPF_NxPP_Node'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel property Layer.
+ID (data, string) is a few-letter code for the panel property node.
 %%%% ¡default!
-'ComparisonEnsembleBrainPF_Layer ID'
+'ComparisonGroupPF_NxPP_Node ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel property node.
@@ -75,13 +75,9 @@ value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warn
 if value
     pf = pr.get('EL');
     NODE = pr.get('PROP');
-    
-    g_dict = pf.get('CP').get('C').get('A1').get('G_DICT');
-    if g_dict.get('LENGTH')
-        g = g_dict.get('IT', 1);
-    else
-        g = pf.get('CP').get('C').get('A1').get('GRAPH_TEMPLATE');
-    end
+
+
+    g = pf.get('M').get('G');
     keys = g.get('ALAYERLABELS');
 
     if isempty(keys)
@@ -93,6 +89,7 @@ if value
             'Value', pf.get(NODE) ...
             )
     end
+
 
     prop_value = pf.getr(NODE);
     if pf.isLocked(NODE) || isa(prop_value, 'Callback')
