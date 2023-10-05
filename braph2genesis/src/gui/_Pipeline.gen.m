@@ -68,6 +68,18 @@ PIPELINE DESCRIPTION
 
 %%% ¡prop!
 %%%% ¡id!
+Pipeline.README
+%%%% ¡title!
+Web Tutorial
+
+%%% ¡prop!
+%%%% ¡id!
+Pipeline.PDF
+%%%% ¡title!
+PDF Tutorial
+
+%%% ¡prop!
+%%%% ¡id!
 Pipeline.PS_DICT
 %%%% ¡title!
 PIPELINE WORKFLOW
@@ -108,10 +120,16 @@ LABEL (metadata, string) is an extended label of the pipeline.
 NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡default!
 'Pipeline notes'
-%%%% ¡gui!
+%%%% ¡_gui!
 pr = PipelinePP_Notes('EL', pip, 'PROP', Pipeline.NOTES, varargin{:});
 
 %% ¡props!
+
+%%% ¡prop!
+README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
+
+%%% ¡prop!
+PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
 
 %%% ¡prop!
 PS_DICT (data, idict) is an indexed dictionary with the code sections.
