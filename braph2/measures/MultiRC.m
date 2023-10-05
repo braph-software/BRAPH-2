@@ -16,14 +16,14 @@ classdef MultiRC < Richness
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multirichness.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multirichness.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
 	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
+	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 	%
 	% MultiRC methods (constructor):
 	%  MultiRC - constructor
@@ -114,8 +114,8 @@ classdef MultiRC < Richness
 	properties (Constant) % properties
 		MULTIRICHNESS_COEFFICIENTS = 16; %CET: Computational Efficiency Trick
 		MULTIRICHNESS_COEFFICIENTS_TAG = 'MULTIRICHNESS_COEFFICIENTS';
-		MULTIRICHNESS_COEFFICIENTS_CATEGORY = 3;
-		MULTIRICHNESS_COEFFICIENTS_FORMAT = 12;
+		MULTIRICHNESS_COEFFICIENTS_CATEGORY = Category.PARAMETER;
+		MULTIRICHNESS_COEFFICIENTS_FORMAT = Format.RVECTOR;
 	end
 	methods % constructor
 		function m = MultiRC(varargin)
@@ -137,14 +137,14 @@ classdef MultiRC < Richness
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multirichness.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multirichness.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.
 			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
+			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 			%
 			% See also Category, Format.
 			
@@ -211,19 +211,19 @@ classdef MultiRC < Richness
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
+				case Category.CONSTANT % __Category.CONSTANT__
 					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
+				case Category.METADATA % __Category.METADATA__
 					prop_list = [6 7];
-				case 3 % Category.PARAMETER
+				case Category.PARAMETER % __Category.PARAMETER__
 					prop_list = [4 16];
-				case 4 % Category.DATA
+				case Category.DATA % __Category.DATA__
 					prop_list = [5 13];
-				case 5 % Category.RESULT
+				case Category.RESULT % __Category.RESULT__
 					prop_list = 14;
-				case 6 % Category.QUERY
+				case Category.QUERY % __Category.QUERY__
 					prop_list = 8;
-				case 9 % Category.GUI
+				case Category.GUI % __Category.GUI__
 					prop_list = 15;
 				otherwise
 					prop_list = [];
@@ -255,19 +255,19 @@ classdef MultiRC < Richness
 			end
 			
 			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
+				case Category.CONSTANT % __Category.CONSTANT__
 					prop_number = 7;
-				case 2 % Category.METADATA
+				case Category.METADATA % __Category.METADATA__
 					prop_number = 2;
-				case 3 % Category.PARAMETER
+				case Category.PARAMETER % __Category.PARAMETER__
 					prop_number = 2;
-				case 4 % Category.DATA
+				case Category.DATA % __Category.DATA__
 					prop_number = 2;
-				case 5 % Category.RESULT
+				case Category.RESULT % __Category.RESULT__
 					prop_number = 1;
-				case 6 % Category.QUERY
+				case Category.QUERY % __Category.QUERY__
 					prop_number = 1;
-				case 9 % Category.GUI
+				case Category.GUI % __Category.GUI__
 					prop_number = 1;
 				otherwise
 					prop_number = 0;
@@ -305,8 +305,8 @@ classdef MultiRC < Richness
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiRC:' 'WrongInput'], ...
-					['BRAPH2' ':MultiRC:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiRC.'] ...
 					)
 			end
@@ -343,8 +343,8 @@ classdef MultiRC < Richness
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiRC:' 'WrongInput'], ...
-					['BRAPH2' ':MultiRC:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for MultiRC.'] ...
 					)
 			end
@@ -478,7 +478,7 @@ classdef MultiRC < Richness
 			prop = MultiRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multirc_description_list = { 'ELCLASS (constant, string) is the class of the Multirichness.'  'NAME (constant, string) is the name of the Multirichness.'  'DESCRIPTION (constant, string) is the description of the Multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the Multirichness.'  'LABEL (metadata, string) is an extended label of the Multirichness.'  'NOTES (metadata, string) are some specific notes about the Multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
+			multirc_description_list = { 'ELCLASS (constant, string) is the class of the Multirichness.'  'NAME (constant, string) is the name of the Multirichness.'  'DESCRIPTION (constant, string) is the description of the Multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the Multirichness.'  'LABEL (metadata, string) is an extended label of the Multirichness.'  'NOTES (metadata, string) are some specific notes about the Multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.'  'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) is the the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).' };
 			prop_description = multirc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -505,7 +505,7 @@ classdef MultiRC < Richness
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 16 % MultiRC.MULTIRICHNESS_COEFFICIENTS
-					prop_settings = Format.getFormatSettings(12);
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
 				case 4 % MultiRC.TEMPLATE
 					prop_settings = 'MultiRC';
 				otherwise
@@ -544,7 +544,7 @@ classdef MultiRC < Richness
 				case 3 % MultiRC.DESCRIPTION
 					prop_default = 'The Multirichness (MultiRC) of a node is the sum of the edges that connect nodes of degree k or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
 				case 4 % MultiRC.TEMPLATE
-					prop_default = Format.getFormatDefault(8, MultiRC.getPropSettings(prop));
+					prop_default = Format.getFormatDefault(Format.ITEM, MultiRC.getPropSettings(prop));
 				case 5 % MultiRC.ID
 					prop_default = 'MultiRC ID';
 				case 6 % MultiRC.LABEL
@@ -552,11 +552,11 @@ classdef MultiRC < Richness
 				case 7 % MultiRC.NOTES
 					prop_default = 'Multirichness notes';
 				case 9 % MultiRC.SHAPE
-					prop_default = 2;
+					prop_default = Measure.NODAL;
 				case 10 % MultiRC.SCOPE
-					prop_default = 1;
+					prop_default = Measure.SUPERGLOBAL;
 				case 11 % MultiRC.PARAMETRICITY
-					prop_default = 2;
+					prop_default = Measure.NONPARAMETRIC;
 				case 12 % MultiRC.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
@@ -604,15 +604,15 @@ classdef MultiRC < Richness
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MultiRC:WrongInput
+			%  Error id: €BRAPH2.STR€:MultiRC:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:MultiRC:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiRC:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(MultiRC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiRC.
-			%   Error id: BRAPH2:MultiRC:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiRC:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(MultiRC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiRC.
-			%   Error id: BRAPH2:MultiRC:WrongInput]
+			%   Error id: €BRAPH2.STR€:MultiRC:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('MultiRC')
 			%  are less computationally efficient.
@@ -624,9 +624,9 @@ classdef MultiRC < Richness
 			
 			switch prop
 				case 16 % MultiRC.MULTIRICHNESS_COEFFICIENTS
-					check = Format.checkFormat(12, value, MultiRC.getPropSettings(prop));
+					check = Format.checkFormat(Format.RVECTOR, value, MultiRC.getPropSettings(prop));
 				case 4 % MultiRC.TEMPLATE
-					check = Format.checkFormat(8, value, MultiRC.getPropSettings(prop));
+					check = Format.checkFormat(Format.ITEM, value, MultiRC.getPropSettings(prop));
 				otherwise
 					if prop <= 15
 						check = checkProp@Richness(prop, value);
@@ -637,8 +637,8 @@ classdef MultiRC < Richness
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiRC:' 'WrongInput'], ...
-					['BRAPH2' ':MultiRC:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiRC:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiRC.getPropTag(prop) ' (' MultiRC.getFormatTag(MultiRC.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -649,13 +649,13 @@ classdef MultiRC < Richness
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
@@ -677,13 +677,13 @@ classdef MultiRC < Richness
 					    N = g.get('NODENUMBER');
 					    multirichness_coefficients = m.get('MULTIRICHNESS_COEFFICIENTS');
 					    assert(length(multirichness_coefficients) == ls(1) || all(multirichness_coefficients == 0), ...
-					        ['BRAPH2' ':Multirichness:' 'WrongInput'], ...
+					        [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
 					        ['Multirichness coefficients must have the same length than the ' ...
 					        'number of layers (' tostring(ls(1)) ') while its length is ' tostring(length(multirichness_coefficients))])
 					
 					    if length(multirichness_coefficients) == ls(1)
 					        assert(all(multirichness_coefficients <= 1) && all(multirichness_coefficients >= 0), ...
-					            ['BRAPH2' ':Multirichness:' 'WrongInput'], ...
+					            [BRAPH2.STR ':Multirichness:' BRAPH2.WRONG_INPUT], ...
 					            ['Multirichness coefficients must be between 0 and 1 ' ...
 					            'while they are ' tostring(multirichness_coefficients)])
 					        c = multirichness_coefficients;
