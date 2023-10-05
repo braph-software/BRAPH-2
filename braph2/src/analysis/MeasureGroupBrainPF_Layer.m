@@ -548,9 +548,9 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 			prop = MeasureGroupBrainPF_Layer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case MeasureGroupBrainPF_Layer.DROPDOWN % __MeasureGroupBrainPF_Layer.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_Layer.DROPDOWN
 					prop_settings = Format.getFormatSettings(18);
-				case MeasureGroupBrainPF_Layer.TEMPLATE % __MeasureGroupBrainPF_Layer.TEMPLATE__
+				case 4 % MeasureGroupBrainPF_Layer.TEMPLATE
 					prop_settings = 'ComparisonGroupPF_NxPP_Node';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -579,27 +579,27 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 			prop = MeasureGroupBrainPF_Layer.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case MeasureGroupBrainPF_Layer.DROPDOWN % __MeasureGroupBrainPF_Layer.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_Layer.DROPDOWN
 					prop_default = Format.getFormatDefault(18, MeasureGroupBrainPF_Layer.getPropSettings(prop));
-				case MeasureGroupBrainPF_Layer.ELCLASS % __MeasureGroupBrainPF_Layer.ELCLASS__
+				case 1 % MeasureGroupBrainPF_Layer.ELCLASS
 					prop_default = 'ComparisonGroupPF_NxPP_Node';
-				case MeasureGroupBrainPF_Layer.NAME % __MeasureGroupBrainPF_Layer.NAME__
+				case 2 % MeasureGroupBrainPF_Layer.NAME
 					prop_default = 'ComparisonGroupPF_NxPP_Node';
-				case MeasureGroupBrainPF_Layer.DESCRIPTION % __MeasureGroupBrainPF_Layer.DESCRIPTION__
+				case 3 % MeasureGroupBrainPF_Layer.DESCRIPTION
 					prop_default = 'ComparisonGroupPF_NxPP_Node plots the panel to select a node from a drop-down list. It is supposed to be used with the property NODE of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.';
-				case MeasureGroupBrainPF_Layer.TEMPLATE % __MeasureGroupBrainPF_Layer.TEMPLATE__
+				case 4 % MeasureGroupBrainPF_Layer.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MeasureGroupBrainPF_Layer.getPropSettings(prop));
-				case MeasureGroupBrainPF_Layer.ID % __MeasureGroupBrainPF_Layer.ID__
+				case 5 % MeasureGroupBrainPF_Layer.ID
 					prop_default = 'ComparisonGroupPF_NxPP_Node ID';
-				case MeasureGroupBrainPF_Layer.LABEL % __MeasureGroupBrainPF_Layer.LABEL__
+				case 6 % MeasureGroupBrainPF_Layer.LABEL
 					prop_default = 'ComparisonGroupPF_NxPP_Node label';
-				case MeasureGroupBrainPF_Layer.NOTES % __MeasureGroupBrainPF_Layer.NOTES__
+				case 7 % MeasureGroupBrainPF_Layer.NOTES
 					prop_default = 'ComparisonGroupPF_NxPP_Node notes';
-				case MeasureGroupBrainPF_Layer.EL % __MeasureGroupBrainPF_Layer.EL__
+				case 23 % MeasureGroupBrainPF_Layer.EL
 					prop_default = ComparisonGroupPF_NU();
-				case MeasureGroupBrainPF_Layer.PROP % __MeasureGroupBrainPF_Layer.PROP__
+				case 24 % MeasureGroupBrainPF_Layer.PROP
 					prop_default = 46;
-				case MeasureGroupBrainPF_Layer.HEIGHT % __MeasureGroupBrainPF_Layer.HEIGHT__
+				case 25 % MeasureGroupBrainPF_Layer.HEIGHT
 					prop_default = 48;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
@@ -665,9 +665,9 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 			prop = MeasureGroupBrainPF_Layer.getPropProp(pointer);
 			
 			switch prop
-				case MeasureGroupBrainPF_Layer.DROPDOWN % __MeasureGroupBrainPF_Layer.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_Layer.DROPDOWN
 					check = Format.checkFormat(18, value, MeasureGroupBrainPF_Layer.getPropSettings(prop));
-				case MeasureGroupBrainPF_Layer.TEMPLATE % __MeasureGroupBrainPF_Layer.TEMPLATE__
+				case 4 % MeasureGroupBrainPF_Layer.TEMPLATE
 					check = Format.checkFormat(8, value, MeasureGroupBrainPF_Layer.getPropSettings(prop));
 				otherwise
 					if prop <= 35
@@ -703,7 +703,7 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case MeasureGroupBrainPF_Layer.DROPDOWN % __MeasureGroupBrainPF_Layer.DROPDOWN__
+				case 36 % MeasureGroupBrainPF_Layer.DROPDOWN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -717,24 +717,20 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 					
 					value = dropdown;
 					
-				case MeasureGroupBrainPF_Layer.X_DRAW % __MeasureGroupBrainPF_Layer.X_DRAW__
+				case 20 % MeasureGroupBrainPF_Layer.X_DRAW
 					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('DROPDOWN')
 					end
 					
-				case MeasureGroupBrainPF_Layer.UPDATE % __MeasureGroupBrainPF_Layer.UPDATE__
+				case 21 % MeasureGroupBrainPF_Layer.UPDATE
 					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    pf = pr.get('EL');
 					    NODE = pr.get('PROP');
 					
-					    g_dict = pf.get('ME').get('A').get('G_DICT');
-					    if g_dict.get('LENGTH')
-					        g = g_dict.get('IT', 1);
-					    else
-					        g = pf.get('ME').get('A').get('GRAPH_TEMPLATE');
-					    end
+					
+					    g = pf.get('M').get('G');
 					    keys = g.get('ALAYERLABELS');
 					
 					    if isempty(keys)
@@ -754,7 +750,7 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 					    end
 					end
 					
-				case MeasureGroupBrainPF_Layer.REDRAW % __MeasureGroupBrainPF_Layer.REDRAW__
+				case 22 % MeasureGroupBrainPF_Layer.REDRAW
 					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
@@ -762,7 +758,7 @@ classdef MeasureGroupBrainPF_Layer < PanelProp
 					    set(pr.get('DROPDOWN'), 'Position', [4 4 .70*w_p 21])
 					end
 					
-				case MeasureGroupBrainPF_Layer.DELETE % __MeasureGroupBrainPF_Layer.DELETE__
+				case 18 % MeasureGroupBrainPF_Layer.DELETE
 					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('DROPDOWN', Element.getNoValue())
