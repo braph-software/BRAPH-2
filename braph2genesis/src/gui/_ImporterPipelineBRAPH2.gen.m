@@ -103,10 +103,10 @@ if isfile(file)
             notes = [notes(1:notes_newlines(i)) strtrim(notes(notes_newlines(i) + 2:end))]; % eliminates % but not newline
         end
 
-        md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once');
+        md = regexp(notes, '/tutorials/pipelines/\\w+/readme\\.md', 'match', 'once'); % note \\ for compilation
         notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 
-        pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
+        pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
         notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
         
         pip.set( ...
