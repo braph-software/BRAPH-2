@@ -16,7 +16,7 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
 	% The list of ImporterGroupSubjectCON_MP_XLS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the CON MP subject group importer from XLS/XLSX.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON MP subject group importer from XLS/XLSX.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON MP subject group importer from XLS/XLSX.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON MP subject group importer from XLS/XLSX.
@@ -151,7 +151,7 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ImporterGroupSubjectCON_MP_XLS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the CON MP subject group importer from XLS/XLSX.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the CON MP subject group importer from XLS/XLSX.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the CON MP subject group importer from XLS/XLSX.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the CON MP subject group importer from XLS/XLSX.
@@ -497,7 +497,7 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 			prop = ImporterGroupSubjectCON_MP_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectcon_mp_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the CON MP subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the CON MP subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the CON MP subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the CON MP subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the CON MP subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the CON MP subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the CON MP subject folders from which to load the L layers of the group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN MP subject group with L layers.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with connectivity multiplex data.' };
+			importergroupsubjectcon_mp_xls_description_list = { 'ELCLASS (constant, string) is the class of the CON MP subject group importer from XLS/XLSX.'  'NAME (constant, string) is the name of the CON MP subject group importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the CON MP subject group importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the CON MP subject group importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the CON MP subject group importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the CON MP subject group importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the CON MP subject group importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the CON MP subject folders from which to load the L layers of the group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the FUN MP subject group with L layers.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with connectivity multiplex data.' };
 			prop_description = importergroupsubjectcon_mp_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

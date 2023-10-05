@@ -1,3 +1,3 @@
-# BRAPH 2.0 — Pipeline for Comparison of Structural Data using Binary Undirected graphs at fixed Densities
+# BRAPH 2.0 — Pipeline for Comparison of Structural Data using Binary Undirected graphs at fixed Densities
 
-This Page is not ready. You can find a similar one in [Structural WU](../tut_a_st_wu)
+This tutorial is only available as a pdf at the moment (../tut_a_st_bud/tut_a_st_bud.pdf).
