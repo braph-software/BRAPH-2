@@ -344,8 +344,8 @@ h_listbox = uilistbox( ...
             'Position', [5 0 w(h_panel)-10 max(2*h(h_panel), (2+2*length(regexp(pipeline.notes, newline()))+length(pipeline.notes)/40)*BRAPH2.FONTSIZE)] ...
             )
 
-        set(h_menu_tut_web, 'Enable', ~isempty(pipeline.pdf))
-        set(h_menu_tut_pdf, 'Enable', ~isempty(pipeline.md))
+        set(h_menu_tut_web, 'Enable', ~isempty(pipeline.md))
+        set(h_menu_tut_pdf, 'Enable', ~isempty(pipeline.pdf))
         set(h_menu_pip_edit, 'Enable', 'on')
         set(h_menu_pip_clone, 'Enable', 'on')
         
