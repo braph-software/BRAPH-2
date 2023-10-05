@@ -314,11 +314,15 @@ h_menu_pip_clone = uimenu( ...
         pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
 
 disp('TUT WEB')
+        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
+        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
+        % system(['start "" "' pdfPath '"']);
     end
     function cb_tut_pdf(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')}; %#ok<NASGU> 
 
 disp('TUT PDF')
+        % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
     end
     function cb_pip_edit(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
@@ -402,13 +406,13 @@ h_button = uibutton( ...
     end
 
 % pipelines
-braph2_dir = fileparts(which('braph2'));
-pipelines_contents = dir(fullfile(braph2_dir, 'pipelines'));  % get the folder contents
-pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
-pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
-
 pipelines = get_pipelines();
     function pipelines = get_pipelines()
+        braph2_dir = fileparts(which('braph2'));
+        pipelines_contents = dir(fullfile(braph2_dir, 'pipelines'));  % get the folder contents
+        pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+        pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+        
         pipelines = {};
 
         for dir_number = 1:1:length(pipelines_dir_list)
@@ -442,15 +446,9 @@ pipelines = get_pipelines();
                     
                     pipelines{p}.pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
                     notes = regexprep(notes, ['PDF:.*' newline()], '');
-        % notes = regexprep(notes, 'PDF: (/tutorials/pipelines/\w+/\w+\.pdf)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">' which('braph2.m') '$1</a>']);
-        % system('open -a Preview /Users/giovannivolpe/Documents/GitHub/Braph-2-Matlab/tutorials/pipelines/tut_a_con_but/tut_a_con_but.pdf')
-        % system(['start "" "' pdfPath '"']);
         
                     pipelines{p}.md = regexp(notes, 'README: /tutorials/pipelines/\w+/\w+\.md', 'match', 'once');
-                    notes = regexprep(notes, ['README:.*' newline()], '');
-        % notes = regexprep(notes, 'README: (/tutorials/pipelines/\w+/\w+\.md)', ['<a href="' BRAPH2.GITHUB '/tree/develop/$1">GitHub Tutorial</a>']);
-                
-        % notes = [notes newline() '<a href="matlab:edit ' file_name '">Open pipeline in MatLab Editor</a>'];
+                    notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 
                     pipelines{p}.notes = strtrim(notes);
                 end
