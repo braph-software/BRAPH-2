@@ -75,12 +75,6 @@ Template for Neural Network Evaluator
 
 %%% ¡prop!
 %%%% ¡id!
-NNRegressorMLP_CrossValidation.D
-%%%% ¡title!
-DATASET
-
-%%% ¡prop!
-%%%% ¡id!
 NNRegressorMLP_CrossValidation.D_LIST
 %%%% ¡title!
 Dataset List
@@ -96,6 +90,12 @@ Neural Network Regressor List
 NNRegressorMLP_CrossValidation.EVALUATOR_LIST
 %%%% ¡title!
 Neural Network Evaluator List
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_CrossValidation.PFSP
+%%%% ¡title!
+Scatter Plot
 
 %%% ¡prop!
 %%%% ¡id!
@@ -129,7 +129,7 @@ Average of Root Mean Squared Error
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.P
+NNRegressorMLP_CrossValidation.P
 %%%% ¡title!
 Permutation Times for Feature Importance
 
@@ -342,6 +342,20 @@ else
     average_fi = average_fi / numel(all_fi);
     value = {average_fi};
 end
+
+%%% ¡prop!
+PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
+%%%% ¡settings!
+'NNRegressorMLP_CrossValidationPF_Scatter'
+%%%% ¡postprocessing!
+if isa(nncv.getr('PFSP'), 'NoValue')
+    nncv.set('PFSP', NNRegressorMLP_CrossValidationPF_Scatter('NNCV', nncv));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Scatter Plot'], ...
+    varargin{:});
 
 %% ¡tests!
 

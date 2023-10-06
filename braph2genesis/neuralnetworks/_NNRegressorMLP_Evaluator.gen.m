@@ -8,6 +8,74 @@ NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressorMLP
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.ID
+%%%% ¡title!
+Cross Validation ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.LABEL
+%%%% ¡title!
+Cross Validation LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.PFSP
+%%%% ¡title!
+Scatter Plot
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.CORR
+%%%% ¡title!
+Correlation Coefficient
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.DET
+%%%% ¡title!
+Coefficient of Determination
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.MAE
+%%%% ¡title!
+Mean Absolute Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.MSE
+%%%% ¡title!
+Mean Squared Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.RMSE
+%%%% ¡title!
+Root Mean Squared Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.P
+%%%% ¡title!
+Permutation Times for Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+%%%% ¡title!
+Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.NOTES
+%%%% ¡title!
+Evaluator NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -174,6 +242,20 @@ else
     average_fi = average_fi / numel(all_fi);
     value = {average_fi};
 end
+
+%%% ¡prop!
+PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
+%%%% ¡settings!
+'NNRegressorMLP_EvaluatorPF_Scatter'
+%%%% ¡postprocessing!
+if isa(nne.getr('PFSP'), 'NoValue')
+    nne.set('PFSP', NNRegressorMLP_EvaluatorPF_Scatter('NNE', nne));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNRegressorMLP_Evaluator.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Scatter Plot'], ...
+    varargin{:});
 
 %% ¡tests!
 
