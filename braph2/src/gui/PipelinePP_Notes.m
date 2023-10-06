@@ -851,9 +851,9 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			    if ismac()
 			        system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pip.get('PDF')]);
 			    elseif isunix()
-			        system(['start "" "' fileparts(fileparts(which('braph2'))) pip.get('PDF') '"']);
-			    elseif ispc()
 			        system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pip.get('PDF'), '/', '\') '"']);
+			    elseif ispc()
+			        system(['start "" "' fileparts(fileparts(which('braph2'))) pip.get('PDF') '"']);
 			    end
 			end
 			function cb_pip_edit(~, ~)
