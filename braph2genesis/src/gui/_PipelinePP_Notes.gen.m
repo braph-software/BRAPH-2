@@ -138,7 +138,7 @@ end
 % % % %%% ¡prop!
 % % % REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 % % % %%%% ¡calculate!
-% % % value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, PanelProp.REDRAW, varargin{:}); % also warning
+% % % value = calculateValue@PanelPropStringTextArea(pr, PanelProp.REDRAW, varargin{:}); % also warning
 % % % if value
 % % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 % % %     
@@ -148,7 +148,7 @@ end
 %%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
-value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, PanelProp.DELETE, varargin{:}); % also warning
+value = calculateValue@PanelPropStringTextArea(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
     pr.set('CONTEXTMENU', Element.getNoValue())
 end
