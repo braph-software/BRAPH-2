@@ -108,18 +108,18 @@ classdef Pipeline < ConcreteElement
 	properties (Constant) % properties
 		README = 9; %CET: Computational Efficiency Trick
 		README_TAG = 'README';
-		README_CATEGORY = 2;
-		README_FORMAT = 2;
+		README_CATEGORY = Category.METADATA;
+		README_FORMAT = Format.STRING;
 		
 		PDF = 10; %CET: Computational Efficiency Trick
 		PDF_TAG = 'PDF';
-		PDF_CATEGORY = 2;
-		PDF_FORMAT = 2;
+		PDF_CATEGORY = Category.METADATA;
+		PDF_FORMAT = Format.STRING;
 		
 		PS_DICT = 11; %CET: Computational Efficiency Trick
 		PS_DICT_TAG = 'PS_DICT';
-		PS_DICT_CATEGORY = 4;
-		PS_DICT_FORMAT = 10;
+		PS_DICT_CATEGORY = Category.DATA;
+		PS_DICT_FORMAT = Format.IDICT;
 	end
 	methods % constructor
 		function pip = Pipeline(varargin)
@@ -210,15 +210,15 @@ classdef Pipeline < ConcreteElement
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
+				case Category.CONSTANT % __Category.CONSTANT__
 					prop_list = [1 2 3];
-				case 2 % Category.METADATA
+				case Category.METADATA % __Category.METADATA__
 					prop_list = [6 7 9 10];
-				case 3 % Category.PARAMETER
+				case Category.PARAMETER % __Category.PARAMETER__
 					prop_list = 4;
-				case 4 % Category.DATA
+				case Category.DATA % __Category.DATA__
 					prop_list = [5 11];
-				case 6 % Category.QUERY
+				case Category.QUERY % __Category.QUERY__
 					prop_list = 8;
 				otherwise
 					prop_list = [];
@@ -250,15 +250,15 @@ classdef Pipeline < ConcreteElement
 			end
 			
 			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
+				case Category.CONSTANT % __Category.CONSTANT__
 					prop_number = 3;
-				case 2 % Category.METADATA
+				case Category.METADATA % __Category.METADATA__
 					prop_number = 4;
-				case 3 % Category.PARAMETER
+				case Category.PARAMETER % __Category.PARAMETER__
 					prop_number = 1;
-				case 4 % Category.DATA
+				case Category.DATA % __Category.DATA__
 					prop_number = 2;
-				case 6 % Category.QUERY
+				case Category.QUERY % __Category.QUERY__
 					prop_number = 1;
 				otherwise
 					prop_number = 0;
@@ -296,8 +296,8 @@ classdef Pipeline < ConcreteElement
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Pipeline:' 'WrongInput'], ...
-					['BRAPH2' ':Pipeline:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Pipeline.'] ...
 					)
 			end
@@ -334,8 +334,8 @@ classdef Pipeline < ConcreteElement
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Pipeline:' 'WrongInput'], ...
-					['BRAPH2' ':Pipeline:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Pipeline.'] ...
 					)
 			end
@@ -495,13 +495,13 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % Pipeline.README
-					prop_settings = Format.getFormatSettings(2);
-				case 10 % Pipeline.PDF
-					prop_settings = Format.getFormatSettings(2);
-				case 11 % Pipeline.PS_DICT
+				case Pipeline.README % __Pipeline.README__
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case Pipeline.PDF % __Pipeline.PDF__
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case Pipeline.PS_DICT % __Pipeline.PS_DICT__
 					prop_settings = 'PipelineSection';
-				case 4 % Pipeline.TEMPLATE
+				case Pipeline.TEMPLATE % __Pipeline.TEMPLATE__
 					prop_settings = 'Pipeline';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -530,25 +530,25 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % Pipeline.README
-					prop_default = Format.getFormatDefault(2, Pipeline.getPropSettings(prop));
-				case 10 % Pipeline.PDF
-					prop_default = Format.getFormatDefault(2, Pipeline.getPropSettings(prop));
-				case 11 % Pipeline.PS_DICT
-					prop_default = Format.getFormatDefault(10, Pipeline.getPropSettings(prop));
-				case 1 % Pipeline.ELCLASS
+				case Pipeline.README % __Pipeline.README__
+					prop_default = Format.getFormatDefault(Format.STRING, Pipeline.getPropSettings(prop));
+				case Pipeline.PDF % __Pipeline.PDF__
+					prop_default = Format.getFormatDefault(Format.STRING, Pipeline.getPropSettings(prop));
+				case Pipeline.PS_DICT % __Pipeline.PS_DICT__
+					prop_default = Format.getFormatDefault(Format.IDICT, Pipeline.getPropSettings(prop));
+				case Pipeline.ELCLASS % __Pipeline.ELCLASS__
 					prop_default = 'Pipeline';
-				case 2 % Pipeline.NAME
+				case Pipeline.NAME % __Pipeline.NAME__
 					prop_default = 'Pipeline';
-				case 3 % Pipeline.DESCRIPTION
+				case Pipeline.DESCRIPTION % __Pipeline.DESCRIPTION__
 					prop_default = 'A Pipeline is an analysis pipeline.';
-				case 4 % Pipeline.TEMPLATE
-					prop_default = Format.getFormatDefault(8, Pipeline.getPropSettings(prop));
-				case 5 % Pipeline.ID
+				case Pipeline.TEMPLATE % __Pipeline.TEMPLATE__
+					prop_default = Format.getFormatDefault(Format.ITEM, Pipeline.getPropSettings(prop));
+				case Pipeline.ID % __Pipeline.ID__
 					prop_default = 'Pipeline ID';
-				case 6 % Pipeline.LABEL
+				case Pipeline.LABEL % __Pipeline.LABEL__
 					prop_default = 'Pipeline label';
-				case 7 % Pipeline.NOTES
+				case Pipeline.NOTES % __Pipeline.NOTES__
 					prop_default = 'Pipeline notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -595,15 +595,15 @@ classdef Pipeline < ConcreteElement
 			% 
 			% PIP.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Pipeline:WrongInput
+			%  Error id: €BRAPH2.STR€:Pipeline:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PIP.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PIP.
-			%   Error id: BRAPH2:Pipeline:WrongInput
+			%   Error id: €BRAPH2.STR€:Pipeline:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Pipeline, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Pipeline.
-			%   Error id: BRAPH2:Pipeline:WrongInput
+			%   Error id: €BRAPH2.STR€:Pipeline:€BRAPH2.WRONG_INPUT€
 			%  PIP.CHECKPROP(Pipeline, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Pipeline.
-			%   Error id: BRAPH2:Pipeline:WrongInput]
+			%   Error id: €BRAPH2.STR€:Pipeline:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PIP) and Element.CHECKPROP('Pipeline')
 			%  are less computationally efficient.
@@ -614,16 +614,16 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop
-				case 9 % Pipeline.README
-					check = Format.checkFormat(2, value, Pipeline.getPropSettings(prop));
-				case 10 % Pipeline.PDF
-					check = Format.checkFormat(2, value, Pipeline.getPropSettings(prop));
-				case 11 % Pipeline.PS_DICT
-					check = Format.checkFormat(10, value, Pipeline.getPropSettings(prop));
-				case 4 % Pipeline.TEMPLATE
-					check = Format.checkFormat(8, value, Pipeline.getPropSettings(prop));
+				case Pipeline.README % __Pipeline.README__
+					check = Format.checkFormat(Format.STRING, value, Pipeline.getPropSettings(prop));
+				case Pipeline.PDF % __Pipeline.PDF__
+					check = Format.checkFormat(Format.STRING, value, Pipeline.getPropSettings(prop));
+				case Pipeline.PS_DICT % __Pipeline.PS_DICT__
+					check = Format.checkFormat(Format.IDICT, value, Pipeline.getPropSettings(prop));
+				case Pipeline.TEMPLATE % __Pipeline.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, Pipeline.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -632,8 +632,8 @@ classdef Pipeline < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Pipeline:' 'WrongInput'], ...
-					['BRAPH2' ':Pipeline:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Pipeline:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Pipeline.getPropTag(prop) ' (' Pipeline.getFormatTag(Pipeline.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -656,11 +656,11 @@ classdef Pipeline < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 11 % Pipeline.PS_DICT
-					pr = PipelinePP_PSDict('EL', pip, 'PROP', 11, varargin{:});
+				case Pipeline.PS_DICT % __Pipeline.PS_DICT__
+					pr = PipelinePP_PSDict('EL', pip, 'PROP', Pipeline.PS_DICT, varargin{:});
 					
-				case 7 % Pipeline.NOTES
-					pr = PipelinePP_Notes('EL', pip, 'PROP', 7, varargin{:});
+				case Pipeline.NOTES % __Pipeline.NOTES__
+					pr = PipelinePP_Notes('EL', pip, 'PROP', Pipeline.NOTES, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@ConcreteElement(pip, prop, varargin{:});
