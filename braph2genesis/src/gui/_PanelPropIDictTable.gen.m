@@ -100,7 +100,6 @@ if value
         else
             pr.set('HEIGHT', min(s(4.5) + s(2) * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
         end
-        
     end
 
     switch el.getPropCategory(prop)
