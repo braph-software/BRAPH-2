@@ -834,7 +834,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					% % % %% ¡prop!
 					% % % REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 					% % % %% ¡calculate!
-					% % % value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, 22, varargin{:}); % also warning
+					% % % value = calculateValue@PanelPropStringTextArea(pr, 22, varargin{:}); % also warning
 					% % % if value
 					% % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					% % %     
@@ -842,7 +842,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					% % % end
 					
 				case 18 % PipelinePP_Notes.DELETE
-					value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, 18, varargin{:}); % also warning
+					value = calculateValue@PanelPropStringTextArea(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
