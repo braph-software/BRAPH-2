@@ -659,6 +659,9 @@ classdef Pipeline < ConcreteElement
 				case 11 % Pipeline.PS_DICT
 					pr = PipelinePP_PSDict('EL', pip, 'PROP', 11, varargin{:});
 					
+				case 7 % Pipeline.NOTES
+					pr = PipelinePP_Notes('EL', pip, 'PROP', 7, varargin{:});
+					
 				otherwise
 					pr = getPanelProp@ConcreteElement(pip, prop, varargin{:});
 					

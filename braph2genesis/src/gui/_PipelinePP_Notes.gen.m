@@ -90,15 +90,15 @@ if value
 % % %         case Category.METADATA
             notes = pip.get(NOTES);
 
-            pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once');
+            pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
             notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
         
-            md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once');
+            md = regexp(notes, '/tutorials/pipelines/\\w+/readme\\.md', 'match', 'once'); % note \\ for compilation
             notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 
             notes = strtrim(notes);
 
-            set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\\n', char(10)))
+            set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\\n', char(10))) % note \\ for compilation
             if el.isLocked(prop)
                 set(pr.get('TEXTAREA'), ...
                     'Editable', 'off', ...
@@ -107,7 +107,8 @@ if value
             end
             
 % % %         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-% % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop), '\\n', char(10)))
+% % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop),
+% '\\n', char(10))) 
 % % % 
 % % %             prop_value = el.getr(prop);
 % % %             if el.isLocked(prop) || isa(prop_value, 'Callback')
@@ -121,9 +122,9 @@ if value
 % % %             prop_value = el.getr(prop);
 % % % 
 % % %             if isa(prop_value, 'NoValue')
-% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.getPropDefault(prop), '\\n', char(10)))
+% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.getPropDefault(prop), '\\n', char(10))) % note \\ for compilation
 % % %             else
-% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop), '\\n', char(10)))
+% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop), '\\n', char(10))) % note \\ for compilation
 % % %             end
 % % %             
 % % %             set(pr.get('TEXTAREA'), ...

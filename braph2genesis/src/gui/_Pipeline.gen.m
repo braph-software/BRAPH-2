@@ -120,7 +120,7 @@ LABEL (metadata, string) is an extended label of the pipeline.
 NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡default!
 'Pipeline notes'
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = PipelinePP_Notes('EL', pip, 'PROP', Pipeline.NOTES, varargin{:});
 
 %% ¡props!
