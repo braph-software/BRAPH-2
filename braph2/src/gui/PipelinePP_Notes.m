@@ -742,12 +742,6 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				case 39 % PipelinePP_Notes.MENUS
 					contextmenu = pr.get('CONTEXTMENU');
 					
-					menu_pip_open = uimenu( ...
-					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_PIP_OPEN', ...
-					    'Text', 'Open Pipeline  ...', ...
-					    'MenuSelectedFcn', {@cb_button} ...
-					    );
 					menu_tut_web = uimenu( ...
 					    'Separator', 'on', ...
 					    'Parent', contextmenu, ...
@@ -778,7 +772,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    'MenuSelectedFcn', {@cb_pip_clone} ...
 					    );
 					
-					value = [menu_pip_open, menu_tut_web, menu_tut_pdf, menu_pip_edit, menu_pip_clone];
+					value = [menu_tut_web, menu_tut_pdf, menu_pip_edit, menu_pip_clone];
 					
 				case 20 % PipelinePP_Notes.X_DRAW
 					value = calculateValue@PanelPropStringTextArea(pr, 20, varargin{:}); % also warning
@@ -794,15 +788,6 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    pip = pr.get('EL');
 					    NOTES = pr.get('PROP');
 					    
-					% % %     switch el.getPropCategory(prop)
-					% % %         case 1
-					% % %             set(pr.get('TEXTAREA'), ...
-					% % %                 'Value', el.get(prop), ...
-					% % %                 'Editable', 'off', ...
-					% % %                 'Enable', pr.get('ENABLE') ...
-					% % %                 )
-					% % %             
-					% % %         case 2
 					    notes = pip.get(NOTES);
 					
 					    pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once'); % note \ for compilation
@@ -822,47 +807,9 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    end
 					
 					    menus = pr.get('MENUS');
-					    set(menus(3), 'Enable', ~isempty(pip.readme)) % menus(3) = menu_tut_web
-					    set(menus(4), 'Enable', ~isempty(pip.pdf)) % menus(4) = menu_tut_pdf
-					
-					% % %         case {3, 4, 8, 9}
-					% % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop),
-					% '\n', char(10))) 
-					% % % 
-					% % %             prop_value = el.getr(prop);
-					% % %             if el.isLocked(prop) || isa(prop_value, 'Callback')
-					% % %                 set(pr.get('TEXTAREA'), ...
-					% % %                     'Editable', 'off', ...
-					% % %                     'Enable', pr.get('ENABLE') ...
-					% % %                     )
-					% % %             end
-					% % % 
-					% % %         case {5 6 7}
-					% % %             prop_value = el.getr(prop);
-					% % % 
-					% % %             if isa(prop_value, 'NoValue')
-					% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.getPropDefault(prop), '\n', char(10))) % note \ for compilation
-					% % %             else
-					% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop), '\n', char(10))) % note \ for compilation
-					% % %             end
-					% % %             
-					% % %             set(pr.get('TEXTAREA'), ...
-					% % %                 'Editable', 'off', ...
-					% % %                 'Enable', pr.get('ENABLE') ...
-					% % %                 )
-					% % %     end
+					    set(menus(1), 'Enable', ~isempty(pip.get('README'))) % menus(1) = menu_tut_web
+					    set(menus(2), 'Enable', ~isempty(pip.get('PDF'))) % menus(2) = menu_tut_pdf
 					end
-					
-					% % % TBE
-					% % % %% ¡prop!
-					% % % REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
-					% % % %% ¡calculate!
-					% % % value = calculateValue@PanelPropStringTextArea(pr, 22, varargin{:}); % also warning
-					% % % if value
-					% % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
-					% % %     
-					% % %     set(pr.get('TEXTAREA'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
-					% % % end
 					
 				case 18 % PipelinePP_Notes.DELETE
 					value = calculateValue@PanelPropStringTextArea(pr, 18, varargin{:}); % also warning
@@ -870,12 +817,6 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					    pr.set('MENUS', Element.getNoValue())
 					end
-					
-					% % % %TBE
-					% % % %% ¡prop!
-					% % % ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-					% % % %% ¡default!
-					% % % true
 					
 				case 37 % PipelinePP_Notes.TEXTAREA
 					pip = pr.get('EL');

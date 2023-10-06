@@ -72,18 +72,6 @@ Pipeline.PS_DICT
 %%%% ¡title!
 PIPELINE WORKFLOW
 
-%%% ¡prop!
-%%%% ¡id!
-Pipeline.README
-%%%% ¡title!
-Web Tutorial
-
-%%% ¡prop!
-%%%% ¡id!
-Pipeline.PDF
-%%%% ¡title!
-PDF Tutorial
-
 %% ¡props_update!
 
 %%% ¡prop!
