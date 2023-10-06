@@ -1,11 +1,11 @@
 %% ¡header!
-NNRegressorMLP_CrossValidationPF_Scatter < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot an ensemble-based comparison.
+NNRegressorMLP_CrossValidationPF_Scatter < PanelFig (pf, panel regression scatter figure) is the panel figure for scatter plot of a regression task.
 
 %%% ¡description!
-NNRegressorMLP_CrossValidationPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.
+NNRegressorMLP_CrossValidationPF_Scatter provides the scatter plot of a regression task.
 
 %%% ¡seealso!
-ComparisonEnsemble
+NNRegressorMLP_CrossValidation
 
 %% ¡layout!
 
@@ -102,7 +102,7 @@ NAME (constant, string) is the name of the panel ensemble-based comparison figur
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNRegressorMLP_CrossValidationPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.'
+'NNRegressorMLP_CrossValidationPF_Scatter provides the scatter plot of a regression task.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.

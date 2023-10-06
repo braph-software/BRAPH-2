@@ -1,11 +1,11 @@
 %% ¡header!
-NNRegressorMLP_EvaluatorPF_Scatter < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot an ensemble-based comparison.
+NNRegressorMLP_EvaluatorPF_Scatter < PanelFig (pf, panel ensemble-based comparison figure) is the panel figure for scatter plot of a regression task.
 
 %%% ¡description!
-NNRegressorMLP_EvaluatorPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.
+NNRegressorMLP_EvaluatorPF_Scatter provides the scatter plot of a regression task.
 
 %%% ¡seealso!
-ComparisonEnsemble
+NNRegressorMLP_Evaluator
 
 %% ¡layout!
 
