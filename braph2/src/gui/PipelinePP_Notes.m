@@ -45,7 +45,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
 	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
 	%  <strong>37</strong> <strong>TEXTAREA</strong> 	TEXTAREA (evanescent, handle) is the string value text-area.
-	%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the popup context menu.
+	%  <strong>39</strong> <strong>MENUS</strong> 	MENUS (evanescent, handlelist) is the list of context menus.
 	%
 	% PipelinePP_Notes methods (constructor):
 	%  PipelinePP_Notes - constructor
@@ -140,6 +141,11 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
 		CONTEXTMENU_CATEGORY = 7;
 		CONTEXTMENU_FORMAT = 18;
+		
+		MENUS = 39; %CET: Computational Efficiency Trick
+		MENUS_TAG = 'MENUS';
+		MENUS_CATEGORY = 7;
+		MENUS_FORMAT = 19;
 	end
 	methods % constructor
 		function pr = PipelinePP_Notes(varargin)
@@ -190,7 +196,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
 			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
 			%  <strong>37</strong> <strong>TEXTAREA</strong> 	TEXTAREA (evanescent, handle) is the string value text-area.
-			%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+			%  <strong>38</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the popup context menu.
+			%  <strong>39</strong> <strong>MENUS</strong> 	MENUS (evanescent, handlelist) is the list of context menus.
 			%
 			% See also Category, Format.
 			
@@ -252,7 +259,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39];
 				return
 			end
 			
@@ -268,7 +275,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				case 6 % Category.QUERY
 					prop_list = [8 11 12 16 17 18 19 20 21 22];
 				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38];
+					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39];
 				case 8 % Category.FIGURE
 					prop_list = 14;
 				case 9 % Category.GUI
@@ -298,7 +305,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 38;
+				prop_number = 39;
 				return
 			end
 			
@@ -314,7 +321,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				case 6 % Category.QUERY
 					prop_number = 10;
 				case 7 % Category.EVANESCENT
-					prop_number = 12;
+					prop_number = 13;
 				case 8 % Category.FIGURE
 					prop_number = 1;
 				case 9 % Category.GUI
@@ -349,7 +356,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 38 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 39 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -387,7 +394,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU'  'MENUS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -420,7 +427,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU'  'MENUS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -449,7 +456,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pipelinepp_notes_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU' };
+				pipelinepp_notes_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'TEXTAREA'  'CONTEXTMENU'  'MENUS' };
 				tag = pipelinepp_notes_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -476,7 +483,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			prop = PipelinePP_Notes.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinepp_notes_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7 };
+			pipelinepp_notes_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7 };
 			prop_category = pipelinepp_notes_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -502,7 +509,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			prop = PipelinePP_Notes.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinepp_notes_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18 };
+			pipelinepp_notes_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  19 };
 			prop_format = pipelinepp_notes_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -528,7 +535,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			prop = PipelinePP_Notes.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinepp_notes_description_list = { 'ELCLASS (constant, string) is the class of the prop panel for pipeline notes.'  'NAME (constant, string) is the name of the prop panel for pipeline notes.'  'DESCRIPTION (constant, string) is the description of the prop panel for pipeline notes.'  'TEMPLATE (parameter, item) is the template of the prop panel for pipeline notes.'  'ID (data, string) is a few-letter code for the prop panel for pipeline notes.'  'LABEL (metadata, string) is an extended label of the prop panel for pipeline notes.'  'NOTES (metadata, string) are some specific notes about the prop panel for pipeline notes.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the prop panel.'  'UPDATE (query, logical) updates the content and permissions of the text-area and popup context menu.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.'  'TEXTAREA (evanescent, handle) is the string value text-area.'  'CONTEXTMENU (evanescent, handle) is the context menu.' };
+			pipelinepp_notes_description_list = { 'ELCLASS (constant, string) is the class of the prop panel for pipeline notes.'  'NAME (constant, string) is the name of the prop panel for pipeline notes.'  'DESCRIPTION (constant, string) is the description of the prop panel for pipeline notes.'  'TEMPLATE (parameter, item) is the template of the prop panel for pipeline notes.'  'ID (data, string) is a few-letter code for the prop panel for pipeline notes.'  'LABEL (metadata, string) is an extended label of the prop panel for pipeline notes.'  'NOTES (metadata, string) are some specific notes about the prop panel for pipeline notes.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the prop panel.'  'UPDATE (query, logical) updates the content and permissions of the text-area and popup context menu.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.'  'TEXTAREA (evanescent, handle) is the string value text-area.'  'CONTEXTMENU (evanescent, handle) is the popup context menu.'  'MENUS (evanescent, handlelist) is the list of context menus.' };
 			prop_description = pipelinepp_notes_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -556,6 +563,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			switch prop %CET: Computational Efficiency Trick
 				case 38 % PipelinePP_Notes.CONTEXTMENU
 					prop_settings = Format.getFormatSettings(18);
+				case 39 % PipelinePP_Notes.MENUS
+					prop_settings = Format.getFormatSettings(19);
 				case 4 % PipelinePP_Notes.TEMPLATE
 					prop_settings = 'PipelinePP_Notes';
 				case 23 % PipelinePP_Notes.EL
@@ -589,6 +598,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			switch prop %CET: Computational Efficiency Trick
 				case 38 % PipelinePP_Notes.CONTEXTMENU
 					prop_default = Format.getFormatDefault(18, PipelinePP_Notes.getPropSettings(prop));
+				case 39 % PipelinePP_Notes.MENUS
+					prop_default = Format.getFormatDefault(19, PipelinePP_Notes.getPropSettings(prop));
 				case 1 % PipelinePP_Notes.ELCLASS
 					prop_default = 'PipelinePP_Notes';
 				case 2 % PipelinePP_Notes.NAME
@@ -608,7 +619,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				case 24 % PipelinePP_Notes.PROP
 					prop_default = 7;
 				case 25 % PipelinePP_Notes.HEIGHT
-					prop_default = 120;
+					prop_default = 180;
 				otherwise
 					prop_default = getPropDefault@PanelPropStringTextArea(prop);
 			end
@@ -675,6 +686,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			switch prop
 				case 38 % PipelinePP_Notes.CONTEXTMENU
 					check = Format.checkFormat(18, value, PipelinePP_Notes.getPropSettings(prop));
+				case 39 % PipelinePP_Notes.MENUS
+					check = Format.checkFormat(19, value, PipelinePP_Notes.getPropSettings(prop));
 				case 4 % PipelinePP_Notes.TEMPLATE
 					check = Format.checkFormat(8, value, PipelinePP_Notes.getPropSettings(prop));
 				case 23 % PipelinePP_Notes.EL
@@ -721,11 +734,18 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'TAG', 'CONTEXTMENU' ...
 					    );
+					
+					set(pr.get('TEXTAREA'), 'ContextMenu', contextmenu)
+					
+					value = contextmenu;
+					
+				case 39 % PipelinePP_Notes.MENUS
+					contextmenu = pr.get('CONTEXTMENU');
+					
 					menu_pip_open = uimenu( ...
 					    'Parent', contextmenu, ...
 					    'Tag', 'MENU_PIP_OPEN', ...
 					    'Text', 'Open Pipeline  ...', ...
-					    'Enable', 'off', ...
 					    'MenuSelectedFcn', {@cb_button} ...
 					    );
 					menu_tut_web = uimenu( ...
@@ -748,7 +768,6 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    'Parent', contextmenu, ...
 					    'Tag', 'MENU_PIP_EDIT', ...
 					    'Text', 'Edit Pipeline ...', ...
-					    'Enable', 'off', ...
 					    'MenuSelectedFcn', {@cb_pip_edit} ...
 					    );
 					menu_pip_clone = uimenu( ...
@@ -756,16 +775,16 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					    'Parent', contextmenu, ...
 					    'Tag', 'MENU_PIP_CLONE', ...
 					    'Text', 'Clone Pipeline ...', ...
-					    'Enable', 'off', ...
 					    'MenuSelectedFcn', {@cb_pip_clone} ...
 					    );
 					
-					value = contextmenu;
+					value = [menu_pip_open, menu_tut_web, menu_tut_pdf, menu_pip_edit, menu_pip_clone];
 					
 				case 20 % PipelinePP_Notes.X_DRAW
 					value = calculateValue@PanelPropStringTextArea(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('CONTEXTMENU')
+					    pr.memorize('MENUS')
 					end
 					
 				case 21 % PipelinePP_Notes.UPDATE
@@ -784,24 +803,28 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					% % %                 )
 					% % %             
 					% % %         case 2
-					            notes = pip.get(NOTES);
+					    notes = pip.get(NOTES);
 					
-					            pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once'); % note \ for compilation
-					            notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
-					        
-					            md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once'); % note \ for compilation
-					            notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
+					    pdf = regexp(notes, '/tutorials/pipelines/\w+/\w+\.pdf', 'match', 'once'); % note \ for compilation
+					    notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
 					
-					            notes = strtrim(notes);
+					    md = regexp(notes, '/tutorials/pipelines/\w+/readme\.md', 'match', 'once'); % note \ for compilation
+					    notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 					
-					            set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\n', char(10))) % note \ for compilation
-					            if pip.isLocked(NOTES)
-					                set(pr.get('TEXTAREA'), ...
-					                    'Editable', 'off', ...
-					                    'Enable', pr.get('ENABLE') ...
-					                    )
-					            end
-					            
+					    notes = strtrim(notes);
+					
+					    set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\n', char(10))) % note \ for compilation
+					    if pip.isLocked(NOTES)
+					        set(pr.get('TEXTAREA'), ...
+					            'Editable', 'off', ...
+					            'Enable', pr.get('ENABLE') ...
+					            )
+					    end
+					
+					    menus = pr.get('MENUS');
+					    set(menus(3), 'Enable', ~isempty(pip.readme)) % menus(3) = menu_tut_web
+					    set(menus(4), 'Enable', ~isempty(pip.pdf)) % menus(4) = menu_tut_pdf
+					
 					% % %         case {3, 4, 8, 9}
 					% % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop),
 					% '\n', char(10))) 
@@ -845,6 +868,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 					value = calculateValue@PanelPropStringTextArea(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('CONTEXTMENU', Element.getNoValue())
+					    pr.set('MENUS', Element.getNoValue())
 					end
 					
 					% % % %TBE
@@ -876,34 +900,29 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 			end
 			
 			function cb_tut_web(~, ~)
-			disp('WEB')
-			% % %     pipeline = pipelines{get(listbox, 'Value')};
-			% % % 
-			% % %     web([BRAPH2.GITHUB '/tree/develop' pipeline.md]);
+			    pip = pr.get('EL');
+			
+			    web([BRAPH2.GITHUB '/tree/develop' pip.get('README')]);
 			end
 			function cb_tut_pdf(~, ~)
-			disp('PDF')
-			% % %     pipeline = pipelines{get(listbox, 'Value')};
-			% % % 
-			% % %     if ismac()
-			% % %         system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipeline.pdf]);
-			% % %     elseif isunix()
-			% % %         system(['start "" "' fileparts(fileparts(which('braph2'))) pipeline.pdf '"']);
-			% % %     elseif ispc()
-			% % %         system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pipeline.pdf, '/', '\') '"']);
-			% % %     end
+			    pip = pr.get('EL');
+			
+			    if ismac()
+			        system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pip.get('PDF')]);
+			    elseif isunix()
+			        system(['start "" "' fileparts(fileparts(which('braph2'))) pip.get('PDF') '"']);
+			    elseif ispc()
+			        system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pip.get('PDF'), '/', '\') '"']);
+			    end
 			end
 			function cb_pip_edit(~, ~)
-			disp('EDIT')
-			% % %     pipeline = pipelines{get(listbox, 'Value')};
-			% % % 
-			% % %     edit(pipeline.file_name)
+			    pip = pr.get('EL');
+			
+			    edit([pip.get('ID') '.braph2'])
 			end
 			function cb_pip_clone(~, ~)
-			disp('CLONE')
-			% % %     pipeline = pipelines{get(listbox, 'Value')};
-			% % % 
-			% % % 
+			    pip = pr.get('EL');
+			
 			% % %     pip = ImporterPipelineBRAPH2( ...
 			% % %         'FILE', pipeline.file_name, ...
 			% % %         'WAITBAR', true ...

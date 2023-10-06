@@ -60,7 +60,7 @@ Pipeline.NOTES
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
-s(10)
+s(15)
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -68,6 +68,7 @@ X_DRAW (query, logical) draws the prop panel.
 value = calculateValue@PanelPropStringTextArea(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
     pr.memorize('CONTEXTMENU')
+    pr.memorize('MENUS')
 end
 
 %%% ¡prop!
@@ -88,24 +89,28 @@ if value
 % % %                 )
 % % %             
 % % %         case Category.METADATA
-            notes = pip.get(NOTES);
+    notes = pip.get(NOTES);
 
-            pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
-            notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
-        
-            md = regexp(notes, '/tutorials/pipelines/\\w+/readme\\.md', 'match', 'once'); % note \\ for compilation
-            notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
+    pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
+    notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
 
-            notes = strtrim(notes);
+    md = regexp(notes, '/tutorials/pipelines/\\w+/readme\\.md', 'match', 'once'); % note \\ for compilation
+    notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
 
-            set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\\n', char(10))) % note \\ for compilation
-            if pip.isLocked(NOTES)
-                set(pr.get('TEXTAREA'), ...
-                    'Editable', 'off', ...
-                    'Enable', pr.get('ENABLE') ...
-                    )
-            end
-            
+    notes = strtrim(notes);
+
+    set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\\n', char(10))) % note \\ for compilation
+    if pip.isLocked(NOTES)
+        set(pr.get('TEXTAREA'), ...
+            'Editable', 'off', ...
+            'Enable', pr.get('ENABLE') ...
+            )
+    end
+
+    menus = pr.get('MENUS');
+    set(menus(3), 'Enable', ~isempty(pip.readme)) % menus(3) = menu_tut_web
+    set(menus(4), 'Enable', ~isempty(pip.pdf)) % menus(4) = menu_tut_pdf
+
 % % %         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 % % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop),
 % '\\n', char(10))) 
@@ -151,6 +156,7 @@ DELETE (query, logical) resets the handles when the panel is deleted.
 value = calculateValue@PanelPropStringTextArea(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
     pr.set('CONTEXTMENU', Element.getNoValue())
+    pr.set('MENUS', Element.getNoValue())
 end
 
 % % % %TBE
@@ -186,7 +192,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-CONTEXTMENU (evanescent, handle) is the context menu.
+CONTEXTMENU (evanescent, handle) is the popup context menu.
 %%%% ¡calculate!
 pip = pr.get('EL');
 NOTES = pr.get('PROP');
@@ -195,11 +201,20 @@ contextmenu = uicontextmenu( ...
     'Parent', ancestor(pr.get('H'), 'figure'), ...
     'TAG', 'CONTEXTMENU' ...
     );
+
+set(pr.get('TEXTAREA'), 'ContextMenu', contextmenu)
+
+value = contextmenu;
+
+%%% ¡prop!
+MENUS (evanescent, handlelist) is the list of context menus.
+%%%% ¡calculate!
+contextmenu = pr.get('CONTEXTMENU');
+
 menu_pip_open = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_PIP_OPEN', ...
     'Text', 'Open Pipeline  ...', ...
-    'Enable', 'off', ...
     'MenuSelectedFcn', {@cb_button} ...
     );
 menu_tut_web = uimenu( ...
@@ -222,7 +237,6 @@ menu_pip_edit = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_PIP_EDIT', ...
     'Text', 'Edit Pipeline ...', ...
-    'Enable', 'off', ...
     'MenuSelectedFcn', {@cb_pip_edit} ...
     );
 menu_pip_clone = uimenu( ...
@@ -230,41 +244,35 @@ menu_pip_clone = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_PIP_CLONE', ...
     'Text', 'Clone Pipeline ...', ...
-    'Enable', 'off', ...
     'MenuSelectedFcn', {@cb_pip_clone} ...
     );
 
-value = contextmenu;
+value = [menu_pip_open, menu_tut_web, menu_tut_pdf, menu_pip_edit, menu_pip_clone];
 %%%% ¡calculate_callbacks!
 function cb_tut_web(~, ~)
-disp('WEB')
-% % %     pipeline = pipelines{get(listbox, 'Value')};
-% % % 
-% % %     web([BRAPH2.GITHUB '/tree/develop' pipeline.md]);
+    pip = pr.get('EL');
+
+    web([BRAPH2.GITHUB '/tree/develop' pip.get('README')]);
 end
 function cb_tut_pdf(~, ~)
-disp('PDF')
-% % %     pipeline = pipelines{get(listbox, 'Value')};
-% % % 
-% % %     if ismac()
-% % %         system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipeline.pdf]);
-% % %     elseif isunix()
-% % %         system(['start "" "' fileparts(fileparts(which('braph2'))) pipeline.pdf '"']);
-% % %     elseif ispc()
-% % %         system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pipeline.pdf, '/', '\\') '"']);
-% % %     end
+    pip = pr.get('EL');
+
+    if ismac()
+        system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pip.get('PDF')]);
+    elseif isunix()
+        system(['start "" "' fileparts(fileparts(which('braph2'))) pip.get('PDF') '"']);
+    elseif ispc()
+        system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pip.get('PDF'), '/', '\\') '"']);
+    end
 end
 function cb_pip_edit(~, ~)
-disp('EDIT')
-% % %     pipeline = pipelines{get(listbox, 'Value')};
-% % % 
-% % %     edit(pipeline.file_name)
+    pip = pr.get('EL');
+
+    edit([pip.get('ID') '.braph2'])
 end
 function cb_pip_clone(~, ~)
-disp('CLONE')
-% % %     pipeline = pipelines{get(listbox, 'Value')};
-% % % 
-% % % 
+    pip = pr.get('EL');
+
 % % %     pip = ImporterPipelineBRAPH2( ...
 % % %         'FILE', pipeline.file_name, ...
 % % %         'WAITBAR', true ...

@@ -68,6 +68,12 @@ PIPELINE DESCRIPTION
 
 %%% ¡prop!
 %%%% ¡id!
+Pipeline.PS_DICT
+%%%% ¡title!
+PIPELINE WORKFLOW
+
+%%% ¡prop!
+%%%% ¡id!
 Pipeline.README
 %%%% ¡title!
 Web Tutorial
@@ -77,12 +83,6 @@ Web Tutorial
 Pipeline.PDF
 %%%% ¡title!
 PDF Tutorial
-
-%%% ¡prop!
-%%%% ¡id!
-Pipeline.PS_DICT
-%%%% ¡title!
-PIPELINE WORKFLOW
 
 %% ¡props_update!
 
