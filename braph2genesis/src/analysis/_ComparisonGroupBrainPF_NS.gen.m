@@ -296,6 +296,7 @@ switch size_diff
         % transfrom diff value to appropriate size
         % value ranching from 0.01 to 1
         diff(isnan(diff)) = 0.1;
+        diff(isinf(diff)) = 0.1;
         size_value = abs(diff);
         min_bound = 0.01;
         max_bound = 1.0;
