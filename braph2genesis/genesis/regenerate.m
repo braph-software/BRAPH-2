@@ -40,7 +40,10 @@ for i = 1:1:length(el_class_list)
     
     el_class = el_class_list{i};
     if create_element_flag
-        delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+        el_file = [fileparts(which('braph2')) el_path filesep() el_class '.m'];
+        if isfile(el_file)
+            delete(el_file)
+        end
         create_Element( ...
             [fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], ...
             [fileparts(which('braph2')) el_path] ...
@@ -53,7 +56,10 @@ for i = 1:1:length(el_class_list)
         end
     end
     if create_layout_flag
-        delete([fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep() el_class '.layout'])
+        layout_file = [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep() el_class '.layout'];
+        if isfile(layout_file)
+            delete(layout_file)
+        end
         create_layout( ...
             [fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], ...
             [fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep()] ...
