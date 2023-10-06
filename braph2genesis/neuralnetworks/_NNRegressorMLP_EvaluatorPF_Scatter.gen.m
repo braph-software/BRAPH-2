@@ -1,11 +1,11 @@
 %% ¡header!
-NNRegressorMLP_EvaluatorPF_Scatter < PanelFig (pf, panel ensemble-based comparison figure) is the panel figure for scatter plot of a regression task.
+NNRegressorMLP_EvaluatorPF_Scatter < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot an ensemble-based comparison.
 
 %%% ¡description!
-NNRegressorMLP_EvaluatorPF_Scatter provides the scatter plot of a regression task.
+NNRegressorMLP_EvaluatorPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.
 
 %%% ¡seealso!
-NNRegressorMLP_Evaluator
+ComparisonEnsemble
 
 %% ¡layout!
 
@@ -339,12 +339,15 @@ if pf.get('PREDICTIONS')
     visible_status = find(cell2mat(cellfun(@(pred_st_line) pred_st_line.get('VISIBLE') , pred_st_list,'UniformOutput', false)) == 1);
     if any(visible_status)
         baseline_X = pred_st_list{visible_status(1)}.get('X');
-        baseline_Y = pred_st_list{visible_status(1)}.get('Y');
+        baseline_Y = pred_st_list{visible_status(1)}.get('X');
     else
         baseline_X = [0];
         baseline_Y = [0];
     end
-    pf.memorize('ST_LINE_BASE').set('X', [min(baseline_X) max(baseline_X)], 'Y', [min(baseline_Y) max(baseline_Y)])
+    pf.memorize('ST_LINE_BASE').set('X', [min(baseline_X) max(baseline_X)], ...
+        'Y', [min(baseline_Y) max(baseline_Y)], ...
+        'SYMBOL', 'none', ...
+        'LINECOLOR', [0.8 0.8 0.8])
 end
 
 xlim = pf.get('H_AXES').get('XLim');
@@ -495,6 +498,8 @@ ST_TITLE (figure, item) determines the title settings.
 SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle')
 %%%% ¡gui!
 pr = SettingsTextPP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE, varargin{:});
+%%%% ¡postset!
+pf.get('SETUP');
 
 %%% ¡prop!
 H_XLABEL (evanescent, handle) is the axis x-label.
