@@ -65,7 +65,7 @@ s(10)
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
 %%%% ¡calculate!
-value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+value = calculateValue@PanelPropStringTextArea(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
     pr.memorize('CONTEXTMENU')
 end
@@ -73,7 +73,7 @@ end
 %%% ¡prop!
 UPDATE (query, logical) updates the content and permissions of the text-area and popup context menu.
 %%%% ¡calculate!
-value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+value = calculateValue@PanelPropStringTextArea(pr, PanelProp.UPDATE, varargin{:}); % also warning
 if value
 
     pip = pr.get('EL');
@@ -99,7 +99,7 @@ if value
             notes = strtrim(notes);
 
             set(pr.get('TEXTAREA'), 'Value', strrep(notes, '\\n', char(10))) % note \\ for compilation
-            if el.isLocked(prop)
+            if pip.isLocked(NOTES)
                 set(pr.get('TEXTAREA'), ...
                     'Editable', 'off', ...
                     'Enable', pr.get('ENABLE') ...
@@ -138,7 +138,7 @@ end
 % % % %%% ¡prop!
 % % % REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 % % % %%%% ¡calculate!
-% % % value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+% % % value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, PanelProp.REDRAW, varargin{:}); % also warning
 % % % if value
 % % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 % % %     
@@ -148,7 +148,7 @@ end
 %%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
-value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+value = calculateValue@PanelPropStringTextAreaStringTextArea(pr, PanelProp.DELETE, varargin{:}); % also warning
 if value
     pr.set('CONTEXTMENU', Element.getNoValue())
 end
