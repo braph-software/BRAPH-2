@@ -80,15 +80,6 @@ if value
     pip = pr.get('EL');
     NOTES = pr.get('PROP');
     
-% % %     switch el.getPropCategory(prop)
-% % %         case Category.CONSTANT
-% % %             set(pr.get('TEXTAREA'), ...
-% % %                 'Value', el.get(prop), ...
-% % %                 'Editable', 'off', ...
-% % %                 'Enable', pr.get('ENABLE') ...
-% % %                 )
-% % %             
-% % %         case Category.METADATA
     notes = pip.get(NOTES);
 
     pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
@@ -110,45 +101,7 @@ if value
     menus = pr.get('MENUS');
     set(menus(3), 'Enable', ~isempty(pip.readme)) % menus(3) = menu_tut_web
     set(menus(4), 'Enable', ~isempty(pip.pdf)) % menus(4) = menu_tut_pdf
-
-% % %         case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
-% % %             set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop),
-% '\\n', char(10))) 
-% % % 
-% % %             prop_value = el.getr(prop);
-% % %             if el.isLocked(prop) || isa(prop_value, 'Callback')
-% % %                 set(pr.get('TEXTAREA'), ...
-% % %                     'Editable', 'off', ...
-% % %                     'Enable', pr.get('ENABLE') ...
-% % %                     )
-% % %             end
-% % % 
-% % %         case {Category.RESULT Category.QUERY Category.EVANESCENT}
-% % %             prop_value = el.getr(prop);
-% % % 
-% % %             if isa(prop_value, 'NoValue')
-% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.getPropDefault(prop), '\\n', char(10))) % note \\ for compilation
-% % %             else
-% % %                 set(pr.get('TEXTAREA'), 'Value', strrep(el.get(prop), '\\n', char(10))) % note \\ for compilation
-% % %             end
-% % %             
-% % %             set(pr.get('TEXTAREA'), ...
-% % %                 'Editable', 'off', ...
-% % %                 'Enable', pr.get('ENABLE') ...
-% % %                 )
-% % %     end
 end
-
-% % % TBE
-% % % %%% ¡prop!
-% % % REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
-% % % %%%% ¡calculate!
-% % % value = calculateValue@PanelPropStringTextArea(pr, PanelProp.REDRAW, varargin{:}); % also warning
-% % % if value
-% % %     w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
-% % %     
-% % %     set(pr.get('TEXTAREA'), 'Position', [s(.3) s(.3) w_p-s(.6) max(1, pr.get('HEIGHT')-s(2.2))])
-% % % end
 
 %%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
@@ -158,12 +111,6 @@ if value
     pr.set('CONTEXTMENU', Element.getNoValue())
     pr.set('MENUS', Element.getNoValue())
 end
-
-% % % %TBE
-% % % %%% ¡prop!
-% % % ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-% % % %%%% ¡default!
-% % % true
 
 %%% ¡prop!
 TEXTAREA (evanescent, handle) is the string value text-area.
