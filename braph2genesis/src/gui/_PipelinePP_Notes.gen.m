@@ -60,7 +60,7 @@ Pipeline.NOTES
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the prop panel.
 %%%% ¡default!
-s(15)
+s(10)
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.

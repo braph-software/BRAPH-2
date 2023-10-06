@@ -619,7 +619,7 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 				case 24 % PipelinePP_Notes.PROP
 					prop_default = 7;
 				case 25 % PipelinePP_Notes.HEIGHT
-					prop_default = 180;
+					prop_default = 120;
 				otherwise
 					prop_default = getPropDefault@PanelPropStringTextArea(prop);
 			end
