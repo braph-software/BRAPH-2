@@ -83,12 +83,6 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
-ComparisonGroupBrainPF_NS.NODE
-%%%% ¡title!
-NODE SELECTION
-
-%%% ¡prop!
-%%%% ¡id!
 ComparisonGroupBrainPF_NS.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -207,6 +201,7 @@ LABEL (metadata, string) is an extended label of the panel figure nodal superglo
 NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal group comparison on brain surface figure.
 %%%% ¡default!
 'ComparisonGroupBrainPF_NS notes'
+
 %%% ¡prop!
 DRAW (query, logical) draws the figure brain atlas.
 %%%% ¡calculate!
@@ -247,6 +242,10 @@ if isempty(diffs)
     return
 end
 diff = diffs{layer};
+if isempty(diff)
+    value = {};
+    return
+end
 p2s = cp.get('P2');
 p2 = p2s{layer};
 
@@ -297,12 +296,13 @@ switch size_diff
         % transfrom diff value to appropriate size
         % value ranching from 0.01 to 1
         diff(isnan(diff)) = 0.1;
+        diff(isinf(diff)) = 0.1;
         size_value = abs(diff);
         min_bound = 0.01;
         max_bound = 1.0;
         min_size_value = min(size_value);
         max_size_value = max(size_value);
-        if max_size_value == min_size_value
+        if isequal(max_size_value, min_size_value)
             normalized_size_value = ones(size(size_value)) * max_bound;
         else
             normalized_size_value = min_bound + (max_bound - min_bound) * (size_value - min_size_value) / (max_size_value - min_size_value);
@@ -356,16 +356,13 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal group comparison on brain surface figure.
-%%%% ¡gui!
-pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.NODE);
-
-%%% ¡prop!
 LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡default!
 1
 %%%% ¡postset!
 pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupBrainPF_xSPP_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NS.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.

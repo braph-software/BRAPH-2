@@ -131,9 +131,6 @@ braph2waitbar(wb, 'close')
 
 %% ¡tests!
 
-%%% ¡excluded_props!
-[CombineGroups_CON_FUN_MP.GET_DIR]
-
 %%% ¡test!
 %%%% ¡name!
 Create example files
