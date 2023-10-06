@@ -308,36 +308,37 @@ NNCV (metadata, item) is the ensemble-based comparison.
 'NNRegressorMLP_CrossValidation'
 
 %%% ¡prop!
-PREDICTIONS_VALUE (metadata, item) is the predictions value.
-%%%% ¡postprocessing!
-if pr.getr('PREDICTIONS_VALUE') && ~isa(pf.get('NNCV'), 'NoValue')
-    nncv = pf.get('NNCV');
-    redictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-    predictions = cell2mat(predictions);
-end
+PREDICTIONS_VALUE (metadata, matrix) is the predictions value.
 
 %%% ¡prop!
-GROUNDTRUTH_VALUE (metadata, item) is the ground truth value.
-%%%% ¡postprocessing!
-if pr.getr('GROUNDTRUTH_VALUE') && ~isa(pf.get('NNCV'), 'NoValue')
-    nncv = pf.get('NNCV');
-    ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
-    ground_truth = cell2mat(ground_truth);
-end
+GROUNDTRUTH_VALUE (metadata, matrix) is the ground truth value.
 
 %%% ¡prop!
 SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
 %%%% ¡calculate!
-nncv = pf.get('NNCV');
-
 pf.memorize('H_PREDICTIONS');
 
-predictions = pf.memorize('PREDICTIONS_VALUE');
-ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
+nncv = pf.get('NNCV');
+if isa(pf.getr('PREDICTIONS_VALUE'), 'NoValue') && ~isa(pf.getr('NNCV'), 'NoValue')
+    predictions = cellfun(@(nn, nne) cell2mat(nn.get('PREDICT', nne.get('D'))), nncv.get('NN_LIST'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    predictions = cell2mat(predictions);
+    pf.set('PREDICTIONS_VALUE', predictions);
+end
+
+if isa(pf.getr('GROUNDTRUTH_VALUE'), 'NoValue') && ~isa(pf.getr('NNCV'), 'NoValue')
+    ground_truth = cellfun(@(nne) nne.get('GROUND_TRUTH'), nncv.get('EVALUATOR_LIST'), 'UniformOutput', false);
+    ground_truth = cell2mat(ground_truth);
+    pf.set('GROUNDTRUTH_VALUE', ground_truth);
+end
+
+predictions = pf.get('PREDICTIONS_VALUE');
+ground_truth = pf.get('GROUNDTRUTH_VALUE');
+
+pf.memorize('PREDICTION_DICT');
 
 if pf.get('PREDICTIONS')
-    pred_st_list = pf.get('PREDICTION_DICT').get('IT_LIST')
-    visible_status = find(cellfun(@(pred_st_line) pred_st_line.get('VISIBLE') , pred_st_list,'UniformOutput', false) == 1);
+    pred_st_list = pf.get('PREDICTION_DICT').get('IT_LIST');
+    visible_status = find(cell2mat(cellfun(@(pred_st_line) pred_st_line.get('VISIBLE') , pred_st_list,'UniformOutput', false)) == 1);
     if any(visible_status)
         baseline_X = pred_st_list{visible_status(1)}.get('X');
         baseline_Y = pred_st_list{visible_status(1)}.get('Y');
@@ -414,8 +415,9 @@ PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
 if pf.get('PREDICTIONS') && ~isa(pf.getr('NNCV'), 'NoValue')
     predictions = pf.memorize('PREDICTIONS_VALUE');
     ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
-
-    if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && length(ground_truth) > 0
+    targets = pf.memorize('NNCV').get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+    
+    if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && ~isempty(ground_truth)
         for i = 1:1:length(targets)
             target = targets{i};
             prediction_st_lines{i} = SettingsLine( ...
@@ -429,13 +431,13 @@ if pf.get('PREDICTIONS') && ~isa(pf.getr('NNCV'), 'NoValue')
                 'VISIBLE', false ...
                 );
         end
+        prediction_st_lines{1}.set('VISIBLE', true);
         pf.get('PREDICTION_DICT').set('IT_LIST', prediction_st_lines)
     end
     for i = 1:1:length(targets)
         pf.get('PREDICTION_DICT').get('IT', i).get('SETUP')
     end
 end
-pf.get('SETUP');
 %%%% ¡gui!
 pr = PanelPropIDictTable('EL', pf, 'PROP', NNRegressorMLP_CrossValidationPF_Scatter.PREDICTION_DICT, ...
     'HEIGHT', [30], ...
