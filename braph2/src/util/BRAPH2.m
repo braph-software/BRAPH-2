@@ -26,6 +26,7 @@ classdef BRAPH2
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_VER        - wrong MatLab or addon version
     %  MISS_ADDON       - addon not installed
+    %  FAIL_GEN         - failed genesis
     %  FAIL_TEST        - failed unit testing
     %  WRONG_INPUT      - wrong input value or format in a function
     %  CANCEL_IO        - cancelled loading/saving files by user
@@ -89,6 +90,7 @@ classdef BRAPH2
 	properties (Constant) % BRAPH2 error codes
         WRONG_VER = 'WrongVersion' % wrong MatLab or addon version
         MISS_ADDON = 'MissingAddOn' % addon not installed
+        FAIL_GEN = 'FailedGenesis' % failed genesis
         FAIL_TEST = 'FailedUnitTest' % failed unit testing
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         CANCEL_IO = 'CancelIO' % cancelled loading/saving files by user
