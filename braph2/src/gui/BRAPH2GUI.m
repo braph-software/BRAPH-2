@@ -296,9 +296,9 @@ h_menu_pip_clone = uimenu( ...
         if ismac()
             system(['open -a Preview ' fileparts(fileparts(which('braph2'))) pipeline.pdf]);
         elseif isunix()
-            system(['start "" "' fileparts(fileparts(which('braph2'))) pipeline.pdf '"']);
-        elseif ispc()
             system(['xdg-open "' fileparts(fileparts(which('braph2'))) regexprep(pipeline.pdf, '/', '\\') '"']);
+        elseif ispc()
+            system(['start "" "' fileparts(fileparts(which('braph2'))) pipeline.pdf '"']);
         end
     end
     function cb_pip_edit(~, ~)
@@ -308,7 +308,6 @@ h_menu_pip_clone = uimenu( ...
     end
     function cb_pip_clone(~, ~)
         pipeline = pipelines{get(h_listbox, 'Value')};
-
 
         pip = ImporterPipelineBRAPH2( ...
             'FILE', pipeline.file_name, ...
