@@ -312,6 +312,9 @@ end
 
 %% ¡tests!
 
+%%% ¡excluded_props!
+[NNClassifierMLP_CrossValidation.PFROC]
+
 %%% ¡test!
 %%%% ¡name!
 evaluate a classifier cross-validation with the example data
