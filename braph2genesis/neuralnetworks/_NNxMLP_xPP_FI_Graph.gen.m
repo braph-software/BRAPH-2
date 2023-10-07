@@ -1,8 +1,8 @@
 %% ¡header!
-NNClassifierMLP_CrossValidationPP_FI_Graph < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+NNxMLP_xPP_FI_Graph < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
 
 %%% ¡description!
-A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Graph) plots the panel for a CELL prop with a table and two sliders.
+A Cell Prop Panel (NNxMLP_xPP_FI_Graph) plots the panel for a CELL prop with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -26,7 +26,7 @@ uitable, uislider, GUI, PanelElement
 %%% ¡prop!
 ELCLASS (constant, string) is the  % % % .
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Graph'
+'NNxMLP_xPP_FI_Graph'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the cell prop panel.
@@ -36,27 +36,27 @@ NAME (constant, string) is the name of the cell prop panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cell prop panel.
 %%%% ¡default!
-'A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Graph) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Cell Prop Panel (NNxMLP_xPP_FI_Graph) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the cell prop panel.
 %%%% ¡settings!
-'NNClassifierMLP_CrossValidationPP_FI_Graph'
+'NNxMLP_xPP_FI_Graph'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Graph ID'
+'NNxMLP_xPP_FI_Graph ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Graph label'
+'NNxMLP_xPP_FI_Graph label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Graph notes'
+'NNxMLP_xPP_FI_Graph notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -96,8 +96,7 @@ if value
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    input_datasets = el.get('D');
-    input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list 
+    input_dataset = pr.get('D'); 
     
     g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
     if g.get('LAYERNUMBER') == 1
@@ -157,7 +156,7 @@ end
 function value = set_sliders_and_get_value()
     value_vectored = el.get(prop);
     
-    cell_template = el.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('INPUT');
+    cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
     value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
 
     if isempty(value)
@@ -234,6 +233,11 @@ if value
 end
 
 %% ¡props!
+
+%%% ¡prop!
+D (metadata, item) is the input dataset.
+%%%% ¡default!
+NNDataset()
 
 %%% ¡prop!
 XSLIDERSHOW (gui, logical) determines whether to show the xslider.
@@ -327,7 +331,7 @@ function cb_yslider(~, ~)
         prop = pr.get('PROP');
         value_vectored = el.get(prop);
 
-        cell_template = el.get('D_LIST_IT', 1).get('DP_DICT').get('IT', 1).get('INPUT');
+        cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
         value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
 
         [R, C] = size(value);
@@ -495,7 +499,7 @@ value = mappedCellArray;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNClassifierMLP_CrossValidationPP_FI_Graph.PARENT NNClassifierMLP_CrossValidationPP_FI_Graph.H NNClassifierMLP_CrossValidationPP_FI_Graph.LISTENER_CB NNClassifierMLP_CrossValidationPP_FI_Graph.HEIGHT NNClassifierMLP_CrossValidationPP_FI_Graph.XSLIDER NNClassifierMLP_CrossValidationPP_FI_Graph.YSLIDER NNClassifierMLP_CrossValidationPP_FI_Graph.TABLE NNClassifierMLP_CrossValidationPP_FI_Graph.CONTEXTMENU]
+[NNxMLP_xPP_FI_Graph.PARENT NNxMLP_xPP_FI_Graph.H NNxMLP_xPP_FI_Graph.LISTENER_CB NNxMLP_xPP_FI_Graph.HEIGHT NNxMLP_xPP_FI_Graph.XSLIDER NNxMLP_xPP_FI_Graph.YSLIDER NNxMLP_xPP_FI_Graph.TABLE NNxMLP_xPP_FI_Graph.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -504,7 +508,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Graph'])
+warning('off', [BRAPH2.STR ':NNxMLP_xPP_FI_Graph'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Graph'])
+warning('on', [BRAPH2.STR ':NNxMLP_xPP_FI_Graph'])

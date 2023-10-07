@@ -351,11 +351,11 @@ graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG()
 measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 
 if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
 elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
 else % DATA input
-    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
 end
 
 %%% ¡prop!

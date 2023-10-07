@@ -1,8 +1,8 @@
 %% ¡header!
-NNClassifierMLP_CrossValidationPP_FI_Measure < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+NNxMLP_xPP_FI_Measure < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
 
 %%% ¡description!
-A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Measure) plots the panel for a CELL prop with a table and two sliders.
+A Cell Prop Panel (NNxMLP_xPP_FI_Measure) plots the panel for a CELL prop with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -26,7 +26,7 @@ uitable, uislider, GUI, PanelElement
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the  % % % .
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Measure'
+'NNxMLP_xPP_FI_Measure'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the cell prop panel.
@@ -36,27 +36,27 @@ NAME (constant, string) is the name of the cell prop panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cell prop panel.
 %%%% ¡default!
-'A Cell Prop Panel (NNClassifierMLP_CrossValidationPP_FI_Measure) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Cell Prop Panel (NNxMLP_xPP_FI_Measure) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the cell prop panel.
 %%%% ¡settings!
-'NNClassifierMLP_CrossValidationPP_FI_Measure'
+'NNxMLP_xPP_FI_Measure'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Measure ID'
+'NNxMLP_xPP_FI_Measure ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Measure label'
+'NNxMLP_xPP_FI_Measure label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the cell prop panel.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPP_FI_Measure notes'
+'NNxMLP_xPP_FI_Measure notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -97,10 +97,8 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function set_table()
-    nncv = pr.get('EL');
 
-    input_datasets = nncv.get('D');
-    input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
+    input_dataset = pr.get('D');
     m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
     
     rowname = cell(length(m_list), 1);
@@ -160,6 +158,37 @@ if value
 end
 
 %%% ¡prop!
+SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
+if value
+    % figures for brain figure
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
+end
+
+%%% ¡prop!
+HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
+if value
+    % figures for brain figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+end
+
+
+%%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
@@ -168,8 +197,27 @@ if value
     pr.set('CONTEXTMENU', Element.getNoValue())
 end
 
+%%% ¡prop!
+CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+%%%% ¡calculate!
+value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
+if value
+    % figures for brain figures
+    gui_b_dict = pr.get('GUI_B_DICT');
+    for i = 1:1:gui_b_dict.get('LENGTH')
+        gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+end
+
 %% ¡props!
 
+%%% ¡prop!
+D (metadata, item) is the input dataset.
+%%%% ¡default!
+NNDataset()
 
 %%% ¡prop!
 ENABLE (gui, option) switches table between on and off.
@@ -289,8 +337,8 @@ set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 value = contextmenu;
 %%%% ¡calculate_callbacks!
 function cb_select_all(~, ~) 
-    g = pr.get('EL').getPropDefaultConditioned(pr.get('PROP'));
-    m_list = g.get('COMPATIBLE_MEASURES');
+    input_dataset = pr.get('D');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
 
     pr.set('SELECTED', [1:1:length(m_list)])
 
@@ -302,8 +350,8 @@ function cb_clear_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_invert_selection(~, ~) 
-    g = pr.get('EL').get('GRAPH_TEMPLATE'); % default graph
-    m_list = g.get('COMPATIBLE_MEASURES');
+    input_dataset = pr.get('D');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
 
     selected_tmp = [1:1:length(m_list)];
     selected_tmp(pr.get('SELECTED')) = [];
@@ -312,9 +360,105 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_open_mbrain(~, ~)
+    % % % input_dataset = pr.get('D');
+    % % % m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+    % % % 
+    % % % f = ancestor(pr.get('H'), 'figure'); % parent GUI
+    % % % N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+    % % % 
+    % % % gui_b_dict = pr.memorize('GUI_B_DICT');
+    % % % selected = pr.get('SELECTED');
+    % % % for s = 1:1:length(selected)
+    % % %     i = selected(s);
+    % % % 
+    % % %     measure = m_list{i}; % also key
+    % % % 
+    % % %     values_vectored = el.get(prop);
+    % % %     cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+    % % %     values = pr.get('MAP_TO_CELL', cell2mat(values_vectored), cell_template);
+    % % %     value = values(i);
+    % % % 
+    % % %     if ~gui_b_dict.get('CONTAINS_KEY', measure)
+    % % % 
+    % % %         brain_atlas = pr.get('BA'); 
+    % % %         %brain_atlas = ImporterBrainAtlasXLS('WAITBAR', false, 'FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'desikan_atlas.xlsx']).get('BA');
+    % % %         switch Element.getPropDefault(measure, 'SHAPE')
+    % % %             case Measure.GLOBAL % __Measure.GLOBAL__
+    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
+    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GS('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GU('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.BILAYER % __Measure.BILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GB('FI', value, 'BA', brain_atlas);
+    % % %                 end
+    % % %             case Measure.NODAL % __Measure.NODAL__
+    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
+    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NS('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NU('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.BILAYER % __Measure.BILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NB('FI', value, 'BA', brain_atlas);
+    % % %                 end
+    % % %             case Measure.BINODAL % __Measure.BINODAL__
+    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
+    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BS('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BU('FI', value, 'BA', brain_atlas);
+    % % %                     case Measure.BILAYER % __Measure.BILAYER__
+    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BB('FI', value, 'BA', brain_atlas);
+    % % %                 end
+    % % %         end
+    % % % 
+    % % %         gui = GUIFig( ...
+    % % %             'ID', measure, ... % this is the dictionary key
+    % % %             'PF', mbfipf, ...
+    % % %             'POSITION', [ ...
+    % % %             x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+    % % %             y0(f, 'normalized') ...
+    % % %             w(f, 'normalized') * 3 ...
+    % % %             .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+    % % %             ], ...
+    % % %             'WAITBAR', pr.getCallback('WAITBAR'), ...
+    % % %             'CLOSEREQ', false ...
+    % % %             );
+    % % %         gui_b_dict.get('ADD', gui)
+    % % %     end
+    % % % 
+    % % %     gui = gui_b_dict.get('IT', measure);
+    % % %     if ~gui.get('DRAWN')
+    % % %         gui.get('DRAW')
+    % % %     end
+    % % %     gui.get('SHOW')
+    % % % end
 end
 function cb_hide_mbrain(~, ~)
+    % % % input_dataset = pr.get('D');
+    % % % m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+    % % % 
+    % % % gui_b_dict = pr.memorize('GUI_B_DICT');
+    % % % 
+    % % % selected = pr.get('SELECTED');
+    % % % for s = 1:1:length(selected)
+    % % %     i = selected(s);
+    % % % 
+    % % %     measure = m_list{i}; % also key
+    % % % 
+    % % %     if gui_b_dict.get('CONTAINS_KEY', measure)
+    % % %         gui = gui_b_dict.get('IT', measure);
+    % % %         if gui.get('DRAWN')
+    % % %             gui.get('HIDE')
+    % % %         end
+    % % %     end
+    % % % end
 end
+
+%%% ¡prop!
+GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
+%%%% ¡settings!
+'GUIFig'
 
 %%% ¡prop!
 MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
@@ -346,7 +490,7 @@ value = mappedCellArray;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNClassifierMLP_CrossValidationPP_FI_Measure.PARENT NNClassifierMLP_CrossValidationPP_FI_Measure.H NNClassifierMLP_CrossValidationPP_FI_Measure.LISTENER_CB NNClassifierMLP_CrossValidationPP_FI_Measure.HEIGHT NNClassifierMLP_CrossValidationPP_FI_Measure.XSLIDER NNClassifierMLP_CrossValidationPP_FI_Measure.YSLIDER NNClassifierMLP_CrossValidationPP_FI_Measure.TABLE NNClassifierMLP_CrossValidationPP_FI_Measure.CONTEXTMENU]
+[NNxMLP_xPP_FI_Measure.PARENT NNxMLP_xPP_FI_Measure.H NNxMLP_xPP_FI_Measure.LISTENER_CB NNxMLP_xPP_FI_Measure.HEIGHT NNxMLP_xPP_FI_Measure.XSLIDER NNxMLP_xPP_FI_Measure.YSLIDER NNxMLP_xPP_FI_Measure.TABLE NNxMLP_xPP_FI_Measure.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -355,7 +499,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Measure'])
+warning('off', [BRAPH2.STR ':NNxMLP_xPP_FI_Measure'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPP_FI_Measure'])
+warning('on', [BRAPH2.STR ':NNxMLP_xPP_FI_Measure'])
