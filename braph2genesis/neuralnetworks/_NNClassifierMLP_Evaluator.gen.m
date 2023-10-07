@@ -8,6 +8,56 @@ NNClassifierMLP_Evaluator evaluates the performance of the trained classifier wi
 %%% ¡seealso!
 NNDataPoint_CON_CLA, NNClassifierMLP
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.ID
+%%%% ¡title!
+Cross Validation ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.LABEL
+%%%% ¡title!
+Cross Validation LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.AUC
+%%%% ¡title!
+Area Under Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.PFROC
+%%%% ¡title!
+Plot Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.MACRO_AUC
+%%%% ¡title!
+Macro Area Under Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.C_MATRIX
+%%%% ¡title!
+Confusion Matrix
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.P
+%%%% ¡title!
+Permutation Times for Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+%%%% ¡title!
+Feature Importance
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -76,6 +126,20 @@ else
     rocNet = rocmetrics(ground_truth, predictions, class_names);
     value = rocNet.AUC;
 end
+
+%%% ¡prop!
+PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
+%%%% ¡settings!
+'NNClassifierMLP_EvaluatorPF_ROC'
+%%%% ¡postprocessing!
+if isa(nne.getr('PFROC'), 'NoValue')
+    nne.set('PFROC', NNClassifierMLP_EvaluatorPF_ROC('NNE', nne));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierMLP_Evaluator.PFROC, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['ROC Plot'], ...
+    varargin{:});
 
 %%% ¡prop!
 MACRO_AUC (result, scalar) provides the metric of the average AUC value.
