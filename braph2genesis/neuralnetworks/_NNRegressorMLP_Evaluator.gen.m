@@ -243,6 +243,21 @@ else
     value = {average_fi};
 end
 
+%%%% ¡gui!
+input_datasets = nne.get('D');
+input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
+dp_class = input_dataset.get('DP_CLASS');
+graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
+
+if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+else % DATA input
+    pr = NNxMLP_xPP_FI_Data('EL', nne, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+end
+
 %%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
 %%%% ¡settings!
