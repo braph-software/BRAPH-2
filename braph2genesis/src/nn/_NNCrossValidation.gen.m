@@ -51,6 +51,11 @@ NOTES (metadata, string) are some specific notes about the cross-validation.
 %% ¡props!
 
 %%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 KFOLDS (data, scalar) is the number of folds.
 %%%% ¡default!
 5
@@ -204,9 +209,12 @@ PLOT_TRAINING (metadata, option) determines whether to plot the training progres
 TRAIN (query, empty) trains all neural network models for all folds.
 %%%% ¡calculate!
 nn_list = nncv.memorize('NN_LIST');
+wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Train neural networks for all folds ...']);
 for i = 1:1:length(nn_list)
+     braph2waitbar(wb, i / length(nn_list), ['Train neural network model ' num2str(i) ' of ' num2str(length(nn_list)) ' ...'])
     nn_list{i}.memorize('MODEL');
 end
+braph2waitbar(wb, 'close')
 value = [];
 
 %% ¡tests!
