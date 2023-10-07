@@ -81,7 +81,11 @@ if value
     if any(el.getPropCategory(prop) == [Category.RESULT Category.QUERY Category.EVANESCENT]) && isa(el.getr(prop), 'NoValue')
         pr.set('HEIGHT', s(2))
     else
-        pr.set('HEIGHT', min(s(4.5) + s(2) * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+        if ispc()
+            pr.set('HEIGHT', min(s(6.5) + s(2) * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+        else
+            pr.set('HEIGHT', min(s(4.5) + s(2) * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+        end
     end
 
     rowname = pr.get('ROWNAME');
