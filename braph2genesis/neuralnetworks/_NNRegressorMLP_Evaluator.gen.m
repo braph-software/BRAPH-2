@@ -273,6 +273,9 @@ pr = PanelPropItem('EL', nne, 'PROP', NNRegressorMLP_Evaluator.PFSP, ...
 
 %% ¡tests!
 
+%%% ¡excluded_props!
+[NNRegressorMLP_Evaluator.PFSP]
+
 %%% ¡test!
 %%%% ¡name!
 Evaluate a regressor with the example data
