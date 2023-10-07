@@ -374,9 +374,6 @@ pr = PanelPropItem('EL', nncv, 'PROP', NNRegressorMLP_CrossValidation.PFSP, ...
 
 %% ¡tests!
 
-%%% ¡excluded_props!
-[NNRegressorMLP_CrossValidation.PFSP]
-
 %%% ¡test!
 %%%% ¡name!
 evaluate a regressor cross-validation with the example data

@@ -211,9 +211,6 @@ end
 
 %% ¡tests!
 
-%%% ¡excluded_props!
-[NNClassifierMLP_Evaluator.PFROC]
-
 %%% ¡test!
 %%%% ¡name!
 Evaluate a classifier with the example data

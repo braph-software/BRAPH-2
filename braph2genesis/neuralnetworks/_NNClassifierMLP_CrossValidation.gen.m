@@ -39,9 +39,27 @@ PLOT TRAINING PROGRESS
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.KFOLDS
+NNClassifierMLP_CrossValidation.EPOCHS
 %%%% ¡title!
-K FOLDS
+Training EPOCHS
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.BATCH
+%%%% ¡title!
+Training BATCH SIZE
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.SHUFFLE
+%%%% ¡title!
+Training SHUFFLE
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.SOLVER
+%%%% ¡title!
+Training SOLVER
 
 %%% ¡prop!
 %%%% ¡id!
@@ -65,7 +83,7 @@ Dataset List
 %%%% ¡id!
 NNClassifierMLP_CrossValidation.NN_LIST
 %%%% ¡title!
-Neural Network Classifier List
+Neural Network Regressor List
 
 %%% ¡prop!
 %%%% ¡id!
@@ -75,9 +93,21 @@ Neural Network Evaluator List
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.TRAIN
+NNClassifierMLP_CrossValidation.AV_AUC
 %%%% ¡title!
-Train All Neural Network Classifiers
+Average of Area Under Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.PFROC
+%%%% ¡title!
+Plot Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+%%%% ¡title!
+Average of Macro Area Under Receiver Operating Characteristic Curve
 
 %%% ¡prop!
 %%%% ¡id!
@@ -87,21 +117,9 @@ Confusion Matrix
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_AUC
+NNClassifierMLP_CrossValidation.P
 %%%% ¡title!
-Average of Area Under ROC Curve
-
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-%%%% ¡title!
-Average of Macro Area Under ROC Curve
-
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_CrossValidation.PFROC
-%%%% ¡title!
-Plot ROC Curve
+Permutation Times for Feature Importance
 
 %%% ¡prop!
 %%%% ¡id!
@@ -185,7 +203,7 @@ else
     end
     
     value = cellfun(@(d) NNClassifierMLP( ...
-        'TEMPLATE', nn_template, 'D', d, 'VERBOSE', nncv.get('VERBOSE'), 'PLOT_TRAINING', nncv.get('PLOT_TRAINING')), ...
+        'TEMPLATE', nn_template, 'D', d), ...
         d_training_set, 'UniformOutput', false);
 end
 
@@ -266,24 +284,15 @@ c_matrices = cellfun(@(e) e.get('C_MATRIX'), ...
 
 combined_c_matrix = cellfun(@(x) double(x), c_matrices, 'UniformOutput', false);
 value = sum(cat(3, combined_c_matrix{:}), 3);
-%%%% ¡gui!
-d = NNDatasetCombine('D_LIST', nncv.get('D')).get('D');
-targets = NNClassifierMLP().get('TARGET_IDS', d);
-class_names = unique(targets);
-pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRIX, ...
-    'TABLE_HEIGHT', s(40), ...
-    'ROWNAME', class_names, ...
-    'COLUMNNAME', class_names, ...
-    varargin{:});
 
 %%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
-wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Initialize feature importance permutation ...']);
+
 all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
     e_list, 'UniformOutput', false);
-braph2waitbar(wb, 'close')
+
 if isempty(cell2mat(all_fi))
     value = {};
 else
@@ -311,9 +320,6 @@ else % DATA input
 end
 
 %% ¡tests!
-
-%%% ¡excluded_props!
-[NNClassifierMLP_CrossValidation.PFROC]
 
 %%% ¡test!
 %%%% ¡name!
