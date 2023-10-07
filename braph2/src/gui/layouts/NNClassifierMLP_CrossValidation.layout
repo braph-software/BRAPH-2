@@ -14,47 +14,57 @@ NOTES
 NaN
 TOSTRING
 NaN
-KFOLDS
+WAITBAR
 NaN
+K FOLDS
+5
 SPLIT
 NaN
-DATASET
-11
+D
+NaN
 Template for Neural Network Classifier
-9
-Template for Neural Network Evaluator
-10
+6
+NNEVALUATOR_TEMPLATE
+NaN
 DSP
 NaN
 DCO
 NaN
 Dataset List
-12
-Neural Network Regressor List
-13
-Neural Network Evaluator List
-14
-Training EPOCHS
-5
-Training BATCH SIZE
-6
-Training SHUFFLE
-7
-Training SOLVER
 8
+D_LIST_IT
+NaN
+Neural Network Classifier List
+9
+NN_LIST_IT
+NaN
+Neural Network Evaluator List
+10
+EVALUATOR_LIST_IT
+NaN
+EPOCHS
+NaN
+BATCH
+NaN
+SHUFFLE
+NaN
+SOLVER
+NaN
 VERBOSE ON/OFF
 3
 PLOT TRAINING PROGRESS
 4
-TRAIN
-NaN
+Train All Neural Network Classifiers
+11
 Permutation Times for Feature Importance
-18
-Average of Area Under Receiver Operating Characteristic Curve
+7
+Average of Area Under ROC Curve
+13
+Plot ROC Curve
 15
-Average of Macro Area Under Receiver Operating Characteristic Curve
-16
+Average of Macro Area Under ROC Curve
+14
 Confusion Matrix
-17
+12
 Average of Feature Importance
-19
+16

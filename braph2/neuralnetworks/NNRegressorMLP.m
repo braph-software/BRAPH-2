@@ -5,33 +5,6 @@ classdef NNRegressorMLP < NNBase
 	% A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset.
 	% NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.
 	%
-	% The list of NNRegressorMLP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
-	%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
-	%  <strong>11</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-	%  <strong>12</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-	%  <strong>13</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-	%  <strong>14</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>15</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model.
-	%  <strong>16</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
-	%  <strong>17</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.
-	%  <strong>18</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
-	%  <strong>19</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-	%  <strong>20</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-	%  <strong>21</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
-	%  <strong>22</strong> <strong>LAYERS</strong> 	LAYERS (data, rvector) defines the number of layers and their neurons.
-	%  <strong>23</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>24</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-	%  <strong>25</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.
-	%
 	% NNRegressorMLP methods (constructor):
 	%  NNRegressorMLP - constructor
 	%
@@ -121,25 +94,25 @@ classdef NNRegressorMLP < NNBase
 	% See also NNDataPoint_CON_REG, NNRegressor_Evaluator.
 	
 	properties (Constant) % properties
-		LAYERS = 22; %CET: Computational Efficiency Trick
+		LAYERS = NNBase.getPropNumber() + 1;
 		LAYERS_TAG = 'LAYERS';
-		LAYERS_CATEGORY = 4;
-		LAYERS_FORMAT = 12;
+		LAYERS_CATEGORY = Category.DATA;
+		LAYERS_FORMAT = Format.RVECTOR;
 		
-		WAITBAR = 23; %CET: Computational Efficiency Trick
+		WAITBAR = NNBase.getPropNumber() + 2;
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = 9;
-		WAITBAR_FORMAT = 4;
+		WAITBAR_CATEGORY = Category.GUI;
+		WAITBAR_FORMAT = Format.LOGICAL;
 		
-		INTERRUPTIBLE = 24; %CET: Computational Efficiency Trick
+		INTERRUPTIBLE = NNBase.getPropNumber() + 3;
 		INTERRUPTIBLE_TAG = 'INTERRUPTIBLE';
-		INTERRUPTIBLE_CATEGORY = 9;
-		INTERRUPTIBLE_FORMAT = 11;
+		INTERRUPTIBLE_CATEGORY = Category.GUI;
+		INTERRUPTIBLE_FORMAT = Format.SCALAR;
 		
-		FEATURE_IMPORTANCE = 25; %CET: Computational Efficiency Trick
+		FEATURE_IMPORTANCE = NNBase.getPropNumber() + 4;
 		FEATURE_IMPORTANCE_TAG = 'FEATURE_IMPORTANCE';
-		FEATURE_IMPORTANCE_CATEGORY = 6;
-		FEATURE_IMPORTANCE_FORMAT = 16;
+		FEATURE_IMPORTANCE_CATEGORY = Category.QUERY;
+		FEATURE_IMPORTANCE_FORMAT = Format.CELL;
 	end
 	methods % constructor
 		function nn = NNRegressorMLP(varargin)
@@ -152,32 +125,6 @@ classdef NNRegressorMLP < NNBase
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of NNRegressorMLP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
-			%  <strong>10</strong> <strong>DP_CLASSES</strong> 	DP_CLASSES (parameter, classlist) is the list of compatible data points.
-			%  <strong>11</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-			%  <strong>12</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-			%  <strong>13</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-			%  <strong>14</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>15</strong> <strong>MODEL</strong> 	MODEL (result, net) is a trained neural network model.
-			%  <strong>16</strong> <strong>INPUTS</strong> 	INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
-			%  <strong>17</strong> <strong>TARGETS</strong> 	TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.
-			%  <strong>18</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains the neural network model with the given dataset.
-			%  <strong>19</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-			%  <strong>20</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-			%  <strong>21</strong> <strong>PREDICT</strong> 	PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.
-			%  <strong>22</strong> <strong>LAYERS</strong> 	LAYERS (data, rvector) defines the number of layers and their neurons.
-			%  <strong>23</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>24</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-			%  <strong>25</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.
 			%
 			% See also Category, Format.
 			
@@ -215,7 +162,7 @@ classdef NNRegressorMLP < NNBase
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNRegressorMLP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NNRegressorMLP', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of multi-layer perceptron regressor.
@@ -236,30 +183,58 @@ classdef NNRegressorMLP < NNBase
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25];
+				prop_list = [ ...
+					NNBase.getProps() ...
+						NNRegressorMLP.LAYERS ...
+						NNRegressorMLP.WAITBAR ...
+						NNRegressorMLP.INTERRUPTIBLE ...
+						NNRegressorMLP.FEATURE_IMPORTANCE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7 19 20];
-				case 3 % Category.PARAMETER
-					prop_list = [4 10 11 12 13 14];
-				case 4 % Category.DATA
-					prop_list = [5 9 22];
-				case 5 % Category.RESULT
-					prop_list = 15;
-				case 6 % Category.QUERY
-					prop_list = [8 16 17 18 21 25];
-				case 9 % Category.GUI
-					prop_list = [23 24];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						NNBase.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						NNBase.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						NNBase.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						NNBase.getProps(Category.DATA) ...
+						NNRegressorMLP.LAYERS ...
+						];
+				case Category.RESULT
+					prop_list = [
+						NNBase.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						NNBase.getProps(Category.QUERY) ...
+						NNRegressorMLP.FEATURE_IMPORTANCE ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						NNBase.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						NNBase.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						NNBase.getProps(Category.GUI) ...
+						NNRegressorMLP.WAITBAR ...
+						NNRegressorMLP.INTERRUPTIBLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -280,31 +255,7 @@ classdef NNRegressorMLP < NNBase
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 25;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 4;
-				case 3 % Category.PARAMETER
-					prop_number = 6;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 6;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NNRegressorMLP.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in multi-layer perceptron regressor/error.
@@ -332,14 +283,14 @@ classdef NNRegressorMLP < NNBase
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 25 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NNRegressorMLP.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNRegressorMLP.'] ...
 					)
 			end
@@ -370,14 +321,15 @@ classdef NNRegressorMLP < NNBase
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT'  'LAYERS'  'WAITBAR'  'INTERRUPTIBLE'  'FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
+			nnregressormlp_tag_list = cellfun(@(x) NNRegressorMLP.getPropTag(x), num2cell(NNRegressorMLP.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, nnregressormlp_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NNRegressorMLP.'] ...
 					)
 			end
@@ -403,7 +355,8 @@ classdef NNRegressorMLP < NNBase
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT'  'LAYERS'  'WAITBAR'  'INTERRUPTIBLE'  'FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
+				nnregressormlp_tag_list = cellfun(@(x) NNRegressorMLP.getPropTag(x), num2cell(NNRegressorMLP.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, nnregressormlp_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -431,9 +384,20 @@ classdef NNRegressorMLP < NNBase
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				nnregressormlp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'DP_CLASSES'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'MODEL'  'INPUTS'  'TARGETS'  'TRAIN'  'VERBOSE'  'PLOT_TRAINING'  'PREDICT'  'LAYERS'  'WAITBAR'  'INTERRUPTIBLE'  'FEATURE_IMPORTANCE' };
-				tag = nnregressormlp_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case NNRegressorMLP.LAYERS
+						tag = NNRegressorMLP.LAYERS_TAG;
+					case NNRegressorMLP.WAITBAR
+						tag = NNRegressorMLP.WAITBAR_TAG;
+					case NNRegressorMLP.INTERRUPTIBLE
+						tag = NNRegressorMLP.INTERRUPTIBLE_TAG;
+					case NNRegressorMLP.FEATURE_IMPORTANCE
+						tag = NNRegressorMLP.FEATURE_IMPORTANCE_TAG;
+					otherwise
+						tag = getPropTag@NNBase(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -458,9 +422,18 @@ classdef NNRegressorMLP < NNBase
 			
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_category_list = { 1  1  1  3  4  2  2  6  4  3  3  3  3  3  5  6  6  6  2  2  6  4  9  9  6 };
-			prop_category = nnregressormlp_category_list{prop};
+			switch prop
+				case NNRegressorMLP.LAYERS
+					prop_category = NNRegressorMLP.LAYERS_CATEGORY;
+				case NNRegressorMLP.WAITBAR
+					prop_category = NNRegressorMLP.WAITBAR_CATEGORY;
+				case NNRegressorMLP.INTERRUPTIBLE
+					prop_category = NNRegressorMLP.INTERRUPTIBLE_CATEGORY;
+				case NNRegressorMLP.FEATURE_IMPORTANCE
+					prop_category = NNRegressorMLP.FEATURE_IMPORTANCE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@NNBase(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -484,9 +457,18 @@ classdef NNRegressorMLP < NNBase
 			
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_format_list = { 2  2  2  8  2  2  2  2  8  7  11  11  5  5  17  16  16  1  4  5  16  12  4  11  16 };
-			prop_format = nnregressormlp_format_list{prop};
+			switch prop
+				case NNRegressorMLP.LAYERS
+					prop_format = NNRegressorMLP.LAYERS_FORMAT;
+				case NNRegressorMLP.WAITBAR
+					prop_format = NNRegressorMLP.WAITBAR_FORMAT;
+				case NNRegressorMLP.INTERRUPTIBLE
+					prop_format = NNRegressorMLP.INTERRUPTIBLE_FORMAT;
+				case NNRegressorMLP.FEATURE_IMPORTANCE
+					prop_format = NNRegressorMLP.FEATURE_IMPORTANCE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@NNBase(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -510,9 +492,42 @@ classdef NNRegressorMLP < NNBase
 			
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.'  'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.'  'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.'  'ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.'  'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.'  'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model.'  'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.'  'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.'  'LAYERS (data, rvector) defines the number of layers and their neurons.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.' };
-			prop_description = nnregressormlp_description_list{prop};
+			switch prop
+				case NNRegressorMLP.LAYERS
+					prop_description = 'LAYERS (data, rvector) defines the number of layers and their neurons.';
+				case NNRegressorMLP.WAITBAR
+					prop_description = 'WAITBAR (gui, logical) detemines whether to show the waitbar.';
+				case NNRegressorMLP.INTERRUPTIBLE
+					prop_description = 'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.';
+				case NNRegressorMLP.FEATURE_IMPORTANCE
+					prop_description = 'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.';
+				case NNRegressorMLP.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case NNRegressorMLP.NAME
+					prop_description = 'NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.ID
+					prop_description = 'ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.';
+				case NNRegressorMLP.D
+					prop_description = 'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.';
+				case NNRegressorMLP.DP_CLASSES
+					prop_description = 'DP_CLASSES (parameter, classlist) is the list of compatible data points.';
+				case NNRegressorMLP.INPUTS
+					prop_description = 'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.';
+				case NNRegressorMLP.TARGETS
+					prop_description = 'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.';
+				case NNRegressorMLP.MODEL
+					prop_description = 'MODEL (result, net) is a trained neural network model.';
+				otherwise
+					prop_description = getPropDescription@NNBase(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -536,18 +551,18 @@ classdef NNRegressorMLP < NNBase
 			
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 22 % NNRegressorMLP.LAYERS
-					prop_settings = Format.getFormatSettings(12);
-				case 23 % NNRegressorMLP.WAITBAR
-					prop_settings = Format.getFormatSettings(4);
-				case 24 % NNRegressorMLP.INTERRUPTIBLE
-					prop_settings = Format.getFormatSettings(11);
-				case 25 % NNRegressorMLP.FEATURE_IMPORTANCE
-					prop_settings = Format.getFormatSettings(16);
-				case 4 % NNRegressorMLP.TEMPLATE
+			switch prop
+				case NNRegressorMLP.LAYERS
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case NNRegressorMLP.WAITBAR
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case NNRegressorMLP.INTERRUPTIBLE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case NNRegressorMLP.FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case NNRegressorMLP.TEMPLATE
 					prop_settings = 'NNRegressorMLP';
-				case 9 % NNRegressorMLP.D
+				case NNRegressorMLP.D
 					prop_settings = 'NNDataset';
 				otherwise
 					prop_settings = getPropSettings@NNBase(prop);
@@ -575,32 +590,32 @@ classdef NNRegressorMLP < NNBase
 			
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 22 % NNRegressorMLP.LAYERS
+			switch prop
+				case NNRegressorMLP.LAYERS
 					prop_default = [32 32];
-				case 23 % NNRegressorMLP.WAITBAR
+				case NNRegressorMLP.WAITBAR
 					prop_default = true;
-				case 24 % NNRegressorMLP.INTERRUPTIBLE
+				case NNRegressorMLP.INTERRUPTIBLE
 					prop_default = .001;
-				case 25 % NNRegressorMLP.FEATURE_IMPORTANCE
-					prop_default = Format.getFormatDefault(16, NNRegressorMLP.getPropSettings(prop));
-				case 1 % NNRegressorMLP.ELCLASS
+				case NNRegressorMLP.FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(Format.CELL, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.ELCLASS
 					prop_default = 'NNRegressorMLP';
-				case 2 % NNRegressorMLP.NAME
+				case NNRegressorMLP.NAME
 					prop_default = 'NNRegressorMLP';
-				case 3 % NNRegressorMLP.DESCRIPTION
+				case NNRegressorMLP.DESCRIPTION
 					prop_default = 'A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset. NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.';
-				case 4 % NNRegressorMLP.TEMPLATE
-					prop_default = Format.getFormatDefault(8, NNRegressorMLP.getPropSettings(prop));
-				case 5 % NNRegressorMLP.ID
+				case NNRegressorMLP.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.ID
 					prop_default = 'NNRegressorMLP ID';
-				case 6 % NNRegressorMLP.LABEL
+				case NNRegressorMLP.LABEL
 					prop_default = 'NNRegressorMLP label';
-				case 7 % NNRegressorMLP.NOTES
+				case NNRegressorMLP.NOTES
 					prop_default = 'NNRegressorMLP notes';
-				case 9 % NNRegressorMLP.D
+				case NNRegressorMLP.D
 					prop_default = NNDataset('DP_CLASS', 'NNDataPoint_CON_REG');
-				case 10 % NNRegressorMLP.DP_CLASSES
+				case NNRegressorMLP.DP_CLASSES
 					prop_default = {'NNDataPoint_CON_REG' 'NNDataPoint_CON_FUN_MP_REG' 'NNDataPoint_FUN_REG' 'NNDataPoint_ST_REG' 'NNDataPoint_ST_MM_REG' 'NNDataPoint_Graph_REG' 'NNDataPoint_Measure_REG'};
 				otherwise
 					prop_default = getPropDefault@NNBase(prop);
@@ -647,15 +662,15 @@ classdef NNRegressorMLP < NNBase
 			% 
 			% NN.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NNRegressorMLP:WrongInput
+			%  Error id: €BRAPH2.STR€:NNRegressorMLP:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NN.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NN.
-			%   Error id: BRAPH2:NNRegressorMLP:WrongInput
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NNRegressorMLP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNRegressorMLP.
-			%   Error id: BRAPH2:NNRegressorMLP:WrongInput
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP:€BRAPH2.WRONG_INPUT€
 			%  NN.CHECKPROP(NNRegressorMLP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNRegressorMLP.
-			%   Error id: BRAPH2:NNRegressorMLP:WrongInput]
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(NN) and Element.CHECKPROP('NNRegressorMLP')
 			%  are less computationally efficient.
@@ -666,20 +681,20 @@ classdef NNRegressorMLP < NNBase
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
 			switch prop
-				case 22 % NNRegressorMLP.LAYERS
-					check = Format.checkFormat(12, value, NNRegressorMLP.getPropSettings(prop));
-				case 23 % NNRegressorMLP.WAITBAR
-					check = Format.checkFormat(4, value, NNRegressorMLP.getPropSettings(prop));
-				case 24 % NNRegressorMLP.INTERRUPTIBLE
-					check = Format.checkFormat(11, value, NNRegressorMLP.getPropSettings(prop));
-				case 25 % NNRegressorMLP.FEATURE_IMPORTANCE
-					check = Format.checkFormat(16, value, NNRegressorMLP.getPropSettings(prop));
-				case 4 % NNRegressorMLP.TEMPLATE
-					check = Format.checkFormat(8, value, NNRegressorMLP.getPropSettings(prop));
-				case 9 % NNRegressorMLP.D
-					check = Format.checkFormat(8, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.LAYERS % __NNRegressorMLP.LAYERS__
+					check = Format.checkFormat(Format.RVECTOR, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.WAITBAR % __NNRegressorMLP.WAITBAR__
+					check = Format.checkFormat(Format.LOGICAL, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.INTERRUPTIBLE % __NNRegressorMLP.INTERRUPTIBLE__
+					check = Format.checkFormat(Format.SCALAR, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.FEATURE_IMPORTANCE % __NNRegressorMLP.FEATURE_IMPORTANCE__
+					check = Format.checkFormat(Format.CELL, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.TEMPLATE % __NNRegressorMLP.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP.getPropSettings(prop));
+				case NNRegressorMLP.D % __NNRegressorMLP.D__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP.getPropSettings(prop));
 				otherwise
-					if prop <= 21
+					if prop <= NNBase.getPropNumber()
 						check = checkProp@NNBase(prop, value);
 					end
 			end
@@ -688,8 +703,8 @@ classdef NNRegressorMLP < NNBase
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNRegressorMLP.getPropTag(prop) ' (' NNRegressorMLP.getFormatTag(NNRegressorMLP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -700,19 +715,19 @@ classdef NNRegressorMLP < NNBase
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 25 % NNRegressorMLP.FEATURE_IMPORTANCE
+				case NNRegressorMLP.FEATURE_IMPORTANCE % __NNRegressorMLP.FEATURE_IMPORTANCE__
 					% fi = nn.get('FEATURE_IMPORTANCE', D) retrieves a cell array containing
 					%  the feature importance values for the trained model, as assessed by
 					%  evaluating it on the input dataset D.
@@ -763,7 +778,7 @@ classdef NNRegressorMLP < NNBase
 					
 					value = feature_importance_all_permutations;
 					
-				case 16 % NNRegressorMLP.INPUTS
+				case NNRegressorMLP.INPUTS % __NNRegressorMLP.INPUTS__
 					% inputs = nn.get('inputs', D) returns a cell array with the
 					%  inputs for all data points in dataset D.
 					if isempty(varargin)
@@ -796,7 +811,7 @@ classdef NNRegressorMLP < NNBase
 					    value = {flattened_inputs_group};
 					end
 					
-				case 17 % NNRegressorMLP.TARGETS
+				case NNRegressorMLP.TARGETS % __NNRegressorMLP.TARGETS__
 					% targets = nn.get('PREDICT', D) returns a cell array with the
 					%  targets for all data points in dataset D.
 					if isempty(varargin)
@@ -816,8 +831,8 @@ classdef NNRegressorMLP < NNBase
 					    value = {nn_targets};
 					end
 					
-				case 15 % NNRegressorMLP.MODEL
-					rng_settings_ = rng(); rng(nn.getPropSeed(15), 'twister')
+				case NNRegressorMLP.MODEL % __NNRegressorMLP.MODEL__
+					rng_settings_ = rng(); rng(nn.getPropSeed(NNRegressorMLP.MODEL), 'twister')
 					
 					inputs = cell2mat(nn.get('INPUTS', nn.get('D')));
 					targets = cell2mat(nn.get('TARGETS', nn.get('D')));
@@ -859,7 +874,7 @@ classdef NNRegressorMLP < NNBase
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 21
+					if prop <= NNBase.getPropNumber()
 						value = calculateValue@NNBase(nn, prop, varargin{:});
 					else
 						value = calculateValue@Element(nn, prop, varargin{:});
@@ -885,9 +900,10 @@ classdef NNRegressorMLP < NNBase
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 22 % NNRegressorMLP.LAYERS
-					pr = PanelPropRVectorSmart('EL', nn, 'PROP', 22, ...
+				case NNRegressorMLP.LAYERS % __NNRegressorMLP.LAYERS__
+					pr = PanelPropRVectorSmart('EL', nn, 'PROP', NNRegressorMLP.LAYERS, ...
 					    'MIN', 0, 'MAX', 2000, ...
+					    'UNIQUE_VALUE', false, ...
 					    'DEFAULT', NNRegressorMLP.getPropDefault('LAYERS'), ...
 					    varargin{:});
 					

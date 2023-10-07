@@ -5,19 +5,6 @@ classdef AnalyzeGroup < ConcreteElement
 	% AnalyzeGroup provides the methods necessary for all group-based analysis subclasses.
 	% Instances of this class should not be created; Use one of its subclasses instead.
 	%
-	% The list of AnalyzeGroup properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group-based graph analysis.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group-based graph analysis.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group-based graph analysis.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-	%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
-	%
 	% AnalyzeGroup methods (constructor):
 	%  AnalyzeGroup - constructor
 	%
@@ -107,20 +94,20 @@ classdef AnalyzeGroup < ConcreteElement
 	% See also CompareGroup.
 	
 	properties (Constant) % properties
-		WAITBAR = 9; %CET: Computational Efficiency Trick
+		WAITBAR = ConcreteElement.getPropNumber() + 1;
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = 9;
-		WAITBAR_FORMAT = 4;
+		WAITBAR_CATEGORY = Category.GUI;
+		WAITBAR_FORMAT = Format.LOGICAL;
 		
-		GR = 10; %CET: Computational Efficiency Trick
+		GR = ConcreteElement.getPropNumber() + 2;
 		GR_TAG = 'GR';
-		GR_CATEGORY = 4;
-		GR_FORMAT = 8;
+		GR_CATEGORY = Category.DATA;
+		GR_FORMAT = Format.ITEM;
 		
-		G = 11; %CET: Computational Efficiency Trick
+		G = ConcreteElement.getPropNumber() + 3;
 		G_TAG = 'G';
-		G_CATEGORY = 5;
-		G_FORMAT = 8;
+		G_CATEGORY = Category.RESULT;
+		G_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function a = AnalyzeGroup(varargin)
@@ -133,18 +120,6 @@ classdef AnalyzeGroup < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeGroup properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group-based graph analysis.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group-based graph analysis.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group-based graph analysis.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-			%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
 			%
 			% See also Category, Format.
 			
@@ -182,7 +157,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeGroup'  'AnalyzeGroup_CON_GA_WU'  'AnalyzeGroup_CON_MP_GA_WU'  'AnalyzeGroup_CON_OMP_GA_WU'  'AnalyzeGroup_CON_FUN_MP_GA_BUD'  'AnalyzeGroup_CON_FUN_MP_GA_WU'  'AnalyzeGroup_FUN_GA_WU'  'AnalyzeGroup_FUN_MP_GA_WU'  'AnalyzeGroup_FUN_OMP_GA_WU'  'AnalyzeGroup_ST_BUD'  'AnalyzeGroup_ST_BUT'  'AnalyzeGroup_ST_WU'  'AnalyzeGroup_ST_MP_BUD'  'AnalyzeGroup_ST_MP_BUT'  'AnalyzeGroup_ST_MP_WU' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('AnalyzeGroup', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of group-based graph analysis.
@@ -203,30 +178,56 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						AnalyzeGroup.WAITBAR ...
+						AnalyzeGroup.GR ...
+						AnalyzeGroup.G ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = 11;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						AnalyzeGroup.GR ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						AnalyzeGroup.G ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						AnalyzeGroup.WAITBAR ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -247,31 +248,7 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 11;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(AnalyzeGroup.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in group-based graph analysis/error.
@@ -299,14 +276,14 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == AnalyzeGroup.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeGroup.'] ...
 					)
 			end
@@ -337,14 +314,15 @@ classdef AnalyzeGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); %CET: Computational Efficiency Trick
+			analyzegroup_tag_list = cellfun(@(x) AnalyzeGroup.getPropTag(x), num2cell(AnalyzeGroup.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, analyzegroup_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeGroup.'] ...
 					)
 			end
@@ -370,7 +348,8 @@ classdef AnalyzeGroup < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' })); % tag = pointer %CET: Computational Efficiency Trick
+				analyzegroup_tag_list = cellfun(@(x) AnalyzeGroup.getPropTag(x), num2cell(AnalyzeGroup.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, analyzegroup_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -398,9 +377,18 @@ classdef AnalyzeGroup < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				analyzegroup_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G' };
-				tag = analyzegroup_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case AnalyzeGroup.WAITBAR
+						tag = AnalyzeGroup.WAITBAR_TAG;
+					case AnalyzeGroup.GR
+						tag = AnalyzeGroup.GR_TAG;
+					case AnalyzeGroup.G
+						tag = AnalyzeGroup.G_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -425,9 +413,16 @@ classdef AnalyzeGroup < ConcreteElement
 			
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegroup_category_list = { 1  1  1  3  4  2  2  6  9  4  5 };
-			prop_category = analyzegroup_category_list{prop};
+			switch prop
+				case AnalyzeGroup.WAITBAR
+					prop_category = AnalyzeGroup.WAITBAR_CATEGORY;
+				case AnalyzeGroup.GR
+					prop_category = AnalyzeGroup.GR_CATEGORY;
+				case AnalyzeGroup.G
+					prop_category = AnalyzeGroup.G_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -451,9 +446,16 @@ classdef AnalyzeGroup < ConcreteElement
 			
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegroup_format_list = { 2  2  2  8  2  2  2  2  4  8  8 };
-			prop_format = analyzegroup_format_list{prop};
+			switch prop
+				case AnalyzeGroup.WAITBAR
+					prop_format = AnalyzeGroup.WAITBAR_FORMAT;
+				case AnalyzeGroup.GR
+					prop_format = AnalyzeGroup.GR_FORMAT;
+				case AnalyzeGroup.G
+					prop_format = AnalyzeGroup.G_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -477,9 +479,30 @@ classdef AnalyzeGroup < ConcreteElement
 			
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegroup_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the group-based graph analysis.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis.'  'ID (data, string) is a few-letter code for the group-based graph analysis.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class.'  'G (result, item) is the graph obtained from this analysis.' };
-			prop_description = analyzegroup_description_list{prop};
+			switch prop
+				case AnalyzeGroup.WAITBAR
+					prop_description = 'WAITBAR (gui, logical) detemines whether to show the waitbar.';
+				case AnalyzeGroup.GR
+					prop_description = 'GR (data, item) is the subject group, which also defines the subject class.';
+				case AnalyzeGroup.G
+					prop_description = 'G (result, item) is the graph obtained from this analysis.';
+				case AnalyzeGroup.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case AnalyzeGroup.NAME
+					prop_description = 'NAME (constant, string) is the name of the group-based graph analysis.';
+				case AnalyzeGroup.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the group-based graph analysis.';
+				case AnalyzeGroup.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the group-based graph analysis.';
+				case AnalyzeGroup.ID
+					prop_description = 'ID (data, string) is a few-letter code for the group-based graph analysis.';
+				case AnalyzeGroup.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the group-based graph analysis.';
+				case AnalyzeGroup.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the group-based graph analysis.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -503,14 +526,14 @@ classdef AnalyzeGroup < ConcreteElement
 			
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % AnalyzeGroup.WAITBAR
-					prop_settings = Format.getFormatSettings(4);
-				case 10 % AnalyzeGroup.GR
+			switch prop
+				case AnalyzeGroup.WAITBAR
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case AnalyzeGroup.GR
 					prop_settings = 'Group';
-				case 11 % AnalyzeGroup.G
+				case AnalyzeGroup.G
 					prop_settings = 'Graph';
-				case 4 % Analyze4
+				case AnalyzeGroup.TEMPLATE
 					prop_settings = 'AnalyzeGroup';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -538,26 +561,26 @@ classdef AnalyzeGroup < ConcreteElement
 			
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % AnalyzeGroup.WAITBAR
+			switch prop
+				case AnalyzeGroup.WAITBAR
 					prop_default = true;
-				case 10 % AnalyzeGroup.GR
-					prop_default = Format.getFormatDefault(8, AnalyzeGroup.getPropSettings(prop));
-				case 11 % AnalyzeGroup.G
-					prop_default = Format.getFormatDefault(8, AnalyzeGroup.getPropSettings(prop));
-				case 1 % Analyze1
+				case AnalyzeGroup.GR
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.G
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.ELCLASS
 					prop_default = 'AnalyzeGroup';
-				case 2 % Analyze2
+				case AnalyzeGroup.NAME
 					prop_default = 'AnalyzeGroup';
-				case 3 % Analyze3
+				case AnalyzeGroup.DESCRIPTION
 					prop_default = 'AnalyzeGroup provides the methods necessary for all group-based analysis subclasses. Instances of this class should not be created; Use one of its subclasses instead.';
-				case 4 % Analyze4
-					prop_default = Format.getFormatDefault(8, AnalyzeGroup.getPropSettings(prop));
-				case 5 % Analyze5
+				case AnalyzeGroup.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.ID
 					prop_default = 'AnalyzeGroup ID';
-				case 6 % Analyze6
+				case AnalyzeGroup.LABEL
 					prop_default = 'AnalyzeGroup label';
-				case 7 % Analyze7
+				case AnalyzeGroup.NOTES
 					prop_default = 'AnalyzeGroup notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -604,15 +627,15 @@ classdef AnalyzeGroup < ConcreteElement
 			% 
 			% A.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeGroup:WrongInput
+			%  Error id: €BRAPH2.STR€:AnalyzeGroup:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  A.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of A.
-			%   Error id: BRAPH2:AnalyzeGroup:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeGroup:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(AnalyzeGroup, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroup.
-			%   Error id: BRAPH2:AnalyzeGroup:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeGroup:€BRAPH2.WRONG_INPUT€
 			%  A.CHECKPROP(AnalyzeGroup, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroup.
-			%   Error id: BRAPH2:AnalyzeGroup:WrongInput]
+			%   Error id: €BRAPH2.STR€:AnalyzeGroup:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(A) and Element.CHECKPROP('AnalyzeGroup')
 			%  are less computationally efficient.
@@ -623,16 +646,16 @@ classdef AnalyzeGroup < ConcreteElement
 			prop = AnalyzeGroup.getPropProp(pointer);
 			
 			switch prop
-				case 9 % AnalyzeGroup.WAITBAR
-					check = Format.checkFormat(4, value, AnalyzeGroup.getPropSettings(prop));
-				case 10 % AnalyzeGroup.GR
-					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
-				case 11 % AnalyzeGroup.G
-					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
-				case 4 % Analyze4
-					check = Format.checkFormat(8, value, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.WAITBAR % __AnalyzeGroup.WAITBAR__
+					check = Format.checkFormat(Format.LOGICAL, value, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.GR % __AnalyzeGroup.GR__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.G % __AnalyzeGroup.G__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroup.getPropSettings(prop));
+				case AnalyzeGroup.TEMPLATE % __AnalyzeGroup.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroup.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -641,8 +664,8 @@ classdef AnalyzeGroup < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroup:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroup:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeGroup.getPropTag(prop) ' (' AnalyzeGroup.getFormatTag(AnalyzeGroup.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -653,27 +676,27 @@ classdef AnalyzeGroup < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % AnalyzeGroup.G
-					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
+				case AnalyzeGroup.G % __AnalyzeGroup.G__
+					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeGroup.G), 'twister')
 					
 					value = Graph();
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						value = calculateValue@ConcreteElement(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -699,17 +722,17 @@ classdef AnalyzeGroup < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 10 % AnalyzeGroup.GR
-					pr = PanelPropItem('EL', a, 'PROP', 10, ...
+				case AnalyzeGroup.GR % __AnalyzeGroup.GR__
+					pr = PanelPropItem('EL', a, 'PROP', AnalyzeGroup.GR, ...
 					    'BUTTON_TEXT', a.get('GR').get('ID'), ...
 					    varargin{:});
 					
-				case 11 % AnalyzeGroup.G
-					% pr = PanelPropItem('EL', a, 'PROP', 11, ...
+				case AnalyzeGroup.G % __AnalyzeGroup.G__
+					% pr = PanelPropItem('EL', a, 'PROP', AnalyzeGroup.G, ...
 					%     'GUICLASS', 'GUIElement', ...
 					%     'BUTTON_TEXT', 'Graph & Measures', ...
 					%     varargin{:});
-					pr = AnalyzeGroupPP_G('EL', a, 'PROP', 11, ...
+					pr = AnalyzeGroupPP_G('EL', a, 'PROP', AnalyzeGroup.G, ...
 					    'WAITBAR', a.getCallback('WAITBAR'), ...
 					    varargin{:});
 					

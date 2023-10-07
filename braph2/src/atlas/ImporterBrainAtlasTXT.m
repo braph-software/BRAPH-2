@@ -11,20 +11,6 @@ classdef ImporterBrainAtlasTXT < Importer
 	%  BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; 
 	%  coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).
 	%
-	% The list of ImporterBrainAtlasTXT properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas importer from TXT.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas importer from TXT.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas importer from TXT.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas importer from TXT.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas importer from TXT.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas importer from TXT.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas importer from TXT.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file from where to load the brain atlas.
-	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the TXT file from where to load the brain atlas.
-	%  <strong>12</strong> <strong>BA</strong> 	BA (result, item) is a brain atlas.
-	%
 	% ImporterBrainAtlasTXT methods (constructor):
 	%  ImporterBrainAtlasTXT - constructor
 	%
@@ -114,20 +100,20 @@ classdef ImporterBrainAtlasTXT < Importer
 	% See also BrainAtlas, ExporterBrainAtlasTXT.
 	
 	properties (Constant) % properties
-		FILE = 10; %CET: Computational Efficiency Trick
+		FILE = Importer.getPropNumber() + 1;
 		FILE_TAG = 'FILE';
-		FILE_CATEGORY = 4;
-		FILE_FORMAT = 2;
+		FILE_CATEGORY = Category.DATA;
+		FILE_FORMAT = Format.STRING;
 		
-		GET_FILE = 11; %CET: Computational Efficiency Trick
+		GET_FILE = Importer.getPropNumber() + 2;
 		GET_FILE_TAG = 'GET_FILE';
-		GET_FILE_CATEGORY = 6;
-		GET_FILE_FORMAT = 8;
+		GET_FILE_CATEGORY = Category.QUERY;
+		GET_FILE_FORMAT = Format.ITEM;
 		
-		BA = 12; %CET: Computational Efficiency Trick
+		BA = Importer.getPropNumber() + 3;
 		BA_TAG = 'BA';
-		BA_CATEGORY = 5;
-		BA_FORMAT = 8;
+		BA_CATEGORY = Category.RESULT;
+		BA_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function im = ImporterBrainAtlasTXT(varargin)
@@ -140,19 +126,6 @@ classdef ImporterBrainAtlasTXT < Importer
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ImporterBrainAtlasTXT properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas importer from TXT.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas importer from TXT.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas importer from TXT.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas importer from TXT.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas importer from TXT.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas importer from TXT.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas importer from TXT.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file from where to load the brain atlas.
-			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the TXT file from where to load the brain atlas.
-			%  <strong>12</strong> <strong>BA</strong> 	BA (result, item) is a brain atlas.
 			%
 			% See also Category, Format.
 			
@@ -190,7 +163,7 @@ classdef ImporterBrainAtlasTXT < Importer
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ImporterBrainAtlasTXT' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('ImporterBrainAtlasTXT', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of brain atlas importer from TXT.
@@ -211,30 +184,56 @@ classdef ImporterBrainAtlasTXT < Importer
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [ ...
+					Importer.getProps() ...
+						ImporterBrainAtlasTXT.FILE ...
+						ImporterBrainAtlasTXT.GET_FILE ...
+						ImporterBrainAtlasTXT.BA ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = 12;
-				case 6 % Category.QUERY
-					prop_list = [8 11];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Importer.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Importer.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Importer.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Importer.getProps(Category.DATA) ...
+						ImporterBrainAtlasTXT.FILE ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Importer.getProps(Category.RESULT) ...
+						ImporterBrainAtlasTXT.BA ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Importer.getProps(Category.QUERY) ...
+						ImporterBrainAtlasTXT.GET_FILE ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Importer.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Importer.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Importer.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -255,31 +254,7 @@ classdef ImporterBrainAtlasTXT < Importer
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 12;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(ImporterBrainAtlasTXT.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in brain atlas importer from TXT/error.
@@ -307,14 +282,14 @@ classdef ImporterBrainAtlasTXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == ImporterBrainAtlasTXT.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ImporterBrainAtlasTXT.'] ...
 					)
 			end
@@ -345,14 +320,15 @@ classdef ImporterBrainAtlasTXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA' })); %CET: Computational Efficiency Trick
+			importerbrainatlastxt_tag_list = cellfun(@(x) ImporterBrainAtlasTXT.getPropTag(x), num2cell(ImporterBrainAtlasTXT.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, importerbrainatlastxt_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for ImporterBrainAtlasTXT.'] ...
 					)
 			end
@@ -378,7 +354,8 @@ classdef ImporterBrainAtlasTXT < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA' })); % tag = pointer %CET: Computational Efficiency Trick
+				importerbrainatlastxt_tag_list = cellfun(@(x) ImporterBrainAtlasTXT.getPropTag(x), num2cell(ImporterBrainAtlasTXT.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, importerbrainatlastxt_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -406,9 +383,18 @@ classdef ImporterBrainAtlasTXT < Importer
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				importerbrainatlastxt_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA' };
-				tag = importerbrainatlastxt_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case ImporterBrainAtlasTXT.FILE
+						tag = ImporterBrainAtlasTXT.FILE_TAG;
+					case ImporterBrainAtlasTXT.GET_FILE
+						tag = ImporterBrainAtlasTXT.GET_FILE_TAG;
+					case ImporterBrainAtlasTXT.BA
+						tag = ImporterBrainAtlasTXT.BA_TAG;
+					otherwise
+						tag = getPropTag@Importer(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -433,9 +419,16 @@ classdef ImporterBrainAtlasTXT < Importer
 			
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerbrainatlastxt_category_list = { 1  1  1  3  4  2  2  6  9  4  6  5 };
-			prop_category = importerbrainatlastxt_category_list{prop};
+			switch prop
+				case ImporterBrainAtlasTXT.FILE
+					prop_category = ImporterBrainAtlasTXT.FILE_CATEGORY;
+				case ImporterBrainAtlasTXT.GET_FILE
+					prop_category = ImporterBrainAtlasTXT.GET_FILE_CATEGORY;
+				case ImporterBrainAtlasTXT.BA
+					prop_category = ImporterBrainAtlasTXT.BA_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Importer(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -459,9 +452,16 @@ classdef ImporterBrainAtlasTXT < Importer
 			
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerbrainatlastxt_format_list = { 2  2  2  8  2  2  2  2  4  2  8  8 };
-			prop_format = importerbrainatlastxt_format_list{prop};
+			switch prop
+				case ImporterBrainAtlasTXT.FILE
+					prop_format = ImporterBrainAtlasTXT.FILE_FORMAT;
+				case ImporterBrainAtlasTXT.GET_FILE
+					prop_format = ImporterBrainAtlasTXT.GET_FILE_FORMAT;
+				case ImporterBrainAtlasTXT.BA
+					prop_format = ImporterBrainAtlasTXT.BA_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Importer(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -485,9 +485,30 @@ classdef ImporterBrainAtlasTXT < Importer
 			
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerbrainatlastxt_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas importer from TXT.'  'NAME (constant, string) is the name of the brain atlas importer from TXT.'  'DESCRIPTION (constant, string) is the description of the brain atlas importer from TXT.'  'TEMPLATE (parameter, item) is the template of the brain atlas importer from TXT.'  'ID (data, string) is a few-letter code for the brain atlas importer from TXT.'  'LABEL (metadata, string) is an extended label of the brain atlas importer from TXT.'  'NOTES (metadata, string) are some specific notes about the brain atlas importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the TXT file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to get the TXT file from where to load the brain atlas.'  'BA (result, item) is a brain atlas.' };
-			prop_description = importerbrainatlastxt_description_list{prop};
+			switch prop
+				case ImporterBrainAtlasTXT.FILE
+					prop_description = 'FILE (data, string) is the TXT file from where to load the brain atlas.';
+				case ImporterBrainAtlasTXT.GET_FILE
+					prop_description = 'GET_FILE (query, item) opens a dialog box to get the TXT file from where to load the brain atlas.';
+				case ImporterBrainAtlasTXT.BA
+					prop_description = 'BA (result, item) is a brain atlas.';
+				case ImporterBrainAtlasTXT.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.NAME
+					prop_description = 'NAME (constant, string) is the name of the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.ID
+					prop_description = 'ID (data, string) is a few-letter code for the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the brain atlas importer from TXT.';
+				case ImporterBrainAtlasTXT.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the brain atlas importer from TXT.';
+				otherwise
+					prop_description = getPropDescription@Importer(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -511,14 +532,14 @@ classdef ImporterBrainAtlasTXT < Importer
 			
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterBrainAtlasTXT.FILE
-					prop_settings = Format.getFormatSettings(2);
-				case 11 % ImporterBrainAtlasTXT.GET_FILE
+			switch prop
+				case ImporterBrainAtlasTXT.FILE
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case ImporterBrainAtlasTXT.GET_FILE
 					prop_settings = 'ImporterBrainAtlasTXT';
-				case 12 % ImporterBrainAtlasTXT.BA
+				case ImporterBrainAtlasTXT.BA
 					prop_settings = 'BrainAtlas';
-				case 4 % ImporterBrainAtlasTXT.TEMPLATE
+				case ImporterBrainAtlasTXT.TEMPLATE
 					prop_settings = 'ImporterBrainAtlasTXT';
 				otherwise
 					prop_settings = getPropSettings@Importer(prop);
@@ -546,26 +567,26 @@ classdef ImporterBrainAtlasTXT < Importer
 			
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterBrainAtlasTXT.FILE
+			switch prop
+				case ImporterBrainAtlasTXT.FILE
 					prop_default = 'desikan_atlas.txt';
-				case 11 % ImporterBrainAtlasTXT.GET_FILE
-					prop_default = Format.getFormatDefault(8, ImporterBrainAtlasTXT.getPropSettings(prop));
-				case 12 % ImporterBrainAtlasTXT.BA
+				case ImporterBrainAtlasTXT.GET_FILE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.BA
 					prop_default = BrainAtlas();
-				case 1 % ImporterBrainAtlasTXT.ELCLASS
+				case ImporterBrainAtlasTXT.ELCLASS
 					prop_default = 'ImporterBrainAtlasTXT';
-				case 2 % ImporterBrainAtlasTXT.NAME
+				case ImporterBrainAtlasTXT.NAME
 					prop_default = 'Brain Atlas Importer from TXT Files';
-				case 3 % ImporterBrainAtlasTXT.DESCRIPTION
+				case ImporterBrainAtlasTXT.DESCRIPTION
 					prop_default = 'A Brain Atlas Importer from TXT Files (ImporterBrainAtlasTXT) imports a brain atlas from a TXT file. The TXT file consists of 6 columns and many rows. The first 4 rows: BrainAtlas ID (row 1, column 1), BrainAtlas LABEL (row 2, column 1), BrainAtlas NOTES (row 3, column 1), BrainSurface Name (row 4, column 1). And from row 5 to the end, the following columns: BrainRegion ID (column 1), BrainRegion LABEL (column 2), BrainRegions (column 3 to column 5; coordinates x, y, z, one per column), and BrainRegion NOTES (column 6).';
-				case 4 % ImporterBrainAtlasTXT.TEMPLATE
-					prop_default = Format.getFormatDefault(8, ImporterBrainAtlasTXT.getPropSettings(prop));
-				case 5 % ImporterBrainAtlasTXT.ID
+				case ImporterBrainAtlasTXT.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.ID
 					prop_default = 'ImporterBrainAtlasTXT ID';
-				case 6 % ImporterBrainAtlasTXT.LABEL
+				case ImporterBrainAtlasTXT.LABEL
 					prop_default = 'ImporterBrainAtlasTXT label';
-				case 7 % ImporterBrainAtlasTXT.NOTES
+				case ImporterBrainAtlasTXT.NOTES
 					prop_default = 'ImporterBrainAtlasTXT notes';
 				otherwise
 					prop_default = getPropDefault@Importer(prop);
@@ -612,15 +633,15 @@ classdef ImporterBrainAtlasTXT < Importer
 			% 
 			% IM.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ImporterBrainAtlasTXT:WrongInput
+			%  Error id: €BRAPH2.STR€:ImporterBrainAtlasTXT:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  IM.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of IM.
-			%   Error id: BRAPH2:ImporterBrainAtlasTXT:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterBrainAtlasTXT:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(ImporterBrainAtlasTXT, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterBrainAtlasTXT.
-			%   Error id: BRAPH2:ImporterBrainAtlasTXT:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterBrainAtlasTXT:€BRAPH2.WRONG_INPUT€
 			%  IM.CHECKPROP(ImporterBrainAtlasTXT, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterBrainAtlasTXT.
-			%   Error id: BRAPH2:ImporterBrainAtlasTXT:WrongInput]
+			%   Error id: €BRAPH2.STR€:ImporterBrainAtlasTXT:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(IM) and Element.CHECKPROP('ImporterBrainAtlasTXT')
 			%  are less computationally efficient.
@@ -631,16 +652,16 @@ classdef ImporterBrainAtlasTXT < Importer
 			prop = ImporterBrainAtlasTXT.getPropProp(pointer);
 			
 			switch prop
-				case 10 % ImporterBrainAtlasTXT.FILE
-					check = Format.checkFormat(2, value, ImporterBrainAtlasTXT.getPropSettings(prop));
-				case 11 % ImporterBrainAtlasTXT.GET_FILE
-					check = Format.checkFormat(8, value, ImporterBrainAtlasTXT.getPropSettings(prop));
-				case 12 % ImporterBrainAtlasTXT.BA
-					check = Format.checkFormat(8, value, ImporterBrainAtlasTXT.getPropSettings(prop));
-				case 4 % ImporterBrainAtlasTXT.TEMPLATE
-					check = Format.checkFormat(8, value, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.FILE % __ImporterBrainAtlasTXT.FILE__
+					check = Format.checkFormat(Format.STRING, value, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.GET_FILE % __ImporterBrainAtlasTXT.GET_FILE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.BA % __ImporterBrainAtlasTXT.BA__
+					check = Format.checkFormat(Format.ITEM, value, ImporterBrainAtlasTXT.getPropSettings(prop));
+				case ImporterBrainAtlasTXT.TEMPLATE % __ImporterBrainAtlasTXT.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterBrainAtlasTXT.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -649,8 +670,8 @@ classdef ImporterBrainAtlasTXT < Importer
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterBrainAtlasTXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterBrainAtlasTXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ImporterBrainAtlasTXT.getPropTag(prop) ' (' ImporterBrainAtlasTXT.getFormatTag(ImporterBrainAtlasTXT.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -661,19 +682,19 @@ classdef ImporterBrainAtlasTXT < Importer
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ImporterBrainAtlasTXT.GET_FILE
+				case ImporterBrainAtlasTXT.GET_FILE % __ImporterBrainAtlasTXT.GET_FILE__
 					[filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
 					if filterindex
 					    file = [filepath filename];
@@ -681,8 +702,8 @@ classdef ImporterBrainAtlasTXT < Importer
 					end
 					value = im;
 					
-				case 12 % ImporterBrainAtlasTXT.BA
-					rng_settings_ = rng(); rng(im.getPropSeed(12), 'twister')
+				case ImporterBrainAtlasTXT.BA % __ImporterBrainAtlasTXT.BA__
+					rng_settings_ = rng(); rng(im.getPropSeed(ImporterBrainAtlasTXT.BA), 'twister')
 					
 					% creates empty BrainAtlas
 					ba = BrainAtlas();
@@ -736,8 +757,8 @@ classdef ImporterBrainAtlasTXT < Importer
 					    
 					    braph2waitbar(wb, 'close')
 					else
-					    error(['BRAPH2' ':ImporterBrainAtlasXLS:' 'CancelIO'], ...
-					        ['BRAPH2' ':ImporterBrainAtlasXLS:' 'CancelIO' '\n' ...
+					    error([BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.CANCEL_IO], ...
+					        [BRAPH2.STR ':ImporterBrainAtlasXLS:' BRAPH2.CANCEL_IO '\n' ...
 					        'The prop FILE must be an existing file, but it is ''' file '''.'] ...
 					        );
 					end
@@ -747,7 +768,7 @@ classdef ImporterBrainAtlasTXT < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});

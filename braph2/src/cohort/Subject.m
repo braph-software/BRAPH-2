@@ -6,17 +6,6 @@ classdef Subject < ConcreteElement
 	%  Instances of this element should not be created. 
 	%  Use one of its subelements instead.
 	%
-	% The list of Subject properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
-	%
 	% Subject methods (constructor):
 	%  Subject - constructor
 	%
@@ -106,10 +95,10 @@ classdef Subject < ConcreteElement
 	% See also Group.
 	
 	properties (Constant) % properties
-		VOI_DICT = 9; %CET: Computational Efficiency Trick
+		VOI_DICT = ConcreteElement.getPropNumber() + 1;
 		VOI_DICT_TAG = 'VOI_DICT';
-		VOI_DICT_CATEGORY = 4;
-		VOI_DICT_FORMAT = 10;
+		VOI_DICT_CATEGORY = Category.DATA;
+		VOI_DICT_FORMAT = Format.IDICT;
 	end
 	methods % constructor
 		function sub = Subject(varargin)
@@ -122,16 +111,6 @@ classdef Subject < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Subject properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 			%
 			% See also Category, Format.
 			
@@ -169,7 +148,7 @@ classdef Subject < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Subject'  'SubjectCON'  'SubjectCON_MP'  'SubjectCON_FUN_MP'  'SubjectFUN'  'SubjectFUN_MP'  'SubjectST'  'SubjectST_MP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Subject', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of subject.
@@ -190,26 +169,52 @@ classdef Subject < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						Subject.VOI_DICT ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 9];
-				case 6 % Category.QUERY
-					prop_list = 8;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						Subject.VOI_DICT ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -230,27 +235,7 @@ classdef Subject < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 9;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Subject.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in subject/error.
@@ -278,14 +263,14 @@ classdef Subject < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Subject.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Subject:' 'WrongInput'], ...
-					['BRAPH2' ':Subject:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Subject.'] ...
 					)
 			end
@@ -316,14 +301,15 @@ classdef Subject < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' })); %CET: Computational Efficiency Trick
+			subject_tag_list = cellfun(@(x) Subject.getPropTag(x), num2cell(Subject.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, subject_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Subject:' 'WrongInput'], ...
-					['BRAPH2' ':Subject:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Subject.'] ...
 					)
 			end
@@ -349,7 +335,8 @@ classdef Subject < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				subject_tag_list = cellfun(@(x) Subject.getPropTag(x), num2cell(Subject.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, subject_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -377,9 +364,14 @@ classdef Subject < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				subject_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT' };
-				tag = subject_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case Subject.VOI_DICT
+						tag = Subject.VOI_DICT_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -404,9 +396,12 @@ classdef Subject < ConcreteElement
 			
 			prop = Subject.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subject_category_list = { 1  1  1  3  4  2  2  6  4 };
-			prop_category = subject_category_list{prop};
+			switch prop
+				case Subject.VOI_DICT
+					prop_category = Subject.VOI_DICT_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -430,9 +425,12 @@ classdef Subject < ConcreteElement
 			
 			prop = Subject.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subject_format_list = { 2  2  2  8  2  2  2  2  10 };
-			prop_format = subject_format_list{prop};
+			switch prop
+				case Subject.VOI_DICT
+					prop_format = Subject.VOI_DICT_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -456,9 +454,26 @@ classdef Subject < ConcreteElement
 			
 			prop = Subject.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			subject_description_list = { 'ELCLASS (constant, string) is the class of the subject.'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.' };
-			prop_description = subject_description_list{prop};
+			switch prop
+				case Subject.VOI_DICT
+					prop_description = 'VOI_DICT (data, idict) contains the variables of interest of the subject.';
+				case Subject.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the subject.';
+				case Subject.NAME
+					prop_description = 'NAME (constant, string) is the name of the subject.';
+				case Subject.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the subject.';
+				case Subject.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the subject.';
+				case Subject.ID
+					prop_description = 'ID (data, string) is a few-letter code for the subject.';
+				case Subject.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the subject.';
+				case Subject.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the subject.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -482,8 +497,8 @@ classdef Subject < ConcreteElement
 			
 			prop = Subject.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Subject.VOI_DICT
+			switch prop
+				case Subject.VOI_DICT
 					prop_settings = 'VOI';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -511,20 +526,20 @@ classdef Subject < ConcreteElement
 			
 			prop = Subject.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Subject.VOI_DICT
-					prop_default = Format.getFormatDefault(10, Subject.getPropSettings(prop));
-				case 1 % Subject.ELCLASS
+			switch prop
+				case Subject.VOI_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, Subject.getPropSettings(prop));
+				case Subject.ELCLASS
 					prop_default = 'Subject';
-				case 2 % Subject.NAME
+				case Subject.NAME
 					prop_default = 'Subject';
-				case 3 % Subject.DESCRIPTION
+				case Subject.DESCRIPTION
 					prop_default = 'A Subject provides the methods necessary for all subjects. Instances of this element should not be created. Use one of its subelements instead.';
-				case 5 % Subject.ID
+				case Subject.ID
 					prop_default = 'Subject ID';
-				case 6 % Subject.LABEL
+				case Subject.LABEL
 					prop_default = 'Subject label';
-				case 7 % Subject.NOTES
+				case Subject.NOTES
 					prop_default = 'Subject notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -571,15 +586,15 @@ classdef Subject < ConcreteElement
 			% 
 			% SUB.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Subject:WrongInput
+			%  Error id: €BRAPH2.STR€:Subject:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  SUB.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of SUB.
-			%   Error id: BRAPH2:Subject:WrongInput
+			%   Error id: €BRAPH2.STR€:Subject:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Subject, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Subject.
-			%   Error id: BRAPH2:Subject:WrongInput
+			%   Error id: €BRAPH2.STR€:Subject:€BRAPH2.WRONG_INPUT€
 			%  SUB.CHECKPROP(Subject, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Subject.
-			%   Error id: BRAPH2:Subject:WrongInput]
+			%   Error id: €BRAPH2.STR€:Subject:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(SUB) and Element.CHECKPROP('Subject')
 			%  are less computationally efficient.
@@ -590,10 +605,10 @@ classdef Subject < ConcreteElement
 			prop = Subject.getPropProp(pointer);
 			
 			switch prop
-				case 9 % Subject.VOI_DICT
-					check = Format.checkFormat(10, value, Subject.getPropSettings(prop));
+				case Subject.VOI_DICT % __Subject.VOI_DICT__
+					check = Format.checkFormat(Format.IDICT, value, Subject.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -602,8 +617,8 @@ classdef Subject < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Subject:' 'WrongInput'], ...
-					['BRAPH2' ':Subject:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Subject:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Subject.getPropTag(prop) ' (' Subject.getFormatTag(Subject.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -626,8 +641,8 @@ classdef Subject < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 9 % Subject.VOI_DICT
-					pr = SubjectPP_VOIDict('EL', sub, 'PROP', 9, varargin{:});
+				case Subject.VOI_DICT % __Subject.VOI_DICT__
+					pr = SubjectPP_VOIDict('EL', sub, 'PROP', Subject.VOI_DICT, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@ConcreteElement(sub, prop, varargin{:});

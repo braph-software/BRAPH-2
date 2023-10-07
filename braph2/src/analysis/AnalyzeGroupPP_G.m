@@ -5,52 +5,6 @@ classdef AnalyzeGroupPP_G < PanelProp
 	% AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.
 	% It is intended to be used only with the property G of AnalyzeGroup.
 	%
-	% The list of AnalyzeGroupPP_G properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
-	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
-	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-	%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-	%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-	%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-	%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
-	%  <strong>44</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
-	%
 	% AnalyzeGroupPP_G methods (constructor):
 	%  AnalyzeGroupPP_G - constructor
 	%
@@ -140,50 +94,50 @@ classdef AnalyzeGroupPP_G < PanelProp
 	% See also uitable, AnalyzeGroup, Graph, Measure.
 	
 	properties (Constant) % properties
-		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
+		TABLE_HEIGHT = PanelProp.getPropNumber() + 1;
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
-		TABLE_HEIGHT_CATEGORY = 9;
-		TABLE_HEIGHT_FORMAT = 22;
+		TABLE_HEIGHT_CATEGORY = Category.GUI;
+		TABLE_HEIGHT_FORMAT = Format.SIZE;
 		
-		SELECTED = 37; %CET: Computational Efficiency Trick
+		SELECTED = PanelProp.getPropNumber() + 2;
 		SELECTED_TAG = 'SELECTED';
-		SELECTED_CATEGORY = 9;
-		SELECTED_FORMAT = 13;
+		SELECTED_CATEGORY = Category.GUI;
+		SELECTED_FORMAT = Format.CVECTOR;
 		
-		TABLE = 38; %CET: Computational Efficiency Trick
+		TABLE = PanelProp.getPropNumber() + 3;
 		TABLE_TAG = 'TABLE';
-		TABLE_CATEGORY = 7;
-		TABLE_FORMAT = 18;
+		TABLE_CATEGORY = Category.EVANESCENT;
+		TABLE_FORMAT = Format.HANDLE;
 		
-		CONTEXTMENU = 39; %CET: Computational Efficiency Trick
+		CONTEXTMENU = PanelProp.getPropNumber() + 4;
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
-		CONTEXTMENU_CATEGORY = 7;
-		CONTEXTMENU_FORMAT = 18;
+		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
+		CONTEXTMENU_FORMAT = Format.HANDLE;
 		
-		GUI_G_PL = 40; %CET: Computational Efficiency Trick
+		GUI_G_PL = PanelProp.getPropNumber() + 5;
 		GUI_G_PL_TAG = 'GUI_G_PL';
-		GUI_G_PL_CATEGORY = 9;
-		GUI_G_PL_FORMAT = 8;
+		GUI_G_PL_CATEGORY = Category.GUI;
+		GUI_G_PL_FORMAT = Format.ITEM;
 		
-		GUI_G_EL = 41; %CET: Computational Efficiency Trick
+		GUI_G_EL = PanelProp.getPropNumber() + 6;
 		GUI_G_EL_TAG = 'GUI_G_EL';
-		GUI_G_EL_CATEGORY = 9;
-		GUI_G_EL_FORMAT = 8;
+		GUI_G_EL_CATEGORY = Category.GUI;
+		GUI_G_EL_FORMAT = Format.ITEM;
 		
-		GUI_F_DICT = 42; %CET: Computational Efficiency Trick
+		GUI_F_DICT = PanelProp.getPropNumber() + 7;
 		GUI_F_DICT_TAG = 'GUI_F_DICT';
-		GUI_F_DICT_CATEGORY = 9;
-		GUI_F_DICT_FORMAT = 10;
+		GUI_F_DICT_CATEGORY = Category.GUI;
+		GUI_F_DICT_FORMAT = Format.IDICT;
 		
-		GUI_M_DICT = 43; %CET: Computational Efficiency Trick
+		GUI_M_DICT = PanelProp.getPropNumber() + 8;
 		GUI_M_DICT_TAG = 'GUI_M_DICT';
-		GUI_M_DICT_CATEGORY = 9;
-		GUI_M_DICT_FORMAT = 10;
+		GUI_M_DICT_CATEGORY = Category.GUI;
+		GUI_M_DICT_FORMAT = Format.IDICT;
 		
-		GUI_B_DICT = 44; %CET: Computational Efficiency Trick
+		GUI_B_DICT = PanelProp.getPropNumber() + 9;
 		GUI_B_DICT_TAG = 'GUI_B_DICT';
-		GUI_B_DICT_CATEGORY = 9;
-		GUI_B_DICT_FORMAT = 10;
+		GUI_B_DICT_CATEGORY = Category.GUI;
+		GUI_B_DICT_FORMAT = Format.IDICT;
 	end
 	methods % constructor
 		function pr = AnalyzeGroupPP_G(varargin)
@@ -196,51 +150,6 @@ classdef AnalyzeGroupPP_G < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeGroupPP_G properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph and measure panel.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph and measure panel.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph and measure panel.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph and measure panel.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph and measure panel.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph and measure panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
-			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
-			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
-			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-			%  <strong>40</strong> <strong>GUI_G_PL</strong> 	GUI_G_PL (gui, item) contains the GUI for the graph figure.
-			%  <strong>41</strong> <strong>GUI_G_EL</strong> 	GUI_G_EL (gui, item) contains the GUI for the graph.
-			%  <strong>42</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-			%  <strong>43</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
-			%  <strong>44</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
 			%
 			% See also Category, Format.
 			
@@ -278,7 +187,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeGroupPP_G' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('AnalyzeGroupPP_G', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graph and measure plot.
@@ -299,32 +208,68 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44];
+				prop_list = [ ...
+					PanelProp.getProps() ...
+						AnalyzeGroupPP_G.TABLE_HEIGHT ...
+						AnalyzeGroupPP_G.SELECTED ...
+						AnalyzeGroupPP_G.TABLE ...
+						AnalyzeGroupPP_G.CONTEXTMENU ...
+						AnalyzeGroupPP_G.GUI_G_PL ...
+						AnalyzeGroupPP_G.GUI_G_EL ...
+						AnalyzeGroupPP_G.GUI_F_DICT ...
+						AnalyzeGroupPP_G.GUI_M_DICT ...
+						AnalyzeGroupPP_G.GUI_B_DICT ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 38 39];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36 37 40 41 42 43 44];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelProp.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelProp.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelProp.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelProp.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelProp.getProps(Category.EVANESCENT) ...
+						AnalyzeGroupPP_G.TABLE ...
+						AnalyzeGroupPP_G.CONTEXTMENU ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelProp.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelProp.getProps(Category.GUI) ...
+						AnalyzeGroupPP_G.TABLE_HEIGHT ...
+						AnalyzeGroupPP_G.SELECTED ...
+						AnalyzeGroupPP_G.GUI_G_PL ...
+						AnalyzeGroupPP_G.GUI_G_EL ...
+						AnalyzeGroupPP_G.GUI_F_DICT ...
+						AnalyzeGroupPP_G.GUI_M_DICT ...
+						AnalyzeGroupPP_G.GUI_B_DICT ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -345,33 +290,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 44;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 12;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 11;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(AnalyzeGroupPP_G.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graph and measure plot/error.
@@ -399,14 +318,14 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 44 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == AnalyzeGroupPP_G.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeGroupPP_G.'] ...
 					)
 			end
@@ -437,14 +356,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' })); %CET: Computational Efficiency Trick
+			analyzegrouppp_g_tag_list = cellfun(@(x) AnalyzeGroupPP_G.getPropTag(x), num2cell(AnalyzeGroupPP_G.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, analyzegrouppp_g_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeGroupPP_G.'] ...
 					)
 			end
@@ -470,7 +390,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				analyzegrouppp_g_tag_list = cellfun(@(x) AnalyzeGroupPP_G.getPropTag(x), num2cell(AnalyzeGroupPP_G.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, analyzegrouppp_g_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -498,9 +419,30 @@ classdef AnalyzeGroupPP_G < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				analyzegrouppp_g_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_G_PL'  'GUI_G_EL'  'GUI_F_DICT'  'GUI_M_DICT'  'GUI_B_DICT' };
-				tag = analyzegrouppp_g_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case AnalyzeGroupPP_G.TABLE_HEIGHT
+						tag = AnalyzeGroupPP_G.TABLE_HEIGHT_TAG;
+					case AnalyzeGroupPP_G.SELECTED
+						tag = AnalyzeGroupPP_G.SELECTED_TAG;
+					case AnalyzeGroupPP_G.TABLE
+						tag = AnalyzeGroupPP_G.TABLE_TAG;
+					case AnalyzeGroupPP_G.CONTEXTMENU
+						tag = AnalyzeGroupPP_G.CONTEXTMENU_TAG;
+					case AnalyzeGroupPP_G.GUI_G_PL
+						tag = AnalyzeGroupPP_G.GUI_G_PL_TAG;
+					case AnalyzeGroupPP_G.GUI_G_EL
+						tag = AnalyzeGroupPP_G.GUI_G_EL_TAG;
+					case AnalyzeGroupPP_G.GUI_F_DICT
+						tag = AnalyzeGroupPP_G.GUI_F_DICT_TAG;
+					case AnalyzeGroupPP_G.GUI_M_DICT
+						tag = AnalyzeGroupPP_G.GUI_M_DICT_TAG;
+					case AnalyzeGroupPP_G.GUI_B_DICT
+						tag = AnalyzeGroupPP_G.GUI_B_DICT_TAG;
+					otherwise
+						tag = getPropTag@PanelProp(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -525,9 +467,28 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9  9  9 };
-			prop_category = analyzegrouppp_g_category_list{prop};
+			switch prop
+				case AnalyzeGroupPP_G.TABLE_HEIGHT
+					prop_category = AnalyzeGroupPP_G.TABLE_HEIGHT_CATEGORY;
+				case AnalyzeGroupPP_G.SELECTED
+					prop_category = AnalyzeGroupPP_G.SELECTED_CATEGORY;
+				case AnalyzeGroupPP_G.TABLE
+					prop_category = AnalyzeGroupPP_G.TABLE_CATEGORY;
+				case AnalyzeGroupPP_G.CONTEXTMENU
+					prop_category = AnalyzeGroupPP_G.CONTEXTMENU_CATEGORY;
+				case AnalyzeGroupPP_G.GUI_G_PL
+					prop_category = AnalyzeGroupPP_G.GUI_G_PL_CATEGORY;
+				case AnalyzeGroupPP_G.GUI_G_EL
+					prop_category = AnalyzeGroupPP_G.GUI_G_EL_CATEGORY;
+				case AnalyzeGroupPP_G.GUI_F_DICT
+					prop_category = AnalyzeGroupPP_G.GUI_F_DICT_CATEGORY;
+				case AnalyzeGroupPP_G.GUI_M_DICT
+					prop_category = AnalyzeGroupPP_G.GUI_M_DICT_CATEGORY;
+				case AnalyzeGroupPP_G.GUI_B_DICT
+					prop_category = AnalyzeGroupPP_G.GUI_B_DICT_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelProp(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -551,9 +512,28 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  8  8  10  10  10 };
-			prop_format = analyzegrouppp_g_format_list{prop};
+			switch prop
+				case AnalyzeGroupPP_G.TABLE_HEIGHT
+					prop_format = AnalyzeGroupPP_G.TABLE_HEIGHT_FORMAT;
+				case AnalyzeGroupPP_G.SELECTED
+					prop_format = AnalyzeGroupPP_G.SELECTED_FORMAT;
+				case AnalyzeGroupPP_G.TABLE
+					prop_format = AnalyzeGroupPP_G.TABLE_FORMAT;
+				case AnalyzeGroupPP_G.CONTEXTMENU
+					prop_format = AnalyzeGroupPP_G.CONTEXTMENU_FORMAT;
+				case AnalyzeGroupPP_G.GUI_G_PL
+					prop_format = AnalyzeGroupPP_G.GUI_G_PL_FORMAT;
+				case AnalyzeGroupPP_G.GUI_G_EL
+					prop_format = AnalyzeGroupPP_G.GUI_G_EL_FORMAT;
+				case AnalyzeGroupPP_G.GUI_F_DICT
+					prop_format = AnalyzeGroupPP_G.GUI_F_DICT_FORMAT;
+				case AnalyzeGroupPP_G.GUI_M_DICT
+					prop_format = AnalyzeGroupPP_G.GUI_M_DICT_FORMAT;
+				case AnalyzeGroupPP_G.GUI_B_DICT
+					prop_format = AnalyzeGroupPP_G.GUI_B_DICT_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelProp(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -577,9 +557,60 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzegrouppp_g_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph and measure panel.'  'DESCRIPTION (constant, string) is the description of the graph and measure panel.'  'TEMPLATE (parameter, item) is the template of the graph and measure panel.'  'ID (data, string) is a few-letter code for the graph and measure panel.'  'LABEL (metadata, string) is an extended label of the graph and measure panel.'  'NOTES (metadata, string) are some specific notes about the graph and measure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_G_PL (gui, item) contains the GUI for the graph figure.'  'GUI_G_EL (gui, item) contains the GUI for the graph.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.'  'GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.' };
-			prop_description = analyzegrouppp_g_description_list{prop};
+			switch prop
+				case AnalyzeGroupPP_G.TABLE_HEIGHT
+					prop_description = 'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.';
+				case AnalyzeGroupPP_G.SELECTED
+					prop_description = 'SELECTED (gui, cvector) is the list of selected items.';
+				case AnalyzeGroupPP_G.TABLE
+					prop_description = 'TABLE (evanescent, handle) is the table.';
+				case AnalyzeGroupPP_G.CONTEXTMENU
+					prop_description = 'CONTEXTMENU (evanescent, handle) is the context menu.';
+				case AnalyzeGroupPP_G.GUI_G_PL
+					prop_description = 'GUI_G_PL (gui, item) contains the GUI for the graph figure.';
+				case AnalyzeGroupPP_G.GUI_G_EL
+					prop_description = 'GUI_G_EL (gui, item) contains the GUI for the graph.';
+				case AnalyzeGroupPP_G.GUI_F_DICT
+					prop_description = 'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.';
+				case AnalyzeGroupPP_G.GUI_M_DICT
+					prop_description = 'GUI_M_DICT (gui, idict) contains the GUIs for the measures.';
+				case AnalyzeGroupPP_G.GUI_B_DICT
+					prop_description = 'GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.';
+				case AnalyzeGroupPP_G.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case AnalyzeGroupPP_G.NAME
+					prop_description = 'NAME (constant, string) is the name of the graph and measure panel.';
+				case AnalyzeGroupPP_G.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the graph and measure panel.';
+				case AnalyzeGroupPP_G.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the graph and measure panel.';
+				case AnalyzeGroupPP_G.ID
+					prop_description = 'ID (data, string) is a few-letter code for the graph and measure panel.';
+				case AnalyzeGroupPP_G.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the graph and measure panel.';
+				case AnalyzeGroupPP_G.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the graph and measure panel.';
+				case AnalyzeGroupPP_G.EL
+					prop_description = 'EL (data, item) is the element.';
+				case AnalyzeGroupPP_G.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case AnalyzeGroupPP_G.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case AnalyzeGroupPP_G.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
+				case AnalyzeGroupPP_G.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case AnalyzeGroupPP_G.SHOW
+					prop_description = 'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.';
+				case AnalyzeGroupPP_G.HIDE
+					prop_description = 'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.';
+				case AnalyzeGroupPP_G.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				case AnalyzeGroupPP_G.CLOSE
+					prop_description = 'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.';
+				otherwise
+					prop_description = getPropDescription@PanelProp(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -603,26 +634,26 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
-					prop_settings = Format.getFormatSettings(22);
-				case 37 % AnalyzeGroupPP_G.SELECTED
-					prop_settings = Format.getFormatSettings(13);
-				case 38 % AnalyzeGroupPP_G.TABLE
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
-					prop_settings = Format.getFormatSettings(18);
-				case 40 % AnalyzeGroupPP_G.GUI_G_PL
+			switch prop
+				case AnalyzeGroupPP_G.TABLE_HEIGHT
+					prop_settings = Format.getFormatSettings(Format.SIZE);
+				case AnalyzeGroupPP_G.SELECTED
+					prop_settings = Format.getFormatSettings(Format.CVECTOR);
+				case AnalyzeGroupPP_G.TABLE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case AnalyzeGroupPP_G.CONTEXTMENU
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case AnalyzeGroupPP_G.GUI_G_PL
 					prop_settings = 'GUIFig';
-				case 41 % AnalyzeGroupPP_G.GUI_G_EL
+				case AnalyzeGroupPP_G.GUI_G_EL
 					prop_settings = 'GUIElement';
-				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
+				case AnalyzeGroupPP_G.GUI_F_DICT
 					prop_settings = 'GUIFig';
-				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
+				case AnalyzeGroupPP_G.GUI_M_DICT
 					prop_settings = 'GUIElement';
-				case 44 % AnalyzeGroupPP_G.GUI_B_DICT
+				case AnalyzeGroupPP_G.GUI_B_DICT
 					prop_settings = 'GUIFig';
-				case 4 % AnalyzeGroupPP_G.TEMPLATE
+				case AnalyzeGroupPP_G.TEMPLATE
 					prop_settings = 'AnalyzeGroupPP_G';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -650,43 +681,43 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
-					prop_default = 360;
-				case 37 % AnalyzeGroupPP_G.SELECTED
-					prop_default = Format.getFormatDefault(13, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 38 % AnalyzeGroupPP_G.TABLE
-					prop_default = Format.getFormatDefault(18, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
-					prop_default = Format.getFormatDefault(18, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 40 % AnalyzeGroupPP_G.GUI_G_PL
-					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 41 % AnalyzeGroupPP_G.GUI_G_EL
-					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 44 % AnalyzeGroupPP_G.GUI_B_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 1 % AnalyzeGroupPP_G.ELCLASS
+			switch prop
+				case AnalyzeGroupPP_G.TABLE_HEIGHT
+					prop_default = s(30);
+				case AnalyzeGroupPP_G.SELECTED
+					prop_default = Format.getFormatDefault(Format.CVECTOR, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.TABLE
+					prop_default = Format.getFormatDefault(Format.HANDLE, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.CONTEXTMENU
+					prop_default = Format.getFormatDefault(Format.HANDLE, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_G_PL
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_G_EL
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_F_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_M_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_B_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.ELCLASS
 					prop_default = 'AnalyzeGroupPP_G';
-				case 2 % AnalyzeGroupPP_G.NAME
+				case AnalyzeGroupPP_G.NAME
 					prop_default = 'AnalyzeGroupPP_G';
-				case 3 % AnalyzeGroupPP_G.DESCRIPTION
+				case AnalyzeGroupPP_G.DESCRIPTION
 					prop_default = 'AnalyzeGroupPP_G plots the panel to manage the graph and measures of a group analysis.';
-				case 4 % AnalyzeGroupPP_G.TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 5 % AnalyzeGroupPP_G.ID
+				case AnalyzeGroupPP_G.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.ID
 					prop_default = 'AnalyzeGroupPP_G';
-				case 6 % AnalyzeGroupPP_G.LABEL
+				case AnalyzeGroupPP_G.LABEL
 					prop_default = 'AnalyzeGroupPP_G label';
-				case 7 % AnalyzeGroupPP_G.NOTES
+				case AnalyzeGroupPP_G.NOTES
 					prop_default = 'AnalyzeGroupPP_G';
-				case 23 % AnalyzeGroupPP_G.EL
+				case AnalyzeGroupPP_G.EL
 					prop_default = AnalyzeGroup();
-				case 24 % AnalyzeGroupPP_G.PROP
-					prop_default = 11;
+				case AnalyzeGroupPP_G.PROP
+					prop_default = AnalyzeGroup.G;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -726,8 +757,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of 2,
-			%  3, 4, 8 and 9.
+			% Conditioning is only used for props of Category.METADATA,
+			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -735,13 +766,13 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop
-				case 37 % AnalyzeGroupPP_G.SELECTED
+				case AnalyzeGroupPP_G.SELECTED % __AnalyzeGroupPP_G.SELECTED__
 					if isrow(value)
 					    value = value';
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = conditioning@PanelProp(pointer, value);
 					end
 			end
@@ -762,15 +793,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeGroupPP_G:WrongInput
+			%  Error id: €BRAPH2.STR€:AnalyzeGroupPP_G:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:AnalyzeGroupPP_G:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeGroupPP_G:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(AnalyzeGroupPP_G, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroupPP_G.
-			%   Error id: BRAPH2:AnalyzeGroupPP_G:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeGroupPP_G:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(AnalyzeGroupPP_G, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroupPP_G.
-			%   Error id: BRAPH2:AnalyzeGroupPP_G:WrongInput]
+			%   Error id: €BRAPH2.STR€:AnalyzeGroupPP_G:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('AnalyzeGroupPP_G')
 			%  are less computationally efficient.
@@ -781,28 +812,28 @@ classdef AnalyzeGroupPP_G < PanelProp
 			prop = AnalyzeGroupPP_G.getPropProp(pointer);
 			
 			switch prop
-				case 36 % AnalyzeGroupPP_G.TABLE_HEIGHT
-					check = Format.checkFormat(22, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 37 % AnalyzeGroupPP_G.SELECTED
-					check = Format.checkFormat(13, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 38 % AnalyzeGroupPP_G.TABLE
-					check = Format.checkFormat(18, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
-					check = Format.checkFormat(18, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 40 % AnalyzeGroupPP_G.GUI_G_PL
-					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 41 % AnalyzeGroupPP_G.GUI_G_EL
-					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 42 % AnalyzeGroupPP_G.GUI_F_DICT
-					check = Format.checkFormat(10, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 43 % AnalyzeGroupPP_G.GUI_M_DICT
-					check = Format.checkFormat(10, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 44 % AnalyzeGroupPP_G.GUI_B_DICT
-					check = Format.checkFormat(10, value, AnalyzeGroupPP_G.getPropSettings(prop));
-				case 4 % AnalyzeGroupPP_G.TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.TABLE_HEIGHT % __AnalyzeGroupPP_G.TABLE_HEIGHT__
+					check = Format.checkFormat(Format.SIZE, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.SELECTED % __AnalyzeGroupPP_G.SELECTED__
+					check = Format.checkFormat(Format.CVECTOR, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.TABLE % __AnalyzeGroupPP_G.TABLE__
+					check = Format.checkFormat(Format.HANDLE, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.CONTEXTMENU % __AnalyzeGroupPP_G.CONTEXTMENU__
+					check = Format.checkFormat(Format.HANDLE, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_G_PL % __AnalyzeGroupPP_G.GUI_G_PL__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_G_EL % __AnalyzeGroupPP_G.GUI_G_EL__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_F_DICT % __AnalyzeGroupPP_G.GUI_F_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_M_DICT % __AnalyzeGroupPP_G.GUI_M_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.GUI_B_DICT % __AnalyzeGroupPP_G.GUI_B_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeGroupPP_G.getPropSettings(prop));
+				case AnalyzeGroupPP_G.TEMPLATE % __AnalyzeGroupPP_G.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroupPP_G.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -811,8 +842,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeGroupPP_G:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeGroupPP_G:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeGroupPP_G.getPropTag(prop) ' (' AnalyzeGroupPP_G.getFormatTag(AnalyzeGroupPP_G.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -823,23 +854,23 @@ classdef AnalyzeGroupPP_G < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 38 % AnalyzeGroupPP_G.TABLE
+				case AnalyzeGroupPP_G.TABLE % __AnalyzeGroupPP_G.TABLE__
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'ColumnSortable', true, ...
 					    'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
 					    'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
@@ -849,7 +880,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    );
 					value = table;
 					
-				case 39 % AnalyzeGroupPP_G.CONTEXTMENU
+				case AnalyzeGroupPP_G.CONTEXTMENU % __AnalyzeGroupPP_G.CONTEXTMENU__
 					contextmenu = uicontextmenu( ...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -949,15 +980,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 					
 					value = contextmenu;
 					
-				case 20 % AnalyzeGroupPP_G.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.X_DRAW % __AnalyzeGroupPP_G.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case 21 % AnalyzeGroupPP_G.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.UPDATE % __AnalyzeGroupPP_G.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 						el = pr.get('EL');
 						prop = pr.get('PROP');
@@ -973,16 +1004,16 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 22 % AnalyzeGroupPP_G.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.REDRAW % __AnalyzeGroupPP_G.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
+					    set(pr.get('TABLE'), 'Position', [s(.3) s(.3) w_p-s(.6) max(1, pr.get('HEIGHT')-s(2.2))])
 					end
 					
-				case 16 % AnalyzeGroupPP_G.SHOW
-					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.SHOW % __AnalyzeGroupPP_G.SHOW__
+					value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
@@ -1022,8 +1053,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 17 % AnalyzeGroupPP_G.HIDE
-					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.HIDE % __AnalyzeGroupPP_G.HIDE__
+					value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
@@ -1063,15 +1094,15 @@ classdef AnalyzeGroupPP_G < PanelProp
 					    end
 					end
 					
-				case 18 % AnalyzeGroupPP_G.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.DELETE % __AnalyzeGroupPP_G.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case 19 % AnalyzeGroupPP_G.CLOSE
-					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
+				case AnalyzeGroupPP_G.CLOSE % __AnalyzeGroupPP_G.CLOSE__
+					value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
 					if value
 					    % figure for graph plot
 					    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
@@ -1112,7 +1143,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1275,60 +1306,60 @@ classdef AnalyzeGroupPP_G < PanelProp
 			            end
 			            brain_atlas = sub.get('BA');
 			            % % %             switch m.get('SHAPE')
-			            % % %                 case 1 % Measure.GLOBAL
+			            % % %                 case Measure.GLOBAL % __Measure.GLOBAL__
 			            % % %                     switch m.get('SCOPE')
-			            % % %                         case 1 % Measure.SUPERGLOBAL
+			            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			            % % %                             mGBPF = MeasureGroupBrainPF_GS('M', m, 'BA', brain_atlas);
-			            % % %                         case 2 % Measure.UNILAYER
+			            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
 			            % % %                             mGBPF = MeasureGroupBrainPF_GU('M', m, 'BA', brain_atlas);
-			            % % %                         case 3 % Measure.BILAYER
+			            % % %                         case Measure.BILAYER % __Measure.BILAYER__
 			            % % %                             mGBPF = MeasureGroupBrainPF_GB('M', m, 'BA', brain_atlas);
 			            % % %                     end
-			            % % %                 case 2 % Measure.NODAL
+			            % % %                 case Measure.NODAL % __Measure.NODAL__
 			            % % %                     switch m.get('SCOPE')
-			            % % %                         case 1 % Measure.SUPERGLOBAL
+			            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			            % % %                             mGBPF = MeasureGroupBrainPF_NS('M', m, 'BA', brain_atlas);
-			            % % %                         case 2 % Measure.UNILAYER
+			            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
 			            % % %                             mGBPF = MeasureGroupBrainPF_NU('M', m, 'BA', brain_atlas);
-			            % % %                         case 3 % Measure.BILAYER
+			            % % %                         case Measure.BILAYER % __Measure.BILAYER__
 			            % % %                             mGBPF = MeasureGroupBrainPF_NB('M', m, 'BA', brain_atlas);
 			            % % %                     end
-			            % % %                 case 3 % Measure.BINODAL
+			            % % %                 case Measure.BINODAL % __Measure.BINODAL__
 			            % % %                     switch m.get('SCOPE')
-			            % % %                         case 1 % Measure.SUPERGLOBAL
+			            % % %                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			            % % %                             mGBPF = MeasureGroupBrainPF_BS('M', m, 'BA', brain_atlas);
-			            % % %                         case 2 % Measure.UNILAYER
+			            % % %                         case Measure.UNILAYER % __Measure.UNILAYER__
 			            % % %                             mGBPF = MeasureGroupBrainPF_BU('M', m, 'BA', brain_atlas);
-			            % % %                         case 3 % Measure.BILAYER
+			            % % %                         case Measure.BILAYER % __Measure.BILAYER__
 			            % % %                             mGBPF =  MeasureGroupBrainPF_BB('M', m, 'BA', brain_atlas);
 			            % % %                     end
 			            % % %             end
 			            switch Element.getPropDefault(measure, 'SHAPE')
-			                case 1 % Measure.GLOBAL
+			                case Measure.GLOBAL % __Measure.GLOBAL__
 			                    switch Element.getPropDefault(measure, 'SCOPE')
-			                        case 1 % Measure.SUPERGLOBAL
+			                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			                            mgbpf = MeasureGroupBrainPF_GS('M', m, 'BA', brain_atlas);
-			                        case 2 % Measure.UNILAYER
+			                        case Measure.UNILAYER % __Measure.UNILAYER__
 			                            mgbpf = MeasureGroupBrainPF_GU('M', m, 'BA', brain_atlas);
-			                        case 3 % Measure.BILAYER
+			                        case Measure.BILAYER % __Measure.BILAYER__
 			                            mgbpf = MeasureGroupBrainPF_GB('M', m, 'BA', brain_atlas);
 			                    end
-			                case 2 % Measure.NODAL
+			                case Measure.NODAL % __Measure.NODAL__
 			                    switch Element.getPropDefault(measure, 'SCOPE')
-			                        case 1 % Measure.SUPERGLOBAL
+			                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			                            mgbpf = MeasureGroupBrainPF_NS('M', m, 'BA', brain_atlas);
-			                        case 2 % Measure.UNILAYER
+			                        case Measure.UNILAYER % __Measure.UNILAYER__
 			                            mgbpf = MeasureGroupBrainPF_NU('M', m, 'BA', brain_atlas);
-			                        case 3 % Measure.BILAYER
+			                        case Measure.BILAYER % __Measure.BILAYER__
 			                            mgbpf = MeasureGroupBrainPF_NB('M', m, 'BA', brain_atlas);
 			                    end
-			                case 3 % Measure.BINODAL
+			                case Measure.BINODAL % __Measure.BINODAL__
 			                    switch Element.getPropDefault(measure, 'SCOPE')
-			                        case 1 % Measure.SUPERGLOBAL
+			                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
 			                            mgbpf = MeasureGroupBrainPF_BS('M', m, 'BA', brain_atlas);
-			                        case 2 % Measure.UNILAYER
+			                        case Measure.UNILAYER % __Measure.UNILAYER__
 			                            mgbpf = MeasureGroupBrainPF_BU('M', m, 'BA', brain_atlas);
-			                        case 3 % Measure.BILAYER
+			                        case Measure.BILAYER % __Measure.BILAYER__
 			                            mgbpf = MeasureGroupBrainPF_BB('M', m, 'BA', brain_atlas);
 			                    end
 			            end
@@ -1531,19 +1562,19 @@ classdef AnalyzeGroupPP_G < PanelProp
 			
 			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
 			
-			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
+			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.NODAL
 			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.GLOBAL
 			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.BINODAL
 			            data{mi, 3} = 'BINODAL';
 			        end
 			
-			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
+			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.SUPERGLOBAL
 			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.UNILAYER
 			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.BILAYER
 			            data{mi, 4} = 'BILAYER';
 			        end
 			        

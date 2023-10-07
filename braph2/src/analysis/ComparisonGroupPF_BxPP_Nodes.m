@@ -5,45 +5,6 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 	% ComparisonGroupPF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists.
 	% It is supposed to be used with the property NODES of ComparisonGroupPF_BU, ComparisonGroupPF_BS, or ComparisonGroupPF_BB.
 	%
-	% The list of ComparisonGroupPF_BxPP_Nodes properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property node.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property node.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property node.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>DROPDOWN_NODE1</strong> 	DROPDOWN_NODE1 (evanescent, handle) is the dropdown for the first node.
-	%  <strong>37</strong> <strong>DROPDOWN_NODE2</strong> 	DROPDOWN_NODE2 (evanescent, handle) is the dropdown for the second node.
-	%
 	% ComparisonGroupPF_BxPP_Nodes methods (constructor):
 	%  ComparisonGroupPF_BxPP_Nodes - constructor
 	%
@@ -133,15 +94,15 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 	% See also uidropdown, GUI, ComparisonGroupPF_BU, ComparisonGroupPF_BS, ComparisonGroupPF_BB.
 	
 	properties (Constant) % properties
-		DROPDOWN_NODE1 = 36; %CET: Computational Efficiency Trick
+		DROPDOWN_NODE1 = PanelProp.getPropNumber() + 1;
 		DROPDOWN_NODE1_TAG = 'DROPDOWN_NODE1';
-		DROPDOWN_NODE1_CATEGORY = 7;
-		DROPDOWN_NODE1_FORMAT = 18;
+		DROPDOWN_NODE1_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_NODE1_FORMAT = Format.HANDLE;
 		
-		DROPDOWN_NODE2 = 37; %CET: Computational Efficiency Trick
+		DROPDOWN_NODE2 = PanelProp.getPropNumber() + 2;
 		DROPDOWN_NODE2_TAG = 'DROPDOWN_NODE2';
-		DROPDOWN_NODE2_CATEGORY = 7;
-		DROPDOWN_NODE2_FORMAT = 18;
+		DROPDOWN_NODE2_CATEGORY = Category.EVANESCENT;
+		DROPDOWN_NODE2_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = ComparisonGroupPF_BxPP_Nodes(varargin)
@@ -154,44 +115,6 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ComparisonGroupPF_BxPP_Nodes properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel property node.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel property node.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel property node.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel property node.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel property node.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel property node.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the prop panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>DROPDOWN_NODE1</strong> 	DROPDOWN_NODE1 (evanescent, handle) is the dropdown for the first node.
-			%  <strong>37</strong> <strong>DROPDOWN_NODE2</strong> 	DROPDOWN_NODE2 (evanescent, handle) is the dropdown for the second node.
 			%
 			% See also Category, Format.
 			
@@ -229,7 +152,7 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ComparisonGroupPF_BxPP_Nodes' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('ComparisonGroupPF_BxPP_Nodes', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel property node.
@@ -250,32 +173,54 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
+				prop_list = [ ...
+					PanelProp.getProps() ...
+						ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1 ...
+						ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2 ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 36 37];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelProp.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelProp.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelProp.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelProp.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelProp.getProps(Category.EVANESCENT) ...
+						ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1 ...
+						ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2 ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelProp.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelProp.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -296,33 +241,7 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 37;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 12;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 4;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(ComparisonGroupPF_BxPP_Nodes.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel property node/error.
@@ -350,14 +269,14 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == ComparisonGroupPF_BxPP_Nodes.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonGroupPF_BxPP_Nodes.'] ...
 					)
 			end
@@ -388,14 +307,15 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN_NODE1'  'DROPDOWN_NODE2' })); %CET: Computational Efficiency Trick
+			comparisongrouppf_bxpp_nodes_tag_list = cellfun(@(x) ComparisonGroupPF_BxPP_Nodes.getPropTag(x), num2cell(ComparisonGroupPF_BxPP_Nodes.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, comparisongrouppf_bxpp_nodes_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for ComparisonGroupPF_BxPP_Nodes.'] ...
 					)
 			end
@@ -421,7 +341,8 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN_NODE1'  'DROPDOWN_NODE2' })); % tag = pointer %CET: Computational Efficiency Trick
+				comparisongrouppf_bxpp_nodes_tag_list = cellfun(@(x) ComparisonGroupPF_BxPP_Nodes.getPropTag(x), num2cell(ComparisonGroupPF_BxPP_Nodes.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, comparisongrouppf_bxpp_nodes_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -449,9 +370,16 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				comparisongrouppf_bxpp_nodes_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN_NODE1'  'DROPDOWN_NODE2' };
-				tag = comparisongrouppf_bxpp_nodes_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+						tag = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1_TAG;
+					case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+						tag = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2_TAG;
+					otherwise
+						tag = getPropTag@PanelProp(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -476,9 +404,14 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			comparisongrouppf_bxpp_nodes_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7  7 };
-			prop_category = comparisongrouppf_bxpp_nodes_category_list{prop};
+			switch prop
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+					prop_category = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1_CATEGORY;
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+					prop_category = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelProp(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -502,9 +435,14 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			comparisongrouppf_bxpp_nodes_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18  18 };
-			prop_format = comparisongrouppf_bxpp_nodes_format_list{prop};
+			switch prop
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+					prop_format = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1_FORMAT;
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+					prop_format = ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelProp(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -528,9 +466,42 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			comparisongrouppf_bxpp_nodes_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel property node.'  'DESCRIPTION (constant, string) is the description of the panel property node.'  'TEMPLATE (parameter, item) is the template of the panel property node.'  'ID (data, string) is a few-letter code for the panel property node.'  'LABEL (metadata, string) is an extended label of the panel property node.'  'NOTES (metadata, string) are some specific notes about the panel property node.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN_NODE1 (evanescent, handle) is the dropdown for the first node.'  'DROPDOWN_NODE2 (evanescent, handle) is the dropdown for the second node.' };
-			prop_description = comparisongrouppf_bxpp_nodes_description_list{prop};
+			switch prop
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+					prop_description = 'DROPDOWN_NODE1 (evanescent, handle) is the dropdown for the first node.';
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+					prop_description = 'DROPDOWN_NODE2 (evanescent, handle) is the dropdown for the second node.';
+				case ComparisonGroupPF_BxPP_Nodes.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case ComparisonGroupPF_BxPP_Nodes.NAME
+					prop_description = 'NAME (constant, string) is the name of the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.ID
+					prop_description = 'ID (data, string) is a few-letter code for the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the panel property node.';
+				case ComparisonGroupPF_BxPP_Nodes.EL
+					prop_description = 'EL (data, item) is the element.';
+				case ComparisonGroupPF_BxPP_Nodes.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case ComparisonGroupPF_BxPP_Nodes.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the property panel.';
+				case ComparisonGroupPF_BxPP_Nodes.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case ComparisonGroupPF_BxPP_Nodes.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the editfield.';
+				case ComparisonGroupPF_BxPP_Nodes.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case ComparisonGroupPF_BxPP_Nodes.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@PanelProp(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -554,12 +525,12 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
-					prop_settings = Format.getFormatSettings(18);
-				case 37 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % ComparisonGroupPF_BxPP_Nodes.TEMPLATE
+			switch prop
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case ComparisonGroupPF_BxPP_Nodes.TEMPLATE
 					prop_settings = 'ComparisonGroupPF_BxPP_Nodes';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -587,31 +558,31 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
-					prop_default = Format.getFormatDefault(18, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
-				case 37 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
-					prop_default = Format.getFormatDefault(18, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
-				case 1 % ComparisonGroupPF_BxPP_Nodes.ELCLASS
+			switch prop
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+					prop_default = Format.getFormatDefault(Format.HANDLE, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+					prop_default = Format.getFormatDefault(Format.HANDLE, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.ELCLASS
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes';
-				case 2 % ComparisonGroupPF_BxPP_Nodes.NAME
+				case ComparisonGroupPF_BxPP_Nodes.NAME
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes';
-				case 3 % ComparisonGroupPF_BxPP_Nodes.DESCRIPTION
+				case ComparisonGroupPF_BxPP_Nodes.DESCRIPTION
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes plots the panel to select the nodes from two drop-down lists. It is supposed to be used with the property NODES of ComparisonGroupPF_BU, ComparisonGroupPF_BS, or ComparisonGroupPF_BB.';
-				case 4 % ComparisonGroupPF_BxPP_Nodes.TEMPLATE
-					prop_default = Format.getFormatDefault(8, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
-				case 5 % ComparisonGroupPF_BxPP_Nodes.ID
+				case ComparisonGroupPF_BxPP_Nodes.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.ID
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes ID';
-				case 6 % ComparisonGroupPF_BxPP_Nodes.LABEL
+				case ComparisonGroupPF_BxPP_Nodes.LABEL
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes label';
-				case 7 % ComparisonGroupPF_BxPP_Nodes.NOTES
+				case ComparisonGroupPF_BxPP_Nodes.NOTES
 					prop_default = 'ComparisonGroupPF_BxPP_Nodes notes';
-				case 23 % ComparisonGroupPF_BxPP_Nodes.EL
+				case ComparisonGroupPF_BxPP_Nodes.EL
 					prop_default = ComparisonGroupPF_BU();
-				case 24 % ComparisonGroupPF_BxPP_Nodes.PROP
-					prop_default = 46;
-				case 25 % ComparisonGroupPF_BxPP_Nodes.HEIGHT
-					prop_default = 48;
+				case ComparisonGroupPF_BxPP_Nodes.PROP
+					prop_default = ComparisonGroupPF_BU.NODES;
+				case ComparisonGroupPF_BxPP_Nodes.HEIGHT
+					prop_default = s(4);
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -657,15 +628,15 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ComparisonGroupPF_BxPP_Nodes:WrongInput
+			%  Error id: €BRAPH2.STR€:ComparisonGroupPF_BxPP_Nodes:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:ComparisonGroupPF_BxPP_Nodes:WrongInput
+			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BxPP_Nodes:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(ComparisonGroupPF_BxPP_Nodes, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupPF_BxPP_Nodes.
-			%   Error id: BRAPH2:ComparisonGroupPF_BxPP_Nodes:WrongInput
+			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BxPP_Nodes:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(ComparisonGroupPF_BxPP_Nodes, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupPF_BxPP_Nodes.
-			%   Error id: BRAPH2:ComparisonGroupPF_BxPP_Nodes:WrongInput]
+			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BxPP_Nodes:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('ComparisonGroupPF_BxPP_Nodes')
 			%  are less computationally efficient.
@@ -676,14 +647,14 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			prop = ComparisonGroupPF_BxPP_Nodes.getPropProp(pointer);
 			
 			switch prop
-				case 36 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
-					check = Format.checkFormat(18, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
-				case 37 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
-					check = Format.checkFormat(18, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
-				case 4 % ComparisonGroupPF_BxPP_Nodes.TEMPLATE
-					check = Format.checkFormat(8, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1 % __ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1__
+					check = Format.checkFormat(Format.HANDLE, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2 % __ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2__
+					check = Format.checkFormat(Format.HANDLE, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
+				case ComparisonGroupPF_BxPP_Nodes.TEMPLATE % __ComparisonGroupPF_BxPP_Nodes.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, ComparisonGroupPF_BxPP_Nodes.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -692,8 +663,8 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput'], ...
-					['BRAPH2' ':ComparisonGroupPF_BxPP_Nodes:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ComparisonGroupPF_BxPP_Nodes:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroupPF_BxPP_Nodes.getPropTag(prop) ' (' ComparisonGroupPF_BxPP_Nodes.getFormatTag(ComparisonGroupPF_BxPP_Nodes.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -704,55 +675,55 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 36 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1 % __ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE1__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					dropdown = uidropdown( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_NODE1', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_dropdown_node1} ...
 					    );
 					
 					value = dropdown;
 					
-				case 37 % ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2
+				case ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2 % __ComparisonGroupPF_BxPP_Nodes.DROPDOWN_NODE2__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					dropdown = uidropdown( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN_NODE2', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_dropdown_node1} ...
 					    );
 					
 					value = dropdown;
 					
-				case 20 % ComparisonGroupPF_BxPP_Nodes.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case ComparisonGroupPF_BxPP_Nodes.X_DRAW % __ComparisonGroupPF_BxPP_Nodes.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('DROPDOWN_NODE1')
 					    pr.memorize('DROPDOWN_NODE2')
 					end
 					
-				case 21 % ComparisonGroupPF_BxPP_Nodes.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case ComparisonGroupPF_BxPP_Nodes.UPDATE % __ComparisonGroupPF_BxPP_Nodes.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    pf = pr.get('EL');
 					    NODES = pr.get('PROP');
@@ -778,24 +749,24 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 					    end
 					end
 					
-				case 22 % ComparisonGroupPF_BxPP_Nodes.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case ComparisonGroupPF_BxPP_Nodes.REDRAW % __ComparisonGroupPF_BxPP_Nodes.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('DROPDOWN_NODE1'), 'Position', [4            4 .40*w_p 21])
-					    set(pr.get('DROPDOWN_NODE2'), 'Position', [4+.50*w_p    4 .40*w_p 21])
+					    set(pr.get('DROPDOWN_NODE1'), 'Position', [s(.3)            s(.3) .40*w_p s(1.75)])
+					    set(pr.get('DROPDOWN_NODE2'), 'Position', [s(.3)+.50*w_p    s(.3) .40*w_p s(1.75)])
 					end
 					
-				case 18 % ComparisonGroupPF_BxPP_Nodes.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case ComparisonGroupPF_BxPP_Nodes.DELETE % __ComparisonGroupPF_BxPP_Nodes.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('DROPDOWN_NODE1', Element.getNoValue())
 					    pr.set('DROPDOWN_NODE2', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

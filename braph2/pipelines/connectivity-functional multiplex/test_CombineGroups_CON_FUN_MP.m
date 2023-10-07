@@ -458,7 +458,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:CombineGroups_CON_FUN_MP.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [CombineGroups_CON_FUN_MP.GET_DIR])
+		if any(prop == [])
 			continue
 		end
 	 
@@ -571,7 +571,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:CombineGroups_CON_FUN_MP.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [CombineGroups_CON_FUN_MP.GET_DIR])
+		if any(prop == [])
 			continue
 		end
 	 
@@ -674,7 +674,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:CombineGroups_CON_FUN_MP.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [CombineGroups_CON_FUN_MP.GET_DIR])
+			if any(prop == [])
 				continue
 			end
 	 
@@ -1247,7 +1247,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:CombineGroups_CON_FUN_MP.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [CombineGroups_CON_FUN_MP.GET_DIR])
+		if any(prop == [])
 			continue
 		end
 	 

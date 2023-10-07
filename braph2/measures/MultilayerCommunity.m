@@ -6,31 +6,6 @@ classdef MultilayerCommunity < Measure
 	%  the network into non-overlapping groups of nodes which maximizes the number 
 	%  of within group edges, and minimizes the number of between group edges.
 	%
-	% The list of MultilayerCommunity properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multilayer Community Structure.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multilayer Community Structure.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multilayer Community Structure.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multilayer Community Structure.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multilayer Community Structure.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
-	%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
-	%  <strong>18</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
-	%  <strong>19</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-	%  <strong>20</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
-	%  <strong>21</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
-	%  <strong>22</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
-	%  <strong>23</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
-	%
 	% MultilayerCommunity methods (constructor):
 	%  MultilayerCommunity - constructor
 	%
@@ -118,45 +93,45 @@ classdef MultilayerCommunity < Measure
 	%
 	
 	properties (Constant) % properties
-		LIMIT = 16; %CET: Computational Efficiency Trick
+		LIMIT = Measure.getPropNumber() + 1;
 		LIMIT_TAG = 'LIMIT';
-		LIMIT_CATEGORY = 3;
-		LIMIT_FORMAT = 11;
+		LIMIT_CATEGORY = Category.PARAMETER;
+		LIMIT_FORMAT = Format.SCALAR;
 		
-		RANDORD = 17; %CET: Computational Efficiency Trick
+		RANDORD = Measure.getPropNumber() + 2;
 		RANDORD_TAG = 'RANDORD';
-		RANDORD_CATEGORY = 3;
-		RANDORD_FORMAT = 4;
+		RANDORD_CATEGORY = Category.PARAMETER;
+		RANDORD_FORMAT = Format.LOGICAL;
 		
-		RANDMOVE = 18; %CET: Computational Efficiency Trick
+		RANDMOVE = Measure.getPropNumber() + 3;
 		RANDMOVE_TAG = 'RANDMOVE';
-		RANDMOVE_CATEGORY = 3;
-		RANDMOVE_FORMAT = 4;
+		RANDMOVE_CATEGORY = Category.PARAMETER;
+		RANDMOVE_FORMAT = Format.LOGICAL;
 		
-		GAMMA = 19; %CET: Computational Efficiency Trick
+		GAMMA = Measure.getPropNumber() + 4;
 		GAMMA_TAG = 'GAMMA';
-		GAMMA_CATEGORY = 3;
-		GAMMA_FORMAT = 11;
+		GAMMA_CATEGORY = Category.PARAMETER;
+		GAMMA_FORMAT = Format.SCALAR;
 		
-		OMEGA = 20; %CET: Computational Efficiency Trick
+		OMEGA = Measure.getPropNumber() + 5;
 		OMEGA_TAG = 'OMEGA';
-		OMEGA_CATEGORY = 3;
-		OMEGA_FORMAT = 11;
+		OMEGA_CATEGORY = Category.PARAMETER;
+		OMEGA_FORMAT = Format.SCALAR;
 		
-		S0 = 21; %CET: Computational Efficiency Trick
+		S0 = Measure.getPropNumber() + 6;
 		S0_TAG = 'S0';
-		S0_CATEGORY = 4;
-		S0_FORMAT = 13;
+		S0_CATEGORY = Category.DATA;
+		S0_FORMAT = Format.CVECTOR;
 		
-		OM = 22; %CET: Computational Efficiency Trick
+		OM = Measure.getPropNumber() + 7;
 		OM_TAG = 'OM';
-		OM_CATEGORY = 4;
-		OM_FORMAT = 14;
+		OM_CATEGORY = Category.DATA;
+		OM_FORMAT = Format.MATRIX;
 		
-		QUALITY_FUNCTION = 23; %CET: Computational Efficiency Trick
+		QUALITY_FUNCTION = Measure.getPropNumber() + 8;
 		QUALITY_FUNCTION_TAG = 'QUALITY_FUNCTION';
-		QUALITY_FUNCTION_CATEGORY = 4;
-		QUALITY_FUNCTION_FORMAT = 14;
+		QUALITY_FUNCTION_CATEGORY = Category.DATA;
+		QUALITY_FUNCTION_FORMAT = Format.MATRIX;
 	end
 	methods % constructor
 		function m = MultilayerCommunity(varargin)
@@ -169,30 +144,6 @@ classdef MultilayerCommunity < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of MultilayerCommunity properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multilayer Community Structure.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multilayer Community Structure.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multilayer Community Structure.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multilayer Community Structure.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multilayer Community Structure.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
-			%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
-			%  <strong>18</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
-			%  <strong>19</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
-			%  <strong>20</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
-			%  <strong>21</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
-			%  <strong>22</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
-			%  <strong>23</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
 			%
 			% See also Category, Format.
 			
@@ -230,7 +181,7 @@ classdef MultilayerCommunity < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'MultilayerCommunity'  'Flexibility'  'FlexibilityAv'  'MultilayerM'  'Persistence' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('MultilayerCommunity', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of multilayer community structure.
@@ -251,30 +202,66 @@ classdef MultilayerCommunity < Measure
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23];
+				prop_list = [ ...
+					Measure.getProps() ...
+						MultilayerCommunity.LIMIT ...
+						MultilayerCommunity.RANDORD ...
+						MultilayerCommunity.RANDMOVE ...
+						MultilayerCommunity.GAMMA ...
+						MultilayerCommunity.OMEGA ...
+						MultilayerCommunity.S0 ...
+						MultilayerCommunity.OM ...
+						MultilayerCommunity.QUALITY_FUNCTION ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16 17 18 19 20];
-				case 4 % Category.DATA
-					prop_list = [5 13 21 22 23];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Measure.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Measure.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Measure.getProps(Category.PARAMETER) ...
+						MultilayerCommunity.LIMIT ...
+						MultilayerCommunity.RANDORD ...
+						MultilayerCommunity.RANDMOVE ...
+						MultilayerCommunity.GAMMA ...
+						MultilayerCommunity.OMEGA ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Measure.getProps(Category.DATA) ...
+						MultilayerCommunity.S0 ...
+						MultilayerCommunity.OM ...
+						MultilayerCommunity.QUALITY_FUNCTION ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Measure.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Measure.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Measure.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Measure.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Measure.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -295,31 +282,7 @@ classdef MultilayerCommunity < Measure
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 23;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 6;
-				case 4 % Category.DATA
-					prop_number = 5;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(MultilayerCommunity.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in multilayer community structure/error.
@@ -347,14 +310,14 @@ classdef MultilayerCommunity < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 23 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == MultilayerCommunity.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultilayerCommunity.'] ...
 					)
 			end
@@ -385,14 +348,15 @@ classdef MultilayerCommunity < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
+			multilayercommunity_tag_list = cellfun(@(x) MultilayerCommunity.getPropTag(x), num2cell(MultilayerCommunity.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, multilayercommunity_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for MultilayerCommunity.'] ...
 					)
 			end
@@ -418,7 +382,8 @@ classdef MultilayerCommunity < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
+				multilayercommunity_tag_list = cellfun(@(x) MultilayerCommunity.getPropTag(x), num2cell(MultilayerCommunity.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, multilayercommunity_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -446,9 +411,28 @@ classdef MultilayerCommunity < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				multilayercommunity_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' };
-				tag = multilayercommunity_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case MultilayerCommunity.LIMIT
+						tag = MultilayerCommunity.LIMIT_TAG;
+					case MultilayerCommunity.RANDORD
+						tag = MultilayerCommunity.RANDORD_TAG;
+					case MultilayerCommunity.RANDMOVE
+						tag = MultilayerCommunity.RANDMOVE_TAG;
+					case MultilayerCommunity.GAMMA
+						tag = MultilayerCommunity.GAMMA_TAG;
+					case MultilayerCommunity.OMEGA
+						tag = MultilayerCommunity.OMEGA_TAG;
+					case MultilayerCommunity.S0
+						tag = MultilayerCommunity.S0_TAG;
+					case MultilayerCommunity.OM
+						tag = MultilayerCommunity.OM_TAG;
+					case MultilayerCommunity.QUALITY_FUNCTION
+						tag = MultilayerCommunity.QUALITY_FUNCTION_TAG;
+					otherwise
+						tag = getPropTag@Measure(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -473,9 +457,26 @@ classdef MultilayerCommunity < Measure
 			
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multilayercommunity_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  3  3  3  4  4  4 };
-			prop_category = multilayercommunity_category_list{prop};
+			switch prop
+				case MultilayerCommunity.LIMIT
+					prop_category = MultilayerCommunity.LIMIT_CATEGORY;
+				case MultilayerCommunity.RANDORD
+					prop_category = MultilayerCommunity.RANDORD_CATEGORY;
+				case MultilayerCommunity.RANDMOVE
+					prop_category = MultilayerCommunity.RANDMOVE_CATEGORY;
+				case MultilayerCommunity.GAMMA
+					prop_category = MultilayerCommunity.GAMMA_CATEGORY;
+				case MultilayerCommunity.OMEGA
+					prop_category = MultilayerCommunity.OMEGA_CATEGORY;
+				case MultilayerCommunity.S0
+					prop_category = MultilayerCommunity.S0_CATEGORY;
+				case MultilayerCommunity.OM
+					prop_category = MultilayerCommunity.OM_CATEGORY;
+				case MultilayerCommunity.QUALITY_FUNCTION
+					prop_category = MultilayerCommunity.QUALITY_FUNCTION_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Measure(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -499,9 +500,26 @@ classdef MultilayerCommunity < Measure
 			
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multilayercommunity_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11  4  4  11  11  13  14  14 };
-			prop_format = multilayercommunity_format_list{prop};
+			switch prop
+				case MultilayerCommunity.LIMIT
+					prop_format = MultilayerCommunity.LIMIT_FORMAT;
+				case MultilayerCommunity.RANDORD
+					prop_format = MultilayerCommunity.RANDORD_FORMAT;
+				case MultilayerCommunity.RANDMOVE
+					prop_format = MultilayerCommunity.RANDMOVE_FORMAT;
+				case MultilayerCommunity.GAMMA
+					prop_format = MultilayerCommunity.GAMMA_FORMAT;
+				case MultilayerCommunity.OMEGA
+					prop_format = MultilayerCommunity.OMEGA_FORMAT;
+				case MultilayerCommunity.S0
+					prop_format = MultilayerCommunity.S0_FORMAT;
+				case MultilayerCommunity.OM
+					prop_format = MultilayerCommunity.OM_FORMAT;
+				case MultilayerCommunity.QUALITY_FUNCTION
+					prop_format = MultilayerCommunity.QUALITY_FUNCTION_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Measure(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -525,9 +543,50 @@ classdef MultilayerCommunity < Measure
 			
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multilayercommunity_description_list = { 'ELCLASS (constant, string) is the class of the Multilayer Community Structure.'  'NAME (constant, string) is the name of the Multilayer Community Structure.'  'DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.'  'TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.'  'ID (data, string) is a few-letter code of the Multilayer Community Structure.'  'LABEL (metadata, string) is an extended label of the Multilayer Community Structure.'  'NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multilayer Community Structure.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
-			prop_description = multilayercommunity_description_list{prop};
+			switch prop
+				case MultilayerCommunity.LIMIT
+					prop_description = 'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.';
+				case MultilayerCommunity.RANDORD
+					prop_description = 'RANDORD (parameter, LOGICAL) is used to set randperm.';
+				case MultilayerCommunity.RANDMOVE
+					prop_description = 'RANDMOVE (parameter, LOGICAL) is the move function.';
+				case MultilayerCommunity.GAMMA
+					prop_description = 'GAMMA (parameter, SCALAR) is the resolution parameter.';
+				case MultilayerCommunity.OMEGA
+					prop_description = 'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.';
+				case MultilayerCommunity.S0
+					prop_description = 'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.';
+				case MultilayerCommunity.OM
+					prop_description = 'OM (data, MATRIX) is the multilayer modularity matrix.';
+				case MultilayerCommunity.QUALITY_FUNCTION
+					prop_description = 'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.';
+				case MultilayerCommunity.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Multilayer Community Structure.';
+				case MultilayerCommunity.NAME
+					prop_description = 'NAME (constant, string) is the name of the Multilayer Community Structure.';
+				case MultilayerCommunity.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Multilayer Community Structure.';
+				case MultilayerCommunity.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Multilayer Community Structure.';
+				case MultilayerCommunity.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Multilayer Community Structure.';
+				case MultilayerCommunity.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Multilayer Community Structure.';
+				case MultilayerCommunity.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Multilayer Community Structure.';
+				case MultilayerCommunity.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case MultilayerCommunity.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case MultilayerCommunity.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case MultilayerCommunity.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case MultilayerCommunity.M
+					prop_description = 'M (result, cell) is the Multilayer Community Structure.';
+				otherwise
+					prop_description = getPropDescription@Measure(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -551,24 +610,24 @@ classdef MultilayerCommunity < Measure
 			
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % MultilayerCommunity.LIMIT
-					prop_settings = Format.getFormatSettings(11);
-				case 17 % MultilayerCommunity.RANDORD
-					prop_settings = Format.getFormatSettings(4);
-				case 18 % MultilayerCommunity.RANDMOVE
-					prop_settings = Format.getFormatSettings(4);
-				case 19 % MultilayerCommunity.GAMMA
-					prop_settings = Format.getFormatSettings(11);
-				case 20 % MultilayerCommunity.OMEGA
-					prop_settings = Format.getFormatSettings(11);
-				case 21 % MultilayerCommunity.S0
-					prop_settings = Format.getFormatSettings(13);
-				case 22 % MultilayerCommunity.OM
-					prop_settings = Format.getFormatSettings(14);
-				case 23 % MultilayerCommunity.QUALITY_FUNCTION
-					prop_settings = Format.getFormatSettings(14);
-				case 4 % MultilayerCommunity.TEMPLATE
+			switch prop
+				case MultilayerCommunity.LIMIT
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MultilayerCommunity.RANDORD
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case MultilayerCommunity.RANDMOVE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case MultilayerCommunity.GAMMA
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MultilayerCommunity.OMEGA
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MultilayerCommunity.S0
+					prop_settings = Format.getFormatSettings(Format.CVECTOR);
+				case MultilayerCommunity.OM
+					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case MultilayerCommunity.QUALITY_FUNCTION
+					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case MultilayerCommunity.TEMPLATE
 					prop_settings = 'MultilayerCommunity';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -596,44 +655,44 @@ classdef MultilayerCommunity < Measure
 			
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % MultilayerCommunity.LIMIT
+			switch prop
+				case MultilayerCommunity.LIMIT
 					prop_default = 10000;
-				case 17 % MultilayerCommunity.RANDORD
+				case MultilayerCommunity.RANDORD
 					prop_default = true;
-				case 18 % MultilayerCommunity.RANDMOVE
+				case MultilayerCommunity.RANDMOVE
 					prop_default = true;
-				case 19 % MultilayerCommunity.GAMMA
+				case MultilayerCommunity.GAMMA
 					prop_default = 1;
-				case 20 % MultilayerCommunity.OMEGA
+				case MultilayerCommunity.OMEGA
 					prop_default = 1;
-				case 21 % MultilayerCommunity.S0
+				case MultilayerCommunity.S0
 					prop_default = [];
-				case 22 % MultilayerCommunity.OM
+				case MultilayerCommunity.OM
 					prop_default = [];
-				case 23 % MultilayerCommunity.QUALITY_FUNCTION
+				case MultilayerCommunity.QUALITY_FUNCTION
 					prop_default = [];
-				case 1 % MultilayerCommunity.ELCLASS
+				case MultilayerCommunity.ELCLASS
 					prop_default = 'MultilayerCommunity';
-				case 2 % MultilayerCommunity.NAME
+				case MultilayerCommunity.NAME
 					prop_default = 'Multilayer Community Structure';
-				case 3 % MultilayerCommunity.DESCRIPTION
+				case MultilayerCommunity.DESCRIPTION
 					prop_default = 'The Multilayer Community Structure (MultilayerCommunity) of a multilayer graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.';
-				case 4 % MultilayerCommunity.TEMPLATE
-					prop_default = Format.getFormatDefault(8, MultilayerCommunity.getPropSettings(prop));
-				case 5 % MultilayerCommunity.ID
+				case MultilayerCommunity.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.ID
 					prop_default = 'MultilayerCommunity ID';
-				case 6 % MultilayerCommunity.LABEL
+				case MultilayerCommunity.LABEL
 					prop_default = 'Multilayer Community Structure label';
-				case 7 % MultilayerCommunity.NOTES
+				case MultilayerCommunity.NOTES
 					prop_default = 'Multilayer Community Structure notes';
-				case 9 % MultilayerCommunity.SHAPE
-					prop_default = 2;
-				case 10 % MultilayerCommunity.SCOPE
-					prop_default = 2;
-				case 11 % MultilayerCommunity.PARAMETRICITY
-					prop_default = 2;
-				case 12 % MultilayerCommunity.COMPATIBLE_GRAPHS
+				case MultilayerCommunity.SHAPE
+					prop_default = Measure.NODAL;
+				case MultilayerCommunity.SCOPE
+					prop_default = Measure.UNILAYER;
+				case MultilayerCommunity.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case MultilayerCommunity.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -680,15 +739,15 @@ classdef MultilayerCommunity < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MultilayerCommunity:WrongInput
+			%  Error id: €BRAPH2.STR€:MultilayerCommunity:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:MultilayerCommunity:WrongInput
+			%   Error id: €BRAPH2.STR€:MultilayerCommunity:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(MultilayerCommunity, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultilayerCommunity.
-			%   Error id: BRAPH2:MultilayerCommunity:WrongInput
+			%   Error id: €BRAPH2.STR€:MultilayerCommunity:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(MultilayerCommunity, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultilayerCommunity.
-			%   Error id: BRAPH2:MultilayerCommunity:WrongInput]
+			%   Error id: €BRAPH2.STR€:MultilayerCommunity:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('MultilayerCommunity')
 			%  are less computationally efficient.
@@ -699,26 +758,26 @@ classdef MultilayerCommunity < Measure
 			prop = MultilayerCommunity.getPropProp(pointer);
 			
 			switch prop
-				case 16 % MultilayerCommunity.LIMIT
-					check = Format.checkFormat(11, value, MultilayerCommunity.getPropSettings(prop));
-				case 17 % MultilayerCommunity.RANDORD
-					check = Format.checkFormat(4, value, MultilayerCommunity.getPropSettings(prop));
-				case 18 % MultilayerCommunity.RANDMOVE
-					check = Format.checkFormat(4, value, MultilayerCommunity.getPropSettings(prop));
-				case 19 % MultilayerCommunity.GAMMA
-					check = Format.checkFormat(11, value, MultilayerCommunity.getPropSettings(prop));
-				case 20 % MultilayerCommunity.OMEGA
-					check = Format.checkFormat(11, value, MultilayerCommunity.getPropSettings(prop));
-				case 21 % MultilayerCommunity.S0
-					check = Format.checkFormat(13, value, MultilayerCommunity.getPropSettings(prop));
-				case 22 % MultilayerCommunity.OM
-					check = Format.checkFormat(14, value, MultilayerCommunity.getPropSettings(prop));
-				case 23 % MultilayerCommunity.QUALITY_FUNCTION
-					check = Format.checkFormat(14, value, MultilayerCommunity.getPropSettings(prop));
-				case 4 % MultilayerCommunity.TEMPLATE
-					check = Format.checkFormat(8, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.LIMIT % __MultilayerCommunity.LIMIT__
+					check = Format.checkFormat(Format.SCALAR, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.RANDORD % __MultilayerCommunity.RANDORD__
+					check = Format.checkFormat(Format.LOGICAL, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.RANDMOVE % __MultilayerCommunity.RANDMOVE__
+					check = Format.checkFormat(Format.LOGICAL, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.GAMMA % __MultilayerCommunity.GAMMA__
+					check = Format.checkFormat(Format.SCALAR, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.OMEGA % __MultilayerCommunity.OMEGA__
+					check = Format.checkFormat(Format.SCALAR, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.S0 % __MultilayerCommunity.S0__
+					check = Format.checkFormat(Format.CVECTOR, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.OM % __MultilayerCommunity.OM__
+					check = Format.checkFormat(Format.MATRIX, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.QUALITY_FUNCTION % __MultilayerCommunity.QUALITY_FUNCTION__
+					check = Format.checkFormat(Format.MATRIX, value, MultilayerCommunity.getPropSettings(prop));
+				case MultilayerCommunity.TEMPLATE % __MultilayerCommunity.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, MultilayerCommunity.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= Measure.getPropNumber()
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -727,8 +786,8 @@ classdef MultilayerCommunity < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
-					['BRAPH2' ':MultilayerCommunity:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultilayerCommunity.getPropTag(prop) ' (' MultilayerCommunity.getFormatTag(MultilayerCommunity.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -739,20 +798,20 @@ classdef MultilayerCommunity < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % MultilayerCommunity.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case MultilayerCommunity.M % __MultilayerCommunity.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(MultilayerCommunity.M), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					L = g.get('LAYERNUMBER');
@@ -801,14 +860,14 @@ classdef MultilayerCommunity < Measure
 					    for i=1:L
 					        A(i) = {A_hold{i, i}};
 					    end
-					    if graph_type == 4 || graph_type == 6
-					        if directionality_firstlayer == 2  % undirected
+					    if graph_type == Graph.MULTIPLEX || graph_type == Graph.MULTILAYER
+					        if directionality_firstlayer == Graph.UNDIRECTED  % undirected
 					            [OM, twom] = multicat_undirected(m, A, gamma, omega, N(1), L);
 					        else  % directed
 					            [OM, twom] = multicat_directed(m, A, gamma, omega, N(1), L);
 					        end
-					    elseif graph_type== 3 || graph_type== 5
-					        if directionality_firstlayer == 2  % undirected
+					    elseif graph_type== Graph.ORDERED_MULTIPLEX || graph_type== Graph.ORDERED_MULTILAYER
+					        if directionality_firstlayer == Graph.UNDIRECTED  % undirected
 					            [OM, twom] = multiord_undirected(m, A, gamma, omega, N(1), L);
 					        else  % directed
 					            [OM, twom] = multiord_directed(m, A, gamma, omega, N(1), L);
@@ -828,7 +887,7 @@ classdef MultilayerCommunity < Measure
 					            group_handler('assign', S0);
 					            S0 = group_handler('return'); % tidy config
 					        else
-					            error(['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
+					            error([BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
 					                ['Initial partition size for the modularity matrix should be equal to %i,' ...
 					                ' while it is ' tostring(numel(S0))], n)
 					        end
@@ -844,7 +903,7 @@ classdef MultilayerCommunity < Measure
 					    end
 					    it = it(ii,:);
 					%     if norm(full(it-it')) > 2*eps
-					%         error(['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
+					%         error([BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
 					%             'Function handle does not correspond to a symmetric matrix. Deviation: %i', norm(full(it-it')))
 					%     end
 					else
@@ -858,7 +917,7 @@ classdef MultilayerCommunity < Measure
 					            group_handler('assign', S0);
 					            S0 = group_handler('return');
 					        else
-					            error(['BRAPH2' ':MultilayerCommunity:' 'WrongInput'], ...
+					            error([BRAPH2.STR ':MultilayerCommunity:' BRAPH2.WRONG_INPUT], ...
 					                ['Initial partition size for the modularity matrix should be equal to %i,' ...
 					                ' while it is ' tostring(numel(S0))], n)
 					        end
@@ -988,7 +1047,7 @@ classdef MultilayerCommunity < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= Measure.getPropNumber()
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

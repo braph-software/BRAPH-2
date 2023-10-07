@@ -7,24 +7,6 @@ classdef RichClub < Degree
 	%  maximum number of edges that such nodes might share within a 
 	%  layer. k is set by the user, the default value is equal to 1.
 	%
-	% The list of RichClub properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, scalar) 
-	%
 	% RichClub methods (constructor):
 	%  RichClub - constructor
 	%
@@ -112,10 +94,10 @@ classdef RichClub < Degree
 	%
 	
 	properties (Constant) % properties
-		PARAMETRIC_VALUE = 16; %CET: Computational Efficiency Trick
+		PARAMETRIC_VALUE = Degree.getPropNumber() + 1;
 		PARAMETRIC_VALUE_TAG = 'PARAMETRIC_VALUE';
-		PARAMETRIC_VALUE_CATEGORY = 3;
-		PARAMETRIC_VALUE_FORMAT = 11;
+		PARAMETRIC_VALUE_CATEGORY = Category.PARAMETER;
+		PARAMETRIC_VALUE_FORMAT = Format.SCALAR;
 	end
 	methods % constructor
 		function m = RichClub(varargin)
@@ -128,23 +110,6 @@ classdef RichClub < Degree
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of RichClub properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, scalar) 
 			%
 			% See also Category, Format.
 			
@@ -182,7 +147,7 @@ classdef RichClub < Degree
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'RichClub' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('RichClub', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of rich-club.
@@ -203,30 +168,52 @@ classdef RichClub < Degree
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					Degree.getProps() ...
+						RichClub.PARAMETRIC_VALUE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Degree.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Degree.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Degree.getProps(Category.PARAMETER) ...
+						RichClub.PARAMETRIC_VALUE ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Degree.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Degree.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Degree.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Degree.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Degree.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Degree.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -247,31 +234,7 @@ classdef RichClub < Degree
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(RichClub.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in rich-club/error.
@@ -299,14 +262,14 @@ classdef RichClub < Degree
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == RichClub.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RichClub:' 'WrongInput'], ...
-					['BRAPH2' ':RichClub:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for RichClub.'] ...
 					)
 			end
@@ -337,14 +300,15 @@ classdef RichClub < Degree
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); %CET: Computational Efficiency Trick
+			richclub_tag_list = cellfun(@(x) RichClub.getPropTag(x), num2cell(RichClub.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, richclub_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RichClub:' 'WrongInput'], ...
-					['BRAPH2' ':RichClub:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for RichClub.'] ...
 					)
 			end
@@ -370,7 +334,8 @@ classdef RichClub < Degree
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); % tag = pointer %CET: Computational Efficiency Trick
+				richclub_tag_list = cellfun(@(x) RichClub.getPropTag(x), num2cell(RichClub.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, richclub_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -398,9 +363,14 @@ classdef RichClub < Degree
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				richclub_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' };
-				tag = richclub_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case RichClub.PARAMETRIC_VALUE
+						tag = RichClub.PARAMETRIC_VALUE_TAG;
+					otherwise
+						tag = getPropTag@Degree(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -425,9 +395,12 @@ classdef RichClub < Degree
 			
 			prop = RichClub.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			richclub_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = richclub_category_list{prop};
+			switch prop
+				case RichClub.PARAMETRIC_VALUE
+					prop_category = RichClub.PARAMETRIC_VALUE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Degree(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -451,9 +424,12 @@ classdef RichClub < Degree
 			
 			prop = RichClub.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			richclub_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11 };
-			prop_format = richclub_format_list{prop};
+			switch prop
+				case RichClub.PARAMETRIC_VALUE
+					prop_format = RichClub.PARAMETRIC_VALUE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Degree(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -477,9 +453,36 @@ classdef RichClub < Degree
 			
 			prop = RichClub.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			richclub_description_list = { 'ELCLASS (constant, string) is the class of the Rich-Club.'  'NAME (constant, string) is the name of the Rich-Club.'  'DESCRIPTION (constant, string) is the description of the Rich-Club.'  'TEMPLATE (parameter, item) is the template of the Rich-Club.'  'ID (data, string) is a few-letter code of the Rich-Club.'  'LABEL (metadata, string) is an extended label of the Rich-Club.'  'NOTES (metadata, string) are some specific notes about the Rich-Club.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Rich-Club.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, scalar) ' };
-			prop_description = richclub_description_list{prop};
+			switch prop
+				case RichClub.PARAMETRIC_VALUE
+					prop_description = 'PARAMETRIC_VALUE (parameter, scalar) ';
+				case RichClub.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Rich-Club.';
+				case RichClub.NAME
+					prop_description = 'NAME (constant, string) is the name of the Rich-Club.';
+				case RichClub.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Rich-Club.';
+				case RichClub.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Rich-Club.';
+				case RichClub.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Rich-Club.';
+				case RichClub.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Rich-Club.';
+				case RichClub.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Rich-Club.';
+				case RichClub.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
+				case RichClub.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case RichClub.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.PARAMETRIC__.';
+				case RichClub.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case RichClub.M
+					prop_description = 'M (result, cell) is the Rich-Club.';
+				otherwise
+					prop_description = getPropDescription@Degree(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -503,10 +506,10 @@ classdef RichClub < Degree
 			
 			prop = RichClub.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % RichClub.PARAMETRIC_VALUE
-					prop_settings = Format.getFormatSettings(11);
-				case 4 % RichClub.TEMPLATE
+			switch prop
+				case RichClub.PARAMETRIC_VALUE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case RichClub.TEMPLATE
 					prop_settings = 'RichClub';
 				otherwise
 					prop_settings = getPropSettings@Degree(prop);
@@ -534,30 +537,30 @@ classdef RichClub < Degree
 			
 			prop = RichClub.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % RichClub.PARAMETRIC_VALUE
+			switch prop
+				case RichClub.PARAMETRIC_VALUE
 					prop_default = 1;
-				case 1 % RichClub.ELCLASS
+				case RichClub.ELCLASS
 					prop_default = 'RichClub';
-				case 2 % RichClub.NAME
+				case RichClub.NAME
 					prop_default = 'Rich-Club';
-				case 3 % RichClub.DESCRIPTION
+				case RichClub.DESCRIPTION
 					prop_default = 'The Rich-Club coefficient (RichClub) of a node at level k is the fraction of the edges that connect nodes of degree k or higher out of the maximum number of edges that such nodes might share within a layer. k is set by the user, the default value is equal to 1.';
-				case 4 % RichClub.TEMPLATE
-					prop_default = Format.getFormatDefault(8, RichClub.getPropSettings(prop));
-				case 5 % RichClub.ID
+				case RichClub.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, RichClub.getPropSettings(prop));
+				case RichClub.ID
 					prop_default = 'RichClub ID';
-				case 6 % RichClub.LABEL
+				case RichClub.LABEL
 					prop_default = 'Rich-Club label';
-				case 7 % RichClub.NOTES
+				case RichClub.NOTES
 					prop_default = 'Rich-Club notes';
-				case 9 % RichClub.SHAPE
-					prop_default = 1;
-				case 10 % RichClub.SCOPE
-					prop_default = 2;
-				case 11 % RichClub.PARAMETRICITY
-					prop_default = 1;
-				case 12 % RichClub.COMPATIBLE_GRAPHS
+				case RichClub.SHAPE
+					prop_default = Measure.GLOBAL;
+				case RichClub.SCOPE
+					prop_default = Measure.UNILAYER;
+				case RichClub.PARAMETRICITY
+					prop_default = Measure.PARAMETRIC;
+				case RichClub.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'};
 				otherwise
 					prop_default = getPropDefault@Degree(prop);
@@ -604,15 +607,15 @@ classdef RichClub < Degree
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:RichClub:WrongInput
+			%  Error id: €BRAPH2.STR€:RichClub:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:RichClub:WrongInput
+			%   Error id: €BRAPH2.STR€:RichClub:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(RichClub, PROP, VALUE) throws error if VALUE has not a valid format for PROP of RichClub.
-			%   Error id: BRAPH2:RichClub:WrongInput
+			%   Error id: €BRAPH2.STR€:RichClub:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(RichClub, PROP, VALUE) throws error if VALUE has not a valid format for PROP of RichClub.
-			%   Error id: BRAPH2:RichClub:WrongInput]
+			%   Error id: €BRAPH2.STR€:RichClub:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('RichClub')
 			%  are less computationally efficient.
@@ -623,12 +626,12 @@ classdef RichClub < Degree
 			prop = RichClub.getPropProp(pointer);
 			
 			switch prop
-				case 16 % RichClub.PARAMETRIC_VALUE
-					check = Format.checkFormat(11, value, RichClub.getPropSettings(prop));
-				case 4 % RichClub.TEMPLATE
-					check = Format.checkFormat(8, value, RichClub.getPropSettings(prop));
+				case RichClub.PARAMETRIC_VALUE % __RichClub.PARAMETRIC_VALUE__
+					check = Format.checkFormat(Format.SCALAR, value, RichClub.getPropSettings(prop));
+				case RichClub.TEMPLATE % __RichClub.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, RichClub.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= Degree.getPropNumber()
 						check = checkProp@Degree(prop, value);
 					end
 			end
@@ -637,8 +640,8 @@ classdef RichClub < Degree
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RichClub:' 'WrongInput'], ...
-					['BRAPH2' ':RichClub:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' RichClub.getPropTag(prop) ' (' RichClub.getFormatTag(RichClub.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -649,20 +652,20 @@ classdef RichClub < Degree
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % RichClub.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case RichClub.M % __RichClub.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(RichClub.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -672,7 +675,7 @@ classdef RichClub < Degree
 					directionality_type = g.get('DIRECTIONALITY_TYPE', L);
 					richclub_threshold = m.get('PARAMETRIC_VALUE');
 					assert(mod(richclub_threshold, 1) == 0, ...
-					    ['BRAPH2' ':RichClub:' 'WrongInput'], ...
+					    [BRAPH2.STR ':RichClub:' BRAPH2.WRONG_INPUT], ...
 					    ['RichClub threshold must be an integer value ' ...
 					    'while it is ' tostring(richclub_threshold)])
 					
@@ -682,7 +685,7 @@ classdef RichClub < Degree
 					    Aii = A{li, li};
 					    directionality_layer = directionality_type(li, li);
 					      
-					    if directionality_layer == 2  % undirected graphs
+					    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
 					        
 					        degree = calculateValue@Degree(m, prop);        
 					        deg = degree{li};
@@ -716,7 +719,7 @@ classdef RichClub < Degree
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= Degree.getPropNumber()
 						value = calculateValue@Degree(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

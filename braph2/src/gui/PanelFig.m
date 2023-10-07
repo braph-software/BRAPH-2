@@ -28,30 +28,6 @@ classdef PanelFig < Panel
 	%     pf.get('<strong>RESIZEX</strong>') - resizes the x-extension of the element panel and its prop panels.
 	%     pf.get('<strong>RESIZEY</strong>') - resizes the y-extension of the element panel and its prop panels.
 	%
-	% The list of PanelFig properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the figure panel.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%
 	% PanelFig methods (constructor):
 	%  PanelFig - constructor
 	%
@@ -141,20 +117,20 @@ classdef PanelFig < Panel
 	% See also uipanel, GUIFig, Settings.
 	
 	properties (Constant) % properties
-		ST_POSITION = 20; %CET: Computational Efficiency Trick
+		ST_POSITION = Panel.getPropNumber() + 1;
 		ST_POSITION_TAG = 'ST_POSITION';
-		ST_POSITION_CATEGORY = 8;
-		ST_POSITION_FORMAT = 8;
+		ST_POSITION_CATEGORY = Category.FIGURE;
+		ST_POSITION_FORMAT = Format.ITEM;
 		
-		H_TOOLBAR = 21; %CET: Computational Efficiency Trick
+		H_TOOLBAR = Panel.getPropNumber() + 2;
 		H_TOOLBAR_TAG = 'H_TOOLBAR';
-		H_TOOLBAR_CATEGORY = 7;
-		H_TOOLBAR_FORMAT = 18;
+		H_TOOLBAR_CATEGORY = Category.EVANESCENT;
+		H_TOOLBAR_FORMAT = Format.HANDLE;
 		
-		H_TOOLS = 22; %CET: Computational Efficiency Trick
+		H_TOOLS = Panel.getPropNumber() + 3;
 		H_TOOLS_TAG = 'H_TOOLS';
-		H_TOOLS_CATEGORY = 7;
-		H_TOOLS_FORMAT = 19;
+		H_TOOLS_CATEGORY = Category.EVANESCENT;
+		H_TOOLS_FORMAT = Format.HANDLELIST;
 	end
 	methods % constructor
 		function pf = PanelFig(varargin)
@@ -167,29 +143,6 @@ classdef PanelFig < Panel
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PanelFig properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the figure panel.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the figure panel.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the figure panel.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the figure panel.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the figure panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
 			%
 			% See also Category, Format.
 			
@@ -227,7 +180,7 @@ classdef PanelFig < Panel
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelFig'  'ComparisonEnsembleBrainPF'  'ComparisonEnsembleBrainPF_BB'  'ComparisonEnsembleBrainPF_BS'  'ComparisonEnsembleBrainPF_BU'  'ComparisonEnsembleBrainPF_GB'  'ComparisonEnsembleBrainPF_GS'  'ComparisonEnsembleBrainPF_GU'  'ComparisonEnsembleBrainPF_NB'  'ComparisonEnsembleBrainPF_NS'  'ComparisonEnsembleBrainPF_NU'  'ComparisonEnsemblePF'  'ComparisonEnsemblePF_BB'  'ComparisonEnsemblePF_BS'  'ComparisonEnsemblePF_BU'  'ComparisonEnsemblePF_GB'  'ComparisonEnsemblePF_GS'  'ComparisonEnsemblePF_GU'  'ComparisonEnsemblePF_NB'  'ComparisonEnsemblePF_NS'  'ComparisonEnsemblePF_NU'  'ComparisonGroupBrainPF'  'ComparisonGroupBrainPF_BB'  'ComparisonGroupBrainPF_BS'  'ComparisonGroupBrainPF_BU'  'ComparisonGroupBrainPF_GB'  'ComparisonGroupBrainPF_GS'  'ComparisonGroupBrainPF_GU'  'ComparisonGroupBrainPF_NB'  'ComparisonGroupBrainPF_NS'  'ComparisonGroupBrainPF_NU'  'ComparisonGroupPF'  'ComparisonGroupPF_BB'  'ComparisonGroupPF_BS'  'ComparisonGroupPF_BU'  'ComparisonGroupPF_GB'  'ComparisonGroupPF_GS'  'ComparisonGroupPF_GU'  'ComparisonGroupPF_NB'  'ComparisonGroupPF_NS'  'ComparisonGroupPF_NU'  'MeasureEnsembleBrainPF'  'MeasureEnsembleBrainPF_BB'  'MeasureEnsembleBrainPF_BS'  'MeasureEnsembleBrainPF_BU'  'MeasureEnsembleBrainPF_GB'  'MeasureEnsembleBrainPF_GS'  'MeasureEnsembleBrainPF_GU'  'MeasureEnsembleBrainPF_NB'  'MeasureEnsembleBrainPF_NS'  'MeasureEnsembleBrainPF_NU'  'MeasureEnsemblePF'  'MeasureEnsemblePF_BB'  'MeasureEnsemblePF_BS'  'MeasureEnsemblePF_BU'  'MeasureEnsemblePF_GB'  'MeasureEnsemblePF_GS'  'MeasureEnsemblePF_GU'  'MeasureEnsemblePF_NB'  'MeasureEnsemblePF_NS'  'MeasureEnsemblePF_NU'  'MeasureGroupBrainPF'  'MeasureGroupBrainPF_BB'  'MeasureGroupBrainPF_BS'  'MeasureGroupBrainPF_BU'  'MeasureGroupBrainPF_GB'  'MeasureGroupBrainPF_GS'  'MeasureGroupBrainPF_GU'  'MeasureGroupBrainPF_NB'  'MeasureGroupBrainPF_NS'  'MeasureGroupBrainPF_NU'  'BrainAtlasPF'  'BrainSurfacePF'  'GraphAdjPF'  'GraphHistPF'  'MeasurePF'  'MeasurePF_BB'  'MeasurePF_BS'  'MeasurePF_BU'  'MeasurePF_GB'  'MeasurePF_GS'  'MeasurePF_GU'  'MeasurePF_NB'  'MeasurePF_NS'  'MeasurePF_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PanelFig', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of figure panel.
@@ -248,32 +201,56 @@ classdef PanelFig < Panel
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22];
+				prop_list = [ ...
+					Panel.getProps() ...
+						PanelFig.ST_POSITION ...
+						PanelFig.H_TOOLBAR ...
+						PanelFig.H_TOOLS ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 21 22];
-				case 8 % Category.FIGURE
-					prop_list = [14 20];
-				case 9 % Category.GUI
-					prop_list = [9 13];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Panel.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Panel.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Panel.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Panel.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Panel.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Panel.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Panel.getProps(Category.EVANESCENT) ...
+						PanelFig.H_TOOLBAR ...
+						PanelFig.H_TOOLS ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Panel.getProps(Category.FIGURE) ...
+						PanelFig.ST_POSITION ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Panel.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -294,33 +271,7 @@ classdef PanelFig < Panel
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 22;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 7;
-				case 7 % Category.EVANESCENT
-					prop_number = 4;
-				case 8 % Category.FIGURE
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PanelFig.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in figure panel/error.
@@ -348,14 +299,14 @@ classdef PanelFig < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 22 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PanelFig.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelFig:' 'WrongInput'], ...
-					['BRAPH2' ':PanelFig:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelFig.'] ...
 					)
 			end
@@ -386,14 +337,15 @@ classdef PanelFig < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); %CET: Computational Efficiency Trick
+			panelfig_tag_list = cellfun(@(x) PanelFig.getPropTag(x), num2cell(PanelFig.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, panelfig_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelFig:' 'WrongInput'], ...
-					['BRAPH2' ':PanelFig:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PanelFig.'] ...
 					)
 			end
@@ -419,7 +371,8 @@ classdef PanelFig < Panel
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' })); % tag = pointer %CET: Computational Efficiency Trick
+				panelfig_tag_list = cellfun(@(x) PanelFig.getPropTag(x), num2cell(PanelFig.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, panelfig_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -447,9 +400,18 @@ classdef PanelFig < Panel
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				panelfig_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS' };
-				tag = panelfig_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case PanelFig.ST_POSITION
+						tag = PanelFig.ST_POSITION_TAG;
+					case PanelFig.H_TOOLBAR
+						tag = PanelFig.H_TOOLBAR_TAG;
+					case PanelFig.H_TOOLS
+						tag = PanelFig.H_TOOLS_TAG;
+					otherwise
+						tag = getPropTag@Panel(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -474,9 +436,16 @@ classdef PanelFig < Panel
 			
 			prop = PanelFig.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelfig_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7 };
-			prop_category = panelfig_category_list{prop};
+			switch prop
+				case PanelFig.ST_POSITION
+					prop_category = PanelFig.ST_POSITION_CATEGORY;
+				case PanelFig.H_TOOLBAR
+					prop_category = PanelFig.H_TOOLBAR_CATEGORY;
+				case PanelFig.H_TOOLS
+					prop_category = PanelFig.H_TOOLS_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Panel(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -500,9 +469,16 @@ classdef PanelFig < Panel
 			
 			prop = PanelFig.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelfig_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19 };
-			prop_format = panelfig_format_list{prop};
+			switch prop
+				case PanelFig.ST_POSITION
+					prop_format = PanelFig.ST_POSITION_FORMAT;
+				case PanelFig.H_TOOLBAR
+					prop_format = PanelFig.H_TOOLBAR_FORMAT;
+				case PanelFig.H_TOOLS
+					prop_format = PanelFig.H_TOOLS_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Panel(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -526,9 +502,36 @@ classdef PanelFig < Panel
 			
 			prop = PanelFig.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelfig_description_list = { 'ELCLASS (constant, string) is the class of the figure panel.'  'NAME (constant, string) is the name of the figure panel.'  'DESCRIPTION (constant, string) is the description of the figure panel.'  'TEMPLATE (parameter, item) is the template of the figure panel.'  'ID (data, string) is a few-letter code for the figure panel.'  'LABEL (metadata, string) is an extended label of the figure panel.'  'NOTES (metadata, string) are some specific notes about the figure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the figure panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.' };
-			prop_description = panelfig_description_list{prop};
+			switch prop
+				case PanelFig.ST_POSITION
+					prop_description = 'ST_POSITION (figure, item) determines the panel position.';
+				case PanelFig.H_TOOLBAR
+					prop_description = 'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.';
+				case PanelFig.H_TOOLS
+					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.';
+				case PanelFig.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the figure panel.';
+				case PanelFig.NAME
+					prop_description = 'NAME (constant, string) is the name of the figure panel.';
+				case PanelFig.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the figure panel.';
+				case PanelFig.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the figure panel.';
+				case PanelFig.ID
+					prop_description = 'ID (data, string) is a few-letter code for the figure panel.';
+				case PanelFig.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the figure panel.';
+				case PanelFig.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the figure panel.';
+				case PanelFig.BKGCOLOR
+					prop_description = 'BKGCOLOR (figure, color) is the panel background color.';
+				case PanelFig.DRAW
+					prop_description = 'DRAW (query, logical) draws the figure panel.';
+				case PanelFig.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the figure panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@Panel(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -552,14 +555,14 @@ classdef PanelFig < Panel
 			
 			prop = PanelFig.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 20 % PanelFig.ST_POSITION
+			switch prop
+				case PanelFig.ST_POSITION
 					prop_settings = 'SettingsPosition';
-				case 21 % PanelFig.H_TOOLBAR
-					prop_settings = Format.getFormatSettings(18);
-				case 22 % PanelFig.H_TOOLS
-					prop_settings = Format.getFormatSettings(19);
-				case 4 % PanelFig.TEMPLATE
+				case PanelFig.H_TOOLBAR
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelFig.H_TOOLS
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case PanelFig.TEMPLATE
 					prop_settings = 'PanelFig';
 				otherwise
 					prop_settings = getPropSettings@Panel(prop);
@@ -587,28 +590,28 @@ classdef PanelFig < Panel
 			
 			prop = PanelFig.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 20 % PanelFig.ST_POSITION
-					prop_default = Format.getFormatDefault(8, PanelFig.getPropSettings(prop));
-				case 21 % PanelFig.H_TOOLBAR
-					prop_default = Format.getFormatDefault(18, PanelFig.getPropSettings(prop));
-				case 22 % PanelFig.H_TOOLS
-					prop_default = Format.getFormatDefault(19, PanelFig.getPropSettings(prop));
-				case 1 % PanelFig.ELCLASS
+			switch prop
+				case PanelFig.ST_POSITION
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelFig.getPropSettings(prop));
+				case PanelFig.H_TOOLBAR
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelFig.getPropSettings(prop));
+				case PanelFig.H_TOOLS
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, PanelFig.getPropSettings(prop));
+				case PanelFig.ELCLASS
 					prop_default = 'PanelFig';
-				case 2 % PanelFig.NAME
+				case PanelFig.NAME
 					prop_default = 'Figure Panel';
-				case 3 % PanelFig.DESCRIPTION
+				case PanelFig.DESCRIPTION
 					prop_default = 'A Figure Panel (PanelFig) plots a figure.';
-				case 4 % PanelFig.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PanelFig.getPropSettings(prop));
-				case 5 % PanelFig.ID
+				case PanelFig.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelFig.getPropSettings(prop));
+				case PanelFig.ID
 					prop_default = 'PanelFig ID';
-				case 6 % PanelFig.LABEL
+				case PanelFig.LABEL
 					prop_default = 'PanelFig label';
-				case 7 % PanelFig.NOTES
+				case PanelFig.NOTES
 					prop_default = 'PanelFig notes';
-				case 14 % PanelFig.BKGCOLOR
+				case PanelFig.BKGCOLOR
 					prop_default = [1 1 1];
 				otherwise
 					prop_default = getPropDefault@Panel(prop);
@@ -655,15 +658,15 @@ classdef PanelFig < Panel
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PanelFig:WrongInput
+			%  Error id: €BRAPH2.STR€:PanelFig:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: BRAPH2:PanelFig:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelFig:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PanelFig, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelFig.
-			%   Error id: BRAPH2:PanelFig:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelFig:€BRAPH2.WRONG_INPUT€
 			%  PF.CHECKPROP(PanelFig, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelFig.
-			%   Error id: BRAPH2:PanelFig:WrongInput]
+			%   Error id: €BRAPH2.STR€:PanelFig:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('PanelFig')
 			%  are less computationally efficient.
@@ -674,16 +677,16 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			switch prop
-				case 20 % PanelFig.ST_POSITION
-					check = Format.checkFormat(8, value, PanelFig.getPropSettings(prop));
-				case 21 % PanelFig.H_TOOLBAR
-					check = Format.checkFormat(18, value, PanelFig.getPropSettings(prop));
-				case 22 % PanelFig.H_TOOLS
-					check = Format.checkFormat(19, value, PanelFig.getPropSettings(prop));
-				case 4 % PanelFig.TEMPLATE
-					check = Format.checkFormat(8, value, PanelFig.getPropSettings(prop));
+				case PanelFig.ST_POSITION % __PanelFig.ST_POSITION__
+					check = Format.checkFormat(Format.ITEM, value, PanelFig.getPropSettings(prop));
+				case PanelFig.H_TOOLBAR % __PanelFig.H_TOOLBAR__
+					check = Format.checkFormat(Format.HANDLE, value, PanelFig.getPropSettings(prop));
+				case PanelFig.H_TOOLS % __PanelFig.H_TOOLS__
+					check = Format.checkFormat(Format.HANDLELIST, value, PanelFig.getPropSettings(prop));
+				case PanelFig.TEMPLATE % __PanelFig.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PanelFig.getPropSettings(prop));
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						check = checkProp@Panel(prop, value);
 					end
 			end
@@ -692,8 +695,8 @@ classdef PanelFig < Panel
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelFig:' 'WrongInput'], ...
-					['BRAPH2' ':PanelFig:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelFig:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelFig.getPropTag(prop) ' (' PanelFig.getFormatTag(PanelFig.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -704,25 +707,25 @@ classdef PanelFig < Panel
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 21 % PanelFig.H_TOOLBAR
+				case PanelFig.H_TOOLBAR % __PanelFig.H_TOOLBAR__
 					value = findobj(ancestor(pf.memorize('PARENT').memorize('H'), 'Figure'), 'Tag', 'TOOLBAR');
 					
-				case 22 % PanelFig.H_TOOLS
+				case PanelFig.H_TOOLS % __PanelFig.H_TOOLS__
 					value = {};
 					
-				case 11 % PanelFig.DRAW
+				case PanelFig.DRAW % __PanelFig.DRAW__
 					if check_graphics(pf.memorize('H'), 'uipanel') % H = p for panel
 					    
 					    pf.memorize('ST_POSITION').set('PANEL', pf, 'PROP', pf.H).get('SETUP')
@@ -730,23 +733,23 @@ classdef PanelFig < Panel
 					    value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pf)], ...
-					        ['BRAPH2' ':' class(pf) '\n' ...
+					        [BRAPH2.STR ':' class(pf)], ...
+					        [BRAPH2.STR ':' class(pf) '\n' ...
 					        'The call pf.get(''DRAW'') did not work.\n' ...
 					        'This shouldn''t happen with well-written code!'] ...
 					        )
 					    value = false;
 					end
 					
-				case 18 % PanelFig.DELETE
-					value = calculateValue@Panel(pf, 18, varargin{:}); % also warning
+				case PanelFig.DELETE % __PanelFig.DELETE__
+					value = calculateValue@Panel(pf, Panel.DELETE, varargin{:}); % also warning
 					if value
 					    pf.set('H_TOOLBAR', Element.getNoValue())
 					    pf.set('H_TOOLS', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						value = calculateValue@Panel(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -772,8 +775,8 @@ classdef PanelFig < Panel
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 20 % PanelFig.ST_POSITION
-					pr = SettingsPositionPP('EL', pf, 'PROP', 20, varargin{:});
+				case PanelFig.ST_POSITION % __PanelFig.ST_POSITION__
+					pr = SettingsPositionPP('EL', pf, 'PROP', PanelFig.ST_POSITION, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@Panel(pf, prop, varargin{:});
