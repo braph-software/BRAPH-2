@@ -631,7 +631,7 @@ classdef PanelPropIDict < PanelProp
 				case 23 % PanelPropIDict.EL
 					prop_default = Pipeline();
 				case 24 % PanelPropIDict.PROP
-					prop_default = 9;
+					prop_default = 11;
 				case 25 % PanelPropIDict.HEIGHT
 					prop_default = 48;
 				otherwise

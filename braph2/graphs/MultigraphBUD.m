@@ -782,7 +782,7 @@ classdef MultigraphBUD < GraphWU
 					
 				case 19 % MultigraphBUD.APARTITIONLABELS
 					apartitionlabels = g.get('PARTITIONLABELS');
-					if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('DENSITIES') % ensures that it's not unecessarily calculated
+					if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('DENSITIES')) % ensures that it's not unecessarily calculated
 					    apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
 					end
 					value = apartitionlabels;

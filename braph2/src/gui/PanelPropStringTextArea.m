@@ -26,7 +26,7 @@ classdef PanelPropStringTextArea < PanelProp
 	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
 	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
 	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the prop panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the text-area.
 	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
 	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the prop number.
@@ -41,7 +41,7 @@ classdef PanelPropStringTextArea < PanelProp
 	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
 	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
 	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
+	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the text-area between active and inactive appearance when not editable.
 	%  <strong>37</strong> <strong>TEXTAREA</strong> 	TEXTAREA (evanescent, handle) is the string value text-area.
 	%
 	% PanelPropStringTextArea methods (constructor):
@@ -175,7 +175,7 @@ classdef PanelPropStringTextArea < PanelProp
 			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
 			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
 			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the prop panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the text-area.
 			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
 			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
 			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the prop number.
@@ -190,7 +190,7 @@ classdef PanelPropStringTextArea < PanelProp
 			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
 			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
 			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
+			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the text-area between active and inactive appearance when not editable.
 			%  <strong>37</strong> <strong>TEXTAREA</strong> 	TEXTAREA (evanescent, handle) is the string value text-area.
 			%
 			% See also Category, Format.
@@ -229,7 +229,7 @@ classdef PanelPropStringTextArea < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelPropStringTextArea' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'PanelPropStringTextArea'  'PipelinePP_Notes' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of string prop panel with text-area .
@@ -529,7 +529,7 @@ classdef PanelPropStringTextArea < PanelProp
 			prop = PanelPropStringTextArea.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panelpropstringtextarea_description_list = { 'ELCLASS (constant, string) is the class of the string prop panel with a text-area.'  'NAME (constant, string) is the name of the string prop panel with a text-area.'  'DESCRIPTION (constant, string) is the description of the string prop panel with a text-area.'  'TEMPLATE (parameter, item) is the template of the string prop panel with a text-area.'  'ID (data, string) is a few-letter code for the string prop panel with a text-area.'  'LABEL (metadata, string) is an extended label of the string prop panel with a text-area.'  'NOTES (metadata, string) are some specific notes about the string prop panel with a text-area.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the prop panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the prop number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.'  'TEXTAREA (evanescent, handle) is the string value text-area.' };
+			panelpropstringtextarea_description_list = { 'ELCLASS (constant, string) is the class of the string prop panel with a text-area.'  'NAME (constant, string) is the name of the string prop panel with a text-area.'  'DESCRIPTION (constant, string) is the description of the string prop panel with a text-area.'  'TEMPLATE (parameter, item) is the template of the string prop panel with a text-area.'  'ID (data, string) is a few-letter code for the string prop panel with a text-area.'  'LABEL (metadata, string) is an extended label of the string prop panel with a text-area.'  'NOTES (metadata, string) are some specific notes about the string prop panel with a text-area.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the prop panel.'  'UPDATE (query, logical) updates the content and permissions of the text-area.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the prop number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the text-area between active and inactive appearance when not editable.'  'TEXTAREA (evanescent, handle) is the string value text-area.' };
 			prop_description = panelpropstringtextarea_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

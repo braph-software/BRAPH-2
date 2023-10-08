@@ -869,6 +869,10 @@ classdef ComparisonEnsembleBrainPF_NS < ComparisonEnsembleBrainPF
 					    return
 					end
 					diff = diffs{layer};
+					if isempty(diff)
+					    value = {};
+					    return
+					end
 					p2s = cp.get('P2');
 					p2 = p2s{layer};
 					
@@ -919,6 +923,7 @@ classdef ComparisonEnsembleBrainPF_NS < ComparisonEnsembleBrainPF
 					        % transfrom diff value to appropriate size
 					        % value ranching from 0.01 to 1
 					        diff(isnan(diff)) = 0.1;
+					        diff(isinf(diff)) = 0.1;
 					        size_value = abs(diff);
 					        min_bound = 0.01;
 					        max_bound = 1.0;
@@ -983,6 +988,32 @@ classdef ComparisonEnsembleBrainPF_NS < ComparisonEnsembleBrainPF
 					end
 			end
 			
+		end
+	end
+	methods % GUI
+		function pr = getPanelProp(pf, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 48 % ComparisonEnsembleBrainPF_NS.LAYER
+					pr = ComparisonEnsembleBrainPF_xSPP_Layer('EL', pf, 'PROP', 48);
+					
+				otherwise
+					pr = getPanelProp@ComparisonEnsembleBrainPF(pf, prop, varargin{:});
+					
+			end
 		end
 	end
 end

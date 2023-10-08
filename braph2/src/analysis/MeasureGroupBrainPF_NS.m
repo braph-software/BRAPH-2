@@ -899,4 +899,30 @@ classdef MeasureGroupBrainPF_NS < MeasureGroupBrainPF
 			
 		end
 	end
+	methods % GUI
+		function pr = getPanelProp(pf, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 48 % MeasureGroupBrainPF_NS.LAYER
+					pr = MeasureGroupBrainPF_xSPP_Layer('EL', pf, 'PROP', 48);
+					
+				otherwise
+					pr = getPanelProp@MeasureGroupBrainPF(pf, prop, varargin{:});
+					
+			end
+		end
+	end
 end

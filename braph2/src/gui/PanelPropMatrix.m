@@ -862,7 +862,11 @@ classdef PanelPropMatrix < PanelProp
 					    if any(el.getPropCategory(prop) == [5 6 7]) && isa(el.getr(prop), 'NoValue')
 					        pr.set('HEIGHT', 24)
 					    else
-					        pr.set('HEIGHT', min(54 + 24 * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+					        if ispc()
+					            pr.set('HEIGHT', min(78 + 24 * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+					        else
+					            pr.set('HEIGHT', min(54 + 24 * size(el.get(prop), 1), pr.get('TABLE_HEIGHT')))
+					        end
 					    end
 					
 					    rowname = pr.get('ROWNAME');

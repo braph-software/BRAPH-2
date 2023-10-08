@@ -828,7 +828,7 @@ classdef MultilayerBUT < MultilayerWU
 					
 				case 19 % MultilayerBUT.APARTITIONLABELS
 					apartitionlabels = g.get('PARTITIONLABELS');
-					if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= g.get('THRESHOLDS') % ensures that it's not unecessarily calculated
+					if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
 					    apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
 					end
 					value = apartitionlabels;

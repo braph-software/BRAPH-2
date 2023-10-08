@@ -1309,7 +1309,11 @@ classdef PanelPropIDictTable < PanelProp
 					        pr.set('HEIGHT', 24)
 					    else
 					        dict = el.get(prop);
-					        pr.set('HEIGHT', min(54 + 24 * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
+					        if ispc()
+					            pr.set('HEIGHT', min(78 + 24 * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
+					        else
+					            pr.set('HEIGHT', min(54 + 24 * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
+					        end
 					    end
 					
 					    switch el.getPropCategory(prop)

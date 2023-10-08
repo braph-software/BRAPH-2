@@ -17,30 +17,35 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-	%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-	%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-	%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-	%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-	%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-	%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-	%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
-	%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
-	%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-	%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-	%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-	%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-	%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-	%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
-	%  <strong>26</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-	%  <strong>27</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
-	%  <strong>28</strong> <strong>AV_DET</strong> 	AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
-	%  <strong>29</strong> <strong>AV_MAE</strong> 	AV_MAE (result, rvector) provides the metric of the mean absolute error.
-	%  <strong>30</strong> <strong>AV_MSE</strong> 	AV_MSE (result, rvector) provides the metric of the mean squared error.
-	%  <strong>31</strong> <strong>AV_RMSE</strong> 	AV_RMSE (result, rvector) provides the metric of the root mean squared error.
-	%  <strong>32</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+	%  <strong>11</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+	%  <strong>12</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+	%  <strong>13</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+	%  <strong>14</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+	%  <strong>15</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+	%  <strong>16</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+	%  <strong>17</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+	%  <strong>18</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>19</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+	%  <strong>20</strong> <strong>NN_LIST_IT</strong> 	NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>21</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+	%  <strong>22</strong> <strong>EVALUATOR_LIST_IT</strong> 	EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>23</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+	%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+	%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+	%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+	%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+	%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+	%  <strong>30</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+	%  <strong>31</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
+	%  <strong>32</strong> <strong>AV_DET</strong> 	AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
+	%  <strong>33</strong> <strong>AV_MAE</strong> 	AV_MAE (result, rvector) provides the metric of the mean absolute error.
+	%  <strong>34</strong> <strong>AV_MSE</strong> 	AV_MSE (result, rvector) provides the metric of the mean squared error.
+	%  <strong>35</strong> <strong>AV_RMSE</strong> 	AV_RMSE (result, rvector) provides the metric of the root mean squared error.
+	%  <strong>36</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+	%  <strong>37</strong> <strong>PFSP</strong> 	PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
 	%
 	% NNRegressorMLP_CrossValidation methods (constructor):
 	%  NNRegressorMLP_CrossValidation - constructor
@@ -131,40 +136,45 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 	% See also NNDataPoint, NNDataset, NNEvaluator.
 	
 	properties (Constant) % properties
-		P = 26; %CET: Computational Efficiency Trick
+		P = 30; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
 		P_CATEGORY = 3;
 		P_FORMAT = 11;
 		
-		AV_CORR = 27; %CET: Computational Efficiency Trick
+		AV_CORR = 31; %CET: Computational Efficiency Trick
 		AV_CORR_TAG = 'AV_CORR';
 		AV_CORR_CATEGORY = 5;
 		AV_CORR_FORMAT = 12;
 		
-		AV_DET = 28; %CET: Computational Efficiency Trick
+		AV_DET = 32; %CET: Computational Efficiency Trick
 		AV_DET_TAG = 'AV_DET';
 		AV_DET_CATEGORY = 5;
 		AV_DET_FORMAT = 12;
 		
-		AV_MAE = 29; %CET: Computational Efficiency Trick
+		AV_MAE = 33; %CET: Computational Efficiency Trick
 		AV_MAE_TAG = 'AV_MAE';
 		AV_MAE_CATEGORY = 5;
 		AV_MAE_FORMAT = 12;
 		
-		AV_MSE = 30; %CET: Computational Efficiency Trick
+		AV_MSE = 34; %CET: Computational Efficiency Trick
 		AV_MSE_TAG = 'AV_MSE';
 		AV_MSE_CATEGORY = 5;
 		AV_MSE_FORMAT = 12;
 		
-		AV_RMSE = 31; %CET: Computational Efficiency Trick
+		AV_RMSE = 35; %CET: Computational Efficiency Trick
 		AV_RMSE_TAG = 'AV_RMSE';
 		AV_RMSE_CATEGORY = 5;
 		AV_RMSE_FORMAT = 12;
 		
-		AV_FEATURE_IMPORTANCE = 32; %CET: Computational Efficiency Trick
+		AV_FEATURE_IMPORTANCE = 36; %CET: Computational Efficiency Trick
 		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
 		AV_FEATURE_IMPORTANCE_CATEGORY = 5;
 		AV_FEATURE_IMPORTANCE_FORMAT = 16;
+		
+		PFSP = 37; %CET: Computational Efficiency Trick
+		PFSP_TAG = 'PFSP';
+		PFSP_CATEGORY = 9;
+		PFSP_FORMAT = 8;
 	end
 	methods % constructor
 		function nncv = NNRegressorMLP_CrossValidation(varargin)
@@ -186,30 +196,35 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
-			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
-			%  <strong>11</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
-			%  <strong>12</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
-			%  <strong>13</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
-			%  <strong>14</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
-			%  <strong>15</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
-			%  <strong>16</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
-			%  <strong>17</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
-			%  <strong>18</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
-			%  <strong>19</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
-			%  <strong>20</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
-			%  <strong>21</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
-			%  <strong>22</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>23</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
-			%  <strong>24</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
-			%  <strong>25</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
-			%  <strong>26</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-			%  <strong>27</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
-			%  <strong>28</strong> <strong>AV_DET</strong> 	AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
-			%  <strong>29</strong> <strong>AV_MAE</strong> 	AV_MAE (result, rvector) provides the metric of the mean absolute error.
-			%  <strong>30</strong> <strong>AV_MSE</strong> 	AV_MSE (result, rvector) provides the metric of the mean squared error.
-			%  <strong>31</strong> <strong>AV_RMSE</strong> 	AV_RMSE (result, rvector) provides the metric of the root mean squared error.
-			%  <strong>32</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+			%  <strong>11</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+			%  <strong>12</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+			%  <strong>13</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+			%  <strong>14</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+			%  <strong>15</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+			%  <strong>16</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+			%  <strong>17</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+			%  <strong>18</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>19</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+			%  <strong>20</strong> <strong>NN_LIST_IT</strong> 	NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>21</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+			%  <strong>22</strong> <strong>EVALUATOR_LIST_IT</strong> 	EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>23</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+			%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+			%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+			%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+			%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+			%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+			%  <strong>30</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+			%  <strong>31</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
+			%  <strong>32</strong> <strong>AV_DET</strong> 	AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.
+			%  <strong>33</strong> <strong>AV_MAE</strong> 	AV_MAE (result, rvector) provides the metric of the mean absolute error.
+			%  <strong>34</strong> <strong>AV_MSE</strong> 	AV_MSE (result, rvector) provides the metric of the mean squared error.
+			%  <strong>35</strong> <strong>AV_RMSE</strong> 	AV_RMSE (result, rvector) provides the metric of the root mean squared error.
+			%  <strong>36</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+			%  <strong>37</strong> <strong>PFSP</strong> 	PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
 			%
 			% See also Category, Format.
 			
@@ -271,7 +286,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
 				return
 			end
 			
@@ -279,15 +294,17 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7 23 24];
+					prop_list = [6 7 27 28];
 				case 3 % Category.PARAMETER
-					prop_list = [4 12 13 19 20 21 22 26];
+					prop_list = [4 13 14 23 24 25 26 30];
 				case 4 % Category.DATA
-					prop_list = [5 9 10 11];
+					prop_list = [5 10 11 12];
 				case 5 % Category.RESULT
-					prop_list = [14 15 16 17 18 27 28 29 30 31 32];
+					prop_list = [15 16 17 19 21 31 32 33 34 35 36];
 				case 6 % Category.QUERY
-					prop_list = [8 25];
+					prop_list = [8 18 20 22 29];
+				case 9 % Category.GUI
+					prop_list = [9 37];
 				otherwise
 					prop_list = [];
 			end
@@ -313,7 +330,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 32;
+				prop_number = 37;
 				return
 			end
 			
@@ -329,6 +346,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 5 % Category.RESULT
 					prop_number = 11;
 				case 6 % Category.QUERY
+					prop_number = 5;
+				case 9 % Category.GUI
 					prop_number = 2;
 				otherwise
 					prop_number = 0;
@@ -360,7 +379,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 32 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -398,7 +417,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE'  'PFSP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -431,7 +450,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE'  'PFSP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -460,7 +479,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnregressormlp_crossvalidation_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'NN_LIST'  'EVALUATOR_LIST'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE' };
+				nnregressormlp_crossvalidation_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_CORR'  'AV_DET'  'AV_MAE'  'AV_MSE'  'AV_RMSE'  'AV_FEATURE_IMPORTANCE'  'PFSP' };
 				tag = nnregressormlp_crossvalidation_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -487,7 +506,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  4  4  4  3  3  5  5  5  5  5  3  3  3  3  2  2  6  3  5  5  5  5  5  5 };
+			nnregressormlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  9  4  4  4  3  3  5  5  5  6  5  6  5  6  3  3  3  3  2  2  6  3  5  5  5  5  5  5  9 };
 			prop_category = nnregressormlp_crossvalidation_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -513,7 +532,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_crossvalidation_format_list = { 2  2  2  8  2  2  2  2  11  16  9  8  8  9  9  9  9  9  11  11  5  5  4  5  1  11  12  12  12  12  12  16 };
+			nnregressormlp_crossvalidation_format_list = { 2  2  2  8  2  2  2  2  4  11  16  9  8  8  9  9  9  8  9  8  9  8  11  11  5  5  4  5  1  11  12  12  12  12  12  16  8 };
 			prop_format = nnregressormlp_crossvalidation_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -539,7 +558,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the nerual cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_CORR (result, rvector) provides the metric of the correlation of coefficients.'  'AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'AV_MAE (result, rvector) provides the metric of the mean absolute error.'  'AV_MSE (result, rvector) provides the metric of the mean squared error.'  'AV_RMSE (result, rvector) provides the metric of the root mean squared error.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
+			nnregressormlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the nerual cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_CORR (result, rvector) provides the metric of the correlation of coefficients.'  'AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'AV_MAE (result, rvector) provides the metric of the mean absolute error.'  'AV_MSE (result, rvector) provides the metric of the mean squared error.'  'AV_RMSE (result, rvector) provides the metric of the root mean squared error.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.'  'PFSP (gui, item) contains the panel figure of the scatter plot for regression model.' };
 			prop_description = nnregressormlp_crossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -565,25 +584,27 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 26 % NNRegressorMLP_CrossValidation.P
+				case 30 % NNRegressorMLP_CrossValidation.P
 					prop_settings = Format.getFormatSettings(11);
-				case 27 % NNRegressorMLP_CrossValidation.AV_CORR
+				case 31 % NNRegressorMLP_CrossValidation.AV_CORR
 					prop_settings = Format.getFormatSettings(12);
-				case 28 % NNRegressorMLP_CrossValidation.AV_DET
+				case 32 % NNRegressorMLP_CrossValidation.AV_DET
 					prop_settings = Format.getFormatSettings(12);
-				case 29 % NNRegressorMLP_CrossValidation.AV_MAE
+				case 33 % NNRegressorMLP_CrossValidation.AV_MAE
 					prop_settings = Format.getFormatSettings(12);
-				case 30 % NNRegressorMLP_CrossValidation.AV_MSE
+				case 34 % NNRegressorMLP_CrossValidation.AV_MSE
 					prop_settings = Format.getFormatSettings(12);
-				case 31 % NNRegressorMLP_CrossValidation.AV_RMSE
+				case 35 % NNRegressorMLP_CrossValidation.AV_RMSE
 					prop_settings = Format.getFormatSettings(12);
-				case 32 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 36 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(16);
+				case 37 % NNRegressorMLP_CrossValidation.PFSP
+					prop_settings = 'NNRegressorMLP_CrossValidationPF_Scatter';
 				case 4 % NNRegressorMLP_CrossValidation.TEMPLATE
 					prop_settings = 'NNRegressorMLP_CrossValidation';
-				case 12 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
+				case 13 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
 					prop_settings = 'NNRegressorMLP';
-				case 13 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 14 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					prop_settings = 'NNRegressorMLP_Evaluator';
 				otherwise
 					prop_settings = getPropSettings@NNCrossValidation(prop);
@@ -612,20 +633,22 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 26 % NNRegressorMLP_CrossValidation.P
+				case 30 % NNRegressorMLP_CrossValidation.P
 					prop_default = 1e+2;
-				case 27 % NNRegressorMLP_CrossValidation.AV_CORR
+				case 31 % NNRegressorMLP_CrossValidation.AV_CORR
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 28 % NNRegressorMLP_CrossValidation.AV_DET
+				case 32 % NNRegressorMLP_CrossValidation.AV_DET
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 29 % NNRegressorMLP_CrossValidation.AV_MAE
+				case 33 % NNRegressorMLP_CrossValidation.AV_MAE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 30 % NNRegressorMLP_CrossValidation.AV_MSE
+				case 34 % NNRegressorMLP_CrossValidation.AV_MSE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 31 % NNRegressorMLP_CrossValidation.AV_RMSE
+				case 35 % NNRegressorMLP_CrossValidation.AV_RMSE
 					prop_default = Format.getFormatDefault(12, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 32 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 36 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(16, NNRegressorMLP_CrossValidation.getPropSettings(prop));
+				case 37 % NNRegressorMLP_CrossValidation.PFSP
+					prop_default = Format.getFormatDefault(8, NNRegressorMLP_CrossValidation.getPropSettings(prop));
 				case 1 % NNRegressorMLP_CrossValidation.ELCLASS
 					prop_default = 'NNRegressorMLP_CrossValidation';
 				case 2 % NNRegressorMLP_CrossValidation.NAME
@@ -640,9 +663,9 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					prop_default = 'NNRegressorMLP_CrossValidation label';
 				case 7 % NNRegressorMLP_CrossValidation.NOTES
 					prop_default = 'NNRegressorMLP_CrossValidation notes';
-				case 12 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
+				case 13 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 13 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 14 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNRegressorMLP_CrossValidation.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@NNCrossValidation(prop);
@@ -708,31 +731,33 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop
-				case 26 % NNRegressorMLP_CrossValidation.P
+				case 30 % NNRegressorMLP_CrossValidation.P
 					check = Format.checkFormat(11, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case 27 % NNRegressorMLP_CrossValidation.AV_CORR
+				case 31 % NNRegressorMLP_CrossValidation.AV_CORR
 					check = Format.checkFormat(12, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 28 % NNRegressorMLP_CrossValidation.AV_DET
+				case 32 % NNRegressorMLP_CrossValidation.AV_DET
 					check = Format.checkFormat(12, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 29 % NNRegressorMLP_CrossValidation.AV_MAE
+				case 33 % NNRegressorMLP_CrossValidation.AV_MAE
 					check = Format.checkFormat(12, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 30 % NNRegressorMLP_CrossValidation.AV_MSE
+				case 34 % NNRegressorMLP_CrossValidation.AV_MSE
 					check = Format.checkFormat(12, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 31 % NNRegressorMLP_CrossValidation.AV_RMSE
+				case 35 % NNRegressorMLP_CrossValidation.AV_RMSE
 					check = Format.checkFormat(12, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 32 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+				case 36 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					check = Format.checkFormat(16, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
+				case 37 % NNRegressorMLP_CrossValidation.PFSP
+					check = Format.checkFormat(8, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
 				case 4 % NNRegressorMLP_CrossValidation.TEMPLATE
 					check = Format.checkFormat(8, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 12 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
+				case 13 % NNRegressorMLP_CrossValidation.NN_TEMPLATE
 					check = Format.checkFormat(8, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
-				case 13 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 14 % NNRegressorMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					check = Format.checkFormat(8, value, NNRegressorMLP_CrossValidation.getPropSettings(prop));
 				otherwise
-					if prop <= 25
+					if prop <= 29
 						check = checkProp@NNCrossValidation(prop, value);
 					end
 			end
@@ -745,6 +770,32 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					['BRAPH2' ':NNRegressorMLP_CrossValidation:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNRegressorMLP_CrossValidation.getPropTag(prop) ' (' NNRegressorMLP_CrossValidation.getFormatTag(NNRegressorMLP_CrossValidation.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postprocessing
+		function postprocessing(nncv, prop)
+			%POSTPROCESSING postprocessesing after setting.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing of PROP after setting. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% The postprocessing of all properties occurs each time set is called.
+			%
+			% See also conditioning, preset, checkProp, postset, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 37 % NNRegressorMLP_CrossValidation.PFSP
+					if isa(nncv.getr('PFSP'), 'NoValue')
+					    nncv.set('PFSP', NNRegressorMLP_CrossValidationPF_Scatter('NNCV', nncv));
+					end
+					
+				otherwise
+					if prop <= 29
+						postprocessing@NNCrossValidation(nncv, prop);
+					end
 			end
 		end
 	end
@@ -765,8 +816,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 27 % NNRegressorMLP_CrossValidation.AV_CORR
-					rng_settings_ = rng(); rng(nncv.getPropSeed(27), 'twister')
+				case 31 % NNRegressorMLP_CrossValidation.AV_CORR
+					rng_settings_ = rng(); rng(nncv.getPropSeed(31), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -781,8 +832,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 28 % NNRegressorMLP_CrossValidation.AV_DET
-					rng_settings_ = rng(); rng(nncv.getPropSeed(28), 'twister')
+				case 32 % NNRegressorMLP_CrossValidation.AV_DET
+					rng_settings_ = rng(); rng(nncv.getPropSeed(32), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -797,8 +848,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 29 % NNRegressorMLP_CrossValidation.AV_MAE
-					rng_settings_ = rng(); rng(nncv.getPropSeed(29), 'twister')
+				case 33 % NNRegressorMLP_CrossValidation.AV_MAE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(33), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -813,8 +864,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 30 % NNRegressorMLP_CrossValidation.AV_MSE
-					rng_settings_ = rng(); rng(nncv.getPropSeed(30), 'twister')
+				case 34 % NNRegressorMLP_CrossValidation.AV_MSE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(34), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -829,8 +880,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 31 % NNRegressorMLP_CrossValidation.AV_RMSE
-					rng_settings_ = rng(); rng(nncv.getPropSeed(31), 'twister')
+				case 35 % NNRegressorMLP_CrossValidation.AV_RMSE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(35), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -845,8 +896,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 32 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					rng_settings_ = rng(); rng(nncv.getPropSeed(32), 'twister')
+				case 36 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(36), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -867,8 +918,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 17 % NNRegressorMLP_CrossValidation.NN_LIST
-					rng_settings_ = rng(); rng(nncv.getPropSeed(17), 'twister')
+				case 19 % NNRegressorMLP_CrossValidation.NN_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(19), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					
@@ -902,8 +953,8 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case 18 % NNRegressorMLP_CrossValidation.EVALUATOR_LIST
-					rng_settings_ = rng(); rng(nncv.getPropSeed(18), 'twister')
+				case 21 % NNRegressorMLP_CrossValidation.EVALUATOR_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(21), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					nn_list = nncv.get('NN_LIST');
@@ -921,13 +972,57 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 25
+					if prop <= 29
 						value = calculateValue@NNCrossValidation(nncv, prop, varargin{:});
 					else
 						value = calculateValue@Element(nncv, prop, varargin{:});
 					end
 			end
 			
+		end
+	end
+	methods % GUI
+		function pr = getPanelProp(nncv, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 36 % NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					input_datasets = nncv.get('D');
+					input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
+					dp_class = input_dataset.get('DP_CLASS');
+					graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
+					measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
+					
+					if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+					    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', 36, varargin{:});
+					elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+					    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', 36, varargin{:});
+					else % DATA input
+					    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', 36, varargin{:});
+					end
+					
+				case 37 % NNRegressorMLP_CrossValidation.PFSP
+					pr = PanelPropItem('EL', nncv, 'PROP', 37, ...
+					    'GUICLASS', 'GUIFig', ...
+						'BUTTON_TEXT', ['Scatter Plot'], ...
+					    varargin{:});
+					
+				otherwise
+					pr = getPanelProp@NNCrossValidation(nncv, prop, varargin{:});
+					
+			end
 		end
 	end
 end

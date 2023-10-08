@@ -16,4 +16,4 @@ ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load a 
 gr = ImporterGroupSubjectST_XLS('BA', ba, 'WAITBAR', true).get('GET_FILE').get('GR'); % Load Group ST from XLS % Group ST
 
 %% Cross-Validation
-nncv = NNRegressorMLP_CrossValidation('D', NNDataset('DP_CLASS', 'NNDataPoint_ST_REG', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_ST_REG', 'IT_LIST', cellfun(@(x) NNDataPoint_ST_REG('ID', x.get('ID'), 'SUB', x, 'TARGET_IDS', x.get('VOI_DICT').get('KEYS')), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false)))); % Cross-Validation % Cross-Validation Process
+nncv = NNRegressorMLP_CrossValidation('D', {NNDataset('DP_CLASS', 'NNDataPoint_ST_REG', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_ST_REG', 'IT_LIST', cellfun(@(x) NNDataPoint_ST_REG('ID', x.get('ID'), 'SUB', x, 'TARGET_IDS', x.get('VOI_DICT').get('KEYS')), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false)))}); % Cross-Validation % Cross-Validation Process
