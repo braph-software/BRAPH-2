@@ -23,7 +23,7 @@ classdef MultiRC < Richness
 	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
+	%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 	%
 	% MultiRC methods (constructor):
 	%  MultiRC - constructor
@@ -144,7 +144,7 @@ classdef MultiRC < Richness
 			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
 			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multirichness.
 			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)
+			%  <strong>16</strong> <strong>MULTIRICHNESS_COEFFICIENTS</strong> 	MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).
 			%
 			% See also Category, Format.
 			
@@ -478,7 +478,7 @@ classdef MultiRC < Richness
 			prop = MultiRC.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multirc_description_list = { 'ELCLASS (constant, string) is the class of the Multirichness.'  'NAME (constant, string) is the name of the Multirichness.'  'DESCRIPTION (constant, string) is the description of the Multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the Multirichness.'  'LABEL (metadata, string) is an extended label of the Multirichness.'  'NOTES (metadata, string) are some specific notes about the Multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR)' };
+			multirc_description_list = { 'ELCLASS (constant, string) is the class of the Multirichness.'  'NAME (constant, string) is the name of the Multirichness.'  'DESCRIPTION (constant, string) is the description of the Multirichness.'  'TEMPLATE (parameter, item) is the template of the multirichness.'  'ID (data, string) is a few-letter code of the Multirichness.'  'LABEL (metadata, string) is an extended label of the Multirichness.'  'NOTES (metadata, string) are some specific notes about the Multirichness.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multirichness.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIRICHNESS_COEFFICIENTS (parameter, RVECTOR) are the coefficients c that are between 0 and 1 that control the relevance of each layer, the default coefficients are (1/layernumber).' };
 			prop_description = multirc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

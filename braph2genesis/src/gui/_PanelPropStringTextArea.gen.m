@@ -69,7 +69,7 @@ if value
 end
 
 %%% ¡prop!
-UPDATE (query, logical) updates the content and permissions of the editfield.
+UPDATE (query, logical) updates the content and permissions of the text-area.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 if value
@@ -143,7 +143,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
+ENABLE (gui, logical) switches the text-area between active and inactive appearance when not editable.
 %%%% ¡default!
 true
 

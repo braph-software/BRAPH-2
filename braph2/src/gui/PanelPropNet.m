@@ -824,8 +824,8 @@ classdef PanelPropNet < PanelProp
 			        
 			        message = {''
 			            ['{\bf\color{orange}' 'BRAPH2' '}'] % note to use doubl slashes to avoid genesis problem
-			            ['{\color{gray}version ' '2.0.0.b1' '}']
-			            ['{\color{gray}build ' int2str(5) '}']
+			            ['{\color{gray}version ' '2.0.0.b2' '}']
+			            ['{\color{gray}build ' int2str(6) '}']
 			            ''
 			            'The network visualization window'
 			            'cannot be closed automatically.'

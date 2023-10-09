@@ -9,7 +9,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 	% The brain atlas and variables of interest are copied from the SubjectCON group.
 	%
 	% The list of CombineGroups_CON_FUN_MP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
@@ -143,7 +143,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of CombineGroups_CON_FUN_MP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
@@ -484,7 +484,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			combinegroups_con_fun_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.'  'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.'  'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.'  'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.'  'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.'  'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (metadata, logical) detemines whether to show the waitbar.'  'GR_CON (data, item) is a group of subjects with connectivity data.'  'GR_FUN (data, item) is a group of subjects with functional data.'  'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.' };
+			combinegroups_con_fun_mp_description_list = { 'ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.'  'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.'  'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.'  'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.'  'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.'  'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.'  'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (metadata, logical) detemines whether to show the waitbar.'  'GR_CON (data, item) is a group of subjects with connectivity data.'  'GR_FUN (data, item) is a group of subjects with functional data.'  'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.' };
 			prop_description = combinegroups_con_fun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -700,7 +700,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 					    'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'), ...
 					    'ID', [gr_CON.get('ID') ' + ' gr_FUN.get('ID')], ...
 					    'LABEL', [gr_CON.get('LABEL') ' -- ' gr_FUN.get('LABEL')], ...
-					    'NOTES', ['Group combining the connectivigy group ' gr_CON.get('ID') ' and the functional group ' gr_FUN.get('ID')] ...
+					    'NOTES', ['Group combining the connectivity group ' gr_CON.get('ID') ' and the functional group ' gr_FUN.get('ID')] ...
 					    );
 					
 					sub_dict = gr.get('SUB_DICT');

@@ -109,9 +109,15 @@ NOTES (metadata, string) are some specific notes about the pipeline.
 %%%% ¡default!
 'Pipeline notes'
 %%%% ¡gui!
-pr = PanelPropStringTextArea('EL', pip, 'PROP', Pipeline.NOTES, 'HEIGHT', s(10), varargin{:});
+pr = PipelinePP_Notes('EL', pip, 'PROP', Pipeline.NOTES, varargin{:});
 
 %% ¡props!
+
+%%% ¡prop!
+README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
+
+%%% ¡prop!
+PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
 
 %%% ¡prop!
 PS_DICT (data, idict) is an indexed dictionary with the code sections.

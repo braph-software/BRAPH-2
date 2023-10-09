@@ -526,7 +526,7 @@ classdef OverlappingSAv < OverlappingS
 				case 1 % OverlappingSAv.ELCLASS
 					prop_default = 'OverlappingSAv';
 				case 2 % OverlappingSAv.NAME
-					prop_default = 'OverlappingSAv';
+					prop_default = 'Average Overlapping Strength';
 				case 3 % OverlappingSAv.DESCRIPTION
 					prop_default = 'The Average Overlapping Strength (OverlappingSAv) of a graph is the average of the sum of the strengths of a node in all layers.';
 				case 4 % OverlappingSAv.TEMPLATE
@@ -544,7 +544,7 @@ classdef OverlappingSAv < OverlappingS
 				case 11 % OverlappingSAv.PARAMETRICITY
 					prop_default = 2;
 				case 12 % OverlappingSAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};;
+					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultilayerWU' 'OrdMlWU'};
 				otherwise
 					prop_default = getPropDefault@OverlappingS(prop);
 			end

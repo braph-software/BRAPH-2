@@ -134,7 +134,11 @@ NOTES (metadata, string) are some specific notes about the panel figure global u
 SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
 cp = pf.get('CP');
-g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+if cp.get('C').get('A1').get('G_DICT').get('LENGTH')
+    g = cp.get('C').get('A1').get('G_DICT').get('IT', 1);
+else
+    g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
+end
 
 x = g.get('ALAYERTICKS');
 

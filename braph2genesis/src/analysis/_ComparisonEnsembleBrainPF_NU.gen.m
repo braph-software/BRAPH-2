@@ -276,6 +276,7 @@ switch size_diff
         % transfrom diff value to appropriate size
         % value ranching from 0.01 to 1
         diff(isnan(diff)) = 0.1;
+        diff(isinf(diff)) = 0.1;
         size_value = abs(diff);
         min_bound = 0.01;
         max_bound = 1.0;
@@ -340,6 +341,8 @@ LAYER (figure, scalar) is the layer number of the nodal measure.
 1
 %%%% ¡postset!
 pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonEnsembleBrainPF_xUPP_Layer('EL', pf, 'PROP', ComparisonEnsembleBrainPF_NU.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.

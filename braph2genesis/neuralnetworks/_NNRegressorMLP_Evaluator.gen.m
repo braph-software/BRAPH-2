@@ -8,6 +8,74 @@ NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressorMLP
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.ID
+%%%% ¡title!
+Cross Validation ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.LABEL
+%%%% ¡title!
+Cross Validation LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.PFSP
+%%%% ¡title!
+Scatter Plot
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.CORR
+%%%% ¡title!
+Correlation Coefficient
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.DET
+%%%% ¡title!
+Coefficient of Determination
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.MAE
+%%%% ¡title!
+Mean Absolute Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.MSE
+%%%% ¡title!
+Mean Squared Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.RMSE
+%%%% ¡title!
+Root Mean Squared Error
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.P
+%%%% ¡title!
+Permutation Times for Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
+%%%% ¡title!
+Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNRegressorMLP_Evaluator.NOTES
+%%%% ¡title!
+Evaluator NOTES
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -175,7 +243,38 @@ else
     value = {average_fi};
 end
 
+%%%% ¡gui!
+input_dataset = nne.get('D');
+dp_class = input_dataset.get('DP_CLASS');
+graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
+
+if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+else % DATA input
+    pr = NNxMLP_xPP_FI_Data('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+end
+
+%%% ¡prop!
+PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
+%%%% ¡settings!
+'NNRegressorMLP_EvaluatorPF_Scatter'
+%%%% ¡postprocessing!
+if isa(nne.getr('PFSP'), 'NoValue')
+    nne.set('PFSP', NNRegressorMLP_EvaluatorPF_Scatter('NNE', nne));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNRegressorMLP_Evaluator.PFSP, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['Scatter Plot'], ...
+    varargin{:});
+
 %% ¡tests!
+
+%%% ¡excluded_props!
+[NNRegressorMLP_Evaluator.PFSP]
 
 %%% ¡test!
 %%%% ¡name!

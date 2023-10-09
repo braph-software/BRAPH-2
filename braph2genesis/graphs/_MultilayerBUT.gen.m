@@ -1,5 +1,5 @@
 %% ¡header!
-MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed thresholds graph) is a multilayer binary undirected with fixed thresholds graph.
+MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed thresholds graph) is a multilayer binary undirected graph with fixed thresholds.
 
 %%% ¡description!
 In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers 
@@ -38,6 +38,12 @@ LAYERS ticks
 MultilayerBUT.LAYERLABELS
 %%%% ¡title!
 LAYERS labels
+
+%%% ¡prop!
+%%%% ¡id!
+MultilayerBUT.PARTITIONLABELS
+%%%% ¡title!
+PARTITION labels
 
 %%% ¡prop!
 %%%% ¡id!
@@ -132,37 +138,37 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'MultilayerBUT'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the multilayer undirected with fixed thresholds graph.
+NAME (constant, string) is the name of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'MultilayerBUT'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the multilayer undirected with fixed thresholds graph.
+DESCRIPTION (constant, string) is the description of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'In a multilayer binary undirected with fixed thresholds (BUT) graph, the layers are those of binary undirected (BU) multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency  matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the multilayer binarized at different thresholds graph.
+TEMPLATE (parameter, item) is the template of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡settings!
 'MultilayerBUT'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the multilayer binary  undirected with fixed thresholds graph.
+ID (data, string) is a few-letter code for the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'MultilayerBUT ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the multilayer binary  undirected with fixed thresholds graph.
+LABEL (metadata, string) is an extended label of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'MultilayerBUT label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the multilayer binary undirected with fixed thresholds graph.
+NOTES (metadata, string) are some specific notes about the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
 'MultilayerBUT notes'
 
@@ -293,11 +299,20 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(thresholds)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, [blayerlabels{j} '|' thresholds{i}]];
+            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' thresholds{i}]];
         end
     end
 end
 value = alayerlabels;
+
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
+    apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+end
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

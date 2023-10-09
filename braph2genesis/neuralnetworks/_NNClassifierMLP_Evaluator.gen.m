@@ -8,6 +8,56 @@ NNClassifierMLP_Evaluator evaluates the performance of the trained classifier wi
 %%% ¡seealso!
 NNDataPoint_CON_CLA, NNClassifierMLP
 
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.ID
+%%%% ¡title!
+Cross Validation ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.LABEL
+%%%% ¡title!
+Cross Validation LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.AUC
+%%%% ¡title!
+Area Under Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.PFROC
+%%%% ¡title!
+Plot Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.MACRO_AUC
+%%%% ¡title!
+Macro Area Under Receiver Operating Characteristic Curve
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.C_MATRIX
+%%%% ¡title!
+Confusion Matrix
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.P
+%%%% ¡title!
+Permutation Times for Feature Importance
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+%%%% ¡title!
+Feature Importance
+
 %% ¡props_update!
 
 %%% ¡prop!
@@ -78,6 +128,20 @@ else
 end
 
 %%% ¡prop!
+PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
+%%%% ¡settings!
+'NNClassifierMLP_EvaluatorPF_ROC'
+%%%% ¡postprocessing!
+if isa(nne.getr('PFROC'), 'NoValue')
+    nne.set('PFROC', NNClassifierMLP_EvaluatorPF_ROC('NNE', nne));
+end
+%%%% ¡gui!
+pr = PanelPropItem('EL', nne, 'PROP', NNClassifierMLP_Evaluator.PFROC, ...
+    'GUICLASS', 'GUIFig', ...
+	'BUTTON_TEXT', ['ROC Plot'], ...
+    varargin{:});
+
+%%% ¡prop!
 MACRO_AUC (result, scalar) provides the metric of the average AUC value.
 %%%% ¡calculate!
 auc = nne.get('AUC');
@@ -131,8 +195,24 @@ else
     average_fi = average_fi / numel(all_fi);
     value = {average_fi};
 end
+%%%% ¡gui!
+input_dataset = nne.get('D');
+dp_class = input_dataset.get('DP_CLASS');
+graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
+
+if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+else % DATA input
+    pr = NNxMLP_xPP_FI_Data('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
+end
 
 %% ¡tests!
+
+%%% ¡excluded_props!
+[NNClassifierMLP_Evaluator.PFROC]
 
 %%% ¡test!
 %%%% ¡name!

@@ -41,6 +41,12 @@ LAYERS labels
 
 %%% ¡prop!
 %%%% ¡id!
+OrdMlBUD.PARTITIONLABELS
+%%%% ¡title!
+PARTITION labels
+
+%%% ¡prop!
+%%%% ¡id!
 OrdMlBUD.NODELABELS
 %%%% ¡title!
 NODES labels
@@ -132,7 +138,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ordinal binary undirected multilayer with fixed densities.
 %%%% ¡default!
 'OrdMlBUD'
 
@@ -294,11 +300,20 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(densities)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, [blayerlabels{j} '|' densities{i}]];
+            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' densities{i}]];
         end
     end
 end
 value = alayerlabels;
+
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('DENSITIES')) % ensures that it's not unecessarily calculated
+    apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
+end
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

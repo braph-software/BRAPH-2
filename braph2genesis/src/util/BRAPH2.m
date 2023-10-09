@@ -11,6 +11,7 @@ classdef BRAPH2
     %  AUTHORS          - BRAPH2 authors
     %  COPYRIGHT        - BRAPH2 copyright
     %  WEB              - BRAPH2 website
+    %  GITHUB           - BRAPH2 GitHub repository
     %  TWITTER          - BRAPH2 twitter handle
     %  MATLAB_VERSION   - Minimal MatLab version (9.12)
     %  MATLAB_RELEASE   - Minimal MatLab release (2022a)
@@ -25,6 +26,7 @@ classdef BRAPH2
     % Properties (Constant) - BRAPH2 error codes:
     %  WRONG_VER        - wrong MatLab or addon version
     %  MISS_ADDON       - addon not installed
+    %  FAIL_GEN         - failed genesis
     %  FAIL_TEST        - failed unit testing
     %  WRONG_INPUT      - wrong input value or format in a function
     %  CANCEL_IO        - cancelled loading/saving files by user
@@ -73,6 +75,7 @@ classdef BRAPH2
         AUTHORS = 'Giovanni Volpe, Emiliano Gomez Ruiz, Anna Canal Garcia, Yu-Wei Chang, Mite Mijalkov, Joana Braga Pereira, Ehsan Kakaei, Eric Westman, et al.'
         COPYRIGHT = ['Copyright 2014-' datestr(now,'yyyy')]
         WEB = 'braph.org' % BRAPH2 website
+        GITHUB = 'github.com/braph-software/BRAPH-2' % GitHub repository
         TWITTER = 'braph2software' % BRAPH2 twitter handle
         MATLAB_VERSION = '9.12' % Minimal MatLab version (9.12)
         MATLAB_RELEASE = '(2022a)' % Minimal MatLab release (2022a)
@@ -87,6 +90,7 @@ classdef BRAPH2
 	properties (Constant) % BRAPH2 error codes
         WRONG_VER = 'WrongVersion' % wrong MatLab or addon version
         MISS_ADDON = 'MissingAddOn' % addon not installed
+        FAIL_GEN = 'FailedGenesis' % failed genesis
         FAIL_TEST = 'FailedUnitTest' % failed unit testing
         WRONG_INPUT = 'WrongInput' % wrong input value or format in a function
         CANCEL_IO = 'CancelIO' % cancelled loading/saving files by user

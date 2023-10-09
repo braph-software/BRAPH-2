@@ -23,15 +23,9 @@ Graph NAME
 
 %%% ¡prop!
 %%%% ¡id!
-MultigraphBUT.LAYERTICKS
+MultigraphBUT.PARTITIONLABELS
 %%%% ¡title!
-LAYERS ticks
-
-%%% ¡prop!
-%%%% ¡id!
-MultigraphBUT.LAYERLABELS
-%%%% ¡title!
-LAYERS labels
+PARTITION labels
 
 %%% ¡prop!
 %%%% ¡id!
@@ -120,7 +114,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the binary undirected multigraph with fixed thresholds.
 %%%% ¡default!
 'MultigraphBUT'
 
@@ -243,6 +237,15 @@ if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not
     alayerlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
 end
 value = alayerlabels;
+
+%%% ¡prop!
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+%%%% ¡calculate!
+apartitionlabels = g.get('PARTITIONLABELS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
+    apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+end
+value = apartitionlabels;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

@@ -51,15 +51,23 @@ NOTES (metadata, string) are some specific notes about the cross-validation.
 %% ¡props!
 
 %%% ¡prop!
+WAITBAR (gui, logical) detemines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
 KFOLDS (data, scalar) is the number of folds.
 %%%% ¡default!
 5
+%%%% ¡postset!
+kfolds = nncv.get('KFOLDS');
+nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
 
 %%% ¡prop!
 SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
 %%%% ¡postprocessing!
-split = nncv.get('SPLIT');
 kfolds = nncv.get('KFOLDS');
+split = nncv.get('SPLIT');
 d = nncv.get('D');
 if isempty(split) && length(d) > 0 && d{1}.get('DP_DICT').get('LENGTH') > kfolds
     nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
@@ -120,10 +128,55 @@ else
 end
 
 %%% ¡prop!
+D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% d = nncv.get('D_LIST_IT', index) returns the NNDataset at the specified 
+%  index from the D_LIST property.
+if isempty(varargin)
+    value = NNDataset();
+    return
+end
+index = varargin{1};
+
+d_list = nncv.get('D_LIST');
+
+value = d_list{index};
+
+%%% ¡prop!
 NN_LIST (result, itemlist) contains the neural network models corresponding to the k folds.
 
 %%% ¡prop!
+NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% nn = nncv.get('NN_LIST_IT', index) returns the NNBase at the specified 
+%  index from the NN_LIST property.
+if isempty(varargin)
+    value = NNBase();
+    return
+end
+index = varargin{1};
+
+nn_list = nncv.get('NN_LIST');
+
+value = nn_list{index};
+
+%%% ¡prop!
 EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to the k folds.
+
+%%% ¡prop!
+EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+%%%% ¡calculate!
+% nne = nncv.get('EVALUATOR_LIST_IT', index) returns the NNEvaluator at the specified 
+%  index from the EVALUATOR_LIST property.
+if isempty(varargin)
+    value = NNEvaluator();
+    return
+end
+index = varargin{1};
+
+nne_list = nncv.get('EVALUATOR_LIST');
+
+value = nne_list{index};
 
 %%% ¡prop!
 EPOCHS (parameter, scalar) is the maximum number of epochs.
@@ -159,9 +212,12 @@ PLOT_TRAINING (metadata, option) determines whether to plot the training progres
 TRAIN (query, empty) trains all neural network models for all folds.
 %%%% ¡calculate!
 nn_list = nncv.memorize('NN_LIST');
+wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Train neural networks for all folds ...']);
 for i = 1:1:length(nn_list)
+     braph2waitbar(wb, i / length(nn_list), ['Train neural network model ' num2str(i) ' of ' num2str(length(nn_list)) ' ...'])
     nn_list{i}.memorize('MODEL');
 end
+braph2waitbar(wb, 'close')
 value = [];
 
 %% ¡tests!

@@ -102,8 +102,19 @@ if isfile(file)
         for i = length(notes_newlines):-1:1
             notes = [notes(1:notes_newlines(i)) strtrim(notes(notes_newlines(i) + 2:end))]; % eliminates % but not newline
         end
-        pip.set('NOTES', notes)
+
+        md = regexp(notes, '/tutorials/pipelines/\\w+/readme\\.md', 'match', 'once'); % note \\ for compilation
+        notes = regexprep(notes, ['README:.*?(' newline() '|$)'], '');
+
+        pdf = regexp(notes, '/tutorials/pipelines/\\w+/\\w+\\.pdf', 'match', 'once'); % note \\ for compilation
+        notes = regexprep(notes, ['PDF:.*?(' newline() '|$)'], '');
         
+        pip.set( ...
+            'NOTES', strtrim(notes), ...
+            'README', md, ...
+            'PDF', pdf ...
+            )
+
         % PipelineSection Dictionary
         pip.set('PS_DICT', Pipeline.getPropDefault('PS_DICT'))
         

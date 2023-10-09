@@ -4,6 +4,7 @@ PipelinePP_PSDict < PanelProp (pr, pipeline plot) plots the panel for a pipeline
 %%% ¡description!
 A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order.
 It opens PanelFig elements using GUIFig, and all other elements using GUIElement.
+It should be used only with the prop PS_DICT of the element Pipeline.
 
 %%% ¡seealso!
 Pipeline
@@ -23,7 +24,7 @@ NAME (constant, string) is the name of the pipeline plot.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the pipeline plot.
 %%%% ¡default!
-'A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order. It opens PanelFig elements using GUIFig, and all other elements using GUIElement.'
+'A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order. It opens PanelFig elements using GUIFig, and all other elements using GUIElement. It should be used only with the prop PS_DICT of the element Pipeline.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the pipeline plot.

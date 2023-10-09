@@ -33,13 +33,23 @@ To install BRAPH 2.0, follow these steps:
 
 4. Unzip the downloaded file into the desired directory on your system.
 
-5. Launch MATLAB and change the current folder to the "braph2genesis" folder located in the directory where you unzipped BRAPH 2.0. You may need to add the folder to the MATLAB path.
+5. Launch MATLAB.
+   
+7. Navigate to the `braph2` folder located in the directory where you unzipped BRAPH 2.0. 
 
-6. Run the script `braph2genesis` in MATLAB. This installation process may take up to one hour to complete. You only need to run this script once or whenever there is an update to BRAPH 2.0.
+9. Run the script `braph2`. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
 
-7. After the installation is complete, you can run BRAPH 2.0 by navigating to the "braph2" folder in MATLAB and running the script `braph2`. This will launch the graphical user interface (GUI) from which you can choose an analysis pipeline to start your analysis.
+10. Explore the [BRAPH 2.0 Tutorials](tutorials).
 
-8. Explore the [BRAPH 2.0 Tutorials](tutorials).
+### Compatibility with MatLab Releases and Operative Systems
+A &check; indicates that we have unit tested the current release BRAPH 2.0 on the indicated Matlab release and operative system.
+
+| Matlab Version        | Mac     | Win    | Linux   |
+| :-------------------: | :-----: | :-----:| :-----: |
+| R2022a                | ?       | ?      | ?       |
+| R2022b                | ?       | ?      | ?       |
+| R2023a                | ?       | ?      | ?       |
+| R2023b                | ?       | ?      | ?       |
 
 ### Use Cases & Analysis Pipelines
 

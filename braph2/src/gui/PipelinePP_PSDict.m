@@ -4,6 +4,7 @@ classdef PipelinePP_PSDict < PanelProp
 	%
 	% A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order.
 	% It opens PanelFig elements using GUIFig, and all other elements using GUIElement.
+	% It should be used only with the prop PS_DICT of the element Pipeline.
 	%
 	% The list of PipelinePP_PSDict properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the pipeline plot.
@@ -687,7 +688,7 @@ classdef PipelinePP_PSDict < PanelProp
 				case 2 % PipelinePP_PSDict.NAME
 					prop_default = 'Pipeline Plot';
 				case 3 % PipelinePP_PSDict.DESCRIPTION
-					prop_default = 'A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order. It opens PanelFig elements using GUIFig, and all other elements using GUIElement.';
+					prop_default = 'A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order. It opens PanelFig elements using GUIFig, and all other elements using GUIElement. It should be used only with the prop PS_DICT of the element Pipeline.';
 				case 4 % PipelinePP_PSDict.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PipelinePP_PSDict.getPropSettings(prop));
 				case 5 % PipelinePP_PSDict.ID
@@ -699,7 +700,7 @@ classdef PipelinePP_PSDict < PanelProp
 				case 23 % PipelinePP_PSDict.EL
 					prop_default = Format.getFormatDefault(8, PipelinePP_PSDict.getPropSettings(prop));
 				case 24 % PipelinePP_PSDict.PROP
-					prop_default = 9;
+					prop_default = 11;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end

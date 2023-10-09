@@ -13,7 +13,9 @@ classdef Pipeline < ConcreteElement
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
+	%  <strong>9</strong> <strong>README</strong> 	README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
+	%  <strong>10</strong> <strong>PDF</strong> 	PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
+	%  <strong>11</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
 	%
 	% Pipeline methods (constructor):
 	%  Pipeline - constructor
@@ -104,7 +106,17 @@ classdef Pipeline < ConcreteElement
 	% See also PipelinePP_PSDict, PipelineSection, PipelineCode.
 	
 	properties (Constant) % properties
-		PS_DICT = 9; %CET: Computational Efficiency Trick
+		README = 9; %CET: Computational Efficiency Trick
+		README_TAG = 'README';
+		README_CATEGORY = 2;
+		README_FORMAT = 2;
+		
+		PDF = 10; %CET: Computational Efficiency Trick
+		PDF_TAG = 'PDF';
+		PDF_CATEGORY = 2;
+		PDF_FORMAT = 2;
+		
+		PS_DICT = 11; %CET: Computational Efficiency Trick
 		PS_DICT_TAG = 'PS_DICT';
 		PS_DICT_CATEGORY = 4;
 		PS_DICT_FORMAT = 10;
@@ -129,7 +141,9 @@ classdef Pipeline < ConcreteElement
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
+			%  <strong>9</strong> <strong>README</strong> 	README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
+			%  <strong>10</strong> <strong>PDF</strong> 	PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
+			%  <strong>11</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
 			%
 			% See also Category, Format.
 			
@@ -191,7 +205,7 @@ classdef Pipeline < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
@@ -199,11 +213,11 @@ classdef Pipeline < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7];
+					prop_list = [6 7 9 10];
 				case 3 % Category.PARAMETER
 					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [5 9];
+					prop_list = [5 11];
 				case 6 % Category.QUERY
 					prop_list = 8;
 				otherwise
@@ -231,7 +245,7 @@ classdef Pipeline < ConcreteElement
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 9;
+				prop_number = 11;
 				return
 			end
 			
@@ -239,7 +253,7 @@ classdef Pipeline < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_number = 3;
 				case 2 % Category.METADATA
-					prop_number = 2;
+					prop_number = 4;
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
@@ -276,7 +290,7 @@ classdef Pipeline < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 9 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -314,7 +328,7 @@ classdef Pipeline < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PS_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'README'  'PDF'  'PS_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -347,7 +361,7 @@ classdef Pipeline < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PS_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'README'  'PDF'  'PS_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -376,7 +390,7 @@ classdef Pipeline < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				pipeline_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PS_DICT' };
+				pipeline_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'README'  'PDF'  'PS_DICT' };
 				tag = pipeline_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -403,7 +417,7 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipeline_category_list = { 1  1  1  3  4  2  2  6  4 };
+			pipeline_category_list = { 1  1  1  3  4  2  2  6  2  2  4 };
 			prop_category = pipeline_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -429,7 +443,7 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipeline_format_list = { 2  2  2  8  2  2  2  2  10 };
+			pipeline_format_list = { 2  2  2  8  2  2  2  2  2  2  10 };
 			prop_format = pipeline_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -455,7 +469,7 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipeline_description_list = { 'ELCLASS (constant, string) is the class of the pipeline.'  'NAME (constant, string) is the name of the pipeline.'  'DESCRIPTION (constant, string) is the description of the pipeline.'  'TEMPLATE (parameter, item) is the template of the pipeline.'  'ID (data, string) is a few-letter code for the pipeline.'  'LABEL (metadata, string) is an extended label of the pipeline.'  'NOTES (metadata, string) are some specific notes about the pipeline.'  'TOSTRING (query, string) returns a string that represents the object.'  'PS_DICT (data, idict) is an indexed dictionary with the code sections.' };
+			pipeline_description_list = { 'ELCLASS (constant, string) is the class of the pipeline.'  'NAME (constant, string) is the name of the pipeline.'  'DESCRIPTION (constant, string) is the description of the pipeline.'  'TEMPLATE (parameter, item) is the template of the pipeline.'  'ID (data, string) is a few-letter code for the pipeline.'  'LABEL (metadata, string) is an extended label of the pipeline.'  'NOTES (metadata, string) are some specific notes about the pipeline.'  'TOSTRING (query, string) returns a string that represents the object.'  'README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).'  'PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).'  'PS_DICT (data, idict) is an indexed dictionary with the code sections.' };
 			prop_description = pipeline_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -481,7 +495,11 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % Pipeline.PS_DICT
+				case 9 % Pipeline.README
+					prop_settings = Format.getFormatSettings(2);
+				case 10 % Pipeline.PDF
+					prop_settings = Format.getFormatSettings(2);
+				case 11 % Pipeline.PS_DICT
 					prop_settings = 'PipelineSection';
 				case 4 % Pipeline.TEMPLATE
 					prop_settings = 'Pipeline';
@@ -512,7 +530,11 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
-				case 9 % Pipeline.PS_DICT
+				case 9 % Pipeline.README
+					prop_default = Format.getFormatDefault(2, Pipeline.getPropSettings(prop));
+				case 10 % Pipeline.PDF
+					prop_default = Format.getFormatDefault(2, Pipeline.getPropSettings(prop));
+				case 11 % Pipeline.PS_DICT
 					prop_default = Format.getFormatDefault(10, Pipeline.getPropSettings(prop));
 				case 1 % Pipeline.ELCLASS
 					prop_default = 'Pipeline';
@@ -592,7 +614,11 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			switch prop
-				case 9 % Pipeline.PS_DICT
+				case 9 % Pipeline.README
+					check = Format.checkFormat(2, value, Pipeline.getPropSettings(prop));
+				case 10 % Pipeline.PDF
+					check = Format.checkFormat(2, value, Pipeline.getPropSettings(prop));
+				case 11 % Pipeline.PS_DICT
 					check = Format.checkFormat(10, value, Pipeline.getPropSettings(prop));
 				case 4 % Pipeline.TEMPLATE
 					check = Format.checkFormat(8, value, Pipeline.getPropSettings(prop));
@@ -630,11 +656,11 @@ classdef Pipeline < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 9 % Pipeline.PS_DICT
-					pr = PipelinePP_PSDict('EL', pip, 'PROP', 9, varargin{:});
+				case 11 % Pipeline.PS_DICT
+					pr = PipelinePP_PSDict('EL', pip, 'PROP', 11, varargin{:});
 					
 				case 7 % Pipeline.NOTES
-					pr = PanelPropStringTextArea('EL', pip, 'PROP', 7, 'HEIGHT', 120, varargin{:});
+					pr = PipelinePP_Notes('EL', pip, 'PROP', 7, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@ConcreteElement(pip, prop, varargin{:});
