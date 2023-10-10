@@ -1,14 +1,210 @@
 # BRAPH 2.0 — Contributors
-| Information  |  |
-| ------------- | ------------- |
-|**Dr. Giovanni Volpe** <br> Department of Physics, University of Gothenburg, <br>  Gothenburg, Sweden <br> giovanni.volpe@physics.gu.se  | ![Giovanni Volpe](figures/giovanni_volpe.png)  | 
-| **Dr. Joanna B. Pereira** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> joana.pereira@ki.se | ![Joanna Pereira](figures/joana_pereira.png)  |
-| **Emiliano Gomez Ruiz** <br> Department of Physics, University of Gothenburg, <br>  Gothenburg, Sweden <br> emiliano.gomez@physics.gu.se| ![Emiliano Gomez](figures/emiliano_gomez.png)  |
-| **Anna Canal García** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> anna.canal.garcia@ki.se | ![Anna Canal](figures/anna_canal.png) |
-| **Yu-Wei Chang** <br> Department of Physics, University of Gothenburg, <br>  Gothenburg, Sweden <br> yuwei.chang@physics.gu.se | ![Yu-Wei Chang](figures/yuwei_chang.png)|
-| **Dr. Mite Mijalkov** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> mite.mijalkov@ki.se | ![Mite Mijalkov](figures/mite_mijalkov.png) |
-| **Dr. Eric Westman** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> eric.westman@ki.se | ![Eric Westman](figures/eric_westman.png) |
-| **Dr. Daniel Vereb** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> daniel.vereb@ki.se | ![Daniel Vereb](figures/daniel_vereb.png) |
-| **Hang Zhao** <br> Department of Physics, University of Gothenburg, <br>  Gothenburg, Sweden <br> hang.zhao@physics.gu.se | ![Hang Zhao](figures/hang_zhao.png) |
-| **Blanca Zufiria** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> blanca.zufiria.gerboles@ki.se | ![Blanca Zufiria](figures/blanca_zufiria.png) |
-| **Jiawei Sun** <br> Department of Clinical Neuroscience, Karolinska Institutet <br> Stockholm, Sweden <br> jiawei.sun@ki.se | ![Jiawei Sun](figures/jiawei_sun.png) |
+
+---
+
+## Prof. Giovanni Volpe
+<table>
+<tr>
+<td>
+
+**Department of Physics**, University of Gothenburg, Gothenburg, Sweden  
+Email: [giovanni.volpe@physics.gu.se](mailto:giovanni.volpe@physics.gu.se)
+
+</td>
+<td>
+
+<img src="figures/giovanni_volpe.png" alt="Giovanni Volpe" width="250"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Dr. Joanna B. Pereira
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [joana.pereira@ki.se](mailto:joana.pereira@ki.se)
+
+</td>
+<td>
+
+<img src="figures/joana_pereira.png" alt="Joanna Pereira" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Emiliano Gomez Ruiz
+<table>
+<tr>
+<td>
+
+**Department of Physics**, University of Gothenburg, Gothenburg, Sweden  
+Email: [emiliano.gomez@physics.gu.se](mailto:emiliano.gomez@physics.gu.se)
+
+</td>
+<td>
+
+<img src="figures/emiliano_gomez.png" alt="Emiliano Gomez" width="250"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Anna Canal García
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [anna.canal.garcia@ki.se](mailto:anna.canal.garcia@ki.se)
+
+</td>
+<td>
+
+<img src="figures/anna_canal.png" alt="Anna Canal" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Yu-Wei Chang
+<table>
+<tr>
+<td>
+
+**Department of Physics**, University of Gothenburg, Gothenburg, Sweden  
+Email: [yuwei.chang@physics.gu.se](mailto:yuwei.chang@physics.gu.se)
+
+</td>
+<td>
+
+<img src="figures/yuwei_chang.png" alt="Yu-Wei Chang" width="250"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Dr. Mite Mijalkov
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [mite.mijalkov@ki.se](mailto:mite.mijalkov@ki.se)
+
+</td>
+<td>
+
+<img src="figures/mite_mijalkov.png" alt="Mite Mijalkov" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Prof. Eric Westman
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [eric.westman@ki.se](mailto:eric.westman@ki.se)
+
+</td>
+<td>
+
+<img src="figures/eric_westman.png" alt="Eric Westman" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Dr. Daniel Vereb
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [daniel.vereb@ki.se](mailto:daniel.vereb@ki.se)
+
+</td>
+<td>
+
+<img src="figures/daniel_vereb.png" alt="Daniel Vereb" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Hang Zhao
+<table>
+<tr>
+<td>
+
+**Department of Physics**, University of Gothenburg, Gothenburg, Sweden  
+Email: [hang.zhao@physics.gu.se](mailto:hang.zhao@physics.gu.se)
+
+</td>
+<td>
+
+<img src="figures/hang_zhao.png" alt="Hang Zhao" width="250"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Blanca Zufiria
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [blanca.zufiria.gerboles@ki.se](mailto:blanca.zufiria.gerboles@ki.se)
+
+</td>
+<td>
+
+<img src="figures/blanca_zufiria.png" alt="Blanca Zufiria" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Jiawei Sun
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [jiawei.sun@ki.se](mailto:jiawei.sun@ki.se)
+
+</td>
+<td>
+
+<img src="figures/jiawei_sun.png" alt="Jiawei Sun" width="150"/>
+
+</td>
+</tr>
+</table>
