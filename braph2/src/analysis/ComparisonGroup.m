@@ -583,7 +583,7 @@ classdef ComparisonGroup < ConcreteElement
 				case 17 % ComparisonGroup.PFC
 					prop_settings = 'ComparisonGroupPF';
 				case 18 % ComparisonGroup.PFBG
-					prop_settings = Format.getFormatSettings(8);
+					prop_settings = 'ComparisonGroupBrainPF';
 				case 19 % ComparisonGroup.CALCULATE_RESULTS
 					prop_settings = Format.getFormatSettings(16);
 				case 4 % Comparison4
@@ -802,6 +802,45 @@ classdef ComparisonGroup < ConcreteElement
 					                    cp.set('PFC', ComparisonGroupPF_BU('CP', cp))
 					                case 3 % Measure.BILAYER
 					                    cp.set('PFC', ComparisonGroupPF_BB('CP', cp))
+					            end
+					    end
+					end
+					
+				case 18 % ComparisonGroup.PFBG
+					if isa(cp.getr('PFBG'), 'NoValue')
+					    measure = cp.get('MEASURE');
+					    if cp.get('C').get('A1').get('GR').get('SUB_DICT').get('LENGTH')
+					        brain_atlas = cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT', 1).get('BA');
+					    else
+					        brain_atlas = BrainAtlas();
+					    end
+					    switch Element.getPropDefault(measure, 'SHAPE')
+					        case 1 % Measure.GLOBAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFBG', ComparisonGroupBrainPF_GS('CP', cp, 'BA', brain_atlas));
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_GU('CP', cp, 'BA', brain_atlas));
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_GB('CP', cp, 'BA', brain_atlas));
+					            end
+					        case 2 % Measure.NODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFBG', ComparisonGroupBrainPF_NS('CP', cp, 'BA', brain_atlas));
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_NU('CP', cp, 'BA', brain_atlas));
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_NB('CP', cp, 'BA', brain_atlas));
+					            end
+					        case 3 % Measure.BINODAL
+					            switch Element.getPropDefault(measure, 'SCOPE')
+					                case 1 % Measure.SUPERGLOBAL
+					                    cp.set('PFBG', ComparisonGroupBrainPF_BS('CP', cp, 'BA', brain_atlas));
+					                case 2 % Measure.UNILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_BU('CP', cp, 'BA', brain_atlas));
+					                case 3 % Measure.BILAYER
+					                    cp.set('PFBG', ComparisonGroupBrainPF_BB('CP', cp, 'BA', brain_atlas));
 					            end
 					    end
 					end

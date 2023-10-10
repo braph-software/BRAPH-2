@@ -544,50 +544,47 @@ pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
 
 %%% ¡prop!
 PFBG (gui, item) contains the panel figure of the brain graph.
-%%%% ¡_settings!
-% % % 'PFBrainGraphComparison'
-%%%% ¡_postprocessing!
-% % % if ~braph2_testing % to avoid problems with isqual when the element is recursive
-% % %     if isa(cp.getr('PFBG'), 'NoValue')
-% % %         c = cp.get('C');
-% % %         g = c.get('A1').get('G');
-% % %         if ~isempty(g) && ~isa(g, 'NoValue')
-% % %             if Graph.is_graph(g) % graph
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.memorize('PFBG').set('ME', cp, 'BA', ba_list{1})
-% % %                 else
-% % %                     cp.memorize('PFBG').set('ME', cp);
-% % %                 end
-% % %                 
-% % %             elseif Graph.is_multigraph(g) % multigraph BUD BUT
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainBinaryGraphComparison('ME', cp));
-% % %                 end
-% % %             elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_weighted(g) % multiplexWU
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainMultiplexGraphComparison('ME', cp));
-% % %                 end
-% % %             elseif (Graph.is_multiplex(g) || Graph.is_ordered_multiplex(g)) && Graph.is_binary(g)
-% % %                 ba_list = g.get('BAS');
-% % %                 if ~isempty(ba_list)
-% % %                     cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp, 'BA', ba_list{1}));
-% % %                 else
-% % %                     cp.set('PFBG', PFBrainMultiplexBinaryGraphComparison('ME', cp));
-% % %                 end
-% % %             end
-% % %                 
-% % %         else
-% % %             m.memorize('PFBG').set('ME', m)
-% % %         end
-% % %     end
-% % % end
+%%%% ¡settings!
+'ComparisonGroupBrainPF'
+%%%% ¡postprocessing!
+if isa(cp.getr('PFBG'), 'NoValue')
+    measure = cp.get('MEASURE');
+    if cp.get('C').get('A1').get('GR').get('SUB_DICT').get('LENGTH')
+        brain_atlas = cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT', 1).get('BA');
+    else
+        brain_atlas = BrainAtlas();
+    end
+    switch Element.getPropDefault(measure, 'SHAPE')
+        case Measure.GLOBAL % __Measure.GLOBAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFBG', ComparisonGroupBrainPF_GS('CP', cp, 'BA', brain_atlas));
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_GU('CP', cp, 'BA', brain_atlas));
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_GB('CP', cp, 'BA', brain_atlas));
+            end
+        case Measure.NODAL % __Measure.NODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFBG', ComparisonGroupBrainPF_NS('CP', cp, 'BA', brain_atlas));
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_NU('CP', cp, 'BA', brain_atlas));
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_NB('CP', cp, 'BA', brain_atlas));
+            end
+        case Measure.BINODAL % __Measure.BINODAL__
+            switch Element.getPropDefault(measure, 'SCOPE')
+                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                    cp.set('PFBG', ComparisonGroupBrainPF_BS('CP', cp, 'BA', brain_atlas));
+                case Measure.UNILAYER % __Measure.UNILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_BU('CP', cp, 'BA', brain_atlas));
+                case Measure.BILAYER % __Measure.BILAYER__
+                    cp.set('PFBG', ComparisonGroupBrainPF_BB('CP', cp, 'BA', brain_atlas));
+            end
+    end
+end
+
 %%%% ¡gui!
 pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFBG, ...
     'GUICLASS', 'GUIFig', ...
