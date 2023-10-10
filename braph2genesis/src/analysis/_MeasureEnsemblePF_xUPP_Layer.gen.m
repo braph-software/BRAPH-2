@@ -77,14 +77,13 @@ if value
     pf = pr.get('EL');
     LAYER = pr.get('PROP');
     
-    %     keys = pf.get('M').get('G').get('ALAYERTICKS');
-    if pf.get('M').get('G_DICT').get('LENGTH')
-        g = pf.get('M').get('G_DICT').get('IT', 1);
+    if pf.get('ME').get('A').get('G_DICT').get('LENGTH')
+        g = pf.get('ME').get('A').get('G_DICT').get('IT', 1);
     else
-        g = pf.get('M').get('GRAPH_TEMPLATE');
+        g = pf.get('ME').get('A').get('GRAPH_TEMPLATE');
     end
     keys = g.get('ALAYERTICKS');
-    
+   
     set(pr.get('DROPDOWN'), ...
         'Items', keys, ...
         'ItemsData', [1:1:length(keys)], ...
