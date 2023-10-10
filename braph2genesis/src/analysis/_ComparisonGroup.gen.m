@@ -552,7 +552,7 @@ if isa(cp.getr('PFBG'), 'NoValue')
     if cp.get('C').get('A1').get('GR').get('SUB_DICT').get('LENGTH')
         brain_atlas = cp.get('C').get('A1').get('GR').get('SUB_DICT').get('IT', 1).get('BA');
     else
-        brain_atlas = BrainAtlas()
+        brain_atlas = BrainAtlas();
     end
     switch Element.getPropDefault(measure, 'SHAPE')
         case Measure.GLOBAL % __Measure.GLOBAL__
