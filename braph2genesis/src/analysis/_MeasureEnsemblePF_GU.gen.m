@@ -122,7 +122,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 m = cell2mat(me.get('M'))';
 
@@ -150,6 +150,17 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%% ¡props!
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the global measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_GU.LAYER);
 
 %% ¡tests!
 

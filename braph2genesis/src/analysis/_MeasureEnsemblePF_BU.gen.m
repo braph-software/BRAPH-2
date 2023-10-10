@@ -128,7 +128,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 nodes = pf.get('NODES');
 m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
@@ -179,6 +179,15 @@ pf.get('SETUP')
 % % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
 % % %     'BA', ba, ...
 % % %     varargin{:});
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the binodal measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_BU.LAYER);
 
 %% ¡tests!
 

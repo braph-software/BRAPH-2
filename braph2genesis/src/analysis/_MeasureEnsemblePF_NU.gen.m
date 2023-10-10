@@ -128,7 +128,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 node = pf.get('NODE');
 m = cellfun(@(x) x(node), me.get('M'))';
@@ -167,7 +167,7 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal group comparison figure.
+NODE (figure, scalar) is the node number of the nodal measure.
 %%%% ¡default!
 1
 %%%% ¡postset!
@@ -179,6 +179,15 @@ pf.get('SETUP')
 % % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
 % % %     'BA', ba, ...
 % % %     varargin{:});
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the nodal measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_NU.LAYER);
 
 %% ¡tests!
 
