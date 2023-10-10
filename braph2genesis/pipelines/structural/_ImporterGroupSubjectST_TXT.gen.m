@@ -207,7 +207,7 @@ value = gr;
 %%%% ¡name!
 Create example files
 %%%% ¡code!
-create_data_ST_TXT()
+create_data_ST_TXT() % only creates files if the example folder doesn't already exist
 
 %%% ¡test!
 %%%% ¡name!
