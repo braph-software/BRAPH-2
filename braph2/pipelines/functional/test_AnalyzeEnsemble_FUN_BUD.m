@@ -1451,9 +1451,7 @@ end
 
 %% Test 12: Example
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'atlas.xlsx'])
-	    test_ImporterGroupSubjectFUN_XLS % create example files
-	end
+	create_data_FUN_XLS() % only creates files if the example folder doesn't already exist
 	
 	example_FUN_BUD
 end
