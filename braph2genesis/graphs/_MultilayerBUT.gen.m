@@ -315,9 +315,13 @@ end
 value = apartitionlabels;
 
 %%% ¡prop!
-APARTITIONTICKS (query, rvector) returns the partition (threshold) ticks for A.
+APARTITIONTICKS (query, stringlist) returns the partition (threshold) ticks for A.
 %%%% ¡calculate!
-value = g.get('THRESHOLDS');
+apartitionticks = g.get('PARTITIONTICKS');
+if ~isa(g.getr('A'), 'NoValue') && length(apartitionticks) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
+    apartitionticks = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+end
+value = apartitionticks;
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
