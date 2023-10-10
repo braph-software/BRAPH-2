@@ -76,7 +76,6 @@ if value
     pf = pr.get('EL');
     LAYER = pr.get('PROP');
 
-    %keys = pf.get('CP').get('C').get('A1').get('G').get('ALAYERTICKS');
     if pf.get('CP').get('C').get('A1').get('G_DICT').get('LENGTH')
         g = pf.get('CP').get('C').get('A1').get('G_DICT').get('IT', 1);
     else

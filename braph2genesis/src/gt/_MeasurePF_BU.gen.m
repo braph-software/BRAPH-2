@@ -175,7 +175,7 @@ NODES (figure, rvector) are the node numbers of the binodal measure.
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡gui!
-pr = MeasurePF_BxPP_Node('EL', pf, 'PROP', MeasurePF_BU.NODE);
+pr = MeasurePF_BxPP_Nodes('EL', pf, 'PROP', MeasurePF_BU.NODES);
 
 %%% ¡prop!
 LAYER (figure, scalar) is the layer number of the binodal measure.

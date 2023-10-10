@@ -199,7 +199,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡gui!
-pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BU.NODES);
+pr = ComparisonGroupPF_BxPP_Nodes('EL', pf, 'PROP', ComparisonGroupPF_BU.NODES);
 
 %%% ¡prop!
 LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
