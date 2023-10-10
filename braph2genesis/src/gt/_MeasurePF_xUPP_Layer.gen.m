@@ -77,7 +77,7 @@ if value
     pf = pr.get('EL');
     LAYER = pr.get('PROP');
     
-    keys = pf.get('M').get('G').get('ALAYERTICKS');
+    keys = pf.get('ME').get('A').get('G').get('ALAYERTICKS');
     
     set(pr.get('DROPDOWN'), ...
         'Items', keys, ...
