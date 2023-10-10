@@ -136,7 +136,7 @@ SETUP (query, empty) calculates the group comparison figure value and stores it.
 cp = pf.get('CP');
 g = cp.get('C').get('A1').get('G');
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 diff = cell2mat(cp.get('DIFF'))';
 cil = cell2mat(cp.get('CIL'))';
@@ -176,6 +176,17 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%% ¡props!
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the global group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_GU.LAYER);
 
 %% ¡tests!
 

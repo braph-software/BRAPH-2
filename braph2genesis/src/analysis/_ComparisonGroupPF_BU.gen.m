@@ -142,7 +142,7 @@ SETUP (query, empty) calculates the group comparison figure value and stores it.
 cp = pf.get('CP');
 g = cp.get('C').get('A1').get('G');
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 nodes = pf.get('NODES');
 diff = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('DIFF'))';
@@ -200,6 +200,15 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 pf.get('SETUP')
 %%%% ¡gui!
 pr = ComparisonGroupPF_BxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_BU.NODES);
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_BU.LAYER);
 
 %% ¡tests!
 

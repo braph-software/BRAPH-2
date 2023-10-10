@@ -140,7 +140,7 @@ else
     g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 diff = cell2mat(cp.get('DIFF'))';
 cil = cell2mat(cp.get('CIL'))';
@@ -180,6 +180,17 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%% ¡props!
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the global group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonEnsemblePF_xUPP_Layer('EL', pf, 'PROP', ComparisonEnsemblePF_GU.LAYER);
 
 %% ¡tests!
 

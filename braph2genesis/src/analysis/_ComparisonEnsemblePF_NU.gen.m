@@ -146,7 +146,7 @@ else
     g = cp.get('C').get('A1').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 node = pf.get('NODE');
 diff = cellfun(@(x) x(node), cp.get('DIFF'))';
@@ -209,6 +209,15 @@ pf.get('SETUP')
 % % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
 % % %     'BA', ba, ...
 % % %     varargin{:});
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the nodal group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonEnsemblePF_xUPP_Layer('EL', pf, 'PROP', ComparisonEnsemblePF_NU.LAYER);
 
 %% ¡tests!
 
