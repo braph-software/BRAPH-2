@@ -242,11 +242,7 @@ value = apartitionlabels;
 %%% ¡prop!
 APARTITIONTICKS (query, stringlist) returns the partition (density) ticks for A.
 %%%% ¡calculate!
-apartitionticks = g.get('PARTITIONTICKS');
-if ~isa(g.getr('A'), 'NoValue') && length(apartitionticks) ~= length(g.get('DENSITIES')) % ensures that it's not unecessarily calculated
-    apartitionticks = cellfun(@num2str, num2cell(g.get('DENSITIES')), 'uniformoutput', false);
-end
-value = apartitionticks;
+value = g.get('DENSITIES');
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
