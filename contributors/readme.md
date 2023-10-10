@@ -97,63 +97,6 @@ Email: [yuwei.chang@physics.gu.se](mailto:yuwei.chang@physics.gu.se)
 
 ---
 
-## Dr. Mite Mijalkov
-<table>
-<tr>
-<td>
-
-**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
-Email: [mite.mijalkov@ki.se](mailto:mite.mijalkov@ki.se)
-
-</td>
-<td>
-
-<img src="figures/mite_mijalkov.png" alt="Mite Mijalkov" width="150"/>
-
-</td>
-</tr>
-</table>
-
----
-
-## Prof. Eric Westman
-<table>
-<tr>
-<td>
-
-**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
-Email: [eric.westman@ki.se](mailto:eric.westman@ki.se)
-
-</td>
-<td>
-
-<img src="figures/eric_westman.png" alt="Eric Westman" width="150"/>
-
-</td>
-</tr>
-</table>
-
----
-
-## Dr. Daniel Vereb
-<table>
-<tr>
-<td>
-
-**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
-Email: [daniel.vereb@ki.se](mailto:daniel.vereb@ki.se)
-
-</td>
-<td>
-
-<img src="figures/daniel_vereb.png" alt="Daniel Vereb" width="150"/>
-
-</td>
-</tr>
-</table>
-
----
-
 ## Hang Zhao
 <table>
 <tr>
@@ -204,6 +147,63 @@ Email: [jiawei.sun@ki.se](mailto:jiawei.sun@ki.se)
 <td>
 
 <img src="figures/jiawei_sun.png" alt="Jiawei Sun" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Prof. Eric Westman
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [eric.westman@ki.se](mailto:eric.westman@ki.se)
+
+</td>
+<td>
+
+<img src="figures/eric_westman.png" alt="Eric Westman" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Dr. Mite Mijalkov
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [mite.mijalkov@ki.se](mailto:mite.mijalkov@ki.se)
+
+</td>
+<td>
+
+<img src="figures/mite_mijalkov.png" alt="Mite Mijalkov" width="150"/>
+
+</td>
+</tr>
+</table>
+
+---
+
+## Dr. Daniel Vereb
+<table>
+<tr>
+<td>
+
+**Department of Clinical Neuroscience**, Karolinska Institutet, Stockholm, Sweden  
+Email: [daniel.vereb@ki.se](mailto:daniel.vereb@ki.se)
+
+</td>
+<td>
+
+<img src="figures/daniel_vereb.png" alt="Daniel Vereb" width="150"/>
 
 </td>
 </tr>
