@@ -1,4 +1,16 @@
 function create_data_ST_TXT(data_dir, random_seed)
+% CREATE_DATA_ST_TXT creates structural data
+%
+% CREATE_DATA_ST_TXT() creates structural data in default folder 'Example
+%    data ST TXT'.
+%
+% CREATE_DATA_ST_TXT(data_dir) creates structural data in data_dir folder.
+%
+% CREATE_DATA_ST_TXT(data_dir, random_seed) cretes structural data in data_dir
+% folder with a specified random_seed.
+%
+% See also create_data_st_xls.
+
     if nargin < 1
         data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST TXT'];
     end

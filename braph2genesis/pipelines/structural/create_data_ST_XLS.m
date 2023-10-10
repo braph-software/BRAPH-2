@@ -1,4 +1,16 @@
 function create_data_ST_XLS(data_dir, random_seed)
+% CREATE_DATA_ST_XLS creates structural data
+%
+% CREATE_DATA_ST_XLS() creates structural data in default folder 'Example
+%    data ST XLS'.
+%
+% CREATE_DATA_ST_XLS(data_dir) creates structural data in data_dir folder.
+%
+% CREATE_DATA_ST_XLS(data_dir, random_seed) cretes structural data in data_dir
+% folder with a specified random_seed.
+%
+% See also create_data_st_txt.
+
     if nargin < 1
         data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST XLS'];
     end
