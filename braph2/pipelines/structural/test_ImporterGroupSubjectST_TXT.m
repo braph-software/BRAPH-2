@@ -1374,7 +1374,7 @@ end
 
 %% Test 12: Create example files
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
-    create_data_ST_TXT()
+	create_data_ST_TXT() % only creates files if the example folder doesn't already exist
 end
 
 %% Test 13: GUI
@@ -1409,3 +1409,4 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end
+

@@ -7,7 +7,7 @@ function create_data_ST_TXT(data_dir, random_seed)
 % CREATE_DATA_ST_TXT(DATA_DIR) creates structural data in DATA_DIR folder.
 %
 % CREATE_DATA_ST_TXT(DATA_DIR, RANDOM_SEED) cretes structural data in
-%   DATA_DIR folder with a specified RANDOM_SEED.
+%  DATA_DIR folder with a specified RANDOM_SEED.
 %
 % See also create_data_st_xls.
 

@@ -173,7 +173,7 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-create_data_ST_XLS()
+create_data_ST_XLS() % only creates files if the example folder doesn't already exist
 
 example_ST_BUT
 

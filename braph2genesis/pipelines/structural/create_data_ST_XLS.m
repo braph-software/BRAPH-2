@@ -4,10 +4,10 @@ function create_data_ST_XLS(data_dir, random_seed)
 % CREATE_DATA_ST_XLS() creates structural data in default folder 'Example
 %  data ST XLS'.
 %
-% CREATE_DATA_ST_XLS(DATA_DIR) creates structural data in data_dir folder.
+% CREATE_DATA_ST_XLS(DATA_DIR) creates structural data in DATA_DIR folder.
 %
-% CREATE_DATA_ST_XLS(data_dir, random_seed) cretes structural data in data_dir
-% folder with a specified random_seed.
+% CREATE_DATA_ST_XLS(DATA_DIR, RANDOM_SEED) cretes structural data in DATA_DIR
+%  folder with a specified RANDOM_SEED.
 %
 % See also create_data_st_txt.
 
