@@ -239,7 +239,7 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-creat_data_FUN_XLS() % only creates files if the example folder doesn't already exist
+create_data_FUN_XLS() % only creates files if the example folder doesn't already exist
 
 example_FUN_BUD
 
