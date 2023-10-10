@@ -1374,7 +1374,7 @@ end
 
 %% Test 12: Create example files
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
-    create_data_SubjectST_TXT()
+    create_data_ST_TXT()
 end
 
 %% Test 13: GUI

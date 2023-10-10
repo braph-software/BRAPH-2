@@ -1,23 +1,27 @@
-function create_data_SubjectST_TXT(data_dir)
+function create_data_ST_XLS(data_dir, random_seed)
     if nargin < 1
-        data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST TXT'];
+        data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST XLS'];
+    end
+
+    if nargin < 2
+        random_seed = 'default';
     end
     
     if ~isfolder(data_dir)
         mkdir(data_dir);
     
         % Brain Atlas
-        im_ba = ImporterBrainAtlasTXT('FILE', 'destrieux_atlas.txt');
+        im_ba = ImporterBrainAtlasXLS('FILE', 'destrieux_atlas.xlsx');
         ba = im_ba.get('BA');
-        ex_ba = ExporterBrainAtlasTXT( ...
+        ex_ba = ExporterBrainAtlasXLS( ...
             'BA', ba, ...
-            'FILE', [data_dir filesep() 'atlas.txt'] ...
+            'FILE', [data_dir filesep() 'atlas.xlsx'] ...
             );
         ex_ba.get('SAVE')
         N = ba.get('BR_DICT').get('LENGTH');
     
         % saves RNG
-        rng_settings_ = rng(); rng('default')
+        rng_settings_ = rng(); rng(random_seed)
     
         N_subjects = 50;
     
@@ -69,17 +73,17 @@ function create_data_SubjectST_TXT(data_dir)
         end
     
         % create the table
-        writetable(array2table([cellstr(sub_Tags1) cellstr(label_Tags1) cellstr(note_Tags1) num2cell(R1)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_1.txt'], 'Delimiter', '	', 'WriteRowNames', true)
+        writetable(array2table([cellstr(sub_Tags1) cellstr(label_Tags1) cellstr(note_Tags1) num2cell(R1)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_1.xlsx'], 'WriteRowNames', true)
     
         % variables of interest
         vois1 = [
             {{'Subject ID'} {'Age'} {'Sex'}}
-            {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
+            {{} {} cell2str(sex_options)}
             ];
         for i = 1:1:N_subjects
             vois1 = [vois1; {sub_Tags1{i}, randi(90), sex_options(randi(2))}];
         end
-        writetable(table(vois1), [data_dir filesep() 'ST_Group_1.vois.txt'], 'Delimiter', '	', 'WriteVariableNames', false)
+        writetable(table(vois1), [data_dir filesep() 'ST_Group_1.vois.xlsx'], 'WriteVariableNames', false)
     
         % Group 2
         K2 = K1; % degree (mean node degree is 2K) - group 2
@@ -116,17 +120,17 @@ function create_data_SubjectST_TXT(data_dir)
             note_Tags2(i_sub) = string(['Note ' num2str(i_sub + N_subjects)]);
         end
     
-        writetable(array2table([cellstr(sub_Tags2) cellstr(label_Tags2) cellstr(note_Tags2) num2cell(R2)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_2.txt'], 'Delimiter', '	', 'WriteRowNames', true)
+        writetable(array2table([cellstr(sub_Tags2) cellstr(label_Tags2) cellstr(note_Tags2) num2cell(R2)], 'VariableNames', reg_Tags), [data_dir filesep() 'ST_Group_2.xlsx'], 'WriteRowNames', true)
     
         % variables of interest
         vois2 = [
             {{'Subject ID'} {'Age'} {'Sex'}}
-            {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
+            {{} {} cell2str(sex_options)}
             ];
         for i = 1:1:N_subjects
             vois2 = [vois2; {sub_Tags2{i}, randi(90), sex_options(randi(2))}];
         end
-        writetable(table(vois2), [data_dir filesep() 'ST_Group_2.vois.txt'], 'Delimiter', '	', 'WriteVariableNames', false)
+        writetable(table(vois2), [data_dir filesep() 'ST_Group_2.vois.xlsx'], 'WriteVariableNames', false)
     
         % reset RNG
         rng(rng_settings_)

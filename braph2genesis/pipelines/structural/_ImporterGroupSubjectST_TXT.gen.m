@@ -207,7 +207,7 @@ value = gr;
 %%%% ¡name!
 Create example files
 %%%% ¡code!
-create_data_SubjectST_TXT()
+create_data_ST_TXT()
 
 %%% ¡test!
 %%%% ¡name!
