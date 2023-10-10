@@ -12,7 +12,7 @@ function create_data_FUN_XLS(data_dir, random_seed)
 % See also create_data_st_txt.
 
 if nargin < 1
-    data_dir = [fileparts(which('SubjectST')) filesep 'Example data ST XLS'];
+    data_dir = [fileparts(which('SubjectST')) filesep 'Example data FUN XLS'];
 end
 
 if nargin < 2
