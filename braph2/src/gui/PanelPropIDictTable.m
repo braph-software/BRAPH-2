@@ -171,17 +171,22 @@ classdef PanelPropIDictTable < PanelProp
 		MENU_OPEN_ITEMS_CATEGORY = Category.GUI;
 		MENU_OPEN_ITEMS_FORMAT = Format.LOGICAL;
 		
-		MENU_EXPORT = PanelProp.getPropNumber() + 12;
+		APPLY_TO_SELECTION = PanelProp.getPropNumber() + 12;
+		APPLY_TO_SELECTION_TAG = 'APPLY_TO_SELECTION';
+		APPLY_TO_SELECTION_CATEGORY = Category.GUI;
+		APPLY_TO_SELECTION_FORMAT = Format.LOGICAL;
+		
+		MENU_EXPORT = PanelProp.getPropNumber() + 13;
 		MENU_EXPORT_TAG = 'MENU_EXPORT';
 		MENU_EXPORT_CATEGORY = Category.GUI;
 		MENU_EXPORT_FORMAT = Format.LOGICAL;
 		
-		CONTEXTMENU = PanelProp.getPropNumber() + 13;
+		CONTEXTMENU = PanelProp.getPropNumber() + 14;
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
 		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
 		CONTEXTMENU_FORMAT = Format.HANDLE;
 		
-		GUI_ITS_DICT = PanelProp.getPropNumber() + 14;
+		GUI_ITS_DICT = PanelProp.getPropNumber() + 15;
 		GUI_ITS_DICT_TAG = 'GUI_ITS_DICT';
 		GUI_ITS_DICT_CATEGORY = Category.GUI;
 		GUI_ITS_DICT_FORMAT = Format.IDICT;
@@ -269,6 +274,7 @@ classdef PanelPropIDictTable < PanelProp
 						PanelPropIDictTable.CB_TAB_EDIT ...
 						PanelPropIDictTable.TABLE ...
 						PanelPropIDictTable.MENU_OPEN_ITEMS ...
+						PanelPropIDictTable.APPLY_TO_SELECTION ...
 						PanelPropIDictTable.MENU_EXPORT ...
 						PanelPropIDictTable.CONTEXTMENU ...
 						PanelPropIDictTable.GUI_ITS_DICT ...
@@ -324,6 +330,7 @@ classdef PanelPropIDictTable < PanelProp
 						PanelPropIDictTable.COLUMNFORMAT ...
 						PanelPropIDictTable.CB_TAB_EDIT ...
 						PanelPropIDictTable.MENU_OPEN_ITEMS ...
+						PanelPropIDictTable.APPLY_TO_SELECTION ...
 						PanelPropIDictTable.MENU_EXPORT ...
 						PanelPropIDictTable.GUI_ITS_DICT ...
 						];
@@ -501,6 +508,8 @@ classdef PanelPropIDictTable < PanelProp
 						tag = PanelPropIDictTable.TABLE_TAG;
 					case PanelPropIDictTable.MENU_OPEN_ITEMS
 						tag = PanelPropIDictTable.MENU_OPEN_ITEMS_TAG;
+					case PanelPropIDictTable.APPLY_TO_SELECTION
+						tag = PanelPropIDictTable.APPLY_TO_SELECTION_TAG;
 					case PanelPropIDictTable.MENU_EXPORT
 						tag = PanelPropIDictTable.MENU_EXPORT_TAG;
 					case PanelPropIDictTable.CONTEXTMENU
@@ -557,6 +566,8 @@ classdef PanelPropIDictTable < PanelProp
 					prop_category = PanelPropIDictTable.TABLE_CATEGORY;
 				case PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_category = PanelPropIDictTable.MENU_OPEN_ITEMS_CATEGORY;
+				case PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_category = PanelPropIDictTable.APPLY_TO_SELECTION_CATEGORY;
 				case PanelPropIDictTable.MENU_EXPORT
 					prop_category = PanelPropIDictTable.MENU_EXPORT_CATEGORY;
 				case PanelPropIDictTable.CONTEXTMENU
@@ -612,6 +623,8 @@ classdef PanelPropIDictTable < PanelProp
 					prop_format = PanelPropIDictTable.TABLE_FORMAT;
 				case PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_format = PanelPropIDictTable.MENU_OPEN_ITEMS_FORMAT;
+				case PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_format = PanelPropIDictTable.APPLY_TO_SELECTION_FORMAT;
 				case PanelPropIDictTable.MENU_EXPORT
 					prop_format = PanelPropIDictTable.MENU_EXPORT_FORMAT;
 				case PanelPropIDictTable.CONTEXTMENU
@@ -667,6 +680,8 @@ classdef PanelPropIDictTable < PanelProp
 					prop_description = 'TABLE (evanescent, handle) is the table.';
 				case PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_description = 'MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to open the items.';
+				case PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_description = 'APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.';
 				case PanelPropIDictTable.MENU_EXPORT
 					prop_description = 'MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.';
 				case PanelPropIDictTable.CONTEXTMENU
@@ -754,6 +769,8 @@ classdef PanelPropIDictTable < PanelProp
 					prop_settings = Format.getFormatSettings(Format.HANDLE);
 				case PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
 				case PanelPropIDictTable.MENU_EXPORT
 					prop_settings = Format.getFormatSettings(Format.LOGICAL);
 				case PanelPropIDictTable.CONTEXTMENU
@@ -811,6 +828,8 @@ classdef PanelPropIDictTable < PanelProp
 					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropIDictTable.getPropSettings(prop));
 				case PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_default = false;
+				case PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_default = true;
 				case PanelPropIDictTable.MENU_EXPORT
 					prop_default = true;
 				case PanelPropIDictTable.CONTEXTMENU
@@ -1224,6 +1243,8 @@ classdef PanelPropIDictTable < PanelProp
 					check = Format.checkFormat(Format.HANDLE, value, PanelPropIDictTable.getPropSettings(prop));
 				case PanelPropIDictTable.MENU_OPEN_ITEMS % __PanelPropIDictTable.MENU_OPEN_ITEMS__
 					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
+				case PanelPropIDictTable.APPLY_TO_SELECTION % __PanelPropIDictTable.APPLY_TO_SELECTION__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
 				case PanelPropIDictTable.MENU_EXPORT % __PanelPropIDictTable.MENU_EXPORT__
 					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
 				case PanelPropIDictTable.CONTEXTMENU % __PanelPropIDictTable.CONTEXTMENU__
@@ -1305,16 +1326,19 @@ classdef PanelPropIDictTable < PanelProp
 					    'Text', 'Invert Selection', ...
 					    'MenuSelectedFcn', {@cb_invert_selection} ...
 					    );
-					% menu_apply_to_selection = uimenu( ...
-					%     'Separator', 'on', ...
-					%     'Parent', contextmenu, ...
-					%     'Tag', 'MENU_APPLY_TO_SELECTION', ...
-					%     'Text', 'Apply to Selection', ...
-					%     'Checked', false ...
-					%     );
-					% set(menu_apply_to_selection, ...
-					%     'MenuSelectedFcn', {@cb_apply_to_selection, menu_apply_to_selection} ...
-					%     );
+					
+					if pr.get('APPLY_TO_SELECTION')
+					    menu_apply_to_selection = uimenu( ...
+					    'Separator', 'on', ...
+					    'Parent', contextmenu, ...
+					    'Tag', 'MENU_APPLY_TO_SELECTION', ...
+					    'Text', 'Apply to Selection', ...
+					    'Checked', false ...
+					    );
+					    set(menu_apply_to_selection, ...
+					        'MenuSelectedFcn', {@cb_apply_to_selection, menu_apply_to_selection} ...
+					        );
+					end
 					if pr.get('MENU_OPEN_ITEMS')
 					    menu_open_selection = uimenu( ...
 					        'Separator', 'on', ...
@@ -1486,26 +1510,31 @@ classdef PanelPropIDictTable < PanelProp
 			end
 			
 			function cb_table(~, event) % (src, event)
-			    % menu_apply_to_selection = findobj(pr.get('CONTEXTMENU'), 'Tag', 'MENU_APPLY_TO_SELECTION');
-				% if ~get(menu_apply_to_selection, 'Checked')
-			    %     cols = pr.get('COLS');
-			    %     cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
-			    % else
-			    cols = pr.get('COLS');
-			
-			    % adds current item to selected
-			    if cols(event.Indices(2)) == pr.SELECTOR
-			        cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
+			    if pr.get('APPLY_TO_SELECTION')==false
+			        cols = pr.get('COLS');
+			        cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
 			    else
-			        cb_table_edit(event.Indices(1), pr.SELECTOR, true)
+			        menu_apply_to_selection = findobj(pr.get('CONTEXTMENU'), 'Tag', 'MENU_APPLY_TO_SELECTION');
+				    if ~get(menu_apply_to_selection, 'Checked')
+			            cols = pr.get('COLS');
+			            cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+			        else
+			            cols = pr.get('COLS');
+			    
+			            % adds current item to selected
+			            if cols(event.Indices(2)) == pr.SELECTOR
+			                cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
+			            else
+			                cb_table_edit(event.Indices(1), pr.SELECTOR, true)
+			            end
+			    
+			            % updates all selected
+			            selected = pr.get('SELECTED');
+			            for s = 1:1:length(selected)
+			                cb_table_edit(selected(s), cols(event.Indices(2)), event.NewData)
+			            end
+			        end
 			    end
-			
-			    % updates all selected
-			    selected = pr.get('SELECTED');
-			    for s = 1:1:length(selected)
-			        cb_table_edit(selected(s), cols(event.Indices(2)), event.NewData)
-			    end
-				% end
 			
 			    pr.get('UPDATE') % placed here for numerical efficiency
 			
@@ -1644,13 +1673,13 @@ classdef PanelPropIDictTable < PanelProp
 			
 			    pr.get('UPDATE')
 			end
-			% function cb_apply_to_selection(~, ~, menu_apply_to_selection) 
-			%     if get(menu_apply_to_selection, 'Checked')
-			%         set(menu_apply_to_selection, 'Checked', false)
-			%     else
-			%         set(menu_apply_to_selection, 'Checked', true)
-			% 	end
-			% end
+			function cb_apply_to_selection(~, ~, menu_apply_to_selection) 
+			    if get(menu_apply_to_selection, 'Checked')
+			        set(menu_apply_to_selection, 'Checked', false)
+			    else
+			        set(menu_apply_to_selection, 'Checked', true)
+				end
+			end
 			function cb_open_selection(~, ~) 
 			    el = pr.get('EL');
 			    prop = pr.get('PROP');
