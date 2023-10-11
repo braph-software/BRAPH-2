@@ -350,7 +350,7 @@ end
 
 bins = [bins(1) bins bins(end)];
 count = [0 count 0];
-count = (count/max(count))*100;
+count = count / max(count) * 100;
 density = [100 density 0];
 
 pf.memorize('ST_HIST_AREA').set('X', bins, 'Y', count)
