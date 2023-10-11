@@ -3,7 +3,7 @@
 % This is the pipeline script to compare two groups of subjects using functional data and weighted undirected graphs.
 % The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
-% 2. It loads the data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 2. It loads the data of two groups of subjects from two directories (e.g., FUN_Group_1 and FUN_Group_2) containing XLS files of each subject.
 % 3. It analyzes the first group using functional analyses (FUN) based on weighted undirected graphs (WU).
 % 4. It analyzes the second group using the same parameters selected for the first group.
 % 5. It compares the results of the two analyses.
