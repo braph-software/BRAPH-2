@@ -239,7 +239,7 @@ end
 value = apartitionlabels;
 
 %%% ¡prop!
-APARTITIONTICKS (query, stringlist) returns the partition (threshold) ticks for A.
+APARTITIONTICKS (query, rvector) returns the partition (threshold) ticks for A.
 %%%% ¡calculate!
 value = g.get('THRESHOLDS');
 

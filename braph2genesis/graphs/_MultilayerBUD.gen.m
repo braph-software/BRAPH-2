@@ -315,7 +315,7 @@ end
 value = apartitionlabels;
 
 %%% ¡prop!
-APARTITIONTICKS (query, stringlist) returns the partition (density) ticks for A.
+APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.
 %%%% ¡calculate!
 value = g.get('DENSITIES');
 
