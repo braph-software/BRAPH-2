@@ -14,8 +14,8 @@ For *connectivity multiplex data*, a connectivity matrix per subject is already 
 If you don't have the `Example data CON_MP XLS` folder inside `connectivity multiplex`, then you can generate it by running the commands referenced below.
 
 ```matlab
-test_ImporterGroupSubjectCON_MP_XLS  % generates the example connectivity multiplex XLS data folder.
-test_ImporterGroupSubjectCON_MP_TXT  % generates the example connectivity multiplex TXT data folder.
+create_data_CON_FUN_MP_XLS()  % generates the example connectivity multiplex XLS data folder.
+create_data_CON_FUN_MP_TXT()  % generates the example connectivity multiplex TXT data folder.
 ```
 
 ## Open the GUI
