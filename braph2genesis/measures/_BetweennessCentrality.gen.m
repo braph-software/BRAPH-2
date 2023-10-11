@@ -2,7 +2,7 @@
 BetweennessCentrality < Measure (m, betweenness centrality) is the Betweenness Centrality.
 
 %%% ¡description!
-The Betweenness Centrality of a graph is the fraction of all shortest paths in the 
+The Betweenness Centrality (BetweennessCentrality) of a graph is the fraction of all shortest paths in the 
 graph that pass through a given node. Nodes with high values of betweenness 
 centrality participate in a large number of shortest paths.
 
@@ -65,7 +65,7 @@ NAME (constant, string) is the name of the Betweenness Centrality.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Betweenness Centrality.
 %%%% ¡default!
-'The Betweenness Centrality of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.'
+'The Betweenness Centrality (BetweennessCentrality) of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Betweenness Centrality.
