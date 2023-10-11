@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the MeasureEnsemblePF_NU.
 %%%% ¡default!
 'MeasureEnsemblePF_NU'
 
@@ -173,12 +173,7 @@ NODE (figure, scalar) is the node number of the nodal measure.
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡_gui!
-% % % bas = pf.get('M').get('G').get('BAS');
-% % % ba = bas{1};
-% % % 
-% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
-% % %     'BA', ba, ...
-% % %     varargin{:});
+pr = MeasureEnsemblePF_NxPP_Node('EL', pf, 'PROP', MeasureEnsemblePF_NU.NODE);
 
 %%% ¡prop!
 LAYER (figure, scalar) is the layer number of the nodal measure.
