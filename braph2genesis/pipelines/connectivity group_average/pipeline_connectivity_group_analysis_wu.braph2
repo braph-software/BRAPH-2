@@ -1,4 +1,4 @@
-%% Pipeline Connectivity Analysis Group WU
+%% Pipeline Connectivity Analysis Group-Average WU
 
 % This is the pipeline script to analyze a group of subjects using connectivity data averaged by group and a weighted undirected graph.
 % The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI).
