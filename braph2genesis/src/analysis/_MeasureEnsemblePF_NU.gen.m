@@ -184,15 +184,6 @@ pf.get('SETUP');
 %%%% ¡gui!
 pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_NU.LAYER);
 
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the nodal measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_NU.LAYER);
-
 %% ¡tests!
 
 %%% ¡excluded_props!
