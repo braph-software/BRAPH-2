@@ -3,7 +3,7 @@
 % This is the pipeline script to compare two groups of subjects using connectivity multiplex data and binary undirected graphs at fixed thresholds.
 % The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
-% 2. It loads the connectivity data of two groups of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
+% 2. It loads the connectivity data of two groups of subjects from two directories (e.g., CON_MP_Group_1 and CON_MP_Group_2) containing XLS files of each subject.
 % 3. It analyzes the first group using connectivity multiplex analyses (CON_MP) based on binary undirected graphs at fixed thresholds (BUT).
 % 4. It analyzes the second group using the same parameters selected for the first group.
 % 5. It compares the results of the two analyses.
