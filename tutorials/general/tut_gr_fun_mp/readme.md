@@ -14,8 +14,8 @@ For *functional multiplex data*, we will upload a folder containing the function
 If you don't have the `Example data FUN_MP XLS` folder inside `functional multiplex`, then you can generate it by running the commands referenced below.
 
 ```matlab
-test_ImporterGroupSubjectFUN_MP_XLS  % generates the example functional multiplex XLS data folder.
-test_ImporterGroupSubjectFUN_MP_TXT  % generates the example functional multiplex TXT data folder.
+create_data_FUN_MP_XLS()  % generates the example functional multiplex XLS data folder.
+create_data_FUN_MP_TXT()  % generates the example functional multiplex TXT data folder.
 ```
 
 ## Open the GUI
