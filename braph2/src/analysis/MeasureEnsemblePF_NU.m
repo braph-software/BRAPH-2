@@ -815,6 +815,9 @@ classdef MeasureEnsemblePF_NU < MeasureEnsemblePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
+                case 40 % MeasureEnsemblePF_NU.NODE
+                    pr = MeasureEnsemblePF_NxPP_Node('EL', pf, 'PROP', 40);
+
 				case 41 % MeasureEnsemblePF_NU.LAYER
 					pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 41);
 					
