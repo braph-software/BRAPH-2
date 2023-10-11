@@ -210,15 +210,6 @@ pf.get('SETUP');
 %%%% ¡gui!
 pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_BU.LAYER);
 
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_BU.LAYER);
-
 %% ¡tests!
 
 %%% ¡excluded_props!
