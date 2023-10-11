@@ -184,15 +184,6 @@ pf.get('SETUP');
 %%%% ¡gui!
 pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_BU.LAYER);
 
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the binodal measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_BU.LAYER);
-
 %% ¡tests!
 
 %%% ¡excluded_props!

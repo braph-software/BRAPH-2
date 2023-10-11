@@ -728,9 +728,8 @@ classdef MeasureGroupBrainPF_xSPP_Layer < PanelProp
 					if value
 					    pf = pr.get('EL');
 					    LAYER = pr.get('PROP');
-					
-					    g = pf.get('M').get('G');
-					    keys = g.get('APARTITIONLABELS');
+					    g = pf.get('M').get('G').memorize('A');
+					    keys = pf.get('M').get('G').get('APARTITIONLABELS');
 					
 					    if isempty(keys)
 					        set(pr.get('DROPDOWN'), 'Enable', 'off')

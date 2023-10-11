@@ -796,7 +796,7 @@ classdef MultiplexBUT < MultiplexWU
 					    alayerlabels = {};
 					    for i = 1:1:length(thresholds)
 					        for j = 1:1:length(blayerlabels)
-					            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' thresholds{i}]];
+					            alayerlabels = [alayerlabels, [blayerlabels{j} '|' thresholds{i}]];
 					        end
 					    end
 					end
