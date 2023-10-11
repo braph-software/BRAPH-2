@@ -739,7 +739,7 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 					    'Tag', 'DROPDOWN_NODE2', ...
 					    'FontSize', 12, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
-					    'ValueChangedFcn', {@cb_dropdown_node1} ...
+					    'ValueChangedFcn', {@cb_dropdown_node2} ...
 					    );
 					
 					value = dropdown;
@@ -804,9 +804,11 @@ classdef ComparisonGroupPF_BxPP_Nodes < PanelProp
 			
 			function cb_dropdown_node1(~, ~)
 			    pr.get('EL').set(pr.get('PROP'), [get(pr.get('DROPDOWN_NODE1'), 'Value') get(pr.get('DROPDOWN_NODE2'), 'Value')])
+                %pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN_NODE1'), 'Value'))
 			end
 			function cb_dropdown_node2(~, ~)
 			    pr.get('EL').set(pr.get('PROP'), [get(pr.get('DROPDOWN_NODE1'), 'Value') get(pr.get('DROPDOWN_NODE2'), 'Value')])
+                %pr.get('EL').set(pr.get('PROP'), get(pr.get('DROPDOWN_NODE2'), 'Value'))
 			end
 		end
 	end
