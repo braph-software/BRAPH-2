@@ -102,7 +102,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ComparisonGroupPF_NU.
 %%%% ¡default!
 'ComparisonGroupPF_NU'
 

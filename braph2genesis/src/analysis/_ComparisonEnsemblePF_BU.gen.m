@@ -102,7 +102,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ComparisonEnsemblePF_BU.
 %%%% ¡default!
 'ComparisonEnsemblePF_BU'
 
@@ -203,12 +203,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡_gui!
-% % % bas = pf.get('M').get('G').get('BAS');
-% % % ba = bas{1};
-% % % 
-% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
-% % %     'BA', ba, ...
-% % %     varargin{:});
+pr = ComparisonEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', ComparisonEnsemblePF_BU.NODES);
 
 %%% ¡prop!
 LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
