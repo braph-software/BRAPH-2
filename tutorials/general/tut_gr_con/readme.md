@@ -15,8 +15,8 @@ This Tutorial explains how to prepare and work with this kind of data.
 If you don't have the `Example data CON XLS` folder inside `connectivity`, then you can generate it by running the commands referenced below.
 
 ```matlab
-create_data_CON_XLS()  % generates the example connectivity XLS data folder.
-create_data_CON_TXT()  % generates the example connectivity TXT data folder.
+test_ImporterGroupSubjectCON_XLS  % generates the example connectivity XLS data folder.
+test_ImporterGroupSubjectCON_TXT  % generates the example connectivity TXT data folder.
 ```
 
 ## Open the GUI

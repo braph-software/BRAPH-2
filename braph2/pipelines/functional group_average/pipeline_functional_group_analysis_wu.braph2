@@ -1,4 +1,4 @@
-%% Pipeline Functional Analysis Group-Average WU
+%% Pipeline Functional Analysis Group WU
 
 % This is the pipeline script to analyze a group of subjects using functional data averaged by group and a weighted undirected graph.
 % The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
@@ -13,7 +13,7 @@
 ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load Brain Atlas from XLS % Brain Atlas
 
 %% Group
-gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN from XLS % Group FUN
+gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GEL_DIR').get('GR'); % Load Group FUN from XLS % Group FUN
 
 %% Analysis
 a_WU = AnalyzeGroup_FUN_GA_WU('GR', gr); % Analyze Group % Group Analysis

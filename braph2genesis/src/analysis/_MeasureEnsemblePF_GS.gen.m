@@ -78,7 +78,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GS.
+ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
 'MeasureEnsemblePF_GS'
 
@@ -115,40 +115,7 @@ NOTES (metadata, string) are some specific notes about the panel figure global s
 %%% ¡prop!
 SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
-me = pf.get('ME');
-if me.get('A').get('G_DICT').get('LENGTH')
-    g = me.get('A').get('G_DICT').get('IT', 1);
-else
-    g = me.get('A').get('GRAPH_TEMPLATE');
-end
-
-x = g.get('APARTITIONTICKS');
-
-m = cell2mat(me.get('M'))';
-
-pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
-
-xlim = pf.get('H_AXES').get('XLim');
-ylim = pf.get('H_AXES').get('YLim');
-pf.get('ST_TITLE').set( ...
-    'TXT', me.get('LABEL'), ...
-    'X', .5 * (xlim(2) + xlim(1)), ...
-    'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
-    'Z', 0 ...
-    )
-pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
-    'X', .5 * (xlim(2) + xlim(1)), ...
-    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
-    'Z', 0 ...
-    )
-pf.get('ST_YLABEL').set( ...
-	'TXT', 'Measure Value', ...
-    'X', xlim(1) - .14 * (xlim(2) - xlim(1)), ...
-    'Y', .5 * (ylim(2) + ylim(1)), ...
-    'Z', 0 ...
-    )
-
+%%%__WARN_TBI__
 value = [];
 
 %% ¡tests!

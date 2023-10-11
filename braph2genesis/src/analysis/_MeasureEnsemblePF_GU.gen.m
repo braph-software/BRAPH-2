@@ -78,7 +78,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GU.
+ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
 'MeasureEnsemblePF_GU'
 
@@ -122,7 +122,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('APARTITIONTICKS');
+x = g.get('ALAYERTICKS');
 
 m = cell2mat(me.get('M'))';
 
@@ -137,7 +137,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
+    'TXT', 'Layer', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -150,17 +150,6 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
-
-%% ¡props!
-
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the global measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_GU.LAYER);
 
 %% ¡tests!
 

@@ -1374,14 +1374,18 @@ end
 
 %% Test 12: Example
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	create_data_ST_XLS() % only creates files if the example folder doesn't already exist
+	if ~isfile([fileparts(which('SubjectST')) filesep 'Example data ST XLS' filesep 'atlas.xlsx'])
+	    test_ImporterGroupSubjectST_XLS % create example files
+	end
 	
 	example_ST_WU
 end
 
 %% Test 13: Template for Graphs and Measures
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	create_data_ST_XLS() % only creates files if the example folder doesn't already exist
+	if ~isfile([fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt'])
+	    test_ImporterGroupSubjectST_TXT % create example files
+	end
 	
 	ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt']).get('BA');
 	gr1 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_1.txt'], 'BA', ba).get('GR');

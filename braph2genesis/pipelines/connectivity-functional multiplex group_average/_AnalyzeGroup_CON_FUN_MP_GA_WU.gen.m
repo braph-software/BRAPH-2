@@ -220,7 +220,10 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-create_data_CON_FUN_MP_XLS()  % only creates files if the example folder doesn't already exist 
+if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_SubjectCON_FUN_MP % create example files
+end
+
 example_CON_FUN_MP_GA_WU
 
 %%% ¡test!

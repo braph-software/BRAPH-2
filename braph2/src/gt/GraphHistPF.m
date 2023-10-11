@@ -4,6 +4,45 @@ classdef GraphHistPF < PanelFig
 	%
 	% A Panel Figure for Graph Histogram (GraphHistPF) manages the plot of the histogram of an adjaciency matrix.
 	%
+	% The list of GraphHistPF properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for graph histogram.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for graph histogram.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for graph histogram.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for graph histogram.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for graph histogram.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for graph histogram.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for graph histogram.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph histogram.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>G</strong> 	G (metadata, item) is the graph.
+	%  <strong>27</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
+	%  <strong>28</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
+	%  <strong>29</strong> <strong>BINS</strong> 	BINS (figure, rvector) is the vector of bins.
+	%  <strong>30</strong> <strong>DIAGONAL</strong> 	DIAGONAL (figure, option) excludes or includes the diagonal in the density calculation.
+	%  <strong>31</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the histogram and density and stores them.
+	%  <strong>32</strong> <strong>H_HIST_AREA</strong> 	H_HIST_AREA (evanescent, handle) is the handle for the histogram area.
+	%  <strong>33</strong> <strong>ST_HIST_AREA</strong> 	ST_HIST_AREA (figure, item) determines the area settings.
+	%  <strong>34</strong> <strong>LISTENER_ST_HIST_AREA</strong> 	LISTENER_ST_HIST_AREA (evanescent, handle) contains the listener to the histogram area settings to update the pushbutton.
+	%  <strong>35</strong> <strong>H_DENSITY_LINE</strong> 	H_DENSITY_LINE (evanescent, handle) is the handle for the density line.
+	%  <strong>36</strong> <strong>ST_DENSITY_LINE</strong> 	ST_DENSITY_LINE (figure, item) determines the line settings.
+	%  <strong>37</strong> <strong>LISTENER_ST_DENSITY_LINE</strong> 	LISTENER_ST_DENSITY_LINE (evanescent, handle) contains the listener to the density line settings to update the pushbutton.
+	%
 	% GraphHistPF methods (constructor):
 	%  GraphHistPF - constructor
 	%
@@ -93,80 +132,80 @@ classdef GraphHistPF < PanelFig
 	% See also Graph, GraphAdjPF.
 	
 	properties (Constant) % properties
-		H_AXES = PanelFig.getPropNumber() + 1;
+		H_AXES = 23; %CET: Computational Efficiency Trick
 		H_AXES_TAG = 'H_AXES';
-		H_AXES_CATEGORY = Category.EVANESCENT;
-		H_AXES_FORMAT = Format.HANDLE;
+		H_AXES_CATEGORY = 7;
+		H_AXES_FORMAT = 18;
 		
-		ST_AXIS = PanelFig.getPropNumber() + 2;
+		ST_AXIS = 24; %CET: Computational Efficiency Trick
 		ST_AXIS_TAG = 'ST_AXIS';
-		ST_AXIS_CATEGORY = Category.FIGURE;
-		ST_AXIS_FORMAT = Format.ITEM;
+		ST_AXIS_CATEGORY = 8;
+		ST_AXIS_FORMAT = 8;
 		
-		LISTENER_ST_AXIS = PanelFig.getPropNumber() + 3;
+		LISTENER_ST_AXIS = 25; %CET: Computational Efficiency Trick
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
-		LISTENER_ST_AXIS_CATEGORY = Category.EVANESCENT;
-		LISTENER_ST_AXIS_FORMAT = Format.HANDLE;
+		LISTENER_ST_AXIS_CATEGORY = 7;
+		LISTENER_ST_AXIS_FORMAT = 18;
 		
-		G = PanelFig.getPropNumber() + 4;
+		G = 26; %CET: Computational Efficiency Trick
 		G_TAG = 'G';
-		G_CATEGORY = Category.METADATA;
-		G_FORMAT = Format.ITEM;
+		G_CATEGORY = 2;
+		G_FORMAT = 8;
 		
-		LAYERS = PanelFig.getPropNumber() + 5;
+		LAYERS = 27; %CET: Computational Efficiency Trick
 		LAYERS_TAG = 'LAYERS';
-		LAYERS_CATEGORY = Category.FIGURE;
-		LAYERS_FORMAT = Format.RVECTOR;
+		LAYERS_CATEGORY = 8;
+		LAYERS_FORMAT = 12;
 		
-		LAYERLOCK = PanelFig.getPropNumber() + 6;
+		LAYERLOCK = 28; %CET: Computational Efficiency Trick
 		LAYERLOCK_TAG = 'LAYERLOCK';
-		LAYERLOCK_CATEGORY = Category.METADATA;
-		LAYERLOCK_FORMAT = Format.LOGICAL;
+		LAYERLOCK_CATEGORY = 2;
+		LAYERLOCK_FORMAT = 4;
 		
-		BINS = PanelFig.getPropNumber() + 7;
+		BINS = 29; %CET: Computational Efficiency Trick
 		BINS_TAG = 'BINS';
-		BINS_CATEGORY = Category.FIGURE;
-		BINS_FORMAT = Format.RVECTOR;
+		BINS_CATEGORY = 8;
+		BINS_FORMAT = 12;
 		
-		DIAGONAL = PanelFig.getPropNumber() + 8;
+		DIAGONAL = 30; %CET: Computational Efficiency Trick
 		DIAGONAL_TAG = 'DIAGONAL';
-		DIAGONAL_CATEGORY = Category.FIGURE;
-		DIAGONAL_FORMAT = Format.OPTION;
+		DIAGONAL_CATEGORY = 8;
+		DIAGONAL_FORMAT = 5;
 		
-		SETUP = PanelFig.getPropNumber() + 9;
+		SETUP = 31; %CET: Computational Efficiency Trick
 		SETUP_TAG = 'SETUP';
-		SETUP_CATEGORY = Category.QUERY;
-		SETUP_FORMAT = Format.EMPTY;
+		SETUP_CATEGORY = 6;
+		SETUP_FORMAT = 1;
 		
-		H_HIST_AREA = PanelFig.getPropNumber() + 10;
+		H_HIST_AREA = 32; %CET: Computational Efficiency Trick
 		H_HIST_AREA_TAG = 'H_HIST_AREA';
-		H_HIST_AREA_CATEGORY = Category.EVANESCENT;
-		H_HIST_AREA_FORMAT = Format.HANDLE;
+		H_HIST_AREA_CATEGORY = 7;
+		H_HIST_AREA_FORMAT = 18;
 		
-		ST_HIST_AREA = PanelFig.getPropNumber() + 11;
+		ST_HIST_AREA = 33; %CET: Computational Efficiency Trick
 		ST_HIST_AREA_TAG = 'ST_HIST_AREA';
-		ST_HIST_AREA_CATEGORY = Category.FIGURE;
-		ST_HIST_AREA_FORMAT = Format.ITEM;
+		ST_HIST_AREA_CATEGORY = 8;
+		ST_HIST_AREA_FORMAT = 8;
 		
-		LISTENER_ST_HIST_AREA = PanelFig.getPropNumber() + 12;
+		LISTENER_ST_HIST_AREA = 34; %CET: Computational Efficiency Trick
 		LISTENER_ST_HIST_AREA_TAG = 'LISTENER_ST_HIST_AREA';
-		LISTENER_ST_HIST_AREA_CATEGORY = Category.EVANESCENT;
-		LISTENER_ST_HIST_AREA_FORMAT = Format.HANDLE;
+		LISTENER_ST_HIST_AREA_CATEGORY = 7;
+		LISTENER_ST_HIST_AREA_FORMAT = 18;
 		
-		H_DENSITY_LINE = PanelFig.getPropNumber() + 13;
+		H_DENSITY_LINE = 35; %CET: Computational Efficiency Trick
 		H_DENSITY_LINE_TAG = 'H_DENSITY_LINE';
-		H_DENSITY_LINE_CATEGORY = Category.EVANESCENT;
-		H_DENSITY_LINE_FORMAT = Format.HANDLE;
+		H_DENSITY_LINE_CATEGORY = 7;
+		H_DENSITY_LINE_FORMAT = 18;
 		
-		ST_DENSITY_LINE = PanelFig.getPropNumber() + 14;
+		ST_DENSITY_LINE = 36; %CET: Computational Efficiency Trick
 		ST_DENSITY_LINE_TAG = 'ST_DENSITY_LINE';
-		ST_DENSITY_LINE_CATEGORY = Category.FIGURE;
-		ST_DENSITY_LINE_FORMAT = Format.ITEM;
+		ST_DENSITY_LINE_CATEGORY = 8;
+		ST_DENSITY_LINE_FORMAT = 8;
 		
-		LISTENER_ST_DENSITY_LINE = PanelFig.getPropNumber() + 15;
+		LISTENER_ST_DENSITY_LINE = 37; %CET: Computational Efficiency Trick
 		LISTENER_ST_DENSITY_LINE_TAG = 'LISTENER_ST_DENSITY_LINE';
-		LISTENER_ST_DENSITY_LINE_CATEGORY = Category.EVANESCENT;
-		LISTENER_ST_DENSITY_LINE_FORMAT = Format.HANDLE;
+		LISTENER_ST_DENSITY_LINE_CATEGORY = 7;
+		LISTENER_ST_DENSITY_LINE_FORMAT = 18;
 	end
 	methods % constructor
 		function pf = GraphHistPF(varargin)
@@ -179,6 +218,44 @@ classdef GraphHistPF < PanelFig
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of GraphHistPF properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for graph histogram.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for graph histogram.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for graph histogram.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for graph histogram.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for graph histogram.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for graph histogram.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for graph histogram.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure graph histogram.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>G</strong> 	G (metadata, item) is the graph.
+			%  <strong>27</strong> <strong>LAYERS</strong> 	LAYERS (figure, rvector) determines the indices of the layers.
+			%  <strong>28</strong> <strong>LAYERLOCK</strong> 	LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.
+			%  <strong>29</strong> <strong>BINS</strong> 	BINS (figure, rvector) is the vector of bins.
+			%  <strong>30</strong> <strong>DIAGONAL</strong> 	DIAGONAL (figure, option) excludes or includes the diagonal in the density calculation.
+			%  <strong>31</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the histogram and density and stores them.
+			%  <strong>32</strong> <strong>H_HIST_AREA</strong> 	H_HIST_AREA (evanescent, handle) is the handle for the histogram area.
+			%  <strong>33</strong> <strong>ST_HIST_AREA</strong> 	ST_HIST_AREA (figure, item) determines the area settings.
+			%  <strong>34</strong> <strong>LISTENER_ST_HIST_AREA</strong> 	LISTENER_ST_HIST_AREA (evanescent, handle) contains the listener to the histogram area settings to update the pushbutton.
+			%  <strong>35</strong> <strong>H_DENSITY_LINE</strong> 	H_DENSITY_LINE (evanescent, handle) is the handle for the density line.
+			%  <strong>36</strong> <strong>ST_DENSITY_LINE</strong> 	ST_DENSITY_LINE (figure, item) determines the line settings.
+			%  <strong>37</strong> <strong>LISTENER_ST_DENSITY_LINE</strong> 	LISTENER_ST_DENSITY_LINE (evanescent, handle) contains the listener to the density line settings to update the pushbutton.
 			%
 			% See also Category, Format.
 			
@@ -216,7 +293,7 @@ classdef GraphHistPF < PanelFig
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('GraphHistPF', [], [], true);
+			subclass_list = { 'GraphHistPF' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel figure for graph histogram.
@@ -237,80 +314,32 @@ classdef GraphHistPF < PanelFig
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelFig.getProps() ...
-						GraphHistPF.H_AXES ...
-						GraphHistPF.ST_AXIS ...
-						GraphHistPF.LISTENER_ST_AXIS ...
-						GraphHistPF.G ...
-						GraphHistPF.LAYERS ...
-						GraphHistPF.LAYERLOCK ...
-						GraphHistPF.BINS ...
-						GraphHistPF.DIAGONAL ...
-						GraphHistPF.SETUP ...
-						GraphHistPF.H_HIST_AREA ...
-						GraphHistPF.ST_HIST_AREA ...
-						GraphHistPF.LISTENER_ST_HIST_AREA ...
-						GraphHistPF.H_DENSITY_LINE ...
-						GraphHistPF.ST_DENSITY_LINE ...
-						GraphHistPF.LISTENER_ST_DENSITY_LINE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelFig.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelFig.getProps(Category.METADATA) ...
-						GraphHistPF.G ...
-						GraphHistPF.LAYERLOCK ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelFig.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelFig.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelFig.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelFig.getProps(Category.QUERY) ...
-						GraphHistPF.SETUP ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelFig.getProps(Category.EVANESCENT) ...
-						GraphHistPF.H_AXES ...
-						GraphHistPF.LISTENER_ST_AXIS ...
-						GraphHistPF.H_HIST_AREA ...
-						GraphHistPF.LISTENER_ST_HIST_AREA ...
-						GraphHistPF.H_DENSITY_LINE ...
-						GraphHistPF.LISTENER_ST_DENSITY_LINE ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelFig.getProps(Category.FIGURE) ...
-						GraphHistPF.ST_AXIS ...
-						GraphHistPF.LAYERS ...
-						GraphHistPF.BINS ...
-						GraphHistPF.DIAGONAL ...
-						GraphHistPF.ST_HIST_AREA ...
-						GraphHistPF.ST_DENSITY_LINE ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelFig.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 26 28];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 31];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 25 32 34 35 37];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 27 29 30 33 36];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -331,7 +360,33 @@ classdef GraphHistPF < PanelFig
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(GraphHistPF.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 37;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 4;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 10;
+				case 8 % Category.FIGURE
+					prop_number = 8;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel figure for graph histogram/error.
@@ -359,14 +414,14 @@ classdef GraphHistPF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == GraphHistPF.getProps());
+			check = prop >= 1 && prop <= 37 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput'], ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for GraphHistPF.'] ...
 					)
 			end
@@ -397,15 +452,14 @@ classdef GraphHistPF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			graphhistpf_tag_list = cellfun(@(x) GraphHistPF.getPropTag(x), num2cell(GraphHistPF.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, graphhistpf_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'BINS'  'DIAGONAL'  'SETUP'  'H_HIST_AREA'  'ST_HIST_AREA'  'LISTENER_ST_HIST_AREA'  'H_DENSITY_LINE'  'ST_DENSITY_LINE'  'LISTENER_ST_DENSITY_LINE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput'], ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for GraphHistPF.'] ...
 					)
 			end
@@ -431,8 +485,7 @@ classdef GraphHistPF < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				graphhistpf_tag_list = cellfun(@(x) GraphHistPF.getPropTag(x), num2cell(GraphHistPF.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, graphhistpf_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'BINS'  'DIAGONAL'  'SETUP'  'H_HIST_AREA'  'ST_HIST_AREA'  'LISTENER_ST_HIST_AREA'  'H_DENSITY_LINE'  'ST_DENSITY_LINE'  'LISTENER_ST_DENSITY_LINE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -460,42 +513,9 @@ classdef GraphHistPF < PanelFig
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case GraphHistPF.H_AXES
-						tag = GraphHistPF.H_AXES_TAG;
-					case GraphHistPF.ST_AXIS
-						tag = GraphHistPF.ST_AXIS_TAG;
-					case GraphHistPF.LISTENER_ST_AXIS
-						tag = GraphHistPF.LISTENER_ST_AXIS_TAG;
-					case GraphHistPF.G
-						tag = GraphHistPF.G_TAG;
-					case GraphHistPF.LAYERS
-						tag = GraphHistPF.LAYERS_TAG;
-					case GraphHistPF.LAYERLOCK
-						tag = GraphHistPF.LAYERLOCK_TAG;
-					case GraphHistPF.BINS
-						tag = GraphHistPF.BINS_TAG;
-					case GraphHistPF.DIAGONAL
-						tag = GraphHistPF.DIAGONAL_TAG;
-					case GraphHistPF.SETUP
-						tag = GraphHistPF.SETUP_TAG;
-					case GraphHistPF.H_HIST_AREA
-						tag = GraphHistPF.H_HIST_AREA_TAG;
-					case GraphHistPF.ST_HIST_AREA
-						tag = GraphHistPF.ST_HIST_AREA_TAG;
-					case GraphHistPF.LISTENER_ST_HIST_AREA
-						tag = GraphHistPF.LISTENER_ST_HIST_AREA_TAG;
-					case GraphHistPF.H_DENSITY_LINE
-						tag = GraphHistPF.H_DENSITY_LINE_TAG;
-					case GraphHistPF.ST_DENSITY_LINE
-						tag = GraphHistPF.ST_DENSITY_LINE_TAG;
-					case GraphHistPF.LISTENER_ST_DENSITY_LINE
-						tag = GraphHistPF.LISTENER_ST_DENSITY_LINE_TAG;
-					otherwise
-						tag = getPropTag@PanelFig(prop);
-				end
+				%CET: Computational Efficiency Trick
+				graphhistpf_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'G'  'LAYERS'  'LAYERLOCK'  'BINS'  'DIAGONAL'  'SETUP'  'H_HIST_AREA'  'ST_HIST_AREA'  'LISTENER_ST_HIST_AREA'  'H_DENSITY_LINE'  'ST_DENSITY_LINE'  'LISTENER_ST_DENSITY_LINE' };
+				tag = graphhistpf_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -520,40 +540,9 @@ classdef GraphHistPF < PanelFig
 			
 			prop = GraphHistPF.getPropProp(pointer);
 			
-			switch prop
-				case GraphHistPF.H_AXES
-					prop_category = GraphHistPF.H_AXES_CATEGORY;
-				case GraphHistPF.ST_AXIS
-					prop_category = GraphHistPF.ST_AXIS_CATEGORY;
-				case GraphHistPF.LISTENER_ST_AXIS
-					prop_category = GraphHistPF.LISTENER_ST_AXIS_CATEGORY;
-				case GraphHistPF.G
-					prop_category = GraphHistPF.G_CATEGORY;
-				case GraphHistPF.LAYERS
-					prop_category = GraphHistPF.LAYERS_CATEGORY;
-				case GraphHistPF.LAYERLOCK
-					prop_category = GraphHistPF.LAYERLOCK_CATEGORY;
-				case GraphHistPF.BINS
-					prop_category = GraphHistPF.BINS_CATEGORY;
-				case GraphHistPF.DIAGONAL
-					prop_category = GraphHistPF.DIAGONAL_CATEGORY;
-				case GraphHistPF.SETUP
-					prop_category = GraphHistPF.SETUP_CATEGORY;
-				case GraphHistPF.H_HIST_AREA
-					prop_category = GraphHistPF.H_HIST_AREA_CATEGORY;
-				case GraphHistPF.ST_HIST_AREA
-					prop_category = GraphHistPF.ST_HIST_AREA_CATEGORY;
-				case GraphHistPF.LISTENER_ST_HIST_AREA
-					prop_category = GraphHistPF.LISTENER_ST_HIST_AREA_CATEGORY;
-				case GraphHistPF.H_DENSITY_LINE
-					prop_category = GraphHistPF.H_DENSITY_LINE_CATEGORY;
-				case GraphHistPF.ST_DENSITY_LINE
-					prop_category = GraphHistPF.ST_DENSITY_LINE_CATEGORY;
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE
-					prop_category = GraphHistPF.LISTENER_ST_DENSITY_LINE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphhistpf_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  8  2  8  8  6  7  8  7  7  8  7 };
+			prop_category = graphhistpf_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -577,40 +566,9 @@ classdef GraphHistPF < PanelFig
 			
 			prop = GraphHistPF.getPropProp(pointer);
 			
-			switch prop
-				case GraphHistPF.H_AXES
-					prop_format = GraphHistPF.H_AXES_FORMAT;
-				case GraphHistPF.ST_AXIS
-					prop_format = GraphHistPF.ST_AXIS_FORMAT;
-				case GraphHistPF.LISTENER_ST_AXIS
-					prop_format = GraphHistPF.LISTENER_ST_AXIS_FORMAT;
-				case GraphHistPF.G
-					prop_format = GraphHistPF.G_FORMAT;
-				case GraphHistPF.LAYERS
-					prop_format = GraphHistPF.LAYERS_FORMAT;
-				case GraphHistPF.LAYERLOCK
-					prop_format = GraphHistPF.LAYERLOCK_FORMAT;
-				case GraphHistPF.BINS
-					prop_format = GraphHistPF.BINS_FORMAT;
-				case GraphHistPF.DIAGONAL
-					prop_format = GraphHistPF.DIAGONAL_FORMAT;
-				case GraphHistPF.SETUP
-					prop_format = GraphHistPF.SETUP_FORMAT;
-				case GraphHistPF.H_HIST_AREA
-					prop_format = GraphHistPF.H_HIST_AREA_FORMAT;
-				case GraphHistPF.ST_HIST_AREA
-					prop_format = GraphHistPF.ST_HIST_AREA_FORMAT;
-				case GraphHistPF.LISTENER_ST_HIST_AREA
-					prop_format = GraphHistPF.LISTENER_ST_HIST_AREA_FORMAT;
-				case GraphHistPF.H_DENSITY_LINE
-					prop_format = GraphHistPF.H_DENSITY_LINE_FORMAT;
-				case GraphHistPF.ST_DENSITY_LINE
-					prop_format = GraphHistPF.ST_DENSITY_LINE_FORMAT;
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE
-					prop_format = GraphHistPF.LISTENER_ST_DENSITY_LINE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphhistpf_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  12  4  12  5  1  18  8  18  18  8  18 };
+			prop_format = graphhistpf_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -634,60 +592,9 @@ classdef GraphHistPF < PanelFig
 			
 			prop = GraphHistPF.getPropProp(pointer);
 			
-			switch prop
-				case GraphHistPF.H_AXES
-					prop_description = 'H_AXES (evanescent, handle) is the handle for the axes.';
-				case GraphHistPF.ST_AXIS
-					prop_description = 'ST_AXIS (figure, item) determines the axis settings.';
-				case GraphHistPF.LISTENER_ST_AXIS
-					prop_description = 'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.';
-				case GraphHistPF.G
-					prop_description = 'G (metadata, item) is the graph.';
-				case GraphHistPF.LAYERS
-					prop_description = 'LAYERS (figure, rvector) determines the indices of the layers.';
-				case GraphHistPF.LAYERLOCK
-					prop_description = 'LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.';
-				case GraphHistPF.BINS
-					prop_description = 'BINS (figure, rvector) is the vector of bins.';
-				case GraphHistPF.DIAGONAL
-					prop_description = 'DIAGONAL (figure, option) excludes or includes the diagonal in the density calculation.';
-				case GraphHistPF.SETUP
-					prop_description = 'SETUP (query, empty) calculates the histogram and density and stores them.';
-				case GraphHistPF.H_HIST_AREA
-					prop_description = 'H_HIST_AREA (evanescent, handle) is the handle for the histogram area.';
-				case GraphHistPF.ST_HIST_AREA
-					prop_description = 'ST_HIST_AREA (figure, item) determines the area settings.';
-				case GraphHistPF.LISTENER_ST_HIST_AREA
-					prop_description = 'LISTENER_ST_HIST_AREA (evanescent, handle) contains the listener to the histogram area settings to update the pushbutton.';
-				case GraphHistPF.H_DENSITY_LINE
-					prop_description = 'H_DENSITY_LINE (evanescent, handle) is the handle for the density line.';
-				case GraphHistPF.ST_DENSITY_LINE
-					prop_description = 'ST_DENSITY_LINE (figure, item) determines the line settings.';
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE
-					prop_description = 'LISTENER_ST_DENSITY_LINE (evanescent, handle) contains the listener to the density line settings to update the pushbutton.';
-				case GraphHistPF.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the panel figure for graph histogram.';
-				case GraphHistPF.NAME
-					prop_description = 'NAME (constant, string) is the name of the panel figure for graph histogram.';
-				case GraphHistPF.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure for graph histogram.';
-				case GraphHistPF.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure for graph histogram.';
-				case GraphHistPF.ID
-					prop_description = 'ID (data, string) is a few-letter code for the panel figure for graph histogram.';
-				case GraphHistPF.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure for graph histogram.';
-				case GraphHistPF.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure for graph histogram.';
-				case GraphHistPF.DRAW
-					prop_description = 'DRAW (query, logical) draws the figure graph histogram.';
-				case GraphHistPF.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel figure graph is deleted.';
-				case GraphHistPF.H_TOOLS
-					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.';
-				otherwise
-					prop_description = getPropDescription@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphhistpf_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for graph histogram.'  'NAME (constant, string) is the name of the panel figure for graph histogram.'  'DESCRIPTION (constant, string) is the description of the panel figure for graph histogram.'  'TEMPLATE (parameter, item) is the template of the panel figure for graph histogram.'  'ID (data, string) is a few-letter code for the panel figure for graph histogram.'  'LABEL (metadata, string) is an extended label of the panel figure for graph histogram.'  'NOTES (metadata, string) are some specific notes about the panel figure for graph histogram.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure graph histogram.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'G (metadata, item) is the graph.'  'LAYERS (figure, rvector) determines the indices of the layers.'  'LAYERLOCK (metadata, logical) is whether the two layers are locked so that only the diagonal is shown.'  'BINS (figure, rvector) is the vector of bins.'  'DIAGONAL (figure, option) excludes or includes the diagonal in the density calculation.'  'SETUP (query, empty) calculates the histogram and density and stores them.'  'H_HIST_AREA (evanescent, handle) is the handle for the histogram area.'  'ST_HIST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_HIST_AREA (evanescent, handle) contains the listener to the histogram area settings to update the pushbutton.'  'H_DENSITY_LINE (evanescent, handle) is the handle for the density line.'  'ST_DENSITY_LINE (figure, item) determines the line settings.'  'LISTENER_ST_DENSITY_LINE (evanescent, handle) contains the listener to the density line settings to update the pushbutton.' };
+			prop_description = graphhistpf_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -711,38 +618,38 @@ classdef GraphHistPF < PanelFig
 			
 			prop = GraphHistPF.getPropProp(pointer);
 			
-			switch prop
-				case GraphHistPF.H_AXES
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.ST_AXIS
+			switch prop %CET: Computational Efficiency Trick
+				case 23 % GraphHistPF.H_AXES
+					prop_settings = Format.getFormatSettings(18);
+				case 24 % GraphHistPF.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case GraphHistPF.LISTENER_ST_AXIS
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.G
+				case 25 % GraphHistPF.LISTENER_ST_AXIS
+					prop_settings = Format.getFormatSettings(18);
+				case 26 % GraphHistPF.G
 					prop_settings = 'Graph';
-				case GraphHistPF.LAYERS
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case GraphHistPF.LAYERLOCK
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case GraphHistPF.BINS
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case GraphHistPF.DIAGONAL
+				case 27 % GraphHistPF.LAYERS
+					prop_settings = Format.getFormatSettings(12);
+				case 28 % GraphHistPF.LAYERLOCK
+					prop_settings = Format.getFormatSettings(4);
+				case 29 % GraphHistPF.BINS
+					prop_settings = Format.getFormatSettings(12);
+				case 30 % GraphHistPF.DIAGONAL
 					prop_settings = {'exclude' 'include'};
-				case GraphHistPF.SETUP
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case GraphHistPF.H_HIST_AREA
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.ST_HIST_AREA
+				case 31 % GraphHistPF.SETUP
+					prop_settings = Format.getFormatSettings(1);
+				case 32 % GraphHistPF.H_HIST_AREA
+					prop_settings = Format.getFormatSettings(18);
+				case 33 % GraphHistPF.ST_HIST_AREA
 					prop_settings = 'SettingsArea';
-				case GraphHistPF.LISTENER_ST_HIST_AREA
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.H_DENSITY_LINE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.ST_DENSITY_LINE
+				case 34 % GraphHistPF.LISTENER_ST_HIST_AREA
+					prop_settings = Format.getFormatSettings(18);
+				case 35 % GraphHistPF.H_DENSITY_LINE
+					prop_settings = Format.getFormatSettings(18);
+				case 36 % GraphHistPF.ST_DENSITY_LINE
 					prop_settings = 'SettingsLine';
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphHistPF.TEMPLATE
+				case 37 % GraphHistPF.LISTENER_ST_DENSITY_LINE
+					prop_settings = Format.getFormatSettings(18);
+				case 4 % GraphHistPF.TEMPLATE
 					prop_settings = 'GraphHistPF';
 				otherwise
 					prop_settings = getPropSettings@PanelFig(prop);
@@ -770,50 +677,50 @@ classdef GraphHistPF < PanelFig
 			
 			prop = GraphHistPF.getPropProp(pointer);
 			
-			switch prop
-				case GraphHistPF.H_AXES
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_AXIS
+			switch prop %CET: Computational Efficiency Trick
+				case 23 % GraphHistPF.H_AXES
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 24 % GraphHistPF.ST_AXIS
 					prop_default = SettingsAxis('AXIS', true, 'GRID', false, 'EQUAL', false);
-				case GraphHistPF.LISTENER_ST_AXIS
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.G
-					prop_default = Format.getFormatDefault(Format.ITEM, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LAYERS
+				case 25 % GraphHistPF.LISTENER_ST_AXIS
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 26 % GraphHistPF.G
+					prop_default = Format.getFormatDefault(8, GraphHistPF.getPropSettings(prop));
+				case 27 % GraphHistPF.LAYERS
 					prop_default = [1 1];
-				case GraphHistPF.LAYERLOCK
+				case 28 % GraphHistPF.LAYERLOCK
 					prop_default = false;
-				case GraphHistPF.BINS
-					prop_default = [-1:.1:1];
-				case GraphHistPF.DIAGONAL
-					prop_default = Format.getFormatDefault(Format.OPTION, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.SETUP
-					prop_default = Format.getFormatDefault(Format.EMPTY, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.H_HIST_AREA
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_HIST_AREA
-					prop_default = Format.getFormatDefault(Format.ITEM, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LISTENER_ST_HIST_AREA
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.H_DENSITY_LINE
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_DENSITY_LINE
-					prop_default = Format.getFormatDefault(Format.ITEM, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ELCLASS
+				case 29 % GraphHistPF.BINS
+					prop_default = [-1:.001:1];
+				case 30 % GraphHistPF.DIAGONAL
+					prop_default = Format.getFormatDefault(5, GraphHistPF.getPropSettings(prop));
+				case 31 % GraphHistPF.SETUP
+					prop_default = Format.getFormatDefault(1, GraphHistPF.getPropSettings(prop));
+				case 32 % GraphHistPF.H_HIST_AREA
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 33 % GraphHistPF.ST_HIST_AREA
+					prop_default = Format.getFormatDefault(8, GraphHistPF.getPropSettings(prop));
+				case 34 % GraphHistPF.LISTENER_ST_HIST_AREA
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 35 % GraphHistPF.H_DENSITY_LINE
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 36 % GraphHistPF.ST_DENSITY_LINE
+					prop_default = Format.getFormatDefault(8, GraphHistPF.getPropSettings(prop));
+				case 37 % GraphHistPF.LISTENER_ST_DENSITY_LINE
+					prop_default = Format.getFormatDefault(18, GraphHistPF.getPropSettings(prop));
+				case 1 % GraphHistPF.ELCLASS
 					prop_default = 'GraphHistPF';
-				case GraphHistPF.NAME
+				case 2 % GraphHistPF.NAME
 					prop_default = 'Panel Figure for Graph Histogram';
-				case GraphHistPF.DESCRIPTION
+				case 3 % GraphHistPF.DESCRIPTION
 					prop_default = 'A Panel Figure for Graph Histogram (GraphHistPF) manages the plot of the histogram of an adjaciency matrix.';
-				case GraphHistPF.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ID
+				case 4 % GraphHistPF.TEMPLATE
+					prop_default = Format.getFormatDefault(8, GraphHistPF.getPropSettings(prop));
+				case 5 % GraphHistPF.ID
 					prop_default = 'GraphHistPF ID';
-				case GraphHistPF.LABEL
+				case 6 % GraphHistPF.LABEL
 					prop_default = 'GraphHistPF label';
-				case GraphHistPF.NOTES
+				case 7 % GraphHistPF.NOTES
 					prop_default = 'GraphHistPF notes';
 				otherwise
 					prop_default = getPropDefault@PanelFig(prop);
@@ -850,8 +757,8 @@ classdef GraphHistPF < PanelFig
 			%PRESET preprocesses the value of a property before setting it.
 			%
 			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
-			%  PROP. It works only with properties with Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI. By
+			%  PROP. It works only with properties with 2,
+			%  3, 4, 8 and 9. By
 			%  default, this function does not do anything, so it should be implemented
 			%  in the subclasses of Element when needed.
 			%
@@ -859,13 +766,13 @@ classdef GraphHistPF < PanelFig
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case GraphHistPF.LAYERS % __GraphHistPF.LAYERS__
+				case 27 % GraphHistPF.LAYERS
 					if pf.get('LAYERLOCK')
 					    value = [value(1) value(1)];
 					end
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						value = preset@PanelFig(pf, prop, value);
 					end
 			end
@@ -886,15 +793,15 @@ classdef GraphHistPF < PanelFig
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:GraphHistPF:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:GraphHistPF:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:GraphHistPF:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:GraphHistPF:WrongInput
 			%  Element.CHECKPROP(GraphHistPF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GraphHistPF.
-			%   Error id: €BRAPH2.STR€:GraphHistPF:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:GraphHistPF:WrongInput
 			%  PF.CHECKPROP(GraphHistPF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GraphHistPF.
-			%   Error id: €BRAPH2.STR€:GraphHistPF:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:GraphHistPF:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('GraphHistPF')
 			%  are less computationally efficient.
@@ -905,40 +812,40 @@ classdef GraphHistPF < PanelFig
 			prop = GraphHistPF.getPropProp(pointer);
 			
 			switch prop
-				case GraphHistPF.H_AXES % __GraphHistPF.H_AXES__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_AXIS % __GraphHistPF.ST_AXIS__
-					check = Format.checkFormat(Format.ITEM, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LISTENER_ST_AXIS % __GraphHistPF.LISTENER_ST_AXIS__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.G % __GraphHistPF.G__
-					check = Format.checkFormat(Format.ITEM, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LAYERS % __GraphHistPF.LAYERS__
-					check = Format.checkFormat(Format.RVECTOR, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LAYERLOCK % __GraphHistPF.LAYERLOCK__
-					check = Format.checkFormat(Format.LOGICAL, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.BINS % __GraphHistPF.BINS__
-					check = Format.checkFormat(Format.RVECTOR, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.DIAGONAL % __GraphHistPF.DIAGONAL__
-					check = Format.checkFormat(Format.OPTION, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.SETUP % __GraphHistPF.SETUP__
-					check = Format.checkFormat(Format.EMPTY, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.H_HIST_AREA % __GraphHistPF.H_HIST_AREA__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_HIST_AREA % __GraphHistPF.ST_HIST_AREA__
-					check = Format.checkFormat(Format.ITEM, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LISTENER_ST_HIST_AREA % __GraphHistPF.LISTENER_ST_HIST_AREA__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.H_DENSITY_LINE % __GraphHistPF.H_DENSITY_LINE__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.ST_DENSITY_LINE % __GraphHistPF.ST_DENSITY_LINE__
-					check = Format.checkFormat(Format.ITEM, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE % __GraphHistPF.LISTENER_ST_DENSITY_LINE__
-					check = Format.checkFormat(Format.HANDLE, value, GraphHistPF.getPropSettings(prop));
-				case GraphHistPF.TEMPLATE % __GraphHistPF.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, GraphHistPF.getPropSettings(prop));
+				case 23 % GraphHistPF.H_AXES
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 24 % GraphHistPF.ST_AXIS
+					check = Format.checkFormat(8, value, GraphHistPF.getPropSettings(prop));
+				case 25 % GraphHistPF.LISTENER_ST_AXIS
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 26 % GraphHistPF.G
+					check = Format.checkFormat(8, value, GraphHistPF.getPropSettings(prop));
+				case 27 % GraphHistPF.LAYERS
+					check = Format.checkFormat(12, value, GraphHistPF.getPropSettings(prop));
+				case 28 % GraphHistPF.LAYERLOCK
+					check = Format.checkFormat(4, value, GraphHistPF.getPropSettings(prop));
+				case 29 % GraphHistPF.BINS
+					check = Format.checkFormat(12, value, GraphHistPF.getPropSettings(prop));
+				case 30 % GraphHistPF.DIAGONAL
+					check = Format.checkFormat(5, value, GraphHistPF.getPropSettings(prop));
+				case 31 % GraphHistPF.SETUP
+					check = Format.checkFormat(1, value, GraphHistPF.getPropSettings(prop));
+				case 32 % GraphHistPF.H_HIST_AREA
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 33 % GraphHistPF.ST_HIST_AREA
+					check = Format.checkFormat(8, value, GraphHistPF.getPropSettings(prop));
+				case 34 % GraphHistPF.LISTENER_ST_HIST_AREA
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 35 % GraphHistPF.H_DENSITY_LINE
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 36 % GraphHistPF.ST_DENSITY_LINE
+					check = Format.checkFormat(8, value, GraphHistPF.getPropSettings(prop));
+				case 37 % GraphHistPF.LISTENER_ST_DENSITY_LINE
+					check = Format.checkFormat(18, value, GraphHistPF.getPropSettings(prop));
+				case 4 % GraphHistPF.TEMPLATE
+					check = Format.checkFormat(8, value, GraphHistPF.getPropSettings(prop));
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -947,8 +854,8 @@ classdef GraphHistPF < PanelFig
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphHistPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput'], ...
+					['BRAPH2' ':GraphHistPF:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' GraphHistPF.getPropTag(prop) ' (' GraphHistPF.getFormatTag(GraphHistPF.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -968,7 +875,7 @@ classdef GraphHistPF < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case GraphHistPF.ST_AXIS % __GraphHistPF.ST_AXIS__
+				case 24 % GraphHistPF.ST_AXIS
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -977,10 +884,10 @@ classdef GraphHistPF < PanelFig
 					    end
 					end
 					
-				case GraphHistPF.LAYERS % __GraphHistPF.LAYERS__
+				case 27 % GraphHistPF.LAYERS
 					pf.get('SETUP')
 					
-				case GraphHistPF.LAYERLOCK % __GraphHistPF.LAYERLOCK__
+				case 28 % GraphHistPF.LAYERLOCK
 					if pf.get('LAYERLOCK')
 					    layers = pf.get('LAYERS');
 					    if layers(1) ~= layers(2)
@@ -988,14 +895,14 @@ classdef GraphHistPF < PanelFig
 					    end
 					end
 					
-				case GraphHistPF.BINS % __GraphHistPF.BINS__
+				case 29 % GraphHistPF.BINS
 					pf.get('SETUP')
 					
-				case GraphHistPF.DIAGONAL % __GraphHistPF.DIAGONAL__
+				case 30 % GraphHistPF.DIAGONAL
 					pf.get('SETUP')
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -1006,19 +913,19 @@ classdef GraphHistPF < PanelFig
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case GraphHistPF.H_AXES % __GraphHistPF.H_AXES__
+				case 23 % GraphHistPF.H_AXES
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -1031,10 +938,10 @@ classdef GraphHistPF < PanelFig
 					hold(h_axes, 'on')
 					value = h_axes;
 					
-				case GraphHistPF.LISTENER_ST_AXIS % __GraphHistPF.LISTENER_ST_AXIS__
+				case 25 % GraphHistPF.LISTENER_ST_AXIS
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case GraphHistPF.SETUP % __GraphHistPF.SETUP__
+				case 31 % GraphHistPF.SETUP
 					A = pf.get('G').get('A');
 					if numel(A) <= 1
 					    A = cell2mat(A);
@@ -1047,7 +954,6 @@ classdef GraphHistPF < PanelFig
 					
 					bins = [bins(1) bins bins(end)];
 					count = [0 count 0];
-					count = (count/max(count))*100;
 					density = [100 density 0];
 					
 					pf.memorize('ST_HIST_AREA').set('X', bins, 'Y', count)
@@ -1056,10 +962,10 @@ classdef GraphHistPF < PanelFig
 					
 					if pf.get('ST_HIST_AREA').get('VISIBLE') && pf.get('ST_DENSITY_LINE').get('VISIBLE')
 					    xlabel(pf.get('H_AXES'), 'coefficient value / threshold')
-					    ylabel(pf.get('H_AXES'), 'coefficient percentage / density')
+					    ylabel(pf.get('H_AXES'), 'coefficient count / density')
 					elseif pf.get('ST_HIST_AREA').get('VISIBLE') && ~pf.get('ST_DENSITY_LINE').get('VISIBLE')
 					    xlabel(pf.get('H_AXES'), 'coefficient value')
-					    ylabel(pf.get('H_AXES'), 'coefficient percentage')
+					    ylabel(pf.get('H_AXES'), 'coefficient count')
 					elseif ~pf.get('ST_HIST_AREA').get('VISIBLE') && pf.get('ST_DENSITY_LINE').get('VISIBLE')
 					    xlabel(pf.get('H_AXES'), 'threshold')
 					    ylabel(pf.get('H_AXES'), 'density')
@@ -1070,39 +976,39 @@ classdef GraphHistPF < PanelFig
 					
 					value = [];
 					
-				case GraphHistPF.H_HIST_AREA % __GraphHistPF.H_HIST_AREA__
+				case 32 % GraphHistPF.H_HIST_AREA
 					value = fill(pf.get('H_AXES'), [0], [0], 'k');
 					
-				case GraphHistPF.LISTENER_ST_HIST_AREA % __GraphHistPF.LISTENER_ST_HIST_AREA__
+				case 34 % GraphHistPF.LISTENER_ST_HIST_AREA
 					value = listener(pf.get('ST_HIST_AREA'), 'PropSet', @cb_listener_st_hist_area);
 					
-				case GraphHistPF.H_DENSITY_LINE % __GraphHistPF.H_DENSITY_LINE__
-					value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2, 'MarkerSize', 1);
+				case 35 % GraphHistPF.H_DENSITY_LINE
+					value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 					
-				case GraphHistPF.LISTENER_ST_DENSITY_LINE % __GraphHistPF.LISTENER_ST_DENSITY_LINE__
+				case 37 % GraphHistPF.LISTENER_ST_DENSITY_LINE
 					value = listener(pf.get('ST_DENSITY_LINE'), 'PropSet', @cb_listener_st_density_line);
 					
-				case GraphHistPF.DRAW % __GraphHistPF.DRAW__
-					value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
+				case 11 % GraphHistPF.DRAW
+					value = calculateValue@PanelFig(pf, 11, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					    
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', GraphHistPF.H_AXES).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					    
 					    pf.memorize('H_HIST_AREA')
-					    pf.memorize('ST_HIST_AREA').set('PANEL', pf, 'PROP', GraphHistPF.H_HIST_AREA).get('SETUP')
+					    pf.memorize('ST_HIST_AREA').set('PANEL', pf, 'PROP', 32).get('SETUP')
 					    pf.memorize('LISTENER_ST_HIST_AREA');
 					
 					    pf.memorize('H_DENSITY_LINE')
-					    pf.memorize('ST_DENSITY_LINE').set('PANEL', pf, 'PROP', GraphHistPF.H_DENSITY_LINE).get('SETUP')
+					    pf.memorize('ST_DENSITY_LINE').set('PANEL', pf, 'PROP', 35).get('SETUP')
 					    pf.memorize('LISTENER_ST_DENSITY_LINE');
 					    
 					    pf.get('SETUP')
 					end
 					
-				case GraphHistPF.DELETE % __GraphHistPF.DELETE__
-					value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
+				case 18 % GraphHistPF.DELETE
+					value = calculateValue@PanelFig(pf, 18, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					
@@ -1115,10 +1021,10 @@ classdef GraphHistPF < PanelFig
 					    pf.set('LISTENER_ST_DENSITY_LINE', Element.getNoValue())
 					end
 					
-				case GraphHistPF.H_TOOLS % __GraphHistPF.H_TOOLS__
+				case 22 % GraphHistPF.H_TOOLS
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, PanelFig.H_TOOLS);
+					    value = calculateValue@PanelFig(pf, 22);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1172,7 +1078,7 @@ classdef GraphHistPF < PanelFig
 					end
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1247,22 +1153,22 @@ classdef GraphHistPF < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case GraphHistPF.ST_AXIS % __GraphHistPF.ST_AXIS__
-					pr = SettingsAxisPP('EL', pf, 'PROP', GraphHistPF.ST_AXIS, varargin{:});
+				case 24 % GraphHistPF.ST_AXIS
+					pr = SettingsAxisPP('EL', pf, 'PROP', 24, varargin{:});
 					
-				case GraphHistPF.LAYERS % __GraphHistPF.LAYERS__
-					pr = LayersPP('EL', pf, 'PROP', GraphHistPF.LAYERS, ...
-					    'G_PROP', GraphHistPF.G, ...
+				case 27 % GraphHistPF.LAYERS
+					pr = LayersPP('EL', pf, 'PROP', 27, ...
+					    'G_PROP', 26, ...
 					    varargin{:});
 					
-				case GraphHistPF.BINS % __GraphHistPF.BINS__
-					pr = PanelPropRVectorSmart('EL', pf, 'PROP', GraphHistPF.BINS, 'MAX', 1, 'MIN', -1, varargin{:});
+				case 29 % GraphHistPF.BINS
+					pr = PanelPropRVectorSmart('EL', pf, 'PROP', 29, 'MAX', 1, 'MIN', -1, varargin{:});
 					
-				case GraphHistPF.ST_HIST_AREA % __GraphHistPF.ST_HIST_AREA__
-					pr = SettingsAreaPP('EL', pf, 'PROP', GraphHistPF.ST_HIST_AREA, varargin{:});
+				case 33 % GraphHistPF.ST_HIST_AREA
+					pr = SettingsAreaPP('EL', pf, 'PROP', 33, varargin{:});
 					
-				case GraphHistPF.ST_DENSITY_LINE % __GraphHistPF.ST_DENSITY_LINE__
-					pr = SettingsLinePP('EL', pf, 'PROP', GraphHistPF.ST_DENSITY_LINE, varargin{:});
+				case 36 % GraphHistPF.ST_DENSITY_LINE
+					pr = SettingsLinePP('EL', pf, 'PROP', 36, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

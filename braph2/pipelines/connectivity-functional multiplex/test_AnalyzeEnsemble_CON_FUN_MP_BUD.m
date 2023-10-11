@@ -1451,7 +1451,10 @@ end
 
 %% Test 12: Example
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	create_data_CON_FUN_MP_XLS()
+	if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+	    test_SubjectCON_FUN_MP % create example files
+	end
+	
 	example_CON_FUN_MP_BUD
 end
 

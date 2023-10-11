@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the MeasureEnsemblePF_NU.
+ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
 'MeasureEnsemblePF_NU'
 
@@ -128,7 +128,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('APARTITIONTICKS');
+x = g.get('ALAYERTICKS');
 
 node = pf.get('NODE');
 m = cellfun(@(x) x(node), me.get('M'))';
@@ -150,7 +150,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
+    'TXT', 'Layer', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -167,22 +167,18 @@ value = [];
 %% ¡props!
 
 %%% ¡prop!
-NODE (figure, scalar) is the node number of the nodal measure.
+NODE (figure, scalar) is the node number of the nodal group comparison figure.
 %%%% ¡default!
 1
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡_gui!
-pr = MeasureEnsemblePF_NxPP_Node('EL', pf, 'PROP', MeasureEnsemblePF_NU.NODE);
-
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the nodal measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_NU.LAYER);
+% % % bas = pf.get('M').get('G').get('BAS');
+% % % ba = bas{1};
+% % % 
+% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
+% % %     'BA', ba, ...
+% % %     varargin{:});
 
 %% ¡tests!
 

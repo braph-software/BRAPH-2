@@ -3,7 +3,7 @@
 % This is the pipeline script to analyze a group of subjects using functional multiplex data and a weighted undirected graph.
 % The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).
 % 1. It loads a brain atlas from an XLS file (e.g., aal90_atlas.xlsx).
-% 2. It loads the functional data of one group of subjects from two directories (e.g., FUN_MP_Group_1 and FUN_MP_Group_2) containing XLS files of each subject.
+% 2. It loads the functional data of one group of subjects from two directories (e.g., GroupName1 and GroupName2) containing XLS files of each subject.
 % 3. It analyzes the data using functional multiplex analysis (FUN_MP) based on weighted undirected graphs (WU).
 
 % PDF: 

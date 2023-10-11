@@ -231,7 +231,10 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-create_data_CON_FUN_MP_XLS()
+if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
+    test_SubjectCON_FUN_MP % create example files
+end
+
 example_CON_FUN_MP_WU
 
 %%% ¡test!

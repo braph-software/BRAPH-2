@@ -239,7 +239,9 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-create_data_FUN_XLS() % only creates files if the example folder doesn't already exist
+if ~isfile([fileparts(which('SubjectFUN')) filesep 'Example data FUN XLS' filesep 'atlas.xlsx'])
+    test_ImporterGroupSubjectFUN_XLS % create example files
+end
 
 example_FUN_BUD
 

@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the MeasureEnsemblePF_BU.
+ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
 'MeasureEnsemblePF_BU'
 
@@ -128,7 +128,7 @@ else
     g = me.get('A').get('GRAPH_TEMPLATE');
 end
 
-x = g.get('APARTITIONTICKS');
+x = g.get('ALAYERTICKS');
 
 nodes = pf.get('NODES');
 m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
@@ -150,7 +150,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
+    'TXT', 'Layer', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -173,16 +173,12 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡_gui!
-pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', MeasureEnsemblePF_BU.NODES);
-
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the binodal measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_BU.LAYER);
+% % % bas = pf.get('M').get('G').get('BAS');
+% % % ba = bas{1};
+% % % 
+% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
+% % %     'BA', ba, ...
+% % %     varargin{:});
 
 %% ¡tests!
 

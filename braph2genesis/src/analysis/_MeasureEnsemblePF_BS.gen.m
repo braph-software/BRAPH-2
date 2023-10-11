@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the MeasureEnsemblePF_BS.
+ELCLASS (constant, string) is the class of the % % % .
 %%%% ¡default!
 'MeasureEnsemblePF_BS'
 
@@ -121,59 +121,20 @@ NOTES (metadata, string) are some specific notes about the panel figure binodal 
 %%% ¡prop!
 SETUP (query, empty) calculates the group comparison figure value and stores it.
 %%%% ¡calculate!
-me = pf.get('ME');
-if me.get('A').get('G_DICT').get('LENGTH')
-    g = me.get('A').get('G_DICT').get('IT', 1);
-else
-    g = me.get('A').get('GRAPH_TEMPLATE');
-end
-
-x = g.get('APARTITIONTICKS');
-
-nodes = pf.get('NODES');
-m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
-
-pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
-
-xlim = pf.get('H_AXES').get('XLim');
-ylim = pf.get('H_AXES').get('YLim');
-anodelabels = g.get('ANODELABELS');
-if isequal(anodelabels, {'numbered'})
-    title = [me.get('LABEL') ' ' int2str(nodes(1)) ' ' int2str(nodes(2))];
-else
-    title = [me.get('LABEL') ' ' anodelabels{nodes(1)} ' ' anodelabels{nodes(2)}];
-end
-pf.get('ST_TITLE').set( ...
-    'TXT', title, ...
-    'X', .5 * (xlim(2) + xlim(1)), ...
-    'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
-    'Z', 0 ...
-    )
-pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
-    'X', .5 * (xlim(2) + xlim(1)), ...
-    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
-    'Z', 0 ...
-    )
-pf.get('ST_YLABEL').set( ...
-	'TXT', 'Measure Value', ...
-    'X', xlim(1) - .14 * (xlim(2) - xlim(1)), ...
-    'Y', .5 * (ylim(2) + ylim(1)), ...
-    'Z', 0 ...
-    )
-
+%%%__WARN_TBI__
 value = [];
 
 %% ¡props!
 
 %%% ¡prop!
 NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
-%%%% ¡default!
-[1 1]
-%%%% ¡postset!
-pf.get('SETUP')
 %%%% ¡_gui!
-pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', MeasureEnsemblePF_BS.NODES);
+% % % bas = pf.get('M').get('G').get('BAS');
+% % % ba = bas{1};
+% % % 
+% % % pr = PP_BrainRegion('EL', pf, 'PROP', PFMeasureNU.BR1_ID, ...
+% % %     'BA', ba, ...
+% % %     varargin{:});
 
 %% ¡tests!
 

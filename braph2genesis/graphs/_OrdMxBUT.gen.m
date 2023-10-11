@@ -275,25 +275,20 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(thresholds)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, [blayerlabels{j} '|' thresholds{i}]];
+            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' thresholds{i}]];
         end
     end
 end
 value = alayerlabels;
 
 %%% ¡prop!
-APARTITIONLABELS (query, stringlist) returns the partition (threshold) labels for A.
+APARTITIONLABELS (query, stringlist) returns the partition labels for A.
 %%%% ¡calculate!
 apartitionlabels = g.get('PARTITIONLABELS');
 if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('THRESHOLDS')) % ensures that it's not unecessarily calculated
     apartitionlabels = cellfun(@num2str, num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
 end
 value = apartitionlabels;
-
-%%% ¡prop!
-APARTITIONTICKS (query, rvector) returns the partition (threshold) ticks for A.
-%%%% ¡calculate!
-value = g.get('THRESHOLDS');
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

@@ -39,7 +39,7 @@ You can generate the example data by typing in the command line the instruction 
 		Command to generate the example data for functional analyses. They will be placed in the folder \fn{./braph2/pipelines/functional/Example data FUN XLS}, and include the brain atlas \fn{atlas.xlsx}, two folders with the subject files \fn{FUN\_Group\_1\_XLS} and \fn{FUN\_Group\_2\_XLS}, and the associated covariates files \fn{FUN\_Group\_1\_XLS.vois} and \fn{FUN\_Group\_2\_XLS.vois}. The details about the format of these files can be found in the tutorials \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba}{Brain Atlas} and \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_fun}{Group of Subjects with Functional Data}.
 	}
 ]
-create_data_FUN_XLS()
+test_ImporterGroupSubjectFUN_XLS
 \end{lstlisting}
 
 \section{Open the GUI}
@@ -221,8 +221,8 @@ After configuring the parameters, you can proceed to calculate specific graph me
 	{
 	{\bf a} Locate the \code{Group-averaged MEASURES} panel and click the \code{C} button to see all available measures. Choose the \code{Community Structure} measure, right-click it, and select \code{Calculate Selected Measures} to perform the calculation.
 	{\bf b} To visualize the results, right-click on the top of the table and choose \code{Plot Selected Measures on Brain} in the Analyze Ensemble interface. This action opens a brain surface with the \code{Community Structure} plotted.
-	{\bf c} Adjust visualization settings by clicking on the \code{Settings Panel Figure} button in the brain surface toolbar.
-	{\bf d} Explore different views such as the \code{Axial dorsal} button in the same toolbar.
+	{\bf c} Explore different views such as the \code{Axial dorsal} button in the brain surface toolbar.
+	{\bf d} Adjust visualization settings by clicking on the \code{Settings Panel Figure} button in the same toolbar.
 	{\bf e} Customize and save plot visualizations within the settings menu. Here, we turned off the option to show the spheres corresponding to the nodes of each community with different sizes.
 	}
 
@@ -249,7 +249,7 @@ After completing the analysis of the first group, you can analyze the second gro
 	{Parameters blocked in the Analysis of Group 2}
 	{
 	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
-	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and the graph property \fn{densities}, as well as {\bf c} rule for \fn{Community Structure}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf a}.
+	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property {\bf d} \fn{densities}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf e}.
 	}
 	
 If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a \code{C} (\Figref{fig:10}e) near the analysis of the first group.
@@ -263,7 +263,8 @@ After exploring the network measures for each group, you can proceed to their st
 	{fig:11}
 	{
 	\includegraphics{fig11abc.jpg}
-	\includegraphics{fig11d.jpg}
+	\includegraphics{fig11d1.jpg}
+	\includegraphics{fig11d2.jpg}
 	}
 	{Compare the groups}
 	{
@@ -283,10 +284,11 @@ If you have enabled the progress bar and verbose functions, two additional windo
  
 To obtain the results from the comparisons, select the measures in the \code{COMPARISONS} panel and press \code{Data Selected Comparisons}({\Figref{fig:11}d}), and a new window will open where we can check the value of the difference between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
- \fig{figure*}
+ \fig{figure}
 	{fig:12}
 	{
-	\includegraphics{fig12.jpg}
+	\includegraphics{fig12a.jpg}
+	\includegraphics{fig12bc.jpg}
 	}
 	{Visualize the group comparison results on a brain surface}
 	{

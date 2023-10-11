@@ -1385,7 +1385,10 @@ end
 
 %% Test 12: Example
 if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
-	create_data_CON_TXT() % only creates files if the example folder doesn't already exist
+	if ~isfile([fileparts(which('SubjectCON')) filesep 'Example data CON XLS' filesep 'atlas.xlsx'])
+	    test_ImporterGroupSubjectCON_XLS % create example files
+	end
+	
 	example_CON_WU
 end
 

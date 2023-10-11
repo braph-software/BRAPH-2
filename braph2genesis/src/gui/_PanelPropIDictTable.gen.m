@@ -692,31 +692,26 @@ table = uitable( ...
 value = table;
 %%%% ¡calculate_callbacks!
 function cb_table(~, event) % (src, event)
-    if pr.get('APPLY_TO_SELECTION')==false
+    menu_apply_to_selection = findobj(pr.get('CONTEXTMENU'), 'Tag', 'MENU_APPLY_TO_SELECTION');
+	if ~get(menu_apply_to_selection, 'Checked')
         cols = pr.get('COLS');
         cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
     else
-        menu_apply_to_selection = findobj(pr.get('CONTEXTMENU'), 'Tag', 'MENU_APPLY_TO_SELECTION');
-	    if ~get(menu_apply_to_selection, 'Checked')
-            cols = pr.get('COLS');
-            cb_table_edit(event.Indices(1), cols(event.Indices(2)), event.NewData)
+        cols = pr.get('COLS');
+
+        % adds current item to selected
+        if cols(event.Indices(2)) == pr.SELECTOR
+            cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
         else
-            cols = pr.get('COLS');
-    
-            % adds current item to selected
-            if cols(event.Indices(2)) == pr.SELECTOR
-                cb_table_edit(event.Indices(1), pr.SELECTOR, event.NewData)
-            else
-                cb_table_edit(event.Indices(1), pr.SELECTOR, true)
-            end
-    
-            % updates all selected
-            selected = pr.get('SELECTED');
-            for s = 1:1:length(selected)
-                cb_table_edit(selected(s), cols(event.Indices(2)), event.NewData)
-            end
+            cb_table_edit(event.Indices(1), pr.SELECTOR, true)
         end
-    end
+
+        % updates all selected
+        selected = pr.get('SELECTED');
+        for s = 1:1:length(selected)
+            cb_table_edit(selected(s), cols(event.Indices(2)), event.NewData)
+        end
+	end
 
     pr.get('UPDATE') % placed here for numerical efficiency
 
@@ -837,11 +832,6 @@ MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to op
 false
 
 %%% ¡prop!
-APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.
-%%%% ¡default!
-true
-
-%%% ¡prop!
 MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
 %%%% ¡default!
 true
@@ -877,19 +867,16 @@ menu_invert_selection = uimenu( ...
     'Text', 'Invert Selection', ...
     'MenuSelectedFcn', {@cb_invert_selection} ...
     );
-
-if pr.get('APPLY_TO_SELECTION')
-    menu_apply_to_selection = uimenu( ...
+menu_apply_to_selection = uimenu( ...
     'Separator', 'on', ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_APPLY_TO_SELECTION', ...
     'Text', 'Apply to Selection', ...
     'Checked', false ...
     );
-    set(menu_apply_to_selection, ...
-        'MenuSelectedFcn', {@cb_apply_to_selection, menu_apply_to_selection} ...
-        );
-end
+set(menu_apply_to_selection, ...
+    'MenuSelectedFcn', {@cb_apply_to_selection, menu_apply_to_selection} ...
+    );
 if pr.get('MENU_OPEN_ITEMS')
     menu_open_selection = uimenu( ...
         'Separator', 'on', ...

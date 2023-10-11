@@ -127,7 +127,7 @@ NOTES (metadata, string) are some specific notes about the panel figure for bino
 %%% ¡prop!
 SETUP (query, empty) calculates the measure value and stores it.
 %%%% ¡calculate!
-x = pf.get('M').get('G').get('APARTITIONTICKS');
+x = pf.get('M').get('G').get('ALAYERTICKS');
 
 nodes = pf.get('NODES');
 y = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
@@ -152,7 +152,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Partition', ...
+    'TXT', 'Layer', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -175,16 +175,7 @@ NODES (figure, rvector) are the node numbers of the binodal measure.
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡gui!
-pr = MeasurePF_BxPP_Nodes('EL', pf, 'PROP', MeasurePF_BU.NODES);
-
-%%% ¡prop!
-LAYER (figure, scalar) is the layer number of the binodal measure.
-%%%% ¡default!
-1
-%%%% ¡postset!
-pf.get('SETUP');
-%%%% ¡gui!
-pr = MeasurePF_xUPP_Layer('EL', pf, 'PROP', MeasurePF_BU.LAYER);
+pr = MeasurePF_BxPP_Node('EL', pf, 'PROP', MeasurePF_BU.NODE);
 
 %% ¡tests!
 

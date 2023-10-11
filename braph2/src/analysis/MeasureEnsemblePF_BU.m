@@ -5,7 +5,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 	% MeasureEnsemblePF_BU manages the basic functionalities to plot of a binodal unilayer group comparison figure.
 	%
 	% The list of MeasureEnsemblePF_BU properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_BU.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.
@@ -45,7 +45,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 	%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
 	%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 	%  <strong>40</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
-	%  <strong>41</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the binodal measure.
 	%
 	% MeasureEnsemblePF_BU methods (constructor):
 	%  MeasureEnsemblePF_BU - constructor
@@ -140,11 +139,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 		NODES_TAG = 'NODES';
 		NODES_CATEGORY = 8;
 		NODES_FORMAT = 12;
-		
-		LAYER = 41; %CET: Computational Efficiency Trick
-		LAYER_TAG = 'LAYER';
-		LAYER_CATEGORY = 8;
-		LAYER_FORMAT = 11;
 	end
 	methods % constructor
 		function pf = MeasureEnsemblePF_BU(varargin)
@@ -158,7 +152,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MeasureEnsemblePF_BU properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_BU.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.
@@ -198,7 +192,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
 			%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 			%  <strong>40</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
-			%  <strong>41</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the binodal measure.
 			%
 			% See also Category, Format.
 			
@@ -260,7 +253,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
@@ -278,7 +271,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 				case 7 % Category.EVANESCENT
 					prop_list = [10 15 21 22 23 25 28 30 31 33 34 36 38];
 				case 8 % Category.FIGURE
-					prop_list = [14 20 24 29 32 35 37 39 40 41];
+					prop_list = [14 20 24 29 32 35 37 39 40];
 				case 9 % Category.GUI
 					prop_list = [9 13];
 				otherwise
@@ -306,7 +299,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 41;
+				prop_number = 40;
 				return
 			end
 			
@@ -324,7 +317,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 				case 7 % Category.EVANESCENT
 					prop_number = 13;
 				case 8 % Category.FIGURE
-					prop_number = 10;
+					prop_number = 9;
 				case 9 % Category.GUI
 					prop_number = 2;
 				otherwise
@@ -357,7 +350,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -395,7 +388,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -428,7 +421,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -457,7 +450,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measureensemblepf_bu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' };
+				measureensemblepf_bu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES' };
 				tag = measureensemblepf_bu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -484,7 +477,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			prop = MeasureEnsemblePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemblepf_bu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8  8 };
+			measureensemblepf_bu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8 };
 			prop_category = measureensemblepf_bu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -510,7 +503,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			prop = MeasureEnsemblePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemblepf_bu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  12  11 };
+			measureensemblepf_bu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  12 };
 			prop_format = measureensemblepf_bu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -536,7 +529,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			prop = MeasureEnsemblePF_BU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemblepf_bu_description_list = { 'ELCLASS (constant, string) is the class of the MeasureEnsemblePF_BU.'  'NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'ME (metadata, item) is the ensemble-based comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_M (figure, item) determines the line settings.'  'LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODES (figure, rvector) are the node numbers of the binodal group comparison figure.'  'LAYER (figure, scalar) is the layer number of the binodal measure.' };
+			measureensemblepf_bu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'ME (metadata, item) is the ensemble-based comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_M (figure, item) determines the line settings.'  'LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODES (figure, rvector) are the node numbers of the binodal group comparison figure.' };
 			prop_description = measureensemblepf_bu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -564,8 +557,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			switch prop %CET: Computational Efficiency Trick
 				case 40 % MeasureEnsemblePF_BU.NODES
 					prop_settings = Format.getFormatSettings(12);
-				case 41 % MeasureEnsemblePF_BU.LAYER
-					prop_settings = Format.getFormatSettings(11);
 				case 4 % MeasureEnsemblePF_BU.TEMPLATE
 					prop_settings = 'MeasureEnsemblePF_BU';
 				otherwise
@@ -597,8 +588,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			switch prop %CET: Computational Efficiency Trick
 				case 40 % MeasureEnsemblePF_BU.NODES
 					prop_default = [1 1];
-				case 41 % MeasureEnsemblePF_BU.LAYER
-					prop_default = 1;
 				case 1 % MeasureEnsemblePF_BU.ELCLASS
 					prop_default = 'MeasureEnsemblePF_BU';
 				case 2 % MeasureEnsemblePF_BU.NAME
@@ -679,8 +668,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			switch prop
 				case 40 % MeasureEnsemblePF_BU.NODES
 					check = Format.checkFormat(12, value, MeasureEnsemblePF_BU.getPropSettings(prop));
-				case 41 % MeasureEnsemblePF_BU.LAYER
-					check = Format.checkFormat(11, value, MeasureEnsemblePF_BU.getPropSettings(prop));
 				case 4 % MeasureEnsemblePF_BU.TEMPLATE
 					check = Format.checkFormat(8, value, MeasureEnsemblePF_BU.getPropSettings(prop));
 				otherwise
@@ -717,9 +704,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 				case 40 % MeasureEnsemblePF_BU.NODES
 					pf.get('SETUP')
 					
-				case 41 % MeasureEnsemblePF_BU.LAYER
-					pf.get('SETUP');
-					
 				otherwise
 					if prop <= 39
 						postset@MeasureEnsemblePF(pf, prop);
@@ -752,7 +736,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 					    g = me.get('A').get('GRAPH_TEMPLATE');
 					end
 					
-					x = g.get('APARTITIONTICKS');
+					x = g.get('ALAYERTICKS');
 					
 					nodes = pf.get('NODES');
 					m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
@@ -774,7 +758,7 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 					    'Z', 0 ...
 					    )
 					pf.get('ST_XLABEL').set( ...
-					    'TXT', 'Partition', ...
+					    'TXT', 'Layer', ...
 					    'X', .5 * (xlim(2) + xlim(1)), ...
 					    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
 					    'Z', 0 ...
@@ -796,35 +780,6 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 					end
 			end
 			
-		end
-	end
-	methods % GUI
-		function pr = getPanelProp(pf, prop, varargin)
-			%GETPANELPROP returns a prop panel.
-			%
-			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
-			%
-			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
-			%  of the panel prop.
-			%
-			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
-			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
-			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
-			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
-			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
-			%  PanelPropString, PanelPropStringList.
-			
-			switch prop
-                case 40 % MeasureensemblePF_BU.NODES
-                    pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', 40);
-                    
-                case 41 % MeasureEnsemblePF_BU.LAYER
-                    pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 41);
-                    
-				otherwise
-					pr = getPanelProp@MeasureEnsemblePF(pf, prop, varargin{:});
-					
-			end
 		end
 	end
 end

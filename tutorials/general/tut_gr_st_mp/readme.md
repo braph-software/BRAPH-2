@@ -14,8 +14,8 @@ For *structural multiplex data*, we will upload a folder containing the structur
 If you don't have the `Example data ST_MP XLS` folder inside `structural multiplex`, then you can generate it by running the commands referenced below.
 
 ```matlab
-create_data_FUN_MP_XLS()  % generates the example structural multiplex XLS data folder.
-create_data_FUN_MP_TXT()  % generates the example structural multiplex TXT data folder.
+test_ImporterGroupSubjectST_MP_XLS  % generates the example structural multiplex XLS data folder.
+test_ImporterGroupSubjectST_MP_TXT  % generates the example structural multiplex TXT data folder.
 ```
 
 ## Open the GUI

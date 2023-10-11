@@ -14,8 +14,8 @@ For *structural data*, we will upload a file containing the structural values fo
 If you don't have the `Example data ST XLS` folder inside `structural`, then you can generate it by running the commands referenced below.
 
 ```matlab
-create_data_ST_XLS()  % generates the example structural XLS data folder.
-create_data_ST_TXT()  % generates the example structural TXT data folder.
+test_ImporterGroupSubjectST_XLS  % generates the example structural XLS data folder.
+test_ImporterGroupSubjectST_TXT  % generates the example structural TXT data folder.
 ```
 
 ## Open the GUI
