@@ -1,12 +1,12 @@
 function create_data_ST_MP_TXT(data_dir, random_seed)
-%create_data_ST_MP_TXT creates structural data
+%CREATE_DATA_ST_MP_TXT creates structural data
 %
-% create_data_ST_MP_TXT() creates structural data in default folder 'Example
+% CREATE_DATA_ST_MP_TXT() creates structural data in default folder 'Example
 %  data ST MP TXT'.
 %
-% create_data_ST_MP_TXT(DATA_DIR) creates structural data in DATA_DIR folder.
+% CREATE_DATA_ST_MP_TXT(DATA_DIR) creates structural data in DATA_DIR folder.
 %
-% create_data_ST_MP_TXT(DATA_DIR, RANDOM_SEED) cretes structural data in DATA_DIR
+% CREATE_DATA_ST_MP_TXT(DATA_DIR, RANDOM_SEED) cretes structural data in DATA_DIR
 %  folder with a specified RANDOM_SEED.
 %
 % See also create_data_st_mp_xls.
