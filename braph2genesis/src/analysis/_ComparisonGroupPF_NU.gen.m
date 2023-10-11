@@ -102,7 +102,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ComparisonGroupPF_NU.
 %%%% ¡default!
 'ComparisonGroupPF_NU'
 
@@ -142,7 +142,7 @@ SETUP (query, empty) calculates the group comparison figure value and stores it.
 cp = pf.get('CP');
 g = cp.get('C').get('A1').get('G');
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 node = pf.get('NODE');
 diff = cellfun(@(x) x(node), cp.get('DIFF'))';
@@ -176,7 +176,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Layer', ...
+    'TXT', 'Partition', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -200,6 +200,15 @@ NODE (figure, scalar) is the node number of the nodal group comparison figure.
 pf.get('SETUP')
 %%%% ¡gui!
 pr = ComparisonGroupPF_NxPP_Node('EL', pf, 'PROP', ComparisonGroupPF_NU.NODE);
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the nodal group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_NU.LAYER);
 
 %% ¡tests!
 

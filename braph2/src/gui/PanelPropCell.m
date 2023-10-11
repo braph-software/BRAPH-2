@@ -776,7 +776,7 @@ classdef PanelPropCell < PanelProp
 				case 23 % PanelPropCell.EL
 					prop_default = Graph();
 				case 24 % PanelPropCell.PROP
-					prop_default = 24;
+					prop_default = 26;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end

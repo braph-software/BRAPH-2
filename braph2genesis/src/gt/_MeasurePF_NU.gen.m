@@ -127,7 +127,7 @@ NOTES (metadata, string) are some specific notes about the panel figure for noda
 %%% ¡prop!
 SETUP (query, empty) calculates the measure value and stores it.
 %%%% ¡calculate!
-x = pf.get('M').get('G').get('ALAYERTICKS');
+x = pf.get('M').get('G').get('APARTITIONTICKS');
 
 node = pf.get('NODE');
 y = cellfun(@(x) x(node), pf.get('M').get('M'))';
@@ -152,7 +152,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Layer', ...
+    'TXT', 'Partition', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -176,6 +176,15 @@ NODE (figure, scalar) is the node number of the nodal measure.
 pf.get('SETUP')
 %%%% ¡gui!
 pr = MeasurePF_NxPP_Node('EL', pf, 'PROP', MeasurePF_NU.NODE);
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the nodal measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = MeasurePF_xUPP_Layer('EL', pf, 'PROP', MeasurePF_NU.LAYER);
 
 %% ¡tests!
 

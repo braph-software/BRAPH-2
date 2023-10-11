@@ -44,6 +44,7 @@ classdef MeasurePF_GU < MeasurePF
 	%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
 	%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
 	%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%  <strong>40</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the global measure.
 	%
 	% MeasurePF_GU methods (constructor):
 	%  MeasurePF_GU - constructor
@@ -133,6 +134,12 @@ classdef MeasurePF_GU < MeasurePF
 	%
 	% See also Measure.
 	
+	properties (Constant) % properties
+		LAYER = 40; %CET: Computational Efficiency Trick
+		LAYER_TAG = 'LAYER';
+		LAYER_CATEGORY = 8;
+		LAYER_FORMAT = 11;
+	end
 	methods % constructor
 		function pf = MeasurePF_GU(varargin)
 			%MeasurePF_GU() creates a panel figure for global unilayer measure.
@@ -184,6 +191,7 @@ classdef MeasurePF_GU < MeasurePF
 			%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
 			%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
 			%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+			%  <strong>40</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the global measure.
 			%
 			% See also Category, Format.
 			
@@ -245,7 +253,7 @@ classdef MeasurePF_GU < MeasurePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
@@ -263,7 +271,7 @@ classdef MeasurePF_GU < MeasurePF
 				case 7 % Category.EVANESCENT
 					prop_list = [10 15 21 22 23 25 28 30 31 33 34 36 38];
 				case 8 % Category.FIGURE
-					prop_list = [14 20 24 29 32 35 37 39];
+					prop_list = [14 20 24 29 32 35 37 39 40];
 				case 9 % Category.GUI
 					prop_list = [9 13];
 				otherwise
@@ -291,7 +299,7 @@ classdef MeasurePF_GU < MeasurePF
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 39;
+				prop_number = 40;
 				return
 			end
 			
@@ -309,7 +317,7 @@ classdef MeasurePF_GU < MeasurePF
 				case 7 % Category.EVANESCENT
 					prop_number = 13;
 				case 8 % Category.FIGURE
-					prop_number = 8;
+					prop_number = 9;
 				case 9 % Category.GUI
 					prop_number = 2;
 				otherwise
@@ -342,7 +350,7 @@ classdef MeasurePF_GU < MeasurePF
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 39 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -380,7 +388,7 @@ classdef MeasurePF_GU < MeasurePF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -413,7 +421,7 @@ classdef MeasurePF_GU < MeasurePF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -442,7 +450,7 @@ classdef MeasurePF_GU < MeasurePF
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				measurepf_gu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' };
+				measurepf_gu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'M'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE'  'ST_LINE'  'LISTENER_ST_LINE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' };
 				tag = measurepf_gu_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -469,7 +477,7 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_gu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8 };
+			measurepf_gu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8 };
 			prop_category = measurepf_gu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -495,7 +503,7 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_gu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8 };
+			measurepf_gu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  11 };
 			prop_format = measurepf_gu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -521,7 +529,7 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measurepf_gu_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for global unilayer measure.'  'NAME (constant, string) is the name of the panel figure for global unilayer measure.'  'DESCRIPTION (constant, string) is the description of the panel figure for global unilayer measure.'  'TEMPLATE (parameter, item) is the template of the panel figure for global unilayer measure.'  'ID (data, string) is a few-letter code for the panel figure for global unilayer measure.'  'LABEL (metadata, string) is an extended label of the panel figure for global unilayer measure.'  'NOTES (metadata, string) are some specific notes about the panel figure for global unilayer measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
+			measurepf_gu_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for global unilayer measure.'  'NAME (constant, string) is the name of the panel figure for global unilayer measure.'  'DESCRIPTION (constant, string) is the description of the panel figure for global unilayer measure.'  'TEMPLATE (parameter, item) is the template of the panel figure for global unilayer measure.'  'ID (data, string) is a few-letter code for the panel figure for global unilayer measure.'  'LABEL (metadata, string) is an extended label of the panel figure for global unilayer measure.'  'NOTES (metadata, string) are some specific notes about the panel figure for global unilayer measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure measure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'M (metadata, item) is the measure.'  'SETUP (query, empty) calculates the measure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the measure area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE (evanescent, handle) is the handle for the measure line.'  'ST_LINE (figure, item) determines the line settings.'  'LISTENER_ST_LINE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'LAYER (figure, scalar) is the layer number of the global measure.' };
 			prop_description = measurepf_gu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -547,6 +555,8 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 40 % MeasurePF_GU.LAYER
+					prop_settings = Format.getFormatSettings(11);
 				case 4 % MeasurePF_GU.TEMPLATE
 					prop_settings = 'MeasurePF_GU';
 				otherwise
@@ -576,6 +586,8 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			switch prop %CET: Computational Efficiency Trick
+				case 40 % MeasurePF_GU.LAYER
+					prop_default = 1;
 				case 1 % MeasurePF_GU.ELCLASS
 					prop_default = 'MeasurePF_GU';
 				case 2 % MeasurePF_GU.NAME
@@ -654,6 +666,8 @@ classdef MeasurePF_GU < MeasurePF
 			prop = MeasurePF_GU.getPropProp(pointer);
 			
 			switch prop
+				case 40 % MeasurePF_GU.LAYER
+					check = Format.checkFormat(11, value, MeasurePF_GU.getPropSettings(prop));
 				case 4 % MeasurePF_GU.TEMPLATE
 					check = Format.checkFormat(8, value, MeasurePF_GU.getPropSettings(prop));
 				otherwise
@@ -670,6 +684,30 @@ classdef MeasurePF_GU < MeasurePF
 					['BRAPH2' ':MeasurePF_GU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasurePF_GU.getPropTag(prop) ' (' MeasurePF_GU.getFormatTag(MeasurePF_GU.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postset
+		function postset(pf, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 40 % MeasurePF_GU.LAYER
+					pf.get('SETUP');
+					
+				otherwise
+					if prop <= 39
+						postset@MeasurePF(pf, prop);
+					end
 			end
 		end
 	end
@@ -691,7 +729,7 @@ classdef MeasurePF_GU < MeasurePF
 			
 			switch prop
 				case 27 % MeasurePF_GU.SETUP
-					x = pf.get('M').get('G').get('ALAYERTICKS');
+					x = pf.get('M').get('G').get('APARTITIONTICKS');
 					
 					y = cell2mat(pf.get('M').get('M'))';
 					
@@ -714,7 +752,7 @@ classdef MeasurePF_GU < MeasurePF
 					    'Z', 0 ...
 					    )
 					pf.get('ST_XLABEL').set( ...
-					    'TXT', 'Layer', ...
+					    'TXT', 'Partition', ...
 					    'X', .5 * (xlim(2) + xlim(1)), ...
 					    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
 					    'Z', 0 ...
@@ -736,6 +774,32 @@ classdef MeasurePF_GU < MeasurePF
 					end
 			end
 			
+		end
+	end
+	methods % GUI
+		function pr = getPanelProp(pf, prop, varargin)
+			%GETPANELPROP returns a prop panel.
+			%
+			% PR = GETPANELPROP(EL, PROP) returns the panel of prop PROP.
+			%
+			% PR = GETPANELPROP(EL, PROP, 'Name', Value, ...) sets the properties 
+			%  of the panel prop.
+			%
+			% See also PanelProp, PanelPropAlpha, PanelPropCell, PanelPropClass,
+			%  PanelPropClassList, PanelPropColor, PanelPropHandle,
+			%  PanelPropHandleList, PanelPropIDict, PanelPropItem, PanelPropLine,
+			%  PanelPropItemList, PanelPropLogical, PanelPropMarker, PanelPropMatrix,
+			%  PanelPropNet, PanelPropOption, PanelPropScalar, PanelPropSize,
+			%  PanelPropString, PanelPropStringList.
+			
+			switch prop
+				case 40 % MeasurePF_GU.LAYER
+					pr = MeasurePF_xUPP_Layer('EL', pf, 'PROP', 40);
+					
+				otherwise
+					pr = getPanelProp@MeasurePF(pf, prop, varargin{:});
+					
+			end
 		end
 	end
 end
