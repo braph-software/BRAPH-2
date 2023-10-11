@@ -344,6 +344,16 @@ ALAYERLABELS (query, stringlist) returns the layer labels for A.
 value = g.get('LAYERLABELS');
 
 %%% ¡prop!
+PARTITIONTICKS (metadata, rvector) are the partition tick values.
+%%%% ¡gui!
+pr = PanelPropRVectorSmart('EL', g, 'PROP', Graph.PARTITIONTICKS, varargin{:});
+
+%%% ¡prop!
+APARTITIONTICKS (query, rvector) returns the partition tick values.
+%%%% ¡calculate!
+value = g.get('PARTITIONTICKS');
+
+%%% ¡prop!
 PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
 
 %%% ¡prop!

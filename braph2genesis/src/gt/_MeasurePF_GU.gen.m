@@ -121,7 +121,7 @@ NOTES (metadata, string) are some specific notes about the panel figure for glob
 %%% ¡prop!
 SETUP (query, empty) calculates the measure value and stores it.
 %%%% ¡calculate!
-x = pf.get('M').get('G').get('ALAYERTICKS');
+x = pf.get('M').get('G').get('APARTITIONTICKS');
 
 y = cell2mat(pf.get('M').get('M'))';
 
@@ -144,7 +144,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Layer', ...
+    'TXT', 'Partition', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -157,6 +157,17 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%% ¡props!
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the global measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = MeasurePF_xUPP_Layer('EL', pf, 'PROP', MeasurePF_GU.LAYER);
 
 %% ¡tests!
 
