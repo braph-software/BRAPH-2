@@ -230,6 +230,15 @@ thresholds = g.get('THRESHOLDS');
 value = ones(1, length(thresholds)) * l / length(thresholds);
 
 %%% ¡prop!
+ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+%%%% ¡calculate!
+alayerlabels = g.get('LAYERLABELS');
+if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
+    alayerlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('THRESHOLDS')), 'uniformoutput', false);
+end
+value = alayerlabels;
+
+%%% ¡prop!
 APARTITIONLABELS (query, stringlist) returns the partition (threshold) labels for A.
 %%%% ¡calculate!
 apartitionlabels = g.get('PARTITIONLABELS');

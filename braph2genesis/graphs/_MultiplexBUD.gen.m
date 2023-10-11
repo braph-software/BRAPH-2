@@ -266,7 +266,7 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(densities)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' densities{i}]];
+            alayerlabels = [alayerlabels, [blayerlabels{j} '|' densities{i}]];
         end
     end
 end
