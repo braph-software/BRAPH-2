@@ -214,6 +214,15 @@ pf.get('SETUP');
 %%%% ¡gui!
 pr = ComparisonEnsemblePF_xUPP_Layer('EL', pf, 'PROP', ComparisonEnsemblePF_BU.LAYER);
 
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonEnsemblePF_xUPP_Layer('EL', pf, 'PROP', ComparisonEnsemblePF_BU.LAYER);
+
 %% ¡tests!
 
 %%% ¡excluded_props!
