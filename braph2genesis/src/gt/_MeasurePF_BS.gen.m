@@ -127,7 +127,43 @@ NOTES (metadata, string) are some specific notes about the panel figure for bino
 %%% ¡prop!
 SETUP (query, empty) calculates the measure value and stores it.
 %%%% ¡calculate!
-%%%__WARN_TBI__
+x = pf.get('M').get('G').get('APARTITIONTICKS');
+
+nodes = pf.get('NODES');
+y = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
+
+pf.memorize('ST_LINE').set('X', x, 'Y', y)
+
+if ~isempty(y)
+    if isempty(x) 
+        pf.memorize('ST_AREA').set('X', [1 1:1:length(y) length(y)], 'Y', [0 y 0])
+    else
+        pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 y 0])
+    end
+end
+
+xlim = pf.get('H_AXES').get('XLim');
+ylim = pf.get('H_AXES').get('YLim');
+anodelabels = pf.get('M').get('G').get('ANODELABELS');
+pf.get('ST_TITLE').set( ...
+    'TXT', [pf.get('M').get('LABEL') ' ' anodelabels{nodes(1)} ' ' anodelabels{nodes(2)}], ...
+    'X', .5 * (xlim(2) + xlim(1)), ...
+    'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
+    'Z', 0 ...
+    )
+pf.get('ST_XLABEL').set( ...
+    'TXT', 'Partition', ...
+    'X', .5 * (xlim(2) + xlim(1)), ...
+    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
+    'Z', 0 ...
+    )
+pf.get('ST_YLABEL').set( ...
+	'TXT', 'Measure Value', ...
+    'X', xlim(1) - .14 * (xlim(2) - xlim(1)), ...
+    'Y', .5 * (ylim(2) + ylim(1)), ...
+    'Z', 0 ...
+    )
+
 value = [];
 
 %% ¡props!
@@ -135,7 +171,7 @@ value = [];
 %%% ¡prop!
 NODES (figure, rvector) are the node numbers of the binodal measure.
 %%%% ¡gui!
-pr = MeasurePF_BxPP_Node('EL', pf, 'PROP', MeasurePF_BS.NODE);
+pr = MeasurePF_BxPP_Nodes('EL', pf, 'PROP', MeasurePF_BS.NODES);
 
 %% ¡tests!
 
