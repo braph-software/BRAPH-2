@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Multilayer Modularity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Multilayer Modularity.
 %%%% ¡default!
-'The Multilayer Modularity (MultilayerM) is the homogeneity of the number of inward neighbours of a node across the layers.'
+'The Multilayer Modularity (MultilayerM) of a multilayer graph is the multilayer quality function Q of the resulting partition of the multilayer network.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Multilayer Modularity.

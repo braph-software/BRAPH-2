@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Average Overlapping Degree.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the average overlapping degree.
 %%%% ¡default!
-'The Average Overlapping Degree (OverlappingDegAv) of a graph is the sum of the degrees of a node in all layers.'
+'The Average Overlapping Degree (OverlappingDegAv) of a graph is the average of the sum of the degrees of a node in all layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average Overlapping Degree.

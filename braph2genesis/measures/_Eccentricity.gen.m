@@ -69,7 +69,7 @@ NAME (constant, string) is the name of the Eccentricity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Eccentricity.
 %%%% ¡default!
-'The Eccentricity (Eccentricity) of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+'The Eccentricity (Eccentricity) of a node is the maximal shortest path length between a node and any other node within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Eccentricity.

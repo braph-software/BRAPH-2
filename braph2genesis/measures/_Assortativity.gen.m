@@ -67,7 +67,7 @@ NAME (constant, string) is the name of the Assortativity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Assortativity.
 %%%% ¡default!
-'The Assortativity coefficient (Assortativity) of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.'
+'The Assortativity coefficient (Assortativity) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of degree/strength.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Assortativity.

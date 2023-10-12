@@ -70,7 +70,7 @@ NAME (constant, string) is the name of the Path Length.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Path Length.
 %%%% ¡default!
-'The Path Length (PathLength) is the average shortest path length of one node to all other nodes within a layer.'
+'The Path Length (PathLength) is the average shortest pathlength of one node to all other nodes within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Path Length.

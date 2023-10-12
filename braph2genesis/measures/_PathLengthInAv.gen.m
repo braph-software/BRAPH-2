@@ -69,7 +69,7 @@ NAME (constant, string) is the name of the Average In-Path Length.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average In-Path Length.
 %%%% ¡default!
-'The Average In-Path Length (PathLengthInAv) is the average shortest in-path length of one node to all other nodes within a layer.'
+'The Average In-Path Length (PathLengthInAv) of a graph is the average of the sum of the in-path lengths within each layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average In-Path Length.

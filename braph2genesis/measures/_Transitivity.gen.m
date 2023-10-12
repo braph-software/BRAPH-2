@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Transitivity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Transitivity.
 %%%% ¡default!
-'The transitivity (Transitivity) of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.'
+'The Transitivity (Transitivity) of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Transitivity.
