@@ -754,10 +754,17 @@ classdef MeasureEnsemblePF_NU < MeasureEnsemblePF
 					
 					x = g.get('APARTITIONTICKS');
 					
-					node = pf.get('NODE');
-					m = cellfun(@(x) x(node), me.get('M'))';
-					
-					pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
+                    node = pf.get('NODE');
+                    layer = pf.get('LAYER');
+                    m = cellfun(@(x) x(node), me.get('M'))';
+                    layers_num = length(g.get('ALAYERTICKS'));
+                    m2 = zeros(1, length(x));
+                    count=1;
+                    for i=layer:layers_num:g.get('LAYERNUMBER')
+                        m2(count) = m(i);
+                        count = count + 1;
+                    end
+					pf.memorize('ST_LINE_M').set('X', x, 'Y', m2)
 					
 					xlim = pf.get('H_AXES').get('XLim');
 					ylim = pf.get('H_AXES').get('YLim');
