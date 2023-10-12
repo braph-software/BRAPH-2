@@ -65,7 +65,7 @@ NAME (constant, string) is the name of the Average In-Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average In-Strength.
 %%%% ¡default!
-'The Average In-Strength (StrengthInAv) of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i. e. , it is the sum of the columns of the adjacency matrix.'
+'The Average In-Strength (StrengthInAv) of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average In-Strength.
