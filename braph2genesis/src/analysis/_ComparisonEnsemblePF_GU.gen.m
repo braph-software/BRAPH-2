@@ -53,6 +53,12 @@ AXIS
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonEnsemblePF_GU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonEnsemblePF_GU.ST_LINE_DIFF
 %%%% ¡title!
 DIFFERENCE

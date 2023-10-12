@@ -41,6 +41,12 @@ NODE SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonGroupPF_NU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonGroupPF_NU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR

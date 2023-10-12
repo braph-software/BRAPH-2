@@ -59,6 +59,12 @@ NODE SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonEnsemblePF_NU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonEnsemblePF_NU.ST_LINE_DIFF
 %%%% ¡title!
 DIFFERENCE

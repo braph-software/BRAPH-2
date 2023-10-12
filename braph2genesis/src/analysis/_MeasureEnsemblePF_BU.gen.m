@@ -59,6 +59,12 @@ NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+MeasureEnsemblePF_BU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasureEnsemblePF_BB.ST_LINE_M
 %%%% ¡title!
 MEASURE

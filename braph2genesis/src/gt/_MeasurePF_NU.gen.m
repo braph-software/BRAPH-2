@@ -41,6 +41,12 @@ NODE SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+MeasurePF_NU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasurePF_NU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR

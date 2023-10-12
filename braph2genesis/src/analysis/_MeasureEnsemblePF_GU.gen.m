@@ -53,6 +53,12 @@ AXIS
 
 %%% ¡prop!
 %%%% ¡id!
+MeasureEnsemblePF_GU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasureEnsemblePF_GU.ST_LINE_M
 %%%% ¡title!
 MEASURE
