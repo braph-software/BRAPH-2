@@ -838,6 +838,15 @@ classdef OrdMlBUD < OrdMlWU
 					end
 					value = apartitionlabels;
 					
+				case 15 % OrdMlBUD.ALAYERTICKS
+					alayerticks = g.get('LAYERTICKS');
+					if length(alayerticks) ~= (g.get('LAYERNUMBER') / length(g.get('DENSITIES'))) % ensures that it's not unecessarily calculated
+					    l = g.get('LAYERNUMBER');
+					    densities = g.get('DENSITIES');
+					    alayerticks = [1:1:(l / length(densities))];
+					end
+					value = alayerticks;
+					
 				case 19 % OrdMlBUD.APARTITIONTICKS
 					value = g.get('DENSITIES');
 					
