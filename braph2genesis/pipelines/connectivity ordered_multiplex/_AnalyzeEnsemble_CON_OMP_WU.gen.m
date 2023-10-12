@@ -148,10 +148,7 @@ Example
 %%%% ¡probability!
 .01
 %%%% ¡code!
-if ~isfile([fileparts(which('SubjectCON_MP')) filesep 'Example data CON_MP XLS' filesep 'atlas.xlsx'])
-    test_ImporterGroupSubjectCON_MP_XLS % create example files
-end
-
+create_data_CON_MP_XLS() % only creates files if the example folder doesn't already exist
 example_CON_OMP_WU
 
 %%% ¡test!

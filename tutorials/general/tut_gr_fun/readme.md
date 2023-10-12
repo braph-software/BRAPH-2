@@ -15,8 +15,8 @@ This Tutorial explains how to prepare and work with this kind of data.
 If you don't have the `Example data FUN XLS` folder inside `functional`, then you can generate it by running the commands referenced below.
 
 ```matlab
-test_ImporterGroupSubjectFUN_XLS  % generates the example functional XLS data folder.
-test_ImporterGroupSubjectFUN_TXT  % generates the example functional TXT data folder.
+create_data_FUN_XLS()  % generates the example functional XLS data folder.
+create_data_FUN_TXT()  % generates the example functional TXT data folder.
 ```
 
 ## Open the GUI

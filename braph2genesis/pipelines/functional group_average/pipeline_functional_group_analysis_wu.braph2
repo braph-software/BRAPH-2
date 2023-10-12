@@ -1,4 +1,4 @@
-%% Pipeline Functional Analysis Group WU
+%% Pipeline Functional Analysis Group-Average WU
 
 % This is the pipeline script to analyze a group of subjects using functional data averaged by group and a weighted undirected graph.
 % The functional data can be derived from imaging modalities like functional MRI (fMRI), electroencephalography (EEG) or magnetoencephalography (MEG).

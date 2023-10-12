@@ -653,7 +653,7 @@ classdef GraphPP_MDict < PanelProp
 				case 23 % GraphPP_MDict.EL
 					prop_default = Graph();
 				case 24 % GraphPP_MDict.PROP
-					prop_default = 29;
+					prop_default = 31;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end

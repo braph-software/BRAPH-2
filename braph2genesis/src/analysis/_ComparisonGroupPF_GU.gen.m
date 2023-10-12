@@ -96,7 +96,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ComparisonGroupPF_GU.
 %%%% ¡default!
 'ComparisonGroupPF_GU'
 
@@ -136,7 +136,7 @@ SETUP (query, empty) calculates the group comparison figure value and stores it.
 cp = pf.get('CP');
 g = cp.get('C').get('A1').get('G');
 
-x = g.get('ALAYERTICKS');
+x = g.get('APARTITIONTICKS');
 
 diff = cell2mat(cp.get('DIFF'))';
 cil = cell2mat(cp.get('CIL'))';
@@ -163,7 +163,7 @@ pf.get('ST_TITLE').set( ...
     'Z', 0 ...
     )
 pf.get('ST_XLABEL').set( ...
-    'TXT', 'Layer', ...
+    'TXT', 'Partition', ...
     'X', .5 * (xlim(2) + xlim(1)), ...
     'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
     'Z', 0 ...
@@ -176,6 +176,17 @@ pf.get('ST_YLABEL').set( ...
     )
 
 value = [];
+
+%% ¡props!
+
+%%% ¡prop!
+LAYER (figure, scalar) is the layer number of the global group comparison figure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
+%%%% ¡gui!
+pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_GU.LAYER);
 
 %% ¡tests!
 

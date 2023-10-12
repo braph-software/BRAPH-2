@@ -266,20 +266,25 @@ if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') 
     alayerlabels = {};
     for i = 1:1:length(densities)
         for j = 1:1:length(blayerlabels)
-            alayerlabels = [alayerlabels, ['L' blayerlabels{j} '|' densities{i}]];
+            alayerlabels = [alayerlabels, [blayerlabels{j} '|' densities{i}]];
         end
     end
 end
 value = alayerlabels;
 
 %%% ¡prop!
-APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+APARTITIONLABELS (query, stringlist) returns the partition (density) labels for A.
 %%%% ¡calculate!
 apartitionlabels = g.get('PARTITIONLABELS');
 if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('DENSITIES')) % ensures that it's not unecessarily calculated
     apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
 end
 value = apartitionlabels;
+
+%%% ¡prop!
+APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.
+%%%% ¡calculate!
+value = g.get('DENSITIES');
 
 %%% ¡prop!
 COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.

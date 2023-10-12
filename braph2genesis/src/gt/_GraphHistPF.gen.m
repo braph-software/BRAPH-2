@@ -322,7 +322,7 @@ end
 %%% ¡prop!
 BINS (figure, rvector) is the vector of bins.
 %%%% ¡default!
-[-1:.001:1]
+[-1:.1:1]
 %%%% ¡postset!
 pf.get('SETUP')
 %%%% ¡gui!
@@ -350,6 +350,7 @@ end
 
 bins = [bins(1) bins bins(end)];
 count = [0 count 0];
+count = count / max(count) * 100;
 density = [100 density 0];
 
 pf.memorize('ST_HIST_AREA').set('X', bins, 'Y', count)
@@ -358,10 +359,10 @@ pf.memorize('ST_DENSITY_LINE').set('X', bins, 'Y', density)
 
 if pf.get('ST_HIST_AREA').get('VISIBLE') && pf.get('ST_DENSITY_LINE').get('VISIBLE')
     xlabel(pf.get('H_AXES'), 'coefficient value / threshold')
-    ylabel(pf.get('H_AXES'), 'coefficient count / density')
+    ylabel(pf.get('H_AXES'), 'coefficient percentage / density')
 elseif pf.get('ST_HIST_AREA').get('VISIBLE') && ~pf.get('ST_DENSITY_LINE').get('VISIBLE')
     xlabel(pf.get('H_AXES'), 'coefficient value')
-    ylabel(pf.get('H_AXES'), 'coefficient count')
+    ylabel(pf.get('H_AXES'), 'coefficient percentage')
 elseif ~pf.get('ST_HIST_AREA').get('VISIBLE') && pf.get('ST_DENSITY_LINE').get('VISIBLE')
     xlabel(pf.get('H_AXES'), 'threshold')
     ylabel(pf.get('H_AXES'), 'density')
@@ -401,7 +402,7 @@ end
 %%% ¡prop!
 H_DENSITY_LINE (evanescent, handle) is the handle for the density line.
 %%%% ¡calculate!
-value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
+value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2, 'MarkerSize', 1);
 
 %%% ¡prop!
 ST_DENSITY_LINE (figure, item) determines the line settings.
