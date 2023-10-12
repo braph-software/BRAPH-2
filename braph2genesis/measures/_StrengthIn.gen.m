@@ -65,7 +65,7 @@ NAME (constant, string) is the name of the In-Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the In-Strength.
 %%%% ¡default!
-'The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges connected to a node within a layer, i. e. , it is the sum of the columns of the adjacency matrix.'
+'The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward edges connected to a node within a layer, i.e. , it is the sum of the columns of the adjacency matrix.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the In-Strength.
