@@ -754,17 +754,17 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 					
 					x = g.get('APARTITIONTICKS');
 					
-                    nodes = pf.get('NODES');
-                    layer = pf.get('LAYER');
-                    m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
-                    layers_num = length(g.get('ALAYERTICKS'));
-                    m2 = zeros(1, length(x));
-                    count=1;
-                    for i=layer:layers_num:g.get('LAYERNUMBER')
-                        m2(count) = m(i);
-                        count = count + 1;
-                    end
-                    pf.memorize('ST_LINE_M').set('X', x, 'Y', m2)
+					nodes = pf.get('NODES');
+					layer = pf.get('LAYER');
+					m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
+					layers_num = length(g.get('ALAYERTICKS'));
+					m2 = zeros(1, length(x));
+					count=1;
+					for i=layer:layers_num:g.get('LAYERNUMBER')
+					    m2(count) = m(i);
+					    count = count + 1;
+					end
+					pf.memorize('ST_LINE_M').set('X', x, 'Y', m2)
 					
 					xlim = pf.get('H_AXES').get('XLim');
 					ylim = pf.get('H_AXES').get('YLim');
@@ -822,6 +822,9 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
+				case 40 % MeasureEnsemblePF_BU.NODES
+					pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', 40);
+					
 				case 41 % MeasureEnsemblePF_BU.LAYER
 					pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 41);
 					

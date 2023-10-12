@@ -185,7 +185,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 [1 1]
 %%%% ¡postset!
 pf.get('SETUP')
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', MeasureEnsemblePF_BU.NODES);
 
 %%% ¡prop!

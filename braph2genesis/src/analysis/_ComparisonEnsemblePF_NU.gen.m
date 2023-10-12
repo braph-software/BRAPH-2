@@ -220,7 +220,7 @@ NODE (figure, scalar) is the node number of the nodal group comparison figure.
 1
 %%%% ¡postset!
 pf.get('SETUP')
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = ComparisonEnsemblePF_NxPP_Node('EL', pf, 'PROP', ComparisonEnsemblePF_NU.NODE);
 
 %%% ¡prop!
