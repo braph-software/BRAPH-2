@@ -819,6 +819,15 @@ classdef OrdMxBUT < OrdMxWU
 					end
 					value = apartitionlabels;
 					
+				case 15 % OrdMxBUT.ALAYERTICKS
+					alayerticks = g.get('LAYERTICKS');
+					if length(alayerticks) ~= (g.get('LAYERNUMBER') / length(g.get('THRESHOLDS'))) % ensures that it's not unecessarily calculated
+					    l = g.get('LAYERNUMBER');
+					    thresholds = g.get('THRESHOLDS');
+					    alayerticks = [1:1:(l / length(thresholds))];
+					end
+					value = alayerticks;
+					
 				case 19 % OrdMxBUT.APARTITIONTICKS
 					value = g.get('THRESHOLDS');
 					

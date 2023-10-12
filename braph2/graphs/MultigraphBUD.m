@@ -789,6 +789,15 @@ classdef MultigraphBUD < GraphWU
 					end
 					value = apartitionlabels;
 					
+				case 15 % MultigraphBUD.ALAYERTICKS
+					alayerticks = g.get('LAYERTICKS');
+					if length(alayerticks) ~= (g.get('LAYERNUMBER') / length(g.get('DENSITIES'))) % ensures that it's not unecessarily calculated
+					    l = g.get('LAYERNUMBER');
+					    densities = g.get('DENSITIES');
+					    alayerticks = [1:1:(l / length(densities))];
+					end
+					value = alayerticks;
+					
 				case 19 % MultigraphBUD.APARTITIONTICKS
 					value = g.get('DENSITIES');
 					
