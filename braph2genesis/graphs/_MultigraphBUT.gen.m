@@ -248,6 +248,13 @@ end
 value = apartitionlabels;
 
 %%% ¡prop!
+ALAYERTICKS (query, rvector) returns the layer tick values.
+%%%% ¡calculate!
+l = g.get('LAYERNUMBER');
+thresholds = g.get('THRESHOLDS');
+value = l / length(thresholds);
+
+%%% ¡prop!
 APARTITIONTICKS (query, rvector) returns the partition (threshold) ticks for A.
 %%%% ¡calculate!
 value = g.get('THRESHOLDS');
