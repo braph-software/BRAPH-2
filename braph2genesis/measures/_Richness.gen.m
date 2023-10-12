@@ -2,7 +2,7 @@
 Richness < Degree (m, richness) is the graph Richness.
 
 %%% ¡description!
-The Richness (Richness) of a node is the sum of the edges that connect nodes 
+The Richness of a node is the sum of the edges that connect nodes 
 of higher degree within a layer.
 
 %% ¡layout!
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Richness.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Richness.
 %%%% ¡default!
-'The Richness (Richness) of a node is the sum of the edges that connect nodes of higher degree within a layer.'
+'The Richness of a node is the sum of the edges that connect nodes of higher degree within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Richness.

@@ -2,7 +2,7 @@
 Modularity < CommunityStructure (m, modularity) is the graph Modularity.
 
 %%% ¡description!
-The Modularity (Modularity) of a graph is the quality function Q of the resulting partition of the network.
+The Modularity of a graph is the quality function Q of the resulting partition of the network.
  
 %% ¡layout!
 
@@ -63,7 +63,7 @@ NAME (constant, string) is the name of the Modularity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Modularity.
 %%%% ¡default!
-'The Modularity (Modularity) of a graph is the quality function Q of the resulting partition of the network.'
+'The Modularity of a graph is the quality function Q of the resulting partition of the network.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Modularity.

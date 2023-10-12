@@ -2,7 +2,7 @@
 Strength < Measure (m, strength) is the graph Strength.
 
 %%% ¡description!
-The Strength (Strength) of a graph is the sum of all weights of the edges connected to 
+The Strength of a graph is the sum of all weights of the edges connected to 
  a node within a layer. 
 
 %% ¡layout!
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Strength.
 %%%% ¡default!
-'The Strength (Strength) of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+'The Strength of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Strength.
