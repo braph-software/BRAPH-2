@@ -3,7 +3,7 @@ WeightedMxP < Measure (m, weighted multiplex participation) is the graph Weighte
 
 %%% ¡description!
 The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity 
- of its number of neighbours across the layers. 
+ of its number of neighbors across the layers. 
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Weighted Multiplex Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Weighted Multiplex Participation.
 %%%% ¡default!
-'The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity of its number of neighbours across the layers.'
+'The Weighted Multiplex Participation (WeightedMxP) of a graph is the nodal homogeneity of its number of neighbors across the layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Weighted Multiplex Participation.

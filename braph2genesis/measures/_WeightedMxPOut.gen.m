@@ -3,7 +3,7 @@ WeightedMxPOut < Measure (m, weighted out-participation) is the graph Weighted M
 
 %%% ¡description!
 The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity 
- of its number of outward neighbours across the layers. 
+ of its number of outward neighbors across the layers. 
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Weighted Multiplex Out-Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Weighted Multiplex Out-Participation.
 %%%% ¡default!
-'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbours across the layers.'
+'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbors across the layers.'
  
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Weighted Multiplex Out-Participation.

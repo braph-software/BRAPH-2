@@ -3,7 +3,7 @@ MultiplexPOut < Measure (m, multiplex out-participation) is the graph Multiplex 
 
 %%% ¡description!
 The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward 
- neighbours of a node across the layers.
+ neighbors of a node across the layers.
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Multiplex Out-Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Multiplex Out-Participation.
 %%%% ¡default!
-'The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward neighbours of a node across the layers.'
+'The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward neighbors of a node across the layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Multiplex Out-Participation.

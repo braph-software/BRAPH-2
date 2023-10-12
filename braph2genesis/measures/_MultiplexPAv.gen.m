@@ -3,7 +3,7 @@ MultiplexPAv < MultiplexP (m, average multiplex participation) is the graph Aver
 
 %%% ¡description!
 The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity 
-   of its number of neighbours across the layers. 
+   of its number of neighbors across the layers. 
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Average Multiplex Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Multiplex Participation.
 %%%% ¡default!
-'The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity of its number of neighbours across the layers.' 
+'The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity of its number of neighbors across the layers.' 
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average Multiplex Participation.

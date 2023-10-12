@@ -3,7 +3,7 @@ MultiplexPIn < Measure (m, multiplex in-participation) is the graph Multiplex In
 
 %%% ¡description!
 The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward 
-neighbours of a node across the layers.
+neighbors of a node across the layers.
  
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Multiplex In-Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Multiplex In-Participation.
 %%%% ¡default!
-'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbours of a node across the layers.'
+'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbors of a node across the layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Multiplex In-Participation.

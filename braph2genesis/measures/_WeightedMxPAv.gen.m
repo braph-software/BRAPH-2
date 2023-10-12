@@ -3,7 +3,7 @@ WeightedMxPAv < WeightedMxP (m, average weighted multiplex participation) is the
 
 %%% ¡description!
 The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity 
- of its number of neighbours across the layers.
+ of its number of neighbors across the layers.
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Average Weighted Multiplex Participat
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Weighted Multiplex Participation.
 %%%% ¡default!
-'The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity of its number of neighbours across the layers.'
+'The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity of its number of neighbors across the layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average Weighted Multiplex Participation.

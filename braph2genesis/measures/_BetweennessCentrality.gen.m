@@ -166,17 +166,17 @@ function weighted_betweenness_centrality = getWeightedCalculation(A)
             for v = V
                 Q(q) = v;
                 q = q-1;
-                neighbours = find(G(v,:));  % neighbours of v
-                for neighbour = neighbours
-                    Duw = D(v) + G(v, neighbour);  % Duw path length to be tested
-                    if Duw<D(neighbour)  % if new u->w shorter than old
-                        D(neighbour) = Duw;
-                        NP(neighbour) = NP(v);  % NP(u->w) = NP of new path
-                        P(neighbour,:) = 0;
-                        P(neighbour, v) = 1;  % v is the only predecessor
-                    elseif Duw==D(neighbour)  % if new u->w equal to old
-                        NP(neighbour) = NP(neighbour)+NP(v);  % NP(u->w) sum of old and new
-                        P(neighbour, v) = 1;  % v is also a predecessor
+                neighbors = find(G(v,:));  % neighbors of v
+                for neighbor = neighbors
+                    Duw = D(v) + G(v, neighbor);  % Duw path length to be tested
+                    if Duw<D(neighbor)  % if new u->w shorter than old
+                        D(neighbor) = Duw;
+                        NP(neighbor) = NP(v);  % NP(u->w) = NP of new path
+                        P(neighbor,:) = 0;
+                        P(neighbor, v) = 1;  % v is the only predecessor
+                    elseif Duw==D(neighbor)  % if new u->w equal to old
+                        NP(neighbor) = NP(neighbor)+NP(v);  % NP(u->w) sum of old and new
+                        P(neighbor, v) = 1;  % v is also a predecessor
                     end
                 end
             end

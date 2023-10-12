@@ -3,7 +3,7 @@ WeightedMxPIn < Measure (m, weighted in-participation) is the graph Weighted Mul
 
 %%% ¡description!
 The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity 
-  of its number of inward neighbours across the layers. 
+  of its number of inward neighbors across the layers. 
 
 %% ¡layout!
 
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Weighted Multiplex In-Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Weighted Multiplex In-Participation.
 %%%% ¡default!
-'The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.'
+'The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity of its number of inward neighbors across the layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Weighted Multiplex In-Participation.

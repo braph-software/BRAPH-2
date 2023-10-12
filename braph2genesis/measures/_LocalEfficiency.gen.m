@@ -119,7 +119,7 @@ for li = 1:L
     Aii = A{li, li};    
     local_efficiency_layer = zeros(N(li), 1);
     for i = 1:1:N(li)
-        nodes = find(Aii(i, :)  | Aii(:, i).');  % neighbours of u
+        nodes = find(Aii(i, :)  | Aii(:, i).');  % neighbors of u
         if numel(nodes) > 1
            sub_graph_Aii = Aii(nodes, nodes);
            global_efficiency = global_Efficiency(sub_graph_Aii, g, li);
@@ -170,7 +170,7 @@ function weighted_distance = getWeightedCalculation(A)
             L1(:, V) = 0; % no in-edges as already shortest
 
             for v = V
-                T = find(L1(v, :)); % neighbours of shortest nodes
+                T = find(L1(v, :)); % neighbors of shortest nodes
                 [d, ~] = min([D(u, T);D(u, v)+L1(v, T)]);
                 D(u, T) = d; % smallest of old/new path lengths
                 % ind = T(wi==2); % indices of lengthened paths
