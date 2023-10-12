@@ -35,6 +35,18 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
+MeasureEnsemblePF_NU.NODE
+%%%% ¡title!
+NODE SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
+MeasureEnsemblePF_NU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasureEnsemblePF_NU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -53,9 +65,9 @@ AXIS
 
 %%% ¡prop!
 %%%% ¡id!
-MeasureEnsemblePF_NU.NODE
+MeasureEnsemblePF_NU.ST_AREA
 %%%% ¡title!
-NODE SELECTION
+FILLED AREA
 
 %%% ¡prop!
 %%%% ¡id!
@@ -131,9 +143,16 @@ end
 x = g.get('APARTITIONTICKS');
 
 node = pf.get('NODE');
+layer = pf.get('LAYER');
 m = cellfun(@(x) x(node), me.get('M'))';
-
-pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
+layers_num = length(g.get('ALAYERTICKS'));
+m2 = zeros(1, length(x));
+count=1;
+for i=layer:layers_num:g.get('LAYERNUMBER')
+    m2(count) = m(i);
+    count = count + 1;
+end
+pf.memorize('ST_LINE_M').set('X', x, 'Y', m2)
 
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
@@ -172,7 +191,7 @@ NODE (figure, scalar) is the node number of the nodal measure.
 1
 %%%% ¡postset!
 pf.get('SETUP')
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = MeasureEnsemblePF_NxPP_Node('EL', pf, 'PROP', MeasureEnsemblePF_NU.NODE);
 
 %%% ¡prop!

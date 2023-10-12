@@ -59,6 +59,12 @@ NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+ComparisonEnsemblePF_BU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 ComparisonEnsemblePF_BU.ST_LINE_DIFF
 %%%% ¡title!
 DIFFERENCE
@@ -152,16 +158,27 @@ nodes = pf.get('NODES');
 diff = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('DIFF'))';
 cil = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('CIL'))';
 ciu = cellfun(@(x) x(nodes(1), nodes(2)), cp.get('CIU'))';
+layer = pf.get('LAYER');
+layers_num = length(g.get('ALAYERTICKS'));
+diff2 = zeros(1, length(x));
+cil2 = zeros(1, length(x));
+ciu2 = zeros(1, length(x));
+count=1;
+for i=layer:layers_num:g.get('LAYERNUMBER')
+    diff2(count) = diff(i);
+    cil2(count) = cil(i);
+    ciu2(count) = ciu(i);
+    count = count + 1;
+end
+pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff2)
+pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil2)
+pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu2)
 
-pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff)
-pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil)
-pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu)
-
-if ~isempty(cil) && ~isempty(ciu)
+if ~isempty(cil2) && ~isempty(ciu2)
     if isempty(x) 
-        pf.memorize('ST_AREA').set('X', [1:1:length(diff) length(diff):-1:1], 'Y', [cil ciu(end:-1:1)])
+        pf.memorize('ST_AREA').set('X', [1:1:length(diff2) length(diff2):-1:1], 'Y', [cil2 ciu2(end:-1:1)])
     else
-        pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil ciu(end:-1:1)])
+        pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil2 ciu2(end:-1:1)])
     end
 end
 
@@ -202,7 +219,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 [1 1]
 %%%% ¡postset!
 pf.get('SETUP')
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = ComparisonEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', ComparisonEnsemblePF_BU.NODES);
 
 %%% ¡prop!

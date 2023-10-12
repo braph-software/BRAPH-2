@@ -734,15 +734,19 @@ classdef MeasureEnsemblePF_xUPP_Layer < PanelProp
 					        g = pf.get('ME').get('A').get('G_DICT').get('IT', 1);
 					    else
 					        g = pf.get('ME').get('A').get('GRAPH_TEMPLATE');
-					    end
-					    keys = g.get('ALAYERTICKS');
-					   
-					    set(pr.get('DROPDOWN'), ...
-					        'Items', keys, ...
-					        'ItemsData', [1:1:length(keys)], ...
-					        'Value', pf.get(LAYER) ...
-					        )
-					
+                        end
+                        
+                        keys = g.get('ALAYERTICKS');
+                        if (length(keys) <= 1)
+                            set(pr.get('DROPDOWN'), 'Enable', 'off')
+                        else
+                            set(pr.get('DROPDOWN'), ...
+                                'Items', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:length(keys)]), 'uniformoutput', false), ...
+                                'ItemsData', [1:1:length(keys)], ...
+                                'Value', pf.get(LAYER) ...
+                                )
+                        end
+                        
 					    prop_value = pf.getr(LAYER);
 					    if pf.isLocked(LAYER) || isa(prop_value, 'Callback')
 					        set(pr.get('DROPDOWN'), 'Enable', 'off')

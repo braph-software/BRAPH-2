@@ -5,7 +5,7 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 	% ComparisonGroupPF_GS manages the basic functionalities to plot of a global superglobal group comparison figure.
 	%
 	% The list of ComparisonGroupPF_GS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ComparisonGroupPF_GS.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure global superglobal group comparison figure.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure global superglobal group comparison figure.
@@ -151,7 +151,7 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ComparisonGroupPF_GS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ComparisonGroupPF_GS.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure global superglobal group comparison figure.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure global superglobal group comparison figure.
@@ -533,7 +533,7 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 			prop = ComparisonGroupPF_GS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisongrouppf_gs_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure global superglobal group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure global superglobal group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure global superglobal group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure global superglobal group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure global superglobal group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'CP (metadata, item) is the group comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the group comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.'  'ST_LINE_DIFF (figure, item) determines the line settings.'  'LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.'  'ST_LINE_CIL (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.'  'ST_LINE_CIU (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
+			comparisongrouppf_gs_description_list = { 'ELCLASS (constant, string) is the class of the ComparisonGroupPF_GS.'  'NAME (constant, string) is the name of the panel figure global superglobal group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure global superglobal group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure global superglobal group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure global superglobal group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure global superglobal group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure global superglobal group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'CP (metadata, item) is the group comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the group comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.'  'ST_LINE_DIFF (figure, item) determines the line settings.'  'LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.'  'ST_LINE_CIL (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.'  'ST_LINE_CIU (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
 			prop_description = comparisongrouppf_gs_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -703,7 +703,48 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 			
 			switch prop
 				case 27 % ComparisonGroupPF_GS.SETUP
-					warning([BRAPH2.STR ':ComparisonGroupPF_GS'], [BRAPH2.STR ':ComparisonGroupPF_GS \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
+					cp = pf.get('CP');
+					g = cp.get('C').get('A1').get('G');
+					
+					x = g.get('APARTITIONTICKS');
+					
+					diff = cell2mat(cp.get('DIFF'))';
+					cil = cell2mat(cp.get('CIL'))';
+					ciu = cell2mat(cp.get('CIU'))';
+					
+					pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff)
+					pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil)
+					pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu)
+					
+					if ~isempty(cil) && ~isempty(ciu)
+					    if isempty(x) 
+					        pf.memorize('ST_AREA').set('X', [1:1:length(diff) length(diff):-1:1], 'Y', [cil ciu(end:-1:1)])
+					    else
+					        pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil ciu(end:-1:1)])
+					    end
+					end
+					
+					xlim = pf.get('H_AXES').get('XLim');
+					ylim = pf.get('H_AXES').get('YLim');
+					pf.get('ST_TITLE').set( ...
+					    'TXT', cp.get('LABEL'), ...
+					    'X', .5 * (xlim(2) + xlim(1)), ...
+					    'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					pf.get('ST_XLABEL').set( ...
+					    'TXT', 'Partition', ...
+					    'X', .5 * (xlim(2) + xlim(1)), ...
+					    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					pf.get('ST_YLABEL').set( ...
+						'TXT', 'Measure Value', ...
+					    'X', xlim(1) - .14 * (xlim(2) - xlim(1)), ...
+					    'Y', .5 * (ylim(2) + ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					
 					value = [];
 					
 				otherwise
