@@ -2,7 +2,7 @@
 Triangles < Measure(m, triangles) is the graph Triangles.
 
 %%% ¡description!
-The Triangles are calculated as the number of neighbors of a node that are 
+The Triangles (Triangles) are calculated as the number of neighbors of a node that are 
  also neighbors of each other within a layer. In weighted graphs, the triangles are 
  calculated as the geometric mean of the weights of the edges forming the triangle.
 
@@ -71,7 +71,7 @@ NAME (constant, string) is the name of the Triangles.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Triangles.
 %%%% ¡default!
-'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.'
+'The triangles (Triangles) are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Triangles.

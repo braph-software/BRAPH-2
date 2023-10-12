@@ -2,7 +2,7 @@
 Distance < Measure (m, distance) is the Distance.
 
 %%% ¡description!
-The Distance of a graph is the shortest path between all pairs of nodes 
+The Distance (Distance) of a graph is the shortest path between all pairs of nodes 
  within a layer of the graph.
 For weighted graphs, the distance is calculated with the Dijkstra algorithm
  using the inverse weight as the distance associated to the edge.
@@ -66,7 +66,7 @@ NAME (constant, string) is the name of the Distance.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Distance.
 %%%% ¡default!
-'The Distance of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.'
+'The Distance (Distance) of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Distance.
