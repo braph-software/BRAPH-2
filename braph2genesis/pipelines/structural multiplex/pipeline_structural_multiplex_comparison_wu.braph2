@@ -1,7 +1,7 @@
 %% Pipeline Structural Multiplex Comparison WU
 
 % This is the pipeline script to compare two groups of subjects using structural multiplex data and weighted graphs.
-% The structural data can be derived from imaging modalities like T1 weighted MRI (T1-W), static positron emission tomography (PET) or arterial spin labeling (ASL).
+% The structural data can be derived from imaging modalities like T1 weighted MRI (T1-W), static positron emission tomography (PET), or arterial spin labeling (ASL).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads the data of two groups of subjects from two directories (e.g., ST_MP_group_1_XLS and ST_MP_group_2_XLS).
 % 3. It analyzes the first group using structural multiplex analyses (ST_MP) based on weighted graphs (WU).
