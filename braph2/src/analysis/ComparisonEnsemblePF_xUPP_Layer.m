@@ -734,17 +734,17 @@ classdef ComparisonEnsemblePF_xUPP_Layer < PanelProp
 					    else
 					        g = pf.get('CP').get('C').get('A1').get('GRAPH_TEMPLATE');
 					    end
-					    keys = g.get('ALAYERTICKS');
-					
-					    if isempty(keys) % ST WU
-					        set(pr.get('DROPDOWN'), 'Enable', 'off')
-					    else
-					        set(pr.get('DROPDOWN'), ...
-					            'Items', keys, ...
-					            'ItemsData', [1:1:length(keys)], ...
-					            'Value', pf.get(LAYER) ...
-					            )
-					    end
+
+                        keys = g.get('ALAYERTICKS');
+                        if (length(keys) <= 1)
+                            set(pr.get('DROPDOWN'), 'Enable', 'off')
+                        else
+                            set(pr.get('DROPDOWN'), ...
+                                'Items', cellfun(@(x) ['L' num2str(x)], num2cell([1:1:length(keys)]), 'uniformoutput', false), ...
+                                'ItemsData', [1:1:length(keys)], ...
+                                'Value', pf.get(LAYER) ...
+                                )
+                        end
 					
 					    prop_value = pf.getr(LAYER);
 					    if pf.isLocked(LAYER) || isa(prop_value, 'Callback')
