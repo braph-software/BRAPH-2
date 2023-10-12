@@ -730,7 +730,7 @@ classdef MeasurePF_GU < MeasurePF
 			switch prop
 				case 27 % MeasurePF_GU.SETUP
 					x = pf.get('M').get('G').get('APARTITIONTICKS');
-					
+					g = pf.get('M').get('G');
                     layer = pf.get('LAYER');
                     m = cell2mat(pf.get('M').get('M'))';
                     layers_num = length(g.get('ALAYERTICKS'));
@@ -742,11 +742,11 @@ classdef MeasurePF_GU < MeasurePF
                     end
                     pf.memorize('ST_LINE').set('X', x, 'Y', m2)
 					
-					if ~isempty(y)
+					if ~isempty(m2)
 					    if isempty(x) 
-					        pf.memorize('ST_AREA').set('X', [1 1:1:length(y) length(y)], 'Y', [0 y 0])
+					        pf.memorize('ST_AREA').set('X', [1 1:1:length(m2) length(m2)], 'Y', [0 m2 0])
 					    else
-					        pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 y 0])
+					        pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 m2 0])
 					    end
 					end
 					
