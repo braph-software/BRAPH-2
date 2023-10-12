@@ -65,7 +65,7 @@ NAME (constant, string) is the name of the Out-Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Out-Strength.
 %%%% ¡default!
-'The Out-Strength (StrengthOut) of a graph is the sum of all weights of the outward edges connected to a node within a layer, i. e. , it is the sum of the rows of the adjacency matrix.'
+'The Out-Strength (StrengthOut) of a graph is the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Out-Strength.
