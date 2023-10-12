@@ -317,9 +317,13 @@ value = apartitionlabels;
 %%% ¡prop!
 ALAYERTICKS (query, rvector) returns the layer tick values.
 %%%% ¡calculate!
-l = g.get('LAYERNUMBER');
-densities = g.get('DENSITIES');
-value = l / length(densities);
+alayerticks = g.get('LAYERTICKS');
+if length(alayerticks) ~= (g.get('LAYERNUMBER') / g.get('DENSITIES')) % ensures that it's not unecessarily calculated
+    l = g.get('LAYERNUMBER');
+    densities = g.get('DENSITIES');
+    alayerticks = [1:1:(l / length(densities))];
+end
+value = alayerticks;
 
 %%% ¡prop!
 APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.
