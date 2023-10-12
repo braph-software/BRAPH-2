@@ -815,12 +815,9 @@ classdef MeasureEnsemblePF_BU < MeasureEnsemblePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-                case 40 % MeasureensemblePF_BU.NODES
-                    pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', 40);
-                    
-                case 41 % MeasureEnsemblePF_BU.LAYER
-                    pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 41);
-                    
+				case 41 % MeasureEnsemblePF_BU.LAYER
+					pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 41);
+					
 				otherwise
 					pr = getPanelProp@MeasureEnsemblePF(pf, prop, varargin{:});
 					
