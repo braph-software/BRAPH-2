@@ -69,7 +69,7 @@ NAME (constant, string) is the name of the Out-Path Length.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Out-Path Length.
 %%%% ¡default!
-'The Out-Path Length (PathLengthOut) is the average shortest out-path length of one node to all other nodes within a layer.'
+'The Out-Path Length (PathLengthOut) is the average shortest out-path lengths of one node to all other nodes without a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Out-Path Length.

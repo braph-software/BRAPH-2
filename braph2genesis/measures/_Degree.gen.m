@@ -2,7 +2,7 @@
 Degree < Measure (m, degree) is the graph Degree.
 
 %%% ¡description!
-The Degree of a node is the number of edges connected to the node within a layer. 
+The Degree (Degree) of a node is the number of edges connected to the node within a layer. 
  Connection weights are ignored in calculations.
 
 %% ¡layout!
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Degree.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Degree.
 %%%% ¡default!
-'The Degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
+'The Degree (Degree) of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Degree.

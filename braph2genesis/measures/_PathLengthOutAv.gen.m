@@ -2,7 +2,7 @@
 PathLengthOutAv < PathLengthOut (m, average out-path length) is the graph Average Out-Path Length.
 
 %%% ¡description!
-The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes without a layer.
+The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes within a layer.
 
 %% ¡layout!
 
@@ -69,7 +69,7 @@ NAME (constant, string) is the name of the Average Out-Path Length.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Out-Path Length.
 %%%% ¡default!
-'The Average Out-Path Length (PathLengthOutAv) is the average shortest PathLengthOutAv of one node to all other nodes within a layer.'
+'The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes within a layer.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Average Out-Path Length.

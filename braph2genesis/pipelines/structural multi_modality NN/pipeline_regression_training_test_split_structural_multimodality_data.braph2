@@ -1,7 +1,7 @@
 %% Pipeline Regression Training-test Split Structural Multimodality Data
 
 % This is the pipeline script to train a multi-layer perceptron regressor using structural multimodality data.
-% The structural data can be derived from imaging modalities like T1 weighted MRI (T1-W), static positron emission tomography (PET), arterial spin labeling (ASL).
+% The structural data can be derived from imaging modalities like T1 weighted MRI (T1-W), static positron emission tomography (PET), or arterial spin labeling (ASL).
 % 1. It loads a brain atlas from an XLS file (e.g., desikan_atlas.xlsx).
 % 2. It loads data for a group of subjects from the directory (e.g., ST_MM_Group_XLS) containing XLS files for each subject.
 % 3. It splits the dataset into a training dataset and a test dataset.

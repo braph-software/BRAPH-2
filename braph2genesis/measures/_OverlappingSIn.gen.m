@@ -2,7 +2,7 @@
 OverlappingSIn < StrengthIn (m, overlapping in-strength) is the graph Overlapping In-Strength.
 
 %%% ¡description!
-The Overlapping In-Strength of a graph is the sum of the in-strengths of a 
+The Overlapping In-Strength (OverlappingSIn) of a graph is the sum of the in-strengths of a 
 node in all layers.
 
 %% ¡layout!
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Overlapping In-Strength.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Overlapping In-Strength.
 %%%% ¡default!
-'The Overlapping In-Strength of a graph is the sum of the in-strengths of a node in all layers.'
+'The Overlapping In-Strength (OverlappingSIn) of a graph is the sum of the in-strengths of a node in all layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Overlapping In-Strength.

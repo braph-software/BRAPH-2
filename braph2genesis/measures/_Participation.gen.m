@@ -2,7 +2,7 @@
 Participation < Measure (m, participation) is the graph Participation.
 
 %%% ¡description!
-The Participation of a node is the ratio of edges that a node forms within 
+The Participation (Participation) of a node is the ratio of edges that a node forms within 
  a single layer community to the total number of edges that forms within the whole single layer graph.
 
 %% ¡layout!
@@ -64,7 +64,7 @@ NAME (constant, string) is the name of the Participation.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Participation.
 %%%% ¡default!
-'The Participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.'
+'The Participation (Participation) of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Participation.

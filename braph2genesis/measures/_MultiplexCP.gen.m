@@ -73,7 +73,7 @@ NAME (constant, string) is the name of the Multiplex Core-Periphery.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Multiplex Core-Periphery.
 %%%% ¡default!
-'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).'
+'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the core and zero otherwise. The relevance of each layer is controlled by the multirichness coefficients that are between 0 and 1, and add up to one; the default coefficients are (1/layernumber).'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the Multiplex Core-Periphery.
