@@ -132,7 +132,7 @@ Brain Atlas NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the concrete element.
+ELCLASS (constant, string) is the class of the brain atlas (BrainAtlas).
 %%%% ¡default!
 'BrainAtlas'
 
