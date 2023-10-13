@@ -35,6 +35,12 @@ Brain Atlas NOTES
 
 %%% ¡prop!
 %%%% ¡id!
+MeasurePF_GU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasurePF_GU.BKGCOLOR
 %%%% ¡title!
 BACKGROUND COLOR
@@ -122,16 +128,23 @@ NOTES (metadata, string) are some specific notes about the panel figure for glob
 SETUP (query, empty) calculates the measure value and stores it.
 %%%% ¡calculate!
 x = pf.get('M').get('G').get('APARTITIONTICKS');
+g = pf.get('M').get('G');
+layer = pf.get('LAYER');
+m = cell2mat(pf.get('M').get('M'))';
+layers_num = length(g.get('ALAYERTICKS'));
+m2 = zeros(1, length(x));
+count=1;
+for i=layer:layers_num:g.get('LAYERNUMBER')
+    m2(count) = m(i);
+    count = count + 1;
+end
+pf.memorize('ST_LINE').set('X', x, 'Y', m2)
 
-y = cell2mat(pf.get('M').get('M'))';
-
-pf.memorize('ST_LINE').set('X', x, 'Y', y)
-
-if ~isempty(y)
+if ~isempty(m2)
     if isempty(x) 
-        pf.memorize('ST_AREA').set('X', [1 1:1:length(y) length(y)], 'Y', [0 y 0])
+        pf.memorize('ST_AREA').set('X', [1 1:1:length(m2) length(m2)], 'Y', [0 m2 0])
     else
-        pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 y 0])
+        pf.memorize('ST_AREA').set('X', [x(1) x x(end)], 'Y', [0 m2 0])
     end
 end
 

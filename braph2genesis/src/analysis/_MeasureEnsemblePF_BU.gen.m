@@ -59,6 +59,12 @@ NODES SELECTION
 
 %%% ¡prop!
 %%%% ¡id!
+MeasureEnsemblePF_BU.LAYER
+%%%% ¡title!
+LAYER SELECTION
+
+%%% ¡prop!
+%%%% ¡id!
 MeasureEnsemblePF_BB.ST_LINE_M
 %%%% ¡title!
 MEASURE
@@ -131,9 +137,16 @@ end
 x = g.get('APARTITIONTICKS');
 
 nodes = pf.get('NODES');
+layer = pf.get('LAYER');
 m = cellfun(@(x) x(nodes(1), nodes(2)), me.get('M'))';
-
-pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
+layers_num = length(g.get('ALAYERTICKS'));
+m2 = zeros(1, length(x));
+count=1;
+for i=layer:layers_num:g.get('LAYERNUMBER')
+    m2(count) = m(i);
+    count = count + 1;
+end
+pf.memorize('ST_LINE_M').set('X', x, 'Y', m2)
 
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
@@ -172,7 +185,7 @@ NODES (figure, rvector) are the node numbers of the binodal group comparison fig
 [1 1]
 %%%% ¡postset!
 pf.get('SETUP')
-%%%% ¡_gui!
+%%%% ¡gui!
 pr = MeasureEnsemblePF_BxPP_Nodes('EL', pf, 'PROP', MeasureEnsemblePF_BU.NODES);
 
 %%% ¡prop!

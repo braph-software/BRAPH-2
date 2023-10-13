@@ -8,6 +8,18 @@ classdef BrainAtlas < ConcreteElement
 	%  thus, it has access to all IndexedDictionary methods.
 	% BrainAtlas can be imported/exported to .txt, .xls and .json files.
 	%
+	% The list of BrainAtlas properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>9</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
+	%  <strong>10</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
+	%
 	% BrainAtlas methods (constructor):
 	%  BrainAtlas - constructor
 	%
@@ -97,15 +109,15 @@ classdef BrainAtlas < ConcreteElement
 	% See also BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT.
 	
 	properties (Constant) % properties
-		BR_DICT = ConcreteElement.getPropNumber() + 1;
+		BR_DICT = 9; %CET: Computational Efficiency Trick
 		BR_DICT_TAG = 'BR_DICT';
-		BR_DICT_CATEGORY = Category.DATA;
-		BR_DICT_FORMAT = Format.IDICT;
+		BR_DICT_CATEGORY = 4;
+		BR_DICT_FORMAT = 10;
 		
-		PFBA = ConcreteElement.getPropNumber() + 2;
+		PFBA = 10; %CET: Computational Efficiency Trick
 		PFBA_TAG = 'PFBA';
-		PFBA_CATEGORY = Category.GUI;
-		PFBA_FORMAT = Format.ITEM;
+		PFBA_CATEGORY = 9;
+		PFBA_FORMAT = 8;
 	end
 	methods % constructor
 		function ba = BrainAtlas(varargin)
@@ -118,6 +130,17 @@ classdef BrainAtlas < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of BrainAtlas properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>9</strong> <strong>BR_DICT</strong> 	BR_DICT (data, idict) contains the brain regions of the brain atlas.
+			%  <strong>10</strong> <strong>PFBA</strong> 	PFBA (gui, item) contains the panel figure of the brain atlas.
 			%
 			% See also Category, Format.
 			
@@ -155,7 +178,7 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('BrainAtlas', [], [], true);
+			subclass_list = { 'BrainAtlas' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of brain atlas.
@@ -176,54 +199,28 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						BrainAtlas.BR_DICT ...
-						BrainAtlas.PFBA ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						BrainAtlas.BR_DICT ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						BrainAtlas.PFBA ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 9];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 10;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -244,7 +241,29 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(BrainAtlas.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 10;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in brain atlas/error.
@@ -272,14 +291,14 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == BrainAtlas.getProps());
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput'], ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for BrainAtlas.'] ...
 					)
 			end
@@ -310,15 +329,14 @@ classdef BrainAtlas < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			brainatlas_tag_list = cellfun(@(x) BrainAtlas.getPropTag(x), num2cell(BrainAtlas.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, brainatlas_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput'], ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for BrainAtlas.'] ...
 					)
 			end
@@ -344,8 +362,7 @@ classdef BrainAtlas < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				brainatlas_tag_list = cellfun(@(x) BrainAtlas.getPropTag(x), num2cell(BrainAtlas.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, brainatlas_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -373,16 +390,9 @@ classdef BrainAtlas < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case BrainAtlas.BR_DICT
-						tag = BrainAtlas.BR_DICT_TAG;
-					case BrainAtlas.PFBA
-						tag = BrainAtlas.PFBA_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				brainatlas_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'BR_DICT'  'PFBA' };
+				tag = brainatlas_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -407,14 +417,9 @@ classdef BrainAtlas < ConcreteElement
 			
 			prop = BrainAtlas.getPropProp(pointer);
 			
-			switch prop
-				case BrainAtlas.BR_DICT
-					prop_category = BrainAtlas.BR_DICT_CATEGORY;
-				case BrainAtlas.PFBA
-					prop_category = BrainAtlas.PFBA_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			brainatlas_category_list = { 1  1  1  3  4  2  2  6  4  9 };
+			prop_category = brainatlas_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -438,14 +443,9 @@ classdef BrainAtlas < ConcreteElement
 			
 			prop = BrainAtlas.getPropProp(pointer);
 			
-			switch prop
-				case BrainAtlas.BR_DICT
-					prop_format = BrainAtlas.BR_DICT_FORMAT;
-				case BrainAtlas.PFBA
-					prop_format = BrainAtlas.PFBA_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			brainatlas_format_list = { 2  2  2  8  2  2  2  2  10  8 };
+			prop_format = brainatlas_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -469,28 +469,9 @@ classdef BrainAtlas < ConcreteElement
 			
 			prop = BrainAtlas.getPropProp(pointer);
 			
-			switch prop
-				case BrainAtlas.BR_DICT
-					prop_description = 'BR_DICT (data, idict) contains the brain regions of the brain atlas.';
-				case BrainAtlas.PFBA
-					prop_description = 'PFBA (gui, item) contains the panel figure of the brain atlas.';
-				case BrainAtlas.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the concrete element.';
-				case BrainAtlas.NAME
-					prop_description = 'NAME (constant, string) is the name of the brain atlas.';
-				case BrainAtlas.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the brain atlas.';
-				case BrainAtlas.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the brain atlas.';
-				case BrainAtlas.ID
-					prop_description = 'ID (data, string) is a few-letter code for the brain atlas.';
-				case BrainAtlas.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the brain atlas.';
-				case BrainAtlas.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the brain atlas.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			brainatlas_description_list = { 'ELCLASS (constant, string) is the class of the concrete element.'  'NAME (constant, string) is the name of the brain atlas.'  'DESCRIPTION (constant, string) is the description of the brain atlas.'  'TEMPLATE (parameter, item) is the template of the brain atlas.'  'ID (data, string) is a few-letter code for the brain atlas.'  'LABEL (metadata, string) is an extended label of the brain atlas.'  'NOTES (metadata, string) are some specific notes about the brain atlas.'  'TOSTRING (query, string) returns a string that represents the object.'  'BR_DICT (data, idict) contains the brain regions of the brain atlas.'  'PFBA (gui, item) contains the panel figure of the brain atlas.' };
+			prop_description = brainatlas_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -514,12 +495,12 @@ classdef BrainAtlas < ConcreteElement
 			
 			prop = BrainAtlas.getPropProp(pointer);
 			
-			switch prop
-				case BrainAtlas.BR_DICT
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % BrainAtlas.BR_DICT
 					prop_settings = 'BrainRegion';
-				case BrainAtlas.PFBA
+				case 10 % BrainAtlas.PFBA
 					prop_settings = 'BrainAtlasPF';
-				case BrainAtlas.TEMPLATE
+				case 4 % BrainAtlas.TEMPLATE
 					prop_settings = 'BrainAtlas';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -547,24 +528,24 @@ classdef BrainAtlas < ConcreteElement
 			
 			prop = BrainAtlas.getPropProp(pointer);
 			
-			switch prop
-				case BrainAtlas.BR_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, BrainAtlas.getPropSettings(prop));
-				case BrainAtlas.PFBA
-					prop_default = Format.getFormatDefault(Format.ITEM, BrainAtlas.getPropSettings(prop));
-				case BrainAtlas.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % BrainAtlas.BR_DICT
+					prop_default = Format.getFormatDefault(10, BrainAtlas.getPropSettings(prop));
+				case 10 % BrainAtlas.PFBA
+					prop_default = Format.getFormatDefault(8, BrainAtlas.getPropSettings(prop));
+				case 1 % BrainAtlas.ELCLASS
 					prop_default = 'BrainAtlas';
-				case BrainAtlas.NAME
+				case 2 % BrainAtlas.NAME
 					prop_default = 'Brain Atlas';
-				case BrainAtlas.DESCRIPTION
+				case 3 % BrainAtlas.DESCRIPTION
 					prop_default = 'A Brain Atlas (BrainAtlas) represents a brain atlas, constituted by a collection of brain regions. BrainAtlas contains and manages brain regions inside an IndexedDictionary; thus, it has access to all IndexedDictionary methods. BrainAtlas can be imported/exported to .txt, .xls and .json files.';
-				case BrainAtlas.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, BrainAtlas.getPropSettings(prop));
-				case BrainAtlas.ID
+				case 4 % BrainAtlas.TEMPLATE
+					prop_default = Format.getFormatDefault(8, BrainAtlas.getPropSettings(prop));
+				case 5 % BrainAtlas.ID
 					prop_default = 'BrainAtlas ID';
-				case BrainAtlas.LABEL
+				case 6 % BrainAtlas.LABEL
 					prop_default = 'BrainAtlas label';
-				case BrainAtlas.NOTES
+				case 7 % BrainAtlas.NOTES
 					prop_default = 'BrainAtlas notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -611,15 +592,15 @@ classdef BrainAtlas < ConcreteElement
 			% 
 			% BA.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:BrainAtlas:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:BrainAtlas:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  BA.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of BA.
-			%   Error id: €BRAPH2.STR€:BrainAtlas:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:BrainAtlas:WrongInput
 			%  Element.CHECKPROP(BrainAtlas, PROP, VALUE) throws error if VALUE has not a valid format for PROP of BrainAtlas.
-			%   Error id: €BRAPH2.STR€:BrainAtlas:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:BrainAtlas:WrongInput
 			%  BA.CHECKPROP(BrainAtlas, PROP, VALUE) throws error if VALUE has not a valid format for PROP of BrainAtlas.
-			%   Error id: €BRAPH2.STR€:BrainAtlas:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:BrainAtlas:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(BA) and Element.CHECKPROP('BrainAtlas')
 			%  are less computationally efficient.
@@ -630,14 +611,14 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			switch prop
-				case BrainAtlas.BR_DICT % __BrainAtlas.BR_DICT__
-					check = Format.checkFormat(Format.IDICT, value, BrainAtlas.getPropSettings(prop));
-				case BrainAtlas.PFBA % __BrainAtlas.PFBA__
-					check = Format.checkFormat(Format.ITEM, value, BrainAtlas.getPropSettings(prop));
-				case BrainAtlas.TEMPLATE % __BrainAtlas.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, BrainAtlas.getPropSettings(prop));
+				case 9 % BrainAtlas.BR_DICT
+					check = Format.checkFormat(10, value, BrainAtlas.getPropSettings(prop));
+				case 10 % BrainAtlas.PFBA
+					check = Format.checkFormat(8, value, BrainAtlas.getPropSettings(prop));
+				case 4 % BrainAtlas.TEMPLATE
+					check = Format.checkFormat(8, value, BrainAtlas.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -646,8 +627,8 @@ classdef BrainAtlas < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':BrainAtlas:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput'], ...
+					['BRAPH2' ':BrainAtlas:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' BrainAtlas.getPropTag(prop) ' (' BrainAtlas.getFormatTag(BrainAtlas.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -667,13 +648,13 @@ classdef BrainAtlas < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case BrainAtlas.PFBA % __BrainAtlas.PFBA__
+				case 10 % BrainAtlas.PFBA
 					if isa(ba.getr('PFBA'), 'NoValue')
 					    ba.memorize('PFBA').set('BA', ba)
 					end
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						postprocessing@ConcreteElement(ba, prop);
 					end
 			end
@@ -696,11 +677,11 @@ classdef BrainAtlas < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case BrainAtlas.BR_DICT % __BrainAtlas.BR_DICT__
+				case 9 % BrainAtlas.BR_DICT
 					% % example code to use CB_TAB_EDIT
 					% cb_tab_edit_code = {
 					%     'switch col'
-					%         'case BrainRegion.ID'
+					%         'case 5'
 					%             'if ~dict.get('CONTAINS_KEY', newdata)'
 					%                 '' % change brain region id
 					%                 'dict.get('IT', i).set(''ID'', newdata)'
@@ -711,14 +692,14 @@ classdef BrainAtlas < ConcreteElement
 					%         'cb_table_edit_default()'
 					%     'end'
 					%     };
-					pr = PanelPropIDictTable('EL', ba, 'PROP', BrainAtlas.BR_DICT, ... 
-						'COLS', [PanelPropIDictTable.SELECTOR BrainRegion.ID BrainRegion.LABEL BrainRegion.X BrainRegion.Y BrainRegion.Z BrainRegion.NOTES], ...
+					pr = PanelPropIDictTable('EL', ba, 'PROP', 9, ... 
+						'COLS', [-1 5 6 9 10 11 7], ...
 						'ROWNAME', 'numbered', ... % 'CB_TAB_EDIT', cb_tab_edit_code, ... % example code to use CB_TAB_EDIT
 					    'APPLY_TO_SELECTION', false, ...
 						varargin{:});
 					
-				case BrainAtlas.PFBA % __BrainAtlas.PFBA__
-					pr = PanelPropItem('EL', ba, 'PROP', BrainAtlas.PFBA, ...
+				case 10 % BrainAtlas.PFBA
+					pr = PanelPropItem('EL', ba, 'PROP', 10, ...
 					    'GUICLASS', 'GUIFig', ...
 					    'BUTTON_TEXT', 'Plot Brain Atlas', ...
 					    varargin{:});

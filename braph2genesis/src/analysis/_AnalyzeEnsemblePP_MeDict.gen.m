@@ -166,23 +166,9 @@ SHOW (query, logical) shows the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
 if value
-    % figure for graph plot
-    if isa(pr.getr('GUI_G_PL'), 'GUIElement') && pr.get('GUI_G_PL').get('DRAWN')
-        pr.get('GUI_G_PL').get('SHOW')
-    end
-
     % figure for graph data
     if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
         pr.get('GUI_G_EL').get('SHOW')
-    end
-    
-    % figures for measure figures
-    gui_f_dict = pr.get('GUI_F_DICT');
-    for i = 1:1:gui_f_dict.get('LENGTH')
-        gui = gui_f_dict.get('IT', i);
-        if gui.get('DRAWN')
-            gui.get('SHOW')
-        end
     end
     
     % figures for measure data
@@ -209,25 +195,11 @@ HIDE (query, logical) hides the figure containing the panel and, possibly, the i
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
 if value
-    % figure for graph plot
-    if isa(pr.getr('GUI_G_PL'), 'GUI') && pr.get('GUI_G_PL').get('DRAWN')
-        pr.get('GUI_G_PL').get('HIDE')
-    end
-
     % figure for graph data
     if isa(pr.getr('GUI_G_EL'), 'GUI') && pr.get('GUI_G_EL').get('DRAWN')
         pr.get('GUI_G_EL').get('HIDE')
     end
 
-    % figures for measure figures
-    gui_f_dict = pr.get('GUI_F_DICT');
-    for i = 1:1:gui_f_dict.get('LENGTH')
-        gui = gui_f_dict.get('IT', i);
-        if gui.get('DRAWN')
-            gui.get('HIDE')
-        end
-    end
-    
     % figures for measure data
     gui_m_dict = pr.get('GUI_M_DICT');
     for i = 1:1:gui_m_dict.get('LENGTH')
@@ -261,23 +233,9 @@ CLOSE (query, logical) closes the figure containing the panel and, possibly, the
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
 if value
-    % figure for graph plot
-    if isa(pr.getr('GUI_G_PL'), 'GUIFig') && pr.get('GUI_G_PL').get('DRAWN')
-        pr.get('GUI_G_PL').get('CLOSE')
-    end
-
     % figure for graph data
     if isa(pr.getr('GUI_G_EL'), 'GUIElement') && pr.get('GUI_G_EL').get('DRAWN')
         pr.get('GUI_G_EL').get('CLOSE')
-    end
-
-    % figures for measure figures
-    gui_f_dict = pr.get('GUI_F_DICT');
-    for i = 1:1:gui_f_dict.get('LENGTH')
-        gui = gui_f_dict.get('IT', i);
-        if gui.get('DRAWN')
-            gui.get('CLOSE')
-        end
     end
     
     % figures for measure data
@@ -477,7 +435,7 @@ function cb_open_plots(~, ~)
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
     N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 
-    gui_f_dict = pr.memorize('GUI_F_DICT');
+    gui_m_dict = pr.memorize('GUI_M_DICT');
     
     selected = pr.get('SELECTED');
 	for s = 1:1:length(selected)
@@ -487,34 +445,38 @@ function cb_open_plots(~, ~)
 
         me = a.get('MEASUREENSEMBLE', measure);
         
-        if ~gui_f_dict.get('CONTAINS_KEY', measure)
-            gui = GUIFig( ...
+        if ~gui_m_dict.get('CONTAINS_KEY', measure)
+            gui = GUIElement( ...
                 'ID', measure, ... % this is the dictionary key
-                'PF', me.get('PFME'), ...
+                'PE', me, ... %.get('PFME'), ...
                 'POSITION', [ ...
                     x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
                     y0(f, 'normalized') ...
-                    w(f, 'normalized') * 3 ...
+                    w(f, 'normalized') ...
                     .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
                     ], ...
                 'WAITBAR', pr.getCallback('WAITBAR'), ...
                 'CLOSEREQ', false ...
                 );
-            gui_f_dict.get('ADD', gui)
+            gui_m_dict.get('ADD', gui)
         end
         
-        gui = gui_f_dict.get('IT', measure);
+        gui = gui_m_dict.get('IT', measure);
         if ~gui.get('DRAWN')
             gui.get('DRAW')
         end
-        gui.get('SHOW')
+        gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFME').memorize('GUI_ITEM');
+        if ~gui_pfm.get('DRAW')
+            gui_pfm.get('DRAW')
+        end
+        gui_pfm.get('SHOW')
     end
 end
 function cb_hide_plots(~, ~)
     g = pr.get('EL').get('GRAPH_TEMPLATE'); % default graph
     m_list = g.get('COMPATIBLE_MEASURES');
     
-    gui_f_dict = pr.memorize('GUI_F_DICT');
+    gui_m_dict = pr.memorize('GUI_M_DICT');
 
     selected = pr.get('SELECTED');
     for s = 1:1:length(selected)
@@ -522,10 +484,11 @@ function cb_hide_plots(~, ~)
         
         measure = m_list{i}; % also key
         
-        if gui_f_dict.get('CONTAINS_KEY', measure)
-            gui = gui_f_dict.get('IT', measure);
+        if gui_m_dict.get('CONTAINS_KEY', measure)
+            gui = gui_m_dict.get('IT', measure);
+            gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFME').memorize('GUI_ITEM');
             if gui.get('DRAWN')
-                gui.get('HIDE')
+                gui_pfm.get('HIDE')
             end
         end
     end
@@ -696,19 +659,9 @@ function cb_hide_mbrain(~, ~)
 end
 
 %%% ¡prop!
-GUI_G_PL (gui, item) contains the GUI for the graph figure.
-%%%% ¡settings!
-'GUIFig'
-
-%%% ¡prop!
 GUI_G_EL (gui, item) contains the GUI for the graph.
 %%%% ¡settings!
 'GUIElement'
-
-%%% ¡prop!
-GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
-%%%% ¡settings!
-'GUIFig'
 
 %%% ¡prop!
 GUI_M_DICT (gui, idict) contains the GUIs for the measures.

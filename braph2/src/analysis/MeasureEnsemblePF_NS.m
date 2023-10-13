@@ -5,7 +5,7 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 	% MeasureEnsemblePF_NS manages the basic functionalities to plot of a nodal superglobal group comparison figure.
 	%
 	% The list of MeasureEnsemblePF_NS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_NS.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure nodal superglobal group comparison figure.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal group comparison figure.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal group comparison figure.
@@ -152,7 +152,7 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MeasureEnsemblePF_NS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_NS.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure nodal superglobal group comparison figure.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal group comparison figure.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal group comparison figure.
@@ -529,7 +529,7 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 			prop = MeasureEnsemblePF_NS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measureensemblepf_ns_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel figure nodal superglobal group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure nodal superglobal group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure nodal superglobal group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'ME (metadata, item) is the ensemble-based comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_M (figure, item) determines the line settings.'  'LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODE (figure, scalar) is the node number of the nodal group comparison figure.' };
+			measureensemblepf_ns_description_list = { 'ELCLASS (constant, string) is the class of the MeasureEnsemblePF_NS.'  'NAME (constant, string) is the name of the panel figure nodal superglobal group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure nodal superglobal group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure nodal superglobal group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure nodal superglobal group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure nodal superglobal group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure nodal superglobal group comparison figure.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'ME (metadata, item) is the ensemble-based comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_M (figure, item) determines the line settings.'  'LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODE (figure, scalar) is the node number of the nodal group comparison figure.' };
 			prop_description = measureensemblepf_ns_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -587,7 +587,7 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 40 % MeasureEnsemblePF_NS.NODE
-					prop_default = Format.getFormatDefault(11, MeasureEnsemblePF_NS.getPropSettings(prop));
+					prop_default = 1;
 				case 1 % MeasureEnsemblePF_NS.ELCLASS
 					prop_default = 'MeasureEnsemblePF_NS';
 				case 2 % MeasureEnsemblePF_NS.NAME
@@ -687,6 +687,30 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 			end
 		end
 	end
+	methods (Access=protected) % postset
+		function postset(pf, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 40 % MeasureEnsemblePF_NS.NODE
+					pf.get('SETUP')
+					
+				otherwise
+					if prop <= 39
+						postset@MeasureEnsemblePF(pf, prop);
+					end
+			end
+		end
+	end
 	methods (Access=protected) % calculate value
 		function value = calculateValue(pf, prop, varargin)
 			%CALCULATEVALUE calculates the value of a property.
@@ -705,7 +729,47 @@ classdef MeasureEnsemblePF_NS < MeasureEnsemblePF
 			
 			switch prop
 				case 27 % MeasureEnsemblePF_NS.SETUP
-					warning([BRAPH2.STR ':MeasureEnsemblePF_NS'], [BRAPH2.STR ':MeasureEnsemblePF_NS \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
+					me = pf.get('ME');
+					if me.get('A').get('G_DICT').get('LENGTH')
+					    g = me.get('A').get('G_DICT').get('IT', 1);
+					else
+					    g = me.get('A').get('GRAPH_TEMPLATE');
+					end
+					
+					x = g.get('APARTITIONTICKS');
+					
+					node = pf.get('NODE');
+					m = cellfun(@(x) x(node), me.get('M'))';
+					
+					pf.memorize('ST_LINE_M').set('X', x, 'Y', m)
+					
+					xlim = pf.get('H_AXES').get('XLim');
+					ylim = pf.get('H_AXES').get('YLim');
+					anodelabels = g.get('ANODELABELS');
+					if isequal(anodelabels, {'numbered'})
+					    title = [me.get('LABEL') ' ' int2str(node)];
+					else
+					    title = [me.get('LABEL') ' ' anodelabels{node}];
+					end
+					pf.get('ST_TITLE').set( ...
+					    'TXT', title, ...
+					    'X', .5 * (xlim(2) + xlim(1)), ...
+					    'Y', ylim(2) + .07 * (ylim(2) - ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					pf.get('ST_XLABEL').set( ...
+					    'TXT', 'Partition', ...
+					    'X', .5 * (xlim(2) + xlim(1)), ...
+					    'Y', ylim(1) - .07 * (ylim(2) - ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					pf.get('ST_YLABEL').set( ...
+						'TXT', 'Measure Value', ...
+					    'X', xlim(1) - .14 * (xlim(2) - xlim(1)), ...
+					    'Y', .5 * (ylim(2) + ylim(1)), ...
+					    'Z', 0 ...
+					    )
+					
 					value = [];
 					
 				otherwise
