@@ -45,9 +45,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
 	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
 	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-	%  <strong>40</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.
-	%  <strong>41</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
-	%  <strong>42</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
+	%  <strong>40</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 	%
 	% CompareEnsemblePP_CpDict methods (constructor):
 	%  CompareEnsemblePP_CpDict - constructor
@@ -158,20 +156,10 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 		CONTEXTMENU_CATEGORY = 7;
 		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_F_DICT = 40; %CET: Computational Efficiency Trick
-		GUI_F_DICT_TAG = 'GUI_F_DICT';
-		GUI_F_DICT_CATEGORY = 9;
-		GUI_F_DICT_FORMAT = 10;
-		
-		GUI_CP_DICT = 41; %CET: Computational Efficiency Trick
+		GUI_CP_DICT = 40; %CET: Computational Efficiency Trick
 		GUI_CP_DICT_TAG = 'GUI_CP_DICT';
 		GUI_CP_DICT_CATEGORY = 9;
 		GUI_CP_DICT_FORMAT = 10;
-		
-		GUI_B_DICT = 42; %CET: Computational Efficiency Trick
-		GUI_B_DICT_TAG = 'GUI_B_DICT';
-		GUI_B_DICT_CATEGORY = 9;
-		GUI_B_DICT_FORMAT = 10;
 	end
 	methods % constructor
 		function pr = CompareEnsemblePP_CpDict(varargin)
@@ -224,9 +212,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
 			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
 			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
-			%  <strong>40</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.
-			%  <strong>41</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
-			%  <strong>42</strong> <strong>GUI_B_DICT</strong> 	GUI_B_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.
+			%  <strong>40</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 			%
 			% See also Category, Format.
 			
@@ -288,7 +274,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
@@ -308,7 +294,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_list = 14;
 				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36 37 40 41 42];
+					prop_list = [9 13 25 26 36 37 40];
 				otherwise
 					prop_list = [];
 			end
@@ -334,7 +320,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 42;
+				prop_number = 40;
 				return
 			end
 			
@@ -354,7 +340,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				case 8 % Category.FIGURE
 					prop_number = 1;
 				case 9 % Category.GUI
-					prop_number = 9;
+					prop_number = 7;
 				otherwise
 					prop_number = 0;
 			end
@@ -385,7 +371,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -423,7 +409,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_CP_DICT'  'GUI_B_DICT' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -456,7 +442,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_CP_DICT'  'GUI_B_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -485,7 +471,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				compareensemblepp_cpdict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_CP_DICT'  'GUI_B_DICT' };
+				compareensemblepp_cpdict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' };
 				tag = compareensemblepp_cpdict_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -512,7 +498,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemblepp_cpdict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9  9 };
+			compareensemblepp_cpdict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9 };
 			prop_category = compareensemblepp_cpdict_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -538,7 +524,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemblepp_cpdict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  10  10  10 };
+			compareensemblepp_cpdict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  10 };
 			prop_format = compareensemblepp_cpdict_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -564,7 +550,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			compareensemblepp_cpdict_description_list = { 'ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.'  'NAME (constant, string) is the name of the comparison panel for ensemble analysis.'  'DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.'  'TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.'  'ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.'  'LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.'  'NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_F_DICT (gui, idict) contains the GUIs for the comparison figures.'  'GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.'  'GUI_B_DICT (gui, idict) contains the GUIs for the brain graph comparison figures.' };
+			compareensemblepp_cpdict_description_list = { 'ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.'  'NAME (constant, string) is the name of the comparison panel for ensemble analysis.'  'DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.'  'TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.'  'ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.'  'LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.'  'NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the prop panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.' };
 			prop_description = compareensemblepp_cpdict_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -598,12 +584,8 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					prop_settings = Format.getFormatSettings(18);
 				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
 					prop_settings = Format.getFormatSettings(18);
-				case 40 % CompareEnsemblePP_CpDict.GUI_F_DICT
-					prop_settings = 'GUIFig';
-				case 41 % CompareEnsemblePP_CpDict.GUI_CP_DICT
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
 					prop_settings = 'GUIElement';
-				case 42 % CompareEnsemblePP_CpDict.GUI_B_DICT
-					prop_settings = 'GUIFig';
 				case 4 % CompareEnsemblePP_CpDict.TEMPLATE
 					prop_settings = 'CompareEnsemblePP_CpDict';
 				otherwise
@@ -641,11 +623,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					prop_default = Format.getFormatDefault(18, CompareEnsemblePP_CpDict.getPropSettings(prop));
 				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
 					prop_default = Format.getFormatDefault(18, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 40 % CompareEnsemblePP_CpDict.GUI_F_DICT
-					prop_default = Format.getFormatDefault(10, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 41 % CompareEnsemblePP_CpDict.GUI_CP_DICT
-					prop_default = Format.getFormatDefault(10, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 42 % CompareEnsemblePP_CpDict.GUI_B_DICT
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
 					prop_default = Format.getFormatDefault(10, CompareEnsemblePP_CpDict.getPropSettings(prop));
 				case 1 % CompareEnsemblePP_CpDict.ELCLASS
 					prop_default = 'CompareEnsemblePP_CpDict';
@@ -767,11 +745,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					check = Format.checkFormat(18, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
 				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
 					check = Format.checkFormat(18, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 40 % CompareEnsemblePP_CpDict.GUI_F_DICT
-					check = Format.checkFormat(10, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 41 % CompareEnsemblePP_CpDict.GUI_CP_DICT
-					check = Format.checkFormat(10, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case 42 % CompareEnsemblePP_CpDict.GUI_B_DICT
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
 					check = Format.checkFormat(10, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
 				case 4 % CompareEnsemblePP_CpDict.TEMPLATE
 					check = Format.checkFormat(8, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
@@ -893,19 +867,6 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					    'Text', 'Hide Selected Data', ...
 						'MenuSelectedFcn', {@cb_hide_elements} ...
 					    );
-					menu_open_brains = uimenu( ...
-						'Separator', 'on', ...
-					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_OPEN_BRAINS', ...
-					    'Text', 'Brain Graphs Selected Comparisons ...', ...
-					    'MenuSelectedFcn', {@cb_open_mbrain} ...
-					    );
-					menu_hide_brains = uimenu( ...
-					    'Parent', contextmenu, ...
-					    'Tag', 'MENU_HIDE_BRAINS', ...
-					    'Text', 'Hide Selected Brain-Plots', ...
-						'MenuSelectedFcn', {@cb_hide_mbrain} ...
-					    );
 					
 					set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 					
@@ -946,28 +907,10 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				case 16 % CompareEnsemblePP_CpDict.SHOW
 					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value    
-					    % figures for comparison figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('SHOW')
-					        end
-					    end
-					    
 					    % figures for comparison data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
 					    for i = 1:1:gui_cp_dict.get('LENGTH')
 					        gui = gui_cp_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('SHOW')
-					        end
-					    end
-					
-					    % figures for brain measures comparison figures
-					    gui_b_dict = pr.get('GUI_B_DICT');
-					    for i = 1:1:gui_b_dict.get('LENGTH')
-					        gui = gui_b_dict.get('IT', i);
 					        if gui.get('DRAWN')
 					            gui.get('SHOW')
 					        end
@@ -977,28 +920,10 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				case 17 % CompareEnsemblePP_CpDict.HIDE
 					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
-					    % figures for measure figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('HIDE')
-					        end
-					    end
-					    
 					    % figures for measure data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
 					    for i = 1:1:gui_cp_dict.get('LENGTH')
 					        gui = gui_cp_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('HIDE')
-					        end
-					    end
-					
-					    % figures for measure brain figures
-					    gui_b_dict = pr.get('GUI_B_DICT');
-					    for i = 1:1:gui_b_dict.get('LENGTH')
-					        gui = gui_b_dict.get('IT', i);
 					        if gui.get('DRAWN')
 					            gui.get('HIDE')
 					        end
@@ -1015,28 +940,10 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				case 19 % CompareEnsemblePP_CpDict.CLOSE
 					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
-					    % figures for measure figures
-					    gui_f_dict = pr.get('GUI_F_DICT');
-					    for i = 1:1:gui_f_dict.get('LENGTH')
-					        gui = gui_f_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('CLOSE')
-					        end
-					    end
-					    
 					    % figures for measure data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
 					    for i = 1:1:gui_cp_dict.get('LENGTH')
 					        gui = gui_cp_dict.get('IT', i);
-					        if gui.get('DRAWN')
-					            gui.get('CLOSE')
-					        end
-					    end
-					
-					    % figures for brain measures comparison figures
-					    gui_b_dict = pr.get('GUI_B_DICT');
-					    for i = 1:1:gui_b_dict.get('LENGTH')
-					        gui = gui_b_dict.get('IT', i);
 					        if gui.get('DRAWN')
 					            gui.get('CLOSE')
 					        end
@@ -1129,7 +1036,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
-			    gui_f_dict = pr.memorize('GUI_F_DICT');
+			    gui_cp_dict = pr.memorize('GUI_CP_DICT');
 			    
 			    selected = pr.get('SELECTED');
 				for s = 1:1:length(selected)
@@ -1138,28 +1045,36 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			        measure = m_list{i}; % also key
 			
 			        cp = c.get('COMPARISON', measure);
+			        cp.get('C').get('A1').get('GRAPH_TEMPLATE').memorize('A');
 			        
-			        if ~gui_f_dict.get('CONTAINS_KEY', measure)
-			            gui = GUIFig( ...
+			        if ~gui_cp_dict.get('CONTAINS_KEY', measure)
+			            gui = GUIElement( ...
 			                'ID', measure, ... % this is the dictionary key
-			                'PF', cp.get('PFC'), ...
+			                'PF', cp, ... % .get('PFC'), ...
 			                'POSITION', [ ...
 			                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
 			                    y0(f, 'normalized') ...
-			                    w(f, 'normalized') * 3 ...
+			                    w(f, 'normalized') ...
 			                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
 			                    ], ...
 			                'WAITBAR', pr.getCallback('WAITBAR'), ...
 			                'CLOSEREQ', false ...
 			                );
-			            gui_f_dict.get('ADD', gui)
+			            gui_cp_dict.get('ADD', gui)
 			        end
 			        
-			        gui = gui_f_dict.get('IT', measure);
+			        gui = gui_cp_dict.get('IT', measure);
 			        if ~gui.get('DRAWN')
 			            gui.get('DRAW')
 			        end
-			        gui.get('SHOW')
+			        gui_pfc = gui.get('PE').get('PR_DICT').get('IT', 'PFC').memorize('GUI_ITEM');
+			    
+			        if ~gui_pfc.get('DRAWN')
+			            gui_pfc.get('DRAW')
+			        end
+			
+			        gui_pfc.get('SHOW')
+				
 			    end
 			end
 			function cb_hide_plots(~, ~)
@@ -1167,7 +1082,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			    g = c.get('A1').get('GRAPH_TEMPLATE');
 			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
-			    gui_f_dict = pr.memorize('GUI_F_DICT');
+			    gui_cp_dict = pr.memorize('GUI_CP_DICT');
 			
 			    selected = pr.get('SELECTED');
 			    for s = 1:1:length(selected)
@@ -1175,10 +1090,11 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			        
 			        measure = m_list{i}; % also key
 			        
-			        if gui_f_dict.get('CONTAINS_KEY', measure)
-			            gui = gui_f_dict.get('IT', measure);
-			            if gui.get('DRAWN')
-			                gui.get('HIDE')
+			        if gui_cp_dict.get('CONTAINS_KEY', measure)
+			            gui = gui_cp_dict.get('IT', measure);
+			            gui_pfc = gui.get('PE').get('PR_DICT').get('IT', 'PFC').memorize('GUI_ITEM');
+			            if gui_pfc.get('DRAWN')
+			                gui_pfc.get('HIDE')
 			            end
 			        end
 			    end
@@ -1277,7 +1193,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
 			
-			    gui_b_dict = pr.memorize('GUI_B_DICT');
+			    gui_cp_dict = pr.memorize('GUI_CP_DICT');
 			
 			    selected = pr.get('SELECTED');
 				for s = 1:1:length(selected)
@@ -1287,28 +1203,34 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			        cp = c.get('COMPARISON', measure);
 			
-			        if ~gui_b_dict.get('CONTAINS_KEY', measure)
-			            gui = GUIFig( ...
+			        if ~gui_cp_dict.get('CONTAINS_KEY', measure)
+			            gui = GUIElement( ...
 			                'ID', measure, ... % this is the dictionary key
-			                'PF', cp.get('PFB'), ...
+			                'PF', cp, ... %.get('PFB'), ...
 			                'POSITION', [ ...
 			                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
 			                    y0(f, 'normalized') ...
-			                    w(f, 'normalized') * 3 ...
+			                    w(f, 'normalized')...
 			                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
 			                    ], ...
 			                'WAITBAR', pr.getCallback('WAITBAR'), ...
 			                'CLOSEREQ', false ...
 			                );
-			            gui_b_dict.get('ADD', gui)
+			            gui_cp_dict.get('ADD', gui)
 			        end
 			
-			        gui = gui_b_dict.get('IT', measure);
+			        gui = gui_cp_dict.get('IT', measure);
 			        if ~gui.get('DRAWN')
 			            gui.get('DRAW')
 			        end
-			        gui.get('SHOW')
-			    end
+			        gui_pfbg = gui.get('PE').get('PR_DICT').get('IT', 'PFB').memorize('GUI_ITEM');
+			    
+			        if ~gui_pfbg.get('DRAWN')
+			            gui_pfbg.get('DRAW')
+			        end
+			
+			        gui_pfbg.get('SHOW')
+			    end    
 			end
 			
 			function cb_hide_mbrain(~, ~)
@@ -1316,7 +1238,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			    g = c.get('A1').get('GRAPH_TEMPLATE');
 			    m_list = g.get('COMPATIBLE_MEASURES');
 			    
-			    gui_b_dict = pr.memorize('GUI_B_DICT');
+			    gui_cp_dict = pr.memorize('GUI_CP_DICT');
 			
 			    selected = pr.get('SELECTED');
 			    for s = 1:1:length(selected)
@@ -1324,10 +1246,11 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			        
 			        measure = m_list{i}; % also key
 			        
-			        if gui_b_dict.get('CONTAINS_KEY', measure)
-			            gui = gui_b_dict.get('IT', measure);
-			            if gui.get('DRAWN')
-			                gui.get('HIDE')
+			        if gui_cp_dict.get('CONTAINS_KEY', measure)
+			            gui = gui_cp_dict.get('IT', measure);
+			            gui_pfbg = gui.get('PE').get('PR_DICT').get('IT', 'PFB').memorize('GUI_ITEM');
+			            if gui_pfbg.get('DRAWN')
+			                gui_pfbg.get('HIDE')
 			            end
 			        end
 			    end

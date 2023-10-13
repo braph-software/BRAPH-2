@@ -585,8 +585,7 @@ function cb_open_mbrain(~, ~)
         end
 
         gui_pfbg.get('SHOW')
-	end
-    end
+    end    
 end
 
 function cb_hide_mbrain(~, ~)
