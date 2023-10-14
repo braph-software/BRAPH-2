@@ -4,7 +4,7 @@
 
 For *structural multiplex data*, we will upload a folder containing the structural files from different modalities (layers) for different brain areas across subjects that belong to the same group. For example, the structural values could correspond to cortical thickness or gray matter volumes obtained from T1-weighted MRI data, brain perfusion in ASL, or abnormal protein deposition in static PET data. Then a connectivity matrix is computed using correlations in structural values between each pair of brain regions for each layer, and then the layers will be integrated in a multiplex graph. This Tutorial explains how to prepare and work with this kind of data.
 
-> ![GUI for a group of subjects with structural multiplex data](fig01.jpg)
+![GUI for a group of subjects with structural multiplex data](fig01.jpg)
 > 
 > **Figure 1. GUI for a group of subjects with structural multiplex data.**
 > Full graphical user interface to upload a group of subjects with structural multiplex data in BRAPH 2.0.
@@ -22,7 +22,7 @@ create_data_FUN_MP_TXT()  % generates the example structural multiplex TXT data 
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
 
-> ![Upload the data of a group of subjects](fig02.jpg)
+![Upload the data of a group of subjects](fig02.jpg)
 > 
 > **Figure 2. Upload the data of a group of subjects.**
 > Steps to upload a group of subjects with structural multiplex data using the GUI and an example dataset:
@@ -49,7 +49,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 
 After completing the steps described in the Figure 2, you can see the data as shown in Figure 3a, and change the Group ID, name, and notes as in Figure 3b.
 
-> ![Edit the group metadata](fig03.jpg)
+![Edit the group metadata](fig03.jpg)
 > 
 > **Figure 3. Edit the group metadata.** 
 > **a** The GUI of the group's structural multiplex data.
@@ -59,7 +59,7 @@ After completing the steps described in the Figure 2, you can see the data as sh
 
 Finally, you can open each subject's structural multiplex values by selecting the subject, right-click, and select "Open selection" as shown in Figure 4a, which shows the structural values from layer 1 in Figure 4b. Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the structural multiplex values.
 
-> ![Edit the individual subject data](fig04.jpg)
+![Edit the individual subject data](fig04.jpg)
 > 
 > **Figure 4. Edit the individual subject data.** 
 > **a** Each subject's structural multiplex values can be opened by selecting the subject,  right-click, and select "Open selection".
@@ -69,7 +69,7 @@ Finally, you can open each subject's structural multiplex values by selecting th
 
 To be able to import structural multiplex data into BRAPH 2.0, you need to include the structural values of each layer for all subjects in a single file in excel or text format. All structural layers' files should be inside one group folder. Below you can see how this file should look like.
 
-> ![Data preparation](fig05.jpg)
+![Data preparation](fig05.jpg)
 >
 > **Figure 5. Data preparation.**
 > The data organization should follow this format:
@@ -87,7 +87,7 @@ When analyzing data, it's a common practice to incorporate *variables of interes
   - Row 2: Categories separated by a return (only for categorical variables of interest, like "Sex" and "Education").
   - Subsequent rows: The values of the variable of interest for each subject.
 
-> ![Edit the Covariates](fig06.jpg)
+![Edit the Covariates](fig06.jpg)
 >
 > **Figure 6. Edit the Covariates.**
 > The editable information in the Covariates file includes:
