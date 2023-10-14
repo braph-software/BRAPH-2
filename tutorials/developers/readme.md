@@ -26,7 +26,9 @@ Developers can also edit the example scripts provided with the software to have 
 
 ## Expanding BRAPH 2.0 with New Functionalities
 
-BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. Here are some of the ways you can extend BRAPH 2.0:
+BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. An overview of the software architecture can be found in [General Developer Tutorial for BRAPH 2.0](dev_intro/dev_intro.pdf)
+
+Here are some of the specific ways you can extend BRAPH 2.0:
 
 - **Graphs**: Developers can implement new graph types by extending the `Graph` element. The [Developer Tutorial to Implement a New Graph](dev_graph/dev_graph.pdf) provides a step-by-step guide on how to create new graph types.
 
