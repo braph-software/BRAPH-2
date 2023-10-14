@@ -23,6 +23,16 @@
 
 The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend the functionalities of the software. All objects in BRAPH~2.0 are derived from a base object called Element. The core code includes the compiler (\code{genesis}), the essential source code (\code{src}), and the GUI functionalities (\code{gui}). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
+\section{Genesis}
+
+explain genesis process and concept of elements with pseudo code 
+
+Need for two compilations and hardcoding
+
+braph2genesis
+
+regenerate + explain when recompile necessary 
+
 \section{Elements}
 
 BRAPH~2.0 is a compiled object-oriented programming software.
@@ -33,57 +43,63 @@ though it is possible to create instances of Element, typically
 one uses its subclasses.
 In this section, we will see how to implement a new element.
 
-\subsection{Category of a Property}
+Overview 
 
+Element, NoValue, Callback, Concrete Element + FIG
+
+\begin{tcolorbox}[
+	title=Property Categories
+]
 The category determines for what and how a property.
 The possible categories are:
- \begin{description}
+\begin{description} 
+ 	\item[\code{CONSTANT}] Static constant equal for all instances of the element. It allows incoming callbacks.
  
- 	\item[\code{CONSTANT}] Static constant equal for all instances of the element. It allows incoming callbacks. It is cloned (implicitly).
+ 	\item[\code{METADATA}] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
  
- 	\item[\code{METADATA}] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not cloned. It is not locked when a result is calculated.
+ 	\item[\code{PARAMETER}] Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
  
- 	\item[\code{PARAMETER}]    Parameter used to calculate the results of the element.
-                 It allows incoming and outgoing callbacks.
-                 It can be cloned.
-                 It is locked when a result is calculated.
+ 	\item[\code{DATA}] Data used to calculate the results of the element. It is NoValue when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
  
- 	\item[\code{DATA}]         Data used to calculate the results of the element 
-                 It ic NoValue when not set.
-                 It allows incoming and outgoing callbacks.
-                 It is not cloned.
-                 It is locked when a result is calculated.
+ 	\item[\code{RESULT}] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is NoValue when not calculated. It allows incoming callbacks.
  
- 	\item[\code{RESULT}]       Result calculated by the element using parameters and data.
-                 The calculation of a result locks the element.
-                 It is NoValue when not calculated. 
-                 It allows incoming callbacks.
+ 	\item[\code{QUERY}] Query result calculated by the element. The calculation of a query does NOT lock the element. It is NoValue when not calculated. It does not allow callbacks.
  
- 	\item[\code{QUERY}]        Query result calculated by the element.
-                 The calculation of a query does NOT lock the element.
-                 It si NoValue when not calculated. 
-                 It does not allow callbacks.
+ 	\item[\code{EVANESCENT}] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is NoValue when not calculated. It does not allow callbacks.
  
- 	\item[\code{EVANESCENT}]   Evanescent variable calculated at runtime (typically
-                 employed for handles of GUI components). 
-                 It is NoValue when not calculated. 
-                 It does not allow callbacks.
- 
- 	\item[\code{FIGURE}]       Parameter used to plot the results in a figure.
-                 It allows incoming and outgoing callbacks.
-                 It is not cloned.
-                 It is not locked when a result is calculated.
+ 	\item[\code{FIGURE}] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
                 
- 	\item[\code{GUI}]          Parameter used by the graphical user interface (GUI).
-                 It allows incoming and outgoing callbacks.
-                 It is not cloned.
-                 It is not locked when a result is calculated.
+ 	\item[\code{GUI}] Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 \end{description}
+\end{tcolorbox}
 
-\subsection{Format of a Property}
+Box Format of Properties
 
-\subsection{Create Elements}
+Property lifecycle: get, set, memorize, lock
 
+Box all tokens 
+
+Box special tokens 
+
+\section{Overview of Elements}
+
+Explain element structure + FIG
+
+\section{Implementation of an Element}
+
+\subsection{Concrete Element extension}
+
+basic header and basic props
+
+show how it works, set, get, memorize, lock
+
+\subsection{Results, Data, Parameters}
+
+locking, seeded randomness
+
+\subsection{Query}
+
+\subsection{Evanescent, Gui, Figure}
 
 %\bibliography{biblio}
 %\bibliographystyle{plainnat}
