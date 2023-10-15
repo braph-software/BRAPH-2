@@ -12,17 +12,14 @@
 
 \begin{abstract}
 \noindent
-...
+The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend its functionalities. All objects in BRAPH~2.0 are derived from a base object called Element. Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated also into the GUI.
+In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the elements are strcutured, and finally we will provide examples of how new elements can be implemented.
 \end{abstract}
 
 \tableofcontents
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Software architecture}
-
-The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend the functionalities of the software. All objects in BRAPH~2.0 are derived from a base object called Element. The core code includes the compiler (\code{genesis}), the essential source code (\code{src}), and the GUI functionalities (\code{gui}). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
-
 \section{Genesis}
 
 explain genesis process and concept of elements with pseudo code 
@@ -145,6 +142,8 @@ Box all tokens
 Box special tokens 
 
 \section{Overview of Elements}
+
+The core code includes the compiler (\code{genesis}), the essential source code (\code{src}), and the GUI functionalities (\code{gui}). 
 
 Explain element structure + FIG
 
