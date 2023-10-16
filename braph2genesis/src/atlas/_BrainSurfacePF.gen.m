@@ -1,5 +1,5 @@
 %% ¡header!
-BrainSurfacePF < PanelFig (pf, panel figure for brain surface) is a plot of a brain surfce.
+BrainSurfacePF < PanelFig (pf, panel figure for brain surface) is a panel figure that manages the plot of a brain surfce.
 
 %%% ¡description!
 A Panel Figure for Brain Surface (BrainSurfacePF) manages the plot of the 
@@ -215,7 +215,7 @@ if value
 end
 
 %%% ¡prop!
-H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain surface.
 %%%% ¡calculate!
 toolbar = pf.memorize('H_TOOLBAR');
 if check_graphics(toolbar, 'uitoolbar')
