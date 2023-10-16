@@ -181,6 +181,14 @@ if value
 % % %                 end
 % % %             end
     end
+
+    % fdr
+    if pr.get('TABLEFDR')
+        [~, mask] = fdr(value, pr.get('TABLEQVALUE'));
+        s = uistyle("BackgroundColor", [1 0.6 0.6]);
+        addStyle(pr.get('TABLE'), s, "cell", mask);
+    end
+    
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()
@@ -405,6 +413,16 @@ true
 TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
 %%%% ¡default!
 s(20)
+
+%%% ¡prop!
+TABLEQVALUE (gui, scalar) is the mask value of the table use in fdr
+%%%% ¡default!
+0.05
+
+%%% ¡prop!
+TABLEFDR (gui, logical) is the mask value of the table use in fdr
+%%%% ¡default!
+false
 
 %%% ¡prop!
 TABLE (evanescent, handle) is the alpha value edit field.
