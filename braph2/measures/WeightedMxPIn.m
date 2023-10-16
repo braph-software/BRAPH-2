@@ -3,7 +3,7 @@ classdef WeightedMxPIn < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity 
-	%   of its number of inward neighbours across the layers.
+	%   of its number of inward neighbors across the layers.
 	%
 	% The list of WeightedMxPIn properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex In-Participation.
@@ -528,7 +528,7 @@ classdef WeightedMxPIn < Measure
 				case 2 % WeightedMxPIn.NAME
 					prop_default = 'Weighted Multiplex In-Participation';
 				case 3 % WeightedMxPIn.DESCRIPTION
-					prop_default = 'The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
+					prop_default = 'The Weighted Multiplex In-Participation (WeightedMxPIn) of a graph is the nodal homogeneity of its number of inward neighbors across the layers.';
 				case 4 % WeightedMxPIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxPIn.getPropSettings(prop));
 				case 5 % WeightedMxPIn.ID

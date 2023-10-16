@@ -2,7 +2,7 @@ classdef Diameter < Measure
 	%Diameter is the graph Diameter.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The diameter is the maximum eccentricity among the vertices within a layer.
+	% The Diameter (Diameter) is the maximum eccentricity among the vertices within a layer.
 	%
 	% The list of Diameter properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Diameter.
@@ -537,7 +537,7 @@ classdef Diameter < Measure
 				case 2 % Diameter.NAME
 					prop_default = 'Diameter';
 				case 3 % Diameter.DESCRIPTION
-					prop_default = 'The Diameter is the maximum eccentricity among the vertices within a layer.';
+					prop_default = 'The Diameter (Diameter) is the maximum eccentricity among the vertices within a layer.';
 				case 5 % Diameter.ID
 					prop_default = 'Diameter ID';
 				case 6 % Diameter.LABEL

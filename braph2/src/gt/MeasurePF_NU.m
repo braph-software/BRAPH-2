@@ -746,18 +746,18 @@ classdef MeasurePF_NU < MeasurePF
 			switch prop
 				case 27 % MeasurePF_NU.SETUP
 					x = pf.get('M').get('G').get('APARTITIONTICKS');
-                    g = pf.get('M').get('G');
-                    node = pf.get('NODE');
-                    layer = pf.get('LAYER');
-                    m = cellfun(@(x) x(node), pf.get('M').get('M'))';
-                    layers_num = length(g.get('ALAYERTICKS'));
-                    m2 = zeros(1, length(x));
-                    count=1;
-                    for i=layer:layers_num:g.get('LAYERNUMBER')
-                        m2(count) = m(i);
-                        count = count + 1;
-                    end
-                    pf.memorize('ST_LINE').set('X', x, 'Y', m2)
+					g = pf.get('M').get('G');
+					node = pf.get('NODE');
+					layer = pf.get('LAYER');
+					m = cellfun(@(x) x(node), pf.get('M').get('M'))';
+					layers_num = length(g.get('ALAYERTICKS'));
+					m2 = zeros(1, length(x));
+					count=1;
+					for i=layer:layers_num:g.get('LAYERNUMBER')
+					    m2(count) = m(i);
+					    count = count + 1;
+					end
+					pf.memorize('ST_LINE').set('X', x, 'Y', m2)
 					
 					if ~isempty(m2)
 					    if isempty(x) 

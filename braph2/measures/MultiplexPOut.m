@@ -3,7 +3,7 @@ classdef MultiplexPOut < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward 
-	%  neighbours of a node across the layers.
+	%  neighbors of a node across the layers.
 	%
 	% The list of MultiplexPOut properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Out-Participation.
@@ -528,7 +528,7 @@ classdef MultiplexPOut < Measure
 				case 2 % MultiplexPOut.NAME
 					prop_default = 'Multiplex Out-Participation';
 				case 3 % MultiplexPOut.DESCRIPTION
-					prop_default = 'The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward neighbours of a node across the layers.';
+					prop_default = 'The Multiplex Out-Participation (MultiplexPOut) is the homogeneity of the number of outward neighbors of a node across the layers.';
 				case 4 % MultiplexPOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPOut.getPropSettings(prop));
 				case 5 % MultiplexPOut.ID

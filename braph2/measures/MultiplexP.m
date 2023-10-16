@@ -3,7 +3,7 @@ classdef MultiplexP < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of 
-	%  neighbours of a node across the layers. 
+	%  neighbors of a node across the layers. 
 	% It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] 
 	%  where L is the number of layers, ki(l) is the degree in the l-th 
 	%  layer and oi is the overlapping degree of the node. 
@@ -533,7 +533,7 @@ classdef MultiplexP < Measure
 				case 2 % MultiplexP.NAME
 					prop_default = 'MultiplexParticipation';
 				case 3 % MultiplexP.DESCRIPTION
-					prop_default = 'The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of neighbours of a node across the layers. It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] where L is the number of layers, ki(l) is the degree in the l-th layer and oi is the overlapping degree of the node. Pi = 1 when the degree is the same in all layers and Pi = 0 when a node has non-zero degree in only one layer.';
+					prop_default = 'The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of neighbors of a node across the layers. It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] where L is the number of layers, ki(l) is the degree in the l-th layer and oi is the overlapping degree of the node. Pi = 1 when the degree is the same in all layers and Pi = 0 when a node has non-zero degree in only one layer.';
 				case 4 % MultiplexP.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexP.getPropSettings(prop));
 				case 5 % MultiplexP.ID

@@ -2,7 +2,7 @@ classdef Strength < Measure
 	%Strength is the graph Strength.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Strength of a graph is the sum of all weights of the edges connected to 
+	% The Strength (Strength) of a graph is the sum of all weights of the edges connected to 
 	%  a node within a layer.
 	%
 	% The list of Strength properties is:
@@ -528,7 +528,7 @@ classdef Strength < Measure
 				case 2 % Strength.NAME
 					prop_default = 'Strength';
 				case 3 % Strength.DESCRIPTION
-					prop_default = 'The Strength of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
+					prop_default = 'The Strength (Strength) of a graph is the sum of all weights of the edges connected to a node within a layer.';
 				case 4 % Strength.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Strength.getPropSettings(prop));
 				case 5 % Strength.ID

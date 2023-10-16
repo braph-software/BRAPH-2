@@ -2,7 +2,7 @@ classdef PathLengthOutAv < PathLengthOut
 	%PathLengthOutAv is the graph Average Out-Path Length.
 	% It is a subclass of <a href="matlab:help PathLengthOut">PathLengthOut</a>.
 	%
-	% The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes without a layer.
+	% The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes within a layer.
 	%
 	% The list of PathLengthOutAv properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Path Length.
@@ -529,7 +529,7 @@ classdef PathLengthOutAv < PathLengthOut
 				case 2 % PathLengthOutAv.NAME
 					prop_default = 'Average Out-Path Length';
 				case 3 % PathLengthOutAv.DESCRIPTION
-					prop_default = 'The Average Out-Path Length (PathLengthOutAv) is the average shortest PathLengthOutAv of one node to all other nodes within a layer.';
+					prop_default = 'The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes within a layer.';
 				case 4 % PathLengthOutAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthOutAv.getPropSettings(prop));
 				case 5 % PathLengthOutAv.ID

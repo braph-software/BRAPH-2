@@ -690,7 +690,7 @@ classdef EdgeNumDist < Measure
 			            L1(:, V) = 0; % no in-edges as already shortest
 			    
 			            for v = V
-			                T = find(L1(v, :)); % neighbours of shortest nodes
+			                T = find(L1(v, :)); % neighbors of shortest nodes
 			                [d, wi] = min([D(u, T);D(u, v)+L1(v, T)]);
 			                D(u, T) = d; % smallest of old/new path lengths
 			                ind = T(wi==2); % indices of lengthened paths
