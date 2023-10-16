@@ -104,12 +104,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultilayerWD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultilayerWD.NOTES
 %%%% ¡title!
 Graph NOTES

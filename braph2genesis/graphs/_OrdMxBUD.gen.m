@@ -114,12 +114,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-OrdMxBUD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 OrdMxBUD.NOTES
 %%%% ¡title!
 Graph NOTES

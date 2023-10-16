@@ -113,12 +113,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexBUD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexBUD.NOTES
 %%%% ¡title!
 Graph NOTES

@@ -82,12 +82,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-GraphBU.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 GraphBU.NOTES
 %%%% ¡title!
 Graph NOTES

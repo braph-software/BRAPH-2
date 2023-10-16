@@ -108,12 +108,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexWU.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexWU.NOTES
 %%%% ¡title!
 Graph NOTES

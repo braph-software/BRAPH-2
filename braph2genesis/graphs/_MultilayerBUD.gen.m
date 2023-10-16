@@ -124,12 +124,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultilayerBUD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultilayerBUD.NOTES
 %%%% ¡title!
 Graph NOTES

@@ -74,12 +74,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-OrdMlBD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 OrdMlBD.NOTES
 %%%% ¡title!
 Graph NOTES

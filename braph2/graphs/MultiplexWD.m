@@ -7,49 +7,6 @@ classdef MultiplexWD < Graph
 	%  number between 0 and 1 and indicating the strength of the connection.
 	% There are connections between layers connecting the corresponding nodes.
 	%
-	% The list of MultiplexWD properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex weighted directed graph.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the multiplex weighted directed graph.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.
-	%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).
-	%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).
-	%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
-	%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
-	%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-	%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-	%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
-	%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
-	%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
-	%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
-	%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
-	%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-	%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-	%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-	%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-	%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
-	%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-	%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-	%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-	%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-	%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-	%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-	%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-	%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-	%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
-	%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
-	%  <strong>37</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
-	%  <strong>38</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
-	%  <strong>39</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-	%  <strong>40</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
-	%  <strong>41</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
-	%
 	% MultiplexWD methods (constructor):
 	%  MultiplexWD - constructor
 	%
@@ -137,35 +94,35 @@ classdef MultiplexWD < Graph
 	%
 	
 	properties (Constant) % properties
-		B = 36; %CET: Computational Efficiency Trick
+		B = Graph.getPropNumber() + 1;
 		B_TAG = 'B';
-		B_CATEGORY = 4;
-		B_FORMAT = 16;
+		B_CATEGORY = Category.DATA;
+		B_FORMAT = Format.CELL;
 		
-		SEMIPOSITIVIZE_RULE = 37; %CET: Computational Efficiency Trick
+		SEMIPOSITIVIZE_RULE = Graph.getPropNumber() + 2;
 		SEMIPOSITIVIZE_RULE_TAG = 'SEMIPOSITIVIZE_RULE';
-		SEMIPOSITIVIZE_RULE_CATEGORY = 3;
-		SEMIPOSITIVIZE_RULE_FORMAT = 5;
+		SEMIPOSITIVIZE_RULE_CATEGORY = Category.PARAMETER;
+		SEMIPOSITIVIZE_RULE_FORMAT = Format.OPTION;
 		
-		STANDARDIZE_RULE = 38; %CET: Computational Efficiency Trick
+		STANDARDIZE_RULE = Graph.getPropNumber() + 3;
 		STANDARDIZE_RULE_TAG = 'STANDARDIZE_RULE';
-		STANDARDIZE_RULE_CATEGORY = 3;
-		STANDARDIZE_RULE_FORMAT = 5;
+		STANDARDIZE_RULE_CATEGORY = Category.PARAMETER;
+		STANDARDIZE_RULE_FORMAT = Format.OPTION;
 		
-		ATTEMPTSPEREDGE = 39; %CET: Computational Efficiency Trick
+		ATTEMPTSPEREDGE = Graph.getPropNumber() + 4;
 		ATTEMPTSPEREDGE_TAG = 'ATTEMPTSPEREDGE';
-		ATTEMPTSPEREDGE_CATEGORY = 3;
-		ATTEMPTSPEREDGE_FORMAT = 11;
+		ATTEMPTSPEREDGE_CATEGORY = Category.PARAMETER;
+		ATTEMPTSPEREDGE_FORMAT = Format.SCALAR;
 		
-		NUMBEROFWEIGHTS = 40; %CET: Computational Efficiency Trick
+		NUMBEROFWEIGHTS = Graph.getPropNumber() + 5;
 		NUMBEROFWEIGHTS_TAG = 'NUMBEROFWEIGHTS';
-		NUMBEROFWEIGHTS_CATEGORY = 3;
-		NUMBEROFWEIGHTS_FORMAT = 11;
+		NUMBEROFWEIGHTS_CATEGORY = Category.PARAMETER;
+		NUMBEROFWEIGHTS_FORMAT = Format.SCALAR;
 		
-		RANDOMIZATION = 41; %CET: Computational Efficiency Trick
+		RANDOMIZATION = Graph.getPropNumber() + 6;
 		RANDOMIZATION_TAG = 'RANDOMIZATION';
-		RANDOMIZATION_CATEGORY = 6;
-		RANDOMIZATION_FORMAT = 16;
+		RANDOMIZATION_CATEGORY = Category.QUERY;
+		RANDOMIZATION_FORMAT = Format.CELL;
 	end
 	methods % constructor
 		function g = MultiplexWD(varargin)
@@ -178,48 +135,6 @@ classdef MultiplexWD < Graph
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of MultiplexWD properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex weighted directed graph.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the multiplex weighted directed graph.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.
-			%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).
-			%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).
-			%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
-			%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
-			%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-			%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-			%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
-			%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
-			%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
-			%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
-			%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
-			%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-			%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-			%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-			%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-			%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.
-			%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-			%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-			%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-			%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-			%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-			%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-			%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-			%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-			%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
-			%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
-			%  <strong>37</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
-			%  <strong>38</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
-			%  <strong>39</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-			%  <strong>40</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
-			%  <strong>41</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
 			%
 			% See also Category, Format.
 			
@@ -257,7 +172,7 @@ classdef MultiplexWD < Graph
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'MultiplexWD' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('MultiplexWD', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of multiplex weighted directed graph.
@@ -278,30 +193,62 @@ classdef MultiplexWD < Graph
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
+				prop_list = [ ...
+					Graph.getProps() ...
+						MultiplexWD.B ...
+						MultiplexWD.SEMIPOSITIVIZE_RULE ...
+						MultiplexWD.STANDARDIZE_RULE ...
+						MultiplexWD.ATTEMPTSPEREDGE ...
+						MultiplexWD.NUMBEROFWEIGHTS ...
+						MultiplexWD.RANDOMIZATION ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 32];
-				case 2 % Category.METADATA
-					prop_list = [6 7 14 16 18 20 22];
-				case 3 % Category.PARAMETER
-					prop_list = [4 24 25 37 38 39 40];
-				case 4 % Category.DATA
-					prop_list = [5 36];
-				case 5 % Category.RESULT
-					prop_list = [26 28 29 30 31];
-				case 6 % Category.QUERY
-					prop_list = [8 10 11 12 13 15 17 19 21 23 27 33 41];
-				case 9 % Category.GUI
-					prop_list = [34 35];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Graph.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Graph.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Graph.getProps(Category.PARAMETER) ...
+						MultiplexWD.SEMIPOSITIVIZE_RULE ...
+						MultiplexWD.STANDARDIZE_RULE ...
+						MultiplexWD.ATTEMPTSPEREDGE ...
+						MultiplexWD.NUMBEROFWEIGHTS ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Graph.getProps(Category.DATA) ...
+						MultiplexWD.B ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Graph.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Graph.getProps(Category.QUERY) ...
+						MultiplexWD.RANDOMIZATION ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Graph.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Graph.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Graph.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -322,31 +269,7 @@ classdef MultiplexWD < Graph
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 41;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 5;
-				case 2 % Category.METADATA
-					prop_number = 7;
-				case 3 % Category.PARAMETER
-					prop_number = 7;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 5;
-				case 6 % Category.QUERY
-					prop_number = 13;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(MultiplexWD.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in multiplex weighted directed graph/error.
@@ -374,14 +297,14 @@ classdef MultiplexWD < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == MultiplexWD.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiplexWD.'] ...
 					)
 			end
@@ -412,14 +335,15 @@ classdef MultiplexWD < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' })); %CET: Computational Efficiency Trick
+			multiplexwd_tag_list = cellfun(@(x) MultiplexWD.getPropTag(x), num2cell(MultiplexWD.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, multiplexwd_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for MultiplexWD.'] ...
 					)
 			end
@@ -445,7 +369,8 @@ classdef MultiplexWD < Graph
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' })); % tag = pointer %CET: Computational Efficiency Trick
+				multiplexwd_tag_list = cellfun(@(x) MultiplexWD.getPropTag(x), num2cell(MultiplexWD.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, multiplexwd_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -473,9 +398,24 @@ classdef MultiplexWD < Graph
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				multiplexwd_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' };
-				tag = multiplexwd_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case MultiplexWD.B
+						tag = MultiplexWD.B_TAG;
+					case MultiplexWD.SEMIPOSITIVIZE_RULE
+						tag = MultiplexWD.SEMIPOSITIVIZE_RULE_TAG;
+					case MultiplexWD.STANDARDIZE_RULE
+						tag = MultiplexWD.STANDARDIZE_RULE_TAG;
+					case MultiplexWD.ATTEMPTSPEREDGE
+						tag = MultiplexWD.ATTEMPTSPEREDGE_TAG;
+					case MultiplexWD.NUMBEROFWEIGHTS
+						tag = MultiplexWD.NUMBEROFWEIGHTS_TAG;
+					case MultiplexWD.RANDOMIZATION
+						tag = MultiplexWD.RANDOMIZATION_TAG;
+					otherwise
+						tag = getPropTag@Graph(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -500,9 +440,22 @@ classdef MultiplexWD < Graph
 			
 			prop = MultiplexWD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexwd_category_list = { 1  1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9  4  3  3  3  3  6 };
-			prop_category = multiplexwd_category_list{prop};
+			switch prop
+				case MultiplexWD.B
+					prop_category = MultiplexWD.B_CATEGORY;
+				case MultiplexWD.SEMIPOSITIVIZE_RULE
+					prop_category = MultiplexWD.SEMIPOSITIVIZE_RULE_CATEGORY;
+				case MultiplexWD.STANDARDIZE_RULE
+					prop_category = MultiplexWD.STANDARDIZE_RULE_CATEGORY;
+				case MultiplexWD.ATTEMPTSPEREDGE
+					prop_category = MultiplexWD.ATTEMPTSPEREDGE_CATEGORY;
+				case MultiplexWD.NUMBEROFWEIGHTS
+					prop_category = MultiplexWD.NUMBEROFWEIGHTS_CATEGORY;
+				case MultiplexWD.RANDOMIZATION
+					prop_category = MultiplexWD.RANDOMIZATION_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Graph(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -526,9 +479,22 @@ classdef MultiplexWD < Graph
 			
 			prop = MultiplexWD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexwd_format_list = { 2  2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8  16  5  5  11  11  16 };
-			prop_format = multiplexwd_format_list{prop};
+			switch prop
+				case MultiplexWD.B
+					prop_format = MultiplexWD.B_FORMAT;
+				case MultiplexWD.SEMIPOSITIVIZE_RULE
+					prop_format = MultiplexWD.SEMIPOSITIVIZE_RULE_FORMAT;
+				case MultiplexWD.STANDARDIZE_RULE
+					prop_format = MultiplexWD.STANDARDIZE_RULE_FORMAT;
+				case MultiplexWD.ATTEMPTSPEREDGE
+					prop_format = MultiplexWD.ATTEMPTSPEREDGE_FORMAT;
+				case MultiplexWD.NUMBEROFWEIGHTS
+					prop_format = MultiplexWD.NUMBEROFWEIGHTS_FORMAT;
+				case MultiplexWD.RANDOMIZATION
+					prop_format = MultiplexWD.RANDOMIZATION_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Graph(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -552,9 +518,52 @@ classdef MultiplexWD < Graph
 			
 			prop = MultiplexWD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexwd_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex weighted directed graph.'  'DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.'  'TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.'  'ID (data, string) is a few-letter code for the multiplex weighted directed graph.'  'LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.'  'NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.'  'TOSTRING (query, string) returns a string that represents the object.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition tick values.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
-			prop_description = multiplexwd_description_list{prop};
+			switch prop
+				case MultiplexWD.B
+					prop_description = 'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.';
+				case MultiplexWD.SEMIPOSITIVIZE_RULE
+					prop_description = 'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.';
+				case MultiplexWD.STANDARDIZE_RULE
+					prop_description = 'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.';
+				case MultiplexWD.ATTEMPTSPEREDGE
+					prop_description = 'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.';
+				case MultiplexWD.NUMBEROFWEIGHTS
+					prop_description = 'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.';
+				case MultiplexWD.RANDOMIZATION
+					prop_description = 'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.';
+				case MultiplexWD.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case MultiplexWD.NAME
+					prop_description = 'NAME (constant, string) is the name of the multiplex weighted directed graph.';
+				case MultiplexWD.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.';
+				case MultiplexWD.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.';
+				case MultiplexWD.ID
+					prop_description = 'ID (data, string) is a few-letter code for the multiplex weighted directed graph.';
+				case MultiplexWD.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.';
+				case MultiplexWD.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.';
+				case MultiplexWD.GRAPH_TYPE
+					prop_description = 'GRAPH_TYPE (constant, scalar) returns the graph type __Graph.MULTIPLEX__.';
+				case MultiplexWD.CONNECTIVITY_TYPE
+					prop_description = 'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.WEIGHTED__ * ones(layernumber).';
+				case MultiplexWD.DIRECTIONALITY_TYPE
+					prop_description = 'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.DIRECTED__ * ones(layernumber).';
+				case MultiplexWD.SELFCONNECTIVITY_TYPE
+					prop_description = 'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__ on the diagonal and __Graph.SELFCONNECTED__ off diagonal.';
+				case MultiplexWD.NEGATIVITY_TYPE
+					prop_description = 'NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).';
+				case MultiplexWD.A
+					prop_description = 'A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.';
+				case MultiplexWD.ALAYERLABELS
+					prop_description = 'ALAYERLABELS (query, stringlist) returns the layer labels for A.';
+				case MultiplexWD.COMPATIBLE_MEASURES
+					prop_description = 'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.';
+				otherwise
+					prop_description = getPropDescription@Graph(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -578,20 +587,20 @@ classdef MultiplexWD < Graph
 			
 			prop = MultiplexWD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % MultiplexWD.B
-					prop_settings = Format.getFormatSettings(16);
-				case 37 % MultiplexWD.SEMIPOSITIVIZE_RULE
+			switch prop
+				case MultiplexWD.B
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case MultiplexWD.SEMIPOSITIVIZE_RULE
 					prop_settings = {'zero', 'absolute'};
-				case 38 % MultiplexWD.STANDARDIZE_RULE
+				case MultiplexWD.STANDARDIZE_RULE
 					prop_settings = {'threshold' 'range'};
-				case 39 % MultiplexWD.ATTEMPTSPEREDGE
-					prop_settings = Format.getFormatSettings(11);
-				case 40 % MultiplexWD.NUMBEROFWEIGHTS
-					prop_settings = Format.getFormatSettings(11);
-				case 41 % MultiplexWD.RANDOMIZATION
-					prop_settings = Format.getFormatSettings(16);
-				case 4 % MultiplexWD.TEMPLATE
+				case MultiplexWD.ATTEMPTSPEREDGE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MultiplexWD.NUMBEROFWEIGHTS
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MultiplexWD.RANDOMIZATION
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case MultiplexWD.TEMPLATE
 					prop_settings = 'MultiplexWD';
 				otherwise
 					prop_settings = getPropSettings@Graph(prop);
@@ -619,37 +628,37 @@ classdef MultiplexWD < Graph
 			
 			prop = MultiplexWD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % MultiplexWD.B
+			switch prop
+				case MultiplexWD.B
 					prop_default = {[] []};
-				case 37 % MultiplexWD.SEMIPOSITIVIZE_RULE
-					prop_default = Format.getFormatDefault(5, MultiplexWD.getPropSettings(prop));
-				case 38 % MultiplexWD.STANDARDIZE_RULE
-					prop_default = Format.getFormatDefault(5, MultiplexWD.getPropSettings(prop));
-				case 39 % MultiplexWD.ATTEMPTSPEREDGE
+				case MultiplexWD.SEMIPOSITIVIZE_RULE
+					prop_default = Format.getFormatDefault(Format.OPTION, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.STANDARDIZE_RULE
+					prop_default = Format.getFormatDefault(Format.OPTION, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.ATTEMPTSPEREDGE
 					prop_default = 5;
-				case 40 % MultiplexWD.NUMBEROFWEIGHTS
+				case MultiplexWD.NUMBEROFWEIGHTS
 					prop_default = 10;
-				case 41 % MultiplexWD.RANDOMIZATION
-					prop_default = Format.getFormatDefault(16, MultiplexWD.getPropSettings(prop));
-				case 1 % MultiplexWD.ELCLASS
+				case MultiplexWD.RANDOMIZATION
+					prop_default = Format.getFormatDefault(Format.CELL, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.ELCLASS
 					prop_default = 'MultiplexWD';
-				case 2 % MultiplexWD.NAME
+				case MultiplexWD.NAME
 					prop_default = 'MultiplexWD';
-				case 3 % MultiplexWD.DESCRIPTION
+				case MultiplexWD.DESCRIPTION
 					prop_default = 'In a multiplex weighted directed (WD) graph, all layers have the same number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.';
-				case 4 % MultiplexWD.TEMPLATE
-					prop_default = Format.getFormatDefault(8, MultiplexWD.getPropSettings(prop));
-				case 5 % MultiplexWD.ID
+				case MultiplexWD.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.ID
 					prop_default = 'MultiplexWD ID';
-				case 6 % MultiplexWD.LABEL
+				case MultiplexWD.LABEL
 					prop_default = 'MultiplexWD label';
-				case 7 % MultiplexWD.NOTES
+				case MultiplexWD.NOTES
 					prop_default = 'MultiplexWD notes';
-				case 9 % MultiplexWD.GRAPH_TYPE
-					prop_default = 4;
-				case 32 % MultiplexWD.COMPATIBLE_MEASURES
-					prop_default = { 'AssortInIn'  'AssortInOut'  'AssortOutIn'  'AssortOutOut'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'DegreeIn'  'DegreeInAv'  'DegreeOut'  'DegreeOutAv'  'Distance'  'EccentricityIn'  'EccentricityInAv'  'EccentricityOut'  'EccentricityOutAv'  'EdgeBetwCentr'  'EdgeNumDist'  'EdgeOverlap'  'GlobalEfficiencyIn'  'GlobalEfficiencyInAv'  'GlobalEfficiencyOut'  'GlobalEfficiencyOutAv'  'KCore'  'KCorenessCentrality'  'MultiRC'  'MultiplexCP'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexPIn'  'MultiplexPOut'  'MultiplexRCDeg'  'MultiplexRCS'  'OverlappingDegIn'  'OverlappingDegInAv'  'OverlappingDegOut'  'OverlappingDegOutAv'  'OverlappingSIn'  'OverlappingSInAv'  'OverlappingSOut'  'OverlappingSOutAv'  'PathLengthIn'  'PathLengthInAv'  'PathLengthOut'  'PathLengthOutAv'  'RCDeg'  'RCS'  'RichClub'  'Richness'  'SCore'  'StrengthIn'  'StrengthInAv'  'StrengthOut'  'StrengthOutAv'  'Transitivity'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxPIn'  'WeightedMxPOut' };
+				case MultiplexWD.GRAPH_TYPE
+					prop_default = Graph.MULTIPLEX;
+				case MultiplexWD.COMPATIBLE_MEASURES
+					prop_default = getCompatibleMeasures('MultiplexWD');
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end
@@ -695,15 +704,15 @@ classdef MultiplexWD < Graph
 			% 
 			% G.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MultiplexWD:WrongInput
+			%  Error id: €BRAPH2.STR€:MultiplexWD:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  G.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of G.
-			%   Error id: BRAPH2:MultiplexWD:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiplexWD:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(MultiplexWD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexWD.
-			%   Error id: BRAPH2:MultiplexWD:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiplexWD:€BRAPH2.WRONG_INPUT€
 			%  G.CHECKPROP(MultiplexWD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexWD.
-			%   Error id: BRAPH2:MultiplexWD:WrongInput]
+			%   Error id: €BRAPH2.STR€:MultiplexWD:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(G) and Element.CHECKPROP('MultiplexWD')
 			%  are less computationally efficient.
@@ -714,22 +723,22 @@ classdef MultiplexWD < Graph
 			prop = MultiplexWD.getPropProp(pointer);
 			
 			switch prop
-				case 36 % MultiplexWD.B
-					check = Format.checkFormat(16, value, MultiplexWD.getPropSettings(prop));
-				case 37 % MultiplexWD.SEMIPOSITIVIZE_RULE
-					check = Format.checkFormat(5, value, MultiplexWD.getPropSettings(prop));
-				case 38 % MultiplexWD.STANDARDIZE_RULE
-					check = Format.checkFormat(5, value, MultiplexWD.getPropSettings(prop));
-				case 39 % MultiplexWD.ATTEMPTSPEREDGE
-					check = Format.checkFormat(11, value, MultiplexWD.getPropSettings(prop));
-				case 40 % MultiplexWD.NUMBEROFWEIGHTS
-					check = Format.checkFormat(11, value, MultiplexWD.getPropSettings(prop));
-				case 41 % MultiplexWD.RANDOMIZATION
-					check = Format.checkFormat(16, value, MultiplexWD.getPropSettings(prop));
-				case 4 % MultiplexWD.TEMPLATE
-					check = Format.checkFormat(8, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.B % __MultiplexWD.B__
+					check = Format.checkFormat(Format.CELL, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.SEMIPOSITIVIZE_RULE % __MultiplexWD.SEMIPOSITIVIZE_RULE__
+					check = Format.checkFormat(Format.OPTION, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.STANDARDIZE_RULE % __MultiplexWD.STANDARDIZE_RULE__
+					check = Format.checkFormat(Format.OPTION, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.ATTEMPTSPEREDGE % __MultiplexWD.ATTEMPTSPEREDGE__
+					check = Format.checkFormat(Format.SCALAR, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.NUMBEROFWEIGHTS % __MultiplexWD.NUMBEROFWEIGHTS__
+					check = Format.checkFormat(Format.SCALAR, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.RANDOMIZATION % __MultiplexWD.RANDOMIZATION__
+					check = Format.checkFormat(Format.CELL, value, MultiplexWD.getPropSettings(prop));
+				case MultiplexWD.TEMPLATE % __MultiplexWD.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, MultiplexWD.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= Graph.getPropNumber()
 						check = checkProp@Graph(prop, value);
 					end
 			end
@@ -738,8 +747,8 @@ classdef MultiplexWD < Graph
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexWD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexWD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiplexWD.getPropTag(prop) ' (' MultiplexWD.getFormatTag(MultiplexWD.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -750,19 +759,19 @@ classdef MultiplexWD < Graph
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 41 % MultiplexWD.RANDOMIZATION
+				case MultiplexWD.RANDOMIZATION % __MultiplexWD.RANDOMIZATION__
 					rng(g.get('RANDOM_SEED'), 'twister')
 					
 					if isempty(varargin)
@@ -783,41 +792,41 @@ classdef MultiplexWD < Graph
 					end
 					value = A;
 					
-				case 10 % MultiplexWD.CONNECTIVITY_TYPE
+				case MultiplexWD.CONNECTIVITY_TYPE % __MultiplexWD.CONNECTIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value =  ones(layernumber);
+					value = Graph.WEIGHTED * ones(layernumber);
 					
-				case 11 % MultiplexWD.DIRECTIONALITY_TYPE
+				case MultiplexWD.DIRECTIONALITY_TYPE % __MultiplexWD.DIRECTIONALITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value =  ones(layernumber);
+					value = Graph.DIRECTED * ones(layernumber);
 					
-				case 12 % MultiplexWD.SELFCONNECTIVITY_TYPE
+				case MultiplexWD.SELFCONNECTIVITY_TYPE % __MultiplexWD.SELFCONNECTIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = 2 * ones(layernumber);
-					value(1:layernumber+1:end) = 1;
+					value = Graph.SELFCONNECTED * ones(layernumber);
+					value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
 					
-				case 13 % MultiplexWD.NEGATIVITY_TYPE
+				case MultiplexWD.NEGATIVITY_TYPE % __MultiplexWD.NEGATIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value =  ones(layernumber);
+					value = Graph.NONNEGATIVE * ones(layernumber);
 					
-				case 26 % MultiplexWD.A
-					rng_settings_ = rng(); rng(g.getPropSeed(26), 'twister')
+				case MultiplexWD.A % __MultiplexWD.A__
+					rng_settings_ = rng(); rng(g.getPropSeed(MultiplexWD.A), 'twister')
 					
 					B = g.get('B'); %#ok<PROPLC>
 					L = length(B); %#ok<PROPLC> % number of layers
@@ -842,7 +851,7 @@ classdef MultiplexWD < Graph
 					
 					rng(rng_settings_)
 					
-				case 17 % MultiplexWD.ALAYERLABELS
+				case MultiplexWD.ALAYERLABELS % __MultiplexWD.ALAYERLABELS__
 					alayerlabels = g.get('LAYERLABELS');
 					if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
 					    alayerlabels = cellfun(@num2str, num2cell([1:1:g.get('LAYERNUMBER')]), 'uniformoutput', false);
@@ -850,7 +859,7 @@ classdef MultiplexWD < Graph
 					value = alayerlabels;
 					
 				otherwise
-					if prop <= 35
+					if prop <= Graph.getPropNumber()
 						value = calculateValue@Graph(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -876,25 +885,25 @@ classdef MultiplexWD < Graph
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 36 % MultiplexWD.B
-					pr = PanelPropCell('EL', g, 'PROP', 36, ...
-					    'TABLE_HEIGHT', 480, ...
+				case MultiplexWD.B % __MultiplexWD.B__
+					pr = PanelPropCell('EL', g, 'PROP', MultiplexWD.B, ...
+					    'TABLE_HEIGHT', s(40), ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', g.get('ALAYERLABELS'), ...
-					    'XSLIDERHEIGHT', 42, ...
+					    'XSLIDERHEIGHT', s(3.5), ...
 					    'YSLIDERSHOW', false, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});
 					
-				case 26 % MultiplexWD.A
-					pr = PanelPropCell('EL', g, 'PROP', 26, ...
-					    'TABLE_HEIGHT', 480, ...
+				case MultiplexWD.A % __MultiplexWD.A__
+					pr = PanelPropCell('EL', g, 'PROP', MultiplexWD.A, ...
+					    'TABLE_HEIGHT', s(40), ...
 					    'XYSLIDERLOCK', true, ... 
 					    'XSLIDERSHOW', false, ...
 					    'YSLIDERSHOW', true, ...
 					    'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					    'YSLIDERWIDTH', 60, ...
+					    'YSLIDERWIDTH', s(5), ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});

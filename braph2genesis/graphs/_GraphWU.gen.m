@@ -94,12 +94,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-GraphWU.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 GraphWU.NOTES
 %%%% ¡title!
 Graph NOTES

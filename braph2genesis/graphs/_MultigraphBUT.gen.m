@@ -101,12 +101,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultigraphBUT.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultigraphBUT.NOTES
 %%%% ¡title!
 Graph NOTES

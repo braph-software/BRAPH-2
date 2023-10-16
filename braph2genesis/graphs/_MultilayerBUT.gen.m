@@ -125,12 +125,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultilayerBUT.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultilayerBUT.NOTES
 %%%% ¡title!
 Graph NOTES

@@ -11,50 +11,6 @@ classdef OrdMlWU < Graph
 	% On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized.
 	% On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 	%
-	% The list of OrdMlWU properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted undirected graph.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multilayer weighted undirected graph.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multilayer weighted undirected graph.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multilayer weighted undirected graph.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-	%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER.
-	%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).
-	%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
-	%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
-	%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
-	%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-	%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-	%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
-	%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
-	%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
-	%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
-	%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
-	%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-	%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-	%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-	%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-	%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted undirected graph and the ordinal connections between layers.
-	%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-	%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-	%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-	%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-	%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-	%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-	%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-	%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-	%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
-	%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.
-	%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
-	%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
-	%  <strong>39</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
-	%  <strong>40</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-	%  <strong>41</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
-	%  <strong>42</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
-	%
 	% OrdMlWU methods (constructor):
 	%  OrdMlWU - constructor
 	%
@@ -142,40 +98,40 @@ classdef OrdMlWU < Graph
 	%
 	
 	properties (Constant) % properties
-		B = 36; %CET: Computational Efficiency Trick
+		B = Graph.getPropNumber() + 1;
 		B_TAG = 'B';
-		B_CATEGORY = 4;
-		B_FORMAT = 16;
+		B_CATEGORY = Category.DATA;
+		B_FORMAT = Format.CELL;
 		
-		SYMMETRIZE_RULE = 37; %CET: Computational Efficiency Trick
+		SYMMETRIZE_RULE = Graph.getPropNumber() + 2;
 		SYMMETRIZE_RULE_TAG = 'SYMMETRIZE_RULE';
-		SYMMETRIZE_RULE_CATEGORY = 3;
-		SYMMETRIZE_RULE_FORMAT = 5;
+		SYMMETRIZE_RULE_CATEGORY = Category.PARAMETER;
+		SYMMETRIZE_RULE_FORMAT = Format.OPTION;
 		
-		SEMIPOSITIVIZE_RULE = 38; %CET: Computational Efficiency Trick
+		SEMIPOSITIVIZE_RULE = Graph.getPropNumber() + 3;
 		SEMIPOSITIVIZE_RULE_TAG = 'SEMIPOSITIVIZE_RULE';
-		SEMIPOSITIVIZE_RULE_CATEGORY = 3;
-		SEMIPOSITIVIZE_RULE_FORMAT = 5;
+		SEMIPOSITIVIZE_RULE_CATEGORY = Category.PARAMETER;
+		SEMIPOSITIVIZE_RULE_FORMAT = Format.OPTION;
 		
-		STANDARDIZE_RULE = 39; %CET: Computational Efficiency Trick
+		STANDARDIZE_RULE = Graph.getPropNumber() + 4;
 		STANDARDIZE_RULE_TAG = 'STANDARDIZE_RULE';
-		STANDARDIZE_RULE_CATEGORY = 3;
-		STANDARDIZE_RULE_FORMAT = 5;
+		STANDARDIZE_RULE_CATEGORY = Category.PARAMETER;
+		STANDARDIZE_RULE_FORMAT = Format.OPTION;
 		
-		ATTEMPTSPEREDGE = 40; %CET: Computational Efficiency Trick
+		ATTEMPTSPEREDGE = Graph.getPropNumber() + 5;
 		ATTEMPTSPEREDGE_TAG = 'ATTEMPTSPEREDGE';
-		ATTEMPTSPEREDGE_CATEGORY = 3;
-		ATTEMPTSPEREDGE_FORMAT = 11;
+		ATTEMPTSPEREDGE_CATEGORY = Category.PARAMETER;
+		ATTEMPTSPEREDGE_FORMAT = Format.SCALAR;
 		
-		NUMBEROFWEIGHTS = 41; %CET: Computational Efficiency Trick
+		NUMBEROFWEIGHTS = Graph.getPropNumber() + 6;
 		NUMBEROFWEIGHTS_TAG = 'NUMBEROFWEIGHTS';
-		NUMBEROFWEIGHTS_CATEGORY = 3;
-		NUMBEROFWEIGHTS_FORMAT = 11;
+		NUMBEROFWEIGHTS_CATEGORY = Category.PARAMETER;
+		NUMBEROFWEIGHTS_FORMAT = Format.SCALAR;
 		
-		RANDOMIZATION = 42; %CET: Computational Efficiency Trick
+		RANDOMIZATION = Graph.getPropNumber() + 7;
 		RANDOMIZATION_TAG = 'RANDOMIZATION';
-		RANDOMIZATION_CATEGORY = 6;
-		RANDOMIZATION_FORMAT = 16;
+		RANDOMIZATION_CATEGORY = Category.QUERY;
+		RANDOMIZATION_FORMAT = Format.CELL;
 	end
 	methods % constructor
 		function g = OrdMlWU(varargin)
@@ -188,49 +144,6 @@ classdef OrdMlWU < Graph
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of OrdMlWU properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted undirected graph.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multilayer weighted undirected graph.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multilayer weighted undirected graph.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multilayer weighted undirected graph.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
-			%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER.
-			%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).
-			%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
-			%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
-			%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
-			%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
-			%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
-			%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
-			%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
-			%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
-			%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
-			%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
-			%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
-			%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
-			%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
-			%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
-			%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted undirected graph and the ordinal connections between layers.
-			%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
-			%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
-			%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
-			%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
-			%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
-			%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
-			%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
-			%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
-			%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
-			%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.
-			%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
-			%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
-			%  <strong>39</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
-			%  <strong>40</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
-			%  <strong>41</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
-			%  <strong>42</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
 			%
 			% See also Category, Format.
 			
@@ -268,7 +181,7 @@ classdef OrdMlWU < Graph
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'OrdMlWU'  'OrdMlBUD'  'OrdMlBUT' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('OrdMlWU', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ordinal multilayer weighted undirected graph.
@@ -289,30 +202,64 @@ classdef OrdMlWU < Graph
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
+				prop_list = [ ...
+					Graph.getProps() ...
+						OrdMlWU.B ...
+						OrdMlWU.SYMMETRIZE_RULE ...
+						OrdMlWU.SEMIPOSITIVIZE_RULE ...
+						OrdMlWU.STANDARDIZE_RULE ...
+						OrdMlWU.ATTEMPTSPEREDGE ...
+						OrdMlWU.NUMBEROFWEIGHTS ...
+						OrdMlWU.RANDOMIZATION ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 32];
-				case 2 % Category.METADATA
-					prop_list = [6 7 14 16 18 20 22];
-				case 3 % Category.PARAMETER
-					prop_list = [4 24 25 37 38 39 40 41];
-				case 4 % Category.DATA
-					prop_list = [5 36];
-				case 5 % Category.RESULT
-					prop_list = [26 28 29 30 31];
-				case 6 % Category.QUERY
-					prop_list = [8 10 11 12 13 15 17 19 21 23 27 33 42];
-				case 9 % Category.GUI
-					prop_list = [34 35];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Graph.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Graph.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Graph.getProps(Category.PARAMETER) ...
+						OrdMlWU.SYMMETRIZE_RULE ...
+						OrdMlWU.SEMIPOSITIVIZE_RULE ...
+						OrdMlWU.STANDARDIZE_RULE ...
+						OrdMlWU.ATTEMPTSPEREDGE ...
+						OrdMlWU.NUMBEROFWEIGHTS ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Graph.getProps(Category.DATA) ...
+						OrdMlWU.B ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Graph.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Graph.getProps(Category.QUERY) ...
+						OrdMlWU.RANDOMIZATION ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Graph.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Graph.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Graph.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -333,31 +280,7 @@ classdef OrdMlWU < Graph
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 42;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 5;
-				case 2 % Category.METADATA
-					prop_number = 7;
-				case 3 % Category.PARAMETER
-					prop_number = 8;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 5;
-				case 6 % Category.QUERY
-					prop_number = 13;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(OrdMlWU.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in ordinal multilayer weighted undirected graph/error.
@@ -385,14 +308,14 @@ classdef OrdMlWU < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == OrdMlWU.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput'], ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for OrdMlWU.'] ...
 					)
 			end
@@ -423,14 +346,15 @@ classdef OrdMlWU < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' })); %CET: Computational Efficiency Trick
+			ordmlwu_tag_list = cellfun(@(x) OrdMlWU.getPropTag(x), num2cell(OrdMlWU.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, ordmlwu_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput'], ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for OrdMlWU.'] ...
 					)
 			end
@@ -456,7 +380,8 @@ classdef OrdMlWU < Graph
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' })); % tag = pointer %CET: Computational Efficiency Trick
+				ordmlwu_tag_list = cellfun(@(x) OrdMlWU.getPropTag(x), num2cell(OrdMlWU.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, ordmlwu_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -484,9 +409,26 @@ classdef OrdMlWU < Graph
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				ordmlwu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION' };
-				tag = ordmlwu_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case OrdMlWU.B
+						tag = OrdMlWU.B_TAG;
+					case OrdMlWU.SYMMETRIZE_RULE
+						tag = OrdMlWU.SYMMETRIZE_RULE_TAG;
+					case OrdMlWU.SEMIPOSITIVIZE_RULE
+						tag = OrdMlWU.SEMIPOSITIVIZE_RULE_TAG;
+					case OrdMlWU.STANDARDIZE_RULE
+						tag = OrdMlWU.STANDARDIZE_RULE_TAG;
+					case OrdMlWU.ATTEMPTSPEREDGE
+						tag = OrdMlWU.ATTEMPTSPEREDGE_TAG;
+					case OrdMlWU.NUMBEROFWEIGHTS
+						tag = OrdMlWU.NUMBEROFWEIGHTS_TAG;
+					case OrdMlWU.RANDOMIZATION
+						tag = OrdMlWU.RANDOMIZATION_TAG;
+					otherwise
+						tag = getPropTag@Graph(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -511,9 +453,24 @@ classdef OrdMlWU < Graph
 			
 			prop = OrdMlWU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			ordmlwu_category_list = { 1  1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9  4  3  3  3  3  3  6 };
-			prop_category = ordmlwu_category_list{prop};
+			switch prop
+				case OrdMlWU.B
+					prop_category = OrdMlWU.B_CATEGORY;
+				case OrdMlWU.SYMMETRIZE_RULE
+					prop_category = OrdMlWU.SYMMETRIZE_RULE_CATEGORY;
+				case OrdMlWU.SEMIPOSITIVIZE_RULE
+					prop_category = OrdMlWU.SEMIPOSITIVIZE_RULE_CATEGORY;
+				case OrdMlWU.STANDARDIZE_RULE
+					prop_category = OrdMlWU.STANDARDIZE_RULE_CATEGORY;
+				case OrdMlWU.ATTEMPTSPEREDGE
+					prop_category = OrdMlWU.ATTEMPTSPEREDGE_CATEGORY;
+				case OrdMlWU.NUMBEROFWEIGHTS
+					prop_category = OrdMlWU.NUMBEROFWEIGHTS_CATEGORY;
+				case OrdMlWU.RANDOMIZATION
+					prop_category = OrdMlWU.RANDOMIZATION_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Graph(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -537,9 +494,24 @@ classdef OrdMlWU < Graph
 			
 			prop = OrdMlWU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			ordmlwu_format_list = { 2  2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8  16  5  5  5  11  11  16 };
-			prop_format = ordmlwu_format_list{prop};
+			switch prop
+				case OrdMlWU.B
+					prop_format = OrdMlWU.B_FORMAT;
+				case OrdMlWU.SYMMETRIZE_RULE
+					prop_format = OrdMlWU.SYMMETRIZE_RULE_FORMAT;
+				case OrdMlWU.SEMIPOSITIVIZE_RULE
+					prop_format = OrdMlWU.SEMIPOSITIVIZE_RULE_FORMAT;
+				case OrdMlWU.STANDARDIZE_RULE
+					prop_format = OrdMlWU.STANDARDIZE_RULE_FORMAT;
+				case OrdMlWU.ATTEMPTSPEREDGE
+					prop_format = OrdMlWU.ATTEMPTSPEREDGE_FORMAT;
+				case OrdMlWU.NUMBEROFWEIGHTS
+					prop_format = OrdMlWU.NUMBEROFWEIGHTS_FORMAT;
+				case OrdMlWU.RANDOMIZATION
+					prop_format = OrdMlWU.RANDOMIZATION_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Graph(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -563,9 +535,54 @@ classdef OrdMlWU < Graph
 			
 			prop = OrdMlWU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			ordmlwu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.'  'DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.'  'TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted undirected graph.'  'ID (data, string) is a few-letter code for the ordinal multilayer weighted undirected graph.'  'LABEL (metadata, string) is an extended label of the ordinal multilayer weighted undirected graph.'  'NOTES (metadata, string) are some specific notes about the ordinal multilayer weighted undirected graph.'  'TOSTRING (query, string) returns a string that represents the object.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTILAYER.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition tick values.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted undirected graph and the ordinal connections between layers.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.'  'SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
-			prop_description = ordmlwu_description_list{prop};
+			switch prop
+				case OrdMlWU.B
+					prop_description = 'B (data, cell) is the input cell containing the multilayer adjacency matrices on the diagonal.';
+				case OrdMlWU.SYMMETRIZE_RULE
+					prop_description = 'SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.';
+				case OrdMlWU.SEMIPOSITIVIZE_RULE
+					prop_description = 'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.';
+				case OrdMlWU.STANDARDIZE_RULE
+					prop_description = 'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.';
+				case OrdMlWU.ATTEMPTSPEREDGE
+					prop_description = 'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.';
+				case OrdMlWU.NUMBEROFWEIGHTS
+					prop_description = 'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.';
+				case OrdMlWU.RANDOMIZATION
+					prop_description = 'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.';
+				case OrdMlWU.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case OrdMlWU.NAME
+					prop_description = 'NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.ID
+					prop_description = 'ID (data, string) is a few-letter code for the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the ordinal multilayer weighted undirected graph.';
+				case OrdMlWU.GRAPH_TYPE
+					prop_description = 'GRAPH_TYPE (constant, scalar) returns the graph type __Graph.ORDERED_MULTILAYER__.';
+				case OrdMlWU.CONNECTIVITY_TYPE
+					prop_description = 'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.WEIGHTED__ * ones(layernumber).';
+				case OrdMlWU.DIRECTIONALITY_TYPE
+					prop_description = 'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.UNDIRECTED__ * ones(layernumber).';
+				case OrdMlWU.SELFCONNECTIVITY_TYPE
+					prop_description = 'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__ on the diagonal and __Graph.SELFCONNECTED__ off diagonal.';
+				case OrdMlWU.NEGATIVITY_TYPE
+					prop_description = 'NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).';
+				case OrdMlWU.A
+					prop_description = 'A (result, cell) is the cell containing the within-layer weighted adjacency matrices of the multilayer weighted undirected graph and the ordinal connections between layers.';
+				case OrdMlWU.ALAYERLABELS
+					prop_description = 'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.';
+				case OrdMlWU.COMPATIBLE_MEASURES
+					prop_description = 'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.';
+				otherwise
+					prop_description = getPropDescription@Graph(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -589,22 +606,22 @@ classdef OrdMlWU < Graph
 			
 			prop = OrdMlWU.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % OrdMlWU.B
-					prop_settings = Format.getFormatSettings(16);
-				case 37 % OrdMlWU.SYMMETRIZE_RULE
+			switch prop
+				case OrdMlWU.B
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case OrdMlWU.SYMMETRIZE_RULE
 					prop_settings = {'max', 'sum', 'average', 'min'};
-				case 38 % OrdMlWU.SEMIPOSITIVIZE_RULE
+				case OrdMlWU.SEMIPOSITIVIZE_RULE
 					prop_settings = {'zero', 'absolute'};
-				case 39 % OrdMlWU.STANDARDIZE_RULE
+				case OrdMlWU.STANDARDIZE_RULE
 					prop_settings = {'threshold' 'range'};
-				case 40 % OrdMlWU.ATTEMPTSPEREDGE
-					prop_settings = Format.getFormatSettings(11);
-				case 41 % OrdMlWU.NUMBEROFWEIGHTS
-					prop_settings = Format.getFormatSettings(11);
-				case 42 % OrdMlWU.RANDOMIZATION
-					prop_settings = Format.getFormatSettings(16);
-				case 4 % OrdMlWU.TEMPLATE
+				case OrdMlWU.ATTEMPTSPEREDGE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case OrdMlWU.NUMBEROFWEIGHTS
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case OrdMlWU.RANDOMIZATION
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case OrdMlWU.TEMPLATE
 					prop_settings = 'OrdMlWU';
 				otherwise
 					prop_settings = getPropSettings@Graph(prop);
@@ -632,39 +649,39 @@ classdef OrdMlWU < Graph
 			
 			prop = OrdMlWU.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % OrdMlWU.B
+			switch prop
+				case OrdMlWU.B
 					prop_default = {[] []; [] []};
-				case 37 % OrdMlWU.SYMMETRIZE_RULE
-					prop_default = Format.getFormatDefault(5, OrdMlWU.getPropSettings(prop));
-				case 38 % OrdMlWU.SEMIPOSITIVIZE_RULE
-					prop_default = Format.getFormatDefault(5, OrdMlWU.getPropSettings(prop));
-				case 39 % OrdMlWU.STANDARDIZE_RULE
-					prop_default = Format.getFormatDefault(5, OrdMlWU.getPropSettings(prop));
-				case 40 % OrdMlWU.ATTEMPTSPEREDGE
+				case OrdMlWU.SYMMETRIZE_RULE
+					prop_default = Format.getFormatDefault(Format.OPTION, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.SEMIPOSITIVIZE_RULE
+					prop_default = Format.getFormatDefault(Format.OPTION, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.STANDARDIZE_RULE
+					prop_default = Format.getFormatDefault(Format.OPTION, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.ATTEMPTSPEREDGE
 					prop_default = 5;
-				case 41 % OrdMlWU.NUMBEROFWEIGHTS
+				case OrdMlWU.NUMBEROFWEIGHTS
 					prop_default = 10;
-				case 42 % OrdMlWU.RANDOMIZATION
-					prop_default = Format.getFormatDefault(16, OrdMlWU.getPropSettings(prop));
-				case 1 % OrdMlWU.ELCLASS
+				case OrdMlWU.RANDOMIZATION
+					prop_default = Format.getFormatDefault(Format.CELL, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.ELCLASS
 					prop_default = 'OrdMlWU';
-				case 2 % OrdMlWU.NAME
+				case OrdMlWU.NAME
 					prop_default = 'OrdMlWU';
-				case 3 % OrdMlWU.DESCRIPTION
+				case OrdMlWU.DESCRIPTION
 					prop_default = 'In an ordinal multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.';
-				case 4 % OrdMlWU.TEMPLATE
-					prop_default = Format.getFormatDefault(8, OrdMlWU.getPropSettings(prop));
-				case 5 % OrdMlWU.ID
+				case OrdMlWU.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.ID
 					prop_default = 'OrdMlWU ID';
-				case 6 % OrdMlWU.LABEL
+				case OrdMlWU.LABEL
 					prop_default = 'OrdMlWU label';
-				case 7 % OrdMlWU.NOTES
+				case OrdMlWU.NOTES
 					prop_default = 'OrdMlWU notes';
-				case 9 % OrdMlWU.GRAPH_TYPE
-					prop_default = 5;
-				case 32 % OrdMlWU.COMPATIBLE_MEASURES
-					prop_default = { 'BetweennessCentrality'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultilayerCommunity'  'MultilayerM'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'PathLength'  'Persistence'  'Strength'  'StrengthAv'  'Transitivity'  'WeightedMxP'  'WeightedMxPAv' };
+				case OrdMlWU.GRAPH_TYPE
+					prop_default = Graph.ORDERED_MULTILAYER;
+				case OrdMlWU.COMPATIBLE_MEASURES
+					prop_default = getCompatibleMeasures('OrdMlWU');
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end
@@ -710,15 +727,15 @@ classdef OrdMlWU < Graph
 			% 
 			% G.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:OrdMlWU:WrongInput
+			%  Error id: €BRAPH2.STR€:OrdMlWU:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  G.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of G.
-			%   Error id: BRAPH2:OrdMlWU:WrongInput
+			%   Error id: €BRAPH2.STR€:OrdMlWU:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(OrdMlWU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMlWU.
-			%   Error id: BRAPH2:OrdMlWU:WrongInput
+			%   Error id: €BRAPH2.STR€:OrdMlWU:€BRAPH2.WRONG_INPUT€
 			%  G.CHECKPROP(OrdMlWU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMlWU.
-			%   Error id: BRAPH2:OrdMlWU:WrongInput]
+			%   Error id: €BRAPH2.STR€:OrdMlWU:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(G) and Element.CHECKPROP('OrdMlWU')
 			%  are less computationally efficient.
@@ -729,24 +746,24 @@ classdef OrdMlWU < Graph
 			prop = OrdMlWU.getPropProp(pointer);
 			
 			switch prop
-				case 36 % OrdMlWU.B
-					check = Format.checkFormat(16, value, OrdMlWU.getPropSettings(prop));
-				case 37 % OrdMlWU.SYMMETRIZE_RULE
-					check = Format.checkFormat(5, value, OrdMlWU.getPropSettings(prop));
-				case 38 % OrdMlWU.SEMIPOSITIVIZE_RULE
-					check = Format.checkFormat(5, value, OrdMlWU.getPropSettings(prop));
-				case 39 % OrdMlWU.STANDARDIZE_RULE
-					check = Format.checkFormat(5, value, OrdMlWU.getPropSettings(prop));
-				case 40 % OrdMlWU.ATTEMPTSPEREDGE
-					check = Format.checkFormat(11, value, OrdMlWU.getPropSettings(prop));
-				case 41 % OrdMlWU.NUMBEROFWEIGHTS
-					check = Format.checkFormat(11, value, OrdMlWU.getPropSettings(prop));
-				case 42 % OrdMlWU.RANDOMIZATION
-					check = Format.checkFormat(16, value, OrdMlWU.getPropSettings(prop));
-				case 4 % OrdMlWU.TEMPLATE
-					check = Format.checkFormat(8, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.B % __OrdMlWU.B__
+					check = Format.checkFormat(Format.CELL, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.SYMMETRIZE_RULE % __OrdMlWU.SYMMETRIZE_RULE__
+					check = Format.checkFormat(Format.OPTION, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.SEMIPOSITIVIZE_RULE % __OrdMlWU.SEMIPOSITIVIZE_RULE__
+					check = Format.checkFormat(Format.OPTION, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.STANDARDIZE_RULE % __OrdMlWU.STANDARDIZE_RULE__
+					check = Format.checkFormat(Format.OPTION, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.ATTEMPTSPEREDGE % __OrdMlWU.ATTEMPTSPEREDGE__
+					check = Format.checkFormat(Format.SCALAR, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.NUMBEROFWEIGHTS % __OrdMlWU.NUMBEROFWEIGHTS__
+					check = Format.checkFormat(Format.SCALAR, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.RANDOMIZATION % __OrdMlWU.RANDOMIZATION__
+					check = Format.checkFormat(Format.CELL, value, OrdMlWU.getPropSettings(prop));
+				case OrdMlWU.TEMPLATE % __OrdMlWU.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, OrdMlWU.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= Graph.getPropNumber()
 						check = checkProp@Graph(prop, value);
 					end
 			end
@@ -755,8 +772,8 @@ classdef OrdMlWU < Graph
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput'], ...
-					['BRAPH2' ':OrdMlWU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':OrdMlWU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' OrdMlWU.getPropTag(prop) ' (' OrdMlWU.getFormatTag(OrdMlWU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -767,19 +784,19 @@ classdef OrdMlWU < Graph
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 42 % OrdMlWU.RANDOMIZATION
+				case OrdMlWU.RANDOMIZATION % __OrdMlWU.RANDOMIZATION__
 					rng(g.get('RANDOM_SEED'), 'twister')
 					
 					if isempty(varargin)
@@ -800,41 +817,41 @@ classdef OrdMlWU < Graph
 					end
 					value = A;
 					
-				case 10 % OrdMlWU.CONNECTIVITY_TYPE
+				case OrdMlWU.CONNECTIVITY_TYPE % __OrdMlWU.CONNECTIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value =  ones(layernumber);
+					value = Graph.WEIGHTED * ones(layernumber);
 					
-				case 11 % OrdMlWU.DIRECTIONALITY_TYPE
+				case OrdMlWU.DIRECTIONALITY_TYPE % __OrdMlWU.DIRECTIONALITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = 2 * ones(layernumber);
+					value = Graph.UNDIRECTED * ones(layernumber);
 					
-				case 12 % OrdMlWU.SELFCONNECTIVITY_TYPE
+				case OrdMlWU.SELFCONNECTIVITY_TYPE % __OrdMlWU.SELFCONNECTIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = 2 * ones(layernumber);
-					value(1:layernumber+1:end) = 1;
+					value = Graph.SELFCONNECTED * ones(layernumber);
+					value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
 					
-				case 13 % OrdMlWU.NEGATIVITY_TYPE
+				case OrdMlWU.NEGATIVITY_TYPE % __OrdMlWU.NEGATIVITY_TYPE__
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value =  ones(layernumber);
+					value = Graph.NONNEGATIVE * ones(layernumber);
 					
-				case 26 % OrdMlWU.A
-					rng_settings_ = rng(); rng(g.getPropSeed(26), 'twister')
+				case OrdMlWU.A % __OrdMlWU.A__
+					rng_settings_ = rng(); rng(g.getPropSeed(OrdMlWU.A), 'twister')
 					
 					B = g.get('B'); %#ok<PROPLC>
 					L = length(B); %#ok<PROPLC> % number of layers
@@ -874,7 +891,7 @@ classdef OrdMlWU < Graph
 					
 					rng(rng_settings_)
 					
-				case 17 % OrdMlWU.ALAYERLABELS
+				case OrdMlWU.ALAYERLABELS % __OrdMlWU.ALAYERLABELS__
 					alayerlabels = g.get('LAYERLABELS');
 					if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
 					    alayerlabels = cellfun(@num2str, num2cell([1:1:g.get('LAYERNUMBER')]), 'uniformoutput', false);
@@ -882,7 +899,7 @@ classdef OrdMlWU < Graph
 					value = alayerlabels;
 					
 				otherwise
-					if prop <= 35
+					if prop <= Graph.getPropNumber()
 						value = calculateValue@Graph(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -908,25 +925,25 @@ classdef OrdMlWU < Graph
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 36 % OrdMlWU.B
-					pr = PanelPropCell('EL', g, 'PROP', 36, ...
-					    'TABLE_HEIGHT', 480, ...
+				case OrdMlWU.B % __OrdMlWU.B__
+					pr = PanelPropCell('EL', g, 'PROP', OrdMlWU.B, ...
+					    'TABLE_HEIGHT', s(40), ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', g.get('LAYERLABELS'), ...
-					    'XSLIDERHEIGHT', 42, ...
+					    'XSLIDERHEIGHT', s(3.5), ...
 					    'YSLIDERSHOW', false, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});
 					
-				case 26 % OrdMlWU.A
-					pr = PanelPropCell('EL', g, 'PROP', 26, ...
-					    'TABLE_HEIGHT', 480, ...
+				case OrdMlWU.A % __OrdMlWU.A__
+					pr = PanelPropCell('EL', g, 'PROP', OrdMlWU.A, ...
+					    'TABLE_HEIGHT', s(40), ...
 					    'XYSLIDERLOCK', true, ... 
 					    'XSLIDERSHOW', false, ...
 					    'YSLIDERSHOW', true, ...
 					    'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					    'YSLIDERWIDTH', 60, ...
+					    'YSLIDERWIDTH', s(5), ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});

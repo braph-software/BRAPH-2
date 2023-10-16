@@ -110,12 +110,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultilayerWU.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultilayerWU.NOTES
 %%%% ¡title!
 Graph NOTES

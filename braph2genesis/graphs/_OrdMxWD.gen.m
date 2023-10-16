@@ -102,12 +102,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-OrdMxWD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 OrdMxWD.NOTES
 %%%% ¡title!
 Graph NOTES

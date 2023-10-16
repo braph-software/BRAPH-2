@@ -89,12 +89,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexBD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexBD.NOTES
 %%%% ¡title!
 Graph NOTES

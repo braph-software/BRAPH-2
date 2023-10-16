@@ -91,12 +91,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultilayerBD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultilayerBD.NOTES
 %%%% ¡title!
 Graph NOTES

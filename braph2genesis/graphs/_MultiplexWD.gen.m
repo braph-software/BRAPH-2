@@ -101,12 +101,6 @@ Graph Histogram
 
 %%% ¡prop!
 %%%% ¡id!
-MultiplexWD.M_DICT
-%%%% ¡title!
-Graph MEASURES
-
-%%% ¡prop!
-%%%% ¡id!
 MultiplexWD.NOTES
 %%%% ¡title!
 Graph NOTES
