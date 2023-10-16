@@ -2,7 +2,7 @@ classdef BetweennessCentrality < Measure
 	%BetweennessCentrality is the Betweenness Centrality.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Betweenness Centrality of a graph is the fraction of all shortest paths in the 
+	% The Betweenness Centrality (BetweennessCentrality) of a graph is the fraction of all shortest paths in the 
 	% graph that pass through a given node. Nodes with high values of betweenness 
 	% centrality participate in a large number of shortest paths.
 	%
@@ -529,7 +529,7 @@ classdef BetweennessCentrality < Measure
 				case 2 % BetweennessCentrality.NAME
 					prop_default = 'Betweenness Centrality';
 				case 3 % BetweennessCentrality.DESCRIPTION
-					prop_default = 'The Betweenness Centrality of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.';
+					prop_default = 'The Betweenness Centrality (BetweennessCentrality) of a graph is the fraction of all shortest paths in the graph that pass through a given node. Nodes with high values of betweenness centrality participate in a large number of shortest paths.';
 				case 4 % BetweennessCentrality.TEMPLATE
 					prop_default = Format.getFormatDefault(8, BetweennessCentrality.getPropSettings(prop));
 				case 5 % BetweennessCentrality.ID
@@ -715,17 +715,17 @@ classdef BetweennessCentrality < Measure
 			            for v = V
 			                Q(q) = v;
 			                q = q-1;
-			                neighbours = find(G(v,:));  % neighbours of v
-			                for neighbour = neighbours
-			                    Duw = D(v) + G(v, neighbour);  % Duw path length to be tested
-			                    if Duw<D(neighbour)  % if new u->w shorter than old
-			                        D(neighbour) = Duw;
-			                        NP(neighbour) = NP(v);  % NP(u->w) = NP of new path
-			                        P(neighbour,:) = 0;
-			                        P(neighbour, v) = 1;  % v is the only predecessor
-			                    elseif Duw==D(neighbour)  % if new u->w equal to old
-			                        NP(neighbour) = NP(neighbour)+NP(v);  % NP(u->w) sum of old and new
-			                        P(neighbour, v) = 1;  % v is also a predecessor
+			                neighbors = find(G(v,:));  % neighbors of v
+			                for neighbor = neighbors
+			                    Duw = D(v) + G(v, neighbor);  % Duw path length to be tested
+			                    if Duw<D(neighbor)  % if new u->w shorter than old
+			                        D(neighbor) = Duw;
+			                        NP(neighbor) = NP(v);  % NP(u->w) = NP of new path
+			                        P(neighbor,:) = 0;
+			                        P(neighbor, v) = 1;  % v is the only predecessor
+			                    elseif Duw==D(neighbor)  % if new u->w equal to old
+			                        NP(neighbor) = NP(neighbor)+NP(v);  % NP(u->w) sum of old and new
+			                        P(neighbor, v) = 1;  % v is also a predecessor
 			                    end
 			                end
 			            end

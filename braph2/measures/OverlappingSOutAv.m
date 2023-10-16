@@ -2,7 +2,7 @@ classdef OverlappingSOutAv < OverlappingSOut
 	%OverlappingSOutAv is the graph Average Overlapping Out-Strength.
 	% It is a subclass of <a href="matlab:help OverlappingSOut">OverlappingSOut</a>.
 	%
-	% The Average Overlapping Out-Strength of a graph is the average of the sum of the out-strengths of a 
+	% The Average Overlapping Out-Strength (OverlappingSOutAv) of a graph is the average of the sum of the out-strengths of a 
 	%  node in all layers.
 	%
 	% The list of OverlappingSOutAv properties is:

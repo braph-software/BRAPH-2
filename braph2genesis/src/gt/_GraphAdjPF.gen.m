@@ -57,11 +57,6 @@ GraphAdjPF.LAYERS
 %%%% ¡title!
 LAYERS
 
-%%% ¡prop!
-%%%% ¡id!
-GraphAdjPF.WEIGHTED
-%%%% ¡title!
-WEIGHTED ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!

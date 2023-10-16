@@ -539,7 +539,7 @@ classdef PathLengthOut < Measure
 				case 2 % PathLengthOut.NAME
 					prop_default = 'Out-Path Length';
 				case 3 % PathLengthOut.DESCRIPTION
-					prop_default = 'The Out-Path Length (PathLengthOut) is the average shortest out-path length of one node to all other nodes within a layer.';
+					prop_default = 'The Out-Path Length (PathLengthOut) is the average shortest out-path lengths of one node to all other nodes without a layer.';
 				case 4 % PathLengthOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthOut.getPropSettings(prop));
 				case 5 % PathLengthOut.ID

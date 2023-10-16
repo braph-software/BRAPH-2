@@ -2,7 +2,7 @@ classdef PathLength < Measure
 	%PathLength is the graph Path Length.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Path Length is the average shortest pathlength of one node to all 
+	% The Path Length (PathLength) is the average shortest path length of one node to all 
 	%  other nodes within a layer.
 	%
 	% The list of PathLength properties is:
@@ -540,7 +540,7 @@ classdef PathLength < Measure
 				case 2 % PathLength.NAME
 					prop_default = 'Path Length';
 				case 3 % PathLength.DESCRIPTION
-					prop_default = 'The Path Length is the average shortest path length of one node to all other nodes within a layer.';
+					prop_default = 'The Path Length (PathLength) is the average shortest path length of one node to all other nodes within a layer.';
 				case 4 % PathLength.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLength.getPropSettings(prop));
 				case 5 % PathLength.ID

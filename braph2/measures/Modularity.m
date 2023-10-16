@@ -2,7 +2,7 @@ classdef Modularity < CommunityStructure
 	%Modularity is the graph Modularity.
 	% It is a subclass of <a href="matlab:help CommunityStructure">CommunityStructure</a>.
 	%
-	% The Modularity of a graph is the quality function Q of the resulting partition of the network.
+	% The Modularity (Modularity) of a graph is the quality function Q of the resulting partition of the network.
 	%
 	% The list of Modularity properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Modularity.
@@ -539,7 +539,7 @@ classdef Modularity < CommunityStructure
 				case 2 % Modularity.NAME
 					prop_default = 'Modularity';
 				case 3 % Modularity.DESCRIPTION
-					prop_default = 'The Modularity of a graph is the quality function Q of the resulting partition of the network.';
+					prop_default = 'The Modularity (Modularity) of a graph is the quality function Q of the resulting partition of the network.';
 				case 4 % Modularity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Modularity.getPropSettings(prop));
 				case 5 % Modularity.ID

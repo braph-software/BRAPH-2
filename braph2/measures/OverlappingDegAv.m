@@ -528,7 +528,7 @@ classdef OverlappingDegAv < OverlappingDeg
 				case 2 % OverlappingDegAv.NAME
 					prop_default = 'Average Overlapping Degree';
 				case 3 % OverlappingDegAv.DESCRIPTION
-					prop_default = 'The Average Overlapping Degree (OverlappingDegAv) of a graph is the sum of the degrees of a node in all layers.';
+					prop_default = 'The Average Overlapping Degree (OverlappingDegAv) of a graph is the average of the sum of the degrees of a node in all layers.';
 				case 4 % OverlappingDegAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingDegAv.getPropSettings(prop));
 				case 5 % OverlappingDegAv.ID

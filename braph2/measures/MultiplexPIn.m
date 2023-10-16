@@ -3,7 +3,7 @@ classdef MultiplexPIn < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward 
-	% neighbours of a node across the layers.
+	% neighbors of a node across the layers.
 	%
 	% The list of MultiplexPIn properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex In-Participation.
@@ -528,7 +528,7 @@ classdef MultiplexPIn < Measure
 				case 2 % MultiplexPIn.NAME
 					prop_default = 'Multiplex In-Participation';
 				case 3 % MultiplexPIn.DESCRIPTION
-					prop_default = 'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbours of a node across the layers.';
+					prop_default = 'The Multiplex In-Participation (MultiplexPIn) is the homogeneity of the number of inward neighbors of a node across the layers.';
 				case 4 % MultiplexPIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPIn.getPropSettings(prop));
 				case 5 % MultiplexPIn.ID

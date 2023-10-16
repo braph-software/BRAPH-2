@@ -699,7 +699,7 @@ classdef EdgeBetwCentr < Measure
 			        Gu(:, V) = 0;  % remove remaining in-edges
 			        for v = V
 			            Q(q) = v; q = q-1;
-			            W = find(Gu(v, :));  % neighbours of v
+			            W = find(Gu(v, :));  % neighbors of v
 			            for w = W
 			                if D(w)
 			                    NP(w) = NP(w) + NP(v);  % NP(u->w) sum of old and new
@@ -752,7 +752,7 @@ classdef EdgeBetwCentr < Measure
 			        G1(:, V) = 0;  % no in-edges as already shortest
 			        for v = V
 			            Q(q) = v; q = q-1;
-			            W = find(G1(v, :));  % neighbours of v
+			            W = find(G1(v, :));  % neighbors of v
 			            for w = W
 			                Duw = D(v) + G1(v, w);  % path length to be tested
 			                if Duw < D(w)  % if new u->w shorter than old

@@ -2,7 +2,7 @@ classdef Degree < Measure
 	%Degree is the graph Degree.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Degree of a node is the number of edges connected to the node within a layer. 
+	% The Degree (Degree) of a node is the number of edges connected to the node within a layer. 
 	%  Connection weights are ignored in calculations.
 	%
 	% The list of Degree properties is:
@@ -528,7 +528,7 @@ classdef Degree < Measure
 				case 2 % Degree.NAME
 					prop_default = 'Degree';
 				case 3 % Degree.DESCRIPTION
-					prop_default = 'The Degree of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
+					prop_default = 'The Degree (Degree) of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
 				case 4 % Degree.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Degree.getPropSettings(prop));
 				case 5 % Degree.ID

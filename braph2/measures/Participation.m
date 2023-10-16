@@ -2,7 +2,7 @@ classdef Participation < Measure
 	%Participation is the graph Participation.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Participation of a node is the ratio of edges that a node forms within 
+	% The Participation (Participation) of a node is the ratio of edges that a node forms within 
 	%  a single layer community to the total number of edges that forms within the whole single layer graph.
 	%
 	% The list of Participation properties is:
@@ -551,7 +551,7 @@ classdef Participation < Measure
 				case 2 % Participation.NAME
 					prop_default = 'Participation';
 				case 3 % Participation.DESCRIPTION
-					prop_default = 'The Participation of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.';
+					prop_default = 'The Participation (Participation) of a node is the ratio of edges that a node forms within a single layer community to the total number of edges that forms within the whole single layer graph.';
 				case 4 % Participation.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Participation.getPropSettings(prop));
 				case 5 % Participation.ID

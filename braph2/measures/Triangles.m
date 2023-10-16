@@ -2,7 +2,7 @@ classdef Triangles < Measure
 	%Triangles is the graph Triangles.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Triangles are calculated as the number of neighbors of a node that are 
+	% The Triangles (Triangles) are calculated as the number of neighbors of a node that are 
 	%  also neighbors of each other within a layer. In weighted graphs, the triangles are 
 	%  calculated as the geometric mean of the weights of the edges forming the triangle.
 	%
@@ -541,7 +541,7 @@ classdef Triangles < Measure
 				case 2 % Triangles.NAME
 					prop_default = 'Triangles';
 				case 3 % Triangles.DESCRIPTION
-					prop_default = 'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.';
+					prop_default = 'The Triangles (Triangles) are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.';
 				case 4 % Triangles.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Triangles.getPropSettings(prop));
 				case 5 % Triangles.ID

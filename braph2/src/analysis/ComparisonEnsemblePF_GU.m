@@ -751,32 +751,32 @@ classdef ComparisonEnsemblePF_GU < ComparisonEnsemblePF
 					x = g.get('APARTITIONTICKS');
 					
 					diff = cell2mat(cp.get('DIFF'))';
-                    cil = cell2mat(cp.get('CIL'))';
-                    ciu = cell2mat(cp.get('CIU'))';
-                    layer = pf.get('LAYER');
-                    layers_num = length(g.get('ALAYERTICKS'));
-                    diff2 = zeros(1, length(x));
-                    cil2 = zeros(1, length(x));
-                    ciu2 = zeros(1, length(x));
-                    count=1;
-                    for i=layer:layers_num:g.get('LAYERNUMBER')
-                        diff2(count) = diff(i);
-                        cil2(count) = cil(i);
-                        ciu2(count) = ciu(i);
-                        count = count + 1;
-                    end
-                    pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff2)
-                    pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil2)
-                    pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu2)
-                    
-                    if ~isempty(cil2) && ~isempty(ciu2)
-                        if isempty(x)
-                            pf.memorize('ST_AREA').set('X', [1:1:length(diff2) length(diff2):-1:1], 'Y', [cil2 ciu2(end:-1:1)])
-                        else
-                            pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil2 ciu2(end:-1:1)])
-                        end
-                    end
-                    
+					cil = cell2mat(cp.get('CIL'))';
+					ciu = cell2mat(cp.get('CIU'))';
+					layer = pf.get('LAYER');
+					layers_num = length(g.get('ALAYERTICKS'));
+					diff2 = zeros(1, length(x));
+					cil2 = zeros(1, length(x));
+					ciu2 = zeros(1, length(x));
+					count=1;
+					for i=layer:layers_num:g.get('LAYERNUMBER')
+					    diff2(count) = diff(i);
+					    cil2(count) = cil(i);
+					    ciu2(count) = ciu(i);
+					    count = count + 1;
+					end
+					pf.memorize('ST_LINE_DIFF').set('X', x, 'Y', diff2)
+					pf.memorize('ST_LINE_CIL').set('X', x, 'Y', cil2)
+					pf.memorize('ST_LINE_CIU').set('X', x, 'Y', ciu2)
+					
+					if ~isempty(cil2) && ~isempty(ciu2)
+					    if isempty(x) 
+					        pf.memorize('ST_AREA').set('X', [1:1:length(diff2) length(diff2):-1:1], 'Y', [cil2 ciu2(end:-1:1)])
+					    else
+					        pf.memorize('ST_AREA').set('X', [x x(end:-1:1)], 'Y', [cil2 ciu2(end:-1:1)])
+					    end
+					end
+					
 					xlim = pf.get('H_AXES').get('XLim');
 					ylim = pf.get('H_AXES').get('YLim');
 					pf.get('ST_TITLE').set( ...

@@ -2,7 +2,7 @@ classdef Radius < Measure
 	%Radius is the graph Radius.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Radius is the minimum eccentricity among the vertices within a layer.
+	% The Radius (Radius) is the minimum eccentricity among the vertices within a layer.
 	%
 	% The list of Radius properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Radius.
@@ -539,7 +539,7 @@ classdef Radius < Measure
 				case 2 % Radius.NAME
 					prop_default = 'Radius';
 				case 3 % Radius.DESCRIPTION
-					prop_default = 'The Radius is the minimum eccentricity among the vertices within a layer.';
+					prop_default = 'The Radius (Radius) is the minimum eccentricity among the vertices within a layer.';
 				case 4 % Radius.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Radius.getPropSettings(prop));
 				case 5 % Radius.ID

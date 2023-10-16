@@ -2,7 +2,7 @@ classdef Transitivity < Triangles
 	%Transitivity is the graph Transitivity.
 	% It is a subclass of <a href="matlab:help Triangles">Triangles</a>.
 	%
-	% The Transitivity of a graph is the fraction of triangles to the number 
+	% The Transitivity (Transitivity) of a graph is the fraction of triangles to the number 
 	%  of (unordered) triplets within a layer.
 	% 
 	%  %% ¡layout!
@@ -532,7 +532,7 @@ classdef Transitivity < Triangles
 				case 2 % Transitivity.NAME
 					prop_default = 'Transitivity';
 				case 3 % Transitivity.DESCRIPTION
-					prop_default = 'The transitivity of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.';
+					prop_default = 'The Transitivity (Transitivity) of a graph is the fraction of triangles to the number of (unordered) triplets within a layer.';
 				case 4 % Transitivity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Transitivity.getPropSettings(prop));
 				case 5 % Transitivity.ID
