@@ -12,27 +12,72 @@
 
 \begin{abstract}
 \noindent
-The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend its functionalities. All objects in BRAPH~2.0 are derived from a base object called Element. Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated also into the GUI.
-In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the elements are strcutured, and finally we will provide examples of how new elements can be implemented.
+The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (\emph{elements}) in BRAPH~2.0 are derived from the base object \code{Element}. Developers can easily add new elements by writing the new elements in the simplified BRAPH~2.0 pseudocode. 
+By recompiling BRAPH~2.0, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
+In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
 \end{abstract}
 
 \tableofcontents
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Genesis}
+\section{Compilation and Element (Re)Generation}
 
-explain genesis process and concept of elements with pseudo code 
+BRAPH~2.0 is a compiled object-oriented programming software.
+Its objects are \emph{elements}, which contain a set of \emph{props} of various \emph{categories} and \emph{formats}, as described in detail in the following sections. 
+These elements are written in the BRAPH~2.0 pseudocode, which simplifies and streamlines the coding process.
+To convert them into usable matlab objects, BRAPH~2.0 needs to be compiled, which is done by calling the script \code{braph2genesis}, which will compile the whole code, as shown in \Coderef{cd:compilation}.
+%
+\begin{lstlisting}[
+	label=cd:compilation,
+	caption={
+		{\bf Compilation of BRAPH~2.0.}
+		Executing the script \code{braph2genesis} compiles BRAPH~2.0 and , subsequently, unit tests it.
+		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
+	}
+]
+>> braph2genesis
+\end{lstlisting}
 
-Need for two compilations and hardcoding
+During the compilation, there are several phases to improve the computational efficiency of the executable code:
+\begin{enumerate}
+	\item {\bf First compilation}, where the elements are created.
+	\item {\bf Second compilation}, where the elements are computationally optimized.
+	\item {\bf Constant hard-coding}, where several contants are hard-coded in the executable code to further optimize the run time.
+\end{enumerate}
 
-braph2genesis
+Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH~2.0. 
+Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
+This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:regenerate}.
+%
+\begin{lstlisting}[
+	label=cd:regenerate,
+	caption={
+		{\bf Regeneration of elements.}
+		The function \code{regenerate()} can be used to regenerate some elements, as long as they already exist in the current BRAPH~2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH~2.0 with \code{braph2genesis}.
+	}
+]
+>> close all; delete(findall(0, 'type', 'figure')); clear all ¥\circled{1}\circlednote{1}{clears the workspace (not always necessary, but needed is some element instances are still in the workspace).}¥
 
-regenerate + explain when recompile necessary 
+>> regenerate(regenerate('/src/gui', {'Pipeline'}) ¥\circled{2}\circlednote{2}{regenerates \code{Pipeline}.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false) ¥\circled{3}\circlednote{3}{performs only one compilation.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false) ¥\circled{4}\circlednote{4}{does not regenerate the element, but only the layout and the unit test.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false) ¥\circled{5}\circlednote{5}{does not regenerate the layout.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false) ¥\circled{6}\circlednote{6}{does not regenerate the unit test.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false) ¥\circled{7}\circlednote{7}{does not perform the unit test.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ¥\circled{8}\circlednote{8}{Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.}¥
+
+>> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'}) ¥\circled{9}\circlednote{9}{Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.}¥
+\end{lstlisting}
 
 \section{Elements}
 
-BRAPH~2.0 is a compiled object-oriented programming software.
 The base class for all elements is \code{Element}. 
 Each element is essentially a container for a series of \emph{properties}. Each propery has a \emph{category} and a \emph{format}.
 The category determines for what and how a property.
