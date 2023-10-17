@@ -708,13 +708,13 @@ classdef PanelPropCell < PanelProp
 					prop_settings = Format.getFormatSettings(4);
 				case 49 % PanelPropCell.TABLE_HEIGHT
 					prop_settings = Format.getFormatSettings(22);
-				case PanelPropCell.TABLEQVALUE % __PanelPropCell.TABLEQVALUE__
+				case 50 % PanelPropCell.TABLEQVALUE
 					prop_settings = Format.getFormatSettings(11);
-				case PanelPropCell.TABLEFDR % __PanelPropCell.TABLEFDR__
+				case 51 % PanelPropCell.TABLEFDR
 					prop_settings = Format.getFormatSettings(4);
-				case 50 % PanelPropCell.TABLE
+				case 52 % PanelPropCell.TABLE
 					prop_settings = Format.getFormatSettings(18);
-				case 51 % PanelPropCell.CONTEXTMENU
+				case 53 % PanelPropCell.CONTEXTMENU
 					prop_settings = Format.getFormatSettings(18);
 				case 4 % PanelPropCell.TEMPLATE
 					prop_settings = 'PanelPropCell';
@@ -773,13 +773,13 @@ classdef PanelPropCell < PanelProp
 					prop_default = true;
 				case 49 % PanelPropCell.TABLE_HEIGHT
 					prop_default = 240;
-				case PanelPropCell.TABLEQVALUE % __PanelPropCell.TABLEQVALUE__
+				case 50 % PanelPropCell.TABLEQVALUE
 					prop_default = 0.05;
-				case PanelPropCell.TABLEFDR % __PanelPropCell.TABLEFDR__
+				case 51 % PanelPropCell.TABLEFDR
 					prop_default = false;
-				case 50 % PanelPropCell.TABLE
+				case 52 % PanelPropCell.TABLE
 					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
-				case 51 % PanelPropCell.CONTEXTMENU
+				case 53 % PanelPropCell.CONTEXTMENU
 					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
 				case 1 % PanelPropCell.ELCLASS
 					prop_default = 'PanelPropCell';
@@ -891,13 +891,13 @@ classdef PanelPropCell < PanelProp
 					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
 				case 49 % PanelPropCell.TABLE_HEIGHT
 					check = Format.checkFormat(22, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.TABLEQVALUE % __PanelPropCell.TABLEQVALUE__
+				case 50 % PanelPropCell.TABLEQVALUE
 					check = Format.checkFormat(11, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.TABLEFDR % __PanelPropCell.TABLEFDR__
+				case 51 % PanelPropCell.TABLEFDR
 					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
-				case 50 % PanelPropCell.TABLE
+				case 52 % PanelPropCell.TABLE
 					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
-				case 51 % PanelPropCell.CONTEXTMENU
+				case 53 % PanelPropCell.CONTEXTMENU
 					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
 				case 4 % PanelPropCell.TEMPLATE
 					check = Format.checkFormat(8, value, PanelPropCell.getPropSettings(prop));
@@ -1003,7 +1003,7 @@ classdef PanelPropCell < PanelProp
 					
 					value = yslider;
 					
-				case 50 % PanelPropCell.TABLE
+				case 52 % PanelPropCell.TABLE
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1017,7 +1017,7 @@ classdef PanelPropCell < PanelProp
 					
 					value = table;
 					
-				case 51 % PanelPropCell.CONTEXTMENU
+				case 53 % PanelPropCell.CONTEXTMENU
 					contextmenu = uicontextmenu(...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -1118,29 +1118,6 @@ classdef PanelPropCell < PanelProp
 					                    'Visible', 'on' ...
 					                    )
 					            end
-					            
-					% % %                 if (isa(el, 'ComparisonGroup') | isa(el, 'ComparisonEnsemble')) && el.existsTag('QVALUE')
-					% % %                     
-					% % %                     tmp_data = get_p_value();
-					% % %                     
-					% % %                     if size(tmp_data, 1) > size(tmp_data, 2)
-					% % %                         tmp_data = tmp_data';
-					% % %                     end
-					% % %                     
-					% % %                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-					% % %                     [cols, rows] = find(mask);
-					% % %                     
-					% % %                     if ~isempty(rows) && ~isempty(cols)
-					% % %                         s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
-					% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-					% % %                     else
-					% % %                         non_sign = ones(size(mask));
-					% % %                         [cols, rows] = find(non_sign - mask);
-					% % %                         s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
-					% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-					% % %                     end
-					% % %                 end
-					% % %             end
 					    end
 					
 					    % fdr
@@ -1148,8 +1125,7 @@ classdef PanelPropCell < PanelProp
 					        [~, mask] = fdr(value, pr.get('TABLEQVALUE'));
 					        s = uistyle("BackgroundColor", [1 0.6 0.6]);
 					        addStyle(pr.get('TABLE'), s, "cell", mask);
-					    end
-					    
+					    end    
 					end
 					
 				case 22 % PanelPropCell.REDRAW

@@ -135,7 +135,7 @@ g = cp.get('C').get('A1').get('G');
 measure = cp.get('MEASURE');
 
 pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.DIFF,  ...
-    'TABLEQVALUE', pr.get('QVALUE'), 'TABLEFDR', true,  varargin{:});
+    'TABLEQVALUE', cp.get('QVALUE'), 'TABLEFDR', true,  varargin{:});
 
 if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
     pr.set( ...

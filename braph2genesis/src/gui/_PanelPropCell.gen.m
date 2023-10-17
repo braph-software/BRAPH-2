@@ -157,29 +157,6 @@ if value
                     'Visible', 'on' ...
                     )
             end
-            
-% % %                 if (isa(el, 'ComparisonGroup') | isa(el, 'ComparisonEnsemble')) && el.existsTag('QVALUE')
-% % %                     
-% % %                     tmp_data = get_p_value();
-% % %                     
-% % %                     if size(tmp_data, 1) > size(tmp_data, 2)
-% % %                         tmp_data = tmp_data';
-% % %                     end
-% % %                     
-% % %                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-% % %                     [cols, rows] = find(mask);
-% % %                     
-% % %                     if ~isempty(rows) && ~isempty(cols)
-% % %                         s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
-% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-% % %                     else
-% % %                         non_sign = ones(size(mask));
-% % %                         [cols, rows] = find(non_sign - mask);
-% % %                         s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
-% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-% % %                     end
-% % %                 end
-% % %             end
     end
 
     % fdr
@@ -187,8 +164,7 @@ if value
         [~, mask] = fdr(value, pr.get('TABLEQVALUE'));
         s = uistyle("BackgroundColor", [1 0.6 0.6]);
         addStyle(pr.get('TABLE'), s, "cell", mask);
-    end
-    
+    end    
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()

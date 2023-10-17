@@ -1015,7 +1015,7 @@ classdef ComparisonGroup < ConcreteElement
 					measure = cp.get('MEASURE');
 					
 					pr = PanelPropCell('EL', cp, 'PROP', 11,  ...
-					    'TABLEQVALUE', pr.get('QVALUE'), 'TABLEFDR', true,  varargin{:});
+					    'TABLEQVALUE', cp.get('QVALUE'), 'TABLEFDR', true, varargin{:});
 					
 					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
