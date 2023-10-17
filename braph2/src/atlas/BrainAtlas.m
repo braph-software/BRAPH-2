@@ -9,7 +9,7 @@ classdef BrainAtlas < ConcreteElement
 	% BrainAtlas can be imported/exported to .txt, .xls and .json files.
 	%
 	% The list of BrainAtlas properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas (BrainAtlas).
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas.
@@ -131,7 +131,7 @@ classdef BrainAtlas < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of BrainAtlas properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the brain atlas (BrainAtlas).
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain atlas.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain atlas.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain atlas.
@@ -470,7 +470,7 @@ classdef BrainAtlas < ConcreteElement
 			prop = BrainAtlas.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainatlas_description_list = { 'ELCLASS (constant, string) is the class of the concrete element.'  'NAME (constant, string) is the name of the brain atlas.'  'DESCRIPTION (constant, string) is the description of the brain atlas.'  'TEMPLATE (parameter, item) is the template of the brain atlas.'  'ID (data, string) is a few-letter code for the brain atlas.'  'LABEL (metadata, string) is an extended label of the brain atlas.'  'NOTES (metadata, string) are some specific notes about the brain atlas.'  'TOSTRING (query, string) returns a string that represents the object.'  'BR_DICT (data, idict) contains the brain regions of the brain atlas.'  'PFBA (gui, item) contains the panel figure of the brain atlas.' };
+			brainatlas_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas (BrainAtlas).'  'NAME (constant, string) is the name of the brain atlas.'  'DESCRIPTION (constant, string) is the description of the brain atlas.'  'TEMPLATE (parameter, item) is the template of the brain atlas.'  'ID (data, string) is a few-letter code for the brain atlas.'  'LABEL (metadata, string) is an extended label of the brain atlas.'  'NOTES (metadata, string) are some specific notes about the brain atlas.'  'TOSTRING (query, string) returns a string that represents the object.'  'BR_DICT (data, idict) contains the brain regions of the brain atlas.'  'PFBA (gui, item) contains the panel figure of the brain atlas.' };
 			prop_description = brainatlas_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
