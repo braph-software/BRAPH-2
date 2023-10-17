@@ -157,29 +157,21 @@ if value
                     'Visible', 'on' ...
                     )
             end
-            
-% % %                 if (isa(el, 'ComparisonGroup') | isa(el, 'ComparisonEnsemble')) && el.existsTag('QVALUE')
-% % %                     
-% % %                     tmp_data = get_p_value();
-% % %                     
-% % %                     if size(tmp_data, 1) > size(tmp_data, 2)
-% % %                         tmp_data = tmp_data';
-% % %                     end
-% % %                     
-% % %                     [~, mask] = fdr(tmp_data, el.get('QVALUE'));
-% % %                     [cols, rows] = find(mask);
-% % %                     
-% % %                     if ~isempty(rows) && ~isempty(cols)
-% % %                         s = uistyle('BackgroundColor',[146/255 179/255 175/255]);
-% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-% % %                     else
-% % %                         non_sign = ones(size(mask));
-% % %                         [cols, rows] = find(non_sign - mask);
-% % %                         s = uistyle('BackgroundColor', [1 1 1]); % default color, no significance
-% % %                         addStyle(pr.table, s, 'cell', [rows', cols']);
-% % %                     end
-% % %                 end
-% % %             end
+    end
+
+    % fdr
+    tmp_val = get(pr.get('TABLE'), 'DATA');
+    if size(tmp_val, 2) == 1
+        tmp_val = tmp_val';
+    end
+    if pr.get('TABLEFDR')
+        [~, mask] = fdr(tmp_val, pr.get('TABLEQVALUE'));
+        s = uistyle("BackgroundColor", BRAPH2.COL_FDR);
+        if size(mask, 1) == 1
+            mask = mask';
+        end
+        [row, col] = find(mask);
+        addStyle(pr.get('TABLE'), s, "cell", [row, col]);
     end
 end
 %%%% ¡calculate_callbacks!
@@ -405,6 +397,16 @@ true
 TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
 %%%% ¡default!
 s(20)
+
+%%% ¡prop!
+TABLEQVALUE (gui, scalar) is the mask value of the table use in fdr
+%%%% ¡default!
+0.05
+
+%%% ¡prop!
+TABLEFDR (gui, logical) is the mask value of the table use in fdr
+%%%% ¡default!
+false
 
 %%% ¡prop!
 TABLE (evanescent, handle) is the alpha value edit field.
