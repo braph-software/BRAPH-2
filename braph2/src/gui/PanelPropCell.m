@@ -1121,11 +1121,19 @@ classdef PanelPropCell < PanelProp
 					    end
 					
 					    % fdr
-					    if pr.get('TABLEFDR')
-					        [~, mask] = fdr(value, pr.get('TABLEQVALUE'));
-					        s = uistyle("BackgroundColor", [1 0.6 0.6]);
-					        addStyle(pr.get('TABLE'), s, "cell", mask);
-					    end    
+                        tmp_val = get(pr.get('TABLE'), 'DATA');
+                        if size(tmp_val, 2) == 1
+                            tmp_val = tmp_val';
+                        end
+                        if pr.get('TABLEFDR')
+                            [~, mask] = fdr(tmp_val, pr.get('TABLEQVALUE'));
+                            s = uistyle("BackgroundColor", [1 0.6 0.6]);
+                            if size(mask, 1) == 1
+                                mask = mask';
+                            end
+                            [row, col] = find(mask);
+                            addStyle(pr.get('TABLE'), s, "cell", [row, col]);
+                        end
 					end
 					
 				case 22 % PanelPropCell.REDRAW

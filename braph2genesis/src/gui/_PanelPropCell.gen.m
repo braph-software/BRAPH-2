@@ -160,11 +160,19 @@ if value
     end
 
     % fdr
+    tmp_val = get(pr.get('TABLE'), 'DATA');
+    if size(tmp_val, 2) == 1
+        tmp_val = tmp_val';
+    end
     if pr.get('TABLEFDR')
-        [~, mask] = fdr(value, pr.get('TABLEQVALUE'));
-        s = uistyle("BackgroundColor", [1 0.6 0.6]);
-        addStyle(pr.get('TABLE'), s, "cell", mask);
-    end    
+        [~, mask] = fdr(tmp_val, pr.get('TABLEQVALUE'));
+        s = uistyle("BackgroundColor", [1 0.6 0.6]);  % might want to put the color on BRAPH2 as a constant
+        if size(mask, 1) == 1
+            mask = mask';
+        end
+        [row, col] = find(mask);
+        addStyle(pr.get('TABLE'), s, "cell", [row, col]);
+    end
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()
