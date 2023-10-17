@@ -114,7 +114,7 @@ PARAMETRICITY_DESCRIPTION = {
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the graph measure.
+ELCLASS (constant, string) is the class of the graph measure (Measure).
 %%%% ¡default!
 'Measure'
 

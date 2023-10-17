@@ -96,7 +96,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal unilayer measure (MeasurPF_BU).
 %%%% ¡default!
 'MeasurePF_BU'
 

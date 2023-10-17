@@ -1,5 +1,5 @@
 %% ¡header!
-MeasurePF_NxPP_Node < PanelProp (pr, node prop panel) plots the panel to select a node.
+MeasurePF_NxPP_Node < PanelProp (pr, node prop panel) plots the panel to select a node of a nodal measure.
 
 %%% ¡description!
 A Node Prop Panel (MeasurePF_NxPP_Node) plots the panel to select a node from a drop-down list.
@@ -11,7 +11,7 @@ uidropdown, GUI, MeasurePF_NU, MeasurePF_NS, MeasurePF_NB
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the node prop panel.
+ELCLASS (constant, string) is the class of the node prop panel (MeasurePF_NxPP_Node).
 %%%% ¡default!
 'MeasurePF_NxPP_Node'
 

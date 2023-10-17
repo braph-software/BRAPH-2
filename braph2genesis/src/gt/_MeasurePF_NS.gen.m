@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NS < MeasurePF (pf, panel figure for nodal superglobal measure) is the base element to plot a nodal superglobal measure.
+MeasurePF_NS < MeasurePF (pf, panel figure for nodal superglobal measure) is the base element to plot the panel figure of the nodal superglobal measure.
 
 %%% ¡description!
-A Panel Figure for Nodal Superglobal Measure (MeasurePF_NS) manages the basic functionalities to plot of a nodal superglobal measure.
+A Panel Figure for Nodal Superglobal Measure (MeasurePF_NS) manages the basic functionalities to plot the panel figure of the nodal superglobal measure.
 
 %%% ¡seealso!
 Measure
@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for nodal superglobal measure.
+ELCLASS (constant, string) is the class of the panel figure for nodal superglobal measure (MeasurePF_NS).
 %%%% ¡default!
 'MeasurePF_NS'
 
