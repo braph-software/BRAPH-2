@@ -532,6 +532,7 @@ end
 function cb_open_mbrain(~, ~)
     g = pr.get('EL').get(pr.get('PROP'));
     m_list = g.get('COMPATIBLE_MEASURES');
+    m_fullname_list = pr.get('TABLE').Data(:,2);
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI
     N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -542,6 +543,7 @@ function cb_open_mbrain(~, ~)
         i = selected(s);
     
         measure = m_list{i}; % also key
+        measure_fullname = m_fullname_list{i};
     
         m = g.get('MEASURE', measure);
     
@@ -585,6 +587,7 @@ function cb_open_mbrain(~, ~)
             end
     
             gui = GUIFig( ...
+                'TITLE', ['Brain plot: ' measure_fullname], ...
                 'ID', measure, ... % this is the dictionary key
                 'PF', mgbpf, ...
                 'POSITION', [ ...
@@ -631,6 +634,7 @@ function cb_open_plots(~, ~)
     g.memorize('A'); % memorizing A to get correct ALAYERLABELS
     
     m_list = g.get('COMPATIBLE_MEASURES');
+    m_fullname_list = pr.get('TABLE').Data(:,2);
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
     N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -642,6 +646,7 @@ function cb_open_plots(~, ~)
         i = selected(s);
         
         measure = m_list{i}; % also key
+        measure_fullname = m_fullname_list{i};
 
         m = g.get('MEASURE', measure);
         
@@ -667,7 +672,7 @@ function cb_open_plots(~, ~)
         end
 
         gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFM').memorize('GUI_ITEM');
-    
+        set(gui_pfm, 'TITLE', ['Line plot: ' measure_fullname]);
         if ~gui_pfm.get('DRAWN')
             gui_pfm.get('DRAW')
         end
