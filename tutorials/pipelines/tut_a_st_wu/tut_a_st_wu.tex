@@ -26,14 +26,6 @@ This tutorial shows how to perform a network analysis using \emph{structural dat
 \end{abstract}
 \tableofcontents
 
-% This figure should be changed -> substitute by nice brain figures
-\fig{figure*}
-	{fig:02}
-	{\includegraphics{fig02.jpg}}
-	{GUI for working with the pipeline to compare two groups of subjects with \emph{structural data} using a weighted undirected analysis (Figure 2)}
-	{
-	Full graphical user interface to perform group comparisons with \emph{structural data} in BRAPH~2.0. 
-	}
 
 \clearpage
 
@@ -57,9 +49,9 @@ You can generate the example data by typing in the command line the instruction 
 The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Structural Comparison WU}, as shown in \Figref{fig:03}.
 
 \fig{figure}
-{fig:03}
+{fig:02}
 {
-	\includegraphics{fig03.jpg}
+	\includegraphics{fig02.jpg}
 }
 {BRAPH 2 main GUI}
 {
@@ -90,7 +82,19 @@ The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's t
 \end{tcolorbox}
 
 
-Once the pipeline is uploaded, you can see a GUI that contains different steps: to upload a brain atlas, to upload the structural data of two groups, analyze them, and finally, to compare the groups (\Figref{fig:04}a). 
+Once the pipeline is uploaded, you can see a GUI that contains different steps: to upload a brain atlas, to upload the structural data of two groups, analyze them, and finally, to compare the groups (\Figref{fig:03}). 
+
+% This figure should be changed -> substitute by nice brain figures
+\fig{marginfigure}
+	{fig:03}
+	{
+	\includegraphics{fig03.jpg}
+	}
+	{Pipeline steps}
+	{
+	These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
+	}
+\clearpage
 
 \section{Step 1: Load the Brain Atlas}
 \Figref{fig:04} shows how to upload and plot the brain atlas that you used to extract the \emph{structural data} for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba}{Brain Atlas} tutorial.
