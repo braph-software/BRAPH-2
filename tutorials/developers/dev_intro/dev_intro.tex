@@ -173,8 +173,27 @@ The possible categories and formats are shown in the boxes below.
 \end{tcolorbox}
 \end{fullwidth}
 
-Even though it is possible to create instances of \code{Element}, typically one uses its subclasses.
+Even though it is possible to create instances of \code{Element}, typically one uses its subclasses and does not have any props.
 Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, as shown in \Figref{fig:elements}.
+
+The element \code{NoValue} is used to represent a value that has not been set (for properties of categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE} or \code{GUI}) or calculated (for properties of category \code{RESULT}, \code{QUERY}, \code{EVANESCENT}), while it should not be used for properties of category \code{CONSTANT}.
+It should be instantiated using \Coderef{cd:novalue}.
+%
+\begin{lstlisting}[
+	label=cd:compilation,
+	caption={
+		{\bf Instantiation of \code{NoValue}.}
+		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor \code{NoValue()}. 
+	}
+]
+\code{Element.getNoValue()}
+\end{lstlisting}
+No element can be a subclass of NoValue.
+  
+  
+ A callback refers to a property of another element, which are identified 
+  by its properties EL and PROP/TAG.
+  No element can be a subclass of Callback.
 
 \fig{figure}
 	{fig:elements}
