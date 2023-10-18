@@ -79,7 +79,7 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 \section{Elements}
 
 The base class for all elements is \code{Element}. 
-Each element is essentially a container for a series of \emph{props} (properties). Each propery has a category and a format.
+Each element is essentially a container for a series of \emph{props} (properties). Each propery has a sequential number (integer starting from 1), a tag (a string), a category and a format.
 The \emph{category} determines for how a prop is used.
 The \emph{format} determines what a prop can contain.
 The possible categories and formats are shown in the boxes below.
@@ -176,32 +176,50 @@ The possible categories and formats are shown in the boxes below.
 Even though it is possible to create instances of \code{Element}, typically one uses its subclasses and does not have any props.
 Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, as shown in \Figref{fig:elements}.
 
+\fig{figure}
+	{fig:elements}
+	{}
+	{Element tree}
+	{
+	All elements derive from the base class \code{Element}. 
+	Its direct children are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, whose properties are also indicated.
+	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.
+	}
+
 The element \code{NoValue} is used to represent a value that has not been set (for properties of categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE} or \code{GUI}) or calculated (for properties of category \code{RESULT}, \code{QUERY}, \code{EVANESCENT}), while it should not be used for properties of category \code{CONSTANT}.
 It should be instantiated using \Coderef{cd:novalue}.
 %
 \begin{lstlisting}[
-	label=cd:compilation,
+	label=cd:novalue,
 	caption={
 		{\bf Instantiation of \code{NoValue}.}
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor \code{NoValue()}. 
 	}
 ]
-\code{Element.getNoValue()}
+Element.getNoValue()
 \end{lstlisting}
+%
 No element can be a subclass of NoValue.
   
-  
- A callback refers to a property of another element, which are identified 
-  by its properties EL and PROP/TAG.
-  No element can be a subclass of Callback.
+A \code{Callback} refers to a prop of another element \code{el}, identified by prop number or tag.
+It should be instantiated using \Coderef{cd:callback}.
+%
+\begin{lstlisting}[
+	label=cd:callback,
+	caption={
+		{\bf Instantiation of a \code{Callback}.}
+		For computational efficiency, it is best to use only one instance of \code{Callback} for each prop of an instance of a concrete element \code{el} with the code shown below, instead of creating new callback instances using its constructor. 
+	}
+]
+el.getCallback('PROP', PROP_NUMBER)
+el.getCallback('TAG', PROP_TAG)
+\end{lstlisting}
+%
+No element can be a subclass of \code{Callback}.
 
-\fig{figure}
-	{fig:elements}
-	{}
-	{Element tree}
-	{All elements derive from the base class \code{Element}. 
-	Its direct children are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, whose properties are also indicated.
-	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.}
+A concrete element (\code{ConcreteElement}) provides the infrastructure necessary for all concrete elements. 
+In particular, it has the constant props \code{ELCLASS} (string), \code{NAME} (string) and \code{DESCRIPTION} (string), the property \code{TEMPLATE} (item), the indexing properties \code{ID} (string), \code{LABEL} (string), and \code{NOTES} (string), and the query prop \code{TOSTRING} (string).
+Even though it is possible to create instances of \code{ConcreteElement}, typically one uses its subclasses.
 
 Property lifecycle: get, set, memorize, lock
 
