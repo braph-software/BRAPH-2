@@ -266,11 +266,17 @@ When a prop is set to a certain value, the following operations are performed:
 \begin{enumerate}
 	\item The value is {\bf conditioned} before being set (by calling the protected \emph{static} function \code{conditioning()}, which can be defined in each subelement).
 	
+	This can be set with the token \code{¡conditioning!}.
+	
 	\item The value is {\bf preset} before being set (by calling the protected function \code{preset()}, which can be defined in each subelement).\footnote{Differently from the \emph{static} function \code{conditioning()}, the function \code{preset()} has access to the element instance.}
+
+	This can be set with the token \code{¡preset!}.
 	
 	\item If a property is checked, its {\bf format is checked} before proceeding to its setting by calling \code{Format.checkFormat()}.\\
 	If the check fails, the property is not set and an error is thrown with error id\\
 	\code{BRAPH2:<Element Class>:WrongInput}.
+	
+	This can be set with the token \code{¡checkProp!}.
 
 	\item The value is {\bf set}.
 
@@ -282,27 +288,19 @@ When a prop is set to a certain value, the following operations are performed:
 		If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to \code{Element.getNoValue()}.
 
 	\item The value is {\bf postset} after being set (by calling the protected function \code{postset()}, which is defined in each subelement).
+	
+	This can be set with the token \code{¡postset!}.
 
 	\item {\bf All} props are {\bf postprocessed} after being set (by calling the protected function \code{postprocessing()}, which is defined in each subelement).
+	
+	This can be set with the token \code{¡postprocessing!}.
 
-	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of all pros is {\bf checked}.\\
+	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of all pros is {\bf checked}.\footnote{When \code{BRAPH2.CHECKED = false}, no checks are performed. This needs to be changes in the file \fn{BRAPH2.m}.}\\
 	If the check fails an error is thrown with error id\\
 	\code{BRAPH2:<Element Class>:WrongInput}.
+	
+	\item When a prop is successfully set, an {\bf event} \code{PropSet()} is {\bf notified}.
 \end{enumerate} 
-Note that, when \code{BRAPH2.CHECKED = false}, no checks are performed.
- 
-  When some properties are successfully set, an event PropSet is notified.
-
- Each subelement can implement the following protected methods (see Element.set):
-    conditioning   - conditions a value before setting a property (static function) read more 
-    preset         - presets a value before setting a property read more 
-    checkProp      - checks the property format before setting read more 
-    postset        - postsets a property after it has been set read more 
-    postprocessing - postprocesses the value of a prop 
-                     AFTER all properties have been set read more 
-    calculateValue - (only for results) calculates the value of a property read more 
-    checkValue     - checks the value of a property 
-                     (for a result, after it is calculated) read more
 
 \subsection{Getting Props}  
 
