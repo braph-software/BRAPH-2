@@ -93,8 +93,8 @@ The functions to inspect these features can be found by using the command \code{
 
 Furthermore, each instance of a prop has the following features:
 \begin{itemize}
-	\item A \emph{value} (which is by defalut a \code{NoValue}).
-	The functions to set, get, and memorize a value will be discussed in detail in the following sections.
+	\item A \emph{value}.\footnote{The value is by defalut a \code{NoValue}. For \code{PARAMETER}, \code{DATA}, \code{FIGURE}, and \code{GUI} props, it can also be a callback. For \code{CONSTANT} props, it is usually a concrete value.}
+	The functions to set, get, and memorize a value will be discussed in the following sections.
 	
 	\item A \emph{seed} for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling \code{randi(intmax('uint32'))}.
@@ -108,15 +108,27 @@ Furthermore, each instance of a prop has the following features:
 	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When \code{BRAPH2.CHECKED = false}, no checks are performed. This needs to be changes in the file \fn{BRAPH2.m}.}
 	
 	The checked status of a prop can be altered with the functions:\\
-	\code{seed = el.checked(pointer)}\\
-	\code{seed = el.unchecked(pointer)}\\
-	The check status of a prop can be assessed with the function:
+	\code{el.checked(pointer)}\\
+	\code{el.unchecked(pointer)}\\
+	The checked status of a prop can be assessed with the function:
 	\code{checked = el.isChecked(pointer)}\\
 	where \code{pointer} can be either a prop number or tag.
 	
-	\item A \emph{locked} status, which is false by default. The \code{PARAMETER} and \code{DATA} props get locked the first time a \code{RESULT} property is successfully calculated.
+	\item A \emph{locked} status, which is false by default.\footnote{The \code{PARAMETER} and \code{DATA} props get locked the first time a \code{RESULT} property is successfully calculated. The locked status is not used for \code{CONSTANT} props.}
 	
-	\item A \emph{callback} instance.
+	A prop can be locked with the function:\\
+	\code{el.lock(pointer)}\\
+	Once locked, it cannot be unlocked.
+	The locked status of a prop can be assessed with the function:\\
+	\code{locked = el.isLocked(pointer)}\\
+	where \code{pointer} can be either a prop number or tag.
+	
+	\item A \emph{callback} instance.\footnote{Callbacks are not used with \code{METADATA} props.}
+	
+	The callback to a prop can be obtained using the function:\\
+	\code{cb = el.getCallback(pointer)}\\
+	where \code{pointer} can be either a prop number or tag.
+	
 \end{itemize}
 Additional functions to operate with these features can be found by using the command \code{help Element} in the MatLab command line.
 
