@@ -525,7 +525,7 @@ classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
 				case 1 % GlobalEfficiencyInAv.ELCLASS
 					prop_default = 'GlobalEfficiencyInAv';
 				case 2 % GlobalEfficiencyInAv.NAME
-					prop_default = 'GlobalEfficiencyInAv';
+					prop_default = 'Average In-Global Efficiency';
 				case 3 % GlobalEfficiencyInAv.DESCRIPTION
 					prop_default = 'The Average In-Global Efficiency (GlobalEfficiencyInAv) is the average inverse shortest in-path length within each layer.';
 				case 4 % GlobalEfficiencyInAv.TEMPLATE

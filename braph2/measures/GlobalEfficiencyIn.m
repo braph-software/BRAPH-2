@@ -526,7 +526,7 @@ classdef GlobalEfficiencyIn < Distance
 				case 1 % GlobalEfficiencyIn.ELCLASS
 					prop_default = 'GlobalEfficiencyIn';
 				case 2 % GlobalEfficiencyIn.NAME
-					prop_default = 'GlobalEfficiencyIn';
+					prop_default = 'In-Global Efficiency';
 				case 3 % GlobalEfficiencyIn.DESCRIPTION
 					prop_default = 'The In-Global Efficiency (GlobalEfficiencyIn) is the average inverse shortest in-path length within each layer. It is inversely related to the characteristic in-path length.';
 				case 4 % GlobalEfficiencyIn.TEMPLATE
