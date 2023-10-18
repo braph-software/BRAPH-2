@@ -976,7 +976,6 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			    
 			    for s = 1:1:length(selected)
 			        i = selected(s);
-                   
 			        g_key = g_key_list{i}; % key for graph
 			        if ~gui_g_dict.get('CONTAINS_KEY', g_key)
 			            g = g_dict.get('IT', g_key); % actual graph
