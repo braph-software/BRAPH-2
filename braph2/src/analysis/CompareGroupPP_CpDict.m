@@ -1031,6 +1031,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
 			    m_list = g.get('COMPATIBLE_MEASURES');
+			    m_fullname_list = pr.get('TABLE').Data(:,2);
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -1042,6 +1043,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			        i = selected(s);
 			        
 			        measure = m_list{i}; % also key
+			        measure_fullname = m_fullname_list{i};
 			
 			        cp = c.get('COMPARISON', measure);
 			        cp.get('C').get('A1').memorize('G').memorize('A'); % memorizing A to get correct ALAYERLABELS
@@ -1069,7 +1071,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			        end
 			
 			        gui_pfbg = gui.get('PE').get('PR_DICT').get('IT', 'PFBG').memorize('GUI_ITEM');
-			    
+			        set(gui_pfbg, 'TITLE', ['Comparison brain plot: ' measure_fullname]);
 			        if ~gui_pfbg.get('DRAWN')
 			            gui_pfbg.get('DRAW')
 			        end
@@ -1103,6 +1105,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			    c = pr.get('EL');
 			    g = c.get('A1').get('G');
 			    m_list = g.get('COMPATIBLE_MEASURES');
+			    m_fullname_list = pr.get('TABLE').Data(:,2);
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -1114,6 +1117,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			        i = selected(s);
 			        
 			        measure = m_list{i}; % also key
+			        measure_fullname = m_fullname_list{i};
 			
 			        cp = c.get('COMPARISON', measure);
 			        cp.get('C').get('A1').memorize('G').memorize('A'); % memorizing A to get correct ALAYERLABELS
@@ -1141,7 +1145,7 @@ classdef CompareGroupPP_CpDict < PanelProp
 			        end
 			
 			        gui_pfc = gui.get('PE').get('PR_DICT').get('IT', 'PFC').memorize('GUI_ITEM');
-			    
+			        set(gui_pfc, 'TITLE', ['Comparison plot: ' measure_fullname]);
 			        if ~gui_pfc.get('DRAWN')
 			            gui_pfc.get('DRAW')
 			        end

@@ -976,6 +976,7 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			    
 			    for s = 1:1:length(selected)
 			        i = selected(s);
+                   
 			        g_key = g_key_list{i}; % key for graph
 			        if ~gui_g_dict.get('CONTAINS_KEY', g_key)
 			            g = g_dict.get('IT', g_key); % actual graph
@@ -1000,7 +1001,7 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			        end
 			
 			        gui_pfga = gui.get('PE').get('PR_DICT').get('IT', 'PFGA').memorize('GUI_ITEM');
-			    
+			        set(gui_pfga, 'TITLE', ['Adjacency matrices plot: ' g_key]);
 			        if ~gui_pfga.get('DRAWN')
 			            gui_pfga.get('DRAW')
 			        end
@@ -1066,7 +1067,7 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			        end
 			
 			        gui_pfgh = gui.get('PE').get('PR_DICT').get('IT', 'PFGH').memorize('GUI_ITEM');
-			    
+			        set(gui_pfgh, 'TITLE', ['Histograms plot: ' g_key]);
 			        if ~gui_pfgh.get('DRAWN')
 			            gui_pfgh.get('DRAW')
 			        end
