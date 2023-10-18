@@ -1715,7 +1715,7 @@ classdef PanelPropIDictTable < PanelProp
 			    
 			    t = cell2table([rows, num2cell(data)], ...
 			        'VariableNames', [' '; columns] ...
-                    );
+			        );
 			
 			    % save file
 			    [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');
