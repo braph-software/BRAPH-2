@@ -89,12 +89,12 @@ Each element is essentially a container for a series of \emph{props} (properties
 	
 	\item A \emph{format}, which determines what a prop can contain.
 \end{itemize}
-The methods to inspect these features can be found by using the command \code{help Element} in the MatLab command line.
+The functions to inspect these features can be found by using the command \code{help Element} in the MatLab command line.
 
 Furthermore, each instance of a prop has the following features:
 \begin{itemize}
 	\item A \emph{value} (which is by defalut a \code{NoValue}).
-	The methods to set, get, and memorize a value will be discussed in detail in the following sections.
+	The functions to set, get, and memorize a value will be discussed in detail in the following sections.
 	
 	\item A \emph{seed} for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling \code{randi(intmax('uint32'))}.
@@ -114,7 +114,7 @@ Furthermore, each instance of a prop has the following features:
 	
 	\item A \emph{callback} instance.
 \end{itemize}
-Additional methods to operate with these features can be found by using the command \code{help Element} in the MatLab command line.
+Additional functions to operate with these features can be found by using the command \code{help Element} in the MatLab command line.
 
 \begin{fullwidth}
 \begin{tcolorbox}[
@@ -311,7 +311,7 @@ When a prop is set to a certain value, the following operations are performed:
 	
 	This can be set with the token \code{¡postprocessing!}.
 
-	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of {\bf all pros} are {\bf checked}.\\
+	\item If ANY property is checked, the function \code{Element.check()} is called after all settings are made and the consistency of the values of {\bf all pros} are {\bf checked}.\\
 	If the check fails an error is thrown with error id\\
 	\code{BRAPH2:<Element Class>:WrongInput}.
 	
