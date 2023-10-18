@@ -107,8 +107,12 @@ Furthermore, each instance of a prop has the following features:
 	\item A \emph{checked} status, which is true by default.
 	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When \code{BRAPH2.CHECKED = false}, no checks are performed. This needs to be changes in the file \fn{BRAPH2.m}.}
 	
-	The checked status of a prop can be altered with the functions \code{checked()} and \code{unchecked()}. 
-	The check status of a prop can be assessed with the function \code{isChecked()}.
+	The checked status of a prop can be altered with the functions:\\
+	\code{seed = el.checked(pointer)}\\
+	\code{seed = el.unchecked(pointer)}\\
+	The check status of a prop can be assessed with the function:
+	\code{checked = el.isChecked(pointer)}\\
+	where \code{pointer} can be either a prop number or tag.
 	
 	\item A \emph{locked} status, which is false by default. The \code{PARAMETER} and \code{DATA} props get locked the first time a \code{RESULT} property is successfully calculated.
 	
