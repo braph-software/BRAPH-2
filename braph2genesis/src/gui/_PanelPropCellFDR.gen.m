@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropCell < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+PanelPropCellFDR < PanelProp (pr, cell prop panel fdr) plots the panel of a prop cell.
 
 %%% ¡description!
-A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders.
+A Cell Prop Panel (PanelPropCellFDR) plots the panel for a CELL prop with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -26,37 +26,37 @@ uitable, uislider, GUI, PanelElement
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the cell prop panel.
 %%%% ¡default!
-'PanelPropCell'
+'PanelPropCellFDR'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the cell prop panel.
 %%%% ¡default!
-'Cell Prop Panel'
+'Cell Prop Panel FDR'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cell prop panel.
 %%%% ¡default!
-'A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Cell Prop Panel (PanelPropCellFDR) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the cell prop panel.
 %%%% ¡settings!
-'PanelPropCell'
+'PanelPropCellFDR'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the cell prop panel.
 %%%% ¡default!
-'PanelPropCell ID'
+'PanelPropCellFDR ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the cell prop panel.
 %%%% ¡default!
-'PanelPropCell label'
+'PanelPropCellFDR label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the cell prop panel.
 %%%% ¡default!
-'PanelPropCell notes'
+'PanelPropCellFDR notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -216,11 +216,6 @@ function value = set_sliders_and_get_value()
         value = value{R + 1 - get(pr.get('YSLIDER'), 'Value'), get(pr.get('XSLIDER'), 'Value')};
     end
 end
-% % %     function pval = get_p_value()
-% % %         value = el.get('P2');
-% % %         [R, ~] = size(value);
-% % %         pval = value{R + 1 - get(pr.get('YSLIDER'), 'Value'), get(pr.get('XSLIDER'), 'Value')};
-% % %     end
 
 %%% ¡prop!
 REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
@@ -292,17 +287,6 @@ value = xslider;
 %%%% ¡calculate_callbacks!
 function cb_xslider(~, ~)
     set(pr.get('XSLIDER'), 'Value', round(get(pr.get('XSLIDER'), 'Value')))
-    
-    % if pr.get('XYSLIDERLOCK')
-    %     el = pr.get('EL');
-    %     prop = pr.get('PROP');
-    %     value = el.get(prop);
-    %     [R, C] = size(value);
-    % 
-    %     R = max(R, 1); % to manage the case in which C = R = 0 (empty cell)
-    % 
-    %     set(pr.get('YSLIDER'), 'Value', R + 1 - get(pr.get('XSLIDER'), 'Value'))
-    % end
     
     pr.get('UPDATE')
 end
@@ -495,7 +479,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[PanelPropCell.PARENT PanelPropCell.H PanelPropCell.LISTENER_CB PanelPropCell.HEIGHT PanelPropCell.XSLIDER PanelPropCell.YSLIDER PanelPropCell.TABLE PanelPropCell.CONTEXTMENU]
+[PanelPropCellFDR.PARENT PanelPropCellFDR.H PanelPropCellFDR.LISTENER_CB PanelPropCellFDR.HEIGHT PanelPropCellFDR.XSLIDER PanelPropCellFDR.YSLIDER PanelPropCellFDR.TABLE PanelPropCellFDR.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -504,7 +488,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':PanelPropCell'])
+warning('off', [BRAPH2.STR ':PanelPropCellFDR'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':PanelPropCell'])
+warning('on', [BRAPH2.STR ':PanelPropCellFDR'])
