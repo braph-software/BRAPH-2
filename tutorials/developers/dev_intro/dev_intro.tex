@@ -79,10 +79,18 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 \section{Elements}
 
 The base class for all elements is \code{Element}. 
-Each element is essentially a container for a series of \emph{props} (properties). Each propery has a sequential number (integer starting from 1), a tag (a string), a category and a format.
-The \emph{category} determines for how a prop is used.
-The \emph{format} determines what a prop can contain.
-The possible categories and formats are shown in the boxes below.
+Each element is essentially a container for a series of \emph{props} (properties). Each prop is characterized by the following:
+\begin{itemize}
+	\item A \emph{sequential number} (integer starting from 1).
+	\item A \emph{tag} (a string).
+	\item A \emph{category}, which determines for how a prop is used.\footnote{The possible categories and formats are shown in the boxes below.}
+	\item A \emph{format}, which determines what a prop can contain.
+	\item A \emph{value} (which is by defalut a \code{NoValue}).
+	\item A \emph{seed} for the random number generator to ensure the reproducibility of the results.
+	\item A \emph{checked} status, which is true by default.
+	\item A \emph{locked} status, which is false by default. The \code{PARAMETER} and \code{DATA} props get locked the first time a \code{RESULT} property is successfully calculated.
+	\item A \emph{callback} instance.
+\end{itemize}
 
 \begin{fullwidth}
 \begin{tcolorbox}[
@@ -95,13 +103,15 @@ The possible categories and formats are shown in the boxes below.
  
  	\item[\code{PARAMETER}] Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
  
- 	\item[\code{DATA}] Data used to calculate the results of the element. It is NoValue when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
+ 	\item[\code{DATA}] Data used to calculate the results of the element. It is \code{NoValue} when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
  
- 	\item[\code{RESULT}] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is NoValue when not calculated. It allows incoming callbacks.
+ 	\item[\code{RESULT}] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is \code{NoValue} when not calculated. It allows incoming callbacks.
  
- 	\item[\code{QUERY}] Query result calculated by the element. The calculation of a query does NOT lock the element. It is NoValue when not calculated. It does not allow callbacks.
+ 	\item[\code{QUERY}] Query result calculated by the element. The calculation of a query does NOT lock the element. It is \code{NoValue} when not calculated. Typically, it should not be memorized.
+It does not allow callbacks.
  
- 	\item[\code{EVANESCENT}] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is NoValue when not calculated. It does not allow callbacks.
+ 	\item[\code{EVANESCENT}] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is \code{NoValue} when not calculated. Typically, it should be memorized at first use.
+It does not allow callbacks.
  
  	\item[\code{FIGURE}] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
                 
@@ -221,7 +231,73 @@ A concrete element (\code{ConcreteElement}) provides the infrastructure necessar
 In particular, it has the constant props \code{ELCLASS} (string), \code{NAME} (string) and \code{DESCRIPTION} (string), the property \code{TEMPLATE} (item), the indexing properties \code{ID} (string), \code{LABEL} (string), and \code{NOTES} (string), and the query prop \code{TOSTRING} (string).
 Even though it is possible to create instances of \code{ConcreteElement}, typically one uses its subclasses.
 
-Property lifecycle: get, set, memorize, lock
+\subsection{Setting Props}
+
+The value of a prop can be set with \Coderef{cd:set}.
+%
+\begin{lstlisting}[
+	label=cd:set,
+	caption={
+		{\bf Setting a prop.}
+		This script illustrates various ways in which props can be set.
+	}
+]
+el.set('ID', 'new el id') ¥\circled{1}\twocirclednotes{1}{2}{set the value of a prop with the prop tag or the prop number.}¥
+el.set(5, 'new el id') ¥\circled{2}¥
+
+el.set( ... ¥\circled{3}\circlednote{3}{sets the values of multiple props at once. The pointers can be either property numbers or property tags.}¥
+	'ID', 'new el id', ...
+	'LABEL', 'new el label', ...
+	7, 'new el notes' ...
+	) 
+
+el = el.set('ID', 'new el id') ¥\circled{3}\circlednote{3}{returns the element.}¥
+\end{lstlisting}
+%
+When a prop is set to a certain value, the following operations are performed:
+\begin{enumerate}
+	\item The value is {\bf conditioned} before being set (by calling the protected \emph{static} function \code{conditioning()}, which can be defined in each subelement).
+	
+	\item The value is {\bf preset} before being set (by calling the protected function \code{preset()}, which can be defined in each subelement).\footnote{Differently from the \emph{static} function \code{conditioning()}, the function \code{preset()} has access to the element instance.}
+	
+	\item If a property is checked, its {\bf format is checked} before proceeding to its setting by calling \code{Format.checkFormat()}.\\
+	If the check fails, the property is not set and an error is thrown with error id \code{BRAPH2:<Element Class>:WrongInput}.
+
+	\item The value is {\bf set}.
+
+		If the property is of category \code{PARAMETER}, \code{DATA}, \code{FIGURE}, or \code{GUI}, the value is set only if the property is unlocked.\\
+		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id \code{BRAPH2:<Element Class>}.\\
+		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id \code{BRAPH2:<Element Class>}.
+ 
+		If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to \code{Element.getNoValue()}.
+
+	\item The value is {\bf postset} after being set (by calling the protected function \code{postset()}, which is defined in each subelement).
+
+	\item {\bf All} props are {\bf postprocessed} after being set (by calling the protected function \code{postprocessing()}, which is defined in each subelement).
+
+	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of all pros is {\bf checked}.\\
+	If the check fails an error is thrown with error id \code{BRAPH2:<Element Class>:WrongInput}.
+\end{enumerate} 
+Note that, when \code{BRAPH2.CHECKED = false}, no checks are performed.
+ 
+  When some properties are successfully set, an event PropSet is notified.
+
+ Each subelement can implement the following protected methods (see Element.set):
+    conditioning   - conditions a value before setting a property (static function) read more 
+    preset         - presets a value before setting a property read more 
+    checkProp      - checks the property format before setting read more 
+    postset        - postsets a property after it has been set read more 
+    postprocessing - postprocesses the value of a prop 
+                     AFTER all properties have been set read more 
+    calculateValue - (only for results) calculates the value of a property read more 
+    checkValue     - checks the value of a property 
+                     (for a result, after it is calculated) read more
+
+\subsection{Getting Props}  
+
+\subsection{Memorizing Props}  
+  
+\subsection{Locking Props}  
 
 Box all tokens 
 
