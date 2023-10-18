@@ -79,26 +79,42 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 \section{Elements}
 
 The base class for all elements is \code{Element}. 
-Each element is essentially a container for a series of \emph{props} (properties). Each prop is characterized by the following:
+Each element is essentially a container for a series of \emph{props} (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
 \begin{itemize}
 	\item A \emph{sequential number} (integer starting from 1).
-	
+		
 	\item A \emph{tag} (a string).
 	
 	\item A \emph{category}, which determines for how a prop is used.\footnote{The possible categories and formats are shown in the boxes below.}
 	
 	\item A \emph{format}, which determines what a prop can contain.
-	
+\end{itemize}
+The methods to inspect these features can be found by using the command \code{help Element} in the MatLab command line.
+
+Furthermore, each instance of a prop has the following features:
+\begin{itemize}
 	\item A \emph{value} (which is by defalut a \code{NoValue}).
+	The methods to set, get, and memorize a value will be discussed in detail in the following sections.
 	
-	\item A \emph{seed} for the random number generator to ensure the reproducibility of the results.
+	\item A \emph{seed} for the random number generator to ensure the reproducibility of the results. 
+	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling \code{randi(intmax('uint32'))}.
 	
+	The seed can be obtained using:\\
+	\code{seed = el.getPropSeed(pointer)}\\
+	where \code{pointer} can be either a prop number or tag.
+	It cannot be changed.
+ 	
 	\item A \emph{checked} status, which is true by default.
+	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When \code{BRAPH2.CHECKED = false}, no checks are performed. This needs to be changes in the file \fn{BRAPH2.m}.}
+	
+	The checked status of a prop can be altered with the functions \code{checked()} and \code{unchecked()}. 
+	The check status of a prop can be assessed with the function \code{isChecked()}.
 	
 	\item A \emph{locked} status, which is false by default. The \code{PARAMETER} and \code{DATA} props get locked the first time a \code{RESULT} property is successfully calculated.
 	
 	\item A \emph{callback} instance.
 \end{itemize}
+Additional methods to operate with these features can be found by using the command \code{help Element} in the MatLab command line.
 
 \begin{fullwidth}
 \begin{tcolorbox}[
@@ -291,11 +307,11 @@ When a prop is set to a certain value, the following operations are performed:
 	
 	This can be set with the token \code{¡postset!}.
 
-	\item {\bf All} props are {\bf postprocessed} after being set (by calling the protected function \code{postprocessing()}, which is defined in each subelement).
+	\item {\bf All props} are {\bf postprocessed} after being set (by calling the protected function \code{postprocessing()}, which is defined in each subelement).
 	
 	This can be set with the token \code{¡postprocessing!}.
 
-	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of all pros is {\bf checked}.\footnote{When \code{BRAPH2.CHECKED = false}, no checks are performed. This needs to be changes in the file \fn{BRAPH2.m}.}\\
+	\item If ANY property is checked, the method \code{Element.check()} is called after all settings are made and the consistency of the values of {\bf all pros} are {\bf checked}.\\
 	If the check fails an error is thrown with error id\\
 	\code{BRAPH2:<Element Class>:WrongInput}.
 	
