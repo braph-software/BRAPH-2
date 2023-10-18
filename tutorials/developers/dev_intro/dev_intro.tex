@@ -79,17 +79,10 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 \section{Elements}
 
 The base class for all elements is \code{Element}. 
-Each element is essentially a container for a series of \emph{properties}. Each propery has a \emph{category} and a \emph{format}.
-The category determines for what and how a property.
-The possible categories are shown in the box below.
-Even
-though it is possible to create instances of Element, typically 
-one uses its subclasses.
-In this section, we will see how to implement a new element.
-
-Overview 
-
-Element, NoValue, Callback, Concrete Element + FIG
+Each element is essentially a container for a series of \emph{props} (properties). Each propery has a category and a format.
+The \emph{category} determines for how a prop is used.
+The \emph{format} determines what a prop can contain.
+The possible categories and formats are shown in the boxes below.
 
 \begin{fullwidth}
 \begin{tcolorbox}[
@@ -179,6 +172,17 @@ Element, NoValue, Callback, Concrete Element + FIG
 \end{description}
 \end{tcolorbox}
 \end{fullwidth}
+
+Even though it is possible to create instances of \code{Element}, typically one uses its subclasses.
+Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, as shown in \Figref{fig:elements}.
+
+\fig{figure}
+	{fig:elements}
+	{}
+	{Element tree}
+	{All elements derive from the base class \code{Element}. 
+	Its direct children are \code{NoValue}, \code{Callback}, and \code{ConcreteElement}, whose properties are also indicated.
+	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.}
 
 Property lifecycle: get, set, memorize, lock
 
