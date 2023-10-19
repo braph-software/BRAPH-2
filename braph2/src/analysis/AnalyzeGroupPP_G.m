@@ -1193,7 +1193,6 @@ classdef AnalyzeGroupPP_G < PanelProp
 			function cb_open_mbrain(~, ~)
 			    g = pr.get('EL').get(pr.get('PROP'));
 			    m_list = g.get('COMPATIBLE_MEASURES');
-			    m_fullname_list = pr.get('TABLE').Data(:,2);
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
