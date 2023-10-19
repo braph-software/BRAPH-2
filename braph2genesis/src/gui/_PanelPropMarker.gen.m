@@ -2,7 +2,7 @@
 PanelPropMarker < PanelProp (pr, marker prop panel) plots the panel of a property marker.
 
 %%% ¡description!
-A Marker Prop Panel (PanelPropMarker) plots the panel for an MARKER property with a drop-down list.
+A Marker Prop Panel (PanelPropMarker) plots the panel for a MARKER property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
@@ -23,7 +23,7 @@ NAME (constant, string) is the name of the marker property panel.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the marker property panel.
 %%%% ¡default!
-'A Marker Prop Panel (PanelPropMarker) plots the panel for an MARKER property with a drop-down list. It works for all categories.'
+'A Marker Prop Panel (PanelPropMarker) plots the panel for a MARKER property with a drop-down list. It works for all categories.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the marker property panel.
