@@ -668,7 +668,7 @@ function cb_open_plots(~, ~)
         end
 
         gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFM').memorize('GUI_ITEM');
-        set(gui_pfm, 'TITLE', ['Line plot: ' measure_fullname]);
+        set(gui_pfm, 'TITLE', ['Line plot - ' m.get('NAME')]);
         if ~gui_pfm.get('DRAWN')
             gui_pfm.get('DRAW')
         end

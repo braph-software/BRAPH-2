@@ -431,7 +431,6 @@ function cb_open_plots(~, ~)
     a = pr.get('EL');   
     g = a.get('GRAPH_TEMPLATE'); 
     m_list = g.get('COMPATIBLE_MEASURES');
-    m_fullname_list = pr.get('TABLE').Data(:,2);
     
     f = ancestor(pr.get('H'), 'figure'); % parent GUI 
     N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -443,7 +442,6 @@ function cb_open_plots(~, ~)
         i = selected(s);
         
         measure = m_list{i}; % also key
-        measure_fullname = m_fullname_list{i};
 
         me = a.get('MEASUREENSEMBLE', measure);
         
