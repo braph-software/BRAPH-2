@@ -526,7 +526,7 @@ classdef GlobalEfficiencyOut < Distance
 				case 1 % GlobalEfficiencyOut.ELCLASS
 					prop_default = 'GlobalEfficiencyOut';
 				case 2 % GlobalEfficiencyOut.NAME
-					prop_default = 'GlobalEfficiencyOut';
+					prop_default = 'Out-Global Efficiency';
 				case 3 % GlobalEfficiencyOut.DESCRIPTION
 					prop_default = 'The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest out-path length within each layer. It is inversely related to the characteristic out-path length.';
 				case 4 % GlobalEfficiencyOut.TEMPLATE

@@ -59,7 +59,7 @@ ELCLASS (constant, string) is the class of the In-Global Efficiency.
 %%% ¡prop!
 NAME (constant, string) is the name of the In-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyIn'
+'In-Global Efficiency'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the In-Global Efficiency.

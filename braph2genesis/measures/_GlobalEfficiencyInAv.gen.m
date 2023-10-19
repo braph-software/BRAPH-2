@@ -58,7 +58,7 @@ ELCLASS (constant, string) is the class of the graph Average In-Global Efficienc
 %%% ¡prop!
 NAME (constant, string) is the name of the graph Average In-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyInAv'
+'Average In-Global Efficiency'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph Average In-Global Efficiency.
