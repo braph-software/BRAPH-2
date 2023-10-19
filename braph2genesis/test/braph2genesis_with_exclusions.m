@@ -37,13 +37,13 @@ else
         ]);
 end
 
-excluded_per_line = 6;
+excluded_per_line = 5;
 offset = max(cellfun(@(x) length(x), excluded)) + 2;
 for i = 1:excluded_per_line:length(excluded)
     cellfun(@(x) fprintf([x repmat(' ', 1, offset - length(x))]), excluded(i:min(i + excluded_per_line - 1, length(excluded))))
     fprintf('\n')
 end
-disp('\n')
+disp(' ')
 
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
