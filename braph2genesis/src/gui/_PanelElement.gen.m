@@ -51,7 +51,7 @@ DESCRIPTION (constant, string) is the description of the element panel.
 'An Element Panel (PanelElement) plots all properties of an element in a panel, which contains a series of stacked property panels, one for each property of the element being plotted.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the line element panel.
+TEMPLATE (parameter, item) is the template of the element panel.
 %%%% ¡settings!
 'PanelElement'
 

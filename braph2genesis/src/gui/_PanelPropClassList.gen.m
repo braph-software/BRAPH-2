@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropClassList < PanelProp (pr, class-list prop panel) plots the panel of a prop class list.
+PanelPropClassList < PanelProp (pr, class-list prop panel) plots the panel of a property class list.
 
 %%% ¡description!
-A Class-List Prop Panel (PanelPropClassList) plots the panel for a CLASSLIST prop with a listbox.
+A Class-List Prop Panel (PanelPropClassList) plots the panel for a CLASSLIST property with a listbox.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uilistbox, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the class-list prop panel.
+ELCLASS (constant, string) is the class of the class-list property panel.
 %%%% ¡default!
 'PanelPropClassList'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the class-list prop panel.
+NAME (constant, string) is the name of the class-list property panel.
 %%%% ¡default!
 'Class-List Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the class-list prop panel.
+DESCRIPTION (constant, string) is the description of the class-list property panel.
 %%%% ¡default!
-'A Class-List Prop Panel (PanelPropClassList) plots the panel for a CLASSLIST prop with a listbox. It works for all categories.'
+'A Class-List Prop Panel (PanelPropClassList) plots the panel for a CLASSLIST property with a listbox. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the class-list prop panel.
+TEMPLATE (parameter, item) is the template of the class-list property panel.
 %%%% ¡settings!
 'PanelPropClassList'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the class-list prop panel.
+ID (data, string) is a few-letter code for the class-list property panel.
 %%%% ¡default!
 'PanelPropClassList ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the class-list prop panel.
+LABEL (metadata, string) is an extended label of the class-list property panel.
 %%%% ¡default!
 'PanelPropClassList label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the class-list prop panel.
+NOTES (metadata, string) are some specific notes about the class-list property panel.
 %%%% ¡default!
 'PanelPropClassList notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 Measure()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 Measure.COMPATIBLE_GRAPHS
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(10)
  
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -112,7 +112,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

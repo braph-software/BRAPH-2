@@ -1,11 +1,11 @@
 %% ¡header!
-PanelPropItem < PanelProp (pr, item prop panel) plots the panel of a prop item.
+PanelPropItem < PanelProp (pr, item prop panel) plots the panel of a property item.
 
 %%% ¡description!
-An Item Prop Panel (PanelPropItem) plots the panel for a ITEM prop with a button.
+An Item Prop Panel (PanelPropItem) plots the panel for a ITEM property with a button.
 It works for all categories. 
 
-The prop GUICLASS determines whether the item figure is a 'GUIElement' or 'GUIFig'.
+The property GUICLASS determines whether the item figure is a 'GUIElement' or 'GUIFig'.
 
 %%% ¡seealso!
 uibutton, GUI, PanelElement, GUIElement, GUIFig
@@ -13,37 +13,37 @@ uibutton, GUI, PanelElement, GUIElement, GUIFig
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the item prop panel.
+ELCLASS (constant, string) is the class of the item property panel.
 %%%% ¡default!
 'PanelPropItem'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the item prop panel.
+NAME (constant, string) is the name of the item property panel.
 %%%% ¡default!
 'Item Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the item prop panel.
+DESCRIPTION (constant, string) is the description of the item property panel.
 %%%% ¡default!
-'An Item Prop Panel (PanelPropItem) plots the panel for a ITEM prop with a button. It works for all categories. The prop GUICLASS determines whether the item figure is a ''GUIElement'' or ''GUIFig''.'
+'An Item Prop Panel (PanelPropItem) plots the panel for a ITEM property with a button. It works for all categories. The property GUICLASS determines whether the item figure is a ''GUIElement'' or ''GUIFig''.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the item prop panel.
+TEMPLATE (parameter, item) is the template of the item property panel.
 %%%% ¡settings!
 'PanelPropItem'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the item prop panel.
+ID (data, string) is a few-letter code for the item property panel.
 %%%% ¡default!
 'PanelPropItem ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the item prop panel.
+LABEL (metadata, string) is an extended label of the item property panel.
 %%%% ¡default!
 'PanelPropItem label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the item prop panel.
+NOTES (metadata, string) are some specific notes about the item property panel.
 %%%% ¡default!
 'PanelPropItem notes'
 
@@ -53,17 +53,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 PanelProp.EL
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -113,7 +113,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

@@ -1,5 +1,5 @@
 %% ¡header!
-NNCrossValidation < ConcreteElement (nncv, neural network cross-validation) is a process for evaluating neural network models using cross-validation.
+NNCrossValidation < ConcreteElement (nncv, neural network cross-validation) is a process for evaluating a neural network model using cross-validation.
 
 %%% ¡description!
 A cross validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. 
@@ -14,37 +14,37 @@ NNDataset, NNEvaluator, NNBase
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
 'NNCrossValidation'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the cross-validation.
+NAME (constant, string) is the name of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
 'NNCrossValidation'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the cross-validation.
+DESCRIPTION (constant, string) is the description of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
 'A cross validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the cross-validation.
+TEMPLATE (parameter, item) is the template of the element to evaluate a neural network model using cross-validation.
 %%%% ¡settings!
 'NNCrossValidation'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cross-validation.
+ID (data, string) is a few-letter code of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
 'NNCrossValidation ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the cross-validation.
+LABEL (metadata, string) is an extended label of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
 'NNCrossValidation label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cross-validation.
+NOTES (metadata, string) are some specific notes about the evaluating neural network model using cross-validation.
 %%%% ¡default!
 'NNCrossValidation notes'
     

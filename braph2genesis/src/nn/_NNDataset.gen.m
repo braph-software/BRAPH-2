@@ -11,7 +11,7 @@ NNDataPoint, NNDatasetCombine, NNDatasetSplit
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the dataset for neural network analysis.
 %%%% ¡default!
 'NNDataset'
 

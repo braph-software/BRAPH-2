@@ -1,5 +1,5 @@
 %% ¡header!
-PanelProp < Panel (pr, prop panel) is a prop panel.
+PanelProp < Panel (pr, prop panel) is a property panel.
 
 %%% ¡description!
 A Prop Panel (PanelProp) renders a property of an element in a panel. 
@@ -50,42 +50,42 @@ uipanel, uilabel, uibutton, GUI, GUIElement, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel.
+ELCLASS (constant, string) is the class of the property panel.
 %%%% ¡default!
 'PanelProp'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel.
+NAME (constant, string) is the name of the property panel.
 %%%% ¡default!
 'Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel.
+DESCRIPTION (constant, string) is the description of the property panel.
 %%%% ¡default!
 'A Prop Panel (PanelProp) renders a property of an element in a panel.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel.
+TEMPLATE (parameter, item) is the template of the property panel.
 %%%% ¡settings!
 'PanelProp'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel.
+ID (data, string) is a few-letter code for the property panel.
 %%%% ¡default!
 'PanelProp ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel.
+LABEL (metadata, string) is an extended label of the property panel.
 %%%% ¡default!
 'PanelProp label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel.
+NOTES (metadata, string) are some specific notes about the property panel.
 %%%% ¡default!
 'PanelProp notes'
 
 %%% ¡prop!
-DRAW (query, logical) draws the prop panel.
+DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@Panel(pr, Panel.DRAW, varargin{:}); % also warning
 if value

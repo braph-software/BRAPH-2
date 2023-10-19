@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropNet < PanelProp (pr, neural network prop panel) plots the panel of a prop neural network.
+PanelPropNet < PanelProp (pr, neural network prop panel) plots the panel of a property neural network.
 
 %%% ¡description!
-A Neural Network Prop Panel (PanelPropNet) plots the panel for a NET prop with a button.
+A Neural Network Prop Panel (PanelPropNet) plots the panel for a NET property with a button.
 It works for all categories. 
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uibutton, GUI, PanelElement, PanelProp
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the neural network prop panel.
+ELCLASS (constant, string) is the class of the neural network property panel.
 %%%% ¡default!
 'PanelPropNet'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the neural network prop panel.
+NAME (constant, string) is the name of the neural network property panel.
 %%%% ¡default!
 'Neural Network Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the neural network prop panel.
+DESCRIPTION (constant, string) is the description of the neural network property panel.
 %%%% ¡default!
-'A Neural Network Prop Panel (PanelPropNet) plots the panel for a NET prop with a button. It works for all categories.'
+'A Neural Network Prop Panel (PanelPropNet) plots the panel for a NET property with a button. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the neural network prop panel.
+TEMPLATE (parameter, item) is the template of the neural network property panel.
 %%%% ¡settings!
 'PanelPropNet'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the neural network prop panel.
+ID (data, string) is a few-letter code for the neural network property panel.
 %%%% ¡default!
 'PanelPropNet ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the neural network prop panel.
+LABEL (metadata, string) is an extended label of the neural network property panel.
 %%%% ¡default!
 'PanelPropNet label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the neural network prop panel.
+NOTES (metadata, string) are some specific notes about the neural network property panel.
 %%%% ¡default!
 'PanelPropNet notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 PanelProp.EL
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -108,7 +108,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

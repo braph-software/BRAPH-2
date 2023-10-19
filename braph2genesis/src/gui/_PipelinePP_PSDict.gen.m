@@ -1,5 +1,5 @@
 %% ¡header!
-PipelinePP_PSDict < PanelProp (pr, pipeline plot) plots the panel for a pipeline.
+PipelinePP_PSDict < PanelProp (pr, pipeline plot) manages the dictionary of pipeline panel plots.
 
 %%% ¡description!
 A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order.
@@ -12,32 +12,32 @@ Pipeline
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the pipeline plot.
+ELCLASS (constant, string) is the class of the pipeline panel plot dictionary.
 %%%% ¡default!
 'PipelinePP_PSDict'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the pipeline plot.
+NAME (constant, string) is the name of the pipeline panel plot dictionary.
 %%%% ¡default!
 'Pipeline Plot'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the pipeline plot.
+DESCRIPTION (constant, string) is the description of the pipeline panel plot dictionary.
 %%%% ¡default!
 'A Pipeline Plot (PipelinePP_PSDict) plots a pipeline allowing the user to execute it in the correct order. It opens PanelFig elements using GUIFig, and all other elements using GUIElement. It should be used only with the prop PS_DICT of the element Pipeline.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the pipeline plot.
+TEMPLATE (parameter, item) is the template of the pipeline panel plot dictionary.
 %%%% ¡settings!
 'PipelinePP_PSDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the pipeline plot.
+ID (data, string) is a few-letter code for the pipeline panel plot dictionary.
 %%%% ¡default!
 'PipelinePP_PSDict ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the pipeline plot.
+LABEL (metadata, string) is an extended label of the pipeline panel plot dictionary.
 %%%% ¡default!
 'PipelinePP_PSDict label'
 

@@ -1,5 +1,5 @@
 %% ¡header!
-SettingsPosition < Settings (st, position settings) contains the figure panel settings.
+SettingsPosition < Settings (st, position settings) contains the figure panel position settings.
 
 %%% ¡description!
 A Position Settings (SettingsPosition) provides the settings 

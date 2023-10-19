@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropSize < PanelProp (pr, size prop panel) plots the panel of a prop size.
+PanelPropSize < PanelProp (pr, size prop panel) plots the panel of a property size.
 
 %%% ¡description!
-A Size Prop Panel (PanelPropSize) plots the panel for a SIZE prop with a numeric edit field.
+A Size Prop Panel (PanelPropSize) plots the panel for a SIZE property with a numeric edit field.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uieditfield, uiaxes, line, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the size prop panel.
+ELCLASS (constant, string) is the class of the size property panel.
 %%%% ¡default!
 'PanelPropSize'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the size prop panel.
+NAME (constant, string) is the name of the size property panel.
 %%%% ¡default!
 'Size Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the size prop panel.
+DESCRIPTION (constant, string) is the description of the size property panel.
 %%%% ¡default!
-'A Size Prop Panel (PanelPropSize) plots the panel for a SIZE prop with a numeric edit field. It works for all categories.'
+'A Size Prop Panel (PanelPropSize) plots the panel for a SIZE property with a numeric edit field. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the size prop panel.
+TEMPLATE (parameter, item) is the template of the size property panel.
 %%%% ¡settings!
 'PanelPropSize'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the size prop panel.
+ID (data, string) is a few-letter code for the size property panel.
 %%%% ¡default!
 'PanelPropSize ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the size prop panel.
+LABEL (metadata, string) is an extended label of the size property panel.
 %%%% ¡default!
 'PanelPropSize label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the size prop panel.
+NOTES (metadata, string) are some specific notes about the size property panel.
 %%%% ¡default!
 'PanelPropSize notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 PanelProp.HEIGHT
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value

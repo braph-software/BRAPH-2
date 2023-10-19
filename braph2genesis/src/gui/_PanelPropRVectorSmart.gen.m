@@ -14,37 +14,37 @@ uieditfield, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the smart row-vector prop panel.
+ELCLASS (constant, string) is the class of the smart row-vector property panel.
 %%%% ¡default!
 'PanelPropRVectorSmart'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the smart row-vector prop panel.
+NAME (constant, string) is the name of the smart row-vector property panel.
 %%%% ¡default!
 'Smart Row-Vector Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the smart row-vector prop panel.
+DESCRIPTION (constant, string) is the description of the smart row-vector property panel.
 %%%% ¡default!
 'A Smart Row-Vector Prop Panel (PanelPropRVEctorSmart) plots the panel for a row vector with an edit field. Smart means that (almost) any MatLab expression leading to a correct row vector can be introduced in the edit field. Also, the value of the vector can be limited between some MIN and MAX. It works for all categories, exept for __Category.RESULT__, __Category.QUERY__, or __Category.EVANESCENT__.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the smart row-vector prop panel.
+TEMPLATE (parameter, item) is the template of the smart row-vector property panel.
 %%%% ¡settings!
 'PanelPropRVectorSmart'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the smart row-vector prop panel.
+ID (data, string) is a few-letter code for the smart row-vector property panel.
 %%%% ¡default!
 'PanelPropRVectorSmart ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the smart row-vector prop panel.
+LABEL (metadata, string) is an extended label of the smart row-vector property panel.
 %%%% ¡default!
 'PanelPropRVectorSmart label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the smart row-vector prop panel.
+NOTES (metadata, string) are some specific notes about the smart row-vector property panel.
 %%%% ¡default!
 'PanelPropRVectorSmart notes'
 
@@ -54,7 +54,7 @@ EL (data, item) is the element.
 Graph()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 Graph.LAYERTICKS
 

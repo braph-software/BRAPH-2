@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropMatrix < PanelProp (pr, matrix-like prop panel) plots the panel of a prop matrix-like.
+PanelPropMatrix < PanelProp (pr, matrix-like prop panel) plots the panel of a property matrix-like.
 
 %%% ¡description!
-A Matrix Prop Panel (PanelPropMatrix) plots the panel for a RVECTOR, CVECTOR, MATRIX or SMATRIX prop with a table.
+A Matrix Prop Panel (PanelPropMatrix) plots the panel for a RVECTOR, CVECTOR, MATRIX or SMATRIX property with a table.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -17,37 +17,37 @@ uitable, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the matrix-like prop panel.
+ELCLASS (constant, string) is the class of the matrix-like property panel.
 %%%% ¡default!
 'PanelPropMatrix'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the matrix-like prop panel.
+NAME (constant, string) is the name of the matrix-like property panel.
 %%%% ¡default!
 'Matrix Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the matrix-like prop panel.
+DESCRIPTION (constant, string) is the description of the matrix-like property panel.
 %%%% ¡default!
-'A Matrix Prop Panel (PanelPropMatrix) plots the panel for a RVECTOR, CVECTOR, MATRIX or SMATRIX prop with a table. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Matrix Prop Panel (PanelPropMatrix) plots the panel for a RVECTOR, CVECTOR, MATRIX or SMATRIX property with a table. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the matrix-like prop panel.
+TEMPLATE (parameter, item) is the template of the matrix-like property panel.
 %%%% ¡settings!
 'PanelPropMatrix'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the matrix-like prop panel.
+ID (data, string) is a few-letter code for the matrix-like property panel.
 %%%% ¡default!
 'PanelPropMatrix ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the matrix-like prop panel.
+LABEL (metadata, string) is an extended label of the matrix-like property panel.
 %%%% ¡default!
 'PanelPropMatrix label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the matrix-like prop panel.
+NOTES (metadata, string) are some specific notes about the matrix-like property panel.
 %%%% ¡default!
 'PanelPropMatrix notes'
 
@@ -57,12 +57,12 @@ EL (data, item) is the element.
 IndexedDictionary()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 IndexedDictionary.REMOVE_ALL
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value

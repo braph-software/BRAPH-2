@@ -13,37 +13,37 @@ SettingsPosition, uicheckbox, uieditfield
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for position settings.
+ELCLASS (constant, string) is the class of the property panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for position settings.
+NAME (constant, string) is the name of the property panel for position settings.
 %%%% ¡default!
 'Prop Panel for Position Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for position settings.
+DESCRIPTION (constant, string) is the description of the property panel for position settings.
 %%%% ¡default!
 'A Prop Panel for Position Settings (SettingsPositionPP) plots the panel for position settings, including a checkbox for autopositioning and numeric edit fields for x0, y0, height and width. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for position settings.
+TEMPLATE (parameter, item) is the template of the property panel for position settings.
 %%%% ¡settings!
 'SettingsPositionPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for position settings.
+ID (data, string) is a few-letter code for the property panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for position settings.
+LABEL (metadata, string) is an extended label of the property panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for position settings.
+NOTES (metadata, string) are some specific notes about the property panel for position settings.
 %%%% ¡default!
 'SettingsPositionPP notes'
 
@@ -58,7 +58,7 @@ PROP (data, scalar) is the property number.
 PanelFig.ST_POSITION
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel for position settings.
+HEIGHT (gui, size) is the pixel height of the property panel for position settings.
 %%%% ¡default!
 s(4)
 

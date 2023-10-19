@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropLogical < PanelProp (pr, logical prop panel) plots the panel of a prop logical.
+PanelPropLogical < PanelProp (pr, logical prop panel) plots the panel of a property logical.
 
 %%% ¡description!
-A Logical Prop Panel (PanelPropLogical) plots the panel for a LOGICAL prop with a checkbox.
+A Logical Prop Panel (PanelPropLogical) plots the panel for a LOGICAL property with a checkbox.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uicheckbox, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the logical prop panel.
+ELCLASS (constant, string) is the class of the logical property panel.
 %%%% ¡default!
 'PanelPropLogical'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the logical prop panel.
+NAME (constant, string) is the name of the logical property panel.
 %%%% ¡default!
 'Logical Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the logical prop panel.
+DESCRIPTION (constant, string) is the description of the logical property panel.
 %%%% ¡default!
-'A Logical Prop Panel (PanelPropLogical) plots the panel for a LOGICAL prop with a checkbox. It works for all categories.'
+'A Logical Prop Panel (PanelPropLogical) plots the panel for a LOGICAL property with a checkbox. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the logical prop panel.
+TEMPLATE (parameter, item) is the template of the logical property panel.
 %%%% ¡settings!
 'PanelPropLogical'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the logical prop panel.
+ID (data, string) is a few-letter code for the logical property panel.
 %%%% ¡default!
 'PanelPropLogical ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the logical prop panel.
+LABEL (metadata, string) is an extended label of the logical property panel.
 %%%% ¡default!
 'PanelPropLogical label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the logical prop panel.
+NOTES (metadata, string) are some specific notes about the logical property panel.
 %%%% ¡default!
 'PanelPropLogical notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 PanelProp()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 PanelProp.DRAW
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
