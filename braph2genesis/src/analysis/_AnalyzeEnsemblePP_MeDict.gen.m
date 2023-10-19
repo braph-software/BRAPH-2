@@ -607,7 +607,7 @@ function cb_open_mbrain(~, ~)
                 case Measure.BINODAL % __Measure.BINODAL__
                     switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mebpf = MeasureEnsembleBrainPF_BS('- 'ME', me, 'BA', brain_atlas);
+                            mebpf = MeasureEnsembleBrainPF_BS('ME', me, 'BA', brain_atlas);
                         case Measure.UNILAYER % __Measure.UNILAYER__
                             mebpf = MeasureEnsembleBrainPF_BU('ME', me, 'BA', brain_atlas);
                         case Measure.BILAYER % __Measure.BILAYER__
