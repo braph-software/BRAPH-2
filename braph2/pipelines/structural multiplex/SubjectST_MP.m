@@ -15,10 +15,9 @@ classdef SubjectST_MP < Subject
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>11</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
-	%  <strong>12</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>13</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-	%  <strong>14</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
+	%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+	%  <strong>13</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
 	%
 	% SubjectST_MP methods (constructor):
 	%  SubjectST_MP - constructor
@@ -114,22 +113,17 @@ classdef SubjectST_MP < Subject
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		L = 11; %CET: Computational Efficiency Trick
-		L_TAG = 'L';
-		L_CATEGORY = 4;
-		L_FORMAT = 11;
-		
-		LAYERLABELS = 12; %CET: Computational Efficiency Trick
+		LAYERLABELS = 11; %CET: Computational Efficiency Trick
 		LAYERLABELS_TAG = 'LAYERLABELS';
 		LAYERLABELS_CATEGORY = 2;
 		LAYERLABELS_FORMAT = 3;
 		
-		ALAYERLABELS = 13; %CET: Computational Efficiency Trick
+		ALAYERLABELS = 12; %CET: Computational Efficiency Trick
 		ALAYERLABELS_TAG = 'ALAYERLABELS';
 		ALAYERLABELS_CATEGORY = 6;
 		ALAYERLABELS_FORMAT = 3;
 		
-		ST_MP = 14; %CET: Computational Efficiency Trick
+		ST_MP = 13; %CET: Computational Efficiency Trick
 		ST_MP_TAG = 'ST_MP';
 		ST_MP_CATEGORY = 4;
 		ST_MP_FORMAT = 16;
@@ -156,10 +150,9 @@ classdef SubjectST_MP < Subject
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>11</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
-			%  <strong>12</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>13</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-			%  <strong>14</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
+			%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+			%  <strong>13</strong> <strong>ST_MP</strong> 	ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.
 			%
 			% See also Category, Format.
 			
@@ -221,7 +214,7 @@ classdef SubjectST_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
@@ -229,13 +222,13 @@ classdef SubjectST_MP < Subject
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7 12];
+					prop_list = [6 7 11];
 				case 3 % Category.PARAMETER
 					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [5 9 10 11 14];
+					prop_list = [5 9 10 13];
 				case 6 % Category.QUERY
-					prop_list = [8 13];
+					prop_list = [8 12];
 				otherwise
 					prop_list = [];
 			end
@@ -261,7 +254,7 @@ classdef SubjectST_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 14;
+				prop_number = 13;
 				return
 			end
 			
@@ -273,7 +266,7 @@ classdef SubjectST_MP < Subject
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
-					prop_number = 5;
+					prop_number = 4;
 				case 6 % Category.QUERY
 					prop_number = 2;
 				otherwise
@@ -306,7 +299,7 @@ classdef SubjectST_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -344,7 +337,7 @@ classdef SubjectST_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -377,7 +370,7 @@ classdef SubjectST_MP < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -406,7 +399,7 @@ classdef SubjectST_MP < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectst_mp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' };
+				subjectst_mp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'ST_MP' };
 				tag = subjectst_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -433,7 +426,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_category_list = { 1  1  1  3  4  2  2  6  4  4  4  2  6  4 };
+			subjectst_mp_category_list = { 1  1  1  3  4  2  2  6  4  4  2  6  4 };
 			prop_category = subjectst_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -459,7 +452,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_format_list = { 2  2  2  8  2  2  2  2  10  8  11  3  3  16 };
+			subjectst_mp_format_list = { 2  2  2  8  2  2  2  2  10  8  3  3  16 };
 			prop_format = subjectst_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -485,7 +478,7 @@ classdef SubjectST_MP < Subject
 			prop = SubjectST_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectst_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.' };
+			subjectst_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'ST_MP (data, cell) is a cell containing L vectors, each with data for each brain region.' };
 			prop_description = subjectst_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -513,8 +506,6 @@ classdef SubjectST_MP < Subject
 			switch prop %CET: Computational Efficiency Trick
 				case 10 % SubjectST_MP.BA
 					prop_settings = 'BrainAtlas';
-				case 11 % SubjectST_MP.L
-					prop_settings = Format.getFormatSettings(11);
 				case 12 % SubjectST_MP.LAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
 				case 13 % SubjectST_MP.ALAYERLABELS
@@ -550,8 +541,6 @@ classdef SubjectST_MP < Subject
 			switch prop %CET: Computational Efficiency Trick
 				case 10 % SubjectST_MP.BA
 					prop_default = Format.getFormatDefault(8, SubjectST_MP.getPropSettings(prop));
-				case 11 % SubjectST_MP.L
-					prop_default = 2;
 				case 12 % SubjectST_MP.LAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectST_MP.getPropSettings(prop));
 				case 13 % SubjectST_MP.ALAYERLABELS
@@ -636,8 +625,6 @@ classdef SubjectST_MP < Subject
 			switch prop
 				case 10 % SubjectST_MP.BA
 					check = Format.checkFormat(8, value, SubjectST_MP.getPropSettings(prop));
-				case 11 % SubjectST_MP.L
-					check = Format.checkFormat(11, value, SubjectST_MP.getPropSettings(prop));
 				case 12 % SubjectST_MP.LAYERLABELS
 					check = Format.checkFormat(3, value, SubjectST_MP.getPropSettings(prop));
 				case 13 % SubjectST_MP.ALAYERLABELS
@@ -658,6 +645,38 @@ classdef SubjectST_MP < Subject
 					['BRAPH2' ':SubjectST_MP:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SubjectST_MP.getPropTag(prop) ' (' SubjectST_MP.getFormatTag(SubjectST_MP.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postset
+		function postset(sub, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 12 % SubjectST_MP.LAYERLABELS
+					if isequal(length(sub.get('LAYERLABELS')), length(sub.get('ST_MP')))
+					    
+					else
+					    warndlg(['The number of Layer Labels has to be the same as the number of layers' ], 'Warning');
+					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('ST_MP'))))))
+					end
+					
+				case 14 % SubjectST_MP.ST_MP
+					sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('ST_MP'))))))
+					
+				otherwise
+					if prop <= 9
+						postset@Subject(sub, prop);
+					end
 			end
 		end
 	end
