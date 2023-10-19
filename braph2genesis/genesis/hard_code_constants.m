@@ -263,7 +263,7 @@ if isempty(constants)
     end
     
     % getCompatibleMeasures
-    if exist('Category', 'class') == 8
+    if exist('Graph', 'class') == 8
         graph_code_list = Graph.getSubclasses();
         for i = 1:1:length(graph_code_list)
             graph_code = graph_code_list{i};
