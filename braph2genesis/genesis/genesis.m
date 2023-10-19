@@ -45,7 +45,7 @@ end
 if nargin < 1 || isempty(target_dir)
     target_dir = [fileparts(source_dir) fp 'braph2'];
 end
-if excluded
+if ~isempty(excluded)
     target_dir = [target_dir '_excluded_'];
 end
 
