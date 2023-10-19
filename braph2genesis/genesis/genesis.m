@@ -117,64 +117,98 @@ disp('¡! copied ready files - braph2')
 disp(' ')
 
 % src
-copydir([source_dir fp 'src' fp 'util'], [target_dir fp 'src' fp 'util'])
-disp('¡! copied ready files - src/util')
-copydir([source_dir fp 'src' fp 'ds'], [target_dir fp 'src' fp 'ds'])
-disp('¡! copied ready files - src/ds')
-copydir([source_dir fp 'src' fp 'ds' fp 'examples'], [target_dir fp 'src' fp 'ds' fp 'examples'])
-disp('¡! copied ready files - ds/examples')
-copydir([source_dir fp 'src' fp 'atlas'], [target_dir fp 'src' fp 'atlas'])
-disp('¡! copied ready files - src/atlas')
-copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
-disp('¡! copied ready files - src/gt')
-copydir([source_dir fp 'src' fp 'cohort'], [target_dir fp 'src' fp 'cohort'])
-disp('¡! copied ready files - src/cohort')
-copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
-disp('¡! copied ready files - src/analysis')
-copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
-disp('¡! copied ready files - src/nn')
-copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
-disp('¡! copied ready files - src/gui')
-copydir([source_dir fp 'src' fp 'gui' fp 'layouts'], [target_dir fp 'src' fp 'gui' fp 'layouts'])
-disp('¡! copied ready files - src/gui/layouts')
-copydir([source_dir fp 'src' fp 'gui' fp 'examples'], [target_dir fp 'src' fp 'gui' fp 'examples'])
-disp('¡! copied ready files - src/gui/examples')
+if ~any(strcmp(excluded, 'util'))
+    copydir([source_dir fp 'src' fp 'util'], [target_dir fp 'src' fp 'util'])
+    disp('¡! copied ready files - src/util')
+end
+if ~any(strcmp(excluded, 'ds'))
+    copydir([source_dir fp 'src' fp 'ds'], [target_dir fp 'src' fp 'ds'])
+    disp('¡! copied ready files - src/ds')
+end
+if ~any(strcmp(excluded, 'examples'))
+    copydir([source_dir fp 'src' fp 'ds' fp 'examples'], [target_dir fp 'src' fp 'ds' fp 'examples'])
+    disp('¡! copied ready files - ds/examples')
+end
+if ~any(strcmp(excluded, 'atlas'))
+    copydir([source_dir fp 'src' fp 'atlas'], [target_dir fp 'src' fp 'atlas'])
+    disp('¡! copied ready files - src/atlas')
+end
+if ~any(strcmp(excluded, 'gt'))
+    copydir([source_dir fp 'src' fp 'gt'], [target_dir fp 'src' fp 'gt'])
+    disp('¡! copied ready files - src/gt')
+end
+if ~any(strcmp(excluded, 'cohort'))
+    copydir([source_dir fp 'src' fp 'cohort'], [target_dir fp 'src' fp 'cohort'])
+    disp('¡! copied ready files - src/cohort')
+end
+if ~any(strcmp(excluded, 'analysis'))
+    copydir([source_dir fp 'src' fp 'analysis'], [target_dir fp 'src' fp 'analysis'])
+    disp('¡! copied ready files - src/analysis')
+end
+if ~any(strcmp(excluded, 'nn'))
+    copydir([source_dir fp 'src' fp 'nn'], [target_dir fp 'src' fp 'nn'])
+    disp('¡! copied ready files - src/nn')
+end
+if ~any(strcmp(excluded, 'gui'))
+    copydir([source_dir fp 'src' fp 'gui'], [target_dir fp 'src' fp 'gui'])
+    disp('¡! copied ready files - src/gui')
+    copydir([source_dir fp 'src' fp 'gui' fp 'layouts'], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+    disp('¡! copied ready files - src/gui/layouts')
+end
+if ~any(strcmp(excluded, 'util'))
+    copydir([source_dir fp 'src' fp 'gui' fp 'examples'], [target_dir fp 'src' fp 'gui' fp 'examples'])
+    disp('¡! copied ready files - src/gui/examples')
+end
 disp(' ')
 
 % brainsurfs
-copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
-disp('¡! copied ready files - brainsurf')
-disp(' ')
+if ~any(strcmp(excluded, 'brainsurfs'))
+    copydir([source_dir fp 'brainsurfs'], [target_dir fp 'brainsurfs'], Inf)
+    disp('¡! copied ready files - brainsurf')
+    disp(' ')
+end
 
 % atlases
-copydir([source_dir fp 'atlases'], [target_dir fp 'atlases'], Inf)
-disp('¡! copied ready files - atlases')
-disp(' ')
+if ~any(strcmp(excluded, 'atlases'))
+    copydir([source_dir fp 'atlases'], [target_dir fp 'atlases'], Inf)
+    disp('¡! copied ready files - atlases')
+    disp(' ')
+end
 
 % graphs
-copydir([source_dir fp 'graphs'], [target_dir fp 'graphs'], Inf)
-disp('¡! copied ready files - graphs')
-disp(' ')
+if ~any(strcmp(excluded, 'graphs'))
+    copydir([source_dir fp 'graphs'], [target_dir fp 'graphs'], Inf)
+    disp('¡! copied ready files - graphs')
+    disp(' ')
+end
 
 % measures
-copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
-disp('¡! copied ready files - measures')
-disp(' ')
+if ~any(strcmp(excluded, 'measures'))
+    copydir([source_dir fp 'measures'], [target_dir fp 'measures'], Inf)
+    disp('¡! copied ready files - measures')
+    disp(' ')
+end
 
 % neuralnetworks
-copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
-disp('¡! copied ready files - neuralnetworks')
-disp(' ')
+if ~any(strcmp(excluded, 'neuralnetworks'))
+    copydir([source_dir fp 'neuralnetworks'], [target_dir fp 'neuralnetworks'], Inf)
+    disp('¡! copied ready files - neuralnetworks')
+    disp(' ')
+end
 
 % pipelines
-copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
-disp('¡! copied ready files - pipelines')
-disp(' ')
+if ~any(strcmp(excluded, 'pipelines'))
+    copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
+    disp('¡! copied ready files - pipelines')
+    disp(' ')
+end
 
 % test
-copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
-disp('¡! copied ready files - test')
-disp(' ')
+if ~any(strcmp(excluded, 'test'))
+    copydir([source_dir fp 'test'], [target_dir fp 'test'], Inf)
+    disp('¡! copied ready files - test')
+    disp(' ')
+end
 
 %% CREATE ELEMENTS
 for run = 1:1:run_number
