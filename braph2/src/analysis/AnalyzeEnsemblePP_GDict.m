@@ -1000,7 +1000,7 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			        end
 			
 			        gui_pfga = gui.get('PE').get('PR_DICT').get('IT', 'PFGA').memorize('GUI_ITEM');
-			        set(gui_pfga, 'TITLE', ['Adjacency matrices plot: ' g_key]);
+			        set(gui_pfga, 'TITLE', ['Adjacency matrices plot - ' g_key]);
 			        if ~gui_pfga.get('DRAWN')
 			            gui_pfga.get('DRAW')
 			        end
@@ -1066,7 +1066,7 @@ classdef AnalyzeEnsemblePP_GDict < PanelProp
 			        end
 			
 			        gui_pfgh = gui.get('PE').get('PR_DICT').get('IT', 'PFGH').memorize('GUI_ITEM');
-			        set(gui_pfgh, 'TITLE', ['Histograms plot: ' g_key]);
+			        set(gui_pfgh, 'TITLE', ['Histograms plot - ' g_key]);
 			        if ~gui_pfgh.get('DRAWN')
 			            gui_pfgh.get('DRAW')
 			        end

@@ -468,7 +468,7 @@ function cb_open_plots(~, ~)
             gui.get('DRAW')
         end
         gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFME').memorize('GUI_ITEM');
-        set(gui_pfm, 'TITLE', ['Measure plot: ' measure_fullname]);
+        set(gui_pfm, 'TITLE', ['Measure plot - ' g.get('MEASURE', measure).get('NAME')]);
         if ~gui_pfm.get('DRAW')
             gui_pfm.get('DRAW')
         end
@@ -565,7 +565,6 @@ function cb_open_mbrain(~, ~)
     g.memorize('A'); % memorizing A to get correct ALAYERLABELS
     
     m_list = g.get('COMPATIBLE_MEASURES');
-    m_fullname_list = pr.get('TABLE').Data(:,2);
 
     f = ancestor(pr.get('H'), 'figure'); % parent GUI
     N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -576,7 +575,6 @@ function cb_open_mbrain(~, ~)
         i = selected(s);
     
         measure = m_list{i}; % also key
-        measure_fullname = m_fullname_list{i};
     
         me = a.get('MEASUREENSEMBLE', measure);
     
@@ -611,7 +609,7 @@ function cb_open_mbrain(~, ~)
                 case Measure.BINODAL % __Measure.BINODAL__
                     switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mebpf = MeasureEnsembleBrainPF_BS('ME', me, 'BA', brain_atlas);
+                            mebpf = MeasureEnsembleBrainPF_BS('- 'ME', me, 'BA', brain_atlas);
                         case Measure.UNILAYER % __Measure.UNILAYER__
                             mebpf = MeasureEnsembleBrainPF_BU('ME', me, 'BA', brain_atlas);
                         case Measure.BILAYER % __Measure.BILAYER__
@@ -620,7 +618,7 @@ function cb_open_mbrain(~, ~)
             end
 
             gui = GUIFig( ...
-                'TITLE', ['Brain plot: ' measure_fullname], ...
+                'TITLE', ['Brain plot - ' g.get('MEASURE', measure).get('NAME')], ...
                 'ID', measure, ... % this is the dictionary key
                 'PF', mebpf, ... 
                 'POSITION', [ ...

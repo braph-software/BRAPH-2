@@ -1246,7 +1246,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			            end
 			    
 			            gui = GUIFig( ...
-			                'TITLE', ['Brain plot: ' m.get('NAME')], ...
+			                'TITLE', ['Brain plot - ' m.get('NAME')], ...
 			                'ID', measure, ... % this is the dictionary key
 			                'PF', mgbpf, ...
 			                'POSITION', [ ...
@@ -1329,7 +1329,7 @@ classdef AnalyzeGroupPP_G < PanelProp
 			        end
 			
 			        gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFM').memorize('GUI_ITEM');
-			        set(gui_pfm, 'TITLE', ['Line plot: ' m.get('NAME')]);
+			        set(gui_pfm, 'TITLE', ['Line plot - ' m.get('NAME')]);
 			        if ~gui_pfm.get('DRAWN')
 			            gui_pfm.get('DRAW')
 			        end

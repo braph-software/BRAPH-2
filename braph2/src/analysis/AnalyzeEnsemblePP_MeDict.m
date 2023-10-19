@@ -1127,7 +1127,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			            gui.get('DRAW')
 			        end
 			        gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFME').memorize('GUI_ITEM');
-			        set(gui_pfm, 'TITLE', ['Measure plot: ' g.get('MEASURE', measure).get('NAME')]);
+			        set(gui_pfm, 'TITLE', ['Measure plot - ' g.get('MEASURE', measure).get('NAME')]);
 			        if ~gui_pfm.get('DRAW')
 			            gui_pfm.get('DRAW')
 			        end
@@ -1277,7 +1277,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			            end
 			
 			            gui = GUIFig( ...
-			                'TITLE', ['Brain plot: ' g.get('MEASURE', measure).get('NAME')], ...
+			                'TITLE', ['Brain plot - ' g.get('MEASURE', measure).get('NAME')], ...
 			                'ID', measure, ... % this is the dictionary key
 			                'PF', mebpf, ... 
 			                'POSITION', [ ...
