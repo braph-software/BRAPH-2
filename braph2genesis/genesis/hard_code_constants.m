@@ -263,12 +263,14 @@ if isempty(constants)
     end
     
     % getCompatibleMeasures
-    graph_code_list = Graph.getSubclasses();
-    for i = 1:1:length(graph_code_list)
-        graph_code = graph_code_list{i};
-        compatible_measures = getCompatibleMeasures(graph_code);
-        constants{end+1, 1} = ['getCompatibleMeasures\(''' graph_code '''\)'];
-        constants{end, 2} = ['{' sprintf(' ''%s'' ', compatible_measures{:}) '}'];
+    if exist('Category', 'class') == 8
+        graph_code_list = Graph.getSubclasses();
+        for i = 1:1:length(graph_code_list)
+            graph_code = graph_code_list{i};
+            compatible_measures = getCompatibleMeasures(graph_code);
+            constants{end+1, 1} = ['getCompatibleMeasures\(''' graph_code '''\)'];
+            constants{end, 2} = ['{' sprintf(' ''%s'' ', compatible_measures{:}) '}'];
+        end
     end
     
     % Fine-tuning
