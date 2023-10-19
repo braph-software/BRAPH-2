@@ -19,7 +19,7 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, 
 %  development examples (by default it does NOT compile them).
 %
 % GENESIS([], [], [], [], LIST) exclude from copilation the directories and
-%  elements contained in LIST, e.g., {'directory_name', 'element_name.gen.m'}.
+%  elements contained in LIST, e.g., {'directory_name', '_element_name.gen.m'}.
 %
 % See also braph2genesis, create_Element, create_layout,
 %  create_test_Element, hard_code_constants.
@@ -44,9 +44,6 @@ end
 
 if nargin < 1 || isempty(target_dir)
     target_dir = [fileparts(source_dir) fp 'braph2'];
-end
-if ~isempty(excluded)
-    target_dir = [target_dir '_excluded_'];
 end
 
 disp('¡ BRAPH 2 Genesis')
