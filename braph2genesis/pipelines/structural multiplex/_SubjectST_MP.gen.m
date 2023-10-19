@@ -190,6 +190,11 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
+L (data, scalar) is the number of layers of subject data.
+%%%% ¡default!
+2
+
+%%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 %%%% ¡postset!
 if isequal(length(sub.get('LAYERLABELS')), length(sub.get('ST_MP')))

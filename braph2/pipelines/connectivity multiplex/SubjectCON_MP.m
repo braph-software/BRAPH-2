@@ -15,9 +15,10 @@ classdef SubjectCON_MP < Subject
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-	%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-	%  <strong>13</strong> <strong>CON_MP</strong> 	CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.
+	%  <strong>11</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
+	%  <strong>12</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>13</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+	%  <strong>14</strong> <strong>CON_MP</strong> 	CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.
 	%
 	% SubjectCON_MP methods (constructor):
 	%  SubjectCON_MP - constructor
@@ -113,17 +114,22 @@ classdef SubjectCON_MP < Subject
 		BA_CATEGORY = 4;
 		BA_FORMAT = 8;
 		
-		LAYERLABELS = 11; %CET: Computational Efficiency Trick
+		L = 11; %CET: Computational Efficiency Trick
+		L_TAG = 'L';
+		L_CATEGORY = 4;
+		L_FORMAT = 11;
+		
+		LAYERLABELS = 12; %CET: Computational Efficiency Trick
 		LAYERLABELS_TAG = 'LAYERLABELS';
 		LAYERLABELS_CATEGORY = 2;
 		LAYERLABELS_FORMAT = 3;
 		
-		ALAYERLABELS = 12; %CET: Computational Efficiency Trick
+		ALAYERLABELS = 13; %CET: Computational Efficiency Trick
 		ALAYERLABELS_TAG = 'ALAYERLABELS';
 		ALAYERLABELS_CATEGORY = 6;
 		ALAYERLABELS_FORMAT = 3;
 		
-		CON_MP = 13; %CET: Computational Efficiency Trick
+		CON_MP = 14; %CET: Computational Efficiency Trick
 		CON_MP_TAG = 'CON_MP';
 		CON_MP_CATEGORY = 4;
 		CON_MP_FORMAT = 16;
@@ -150,9 +156,10 @@ classdef SubjectCON_MP < Subject
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
 			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>11</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
-			%  <strong>12</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
-			%  <strong>13</strong> <strong>CON_MP</strong> 	CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.
+			%  <strong>11</strong> <strong>L</strong> 	L (data, scalar) is the number of layers of subject data.
+			%  <strong>12</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>13</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the processed layer labels.
+			%  <strong>14</strong> <strong>CON_MP</strong> 	CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.
 			%
 			% See also Category, Format.
 			
@@ -214,7 +221,7 @@ classdef SubjectCON_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
 				return
 			end
 			
@@ -222,13 +229,13 @@ classdef SubjectCON_MP < Subject
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7 11];
+					prop_list = [6 7 12];
 				case 3 % Category.PARAMETER
 					prop_list = 4;
 				case 4 % Category.DATA
-					prop_list = [5 9 10 13];
+					prop_list = [5 9 10 11 14];
 				case 6 % Category.QUERY
-					prop_list = [8 12];
+					prop_list = [8 13];
 				otherwise
 					prop_list = [];
 			end
@@ -254,7 +261,7 @@ classdef SubjectCON_MP < Subject
 			%CET: Computational Efficiency Trick
 			
 			if nargin == 0
-				prop_number = 13;
+				prop_number = 14;
 				return
 			end
 			
@@ -266,7 +273,7 @@ classdef SubjectCON_MP < Subject
 				case 3 % Category.PARAMETER
 					prop_number = 1;
 				case 4 % Category.DATA
-					prop_number = 4;
+					prop_number = 5;
 				case 6 % Category.QUERY
 					prop_number = 2;
 				otherwise
@@ -299,7 +306,7 @@ classdef SubjectCON_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -337,7 +344,7 @@ classdef SubjectCON_MP < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -370,7 +377,7 @@ classdef SubjectCON_MP < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -399,7 +406,7 @@ classdef SubjectCON_MP < Subject
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				subjectcon_mp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' };
+				subjectcon_mp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'L'  'LAYERLABELS'  'ALAYERLABELS'  'CON_MP' };
 				tag = subjectcon_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -426,7 +433,7 @@ classdef SubjectCON_MP < Subject
 			prop = SubjectCON_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_mp_category_list = { 1  1  1  3  4  2  2  6  4  4  2  6  4 };
+			subjectcon_mp_category_list = { 1  1  1  3  4  2  2  6  4  4  4  2  6  4 };
 			prop_category = subjectcon_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -452,7 +459,7 @@ classdef SubjectCON_MP < Subject
 			prop = SubjectCON_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_mp_format_list = { 2  2  2  8  2  2  2  2  10  8  3  3  16 };
+			subjectcon_mp_format_list = { 2  2  2  8  2  2  2  2  10  8  11  3  3  16 };
 			prop_format = subjectcon_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -478,7 +485,7 @@ classdef SubjectCON_MP < Subject
 			prop = SubjectCON_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectcon_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.' };
+			subjectcon_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the object.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.' };
 			prop_description = subjectcon_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -506,11 +513,13 @@ classdef SubjectCON_MP < Subject
 			switch prop %CET: Computational Efficiency Trick
 				case 10 % SubjectCON_MP.BA
 					prop_settings = 'BrainAtlas';
-				case 11 % SubjectCON_MP.LAYERLABELS
+				case 11 % SubjectCON_MP.L
+					prop_settings = Format.getFormatSettings(11);
+				case 12 % SubjectCON_MP.LAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 12 % SubjectCON_MP.ALAYERLABELS
+				case 13 % SubjectCON_MP.ALAYERLABELS
 					prop_settings = Format.getFormatSettings(3);
-				case 13 % SubjectCON_MP.CON_MP
+				case 14 % SubjectCON_MP.CON_MP
 					prop_settings = Format.getFormatSettings(16);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
@@ -541,11 +550,13 @@ classdef SubjectCON_MP < Subject
 			switch prop %CET: Computational Efficiency Trick
 				case 10 % SubjectCON_MP.BA
 					prop_default = Format.getFormatDefault(8, SubjectCON_MP.getPropSettings(prop));
-				case 11 % SubjectCON_MP.LAYERLABELS
+				case 11 % SubjectCON_MP.L
+					prop_default = 2;
+				case 12 % SubjectCON_MP.LAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectCON_MP.getPropSettings(prop));
-				case 12 % SubjectCON_MP.ALAYERLABELS
+				case 13 % SubjectCON_MP.ALAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectCON_MP.getPropSettings(prop));
-				case 13 % SubjectCON_MP.CON_MP
+				case 14 % SubjectCON_MP.CON_MP
 					prop_default = Format.getFormatDefault(16, SubjectCON_MP.getPropSettings(prop));
 				case 1 % SubjectCON_MP.ELCLASS
 					prop_default = 'SubjectCON_MP';
@@ -625,11 +636,13 @@ classdef SubjectCON_MP < Subject
 			switch prop
 				case 10 % SubjectCON_MP.BA
 					check = Format.checkFormat(8, value, SubjectCON_MP.getPropSettings(prop));
-				case 11 % SubjectCON_MP.LAYERLABELS
+				case 11 % SubjectCON_MP.L
+					check = Format.checkFormat(11, value, SubjectCON_MP.getPropSettings(prop));
+				case 12 % SubjectCON_MP.LAYERLABELS
 					check = Format.checkFormat(3, value, SubjectCON_MP.getPropSettings(prop));
-				case 12 % SubjectCON_MP.ALAYERLABELS
+				case 13 % SubjectCON_MP.ALAYERLABELS
 					check = Format.checkFormat(3, value, SubjectCON_MP.getPropSettings(prop));
-				case 13 % SubjectCON_MP.CON_MP
+				case 14 % SubjectCON_MP.CON_MP
 					check = Format.checkFormat(16, value, SubjectCON_MP.getPropSettings(prop));
 				otherwise
 					if prop <= 9
@@ -662,7 +675,7 @@ classdef SubjectCON_MP < Subject
 			%  checkValue.
 			
 			switch prop
-				case 11 % SubjectCON_MP.LAYERLABELS
+				case 12 % SubjectCON_MP.LAYERLABELS
 					if isequal(length(sub.get('LAYERLABELS')), length(sub.get('CON_MP')))
 					    
 					else
@@ -670,7 +683,7 @@ classdef SubjectCON_MP < Subject
 					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('CON_MP'))))))
 					end
 					
-				case 13 % SubjectCON_MP.CON_MP
+				case 14 % SubjectCON_MP.CON_MP
 					sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('CON_MP'))))))
 					
 				otherwise
@@ -697,7 +710,7 @@ classdef SubjectCON_MP < Subject
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % SubjectCON_MP.ALAYERLABELS
+				case 13 % SubjectCON_MP.ALAYERLABELS
 					value = sub.get('LAYERLABELS');
 					
 				otherwise
@@ -726,7 +739,7 @@ classdef SubjectCON_MP < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case 13 % SubjectCON_MP.CON_MP
+				case 14 % SubjectCON_MP.CON_MP
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
 					num_layers = sub.get('L');
 					check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)  && isequal( cellfun(@(v) size(v, 2), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0);
@@ -760,8 +773,8 @@ classdef SubjectCON_MP < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 13 % SubjectCON_MP.CON_MP
-					pr = PanelPropCell('EL', sub, 'PROP', 13, ...
+				case 14 % SubjectCON_MP.CON_MP
+					pr = PanelPropCell('EL', sub, 'PROP', 14, ...
 					    'TABLE_HEIGHT', 480, ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
