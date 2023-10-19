@@ -1092,7 +1092,6 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			    a = pr.get('EL');   
 			    g = a.get('GRAPH_TEMPLATE'); 
 			    m_list = g.get('COMPATIBLE_MEASURES');
-			    m_fullname_list = pr.get('TABLE').Data(:,2);
 			    
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -1104,7 +1103,6 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			        i = selected(s);
 			        
 			        measure = m_list{i}; % also key
-			        measure_fullname = m_fullname_list{i};
 			
 			        me = a.get('MEASUREENSEMBLE', measure);
 			        
@@ -1129,7 +1127,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			            gui.get('DRAW')
 			        end
 			        gui_pfm = gui.get('PE').get('PR_DICT').get('IT', 'PFME').memorize('GUI_ITEM');
-			        set(gui_pfm, 'TITLE', ['Measure plot: ' measure_fullname]);
+			        set(gui_pfm, 'TITLE', ['Measure plot: ' g.get('MEASURE', measure).get('NAME')]);
 			        if ~gui_pfm.get('DRAW')
 			            gui_pfm.get('DRAW')
 			        end
@@ -1226,7 +1224,6 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			    g.memorize('A'); % memorizing A to get correct ALAYERLABELS
 			    
 			    m_list = g.get('COMPATIBLE_MEASURES');
-			    m_fullname_list = pr.get('TABLE').Data(:,2);
 			
 			    f = ancestor(pr.get('H'), 'figure'); % parent GUI
 			    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
@@ -1237,7 +1234,6 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			        i = selected(s);
 			    
 			        measure = m_list{i}; % also key
-			        measure_fullname = m_fullname_list{i};
 			    
 			        me = a.get('MEASUREENSEMBLE', measure);
 			    
@@ -1281,7 +1277,7 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			            end
 			
 			            gui = GUIFig( ...
-			                'TITLE', ['Brain plot: ' measure_fullname], ...
+			                'TITLE', ['Brain plot: ' g.get('MEASURE', measure).get('NAME')], ...
 			                'ID', measure, ... % this is the dictionary key
 			                'PF', mebpf, ... 
 			                'POSITION', [ ...
