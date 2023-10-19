@@ -76,5 +76,5 @@ if ~exist(target_dir, 'dir')
     
     braph2(false)
 
-    % test_braph2 % % % ON RELEASE: uncomment
+    test_braph2
 end
