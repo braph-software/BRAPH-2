@@ -129,12 +129,6 @@ Variables of Interest
 
 %%% ¡prop!
 %%%% ¡id!
-SubjectST_MP.L
-%%%% ¡title!
-Layer Number
-
-%%% ¡prop!
-%%%% ¡id!
 SubjectST_MP.LAYERLABELS
 %%%% ¡title!
 Layer Labels
@@ -196,12 +190,14 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-L (data, scalar) is the number of layers of subject data.
-%%%% ¡default!
-2
-
-%%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+%%%% ¡postset!
+if isequal(length(sub.get('LAYERLABELS')), length(sub.get('ST_MP')))
+    
+else
+    warndlg(['The number of Layer Labels has to be the same as the number of layers' ], 'Warning');
+    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('ST_MP'))))))
+end
 
 %%% ¡prop!
 ALAYERLABELS (query, stringlist) returns the processed layer labels.
@@ -219,6 +215,8 @@ if check
 else   
     msg = ['ST_MP must be a column vector with the same number of element as the brain regions (' int2str(br_number) ').'];
 end
+%%%% ¡postset!
+sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('ST_MP'))))))
 %%%% ¡gui!
 pr = PanelPropCell('EL', sub, 'PROP', SubjectST_MP.ST_MP, ...
     'TABLE_HEIGHT', s(40), ...
