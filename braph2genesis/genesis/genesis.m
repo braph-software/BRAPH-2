@@ -45,6 +45,9 @@ end
 if nargin < 1 || isempty(target_dir)
     target_dir = [fileparts(source_dir) fp 'braph2'];
 end
+if excluded
+    target_dir = [target_dir '_excluded_'];
+end
 
 disp('¡ BRAPH 2 Genesis')
 disp(['¡ source dir: ' source_dir])
