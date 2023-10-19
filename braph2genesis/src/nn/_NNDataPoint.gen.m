@@ -12,7 +12,7 @@ NNData
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for neural network analysis .
 %%%% ¡default!
 'NNDataPoint'
 

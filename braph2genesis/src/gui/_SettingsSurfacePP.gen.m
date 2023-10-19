@@ -13,37 +13,37 @@ SettingsPosition, uipushbutton, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for surface settings.
+ELCLASS (constant, string) is the class of the property panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for surface settings.
+NAME (constant, string) is the name of the property panel for surface settings.
 %%%% ¡default!
 'Prop Panel for Surface Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for surface settings.
+DESCRIPTION (constant, string) is the description of the property panel for surface settings.
 %%%% ¡default!
 'A Prop Panel for Surface Settings (SettingsSurfacePP) plots the panel for surface settings, including face color, face alpha, edge color, and edge alpha. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for surface settings.
+TEMPLATE (parameter, item) is the template of the property panel for surface settings.
 %%%% ¡settings!
 'SettingsSurfacePP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for surface settings.
+ID (data, string) is a few-letter code for the property panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for surface settings.
+LABEL (metadata, string) is an extended label of the property panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for surface settings.
+NOTES (metadata, string) are some specific notes about the property panel for surface settings.
 %%%% ¡default!
 'SettingsSurfacePP notes'
 
@@ -58,7 +58,7 @@ PROP (data, scalar) is the property number.
 BrainSurfacePF.ST_SURFACE
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel for surface settings.
+HEIGHT (gui, size) is the pixel height of the property panel for surface settings.
 %%%% ¡default!
 s(6.7)
 

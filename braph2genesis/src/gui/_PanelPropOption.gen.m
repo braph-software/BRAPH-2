@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropOption < PanelProp (pr, option prop panel) plots the panel of a prop option.
+PanelPropOption < PanelProp (pr, option prop panel) plots the panel of a property option.
 
 %%% ¡description!
-An Option Prop Panel (PanelPropOption) plots the panel for an OPTION prop with a drop-down list.
+An Option Prop Panel (PanelPropOption) plots the panel for an OPTION property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uidropdown, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the option prop panel.
+ELCLASS (constant, string) is the class of the option property panel.
 %%%% ¡default!
 'PanelPropOption'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the option prop panel.
+NAME (constant, string) is the name of the option property panel.
 %%%% ¡default!
 'Option Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the option prop panel.
+DESCRIPTION (constant, string) is the description of the option property panel.
 %%%% ¡default!
-'An Option Prop Panel (PanelPropOption) plots the panel for an OPTION prop with a drop-down list. It works for all categories.'
+'An Option Prop Panel (PanelPropOption) plots the panel for an OPTION property with a drop-down list. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the option prop panel.
+TEMPLATE (parameter, item) is the template of the option property panel.
 %%%% ¡settings!
 'PanelPropOption'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the option prop panel.
+ID (data, string) is a few-letter code for the option property panel.
 %%%% ¡default!
 'PanelPropOption ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the option prop panel.
+LABEL (metadata, string) is an extended label of the option property panel.
 %%%% ¡default!
 'PanelPropOption label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the option prop panel.
+NOTES (metadata, string) are some specific notes about the option property panel.
 %%%% ¡default!
 'PanelPropOption notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 PanelPropItem()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 PanelPropItem.GUICLASS
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value

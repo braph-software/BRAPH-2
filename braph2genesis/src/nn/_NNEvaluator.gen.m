@@ -12,7 +12,7 @@ NNDataPoint, NNDataset, NNBase
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the evaluator of the trained neural network.
 %%%% ¡default!
 'NNEvaluator'
 

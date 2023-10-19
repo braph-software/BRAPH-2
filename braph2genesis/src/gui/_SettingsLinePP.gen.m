@@ -13,37 +13,37 @@ SettingsLine, uicheckbox, uidropdown, uieditfield, uipushbutton
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for line settings.
+ELCLASS (constant, string) is the class of the property panel for line settings.
 %%%% ¡default!
 'SettingsLinePP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for line settings.
+NAME (constant, string) is the name of the property panel for line settings.
 %%%% ¡default!
 'Prop Panel for Line Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for line settings.
+DESCRIPTION (constant, string) is the description of the property panel for line settings.
 %%%% ¡default!
 'A Prop Panel for Line Settings (SettingsLinePP) plots the panel for line settings, including visibility, line style, size and color, and symbol style, size, edge color, and face color. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for line settings.
+TEMPLATE (parameter, item) is the template of the property panel for line settings.
 %%%% ¡settings!
 'SettingsLinePP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for line settings.
+ID (data, string) is a few-letter code for the property panel for line settings.
 %%%% ¡default!
 'SettingsLinePP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for line settings.
+LABEL (metadata, string) is an extended label of the property panel for line settings.
 %%%% ¡default!
 'SettingsLinePP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for line settings.
+NOTES (metadata, string) are some specific notes about the property panel for line settings.
 %%%% ¡default!
 'SettingsLinePP notes'
 

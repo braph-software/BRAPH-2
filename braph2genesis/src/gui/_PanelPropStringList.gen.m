@@ -1,11 +1,11 @@
 %% ¡header!
-PanelPropStringList < PanelProp (pr, string-list prop panel) plots the panel of a prop string-list.
+PanelPropStringList < PanelProp (pr, string-list prop panel) plots the panel of a property string-list.
 
 %%% ¡description!
-PanelPropStringList plots the panel for a STRINGLIST prop with a text area.
+PanelPropStringList plots the panel for a STRINGLIST property with a text area.
 It works for all categories.
 
-It can be personalized with the following prop:
+It can be personalized with the following property:
  TA_HEIGHT - Text area height in pixels when the table is shown.
 
 %%% ¡seealso!
@@ -14,37 +14,37 @@ uitextarea, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the string-list prop panel.
+ELCLASS (constant, string) is the class of the string-list property panel.
 %%%% ¡default!
 'PanelPropStringList'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the string-list prop panel.
+NAME (constant, string) is the name of the string-list property panel.
 %%%% ¡default!
 'String-List Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the string-list prop panel.
+DESCRIPTION (constant, string) is the description of the string-list property panel.
 %%%% ¡default!
-'PanelPropStringList plots the panel for a STRINGLIST prop with a text area. It works for all categories. It can be personalized with the following props: TA_HEIGHT.'
+'PanelPropStringList plots the panel for a STRINGLIST property with a text area. It works for all categories. It can be personalized with the following props: TA_HEIGHT.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the string-list prop panel.
+TEMPLATE (parameter, item) is the template of the string-list property panel.
 %%%% ¡settings!
 'PanelPropStringList'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the string-list prop panel.
+ID (data, string) is a few-letter code for the string-list property panel.
 %%%% ¡default!
 'PanelPropStringList ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the string-list prop panel.
+LABEL (metadata, string) is an extended label of the string-list property panel.
 %%%% ¡default!
 'PanelPropStringList label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the string-list prop panel.
+NOTES (metadata, string) are some specific notes about the string-list property panel.
 %%%% ¡default!
 'PanelPropStringList notes'
 
@@ -54,12 +54,12 @@ EL (data, item) is the element.
 Graph()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 Graph.LAYERLABELS
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -137,7 +137,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
