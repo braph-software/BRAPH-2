@@ -1,5 +1,5 @@
 %% ¡header!
-NNDatasetSplit < ConcreteElement (dsp, splitter of a neural network data) splits a dataset into several partitioned datasets based on specified indices or proportions.
+NNDatasetSplit < ConcreteElement (dsp, splitter of a neural network dataset) splits a dataset into several partitioned datasets based on specified indices or proportions.
 
 %%% ¡description!
 A dataset splitter (NNDatasetSplit) allows users to split a given dataset into multiple smaller datasets, each forming a partition. 
@@ -52,37 +52,37 @@ Dataset Splitter NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the neural network dataset split.
+ELCLASS (constant, string) is the class of the splitter of a neural network dataset.
 %%%% ¡default!
 'NNDatasetSplit'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the splitter of a neural network data.
+NAME (constant, string) is the name of the splitter of a neural network dataset.
 %%%% ¡default!
 'NNDatasetSplit'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
+DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.
 %%%% ¡default!
 'A dataset splitter (NNDatasetSplit) allows users to split a given dataset into multiple smaller datasets, each forming a partition. The splitting can be achieved by providing either specific indices or proportions for the datapoints in each partitioned dataset. For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}. Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
+TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.
 %%%% ¡settings!
 'NNDatasetSplit'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the splitter of a neural network data.
+ID (data, string) is a few-letter code for the splitter of a neural network dataset.
 %%%% ¡default!
 'NNDatasetSplit ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the splitter of a neural network data.
+LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.
 %%%% ¡default!
 'NNDatasetSplit label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the splitter of a neural network data.
+NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.
 %%%% ¡default!
 'NNDatasetSplit notes'
     
