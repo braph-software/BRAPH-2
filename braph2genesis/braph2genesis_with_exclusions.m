@@ -1,8 +1,8 @@
-%BRAPH2GENESIS 
+%BRAPH2GENESIS_WITH_EXCLUSIONS
 % This script generates and tests BRAPH2. The various subfolders contain
 % the files necessary to generate the various parts of BRAPH2.
 %
-% BRAPH2GENESIS packages:
+% BRAPH2GENESIS_WITH_EXCLUSIONS packages:
 %  <a href="matlab:help genesis         ">genesis</a>        - code to generate BRAPH2
 %  <a href="matlab:help braph2          ">braph2</a>         - BRAPH2 loader
 %  <a href="matlab:help src             ">src</a>            - BRAPH2 core
@@ -17,6 +17,8 @@ delete(findall(0, 'type', 'figure'))
 close all
 clear all %#ok<CLALL>
 clc
+
+excluded = {'analysis', 'atlas', 'cohort', 'gt', 'gui', 'nn', 'graphs', 'measures', 'neuralnetworks', 'pipelines'}
 
 if ispc
     fprintf([ ...
@@ -43,7 +45,7 @@ end
 addpath(fileparts(which('braph2genesis')))
 addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
 
-target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2'];
+target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2_with_exclusions'];
 if exist(target_dir, 'dir') 
     if input([ ...
         'The target directory already exists:\n' ...
@@ -62,7 +64,7 @@ end
 if ~exist(target_dir, 'dir') 
     time_start = tic;
 
-    [target_dir, source_dir] = genesis(target_dir, [], 2, false);
+    [target_dir, source_dir] = genesis(target_dir, [], 2, false, excluded);
 
     addpath(target_dir)
 
