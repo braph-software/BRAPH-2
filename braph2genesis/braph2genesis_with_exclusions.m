@@ -1,24 +1,13 @@
 %BRAPH2GENESIS_WITH_EXCLUSIONS
-% This script generates and tests BRAPH2. The various subfolders contain
-% the files necessary to generate the various parts of BRAPH2.
-%
-% BRAPH2GENESIS_WITH_EXCLUSIONS packages:
-%  <a href="matlab:help genesis         ">genesis</a>        - code to generate BRAPH2
-%  <a href="matlab:help braph2          ">braph2</a>         - BRAPH2 loader
-%  <a href="matlab:help src             ">src</a>            - BRAPH2 core
-%  <a href="matlab:help brainsurfs      ">brainsurfs</a>     - BRAPH2 brainsurfs
-%  <a href="matlab:help graphs          ">graphs</a>         - BRAPH2 graphs
-%  <a href="matlab:help measures        ">measures</a>       - BRAPH2 measures
-%  <a href="matlab:help neuralnetworks  ">neuralnetworks</a> - BRAPH2 neural networks
-%  <a href="matlab:help pipelines       ">pipelines</a>      - BRAPH2 pipelines
-%  <a href="matlab:help test            ">test</a>           - BRAPH2 unit testing
+% This script generates and tests BRAPH2 excluding some directories and
+%  elements, whose list is defined by the variable excluded.
 
 delete(findall(0, 'type', 'figure'))
 close all
 clear all %#ok<CLALL>
 clc
 
-excluded = {'analysis', 'atlas', 'cohort', 'gt', 'gui', 'nn', 'graphs', 'measures', 'neuralnetworks', 'pipelines'}
+excluded = {'_Importer.gen.m' 'analysis', 'atlas', 'cohort', 'gt', 'gui', 'nn', 'graphs', 'measures', 'neuralnetworks', 'pipelines'}
 
 if ispc
     fprintf([ ...
