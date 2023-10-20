@@ -599,7 +599,25 @@ We will now see how to implement a few concrete elements.
 \begin{tcolorbox}[
 	title=Light compilation of BRAPH~2.0
 ]
-It is possible to per
+To speed up the compilation of BRAPH~2.0 when trying these examples, it is possible to perform a light version of the compilation using the script \code{braph2genesis\_with\_exclusions}, which permits one to exclude entire folders or individual elements, as shown in \Coderef{cd:exclusions}
+%
+\begin{lstlisting}[
+	label=cd:exclusions,
+	caption={
+		{\bf BRAPH~2.0 genesis with exclusions.}
+		Using \code{braph2genesis\_with\_exclusions}, it is possible to exclude some folders and elements, which are defined in the variable \code{excluded}.
+	}
+]
+¤...¤
+excluded = { ...
+	'gt', 'atlas', 'cohort', 'analysis', 'nn', 'gui', ...
+	'_Exporter.gen.m', '_Importer.gen.m', ...
+	'brainsurfs', 'atlases', 'graphs', 'measures', 'pipelines' ...
+	}
+¤...¤
+\end{lstlisting}
+
+This same approach (appropriately altering the excluded folders and elements) can also be used to reduce the compilation time when developing new functionalities.
 \end{tcolorbox}
 \end{fullwidth}
 
