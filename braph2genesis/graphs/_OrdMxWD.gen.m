@@ -1,5 +1,5 @@
 %% ¡header!
-OrdMxWD < Graph (g, multiplex weighted directed graph) is an ordinal multiplex weighted directed graph.
+OrdMxWD < Graph (g, ordinal multiplex weighted directed graph) is an ordinal multiplex weighted directed graph.
 
 %%% ¡description!
 In an ordinal multiplex weighted directed (WD) graph, all layers have the same number 
@@ -115,7 +115,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ordinal multiplex weighted directed graph.
 %%%% ¡default!
 'OrdMxWD'
 

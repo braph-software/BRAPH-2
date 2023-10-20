@@ -1,8 +1,8 @@
 %% ¡header!
-OrdMxBUD < OrdMxWU (g, binary undirected multiplex with fixed densities) is a ordinal multiplex binary undirected with fixed densities.
+OrdMxBUD < OrdMxWU (g, ordinal multiplex binary undirected with fixed densities) is a ordinal multiplex binary undirected with fixed densities.
 
 %%% ¡description!
-In an ordinal binary undirected multiplex with fixed densities (BUD), the layers are 
+In an ordinal multiplex binary undirected with fixed densities (BUD), the layers are 
  those of binary undirected (BU) multiplex graphs derived from the same 
  weighted supra-adjacency matrices binarized at different densities.
 The supra-adjacency matrix has a number of partitions equal to the number of densities.
@@ -127,37 +127,37 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the ordinal binary undirected multiplex with fixed densities.
+ELCLASS (constant, string) is the class of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
 'OrdMxBUD'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ordinal binary undirected multiplex with fixed densities.
+NAME (constant, string) is the name of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
 'OrdMxBUD'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ordinal binary undirected multiplex with fixed densities.
+DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
-'In an ordinal binary undirected multiplex with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
+'In an ordinal multiplex binary undirected with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the ordinal binary undirected multiplex with fixed densities.
+TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡settings!
 'OrdMxBUD'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the ordinal binary undirected multiplex with fixed densities.
+ID (data, string) is a few-letter code for the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
 'OrdMxBUD ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the ordinal binary undirected multiplex with fixed densities.
+LABEL (metadata, string) is an extended label of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
 'OrdMxBUD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the ordinal binary undirected multiplex with fixed densities.
+NOTES (metadata, string) are some specific notes about the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
 'OrdMxBUD notes'
 

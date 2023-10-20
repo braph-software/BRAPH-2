@@ -79,7 +79,7 @@ Evaluator NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network evaluator.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator'
 

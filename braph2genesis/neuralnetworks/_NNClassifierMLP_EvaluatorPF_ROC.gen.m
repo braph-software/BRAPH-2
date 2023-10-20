@@ -1,8 +1,8 @@
 %% ¡header!
-NNClassifierMLP_EvaluatorPF_ROC < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot an ensemble-based comparison.
+NNClassifierMLP_EvaluatorPF_ROC < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot a panel of an ensemble-based comparison.
 
 %%% ¡description!
-NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot of an ensemble-based comparison.
+NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.
 
 %%% ¡seealso!
 ComparisonEnsemble
@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the panel of the ensemble-based comparison.
 %%%% ¡default!
 'NNClassifierMLP_EvaluatorPF_ROC'
 
@@ -96,7 +96,7 @@ NAME (constant, string) is the name of the panel ensemble-based comparison figur
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot of an ensemble-based comparison.'
+'NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.

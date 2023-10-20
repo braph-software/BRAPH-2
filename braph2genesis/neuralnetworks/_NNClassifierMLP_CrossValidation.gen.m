@@ -112,7 +112,7 @@ Average of Feature Importance
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network validator.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidation'
 

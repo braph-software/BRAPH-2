@@ -123,7 +123,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ordinal multiplex weighted undirected graph.
 %%%% ¡default!
 'OrdMxWU'
 

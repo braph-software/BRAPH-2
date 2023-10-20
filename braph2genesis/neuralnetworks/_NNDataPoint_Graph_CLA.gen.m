@@ -13,7 +13,7 @@ NNDataPoint_Graph_REG, NNDataPoint_Measure_REG, NNDataPoint_Measure_CLA
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point.
 %%%% ¡default!
 'NNDataPoint_Graph_CLA'
 

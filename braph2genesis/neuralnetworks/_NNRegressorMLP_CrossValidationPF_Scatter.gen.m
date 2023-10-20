@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the panel for cross-validation scatter.
 %%%% ¡default!
 'NNRegressorMLP_CrossValidationPF_Scatter'
 

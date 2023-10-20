@@ -1,8 +1,8 @@
 %% ¡header!
-NNDataPoint_Graph_REG < NNDataPoint (dp, measure regressioni data point) is a data point for regression with a graph.
+NNDataPoint_Graph_REG < NNDataPoint (dp, measure regressioni data point) is a data point for a regression with a graph.
 
 %%% ¡description!
-A data point for regression with a graph (NNDataPoint_Graph_REG) 
+A data point for a regression with a graph (NNDataPoint_Graph_REG) 
  contains both input and target for neural network analysis.
 The input is the value of the adjacency matrix extracted from the derived graph of the subject.
 The target is obtained from the variables of interest of the subject.
@@ -13,7 +13,7 @@ NNDataPoint_Graph_CLA, NNDataPoint_Measure_REG, NNDataPoint_Measure_CLA
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for a regression.
 %%%% ¡default!
 'NNDataPoint_Graph_REG'
 
