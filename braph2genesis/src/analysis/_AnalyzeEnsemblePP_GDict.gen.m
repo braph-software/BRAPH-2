@@ -403,11 +403,10 @@ function cb_open_g_h(~, ~)
         end
 
         gui_pfgh = gui.get('PE').get('PR_DICT').get('IT', 'PFGH').memorize('GUI_ITEM');
-    
+        set(gui_pfgh, 'TITLE', ['Histograms plot - ' g_key]);
         if ~gui_pfgh.get('DRAWN')
             gui_pfgh.get('DRAW')
         end
-        set(gui_pfgh, 'TITLE', ['Histograms plot - ' g_key]);
         gui_pfgh.get('SHOW')
     end
 end
