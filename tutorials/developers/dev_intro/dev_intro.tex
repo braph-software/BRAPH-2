@@ -376,7 +376,35 @@ value = el.getr(ConcreteElement.ID);
 \end{lstlisting}
 
 \subsection{Memorizing Props}  
+
+The value of a prop can be memorized using \Coderef{cd:memorize}.
+%
+\begin{lstlisting}[
+	label=cd:get,
+	caption={
+		{\bf Getting a prop.}
+		This script illustrates various ways in which the value of a prop can be retrieved.
+	}
+]
+value = el.memorize('ID'); ¥\circled{1}\twocirclednotes{1}{2}{memorize the value of a prop using the prop tag and the prop number.}¥
+value = el.memorize(ConcreteElement.ID); ¥\circled{2}¥
+
+el.get('ID') ¥\circled{3}\twocirclednotes{3}{4}{do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a \code{QUERY}.}¥
+el.get(ConcreteElement.ID) ¥\circled{4}¥
+
+value = el.get('QUERY', ARG1, ARG2, ... ); ¥\circled{5}\circlednote{5}{can be used with a series of arguments for props of category \code{QUERY}. Any additional arguments are ignored for props of other categories.}¥
+\end{lstlisting}
+
+If the property is of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT}, it calls the function check, proceed to save the result, and notifies an {\bf event PropMemorized}.
+
+If the property is \emph{not} of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT} and has not been set yet, it sets it to its default value.
+ 
+If the property is \emph{not} of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT} and is a callback, it iteratively memorizes the property of the element in the callback.
+ 
+If a property of category \code{QUERY} is memorized, a warning is thrown with warning id \code{BRAPH2:<Element Class>}, because query properties are generally not supposed to be memorized. If such behavior is intended, consider enclosing the command between warning off and warning on.
   
+  memorize(EL, POINTER) does not return any output value.
+
 \subsection{Locking Props}  
 
 Box all tokens 
