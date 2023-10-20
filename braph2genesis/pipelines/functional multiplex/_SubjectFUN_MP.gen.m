@@ -193,15 +193,29 @@ BA (data, item) is a brain atlas.
 L (data, scalar) is the number of layers of subject data.
 %%%% ¡default!
 2
+%%%% ¡preset!
+value = abs(round(value));
+%%%% ¡postset!
+if ~isa(sub.getr('FUN_MP'), 'NoValue') && sub.get('L') ~= length(sub.get('FUN_MP'))
+    sub.set('L', length(sub.get('FUN_MP')))
+end
 
 %%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 %%%% ¡postset!
-if isequal(length(sub.get('LAYERLABELS')), length(sub.get('FUN_MP')))
+if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) ~= sub.get('L')
+    title = ['About Layer Labels'];
     
-else
-    warndlg(['The number of Layer Labels has to be the same as the number of layers' ], 'Warning');
-    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('FUN_MP'))))))
+    message = {''
+        ['{\\bf\\color{orange}' BRAPH2.STR '}'] % note to use doubl slashes to avoid genesis problem
+        ['{\\color{gray}version ' BRAPH2.VERSION '}']
+        ['{\\color{gray}build ' int2str(BRAPH2.BUILD) '}']
+        ''
+        'Please, select a valid number of Layer Labels.'
+        ''
+        ''};
+    braph2msgbox(title, message)
+    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('FUN_MP'))))))
 end
 
 %%% ¡prop!
@@ -221,7 +235,9 @@ else
     msg = ['FUN_MP must be a cell with L matrices with the same number of columns as the number of brain regions (' int2str(br_number) ').'];
 end
 %%%% ¡postset!
-sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('FUN_MP'))))))
+if length(sub.get('LAYERLABELS')) ~= sub.get('L')
+    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('FUN_MP'))))))
+end
 %%%% ¡gui!
 pr = PanelPropCell('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, ...
     'TABLE_HEIGHT', s(40), ...

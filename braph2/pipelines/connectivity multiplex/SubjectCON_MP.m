@@ -600,6 +600,30 @@ classdef SubjectCON_MP < Subject
 			prop_default = SubjectCON_MP.conditioning(prop, SubjectCON_MP.getPropDefault(prop));
 		end
 	end
+	methods (Access=protected) % preset
+		function value = preset(sub, prop, value)
+			%PRESET preprocesses the value of a property before setting it.
+			%
+			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
+			%  PROP. It works only with properties with 2,
+			%  3, 4, 8 and 9. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% See also conditioning, checkProp, postset, postprocessing,
+			%  calculateValue, checkValue.
+			
+			switch prop
+				case 11 % SubjectCON_MP.L
+					value = abs(round(value));
+					
+				otherwise
+					if prop <= 9
+						value = preset@Subject(sub, prop, value);
+					end
+			end
+		end
+	end
 	methods (Static) % checkProp
 		function prop_check = checkProp(pointer, value)
 			%CHECKPROP checks whether a value has the correct format/error.
@@ -675,16 +699,31 @@ classdef SubjectCON_MP < Subject
 			%  checkValue.
 			
 			switch prop
+				case 11 % SubjectCON_MP.L
+					if ~isa(sub.getr('CON_MP'), 'NoValue') && sub.get('L') ~= length(sub.get('CON_MP'))
+					    sub.set('L', length(sub.get('CON_MP')))
+					end
+					
 				case 12 % SubjectCON_MP.LAYERLABELS
-					if isequal(length(sub.get('LAYERLABELS')), length(sub.get('CON_MP')))
+					if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) == sub.get('L')
+					    title = ['About Layer Labels'];
 					    
-					else
-					    warndlg(['The number of Layer Labels has to be the same as the number of layers' ], 'Warning');
-					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('CON_MP'))))))
+					    message = {''
+					        ['{\bf\color{orange}' 'BRAPH2' '}'] % note to use doubl slashes to avoid genesis problem
+					        ['{\color{gray}version ' '2.0.0.b2' '}']
+					        ['{\color{gray}build ' int2str(6) '}']
+					        ''
+					        'Please, select a valid number of Layer Labels.'
+					        ''
+					        ''};
+					    braph2msgbox(title, message)
+					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('CON_MP'))))))
 					end
 					
 				case 14 % SubjectCON_MP.CON_MP
-					sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:length(sub.get('CON_MP'))))))
+					if length(sub.get('LAYERLABELS')) ~= sub.get('L')
+					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('CON_MP'))))))
+					end
 					
 				otherwise
 					if prop <= 9
