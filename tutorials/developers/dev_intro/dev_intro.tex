@@ -360,7 +360,20 @@ If the raw value of the property is a \code{NoValue}, it proceed to return the d
 If the raw value of the property is a callback, it retrieves the value of the linked property (for categories \code{PARAMETER}, \code{DATA}, \code{FIGURE}, and \code{GUI}).
  
 If a property of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT} is not calculated (i.e., its raw value is \code{NoValue}), it proceeds to calculate it (but not to memorize it, i.e., its raw value remains \code{NoValue}). After the calculation of a property of category \code{RESULT} all properties of categories \code{PARAMETER} and \code{DATA} are irreversibly locked.
-If the property is checked, it proceeds to check all properties after the calculation calling the function \code{check()}. If the check fails, it resets the property to \code{NoValue} and returns \code{NoValue}, does not lock the property, and throws a warning with warning id \code{BRAPH2:<Element Class>}
+If the property is checked, it proceeds to check all properties after the calculation calling the function \code{check()}. If the check fails, it resets the property to \code{NoValue} and returns \code{NoValue}, does not lock the property, and throws a warning with warning id \code{BRAPH2:<Element Class>}.
+
+The raw value of a prop can be retrieved with \Coderef{cd:getr}.
+%
+\begin{lstlisting}[
+	label=cd:getr,
+	caption={
+		{\bf Getting the raw value of a prop.}
+		This script illustrates various ways in which the raw value of a prop can be retrieved.
+	}
+]
+value = el.getr('ID');
+value = el.getr(ConcreteElement.ID);
+\end{lstlisting}
 
 \subsection{Memorizing Props}  
   
