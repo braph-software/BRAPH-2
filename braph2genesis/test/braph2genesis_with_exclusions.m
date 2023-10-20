@@ -8,9 +8,13 @@ clear all %#ok<CLALL>
 clc
 
 %% Add here all excluded folders and elements
-% cellfun(@(x) fprintf([ ' ''' x ''' ' ]), Measure.getSubclasses())
-% cellfun(@(x) fprintf([ ' ''' x ''' ' ]), Graph.getSubclasses())
-excluded = {'_Importer.gen.m' 'analysis', 'atlas', 'cohort', 'gt', 'gui', 'nn', 'graphs', 'measures', 'neuralnetworks', 'pipelines'};
+% cellfun(@(x) fprintf([ ' ''_' x '.gen.m'' ' ]), Measure.getSubclasses())
+% cellfun(@(x) fprintf([ ' ''_' x '.gen.m'' ' ]), Graph.getSubclasses())
+excluded = { ...
+	'gt', 'atlas', 'cohort', 'analysis', 'nn', 'gui', ...
+	'brainsurfs', 'atlases', 'graphs', 'measures', 'pipelines', ...
+	'_Exporter.gen.m', '_Importer.gen.m' ...
+	};
 
 %% Genesis With Exclusions
 if ispc
