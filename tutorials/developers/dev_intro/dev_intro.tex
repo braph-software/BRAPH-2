@@ -389,10 +389,8 @@ The value of a prop can be memorized using \Coderef{cd:memorize}.
 value = el.memorize('ID'); ¥\circled{1}\twocirclednotes{1}{2}{memorize the value of a prop using the prop tag and the prop number.}¥
 value = el.memorize(ConcreteElement.ID); ¥\circled{2}¥
 
-el.get('ID') ¥\circled{3}\twocirclednotes{3}{4}{do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a \code{QUERY}.}¥
-el.get(ConcreteElement.ID) ¥\circled{4}¥
-
-value = el.get('QUERY', ARG1, ARG2, ... ); ¥\circled{5}\circlednote{5}{can be used with a series of arguments for props of category \code{QUERY}. Any additional arguments are ignored for props of other categories.}¥
+el.memorize('ID') ¥\circled{3}\twocirclednotes{3}{4}{do not return any output value.}¥
+el.memorize(ConcreteElement.ID) ¥\circled{4}¥
 \end{lstlisting}
 
 If the property is of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT}, it calls the function check, proceed to save the result, and notifies an {\bf event PropMemorized}.
