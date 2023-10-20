@@ -334,7 +334,33 @@ When a prop is set to a certain value, the following operations are performed:
 	\item When a prop is successfully set, an {\bf event} \code{PropSet()} is {\bf notified}.
 \end{enumerate} 
 
-\subsection{Getting Props}  
+\subsection{Getting Props}
+
+The value of a prop can be retrieved with \Coderef{cd:get}.
+%
+\begin{lstlisting}[
+	label=cd:get,
+	caption={
+		{\bf Getting a prop.}
+		This script illustrates various ways in which the value of a prop can be retrieved.
+	}
+]
+value = el.get('ID'); ¥\circled{1}\circlednote{1}{gets the value of a prop using the prop tag.}¥
+
+value = el.get(ConcreteElement.ID); ¥\circled{2}\circlednote{2}{gets the value of a prop using the prop number.}¥
+
+el.get('ID') ¥\circled{3}\twocirclednotes{3}{4}{do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a \code{QUERY}.}¥
+el.get(ConcreteElement.ID) ¥\circled{4}¥
+
+value = el.get('QUERY', ARG1, ARG2, ... ); ¥\circled{5}\circlednote{5}{can be used with a series of arguments for props of category \code{QUERY}. Any additional arguments are ignored for props of other categories.}¥
+\end{lstlisting}
+
+If the raw value of the property is a \code{NoValue}, it proceed to return the default property value (for categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE}, and \code{GUI}).
+ 
+If the raw value of the property is a callback, it retrieves the value of the linked property (for categories \code{PARAMETER}, \code{DATA}, \code{FIGURE}, and \code{GUI}).
+ 
+If a property of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT} is not calculated (i.e., its raw value is \code{NoValue}), it proceeds to calculate it (but not to memorize it, i.e., its raw value remains \code{NoValue}). After the calculation of a property of category \code{RESULT} all properties of categories \code{PARAMETER} and \code{DATA} are irreversibly locked.
+If the property is checked, it proceeds to check all properties after the calculation calling the function \code{check()}. If the check fails, it resets the property to \code{NoValue} and returns \code{NoValue}, does not lock the property, and throws a warning with warning id \code{BRAPH2:<Element Class>}
 
 \subsection{Memorizing Props}  
   
