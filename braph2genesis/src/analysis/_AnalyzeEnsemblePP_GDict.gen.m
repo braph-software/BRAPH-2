@@ -407,6 +407,7 @@ function cb_open_g_h(~, ~)
         if ~gui_pfgh.get('DRAWN')
             gui_pfgh.get('DRAW')
         end
+        
         gui_pfgh.get('SHOW')
     end
 end
