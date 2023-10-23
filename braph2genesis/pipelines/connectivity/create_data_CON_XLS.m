@@ -1,4 +1,4 @@
-function create_data_CON_XLS(data_dir, random_seed)
+function create_data_CON_XLS(data_dir, random_seed, direction)
 %CREATE_DATA_CON_XLS creates connectivity data
 %
 % CREATE_DATA_CON_XLS() creates connectivity data in default folder 'Example
@@ -9,6 +9,10 @@ function create_data_CON_XLS(data_dir, random_seed)
 % CREATE_DATA_CON_XLS(DATA_DIR, RANDOM_SEED) cretes connectivity data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
+% CREATE_DATA_CON_XLS(DATA_DIR, RANDOM_SEED, DIRECTION) cretes connectivity data in
+%  DATA_DIR folder with a specified RANDOM_SEED and symmetrize the matrix
+%  if DIRECTION is set to 'undirected', will preserve direction otherwise.
+%
 % See also create_data_con_xls.
 
 if nargin < 1
@@ -17,6 +21,10 @@ end
 
 if nargin < 2
     random_seed = 'default';
+end
+
+if nargin < 3
+    direction = 'undirected';
 end
 
 if ~isfolder(data_dir)
@@ -60,7 +68,12 @@ if ~isfolder(data_dir)
 
         A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
         r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
-        A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
+        
+        if strcmp(direction, 'undirected')
+            A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
+        else
+            % do nothing;
+        end
 
         writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
@@ -92,7 +105,11 @@ if ~isfolder(data_dir)
 
         A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
         r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
-        A2 = max(A2, transpose(A2));
+        if strcmp(direction, 'undirected')
+            A2 = max(A2, transpose(A2)); % make the adjacency matrix symmetric
+        else
+            % do nothing;
+        end
 
         writetable(array2table(A2), [gr2_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
