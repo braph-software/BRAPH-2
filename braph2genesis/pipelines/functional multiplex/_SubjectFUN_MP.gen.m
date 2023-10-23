@@ -129,6 +129,12 @@ Variables of Interest
 
 %%% ¡prop!
 %%%% ¡id!
+SubjectFUN_MP.L
+%%%% ¡title!
+Layer Number
+
+%%% ¡prop!
+%%%% ¡id!
 SubjectFUN_MP.LAYERLABELS
 %%%% ¡title!
 Layer Labels
