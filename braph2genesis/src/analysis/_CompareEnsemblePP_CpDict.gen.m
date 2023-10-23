@@ -423,7 +423,7 @@ function cb_open_plots(~, ~)
             gui.get('DRAW')
         end
         gui_pfc = gui.get('PE').get('PR_DICT').get('IT', 'PFC').memorize('GUI_ITEM');
-    
+        set(gui_pfc, 'TITLE', ['Comparison plot - ' g.get('MEASURE', measure).get('NAME')]);
         if ~gui_pfc.get('DRAWN')
             gui_pfc.get('DRAW')
         end
@@ -579,7 +579,7 @@ function cb_open_mbrain(~, ~)
             gui.get('DRAW')
         end
         gui_pfbg = gui.get('PE').get('PR_DICT').get('IT', 'PFB').memorize('GUI_ITEM');
-    
+        set(gui_pfbg, 'TITLE', ['Comparison brain plot - ' g.get('MEASURE', measure).get('NAME')]);
         if ~gui_pfbg.get('DRAWN')
             gui_pfbg.get('DRAW')
         end
