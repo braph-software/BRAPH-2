@@ -600,6 +600,30 @@ classdef SubjectST_MP < Subject
 			prop_default = SubjectST_MP.conditioning(prop, SubjectST_MP.getPropDefault(prop));
 		end
 	end
+	methods (Access=protected) % preset
+		function value = preset(sub, prop, value)
+			%PRESET preprocesses the value of a property before setting it.
+			%
+			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
+			%  PROP. It works only with properties with 2,
+			%  3, 4, 8 and 9. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% See also conditioning, checkProp, postset, postprocessing,
+			%  calculateValue, checkValue.
+			
+			switch prop
+				case 11 % SubjectST_MP.L
+					value = abs(round(value));
+					
+				otherwise
+					if prop <= 9
+						value = preset@Subject(sub, prop, value);
+					end
+			end
+		end
+	end
 	methods (Static) % checkProp
 		function prop_check = checkProp(pointer, value)
 			%CHECKPROP checks whether a value has the correct format/error.
@@ -658,6 +682,53 @@ classdef SubjectST_MP < Subject
 					['BRAPH2' ':SubjectST_MP:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SubjectST_MP.getPropTag(prop) ' (' SubjectST_MP.getFormatTag(SubjectST_MP.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postset
+		function postset(sub, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 11 % SubjectST_MP.L
+					if ~isa(sub.getr('ST_MP'), 'NoValue') && sub.get('L') ~= length(sub.get('ST_MP'))
+					    sub.set('L', length(sub.get('ST_MP')))
+					end
+					
+				case 12 % SubjectST_MP.LAYERLABELS
+					if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) == sub.get('L')
+					    title = ['About Layer Labels'];
+					    
+					    message = {''
+					        ['{\bf\color{orange}' 'BRAPH2' '}'] % note to use doubl slashes to avoid genesis problem
+					        ['{\color{gray}version ' '2.0.0.b2' '}']
+					        ['{\color{gray}build ' int2str(6) '}']
+					        ''
+					        'Please, select a valid number of Layer Labels.'
+					        ''
+					        ''};
+					    braph2msgbox(title, message)
+					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('ST_MP'))))))
+					end
+					
+				case 14 % SubjectST_MP.ST_MP
+					if length(sub.get('LAYERLABELS')) ~= sub.get('L')
+					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('ST_MP'))))))
+					end
+					
+				otherwise
+					if prop <= 9
+						postset@Subject(sub, prop);
+					end
 			end
 		end
 	end
