@@ -116,6 +116,7 @@ classdef BRAPH2
         COL_E = [.6 .6 .6] % standard evanescent prop background color
         COL_F = [.7 .7 .7] % standard figure prop background color
         COL_G = [.8 .8 .8] % standard gui prop background color
+        COL_FDR = [0.4660 0.6740 0.1880] % standar gui fdr color
     end
     methods (Static) % BRAPH2 information
         function credits()

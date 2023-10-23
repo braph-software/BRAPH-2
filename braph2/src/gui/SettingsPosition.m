@@ -1,5 +1,5 @@
 classdef SettingsPosition < Settings
-	%SettingsPosition contains the figure panel settings.
+	%SettingsPosition contains the figure panel position settings.
 	% It is a subclass of <a href="matlab:help Settings">Settings</a>.
 	%
 	% A Position Settings (SettingsPosition) provides the settings 

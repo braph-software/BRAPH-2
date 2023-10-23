@@ -8,13 +8,13 @@ classdef NNDatasetSplit < ConcreteElement
 	% Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).
 	%
 	% The list of NNDatasetSplit properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network data.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network data.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network data.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network data.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the splitter of a neural network dataset.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network dataset.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network dataset.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
 	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
@@ -39,33 +39,33 @@ classdef NNDatasetSplit < ConcreteElement
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNDatasetSplit methods (display):
-	%  tostring - string with information about the splitter of a neural network data
-	%  disp - displays information about the splitter of a neural network data
-	%  tree - displays the tree of the splitter of a neural network data
+	%  tostring - string with information about the splitter of a neural network dataset
+	%  disp - displays information about the splitter of a neural network dataset
+	%  tree - displays the tree of the splitter of a neural network dataset
 	%
 	% NNDatasetSplit methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two splitter of a neural network data are equal (values, locked)
+	%  isequal - determines whether two splitter of a neural network dataset are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the splitter of a neural network data
+	%  copy - copies the splitter of a neural network dataset
 	%
 	% NNDatasetSplit methods (save/load, Static):
-	%  save - saves BRAPH2 splitter of a neural network data as b2 file
-	%  load - loads a BRAPH2 splitter of a neural network data from a b2 file
+	%  save - saves BRAPH2 splitter of a neural network dataset as b2 file
+	%  load - loads a BRAPH2 splitter of a neural network dataset from a b2 file
 	%
 	% NNDatasetSplit method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the splitter of a neural network data
+	%  encodeJSON - returns a JSON string encoding the splitter of a neural network dataset
 	%
 	% NNDatasetSplit method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the splitter of a neural network data
+	%   decodeJSON - returns a JSON string encoding the splitter of a neural network dataset
 	%
 	% NNDatasetSplit methods (inspection, Static):
-	%  getClass - returns the class of the splitter of a neural network data
+	%  getClass - returns the class of the splitter of a neural network dataset
 	%  getSubclasses - returns all subclasses of NNDatasetSplit
-	%  getProps - returns the property list of the splitter of a neural network data
-	%  getPropNumber - returns the property number of the splitter of a neural network data
+	%  getProps - returns the property list of the splitter of a neural network dataset
+	%  getPropNumber - returns the property number of the splitter of a neural network dataset
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -132,7 +132,7 @@ classdef NNDatasetSplit < ConcreteElement
 	end
 	methods % constructor
 		function dsp = NNDatasetSplit(varargin)
-			%NNDatasetSplit() creates a splitter of a neural network data.
+			%NNDatasetSplit() creates a splitter of a neural network dataset.
 			%
 			% NNDatasetSplit(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -142,13 +142,13 @@ classdef NNDatasetSplit < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDatasetSplit properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network data.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network data.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network data.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network data.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network data.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network data.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the splitter of a neural network dataset.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the splitter of a neural network dataset.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network dataset.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
 			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
 			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
@@ -162,12 +162,12 @@ classdef NNDatasetSplit < ConcreteElement
 	end
 	methods (Static) % inspection
 		function dsp_class = getClass()
-			%GETCLASS returns the class of the splitter of a neural network data.
+			%GETCLASS returns the class of the splitter of a neural network dataset.
 			%
 			% CLASS = NNDatasetSplit.GETCLASS() returns the class 'NNDatasetSplit'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = DSP.GETCLASS() returns the class of the splitter of a neural network data DSP.
+			%  CLASS = DSP.GETCLASS() returns the class of the splitter of a neural network dataset DSP.
 			%  CLASS = Element.GETCLASS(DSP) returns the class of 'DSP'.
 			%  CLASS = Element.GETCLASS('NNDatasetSplit') returns 'NNDatasetSplit'.
 			%
@@ -177,12 +177,12 @@ classdef NNDatasetSplit < ConcreteElement
 			dsp_class = 'NNDatasetSplit';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the splitter of a neural network data.
+			%GETSUBCLASSES returns all subclasses of the splitter of a neural network dataset.
 			%
 			% LIST = NNDatasetSplit.GETSUBCLASSES() returns all subclasses of 'NNDatasetSplit'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = DSP.GETSUBCLASSES() returns all subclasses of the splitter of a neural network data DSP.
+			%  LIST = DSP.GETSUBCLASSES() returns all subclasses of the splitter of a neural network dataset DSP.
 			%  LIST = Element.GETSUBCLASSES(DSP) returns all subclasses of 'DSP'.
 			%  LIST = Element.GETSUBCLASSES('NNDatasetSplit') returns all subclasses of 'NNDatasetSplit'.
 			%
@@ -194,16 +194,16 @@ classdef NNDatasetSplit < ConcreteElement
 			subclass_list = { 'NNDatasetSplit' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of splitter of a neural network data.
+			%GETPROPS returns the property list of splitter of a neural network dataset.
 			%
-			% PROPS = NNDatasetSplit.GETPROPS() returns the property list of splitter of a neural network data
+			% PROPS = NNDatasetSplit.GETPROPS() returns the property list of splitter of a neural network dataset
 			%  as a row vector.
 			%
 			% PROPS = NNDatasetSplit.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = DSP.GETPROPS([CATEGORY]) returns the property list of the splitter of a neural network data DSP.
+			%  PROPS = DSP.GETPROPS([CATEGORY]) returns the property list of the splitter of a neural network dataset DSP.
 			%  PROPS = Element.GETPROPS(DSP[, CATEGORY]) returns the property list of 'DSP'.
 			%  PROPS = Element.GETPROPS('NNDatasetSplit'[, CATEGORY]) returns the property list of 'NNDatasetSplit'.
 			%
@@ -237,15 +237,15 @@ classdef NNDatasetSplit < ConcreteElement
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of splitter of a neural network data.
+			%GETPROPNUMBER returns the property number of splitter of a neural network dataset.
 			%
-			% N = NNDatasetSplit.GETPROPNUMBER() returns the property number of splitter of a neural network data.
+			% N = NNDatasetSplit.GETPROPNUMBER() returns the property number of splitter of a neural network dataset.
 			%
-			% N = NNDatasetSplit.GETPROPNUMBER(CATEGORY) returns the property number of splitter of a neural network data
+			% N = NNDatasetSplit.GETPROPNUMBER(CATEGORY) returns the property number of splitter of a neural network dataset
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = DSP.GETPROPNUMBER([CATEGORY]) returns the property number of the splitter of a neural network data DSP.
+			%  N = DSP.GETPROPNUMBER([CATEGORY]) returns the property number of the splitter of a neural network dataset DSP.
 			%  N = Element.GETPROPNUMBER(DSP) returns the property number of 'DSP'.
 			%  N = Element.GETPROPNUMBER('NNDatasetSplit') returns the property number of 'NNDatasetSplit'.
 			%
@@ -279,7 +279,7 @@ classdef NNDatasetSplit < ConcreteElement
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in splitter of a neural network data/error.
+			%EXISTSPROP checks whether property exists in splitter of a neural network dataset/error.
 			%
 			% CHECK = NNDatasetSplit.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -317,7 +317,7 @@ classdef NNDatasetSplit < ConcreteElement
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in splitter of a neural network data/error.
+			%EXISTSTAG checks whether tag exists in splitter of a neural network dataset/error.
 			%
 			% CHECK = NNDatasetSplit.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -483,7 +483,7 @@ classdef NNDatasetSplit < ConcreteElement
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatasetsplit_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the splitter of a neural network data.'  'DESCRIPTION (constant, string) is the description of the splitter of a neural network data.'  'TEMPLATE (parameter, item) is the template of the splitter of a neural network data.'  'ID (data, string) is a few-letter code for the splitter of a neural network data.'  'LABEL (metadata, string) is an extended label of the splitter of a neural network data.'  'NOTES (metadata, string) are some specific notes about the splitter of a neural network data.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is a dataset for neural network analysis.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.' };
+			nndatasetsplit_description_list = { 'ELCLASS (constant, string) is the class of the splitter of a neural network dataset.'  'NAME (constant, string) is the name of the splitter of a neural network dataset.'  'DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.'  'TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.'  'ID (data, string) is a few-letter code for the splitter of a neural network dataset.'  'LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.'  'NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is a dataset for neural network analysis.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.' };
 			prop_description = nndatasetsplit_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
