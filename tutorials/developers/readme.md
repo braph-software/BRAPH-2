@@ -6,7 +6,7 @@ This section provides instructions and examples for developers who want to exten
 
 The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects in BRAPH 2.0 are derived from a base object called `Element`. The core code includes the compiler (`genesis`), the essential source code (`src`), and the GUI functionalities (`gui`). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
-> ![BRAPH 2.0 software architecture](braph2genesis.png)
+![BRAPH 2.0 software architecture](braph2genesis.png)
 > **BRAPH 2.0 software architecture.**
 Directory structure of BRAPH 2.0 GENESIS (left) and BRAPH 2.0 (right).
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files *.gen.m) that is compiled into the actual elements (files *.m) by the command `braph2genesis` (some examples of these elements are shown).
