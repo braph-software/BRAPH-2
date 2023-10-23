@@ -209,9 +209,8 @@ end
 %%% ¡prop!
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
 %%%% ¡postset!
-if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) == sub.get('L')
+if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) ~= sub.get('L')
     title = ['About Layer Labels'];
-    
     message = {''
         ['{\\bf\\color{orange}' BRAPH2.STR '}'] % note to use doubl slashes to avoid genesis problem
         ['{\\color{gray}version ' BRAPH2.VERSION '}']
@@ -221,6 +220,7 @@ if ~isa(sub.getr('L'), 'NoValue') && length(sub.get('LAYERLABELS')) == sub.get('
         ''
         ''};
     braph2msgbox(title, message)
+    
     sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('CON_MP'))))))
 end
 
