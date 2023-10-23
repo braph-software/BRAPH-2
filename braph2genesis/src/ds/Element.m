@@ -2015,7 +2015,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also encodeJSON.
             
-            struct = jsondecode(json);
+            struct = jsondecode(regexprep(json, '\\', '\\\\'));
             
             % manages special case when only one element
             if length(struct) == 1
