@@ -1353,29 +1353,15 @@ classdef PanelProp < Panel
 			
 			function cb_button_cb(~, ~)
 			    gui_cb = pr.memorize('GUI_CB');
-                gui_el = gui_cb.get('PE').get('EL');
 
-                % new section, find repeating figures
-                all_fig_h = findall(0, 'type', 'figure');
-                original_item = [];
-                for i = 1:length(all_fig_h)
-                    tmp_h = all_fig_h(i);
-                    tmp_UserData =  tmp_h.UserData;
-                    if isempty(tmp_UserData)
-                        continue;
-                    end
-                    tmp_pe = tmp_UserData.get('PE');
-                    tmp_el = tmp_pe.get('EL');
-                    if strcmp(tmp_h.Name, gui_cb.get('TITLE')) && strcmp(gui_el.get('ID'), tmp_el.get('ID'))
-                        original_item = tmp_h;
-                        break;
-                    end                    
-                end
-
-                if ~isempty(original_item)
-                    gui_element = original_item.UserData;
-                    gui_element.get('SHOW');
-                    return;
+                % find repeating figures
+                all_figs = findall(0, 'type', 'figure');
+                for i = 1:1:length(all_figs)
+                    user_data = all_figs(i).get('UserData');
+                    if isa(user_data, 'PanelElement') && user_data.get('PE').get('EL') == gui_cb.get('PE').get('EL')
+   			user_data.get('PE').get('SHOW')
+      			return
+		    end
                 end
 			
 			    if ~gui_cb.get('DRAWN') 
