@@ -1,8 +1,8 @@
 %% ¡header!
-GraphAdjPF < PanelFig (pf, panel figure for graph adjacency matrix) is a plot of a graph adjacency matrix.
+GraphAdjPF < PanelFig (pf, panel figure for graph adjacency matrix) is a plot of the panel figure for the graph adjacency matrix.
 
 %%% ¡description!
-A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of an adjacency matrix.
+A Panel Figure for Graph Adjacency Matrix (GraphAdjPF) manages the plot of the panel figure for the adjacency matrix.
 
 %%% ¡seealso!
 Graph, GraphAdjPF
@@ -57,11 +57,6 @@ GraphAdjPF.LAYERS
 %%%% ¡title!
 LAYERS
 
-%%% ¡prop!
-%%%% ¡id!
-GraphAdjPF.WEIGHTED
-%%%% ¡title!
-WEIGHTED ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
@@ -78,7 +73,7 @@ MATERIAL & LIGHTNING
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix.
+ELCLASS (constant, string) is the class of the panel figure for graph adjacency matrix (GraphAdjPF).
 %%%% ¡default!
 'GraphAdjPF'
 

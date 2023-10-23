@@ -260,7 +260,7 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the graph.
+ELCLASS (constant, string) is the class of the graph (Graph).
 %%%% ¡default!
 'Graph'
 

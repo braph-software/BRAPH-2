@@ -12,37 +12,37 @@ Settings
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for settings.
+ELCLASS (constant, string) is the class of the property panel for settings.
 %%%% ¡default!
 'SettingsPP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for settings.
+NAME (constant, string) is the name of the property panel for settings.
 %%%% ¡default!
 'Prop Panel for Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for settings.
+DESCRIPTION (constant, string) is the description of the property panel for settings.
 %%%% ¡default!
 'A Prop Panel for Settings (SettingsPP) is the base element for the panels of the Settings. In particular, it provides the updated PanelProp listeners. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for settings.
+TEMPLATE (parameter, item) is the template of the property panel for settings.
 %%%% ¡settings!
 'SettingsPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for settings.
+ID (data, string) is a few-letter code for the property panel for settings.
 %%%% ¡default!
 'SettingsPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for settings.
+LABEL (metadata, string) is an extended label of the property panel for settings.
 %%%% ¡default!
 'SettingsPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for settings.
+NOTES (metadata, string) are some specific notes about the property panel for settings.
 %%%% ¡default!
 'SettingsPP notes'
 

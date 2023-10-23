@@ -11,7 +11,7 @@ uitable, GraphHistPF, GraphAdjPF.
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel to select the layers of an adjacency matrix.
+ELCLASS (constant, string) is the class of the panel to select the layers of an adjacency matrix (LayersPP).
 %%%% ¡default!
 'LayersPP'
 

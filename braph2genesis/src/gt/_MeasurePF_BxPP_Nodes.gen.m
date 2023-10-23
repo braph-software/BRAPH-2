@@ -1,5 +1,5 @@
 %% ¡header!
-MeasurePF_BxPP_Nodes < PanelProp (pr, nodes prop panel) plots the panel to select a couple of nodes.
+MeasurePF_BxPP_Nodes < PanelProp (pr, nodes prop panel) plots the panel to select a couple of nodes of a binodal measure.
 
 %%% ¡description!
 A Nodes Prop Panel (MeasurePF_BxPP_Nodes) plots the panel to select the nodes from two drop-down lists.
@@ -11,7 +11,7 @@ uidropdown, GUI, MeasurePF_BU, MeasurePF_BS, MeasurePF_BB
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the nodes prop panel.
+ELCLASS (constant, string) is the class of the nodes prop panel (MeasurePF_BxPP_Nodes).
 %%%% ¡default!
 'MeasurePF_BxPP_Nodes'
 

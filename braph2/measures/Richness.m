@@ -2,7 +2,7 @@ classdef Richness < Degree
 	%Richness is the graph Richness.
 	% It is a subclass of <a href="matlab:help Degree">Degree</a>.
 	%
-	% The Richness of a node is the sum of the edges that connect nodes 
+	% The Richness (Richness) of a node is the sum of the edges that connect nodes 
 	% of higher degree within a layer.
 	%
 	% The list of Richness properties is:
@@ -528,7 +528,7 @@ classdef Richness < Degree
 				case 2 % Richness.NAME
 					prop_default = 'Richness';
 				case 3 % Richness.DESCRIPTION
-					prop_default = 'The Richness of a node is the sum of the edges that connect nodes of higher degree within a layer.';
+					prop_default = 'The Richness (Richness) of a node is the sum of the edges that connect nodes of higher degree within a layer.';
 				case 4 % Richness.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Richness.getPropSettings(prop));
 				case 5 % Richness.ID

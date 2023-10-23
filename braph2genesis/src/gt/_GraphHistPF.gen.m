@@ -84,7 +84,7 @@ DENSITY LINE PROPERTIES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for graph histogram.
+ELCLASS (constant, string) is the class of the panel figure for graph histogram (GraphHistPF).
 %%%% ¡default!
 'GraphHistPF'
 

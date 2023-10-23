@@ -12,37 +12,37 @@ SettingsArea, uicheckbox, , uipushbutton, uieditfield, uislider
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for area settings.
+ELCLASS (constant, string) is the class of the property panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for area settings.
+NAME (constant, string) is the name of the property panel for area settings.
 %%%% ¡default!
 'Prop Panel for Area Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for area settings.
+DESCRIPTION (constant, string) is the description of the property panel for area settings.
 %%%% ¡default!
 'A Prop Panel for Area Settings (SettingsAreaPP) plots the panel for area settings, including visibility, face color, face alpha, edge color, and edge alpha. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for area settings.
+TEMPLATE (parameter, item) is the template of the property panel for area settings.
 %%%% ¡settings!
 'SettingsAreaPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for area settings.
+ID (data, string) is a few-letter code for the property panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for area settings.
+LABEL (metadata, string) is an extended label of the property panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for area settings.
+NOTES (metadata, string) are some specific notes about the property panel for area settings.
 %%%% ¡default!
 'SettingsAreaPP notes'
 

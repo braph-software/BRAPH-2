@@ -3,7 +3,7 @@ classdef WeightedMxPOut < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity 
-	%  of its number of outward neighbours across the layers.
+	%  of its number of outward neighbors across the layers.
 	%
 	% The list of WeightedMxPOut properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Multiplex Out-Participation.
@@ -528,7 +528,7 @@ classdef WeightedMxPOut < Measure
 				case 2 % WeightedMxPOut.NAME
 					prop_default = 'Weighted Multiplex Out-Participation ';
 				case 3 % WeightedMxPOut.DESCRIPTION
-					prop_default = 'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbours across the layers.';
+					prop_default = 'The Weighted Multiplex Out-Participation (WeightedMxPOut) of a graph is the nodal homogeneity of its number of outward neighbors across the layers.';
 				case 4 % WeightedMxPOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxPOut.getPropSettings(prop));
 				case 5 % WeightedMxPOut.ID

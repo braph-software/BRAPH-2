@@ -12,7 +12,7 @@ An Indexed Dictionary (IndexedDictionary) provides the methods necessary
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the indexed dictionary.
+ELCLASS (constant, string) is the class of the indexed dictionary (IndexedDictionary).
 %%%% ¡default!
 'IndexedDictionary'
 

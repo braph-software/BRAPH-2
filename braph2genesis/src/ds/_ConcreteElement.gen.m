@@ -16,7 +16,7 @@ NoValue, Callback
 %% ¡props!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the concrete element.
+ELCLASS (constant, string) is the class of the concrete element (ConcreteElement).
 %%%% ¡default!
 'ConcreteElement'
 

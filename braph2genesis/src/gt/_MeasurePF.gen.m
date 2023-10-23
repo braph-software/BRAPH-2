@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF < PanelFig (pf, panel figure for measure) is the base element to plot a measure.
+MeasurePF < PanelFig (pf, panel figure for measure) is the base element to plot the panel figure of the measure.
 
 %%% ¡description!
-A Panel Figure for Measure (MeasurePF) manages the basic functionalities to plot of a measure.
+A Panel Figure for Measure (MeasurePF) manages the basic functionalities to plot the panel figure of a measure.
 
 %%% ¡seealso!
 Measure
@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for measure.
+ELCLASS (constant, string) is the class of the panel figure for measure (MeasurePF).
 %%%% ¡default!
 'MeasurePF'
 

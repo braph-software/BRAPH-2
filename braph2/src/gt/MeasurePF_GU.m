@@ -731,16 +731,16 @@ classdef MeasurePF_GU < MeasurePF
 				case 27 % MeasurePF_GU.SETUP
 					x = pf.get('M').get('G').get('APARTITIONTICKS');
 					g = pf.get('M').get('G');
-                    layer = pf.get('LAYER');
-                    m = cell2mat(pf.get('M').get('M'))';
-                    layers_num = length(g.get('ALAYERTICKS'));
-                    m2 = zeros(1, length(x));
-                    count=1;
-                    for i=layer:layers_num:g.get('LAYERNUMBER')
-                        m2(count) = m(i);
-                        count = count + 1;
-                    end
-                    pf.memorize('ST_LINE').set('X', x, 'Y', m2)
+					layer = pf.get('LAYER');
+					m = cell2mat(pf.get('M').get('M'))';
+					layers_num = length(g.get('ALAYERTICKS'));
+					m2 = zeros(1, length(x));
+					count=1;
+					for i=layer:layers_num:g.get('LAYERNUMBER')
+					    m2(count) = m(i);
+					    count = count + 1;
+					end
+					pf.memorize('ST_LINE').set('X', x, 'Y', m2)
 					
 					if ~isempty(m2)
 					    if isempty(x) 

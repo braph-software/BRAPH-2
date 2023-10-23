@@ -56,7 +56,7 @@ EL (data, item) is the element.
 BrainSurfacePF()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 BrainSurfacePF.VIEW
 
@@ -66,7 +66,7 @@ HEIGHT (gui, size) is the pixel height of the settings position panel.
 s(6.4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value

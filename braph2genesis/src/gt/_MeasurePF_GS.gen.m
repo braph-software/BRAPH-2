@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_GS < MeasurePF (pf, panel figure for global superglobal measure) is the base element to plot a global superglobal measure.
+MeasurePF_GS < MeasurePF (pf, panel figure for global superglobal measure) is the base element to plot the panel figure of the global superglobal measure.
 
 %%% ¡description!
-A Panel Figure for Global Superglobal Measure (MeasurePF_GS) manages the basic functionalities to plot of a global superglobal measure.
+A Panel Figure for Global Superglobal Measure (MeasurePF_GS) manages the basic functionalities to plot the panel figure of a global superglobal measure.
 
 %%% ¡seealso!
 Measure
@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for global superglobal measure.
+ELCLASS (constant, string) is the class of the panel figure for global superglobal measure (MeasurePF_GS).
 %%%% ¡default!
 'MeasurePF_GS'
 
@@ -96,7 +96,7 @@ NAME (constant, string) is the name of the panel figure for global superglobal m
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure for global superglobal measure.
 %%%% ¡default!
-'A Panel Figure for Global Superglobal Measure (MeasurePF_GS) manages the basic functionalities to plot of a global superglobal measure.'
+'A Panel Figure for Global Superglobal Measure (MeasurePF_GS) manages the basic functionalities to plot the panel figure of a global superglobal measure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure for global superglobal measure.

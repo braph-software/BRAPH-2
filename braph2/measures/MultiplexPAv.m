@@ -3,7 +3,7 @@ classdef MultiplexPAv < MultiplexP
 	% It is a subclass of <a href="matlab:help MultiplexP">MultiplexP</a>.
 	%
 	% The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity 
-	%    of its number of neighbours across the layers.
+	%    of its number of neighbors across the layers.
 	%
 	% The list of MultiplexPAv properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Multiplex Participation.
@@ -528,7 +528,7 @@ classdef MultiplexPAv < MultiplexP
 				case 2 % MultiplexPAv.NAME
 					prop_default = 'Average Multiplex Participation';
 				case 3 % MultiplexPAv.DESCRIPTION
-					prop_default = 'The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity of its number of neighbours across the layers.';
+					prop_default = 'The Average Multiplex Participation (MultiplexPAv) of a graph is the average homogeneity of its number of neighbors across the layers.';
 				case 4 % MultiplexPAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexPAv.getPropSettings(prop));
 				case 5 % MultiplexPAv.ID

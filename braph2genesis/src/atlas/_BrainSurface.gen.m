@@ -50,12 +50,12 @@ NOTES (metadata, string) are some specific notes about the brain surface.
 %% ¡props!
 
 %%% ¡prop!
-VERTEX_NUMBER (data, scalar) is the number of triangle vertices.
+VERTEX_NUMBER (data, scalar) is the number of triangle vertices of the brain surface.
 %%%% ¡check_prop!
 check = value >= 0;
 
 %%% ¡prop!
-COORDINATES (data, matrix) are the coordinates of the triangle vertices.
+COORDINATES (data, matrix) are the coordinates of the triangle vertices of the brain surface.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3;
 %%%% ¡check_value!
@@ -67,12 +67,12 @@ else
 end
 
 %%% ¡prop!
-TRIANGLES_NUMBER (data, scalar) is the number of triangles.
+TRIANGLES_NUMBER (data, scalar) is the number of triangles of the brain surface.
 %%%% ¡check_prop!
 check = value >= 0;
 
 %%% ¡prop!
-TRIANGLES (data, matrix) are the triads of coordinates of the triangles.
+TRIANGLES (data, matrix) are the triads of coordinates of the triangles of the brain surface.
 %%%% ¡check_prop!
 check = isempty(value) || size(value, 2) == 3;
 %%%% ¡check_value!

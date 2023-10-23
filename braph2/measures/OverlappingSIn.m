@@ -2,7 +2,7 @@ classdef OverlappingSIn < StrengthIn
 	%OverlappingSIn is the graph Overlapping In-Strength.
 	% It is a subclass of <a href="matlab:help StrengthIn">StrengthIn</a>.
 	%
-	% The Overlapping In-Strength of a graph is the sum of the in-strengths of a 
+	% The Overlapping In-Strength (OverlappingSIn) of a graph is the sum of the in-strengths of a 
 	% node in all layers.
 	%
 	% The list of OverlappingSIn properties is:
@@ -528,7 +528,7 @@ classdef OverlappingSIn < StrengthIn
 				case 2 % OverlappingSIn.NAME
 					prop_default = 'Overlapping In-Strength';
 				case 3 % OverlappingSIn.DESCRIPTION
-					prop_default = 'The Overlapping In-Strength of a graph is the sum of the in-strengths of a node in all layers.';
+					prop_default = 'The Overlapping In-Strength (OverlappingSIn) of a graph is the sum of the in-strengths of a node in all layers.';
 				case 4 % OverlappingSIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, OverlappingSIn.getPropSettings(prop));
 				case 5 % OverlappingSIn.ID

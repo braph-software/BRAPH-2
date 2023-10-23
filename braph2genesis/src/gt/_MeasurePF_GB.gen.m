@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_GB < MeasurePF (pf, panel figure for global bilayer measure) is the base element to plot a global bilayer measure.
+MeasurePF_GB < MeasurePF (pf, panel figure for global bilayer measure) is the base element to plot the panel figure of a global bilayer measure.
 
 %%% ¡description!
-A Panel Figure for Global Bilayer Measure (MeasurePF_GB) manages the basic functionalities to plot of a global bilayer measure.
+A Panel Figure for Global Bilayer Measure (MeasurePF_GB) manages the basic functionalities to plot the panel figure of a global bilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -84,7 +84,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for global bilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for global bilayer measure (MeasurePF_GB).
 %%%% ¡default!
 'MeasurePF_GB'
 
@@ -96,7 +96,7 @@ NAME (constant, string) is the name of the panel figure for global bilayer measu
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure for global bilayer measure.
 %%%% ¡default!
-'A Panel Figure for Global Bilayer Measure (MeasurePF_GB) manages the basic functionalities to plot of a global bilayer measure.'
+'A Panel Figure for Global Bilayer Measure (MeasurePF_GB) manages the basic functionalities to plot the panel figure of a global bilayer measure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure for global bilayer measure.

@@ -59,7 +59,7 @@ ELCLASS (constant, string) is the class of the Out-Global Efficiency.
 %%% ¡prop!
 NAME (constant, string) is the name of the Out-Global Efficiency.
 %%%% ¡default!
-'GlobalEfficiencyOut'
+'Out-Global Efficiency'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Out-Global Efficiency.

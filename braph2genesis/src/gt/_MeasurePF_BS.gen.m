@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BS < MeasurePF (pf, panel figure for binodal superglobal measure) is the base element to plot a binodal superglobal measure.
+MeasurePF_BS < MeasurePF (pf, panel figure for binodal superglobal measure) is the base element to plot the panel figure of a binodal superglobal measure.
 
 %%% ¡description!
-A Panel Figure for Binodal Superglobal Measure (MeasurePF_BS) manages the basic functionalities to plot of a binodal superglobal measure.
+A Panel Figure for Binodal Superglobal Measure (MeasurePF_BS) manages the basic functionalities to plot the panel figure of a binodal superglobal measure.
 
 %%% ¡seealso!
 Measure
@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for binodal superglobal measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal superglobal measure (MeasurePF_BS).
 %%%% ¡default!
 'MeasurePF_BS'
 

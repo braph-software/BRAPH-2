@@ -9,3 +9,5 @@
 *.toc
 
 braph2/pipelines/*/Example *
+
+*_with_exclusions/

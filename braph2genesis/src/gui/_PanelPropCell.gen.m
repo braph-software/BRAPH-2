@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropCell < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+PanelPropCell < PanelProp (pr, cell prop panel) plots the panel of a property cell.
 
 %%% ¡description!
-A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders.
+A Cell Prop Panel (PanelPropCell) plots the panel for a CELL property with a table and two sliders.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -24,37 +24,37 @@ uitable, uislider, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the cell prop panel.
+ELCLASS (constant, string) is the class of the cell property panel.
 %%%% ¡default!
 'PanelPropCell'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the cell prop panel.
+NAME (constant, string) is the name of the cell property panel.
 %%%% ¡default!
 'Cell Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the cell prop panel.
+DESCRIPTION (constant, string) is the description of the cell property panel.
 %%%% ¡default!
-'A Cell Prop Panel (PanelPropCell) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A Cell Prop Panel (PanelPropCell) plots the panel for a CELL property with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the cell prop panel.
+TEMPLATE (parameter, item) is the template of the cell property panel.
 %%%% ¡settings!
 'PanelPropCell'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cell prop panel.
+ID (data, string) is a few-letter code for the cell property panel.
 %%%% ¡default!
 'PanelPropCell ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the cell prop panel.
+LABEL (metadata, string) is an extended label of the cell property panel.
 %%%% ¡default!
 'PanelPropCell label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cell prop panel.
+NOTES (metadata, string) are some specific notes about the cell property panel.
 %%%% ¡default!
 'PanelPropCell notes'
 
@@ -64,12 +64,12 @@ EL (data, item) is the element.
 Graph()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 Graph.A
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -231,7 +231,7 @@ end
 % % %     end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -478,9 +478,8 @@ function cb_export_to_xls(~, ~)
         rows = cellfun(@(x) num2str(x), num2cell([1:1:size(data, 1)]), 'UniformOutput', false);
     end
     
-    t = array2table(data, ...
-        'VariableNames', columns, ...
-        'RowNames', rows ...
+    t = cell2table([rows, num2cell(data)], ...
+        'VariableNames', [' '; columns] ...
         );
 
     % save file

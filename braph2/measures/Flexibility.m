@@ -2,7 +2,7 @@ classdef Flexibility < MultilayerCommunity
 	%Flexibility is the graph Flexibility.
 	% It is a subclass of <a href="matlab:help MultilayerCommunity">MultilayerCommunity</a>.
 	%
-	% The Flexibility of each node in a multilayer network is calculated 
+	% The Flexibility (Flexibility) of each node in a multilayer network is calculated 
 	% as the number of times that it changes community assignment, 
 	% normalized by the total possible number of changes. In ordered 
 	% multilayer networks (e.g. temporal, changes are possible only between 
@@ -548,7 +548,7 @@ classdef Flexibility < MultilayerCommunity
 				case 2 % Flexibility.NAME
 					prop_default = 'Flexibility';
 				case 3 % Flexibility.DESCRIPTION
-					prop_default = 'The Flexibility of each node in a multilayer network is calculated  as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
+					prop_default = 'The Flexibility (Flexibility) of each node in a multilayer network is calculated as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e. g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
 				case 4 % Flexibility.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Flexibility.getPropSettings(prop));
 				case 5 % Flexibility.ID

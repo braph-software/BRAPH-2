@@ -11,7 +11,7 @@ uitable, Graph
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the measure dictionary plot.
+ELCLASS (constant, string) is the class of the measure dictionary plot (GraphPP_MDict).
 %%%% ¡default!
 'GraphPP_MDict'
 

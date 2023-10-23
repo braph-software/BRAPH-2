@@ -530,7 +530,7 @@ classdef AssortOutOut < Measure
 				case 2 % AssortOutOut.NAME
 					prop_default = 'Out-Out-Assortativity';
 				case 3 % AssortOutOut.DESCRIPTION
-					prop_default = 'The out-out-assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
+					prop_default = 'The Out-Out-Assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
 				case 4 % AssortOutOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AssortOutOut.getPropSettings(prop));
 				case 5 % AssortOutOut.ID

@@ -531,7 +531,7 @@ classdef Assortativity < Measure
 				case 2 % Assortativity.NAME
 					prop_default = 'Assortativity';
 				case 3 % Assortativity.DESCRIPTION
-					prop_default = 'The Assortativity coefficient (Assortativity) of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the assortativity is calculated with the Dijkstra algorithm using the inverse weight as the assortativity associated to the edge.';
+					prop_default = 'The Assortativity coefficient (Assortativity) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of degree/strength.';
 				case 4 % Assortativity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Assortativity.getPropSettings(prop));
 				case 5 % Assortativity.ID

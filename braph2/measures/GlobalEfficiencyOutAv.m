@@ -2,7 +2,7 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 	%GlobalEfficiencyOutAv is the graph Average Out-Global Efficiency.
 	% It is a subclass of <a href="matlab:help GlobalEfficiencyOut">GlobalEfficiencyOut</a>.
 	%
-	% The Average Out-Global Efficiency (GlobalEfficiencyOutAv) is the average inverse shortest in-path length within each layer.
+	% The Average Out-Global Efficiency (GlobalEfficiencyOutAv) is the average inverse shortest out-path length within each layer.
 	%
 	% The list of GlobalEfficiencyOutAv properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Global Efficiency.
@@ -525,7 +525,7 @@ classdef GlobalEfficiencyOutAv < GlobalEfficiencyOut
 				case 1 % GlobalEfficiencyOutAv.ELCLASS
 					prop_default = 'GlobalEfficiencyOutAv';
 				case 2 % GlobalEfficiencyOutAv.NAME
-					prop_default = 'GlobalEfficiencyOutAv';
+					prop_default = 'Average Out-Global Efficiency';
 				case 3 % GlobalEfficiencyOutAv.DESCRIPTION
 					prop_default = 'The Average Out-Global Efficiency (GlobalEfficiencyOutAv) is the average inverse shortest out-path length within each layer.';
 				case 4 % GlobalEfficiencyOutAv.TEMPLATE

@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropIDictTable < PanelProp (pr, idict prop panel with table) plots the panel of a prop idict in a table.
+PanelPropIDictTable < PanelProp (pr, idict prop panel with table) plots the panel of a property idict in a table.
 
 %%% ¡description!
-An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT prop with a table.
+An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT property with a table.
 It works for all categories.
 
 It can be personalized with the following props:
@@ -30,37 +30,37 @@ uitable, GUI, PanelPropIDict, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the idict prop panel with table.
+ELCLASS (constant, string) is the class of the idict property panel with table.
 %%%% ¡default!
 'PanelPropIDictTable'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the idict prop panel with table.
+NAME (constant, string) is the name of the idict property panel with table.
 %%%% ¡default!
 'Indexed-Dictionary Prop Panel with Table'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the idict prop panel with table.
+DESCRIPTION (constant, string) is the description of the idict property panel with table.
 %%%% ¡default!
-'An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT prop with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
+'An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the idict prop panel with table.
+TEMPLATE (parameter, item) is the template of the idict property panel with table.
 %%%% ¡settings!
 'PanelPropIDictTable'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the idict prop panel with table.
+ID (data, string) is a few-letter code for the idict property panel with table.
 %%%% ¡default!
 'PanelPropIDictTable ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the idict prop panel with table.
+LABEL (metadata, string) is an extended label of the idict property panel with table.
 %%%% ¡default!
 'PanelPropIDictTable label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the idict prop panel with table.
+NOTES (metadata, string) are some specific notes about the idict property panel with table.
 %%%% ¡default!
 'PanelPropIDictTable notes'
 
@@ -70,12 +70,12 @@ EL (data, item) is the element.
 BrainAtlas()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 BrainAtlas.BR_DICT
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -333,7 +333,7 @@ function set_table()
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value
@@ -402,7 +402,7 @@ SELECTOR = -1 % code for the selector column.
 %% ¡props!
 
 %%% ¡prop!
-TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
+TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
 %%%% ¡default!
 s(20)
 
@@ -1082,9 +1082,9 @@ function cb_export_to_xls(~, ~)
         rows = rows(reshape(selected, [1 length(selected)]));
     end
     
-    t = cell2table(data, ...
-        'VariableNames', columns, ...
-        'RowNames', rows);
+    t = cell2table([rows, num2cell(data)], ...
+        'VariableNames', [' '; columns] ...
+        );
 
     % save file
     [filename, filepath, filterindex] = uiputfile({'*.xlsx';'*.xls'}, 'Select Excel file');

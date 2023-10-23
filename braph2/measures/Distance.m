@@ -2,7 +2,7 @@ classdef Distance < Measure
 	%Distance is the Distance.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Distance of a graph is the shortest path between all pairs of nodes 
+	% The Distance (Distance) of a graph is the shortest path between all pairs of nodes 
 	%  within a layer of the graph.
 	% For weighted graphs, the distance is calculated with the Dijkstra algorithm
 	%  using the inverse weight as the distance associated to the edge.
@@ -530,7 +530,7 @@ classdef Distance < Measure
 				case 2 % Distance.NAME
 					prop_default = 'Distance';
 				case 3 % Distance.DESCRIPTION
-					prop_default = 'The Distance of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.';
+					prop_default = 'The Distance (Distance) of a graph is the shortest path between all pairs of nodes within a layer of the graph. For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.';
 				case 4 % Distance.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Distance.getPropSettings(prop));
 				case 5 % Distance.ID
@@ -705,7 +705,7 @@ classdef Distance < Measure
 			            L1(:, V) = 0; % no in-edges as already shortest
 			
 			            for v = V
-			                T = find(L1(v, :)); % neighbours of shortest nodes
+			                T = find(L1(v, :)); % neighbors of shortest nodes
 			                [d, ~] = min([D(u, T);D(u, v)+L1(v, T)]);
 			                D(u, T) = d; % smallest of old/new path lengths
 			                % ind = T(wi==2); % indices of lengthened paths

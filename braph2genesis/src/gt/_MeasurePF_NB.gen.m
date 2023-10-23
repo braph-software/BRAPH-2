@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NB < MeasurePF (pf, panel figure for nodal bilayer measure) is the base element to plot a nodal bilayer measure.
+MeasurePF_NB < MeasurePF (pf, panel figure for nodal bilayer measure) is the base element to plot the panel figure of the nodal bilayer measure.
 
 %%% ¡description!
-A Panel Figure for Nodal Bilayer Measure (MeasurePF_NB) manages the basic functionalities to plot of a nodal bilayer measure.
+A Panel Figure for Nodal Bilayer Measure (MeasurePF_NB) manages the basic functionalities to plot the panel figure of the nodal bilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for nodal bilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for nodal bilayer measure (MeasurePF_NB).
 %%%% ¡default!
 'MeasurePF_NB'
 

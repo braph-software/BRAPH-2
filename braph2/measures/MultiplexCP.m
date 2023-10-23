@@ -533,7 +533,7 @@ classdef MultiplexCP < MultiRC
 				case 2 % MultiplexCP.NAME
 					prop_default = 'Multiplex Core-Periphery';
 				case 3 % MultiplexCP.DESCRIPTION
-					prop_default = 'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the  core and zero otherwise. The relevance of each layer is controlled by the  multirichness coefficients that are between 0 and 1, and add up to one;  the default coefficients are (1/layernumber).';
+					prop_default = 'The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank corresponding to the maximum multirichness nodes. It returns 1 for a node belonging to the core and zero otherwise. The relevance of each layer is controlled by the multirichness coefficients that are between 0 and 1, and add up to one; the default coefficients are (1/layernumber).';
 				case 4 % MultiplexCP.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexCP.getPropSettings(prop));
 				case 5 % MultiplexCP.ID

@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_GU < MeasurePF (pf, panel figure for global unilayer measure) is the base element to plot a global unilayer measure.
+MeasurePF_GU < MeasurePF (pf, panel figure for global unilayer measure) is the base element to plot the panel figure of the global unilayer measure.
 
 %%% ¡description!
-A Panel Figure for Global Unilayer Measure (MeasurePF_GU) manages the basic functionalities to plot of a global unilayer measure.
+A Panel Figure for Global Unilayer Measure (MeasurePF_GU) manages the basic functionalities to plot the panel figure of a global unilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for global unilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for global unilayer measure (MeasurePF_GU).
 %%%% ¡default!
 'MeasurePF_GU'
 

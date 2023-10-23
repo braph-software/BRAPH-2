@@ -544,7 +544,7 @@ classdef MultilayerM < MultilayerCommunity
 				case 2 % MultilayerM.NAME
 					prop_default = 'Multilayer Modularity';
 				case 3 % MultilayerM.DESCRIPTION
-					prop_default = 'The Multilayer Modularity (MultilayerM) is the homogeneity of the number of inward neighbours of a node across the layers.';
+					prop_default = 'The Multilayer Modularity (MultilayerM) of a multilayer graph is the multilayer quality function Q of the resulting partition of the multilayer network.';
 				case 4 % MultilayerM.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultilayerM.getPropSettings(prop));
 				case 5 % MultilayerM.ID

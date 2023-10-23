@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropMarker < PanelProp (pr, marker prop panel) plots the panel of a prop marker.
+PanelPropMarker < PanelProp (pr, marker prop panel) plots the panel of a property marker.
 
 %%% ¡description!
-A Marker Prop Panel (PanelPropMarker) plots the panel for an MARKER prop with a drop-down list.
+A Marker Prop Panel (PanelPropMarker) plots the panel for a MARKER property with a drop-down list.
 It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uidropdown, uiaxes, line, GUI, PanelElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the marker prop panel.
+ELCLASS (constant, string) is the class of the marker property panel.
 %%%% ¡default!
 'PanelPropMarker'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the marker prop panel.
+NAME (constant, string) is the name of the marker property panel.
 %%%% ¡default!
 'Marker Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the marker prop panel.
+DESCRIPTION (constant, string) is the description of the marker property panel.
 %%%% ¡default!
-'A Marker Prop Panel (PanelPropMarker) plots the panel for an MARKER prop with a drop-down list. It works for all categories.'
+'A Marker Prop Panel (PanelPropMarker) plots the panel for a MARKER property with a drop-down list. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the marker prop panel.
+TEMPLATE (parameter, item) is the template of the marker property panel.
 %%%% ¡settings!
 'PanelPropMarker'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the marker prop panel.
+ID (data, string) is a few-letter code for the marker property panel.
 %%%% ¡default!
 'PanelPropMarker ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the marker prop panel.
+LABEL (metadata, string) is an extended label of the marker property panel.
 %%%% ¡default!
 'PanelPropMarker label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the marker prop panel.
+NOTES (metadata, string) are some specific notes about the marker property panel.
 %%%% ¡default!
 'PanelPropMarker notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 SettingsSymbol()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 SettingsSymbol.SYMBOL
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -119,7 +119,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

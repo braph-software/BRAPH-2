@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_BB < MeasurePF (pf, panel figure for binodal bilayer measure) is the base element to plot a binodal bilayer measure.
+MeasurePF_BB < MeasurePF (pf, panel figure for binodal bilayer measure) is the base element to plot the panel figure of a binodal bilayer measure.
 
 %%% ¡description!
-A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot of a binodal bilayer measure.
+A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot the panel figure of a binodal bilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -90,7 +90,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for binodal bilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for binodal bilayer measure (MeasurePF_BB).
 %%%% ¡default!
 'MeasurePF_BB'
 
@@ -102,7 +102,7 @@ NAME (constant, string) is the name of the panel figure for binodal bilayer meas
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel figure for binodal bilayer measure.
 %%%% ¡default!
-'A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot of a binodal bilayer measure.'
+'A Panel Figure for Binodal Bilayer Measure (MeasurePF_BB) manages the basic functionalities to plot the panel figure of a binodal bilayer measure.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel figure for binodal bilayer measure.

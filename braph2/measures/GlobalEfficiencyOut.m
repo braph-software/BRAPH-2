@@ -2,8 +2,8 @@ classdef GlobalEfficiencyOut < Distance
 	%GlobalEfficiencyOut is the graph Out-Global Efficiency.
 	% It is a subclass of <a href="matlab:help Distance">Distance</a>.
 	%
-	% The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest in-path length within each layer. 
-	% It is inversely related to the characteristic in-path length.
+	% The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest out-path length within each layer. 
+	% It is inversely related to the characteristic out-path length.
 	%
 	% The list of GlobalEfficiencyOut properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-Global Efficiency.
@@ -526,7 +526,7 @@ classdef GlobalEfficiencyOut < Distance
 				case 1 % GlobalEfficiencyOut.ELCLASS
 					prop_default = 'GlobalEfficiencyOut';
 				case 2 % GlobalEfficiencyOut.NAME
-					prop_default = 'GlobalEfficiencyOut';
+					prop_default = 'Out-Global Efficiency';
 				case 3 % GlobalEfficiencyOut.DESCRIPTION
 					prop_default = 'The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest out-path length within each layer. It is inversely related to the characteristic out-path length.';
 				case 4 % GlobalEfficiencyOut.TEMPLATE

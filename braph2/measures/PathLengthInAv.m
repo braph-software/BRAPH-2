@@ -529,7 +529,7 @@ classdef PathLengthInAv < PathLengthIn
 				case 2 % PathLengthInAv.NAME
 					prop_default = 'Average In-Path Length';
 				case 3 % PathLengthInAv.DESCRIPTION
-					prop_default = 'The Average In-Path Length (PathLengthInAv) is the average shortest in-path length of one node to all other nodes within a layer.';
+					prop_default = 'The Average In-Path Length (PathLengthInAv) of a graph is the average of the sum of the in-path lengths within each layer.';
 				case 4 % PathLengthInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, PathLengthInAv.getPropSettings(prop));
 				case 5 % PathLengthInAv.ID

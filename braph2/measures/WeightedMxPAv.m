@@ -3,7 +3,7 @@ classdef WeightedMxPAv < WeightedMxP
 	% It is a subclass of <a href="matlab:help WeightedMxP">WeightedMxP</a>.
 	%
 	% The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity 
-	%  of its number of neighbours across the layers.
+	%  of its number of neighbors across the layers.
 	%
 	% The list of WeightedMxPAv properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Weighted Multiplex Participation.
@@ -528,7 +528,7 @@ classdef WeightedMxPAv < WeightedMxP
 				case 2 % WeightedMxPAv.NAME
 					prop_default = 'Average Weighted Multiplex Participation';
 				case 3 % WeightedMxPAv.DESCRIPTION
-					prop_default = 'The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the nodal homogeneity of its number of inward neighbours across the layers.';
+					prop_default = 'The Average Weighted Multiplex Participation (WeightedMxPAv) of a graph is the average homogeneity of its number of neighbors across the layers.';
 				case 4 % WeightedMxPAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, WeightedMxPAv.getPropSettings(prop));
 				case 5 % WeightedMxPAv.ID

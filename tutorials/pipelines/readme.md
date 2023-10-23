@@ -21,7 +21,7 @@ These tutorials provide step-by-step instructions for analyzing and comparing co
   - [Pipeline Structural Comparison BUD](tut_a_st_bud/tut_a_st_bud.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed densities (BUD).
   - [Pipeline Structural Comparison BUT](tut_a_st_but/tut_a_st_but.pdf): Tutorial to compare two groups of subjects with structural data (ST) using binary undirected graphs at fixed thresholds (BUT).
 
-> ![Advances in brain connectivity analysis](pipeline-graph.png)
+![Advances in brain connectivity analysis](pipeline-graph.png)
 > 
 > **BRAPH~2.0 graph analysis pipeline.**
 > **a** Main graphical user interface (GUI) for BRAPH 2.0, which is launched by the command `braph2`, where an analysis pipeline can be selected.
@@ -58,7 +58,7 @@ Explore the deep learning pipelines in BRAPH 2.0. These tutorials demonstrate th
 - Pipeline Neural Networks Classification Connectivity WU: Tutorial that applies neural networks for classification using weighted undirected (WU) connectivity data. [Tutorial Link](tut_nn_clss_con_wu/tut_nn_clss_con_wu.pdf)
 - Pipeline Neural Networks Classification Cross Validation Functional WU: Tutorial that applies neural networks for classification with cross-validation using weighted undirected (WU) functional connectivity data. [Tutorial Link](tut_nn_clss_xval_fun_wu/tut_nn_clss_xval_fun_wu.pdf)
 
-> ![Advances in brain connectivity analysis](pipeline-nn.png)
+![Advances in brain connectivity analysis](pipeline-nn.png)
 > 
 > **BRAPH 2.0 deep-learning analysis pipeline.**
 > **a** Main graphical user interface (GUI) for BRAPH 2.0, which is launched by the command `braph2`, where an analysis pipeline can be selected.

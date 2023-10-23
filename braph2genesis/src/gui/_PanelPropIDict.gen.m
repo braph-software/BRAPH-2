@@ -1,8 +1,8 @@
 %% ¡header!
-PanelPropIDict < PanelProp (pr, idict prop panel) plots the panel of a prop idict.
+PanelPropIDict < PanelProp (pr, idict prop panel) plots the panel of a property idict.
 
 %%% ¡description!
-An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT prop with a button.
+An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT property with a button.
  It works for all categories.
 
 %%% ¡seealso!
@@ -11,37 +11,37 @@ uibutton, GUI, PanelElement, GUIElement
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the idict prop panel.
+ELCLASS (constant, string) is the class of the idict property panel.
 %%%% ¡default!
 'PanelPropIDict'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the idict prop panel.
+NAME (constant, string) is the name of the idict property panel.
 %%%% ¡default!
 'Indexed-Dictionary Prop Panel'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the idict prop panel.
+DESCRIPTION (constant, string) is the description of the idict property panel.
 %%%% ¡default!
-'An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT prop with a button. It works for all categories.'
+'An Indexed-Dictionary Prop Panel (PanelPropIDict) plots the panel for a IDICT property with a button. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the idict prop panel.
+TEMPLATE (parameter, item) is the template of the idict property panel.
 %%%% ¡settings!
 'PanelPropIDict'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the idict prop panel.
+ID (data, string) is a few-letter code for the idict property panel.
 %%%% ¡default!
 'PanelPropIDict ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the idict prop panel.
+LABEL (metadata, string) is an extended label of the idict property panel.
 %%%% ¡default!
 'PanelPropIDict label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the idict prop panel.
+NOTES (metadata, string) are some specific notes about the idict property panel.
 %%%% ¡default!
 'PanelPropIDict notes'
 
@@ -51,17 +51,17 @@ EL (data, item) is the element.
 Pipeline()
 
 %%% ¡prop!
-PROP (data, scalar) is the prop number.
+PROP (data, scalar) is the property number.
 %%%% ¡default!
 Pipeline.PS_DICT
 
 %%% ¡prop!
-HEIGHT (gui, size) is the pixel height of the prop panel.
+HEIGHT (gui, size) is the pixel height of the property panel.
 %%%% ¡default!
 s(4)
 
 %%% ¡prop!
-X_DRAW (query, logical) draws the prop panel.
+X_DRAW (query, logical) draws the property panel.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 if value
@@ -113,7 +113,7 @@ if value
 end
 
 %%% ¡prop!
-REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
+REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
 %%%% ¡calculate!
 value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 if value

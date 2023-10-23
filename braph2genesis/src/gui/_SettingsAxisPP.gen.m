@@ -13,37 +13,37 @@ SettingsPosition, uicheckbox, uipushbutton
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the prop panel for axis settings.
+ELCLASS (constant, string) is the class of the property panel for axis settings.
 %%%% ¡default!
 'SettingsAxisPP'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the prop panel for axis settings.
+NAME (constant, string) is the name of the property panel for axis settings.
 %%%% ¡default!
 'Prop Panel for Axis Settings'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the prop panel for axis settings.
+DESCRIPTION (constant, string) is the description of the property panel for axis settings.
 %%%% ¡default!
 'A Prop Panel for Axis Settings (SettingsAxisPP) plots the panel for axis settings, including a button for the axis color and checkboxes for axis on/off, grid on/off, equal on/off, and tight on/off. It works for all categories.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the prop panel for axis settings.
+TEMPLATE (parameter, item) is the template of the property panel for axis settings.
 %%%% ¡settings!
 'SettingsAxisPP'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the prop panel for axis settings.
+ID (data, string) is a few-letter code for the property panel for axis settings.
 %%%% ¡default!
 'SettingsAxisPP ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the prop panel for axis settings.
+LABEL (metadata, string) is an extended label of the property panel for axis settings.
 %%%% ¡default!
 'SettingsAxisPP label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the prop panel for axis settings.
+NOTES (metadata, string) are some specific notes about the property panel for axis settings.
 %%%% ¡default!
 'SettingsAxisPP notes'
 

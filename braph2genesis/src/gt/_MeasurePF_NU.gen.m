@@ -1,8 +1,8 @@
 %% ¡header!
-MeasurePF_NU < MeasurePF (pf, panel figure for nodal unilayer measure) is the base element to plot a nodal unilayer measure.
+MeasurePF_NU < MeasurePF (pf, panel figure for nodal unilayer measure) is the base element to plot the panel figure of the nodal unilayer measure.
 
 %%% ¡description!
-A Panel Figure for Nodal Unilayer Measure (MeasurePF_NU) manages the basic functionalities to plot of a nodal unilayer measure.
+A Panel Figure for Nodal Unilayer Measure (MeasurePF_NU) manages the basic functionalities to plot the panel figure of the nodal unilayer measure.
 
 %%% ¡seealso!
 Measure
@@ -96,7 +96,7 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel figure for nodal unilayer measure.
+ELCLASS (constant, string) is the class of the panel figure for nodal unilayer measure (MeasurePF_NU).
 %%%% ¡default!
 'MeasurePF_NU'
 

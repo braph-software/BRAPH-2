@@ -2,7 +2,7 @@ classdef Eccentricity < Measure
 	%Eccentricity is the graph Eccentricity.
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
-	% The Eccentricity of a node is the maximal shortest path length between a node and any other node within a layer.
+	% The Eccentricity (Eccentricity) of a node is the maximal shortest path length between a node and any other node within a layer.
 	%
 	% The list of Eccentricity properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Eccentricity.
@@ -539,7 +539,7 @@ classdef Eccentricity < Measure
 				case 2 % Eccentricity.NAME
 					prop_default = 'Eccentricity';
 				case 3 % Eccentricity.DESCRIPTION
-					prop_default = 'The Eccentricity of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
+					prop_default = 'The Eccentricity (Eccentricity) of a node is the maximal shortest path length between a node and any other node within a layer.';
 				case 4 % Eccentricity.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Eccentricity.getPropSettings(prop));
 				case 5 % Eccentricity.ID

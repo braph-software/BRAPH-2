@@ -1,5 +1,5 @@
 %% ¡header!
-BrainAtlasPF < BrainSurfacePF (pf, panel figure for brain atlas) is a plot of a brain atlas.
+BrainAtlasPF < BrainSurfacePF (pf, panel figure for brain atlas) is a panel to manage the plot of a brain atlas.
 
 %%% ¡description!
 A Panel Figure for Brain Atlas (BrainAtlasPF) manages the plot of the brain 
@@ -170,7 +170,7 @@ NOTES (metadata, string) are some specific notes about the panel figure for brai
 'BrainAtlasPF notes'
 
 %%% ¡prop!
-DRAW (query, logical) draws the figure brain atlas.
+DRAW (query, logical) draws the panel figure for brain atlas.
 %%%% ¡calculate!
 value = calculateValue@BrainSurfacePF(pf, BrainSurfacePF.DRAW, varargin{:}); % also warning
 if value
@@ -204,7 +204,7 @@ function cb_labs(~, ~, labs) % (src, event)
 end
 
 %%% ¡prop!
-DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+DELETE (query, logical) resets the handles when the panel figure for brain atlas is deleted.
 %%%% ¡calculate!
 value = calculateValue@BrainSurfacePF(pf, BrainSurfacePF.DELETE, varargin{:}); % also warning
 if value
@@ -215,7 +215,7 @@ if value
 end
 
 %%% ¡prop!
-H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain atlas.
 %%%% ¡calculate!
 toolbar = pf.memorize(PanelFig.H_TOOLBAR);
 if check_graphics(toolbar, 'uitoolbar')

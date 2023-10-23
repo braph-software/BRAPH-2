@@ -2,7 +2,7 @@ classdef StrengthInAv < StrengthIn
 	%StrengthInAv is the graph Average In-Strength.
 	% It is a subclass of <a href="matlab:help StrengthIn">StrengthIn</a>.
 	%
-	% The Average In-Strength (StrengthIn) of a graph is the mean of the sum of all weights of the inward edges 
+	% The Average In-Strength (StrengthInAv) of a graph is the mean of the sum of all weights of the inward edges 
 	% connected to a node within a layer, i.e., it is the sum of the columns of 
 	% the adjacency matrix.
 	%
@@ -529,7 +529,7 @@ classdef StrengthInAv < StrengthIn
 				case 2 % StrengthInAv.NAME
 					prop_default = 'Average In-Strength';
 				case 3 % StrengthInAv.DESCRIPTION
-					prop_default = 'The Average In-Strength (StrengthIn) of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
+					prop_default = 'The Average In-Strength (StrengthInAv) of a graph is the mean of the sum of all weights of the inward edges connected to a node within a layer, i.e., it is the sum of the columns of the adjacency matrix.';
 				case 4 % StrengthInAv.TEMPLATE
 					prop_default = Format.getFormatDefault(8, StrengthInAv.getPropSettings(prop));
 				case 5 % StrengthInAv.ID
