@@ -60,18 +60,18 @@ classdef Format < handle
     %               (network, SeriesNetwork, DAGNetwork, dlnetwork).
     %
     %  HANDLE       Handle is a handle for a graphical or listener component.
-    %               It should only be used as an EVANESCENT property.
+    %               It should only be used as an evanescent property.
     %
     %  HANDLELIST   HandleList is a cell array with handles for graphical 
     %               or listener components.
-    %               It should only be used as an EVANESCENT property.
+    %               It should only be used as an evanescent property.
     %
-    %  COLOR        Color is an RGB color.
+    %  COLOR        Color is an RGB color, e.g., '[1 0 0' for red.
     %
     %  ALPHA        Alpha is a transparency level between 0 and 1.
     %
     %  SIZE         Size represents the size of a graphical componet.
-    %               It is a positive numebr (default = 1).
+    %               It is a positive number (default = 1).
     %
     %  MARKER       Marker represents the marker style.
     %               It can be 'o' (circle), '+' (plus), '*' (asterisk), 
@@ -309,12 +309,12 @@ classdef Format < handle
         HANDLE = 18
         HANDLE_TAG = 'ha'
         HANDLE_NAME = 'handle'
-        HANDLE_DESCRIPTION = 'Handle is a handle for a graphical or listener component. It should only be used as an EVANESCENT property.'
+        HANDLE_DESCRIPTION = 'Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.'
 
         HANDLELIST = 19
         HANDLELIST_TAG = 'hl'
         HANDLELIST_NAME = 'handlelist'
-        HANDLELIST_DESCRIPTION = 'HandleList is a cell array with handles for graphical or listener components. It should only be used as an EVANESCENT property.'
+        HANDLELIST_DESCRIPTION = 'HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.'
 
         COLOR = 20
         COLOR_TAG = 'co'
@@ -329,7 +329,7 @@ classdef Format < handle
         SIZE = 22
         SIZE_TAG = 'sz'
         SIZE_NAME = 'size'
-        SIZE_DESCRIPTION = 'Size represents the size of a graphical component. It is a positive numebr (default = 1).'
+        SIZE_DESCRIPTION = 'Size represents the size of a graphical component. It is a positive number (default = 1).'
 
         MARKER = 23
         MARKER_TAG = 'mr'

@@ -974,7 +974,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  properties of categories PARAMETER and DATA are irreversibly locked.
             % If the property is checked, it proceeds to check all properties
             %  after the calculation calling the function <a href="matlab:help Element.check">check</a>.
-            %  if the check fails, it resets the property to NoValue, returns NoValue,
+            %  If the check fails, it resets the property to NoValue and returns NoValue,
             %  does not lock the property, and throws a warning.
             %  Warning id: €BRAPH2.STR€:<Element Class>
             %
@@ -2235,7 +2235,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         end        
     end  
     methods (Static) % GUI Static
-        function getGUIMenuImport(el, menu_import, pe)
+        function getGUIMenuImport(el, menu_import, pe) %#ok<INUSD> 
             %GETGUIMENUIMPORT sets the import submenu gui json.
             % 
             % GETGUIMENUIMPORT(EL, UI_MENU, PL) sets the import submenu

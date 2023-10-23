@@ -2,10 +2,13 @@
 ConcreteElement < Element (el, concrete element) is the base class for all concrete elements.
 
 %%% ¡description!
-A Concrete Element (ConcreteElement) provides the infrastructure necessary for all concrete elements. 
- In particular, it has the constant properties NAME (string) and DESCRIPTION (string), 
- the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string).
-Even though it is possible to create instances of ConcreteElement, typically one uses its subclasses.
+A Concrete Element (ConcreteElement) provides the infrastructure necessary 
+ for all concrete elements. In particular, it has the constant properties 
+ ELCLASS (string), NAME (string) and DESCRIPTION (string), the property 
+ TEMPLATE (item), the indexing properties ID (string), LABEL (string), 
+ and NOTES (string), and the query prop TOSTRING (string).
+Even though it is possible to create instances of ConcreteElement, 
+ typically one uses its subclasses.
 
 %%% ¡seealso!
 NoValue, Callback
@@ -74,7 +77,7 @@ NOTES (metadata, string) are some specific notes about the concrete element.
 pr = PanelPropStringTextArea('EL', el, 'PROP', ConcreteElement.NOTES, varargin{:});
 
 %%% ¡prop!
-TOSTRING (query, string) returns a string that represents the object.
+TOSTRING (query, string) returns a string that represents the concrete element.
 %%%% ¡calculate!
 value = el.tostring();
 

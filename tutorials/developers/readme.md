@@ -6,7 +6,7 @@ This section provides instructions and examples for developers who want to exten
 
 The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects in BRAPH 2.0 are derived from a base object called `Element`. The core code includes the compiler (`genesis`), the essential source code (`src`), and the GUI functionalities (`gui`). Developers can easily add new elements such as brain surfaces, atlases, example scripts, GUI pipelines, graphs, measures, data types, data importers, data exporters, and analyses. By writing new elements and recompiling the code, the new elements and their functionalities are immediately integrated into the GUI.
 
-![BRAPH 2.0 software architecture](../../figures/braph2genesis.png)
+![BRAPH 2.0 software architecture](braph2genesis.png)
 > **BRAPH 2.0 software architecture.**
 Directory structure of BRAPH 2.0 GENESIS (left) and BRAPH 2.0 (right).
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files *.gen.m) that is compiled into the actual elements (files *.m) by the command `braph2genesis` (some examples of these elements are shown).
@@ -26,7 +26,9 @@ Developers can also edit the example scripts provided with the software to have 
 
 ## Expanding BRAPH 2.0 with New Functionalities
 
-BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. Here are some of the ways you can extend BRAPH 2.0:
+BRAPH 2.0's object-oriented programming architecture makes it easy to expand its capabilities by introducing new elements and features. An overview of the software architecture can be found in [General Developer Tutorial for BRAPH 2.0](dev_intro/dev_intro.pdf)
+
+Here are some of the specific ways you can extend BRAPH 2.0:
 
 - **Graphs**: Developers can implement new graph types by extending the `Graph` element. The [Developer Tutorial to Implement a New Graph](dev_graph/dev_graph.pdf) provides a step-by-step guide on how to create new graph types.
 
