@@ -6,7 +6,7 @@ classdef NNDataset < ConcreteElement
 	% NNDataset can contain all the necessary inputs and targets.
 	%
 	% The list of NNDataset properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the dataset for neural network analysis.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the dataset for neural network analysis.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.
@@ -140,7 +140,7 @@ classdef NNDataset < ConcreteElement
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDataset properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the dataset for neural network analysis.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the dataset for neural network analysis.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.
@@ -481,7 +481,7 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndataset_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
+			nndataset_description_list = { 'ELCLASS (constant, string) is the class of the dataset for neural network analysis.'  'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
 			prop_description = nndataset_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

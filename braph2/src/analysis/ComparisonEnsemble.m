@@ -1043,7 +1043,8 @@ classdef ComparisonEnsemble < ConcreteElement
 					g.memorize('A');
 					measure = cp.get('MEASURE');
 					
-					pr = PanelPropCell('EL', cp, 'PROP', 11, varargin{:});
+					pr = PanelPropCellFDR('EL', cp, 'PROP', 11,  ...
+					    'TABLEQVALUE', cp.get('QVALUE'), 'TABLEFDR', true, varargin{:}); 
 					
 					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
