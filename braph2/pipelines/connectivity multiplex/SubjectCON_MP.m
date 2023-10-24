@@ -715,7 +715,7 @@ classdef SubjectCON_MP < Subject
 					        'Please, select a valid number of Layer Labels.'
 					        ''
 					        ''};
-					    oosgbox(title, message)
+					    braph2msgbox(title, message)
 					    
 					    sub.set('LAYERLABELS', cat(1, strsplit(num2str(1:1:length(sub.get('CON_MP'))))))
 					end
