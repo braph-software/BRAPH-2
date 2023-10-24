@@ -12,7 +12,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
 	%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
@@ -143,7 +143,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST.
 			%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
@@ -483,7 +483,7 @@ classdef AnalyzeGroup_ST_BUD < AnalyzeGroup
 			prop = AnalyzeGroup_ST_BUD.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_bud_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed density.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data at fixed density.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data at fixed density.'  'ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
+			analyzegroup_st_bud_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the group-based graph analysis with structural data at fixed density.'  'DESCRIPTION (constant, string) is the description of the group-based graph analysis with structural data at fixed density.'  'TEMPLATE (parameter, item) is the template of the group-based graph analysis with structural data at fixed density.'  'ID (data, string) is a few-letter code for the group-based graph analysis with structural data at fixed density.'  'LABEL (metadata, string) is an extended label of the group-based graph analysis with structural data at fixed density.'  'NOTES (metadata, string) are some specific notes about the group-based graph analysis with structural data at fixed density.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
 			prop_description = analyzegroup_st_bud_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

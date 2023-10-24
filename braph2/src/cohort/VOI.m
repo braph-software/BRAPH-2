@@ -14,7 +14,7 @@ classdef VOI < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the variable of interest.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the variable of interest.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the variable of interest.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 	%
 	% VOI methods (constructor):
@@ -130,7 +130,7 @@ classdef VOI < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the variable of interest.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the variable of interest.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the variable of interest.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>V</strong> 	V (data, scalar) is the value of the variable of interest.
 			%
 			% See also Category, Format.
@@ -457,7 +457,7 @@ classdef VOI < ConcreteElement
 			prop = VOI.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			voi_description_list = { 'ELCLASS (constant, string) is the class of the variable of interest.'  'NAME (constant, string) is the name of the variable of interest.'  'DESCRIPTION (constant, string) is the description of the variable of interest.'  'TEMPLATE (parameter, item) is the template of the variable of interest.'  'ID (data, string) is a few-letter code for the variable of interest.'  'LABEL (metadata, string) is an extended label of the variable of interest.'  'NOTES (metadata, string) are some specific notes about the variable of interest.'  'TOSTRING (query, string) returns a string that represents the object.'  'V (data, scalar) is the value of the variable of interest.' };
+			voi_description_list = { 'ELCLASS (constant, string) is the class of the variable of interest.'  'NAME (constant, string) is the name of the variable of interest.'  'DESCRIPTION (constant, string) is the description of the variable of interest.'  'TEMPLATE (parameter, item) is the template of the variable of interest.'  'ID (data, string) is a few-letter code for the variable of interest.'  'LABEL (metadata, string) is an extended label of the variable of interest.'  'NOTES (metadata, string) are some specific notes about the variable of interest.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'V (data, scalar) is the value of the variable of interest.' };
 			prop_description = voi_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

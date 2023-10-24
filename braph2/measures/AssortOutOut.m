@@ -15,7 +15,7 @@ classdef AssortOutOut < Measure
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Out-Assortativity.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Out-Assortativity.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Out-Assortativity.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
@@ -129,7 +129,7 @@ classdef AssortOutOut < Measure
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-Out-Assortativity.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-Out-Assortativity.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-Out-Assortativity.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
@@ -470,7 +470,7 @@ classdef AssortOutOut < Measure
 			prop = AssortOutOut.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			assortoutout_description_list = { 'ELCLASS (constant, string) is the class of the Out-Out-Assortativity.'  'NAME (constant, string) is the name of the Out-Out-Assortativity.'  'DESCRIPTION (constant, string) is the description of the Out-Out-Assortativity.'  'TEMPLATE (parameter, item) is the template of the Out-Out-Assortativity.'  'ID (data, string) is a few-letter code of the Out-Out-Assortativity.'  'LABEL (metadata, string) is an extended label of the Out-Out-Assortativity.'  'NOTES (metadata, string) are some specific notes about the Out-Out-Assortativity.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Out-Out-Assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			assortoutout_description_list = { 'ELCLASS (constant, string) is the class of the Out-Out-Assortativity.'  'NAME (constant, string) is the name of the Out-Out-Assortativity.'  'DESCRIPTION (constant, string) is the description of the Out-Out-Assortativity.'  'TEMPLATE (parameter, item) is the template of the Out-Out-Assortativity.'  'ID (data, string) is a few-letter code of the Out-Out-Assortativity.'  'LABEL (metadata, string) is an extended label of the Out-Out-Assortativity.'  'NOTES (metadata, string) are some specific notes about the Out-Out-Assortativity.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Out-Out-Assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = assortoutout_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

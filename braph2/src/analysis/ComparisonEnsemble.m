@@ -14,7 +14,7 @@ classdef ComparisonEnsemble < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the results of an ensemble-based comparison.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>MEASURE</strong> 	MEASURE (parameter, class) is the measure class.
 	%  <strong>10</strong> <strong>C</strong> 	C (data, item) is the ensemble-based comparison.
 	%  <strong>11</strong> <strong>DIFF</strong> 	DIFF (result, cell) is the ensemble comparison value.
@@ -190,7 +190,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the results of an ensemble-based comparison.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>MEASURE</strong> 	MEASURE (parameter, class) is the measure class.
 			%  <strong>10</strong> <strong>C</strong> 	C (data, item) is the ensemble-based comparison.
 			%  <strong>11</strong> <strong>DIFF</strong> 	DIFF (result, cell) is the ensemble comparison value.
@@ -539,7 +539,7 @@ classdef ComparisonEnsemble < ConcreteElement
 			prop = ComparisonEnsemble.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			comparisonensemble_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the results of an ensemble-based comparison.'  'DESCRIPTION (constant, string) is the description of the results of an ensemble-based comparison.'  'TEMPLATE (parameter, item) is the template of the results of an ensemble-based comparison.'  'ID (data, string) is a few-letter code for the results of an ensemble-based comparison.'  'LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.'  'NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.'  'TOSTRING (query, string) returns a string that represents the object.'  'MEASURE (parameter, class) is the measure class.'  'C (data, item) is the ensemble-based comparison.'  'DIFF (result, cell) is the ensemble comparison value.'  'P1 (result, cell) is the one-tailed p-value.'  'P2 (result, cell) is the two-tailed p-value.'  'CIL (result, cell) is the lower value of the 95%% confidence interval.'  'CIU (result, cell) is the upper value of the 95%% confidence interval.'  'QVALUE (metadata, scalar) is the selected qvalue threshold.'  'PFC (gui, item) contains the panel figure of the comparison.'  'PFB (gui, item) contains the panel figure of the comparison.'  'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.' };
+			comparisonensemble_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the results of an ensemble-based comparison.'  'DESCRIPTION (constant, string) is the description of the results of an ensemble-based comparison.'  'TEMPLATE (parameter, item) is the template of the results of an ensemble-based comparison.'  'ID (data, string) is a few-letter code for the results of an ensemble-based comparison.'  'LABEL (metadata, string) is an extended label of the results of an ensemble-based comparison.'  'NOTES (metadata, string) are some specific notes about the results of an ensemble-based comparison.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'MEASURE (parameter, class) is the measure class.'  'C (data, item) is the ensemble-based comparison.'  'DIFF (result, cell) is the ensemble comparison value.'  'P1 (result, cell) is the one-tailed p-value.'  'P2 (result, cell) is the two-tailed p-value.'  'CIL (result, cell) is the lower value of the 95%% confidence interval.'  'CIU (result, cell) is the upper value of the 95%% confidence interval.'  'QVALUE (metadata, scalar) is the selected qvalue threshold.'  'PFC (gui, item) contains the panel figure of the comparison.'  'PFB (gui, item) contains the panel figure of the comparison.'  'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.' };
 			prop_description = comparisonensemble_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

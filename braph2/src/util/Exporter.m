@@ -12,7 +12,7 @@ classdef Exporter < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%
 	% Exporter methods (constructor):
@@ -128,7 +128,7 @@ classdef Exporter < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%
 			% See also Category, Format.
@@ -459,7 +459,7 @@ classdef Exporter < ConcreteElement
 			prop = Exporter.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporter_description_list = { 'ELCLASS (constant, string) is the class of the exporter.'  'NAME (constant, string) is the name of the exporter.'  'DESCRIPTION (constant, string) is the description of the exporter.'  'TEMPLATE (parameter, item) is the template of the exporter.'  'ID (data, string) is a few-letter code for the exporter.'  'LABEL (metadata, string) is an extended label of the exporter.'  'NOTES (metadata, string) are some specific notes about the exporter.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
+			exporter_description_list = { 'ELCLASS (constant, string) is the class of the exporter.'  'NAME (constant, string) is the name of the exporter.'  'DESCRIPTION (constant, string) is the description of the exporter.'  'TEMPLATE (parameter, item) is the template of the exporter.'  'ID (data, string) is a few-letter code for the exporter.'  'LABEL (metadata, string) is an extended label of the exporter.'  'NOTES (metadata, string) are some specific notes about the exporter.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
 			prop_description = exporter_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

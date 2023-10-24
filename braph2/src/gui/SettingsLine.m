@@ -15,7 +15,7 @@ classdef SettingsLine < Settings
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line settings.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line settings.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
 	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
 	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
@@ -197,7 +197,7 @@ classdef SettingsLine < Settings
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line settings.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line settings.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
 			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
 			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
@@ -548,7 +548,7 @@ classdef SettingsLine < Settings
 			prop = SettingsLine.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsline_description_list = { 'ELCLASS (constant, string) is the class of the line settings.'  'NAME (constant, string) is the name of the line settings.'  'DESCRIPTION (constant, string) is the description of the line settings.'  'TEMPLATE (parameter, item) is the template of the line settings.'  'ID (data, string) is a few-letter code for the line settings.'  'LABEL (metadata, string) is an extended label of the line settings.'  'NOTES (metadata, string) are some specific notes about the line settings.'  'TOSTRING (query, string) returns a string that represents the object.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of the y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'LINESTYLE (figure, line) is the line style.'  'LINEWIDTH (figure, size) is the line width.'  'LINECOLOR (figure, color) is the line RGB color.'  'SYMBOL (figure, marker) is the symbol style.'  'SYMBOLSIZE (figure, size) is the symbol size.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'FACECOLOR (figure, color) is the symbol RGB face color.' };
+			settingsline_description_list = { 'ELCLASS (constant, string) is the class of the line settings.'  'NAME (constant, string) is the name of the line settings.'  'DESCRIPTION (constant, string) is the description of the line settings.'  'TEMPLATE (parameter, item) is the template of the line settings.'  'ID (data, string) is a few-letter code for the line settings.'  'LABEL (metadata, string) is an extended label of the line settings.'  'NOTES (metadata, string) are some specific notes about the line settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of the y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'LINESTYLE (figure, line) is the line style.'  'LINEWIDTH (figure, size) is the line width.'  'LINECOLOR (figure, color) is the line RGB color.'  'SYMBOL (figure, marker) is the symbol style.'  'SYMBOLSIZE (figure, size) is the symbol size.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'FACECOLOR (figure, color) is the symbol RGB face color.' };
 			prop_description = settingsline_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

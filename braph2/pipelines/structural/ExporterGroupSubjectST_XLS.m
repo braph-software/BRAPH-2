@@ -22,7 +22,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
 	%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
@@ -157,7 +157,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with structural data.
 			%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.
@@ -496,7 +496,7 @@ classdef ExporterGroupSubjectST_XLS < Exporter
 			prop = ExporterGroupSubjectST_XLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
+			exportergroupsubjectst_xls_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group exporter in XLSX.'  'DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.'  'TEMPLATE (parameter, item) is the template of the ST subject group exporter in XLSX.'  'ID (data, string) is a few-letter code for the ST subject group exporter in XLSX.'  'LABEL (metadata, string) is an extended label of the ST subject group exporter in XLSX.'  'NOTES (metadata, string) are some specific notes about the ST subject group exporter in XLSX.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with structural data.'  'FILE (data, string) is the XLSX file name where to save the group of subjects with structural data.'  'PUT_FILE (query, item) opens a dialog box to set the XLSX file where to save the group of subjects with structural data.'  'SAVE (result, empty) saves the group of subjects with structural data in the selected XLSX file.' };
 			prop_description = exportergroupsubjectst_xls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

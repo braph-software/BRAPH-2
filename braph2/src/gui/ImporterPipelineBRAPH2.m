@@ -13,7 +13,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file from where to load the pipeline.
 	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.
@@ -142,7 +142,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file from where to load the pipeline.
 			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.
@@ -480,7 +480,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.'  'NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.'  'ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the BRAPH2 file from where to load the pipeline.'  'GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.'  'PIP (result, item) is a pipeline.' };
+			importerpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.'  'NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.'  'ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the BRAPH2 file from where to load the pipeline.'  'GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.'  'PIP (result, item) is a pipeline.' };
 			prop_description = importerpipelinebraph2_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

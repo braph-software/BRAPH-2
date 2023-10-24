@@ -16,7 +16,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (data, item) is a group of subjects with connectivity data.
 	%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (data, item) is a group of subjects with functional data.
@@ -150,7 +150,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (data, item) is a group of subjects with connectivity data.
 			%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (data, item) is a group of subjects with functional data.
@@ -484,7 +484,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			combinegroups_con_fun_mp_description_list = { 'ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.'  'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.'  'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.'  'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.'  'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.'  'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.'  'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (metadata, logical) detemines whether to show the waitbar.'  'GR_CON (data, item) is a group of subjects with connectivity data.'  'GR_FUN (data, item) is a group of subjects with functional data.'  'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.' };
+			combinegroups_con_fun_mp_description_list = { 'ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.'  'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.'  'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.'  'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.'  'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.'  'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.'  'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (metadata, logical) detemines whether to show the waitbar.'  'GR_CON (data, item) is a group of subjects with connectivity data.'  'GR_FUN (data, item) is a group of subjects with functional data.'  'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.' };
 			prop_description = combinegroups_con_fun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

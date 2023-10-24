@@ -12,7 +12,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
 	%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
@@ -147,7 +147,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>PIP</strong> 	PIP (data, item) is a pipeline.
 			%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file where to save the pipeline.
@@ -486,7 +486,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 			prop = ExporterPipelineBRAPH2.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.'  'NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.'  'ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'PIP (data, item) is a pipeline.'  'FILE (data, string) is the BRAPH2 file where to save the pipeline.'  'PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.'  'SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.' };
+			exporterpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the exporter of a pipeline to a BRAPH2 file.'  'NAME (constant, string) is the name of the exporter of a pipeline to a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the exporter of a pipeline to a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the exporter of a pipeline to a BRAPH2 file.'  'ID (data, string) is a few-letter code for the exporter of a pipeline v a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the exporter of a pipeline to a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the exporter of a pipeline to a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'PIP (data, item) is a pipeline.'  'FILE (data, string) is the BRAPH2 file where to save the pipeline.'  'PUT_FILE (query, empty) opens a dialog box to set the BRAPH2 file where to save the brain atlas.'  'SAVE (result, empty) saves the pipeline in the selected BRAPH2 file.' };
 			prop_description = exporterpipelinebraph2_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

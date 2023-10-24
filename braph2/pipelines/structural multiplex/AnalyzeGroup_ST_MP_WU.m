@@ -14,7 +14,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
 	%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
@@ -139,7 +139,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
 			%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
@@ -478,7 +478,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzegroup_st_mp_wu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph analysis with structural multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.' };
+			analyzegroup_st_mp_wu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the graph analysis with structural multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.' };
 			prop_description = analyzegroup_st_mp_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

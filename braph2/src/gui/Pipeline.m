@@ -12,7 +12,7 @@ classdef Pipeline < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>README</strong> 	README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
 	%  <strong>10</strong> <strong>PDF</strong> 	PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
 	%  <strong>11</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
@@ -140,7 +140,7 @@ classdef Pipeline < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>README</strong> 	README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).
 			%  <strong>10</strong> <strong>PDF</strong> 	PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).
 			%  <strong>11</strong> <strong>PS_DICT</strong> 	PS_DICT (data, idict) is an indexed dictionary with the code sections.
@@ -469,7 +469,7 @@ classdef Pipeline < ConcreteElement
 			prop = Pipeline.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipeline_description_list = { 'ELCLASS (constant, string) is the class of the pipeline.'  'NAME (constant, string) is the name of the pipeline.'  'DESCRIPTION (constant, string) is the description of the pipeline.'  'TEMPLATE (parameter, item) is the template of the pipeline.'  'ID (data, string) is a few-letter code for the pipeline.'  'LABEL (metadata, string) is an extended label of the pipeline.'  'NOTES (metadata, string) are some specific notes about the pipeline.'  'TOSTRING (query, string) returns a string that represents the object.'  'README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).'  'PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).'  'PS_DICT (data, idict) is an indexed dictionary with the code sections.' };
+			pipeline_description_list = { 'ELCLASS (constant, string) is the class of the pipeline.'  'NAME (constant, string) is the name of the pipeline.'  'DESCRIPTION (constant, string) is the description of the pipeline.'  'TEMPLATE (parameter, item) is the template of the pipeline.'  'ID (data, string) is a few-letter code for the pipeline.'  'LABEL (metadata, string) is an extended label of the pipeline.'  'NOTES (metadata, string) are some specific notes about the pipeline.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'README (metadata, string) is the web tutorial address (/tutorials/pipelines/tut/readme.md).'  'PDF (metadata, string) is the PDF tutorial file (/tutorials/pipelines/tut/tut.pdf).'  'PS_DICT (data, idict) is an indexed dictionary with the code sections.' };
 			prop_description = pipeline_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

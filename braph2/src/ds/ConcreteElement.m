@@ -2,20 +2,23 @@ classdef ConcreteElement < Element
 	%ConcreteElement is the base class for all concrete elements.
 	% It is a subclass of <a href="matlab:help Element">Element</a>.
 	%
-	% A Concrete Element (ConcreteElement) provides the infrastructure necessary for all concrete elements. 
-	%  In particular, it has the constant properties NAME (string) and DESCRIPTION (string), 
-	%  the property TEMPLATE (item), and the indexing properties ID (string), LABEL (string), and NOTES (string).
-	% Even though it is possible to create instances of ConcreteElement, typically one uses its subclasses.
+	% A Concrete Element (ConcreteElement) provides the infrastructure necessary 
+	%  for all concrete elements. In particular, it has the constant properties 
+	%  ELCLASS (string), NAME (string) and DESCRIPTION (string), the property 
+	%  TEMPLATE (item), the indexing properties ID (string), LABEL (string), 
+	%  and NOTES (string), and the query prop TOSTRING (string).
+	% Even though it is possible to create instances of ConcreteElement, 
+	%  typically one uses its subclasses.
 	%
 	% The list of ConcreteElement properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element (ConcreteElement).
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%
 	% ConcreteElement methods (constructor):
 	%  ConcreteElement - constructor
@@ -158,14 +161,14 @@ classdef ConcreteElement < Element
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of ConcreteElement properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element (ConcreteElement).
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the concrete element.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the concrete element.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the concrete element.
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the concrete element.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the concrete element.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the concrete element.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%
 			% See also Category, Format.
 			
@@ -491,7 +494,7 @@ classdef ConcreteElement < Element
 			prop = ConcreteElement.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			concreteelement_description_list = { 'ELCLASS (constant, string) is the class of the concrete element.'  'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the object.' };
+			concreteelement_description_list = { 'ELCLASS (constant, string) is the class of the concrete element (ConcreteElement).'  'NAME (constant, string) is the name of the concrete element.'  'DESCRIPTION (constant, string) is the description of the concrete element.'  'TEMPLATE (parameter, item) is the template of the concrete element.'  'ID (data, string) is a few-letter code for the concrete element.'  'LABEL (metadata, string) is an extended label of the concrete element.'  'NOTES (metadata, string) are some specific notes about the concrete element.'  'TOSTRING (query, string) returns a string that represents the concrete element.' };
 			prop_description = concreteelement_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
