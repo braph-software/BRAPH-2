@@ -36,7 +36,7 @@ classdef PanelFig < Panel
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
 	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
@@ -175,7 +175,7 @@ classdef PanelFig < Panel
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the figure panel.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the figure panel.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the figure panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
 			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure panel.
@@ -527,7 +527,7 @@ classdef PanelFig < Panel
 			prop = PanelFig.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			panelfig_description_list = { 'ELCLASS (constant, string) is the class of the figure panel.'  'NAME (constant, string) is the name of the figure panel.'  'DESCRIPTION (constant, string) is the description of the figure panel.'  'TEMPLATE (parameter, item) is the template of the figure panel.'  'ID (data, string) is a few-letter code for the figure panel.'  'LABEL (metadata, string) is an extended label of the figure panel.'  'NOTES (metadata, string) are some specific notes about the figure panel.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the figure panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.' };
+			panelfig_description_list = { 'ELCLASS (constant, string) is the class of the figure panel.'  'NAME (constant, string) is the name of the figure panel.'  'DESCRIPTION (constant, string) is the description of the figure panel.'  'TEMPLATE (parameter, item) is the template of the figure panel.'  'ID (data, string) is a few-letter code for the figure panel.'  'LABEL (metadata, string) is an extended label of the figure panel.'  'NOTES (metadata, string) are some specific notes about the figure panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the figure panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.' };
 			prop_description = panelfig_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

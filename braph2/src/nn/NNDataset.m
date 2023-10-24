@@ -13,7 +13,7 @@ classdef NNDataset < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the dataset for neural network analysis.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the dataset for neural network analysis.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
 	%  <strong>10</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
 	%  <strong>11</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
@@ -147,7 +147,7 @@ classdef NNDataset < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the dataset for neural network analysis.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the dataset for neural network analysis.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>DP_CLASS</strong> 	DP_CLASS (parameter, class) is the class of the data points
 			%  <strong>10</strong> <strong>DP_DICT</strong> 	DP_DICT (data, idict) is an indexed dictionary containing the data points.
 			%  <strong>11</strong> <strong>INPUTS</strong> 	INPUTS (result, cell) is a collection of the inputs from all data points.
@@ -481,7 +481,7 @@ classdef NNDataset < ConcreteElement
 			prop = NNDataset.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndataset_description_list = { 'ELCLASS (constant, string) is the class of the dataset for neural network analysis.'  'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
+			nndataset_description_list = { 'ELCLASS (constant, string) is the class of the dataset for neural network analysis.'  'NAME (constant, string) is the name of the dataset for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the dataset for neural network analysis.'  'ID (data, string) is a few-letter code for the dataset for neural network analysis.'  'LABEL (metadata, string) is an extended label of the dataset for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the dataset for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'DP_CLASS (parameter, class) is the class of the data points'  'DP_DICT (data, idict) is an indexed dictionary containing the data points.'  'INPUTS (result, cell) is a collection of the inputs from all data points.'  'TARGETS (result, cell) is a collection of the targets from all data points.' };
 			prop_description = nndataset_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

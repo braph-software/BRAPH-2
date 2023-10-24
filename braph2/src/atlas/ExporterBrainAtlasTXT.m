@@ -12,7 +12,7 @@ classdef ExporterBrainAtlasTXT < Exporter
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in TXT.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in TXT.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in TXT.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
 	%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file where to save the brain atlas.
@@ -147,7 +147,7 @@ classdef ExporterBrainAtlasTXT < Exporter
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas exporter in TXT.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas exporter in TXT.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas exporter in TXT.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
 			%  <strong>11</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file where to save the brain atlas.
@@ -486,7 +486,7 @@ classdef ExporterBrainAtlasTXT < Exporter
 			prop = ExporterBrainAtlasTXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exporterbrainatlastxt_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas exporter in TXT.'  'NAME (constant, string) is the name of the brain atlas exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the brain atlas exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the brain atlas exporter in TXT.'  'ID (data, string) is a few-letter code for the brain atlas exporter in TXT.'  'LABEL (metadata, string) is an extended label of the brain atlas exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the brain atlas exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'BA (data, item) is a brain atlas.'  'FILE (data, string) is the TXT file where to save the brain atlas.'  'PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the brain atlas.'  'SAVE (result, empty) saves the brain atlas in the selected TXT file.' };
+			exporterbrainatlastxt_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas exporter in TXT.'  'NAME (constant, string) is the name of the brain atlas exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the brain atlas exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the brain atlas exporter in TXT.'  'ID (data, string) is a few-letter code for the brain atlas exporter in TXT.'  'LABEL (metadata, string) is an extended label of the brain atlas exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the brain atlas exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'BA (data, item) is a brain atlas.'  'FILE (data, string) is the TXT file where to save the brain atlas.'  'PUT_FILE (query, item) opens a dialog box to set the TXT file where to save the brain atlas.'  'SAVE (result, empty) saves the brain atlas in the selected TXT file.' };
 			prop_description = exporterbrainatlastxt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

@@ -21,7 +21,7 @@ classdef ImporterGroupSubjectFUN_TXT < Importer
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group importer from TXT.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group importer from TXT.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group importer from TXT.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.
 	%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN subject group.
@@ -156,7 +156,7 @@ classdef ImporterGroupSubjectFUN_TXT < Importer
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group importer from TXT.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group importer from TXT.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group importer from TXT.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.
 			%  <strong>11</strong> <strong>GET_DIR</strong> 	GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN subject group.
@@ -495,7 +495,7 @@ classdef ImporterGroupSubjectFUN_TXT < Importer
 			prop = ImporterGroupSubjectFUN_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importergroupsubjectfun_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the FUN subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the FUN subject group importer from TXT.'  'ID (data, string) is a few-letter code for the FUN subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the FUN subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the FUN subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with functional data.' };
+			importergroupsubjectfun_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the FUN subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the FUN subject group importer from TXT.'  'ID (data, string) is a few-letter code for the FUN subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the FUN subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the FUN subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'DIRECTORY (data, string) is the directory containing the FUN subject group files from which to load the subject group.'  'GET_DIR (query, item) opens a dialog box to set the directory from where to load the TXT files of the FUN subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with functional data.' };
 			prop_description = importergroupsubjectfun_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

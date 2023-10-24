@@ -15,7 +15,7 @@ classdef BrainSurface < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices of the brain surface.
 	%  <strong>10</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices of the brain surface.
 	%  <strong>11</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles of the brain surface.
@@ -149,7 +149,7 @@ classdef BrainSurface < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>VERTEX_NUMBER</strong> 	VERTEX_NUMBER (data, scalar) is the number of triangle vertices of the brain surface.
 			%  <strong>10</strong> <strong>COORDINATES</strong> 	COORDINATES (data, matrix) are the coordinates of the triangle vertices of the brain surface.
 			%  <strong>11</strong> <strong>TRIANGLES_NUMBER</strong> 	TRIANGLES_NUMBER (data, scalar) is the number of triangles of the brain surface.
@@ -479,7 +479,7 @@ classdef BrainSurface < ConcreteElement
 			prop = BrainSurface.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			brainsurface_description_list = { 'ELCLASS (constant, string) is the class of the brain surface.'  'NAME (constant, string) is the name of the brain surface.'  'DESCRIPTION (constant, string) is the description of the brain surface.'  'TEMPLATE (parameter, item) is the template of the brain surface.'  'ID (data, string) is a few-letter code for the brain surface.'  'LABEL (metadata, string) is an extended label of the brain surface.'  'NOTES (metadata, string) are some specific notes about the brain surface.'  'TOSTRING (query, string) returns a string that represents the object.'  'VERTEX_NUMBER (data, scalar) is the number of triangle vertices of the brain surface.'  'COORDINATES (data, matrix) are the coordinates of the triangle vertices of the brain surface.'  'TRIANGLES_NUMBER (data, scalar) is the number of triangles of the brain surface.'  'TRIANGLES (data, matrix) are the triads of coordinates of the triangles of the brain surface.' };
+			brainsurface_description_list = { 'ELCLASS (constant, string) is the class of the brain surface.'  'NAME (constant, string) is the name of the brain surface.'  'DESCRIPTION (constant, string) is the description of the brain surface.'  'TEMPLATE (parameter, item) is the template of the brain surface.'  'ID (data, string) is a few-letter code for the brain surface.'  'LABEL (metadata, string) is an extended label of the brain surface.'  'NOTES (metadata, string) are some specific notes about the brain surface.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'VERTEX_NUMBER (data, scalar) is the number of triangle vertices of the brain surface.'  'COORDINATES (data, matrix) are the coordinates of the triangle vertices of the brain surface.'  'TRIANGLES_NUMBER (data, scalar) is the number of triangles of the brain surface.'  'TRIANGLES (data, matrix) are the triads of coordinates of the triangles of the brain surface.' };
 			prop_description = brainsurface_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

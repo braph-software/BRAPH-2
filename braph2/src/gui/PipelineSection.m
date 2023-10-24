@@ -12,7 +12,7 @@ classdef PipelineSection < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline section.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline section.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline section.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
 	%
 	% PipelineSection methods (constructor):
@@ -128,7 +128,7 @@ classdef PipelineSection < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline section.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline section.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline section.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>PC_DICT</strong> 	PC_DICT (data, idict) is an indexed dictionary with the executable code lines.
 			%
 			% See also Category, Format.
@@ -455,7 +455,7 @@ classdef PipelineSection < ConcreteElement
 			prop = PipelineSection.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			pipelinesection_description_list = { 'ELCLASS (constant, string) is the class of the pipeline section.'  'NAME (constant, string) is the name of the pipeline section.'  'DESCRIPTION (constant, string) is the description of the pipeline section.'  'TEMPLATE (parameter, item) is the template of the pipeline section.'  'ID (data, string) is a few-letter code for the pipeline section.'  'LABEL (metadata, string) is an extended label of the pipeline section.'  'NOTES (metadata, string) are some specific notes about the pipeline section.'  'TOSTRING (query, string) returns a string that represents the object.'  'PC_DICT (data, idict) is an indexed dictionary with the executable code lines.' };
+			pipelinesection_description_list = { 'ELCLASS (constant, string) is the class of the pipeline section.'  'NAME (constant, string) is the name of the pipeline section.'  'DESCRIPTION (constant, string) is the description of the pipeline section.'  'TEMPLATE (parameter, item) is the template of the pipeline section.'  'ID (data, string) is a few-letter code for the pipeline section.'  'LABEL (metadata, string) is an extended label of the pipeline section.'  'NOTES (metadata, string) are some specific notes about the pipeline section.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PC_DICT (data, idict) is an indexed dictionary with the executable code lines.' };
 			prop_description = pipelinesection_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

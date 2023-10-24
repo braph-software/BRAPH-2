@@ -19,7 +19,7 @@ classdef ImporterBrainAtlasXLS < Importer
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas importer from XLS/XLSX.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas importer from XLS/XLSX.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the brain atlas.
 	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.
@@ -148,7 +148,7 @@ classdef ImporterBrainAtlasXLS < Importer
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain atlas importer from XLS/XLSX.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain atlas importer from XLS/XLSX.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the XLS/XLSX file from where to load the brain atlas.
 			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.
@@ -486,7 +486,7 @@ classdef ImporterBrainAtlasXLS < Importer
 			prop = ImporterBrainAtlasXLS.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerbrainatlasxls_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas importer from XLS/XLSX.'  'NAME (constant, string) is the name of the brain atlas importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the brain atlas importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the brain atlas importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the brain atlas importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the brain atlas importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.'  'BA (result, item) is a brain atlas.' };
+			importerbrainatlasxls_description_list = { 'ELCLASS (constant, string) is the class of the brain atlas importer from XLS/XLSX.'  'NAME (constant, string) is the name of the brain atlas importer from XLS/XLSX.'  'DESCRIPTION (constant, string) is the description of the brain atlas importer from XLS/XLSX.'  'TEMPLATE (parameter, item) is the template of the brain atlas importer from XLS/XLSX.'  'ID (data, string) is a few-letter code for the brain atlas importer from XLS/XLSX.'  'LABEL (metadata, string) is an extended label of the brain atlas importer from XLS/XLSX.'  'NOTES (metadata, string) are some specific notes about the brain atlas importer from XLS/XLSX.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the XLS/XLSX file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to get the XLS/XLSX file from where to load the brain atlas.'  'BA (result, item) is a brain atlas.' };
 			prop_description = importerbrainatlasxls_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

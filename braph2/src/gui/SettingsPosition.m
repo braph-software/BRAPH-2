@@ -15,7 +15,7 @@ classdef SettingsPosition < Settings
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the position settings.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the position settings.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the position settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
 	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
 	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
@@ -161,7 +161,7 @@ classdef SettingsPosition < Settings
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the position settings.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the position settings.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the position settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
 			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
 			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
@@ -506,7 +506,7 @@ classdef SettingsPosition < Settings
 			prop = SettingsPosition.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			settingsposition_description_list = { 'ELCLASS (constant, string) is the class of the position settings.'  'NAME (constant, string) is the name of the position settings.'  'DESCRIPTION (constant, string) is the description of the position settings.'  'TEMPLATE (parameter, item) is the template of the position settings.'  'ID (data, string) is a few-letter code for the position settings.'  'LABEL (metadata, string) is an extended label of the position settings.'  'NOTES (metadata, string) are some specific notes about the position settings.'  'TOSTRING (query, string) returns a string that represents the object.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'AUTOPOS (figure, logical) determines whether the position is adjusted automatically.'  'X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.'  'Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.'  'WIDTH (figure, size) is the width of the panel in pixels.'  'HEIGHT (figure, size) is the height of the panel in pixels.' };
+			settingsposition_description_list = { 'ELCLASS (constant, string) is the class of the position settings.'  'NAME (constant, string) is the name of the position settings.'  'DESCRIPTION (constant, string) is the description of the position settings.'  'TEMPLATE (parameter, item) is the template of the position settings.'  'ID (data, string) is a few-letter code for the position settings.'  'LABEL (metadata, string) is an extended label of the position settings.'  'NOTES (metadata, string) are some specific notes about the position settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'AUTOPOS (figure, logical) determines whether the position is adjusted automatically.'  'X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.'  'Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.'  'WIDTH (figure, size) is the width of the panel in pixels.'  'HEIGHT (figure, size) is the height of the panel in pixels.' };
 			prop_description = settingsposition_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

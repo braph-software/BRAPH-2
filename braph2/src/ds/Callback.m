@@ -3,7 +3,11 @@ classdef (Sealed=true) Callback < Element
 	% It is a subclass of <a href="matlab:help Element">Element</a>.
 	%
 	% A callback refers to a property of another element, which are identified 
-	% by its properties EL and PROP/TAG.
+	%  by its properties EL and PROP/TAG.
+	% For computational efficiency, it is best to use only one instance of Callback
+	%  for each prop of an instance of a concrete element EL, using 
+	%  EL.getCallback('PROP', <prop number>) or EL.getCallback('TAG', <prop tag>),
+	%  instead of creating new callback instances using its constructor. 
 	% No element can be a subclass of Callback.
 	%
 	% The list of Callback properties is:

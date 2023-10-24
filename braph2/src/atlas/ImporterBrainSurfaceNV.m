@@ -12,7 +12,7 @@ classdef ImporterBrainSurfaceNV < Importer
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface importer from NV.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface importer from NV.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface importer from NV.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
 	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
@@ -141,7 +141,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain surface importer from NV.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain surface importer from NV.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain surface importer from NV.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the NV file from where to load the brain atlas.
 			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.
@@ -479,7 +479,7 @@ classdef ImporterBrainSurfaceNV < Importer
 			prop = ImporterBrainSurfaceNV.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importerbrainsurfacenv_description_list = { 'ELCLASS (constant, string) is the class of the brain surface importer from NV.'  'NAME (constant, string) is the name of the brain surface importer from NV.'  'DESCRIPTION (constant, string) is the description of the brain surface importer from NV.'  'TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.'  'ID (data, string) is a few-letter code for the brain surface importer from NV.'  'LABEL (metadata, string) is an extended label of the brain surface importer from NV.'  'NOTES (metadata, string) are some specific notes about the brain surface importer from NV.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the NV file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.'  'SURF (result, item) is a brain surface.' };
+			importerbrainsurfacenv_description_list = { 'ELCLASS (constant, string) is the class of the brain surface importer from NV.'  'NAME (constant, string) is the name of the brain surface importer from NV.'  'DESCRIPTION (constant, string) is the description of the brain surface importer from NV.'  'TEMPLATE (parameter, item) is the template of the importe of the brain surface from NVr.'  'ID (data, string) is a few-letter code for the brain surface importer from NV.'  'LABEL (metadata, string) is an extended label of the brain surface importer from NV.'  'NOTES (metadata, string) are some specific notes about the brain surface importer from NV.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the NV file from where to load the brain atlas.'  'GET_FILE (query, item) opens a dialog box to set the NV file where to save the brain atlas.'  'SURF (result, item) is a brain surface.' };
 			prop_description = importerbrainsurfacenv_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

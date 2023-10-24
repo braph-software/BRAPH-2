@@ -30,7 +30,7 @@ classdef Measure < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
 	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
 	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
@@ -268,7 +268,7 @@ classdef Measure < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph measure.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph measure.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph measure.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape.
 			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope.
 			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure.
@@ -609,7 +609,7 @@ classdef Measure < ConcreteElement
 			prop = Measure.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			measure_description_list = { 'ELCLASS (constant, string) is the class of the graph measure (Measure).'  'NAME (constant, string) is the name of the graph measure.'  'DESCRIPTION (constant, string) is the description of the graph measure.'  'TEMPLATE (parameter, item) is the template of the graph measure.'  'ID (data, string) is a few-letter code for the graph measure.'  'LABEL (metadata, string) is an extended label of the graph measure.'  'NOTES (metadata, string) are some specific notes about the graph measure.'  'TOSTRING (query, string) returns a string that represents the object.'  'SHAPE (constant, scalar) is the measure shape.'  'SCOPE (constant, scalar) is the measure scope.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the measure result.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			measure_description_list = { 'ELCLASS (constant, string) is the class of the graph measure (Measure).'  'NAME (constant, string) is the name of the graph measure.'  'DESCRIPTION (constant, string) is the description of the graph measure.'  'TEMPLATE (parameter, item) is the template of the graph measure.'  'ID (data, string) is a few-letter code for the graph measure.'  'LABEL (metadata, string) is an extended label of the graph measure.'  'NOTES (metadata, string) are some specific notes about the graph measure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape.'  'SCOPE (constant, scalar) is the measure scope.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the measure result.'  'PFM (gui, item) contains the panel figure of the measure.' };
 			prop_description = measure_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

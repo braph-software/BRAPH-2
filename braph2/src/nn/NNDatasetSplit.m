@@ -15,7 +15,7 @@ classdef NNDatasetSplit < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network dataset.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
 	%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
 	%  <strong>11</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.
@@ -149,7 +149,7 @@ classdef NNDatasetSplit < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the splitter of a neural network dataset.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is a dataset for neural network analysis.
 			%  <strong>10</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
 			%  <strong>11</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.
@@ -483,7 +483,7 @@ classdef NNDatasetSplit < ConcreteElement
 			prop = NNDatasetSplit.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatasetsplit_description_list = { 'ELCLASS (constant, string) is the class of the splitter of a neural network dataset.'  'NAME (constant, string) is the name of the splitter of a neural network dataset.'  'DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.'  'TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.'  'ID (data, string) is a few-letter code for the splitter of a neural network dataset.'  'LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.'  'NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.'  'TOSTRING (query, string) returns a string that represents the object.'  'D (data, item) is a dataset for neural network analysis.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.' };
+			nndatasetsplit_description_list = { 'ELCLASS (constant, string) is the class of the splitter of a neural network dataset.'  'NAME (constant, string) is the name of the splitter of a neural network dataset.'  'DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.'  'TEMPLATE (parameter, item) is the template of the splitter of a neural network dataset.'  'ID (data, string) is a few-letter code for the splitter of a neural network dataset.'  'LABEL (metadata, string) is an extended label of the splitter of a neural network dataset.'  'NOTES (metadata, string) are some specific notes about the splitter of a neural network dataset.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is a dataset for neural network analysis.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D_LIST (result, itemlist) is the itemlist of splitted neural network datasets.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.' };
 			prop_description = nndatasetsplit_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

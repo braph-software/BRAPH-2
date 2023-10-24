@@ -14,7 +14,7 @@ classdef NNDataPoint < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 	%
@@ -136,7 +136,7 @@ classdef NNDataPoint < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for neural network analysis.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for neural network analysis.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for neural network analysis.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
 			%
@@ -468,7 +468,7 @@ classdef NNDataPoint < ConcreteElement
 			prop = NNDataPoint.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_description_list = { 'ELCLASS (constant, string) is the class of the data point for neural network analysis .'  'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the object.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
+			nndatapoint_description_list = { 'ELCLASS (constant, string) is the class of the data point for neural network analysis .'  'NAME (constant, string) is the name of the data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.'  'ID (data, string) is a few-letter code for the data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.' };
 			prop_description = nndatapoint_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

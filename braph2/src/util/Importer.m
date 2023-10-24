@@ -12,7 +12,7 @@ classdef Importer < ConcreteElement
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%
 	% Importer methods (constructor):
@@ -128,7 +128,7 @@ classdef Importer < ConcreteElement
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%
 			% See also Category, Format.
@@ -459,7 +459,7 @@ classdef Importer < ConcreteElement
 			prop = Importer.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			importer_description_list = { 'ELCLASS (constant, string) is the class of the importer.'  'NAME (constant, string) is the name of the importer.'  'DESCRIPTION (constant, string) is the description of the importer.'  'TEMPLATE (parameter, item) is the template of the importer.'  'ID (data, string) is a few-letter code for the importer.'  'LABEL (metadata, string) is an extended label of the importer.'  'NOTES (metadata, string) are some specific notes about the importer.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
+			importer_description_list = { 'ELCLASS (constant, string) is the class of the importer.'  'NAME (constant, string) is the name of the importer.'  'DESCRIPTION (constant, string) is the description of the importer.'  'TEMPLATE (parameter, item) is the template of the importer.'  'ID (data, string) is a few-letter code for the importer.'  'LABEL (metadata, string) is an extended label of the importer.'  'NOTES (metadata, string) are some specific notes about the importer.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.' };
 			prop_description = importer_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

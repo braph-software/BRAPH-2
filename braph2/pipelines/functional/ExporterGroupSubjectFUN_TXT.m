@@ -21,7 +21,7 @@ classdef ExporterGroupSubjectFUN_TXT < Exporter
 	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group exporter in TXT.
 	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group exporter in TXT.
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group exporter in TXT.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with functional data.
 	%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.
@@ -156,7 +156,7 @@ classdef ExporterGroupSubjectFUN_TXT < Exporter
 			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the FUN subject group exporter in TXT.
 			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the FUN subject group exporter in TXT.
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the FUN subject group exporter in TXT.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the object.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
 			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is a group of subjects with functional data.
 			%  <strong>11</strong> <strong>DIRECTORY</strong> 	DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.
@@ -495,7 +495,7 @@ classdef ExporterGroupSubjectFUN_TXT < Exporter
 			prop = ExporterGroupSubjectFUN_TXT.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			exportergroupsubjectfun_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the FUN subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the FUN subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the FUN subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the FUN subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the FUN subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the object.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with functional data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.'  'SAVE (result, empty) saves the group of subjects with functional data in TXT files in the selected directory.' };
+			exportergroupsubjectfun_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the FUN subject group exporter in TXT.'  'DESCRIPTION (constant, string) is the description of the FUN subject group exporter in TXT.'  'TEMPLATE (parameter, item) is the template of the FUN subject group exporter in TXT.'  'ID (data, string) is a few-letter code for the FUN subject group exporter in TXT.'  'LABEL (metadata, string) is an extended label of the FUN subject group exporter in TXT.'  'NOTES (metadata, string) are some specific notes about the FUN subject group exporter in TXT.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is a group of subjects with functional data.'  'DIRECTORY (data, string) is the directory name where to save the group of subjects with functional data.'  'PUT_DIR (query, item) opens a dialog box to set the directory where to save the group of subjects with functional data.'  'SAVE (result, empty) saves the group of subjects with functional data in TXT files in the selected directory.' };
 			prop_description = exportergroupsubjectfun_txt_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
