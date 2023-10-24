@@ -154,13 +154,13 @@ Template for Graphs and Measures
 %%%% ¡probability!
 .01
 %%%% ¡code!
-if ~isfile([fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON TXT' filesep 'atlas.txt'])
+if ~isfile([fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'atlas.txt'])
     test_ImporterGroupSubjectCON_TXT % create example files
 end
 
-ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON TXT' filesep 'atlas.txt']).get('BA');
-gr1 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON TXT' filesep 'CON_Group_1_TXT'], 'BA', ba).get('GR');
-gr2 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON TXT' filesep 'CON_Group_2_TXT'], 'BA', ba).get('GR');
+ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'atlas.txt']).get('BA');
+gr1 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'COND_Group_1_TXT'], 'BA', ba).get('GR');
+gr2 = ImporterGroupSubjectCON_TXT('DIRECTORY', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'COND_Group_2_TXT'], 'BA', ba).get('GR');
 
 % check that analysis parameters are correctly templated between analysis 1 and 2
 a_WD1 = AnalyzeEnsemble_CON_WD('GR', gr1);

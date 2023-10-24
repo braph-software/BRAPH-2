@@ -1,4 +1,4 @@
-function create_data_COND_XLS(data_dir, random_seed, direction)
+function create_data_COND_XLS(data_dir, random_seed)
 %create_data_COND_XLS creates connectivity data
 %
 % create_data_COND_XLS() creates connectivity data in default folder 'Example
@@ -16,15 +16,11 @@ function create_data_COND_XLS(data_dir, random_seed, direction)
 % See also create_data_cond_xls.
 
 if nargin < 1
-    data_dir = [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON XLS'];
+    data_dir = [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D XLS'];
 end
 
 if nargin < 2
     random_seed = 'default';
-end
-
-if nargin < 3
-    direction = 'undirected';
 end
 
 if ~isfolder(data_dir)
@@ -48,7 +44,7 @@ if ~isfolder(data_dir)
     % Group 1
     K1 = 2; % degree (mean node degree is 2K) - group 1
     beta1 = 0.3; % Rewiring probability - group 1
-    gr1_name = 'CON_Group_1_XLS';
+    gr1_name = 'COND_Group_1_XLS';
     gr1_dir = [data_dir filesep() gr1_name];
     mkdir(gr1_dir);
     vois1 = [
@@ -68,12 +64,6 @@ if ~isfolder(data_dir)
 
         A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
         r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
-        
-        if strcmp(direction, 'undirected')
-            A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
-        else
-            % do nothing;
-        end
 
         writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
@@ -85,7 +75,7 @@ if ~isfolder(data_dir)
     % Group 2
     K2 = 2; % degree (mean node degree is 2K) - group 2
     beta2 = 0.85; % Rewiring probability - group 2
-    gr2_name = 'CON_Group_2_XLS';
+    gr2_name = 'COND_Group_2_XLS';
     gr2_dir = [data_dir filesep() gr2_name];
     mkdir(gr2_dir);
     vois2 = [
@@ -105,11 +95,6 @@ if ~isfolder(data_dir)
 
         A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
         r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
-        if strcmp(direction, 'undirected')
-            A2 = max(A2, transpose(A2)); % make the adjacency matrix symmetric
-        else
-            % do nothing;
-        end
 
         writetable(array2table(A2), [gr2_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
