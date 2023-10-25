@@ -13,14 +13,14 @@ SubjectFUN
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for classification with functional data.
 %%%% ¡default!
 'NNDataPoint_FUN_CLA'
 
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with functional data.
 %%%% ¡default!
-'NNDataPoint_FUN_CLA'
+'Neural Network Functional Data Point for Classification'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with functional data.

@@ -23,14 +23,14 @@ Group, SubjectST_MP, ImporterGroupSubjectST_MP_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ST MP subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_MP_XLS'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ST MP subject group exporter in XLSX.
 %%%% ¡default!
-'ExporterGroupSubjectST_MP_XLS'
+'Multiplex Structural Subject Group XLS Exporter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ST MP subject group exporter in XLSX.

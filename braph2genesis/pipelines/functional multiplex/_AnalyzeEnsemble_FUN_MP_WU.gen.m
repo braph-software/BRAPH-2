@@ -91,14 +91,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ensemble-based graph analysis with functional multiplex data.
 %%%% ¡default!
 'AnalyzeEnsemble_FUN_MP_WU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis with functional multiplex data.
 %%%% ¡default!
-'AnalyzeEnsemble_FUN_MP_WU'
+'Multiplex Functional Weighted Undirected Analyze Ensemble'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional multiplex data.

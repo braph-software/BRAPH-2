@@ -20,14 +20,14 @@ Group, SubjectST, ImporterGroupSubjectST_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ST subject group exporter in XLSX.
 %%%% ¡default!
 'ExporterGroupSubjectST_XLS'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ST subject group exporter in XLSX.
 %%%% ¡default!
-'ExporterGroupSubjectST_XLS'
+'Structural Subject Group XLS Exporter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ST subject group exporter in XLSX.

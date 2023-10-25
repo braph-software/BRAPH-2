@@ -67,14 +67,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the graph analysis with structural multiplex data of fixed threshold.
 %%%% ¡default!
 'AnalyzeGroup_ST_MP_BUT'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with structural multiplex data of fixed threshold.
 %%%% ¡default!
-'AnalyzeGroup_ST_MP_BUT'
+'Multiplex Structural Binary Undirected at fixed Thresholds Analyze Group'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data of fixed threshold.

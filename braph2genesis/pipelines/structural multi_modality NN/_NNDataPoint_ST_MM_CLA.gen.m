@@ -14,14 +14,14 @@ SubjectST_MP
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for classification with structural multimodality data.
 %%%% ¡default!
 'NNDataPoint_ST_MM_CLA'
 
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with structural multimodality data.
 %%%% ¡default!
-'NNDataPoint_ST_MM_CLA'
+'Neural Network Structural Multimodality Data Point for Classification'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with structural multimodality data.
