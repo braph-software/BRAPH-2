@@ -2,7 +2,7 @@
 OrdMlWD < Graph (g, ordinal multilayer weighted directed graph) is an ordinal multilayer weighted directed graph.
 
 %%% ¡description!
-In an ordinal multilayer weighted directed (WD) graph, layers could have different number 
+In an ordinal multilayer weighted directed graph (OrdMlWD), layers could have different number 
  of nodes with within-layer weighted directed edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 All nodes are allowed between layers.
@@ -124,12 +124,12 @@ ELCLASS (constant, string) is the class of the ordinal multilayer weighted direc
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multilayer weighted directed graph.
 %%%% ¡default!
-'OrdMlWD'
+'Ordinal Multilayer Weighted Directed'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted directed graph.
 %%%% ¡default!
-'In an ordinal multilayer weighted directed (BD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. All nodes are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
+'In an ordinal multilayer weighted directed graph (OrdMlWD), layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. All nodes are allowed between layers. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected. On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multilayer weighted directed graph.

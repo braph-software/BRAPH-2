@@ -2,7 +2,7 @@
 MultilayerWU < Graph (g, multilayer weighted undirected graph) is a multilayer weighted undirected graph.
 
 %%% ¡description!
-In a multilayer weighted undirected (WU) graph, layers could have different number 
+In a multilayer weighted undirected graph (MultilayerWU) graph, layers could have different number 
  of nodes with within-layer weighted undirected edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
@@ -130,12 +130,12 @@ ELCLASS (constant, string) is the class of the multilayer weighted undirected gr
 %%% ¡prop!
 NAME (constant, string) is the name of the multilayer weighted undirected graph.
 %%%% ¡default!
-'MultilayerWU'
+'Multilayer Weighted Undirected'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted undirected graph.
 %%%% ¡default!
-'In a multilayer weighted undirected (WU) graph, layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
+'In a multilayer weighted undirected graph (MultilayerWU), layers could have different number of nodes with within-layer weighted undirected edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted undirected graph.

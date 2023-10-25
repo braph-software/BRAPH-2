@@ -97,7 +97,7 @@ ELCLASS (constant, string) is the class of the panel plot for the neural network
 %%% ¡prop!
 NAME (constant, string) is the name of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNRegressorMLP_EvaluatorPF_Scatter'
+'NN Regressor Multilayer Perceptron Evaluator Panel Figure Scatter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.

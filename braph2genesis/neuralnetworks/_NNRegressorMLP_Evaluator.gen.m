@@ -86,7 +86,7 @@ ELCLASS (constant, string) is the class of the neural network evaluator.
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network evaluator for the regression task.
 %%%% ¡default!
-'NNRegressorMLP_Evaluator'
+'NN Regressor Multilayer Perceptron Evaluator'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.

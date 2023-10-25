@@ -21,7 +21,7 @@ ELCLASS (constant, string) is the class of the data point for classification.
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with graph measures.
 %%%% ¡default!
-'NNDataPoint_Measure_CLA'
+'NN Data Point for Classification with a graph Measure'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with graph measures.

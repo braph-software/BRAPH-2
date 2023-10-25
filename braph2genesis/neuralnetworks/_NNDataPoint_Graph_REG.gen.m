@@ -20,7 +20,7 @@ ELCLASS (constant, string) is the class of the data point for a regression.
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for regression with a graph.
 %%%% ¡default!
-'NNDataPoint_Graph_REG'
+'NN Data Point for Regression with a Graph'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for regression with a graph.

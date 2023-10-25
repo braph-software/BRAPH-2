@@ -98,7 +98,7 @@ ELCLASS (constant, string) is the class of the neural network perceptron regress
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
 %%%% ¡default!
-'NNRegressorMLP'
+'NN Regressor Multilayer Perceptron'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.

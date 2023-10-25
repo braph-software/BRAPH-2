@@ -2,7 +2,7 @@
 MultilayerWD < Graph (g, multilayer weighted directed graph) is a multilayer weighted directed graph.
 
 %%% ¡description!
-In a multilayer weighted directed (WD) graph, layers could have different number 
+In a multilayer weighted directed graph (MultilayerWD) , layers could have different number 
 of nodes with within-layer weighted directed edges, associated with a real
 number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
@@ -124,12 +124,12 @@ ELCLASS (constant, string) is the class of the multilayer weighted directed grap
 %%% ¡prop!
 NAME (constant, string) is the name of the multilayer weighted directed graph.
 %%%% ¡default!
-'MultilayerWD'
+'Multilayer Weighted Directed'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer weighted directed graph.
 %%%% ¡default!
-'In a multilayer weighted directed (WD) graph, layers could have different number  of nodes with within-layer weighted directed edges, associated with a real  number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
+'In a multilayer weighted directed graph (MultilayerWD), layers could have different number  of nodes with within-layer weighted directed edges, associated with a real  number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer weighted directed graph.

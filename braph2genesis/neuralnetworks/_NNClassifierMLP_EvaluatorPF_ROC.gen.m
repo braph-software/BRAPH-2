@@ -91,7 +91,7 @@ ELCLASS (constant, string) is the class of the panel of the ensemble-based compa
 %%% ¡prop!
 NAME (constant, string) is the name of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNClassifierMLP_EvaluatorPF_ROC'
+'NN Classifier Multilayer Perceptron Evaluator Panel Figure ROC'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.

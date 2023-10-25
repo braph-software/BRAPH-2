@@ -3,7 +3,7 @@ MultigraphBUD < GraphWU (g, binary undirected multigraph with fixed densities) i
 
 %%% ¡description!
 In a binary undirected multigraph with fixed densities, all the layers 
- consist of binary undirected (BU) graphs derived from the same weighted 
+ consist of binary undirected graphs (MultigraphBUD) derived from the same weighted 
  connectivity matrix binarized at different densities.
 There are no connections between layers.
 
@@ -121,12 +121,12 @@ ELCLASS (constant, string) is the class of the binary undirected multigraph with
 %%% ¡prop!
 NAME (constant, string) is the name of the binary undirected multigraph with fixed densities.
 %%%% ¡default!
-'MultigraphBUD'
+'Multigraph Binary Undirected at fixed Densities'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the binary undirected multigraph with fixed densities.
 %%%% ¡default!
-'In a binary undirected multigraph with fixed densities, all the layers consist of binary undirected (BU) graphs derived from the same weighted connectivity matrix binarized at different densities. There are no connections between layers.'
+'In a binary undirected multigraph with fixed densities, all the layers consist of binary undirected graphs (MultigraphBUD) derived from the same weighted connectivity matrix binarized at different densities. There are no connections between layers.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the binary undirected multigraph with fixed densities.

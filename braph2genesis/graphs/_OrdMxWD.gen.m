@@ -2,7 +2,7 @@
 OrdMxWD < Graph (g, ordinal multiplex weighted directed graph) is an ordinal multiplex weighted directed graph.
 
 %%% ¡description!
-In an ordinal multiplex weighted directed (WD) graph, all layers have the same number 
+In an ordinal multiplex weighted directed graph (OrdMxWD), all layers have the same number 
  of nodes with within-layer weighted directed edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 There are connections between layers connecting the corresponding nodes.
@@ -122,12 +122,12 @@ ELCLASS (constant, string) is the class of the ordinal multiplex weighted direct
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex weighted directed graph.
 %%%% ¡default!
-'OrdMxWD'
+'Ordinal Multiplex Weighted Directed'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex weighted directed graph.
 %%%% ¡default!
-'In an ordinal multiplex weighted directed (WD) graph, all layers have the same number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multiplex weighted directed graph (OrdMxWD), all layers have the same number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex weighted directed graph.

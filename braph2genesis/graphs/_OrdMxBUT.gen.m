@@ -2,8 +2,8 @@
 OrdMxBUT < OrdMxWU (g, ordinal multiplex binary undirected with fixed thresholds) is a ordinal multiplex binary undirected with fixed thresholds.
 
 %%% ¡description!
-In a ordinal multiplex binary undirected with fixed thresholds (BUT), 
-all the layers consist of binary undirected (BU) multiplex graphs 
+In a ordinal multiplex binary undirected with fixed thresholds graphs (OrdMxBUT), 
+all the layers consist of binary undirected multiplex graphs 
 derived from the same weighted supra-connectivity matrices 
 binarized at different thresholds.
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
@@ -135,12 +135,12 @@ ELCLASS (constant, string) is the class of the ordinal multiplex binary undirect
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary undirected with fixed thresholds.
 %%%% ¡default!
-'OrdMxBUT'
+'Ordinal Multiplex Binary Undirected at fixed Thresholds'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed thresholds.
 %%%% ¡default!
-'In a ordinal multiplex binary undirected with fixed thresholds (BUT),  all the layers consist of binary undirected (BU) multiplex graphs  derived from the same weighted supra-connectivity matrices  binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
+'In a ordinal multiplex binary undirected with fixed threshold graph (OrdMxBUT),  all the layers consist of binary undirected multiplex graphs  derived from the same weighted supra-connectivity matrices  binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected with fixed thresholds.

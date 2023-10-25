@@ -61,14 +61,14 @@ Feature Importance
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the neural network evaluator.
+ELCLASS (constant, string) is the class of the neural network evaluator for the classification task.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network evaluator for the classification task.
 %%%% ¡default!
-'NNClassifierMLP_Evaluator'
+'NN Classifier Multilayer Perceptron Evaluator'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.

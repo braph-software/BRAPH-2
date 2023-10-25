@@ -2,7 +2,7 @@
 OrdMxBU < Graph (g, ordinal multiplex binary undirected graph) is an ordinal multiplex binary undirected graph.
 
 %%% ¡description!
-In an ordinal multiplex binary undirected (BU) graph, all layers have the same number 
+In an ordinal multiplex binary undirected graph (OrdMxBU), all layers have the same number 
  of nodes with within-layer undirected edges either 0 (absence of connection) 
  or 1 (existence of connection).
 The connectivity matrices are symmetric.
@@ -116,12 +116,12 @@ ELCLASS (constant, string) is the class of the ordinal multiplex binary undirect
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.
 %%%% ¡default!
-'OrdMxBU'
+'Ordinal Multiplex Binary Undirected'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.
 %%%% ¡default!
-'In an ordinal multiplex binary undirected (BU) graph, all layers have the same number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
+'In an ordinal multiplex binary undirected graph (OrdMxBU), all layers have the same number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected graph.

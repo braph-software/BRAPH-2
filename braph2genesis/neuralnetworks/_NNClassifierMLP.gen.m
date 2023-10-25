@@ -91,14 +91,14 @@ Neural Networks NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the neural network classifier.
+ELCLASS (constant, string) is the class of the neural network multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.
 %%%% ¡default!
-'NNClassifierMLP'
+'NN Classifier Multi-layer Perceptron'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.

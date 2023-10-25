@@ -2,7 +2,7 @@
 MultiplexBU < Graph (g, multiplex binary undirected graph) is a multiplex binary undirected graph.
 
 %%% ¡description!
-In a multiplex binary undirected (BU) graph, all layers have the same number 
+In a multiplex binary undirected graph (MultiplexBU), all layers have the same number 
  of nodes with within-layer undirected edges either 0 (absence of connection) 
  or 1 (existence of connection).
 The connectivity matrices are symmetric.
@@ -116,12 +116,12 @@ ELCLASS (constant, string) is the class of the multiplex binary undirected graph
 %%% ¡prop!
 NAME (constant, string) is the name of the multiplex binary undirected graph.
 %%%% ¡default!
-'MultiplexBU'
+'Multiplex Binary Undirected'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multiplex binary undirected graph.
 %%%% ¡default!
-'In a multiplex binary undirected (BU) graph, all layers have the same number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
+'In a multiplex binary undirected graph (MultiplexBU), all layers have the same number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multiplex binary undirected graph.

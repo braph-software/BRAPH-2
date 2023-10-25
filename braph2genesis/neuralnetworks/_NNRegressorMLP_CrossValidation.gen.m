@@ -155,7 +155,7 @@ ELCLASS (constant, string) is the class of the cross-validation.
 %%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
-'NNRegressorMLP_CrossValidation'
+'NN Regressor Multilayer Perceptron Cross Validation'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cross-validation.

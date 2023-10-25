@@ -2,8 +2,8 @@
 OrdMxBUD < OrdMxWU (g, ordinal multiplex binary undirected with fixed densities) is a ordinal multiplex binary undirected with fixed densities.
 
 %%% ¡description!
-In an ordinal multiplex binary undirected with fixed densities (BUD), the layers are 
- those of binary undirected (BU) multiplex graphs derived from the same 
+In an ordinal multiplex binary undirected with fixed densities graph (OrdMxBUD), the layers are 
+ those of binary undirected multiplex graphs derived from the same 
  weighted supra-adjacency matrices binarized at different densities.
 The supra-adjacency matrix has a number of partitions equal to the number of densities.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
@@ -134,12 +134,12 @@ ELCLASS (constant, string) is the class of the ordinal multiplex binary undirect
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
-'OrdMxBUD'
+'Ordinal Multiplex Binary Undirected at fixed Densities'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
-'In an ordinal multiplex binary undirected with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
+'In an ordinal multiplex binary undirected with fixed densities graph (OrdMxBUD), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected with fixed densities.

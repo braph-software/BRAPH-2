@@ -97,7 +97,7 @@ ELCLASS (constant, string) is the class of the panel for cross-validation scatte
 %%% ¡prop!
 NAME (constant, string) is the name of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNRegressorMLP_CrossValidationPF_Scatter'
+'NN Regressor Multilayer Perceptron Cross Validation Panel Figure Scatter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
