@@ -168,7 +168,7 @@ value = rich_club;
 
 %% ¡props!
 %%% ¡prop! 
-PARAMETRIC_VALUE (parameter, scalar) 
+PARAMETRIC_VALUE (parameter, scalar) is the threshold (k)
 %%%% ¡default!
 1
 
