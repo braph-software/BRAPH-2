@@ -14,7 +14,7 @@ NNDataPoint_Graph_REG, NNDataPoint_Graph_REG, NNDataPoint_Measure_CLA
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the data point for regression.
+ELCLASS (constant, string) is the class of the data point for regression with graph measures.
 %%%% ¡default!
 'NNDataPoint_Measure_REG'
 
