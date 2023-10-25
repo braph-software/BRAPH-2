@@ -64,7 +64,7 @@ ELCLASS (constant, string) is the class of the Multiplex Participation.
 %%% ¡prop!
 NAME (constant, string) is the name of the Multiplex Participation.
 %%%% ¡default!
-'MultiplexParticipation'
+'Multiplex Participation'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Multiplex Participation.

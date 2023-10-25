@@ -3,7 +3,7 @@ AssortOutOut < Measure (m, out-out-assortativity) is the graph Out-Out-Assortati
 
 %%% ¡description!
 The Out-Out-Assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between 
-  the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+  the outward degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 The corresponding coefficient for directed and weighted networks is calculated by using 
   the weighted and directed variants of out-degree/out-strength.
 
