@@ -10,7 +10,7 @@
 % README: 
 
 %% Brain Atlas
-ba = ImporterBrainAtlasXLS('WAITBAR', true).get('DIR_FILE').get('BA'); % Load Brain Atlas from XLS % Brain Atlas
+ba = ImporterBrainAtlasXLS('WAITBAR', true).get('GET_FILE').get('BA'); % Load Brain Atlas from XLS % Brain Atlas
 
 %% Group
 gr = ImporterGroupSubjectFUN_XLS('BA', ba, 'WAITBAR', true).get('GET_DIR').get('GR'); % Load Group FUN from XLS % Group FUN
