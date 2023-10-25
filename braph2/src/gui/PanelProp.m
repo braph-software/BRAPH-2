@@ -1358,7 +1358,7 @@ classdef PanelProp < Panel
                 all_figs = findall(0, 'type', 'figure');
                 for i = 1:1:length(all_figs)
                     user_data = all_figs(i).get('UserData');
-                    if isa(user_data, 'PanelElement') && user_data.get('PE').get('EL') == gui_cb.get('PE').get('EL')
+                    if isa(user_data, 'GUIElement') && user_data.get('PE').get('EL') == gui_cb.get('PE').get('EL')
                			user_data.get('PE').get('SHOW')
               			return
         		    end
