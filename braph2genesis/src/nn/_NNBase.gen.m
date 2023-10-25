@@ -24,7 +24,7 @@ ELCLASS (constant, string) is the class of the neural network base.
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network base.
 %%%% ¡default!
-'Neural Network Base '
+'NN Base '
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network base.

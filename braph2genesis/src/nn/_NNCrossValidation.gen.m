@@ -21,7 +21,7 @@ ELCLASS (constant, string) is the class of the element to evaluate a neural netw
 %%% ¡prop!
 NAME (constant, string) is the name of the element to evaluate a neural network model using cross-validation.
 %%%% ¡default!
-'NNCrossValidation'
+'NN Cross Validation'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the element to evaluate a neural network model using cross-validation.
