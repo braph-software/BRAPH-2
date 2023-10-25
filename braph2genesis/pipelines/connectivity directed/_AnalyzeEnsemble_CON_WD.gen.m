@@ -60,37 +60,37 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_WD'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.
+NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
-'AnalyzeEnsemble_CON_WD'
+'Connectivity Weighted Directed Analyze Ensemble'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.
+DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
 'This ensemble-based graph analysis (AnalyzeEnsemble_CON_WD) analyzes connectivity data using weighted directed graphs.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity data.
+TEMPLATE (parameter, item) is the template of the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡settings!
 'AnalyzeEnsemble_CON_WD'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity data.
+ID (data, string) is a few-letter code for the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_WD ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity data.
+LABEL (metadata, string) is an extended label of the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_WD label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity data.
+NOTES (metadata, string) are some specific notes about the ensenmble-based graph analysis using connectivity directed data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_WD notes'
 

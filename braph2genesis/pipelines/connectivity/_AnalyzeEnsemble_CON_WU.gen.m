@@ -60,14 +60,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ensenmble-based graph analysis using connectivity data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_WU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ensenmble-based graph analysis using connectivity data.
 %%%% ¡default!
-'AnalyzeEnsemble_CON_WU'
+'Connectivity Weigthed Undirected Analyze Ensemble'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ensenmble-based graph analysis using connectivity data.

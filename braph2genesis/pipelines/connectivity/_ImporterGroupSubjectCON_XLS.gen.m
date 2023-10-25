@@ -19,14 +19,14 @@ Group, SubjectCON, ExporterGroupSubjectCON_XLS
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the CON subject group importer from XLS/XLSX.
 %%%% ¡default!
 'ImporterGroupSubjectCON_XLS'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the CON subject group importer from XLS/XLSX.
 %%%% ¡default!
-'ImporterGroupSubjectCON_XLS'
+'Connectivity Subject Group XLS Importer'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the CON subject group importer from XLS/XLSX.

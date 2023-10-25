@@ -14,14 +14,14 @@ SubjectCON_FUN_MP
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for regression with connectivity-functional multiplex data.
 %%%% ¡default!
 'NNDataPoint_CON_FUN_MP_REG'
 
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for regression with connectivity-functional multiplex data.
 %%%% ¡default!
-'NNDataPoint_CON_FUN_MP_REG'
+'Neural Network Multiplex Connectivity-Functional Data Point for Regression'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for regression with connectivity-functional multiplex data.
