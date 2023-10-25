@@ -1,5 +1,5 @@
 %% ¡header!
-NNClassifierMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation) is a process for evaluating multi-layer perceptron classifiers using cross-validation.
+NNClassifierMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation for MLP classifiers) is a process for evaluating multi-layer perceptron classifiers using cross-validation.
 
 %%% ¡description!
 A cross validation for multi-layer perceptron classifiers (NNClassifierMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron classifiers using cross-validation. 
@@ -119,7 +119,7 @@ ELCLASS (constant, string) is the class of the cross-validation.
 %%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
-'NN Classifier Multi-layer Perceptron Cross Validation'
+'Neural Network Cross-Validation for Multi-layer Perceptron Classifiers'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cross-validation.

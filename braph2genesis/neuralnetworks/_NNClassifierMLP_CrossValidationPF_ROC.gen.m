@@ -1,11 +1,13 @@
 %% ¡header!
-NNClassifierMLP_CrossValidationPF_ROC < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot a panel of an ensemble-based comparison.
+NNClassifierMLP_CrossValidationPF_ROC < PanelFig (pf, panel receiver operating characteristic figure) plots a panel of receiver operating characteristic curves.
 
 %%% ¡description!
-NNClassifierMLP_CrossValidationPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.
+The receiver operating characteristic panel for cross-validation MLP classifier 
+ (NNClassifierMLP_CrossValidationPF_ROC) manages the functionalities to plot 
+ a panel of the receiver operating characteristic curves.
 
 %%% ¡seealso!
-ComparisonEnsemble
+NNClassifierMLP_CrossValidation
 
 %% ¡layout!
 
@@ -84,42 +86,42 @@ Y-LABEL
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the panel for the ensemble-based comparison.
+ELCLASS (constant, string) is the class of the panel for receiver operating characteristic figure.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidationPF_ROC'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel ensemble-based comparison figure.
+NAME (constant, string) is the name of the panel for receiver operating characteristic figure.
 %%%% ¡default!
-'NN Classifier Multilayer Perceptron CrossValidation Panel Figure ROC'
+'ROC Panel for Cross-Validation MLP Classifier'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
+DESCRIPTION (constant, string) is the description of the panel for receiver operating characteristic figure.
 %%%% ¡default!
-'NNClassifierMLP_CrossValidationPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.'
+'The receiver operating characteristic panel for cross-validation MLP classifier (NNClassifierMLP_CrossValidationPF_ROC) manages the functionalities to plot a panel of the receiver operating characteristic curves.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
+TEMPLATE (parameter, item) is the template of the panel for receiver operating characteristic figure.
 %%%% ¡settings!
 'NNClassifierMLP_CrossValidationPF_ROC'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.
+ID (data, string) is a few-letter code for the panel for receiver operating characteristic figure.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidationPF_ROC ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.
+LABEL (metadata, string) is an extended label of the panel for receiver operating characteristic figure.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidationPF_ROC label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.
+NOTES (metadata, string) are some specific notes about the panel for receiver operating characteristic figure.
 %%%% ¡default!
 'NNClassifierMLP_CrossValidationPF_ROC notes'
 
 %%% ¡prop!
-DRAW (query, logical) draws the figure comparison figure.
+DRAW (query, logical) draws the receiver operating characteristic figure.
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 if value
@@ -287,7 +289,7 @@ function cb_listener_st_axis(~, ~)
 end
 
 %%% ¡prop!
-NNCV (metadata, item) is the ensemble-based comparison.
+NNCV (metadata, item) is the cross-validation.
 %%%% ¡settings!
 'NNClassifierMLP_CrossValidation'
 
@@ -299,7 +301,7 @@ if isempty(pf.getr('CLASSNAMES')) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoVal
 end
 
 %%% ¡prop!
-X_VALUES (metadata, matrix) is the ROC X value.
+X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.
 %%%% ¡postset!
 if isequal(pf.getr('X_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
@@ -322,7 +324,7 @@ if isequal(pf.getr('X_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoV
 end
                         
 %%% ¡prop!
-Y_VALUES (metadata, matrix) is the ROC Y value.
+Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.
 %%%% ¡postset!
 if isequal(pf.getr('Y_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
@@ -345,7 +347,7 @@ if isequal(pf.getr('Y_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoV
 end
 
 %%% ¡prop!
-SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
+SETUP (query, empty) initializes the receiver operating characteristic figure.
 %%%% ¡calculate!
 xlim = pf.get('H_AXES').get('XLim');
 ylim = pf.get('H_AXES').get('YLim');
@@ -374,7 +376,7 @@ pf.get('ST_YLABEL').set( ...
 value = [];
 
 %%% ¡prop!
-H_ROC (evanescent, handlelist) is the set of handles for the prediction plots.
+H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.
 %%%% ¡calculate!
 if ~isempty(pf.get('CLASSNAMES')) && ~isa(pf.getr('NNCV'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
@@ -391,7 +393,7 @@ end
 
 
 %%% ¡prop!
-ROC (figure, logical) determines whether the prediction plot are shown.
+ROC (figure, logical) determines whether the ROC plots are shown.
 %%%% ¡default!
 true
 %%%% ¡postset!
@@ -414,7 +416,7 @@ end
 pf.get('SETUP');
 
 %%% ¡prop!
-ROC_DICT (figure, idict) contains the prediction plot for each target.
+ROC_DICT (figure, idict) contains the ROC plots for each class.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡postset!

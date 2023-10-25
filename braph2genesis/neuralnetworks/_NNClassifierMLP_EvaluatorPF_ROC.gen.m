@@ -1,11 +1,13 @@
 %% ¡header!
-NNClassifierMLP_EvaluatorPF_ROC < PanelFig (pf, panel ensemble-based comparison figure) is the base element to plot a panel of an ensemble-based comparison.
+NNClassifierMLP_EvaluatorPF_ROC < PanelFig (pf, panel receiver operating characteristic figure) plots a panel of receiver operating characteristic curves.
 
 %%% ¡description!
-NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.
+The receiver operating characteristic panel for an evaluator of MLP classifier 
+ (NNClassifierMLP_EvaluatorPF_ROC) manages the functionalities to plot 
+ a panel of the receiver operating characteristic curves.
 
 %%% ¡seealso!
-ComparisonEnsemble
+NNClassifierMLP_Evaluator
 
 %% ¡layout!
 
@@ -91,12 +93,12 @@ ELCLASS (constant, string) is the class of the panel of the ensemble-based compa
 %%% ¡prop!
 NAME (constant, string) is the name of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NN Classifier Multilayer Perceptron Evaluator Panel Figure ROC'
+'ROC Panel for an Evaluator of MLP Classifier'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
 %%%% ¡default!
-'NNClassifierMLP_EvaluatorPF_ROC manages the basic functionalities to plot a panel of an ensemble-based comparison.'
+'The receiver operating characteristic panel for an evaluator of MLP classifier (NNClassifierMLP_EvaluatorPF_ROC) manages the functionalities to plot a panel of the receiver operating characteristic curves.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
@@ -119,7 +121,7 @@ NOTES (metadata, string) are some specific notes about the panel ensemble-based 
 'NNClassifierMLP_EvaluatorPF_ROC notes'
 
 %%% ¡prop!
-DRAW (query, logical) draws the figure comparison figure.
+DRAW (query, logical) draws the receiver operating characteristic figure.
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 if value
@@ -275,7 +277,7 @@ function cb_listener_st_axis(~, ~)
 end
 
 %%% ¡prop!
-NNE (metadata, item) is the ensemble-based comparison.
+NNE (metadata, item) is the neural network evaluator.
 %%%% ¡settings!
 'NNClassifierMLP_Evaluator'
 
@@ -287,7 +289,7 @@ if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoVa
 end
 
 %%% ¡prop!
-X_VALUES (metadata, matrix) is the ROC X value.
+X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.
 %%%% ¡postprocessing!
 if isa(pf.getr('X_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
@@ -302,7 +304,7 @@ if isa(pf.getr('X_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValu
 end
                         
 %%% ¡prop!
-Y_VALUES (metadata, matrix) is the ROC Y value.
+Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.
 %%%% ¡postprocessing!
 if isa(pf.getr('Y_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
@@ -317,7 +319,7 @@ if isa(pf.getr('Y_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValu
 end
 
 %%% ¡prop!
-SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
+SETUP (query, empty) calculates the the receiver operating characteristic values and initializes the receiver operating characteristic figure.
 %%%% ¡calculate!
 pf.memorize('H_ROC');
 
@@ -353,7 +355,7 @@ pf.get('ST_YLABEL').set( ...
 value = [];
 
 %%% ¡prop!
-H_ROC (evanescent, handlelist) is the set of handles for the prediction plots.
+H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.
 %%%% ¡calculate!
 classNames = pf.get('CLASSNAMES');
 L = length(classNames);
@@ -364,7 +366,7 @@ end
 value = H_ROC;
 
 %%% ¡prop!
-ROC (figure, logical) determines whether the prediction plot are shown.
+ROC (figure, logical) determines whether the ROC plots are shown.
 %%%% ¡default!
 true
 %%%% ¡postset!
@@ -387,7 +389,7 @@ end
 pf.get('SETUP');
 
 %%% ¡prop!
-ROC_DICT (figure, idict) contains the prediction plot for each target.
+ROC_DICT (figure, idict) contains the ROC plot for each class.
 %%%% ¡settings!
 'SettingsLine'
 %%%% ¡postset!

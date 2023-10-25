@@ -20,7 +20,7 @@ ELCLASS (constant, string) is the class of the data point.
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with a graph.
 %%%% ¡default!
-'NN Data Point for Classification with a Graph'
+'Neural Network Data Point for Classification with a Graph'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with a graph.

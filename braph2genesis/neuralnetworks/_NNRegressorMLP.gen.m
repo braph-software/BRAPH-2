@@ -2,8 +2,10 @@
 NNRegressorMLP < NNBase (nn, multi-layer perceptron regressor) comprises a multi-layer perceptron regressor model and a given dataset.
 
 %%% ¡description!
-A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset.
-NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises 
+ a multi-layer perceptron regressor model and a given dataset.
+NNRegressorMLP trains the multi-layer perceptron regressor with a formatted
+ inputs ("CB", channel and batch) derived from the given dataset.
 
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressor_Evaluator
@@ -91,14 +93,14 @@ Neural Networks NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the neural network perceptron regressor.
+ELCLASS (constant, string) is the class of the neural network multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
 %%%% ¡default!
-'NN Regressor Multilayer Perceptron'
+'Neural Network Multi-layer Perceptron Regressor'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.
