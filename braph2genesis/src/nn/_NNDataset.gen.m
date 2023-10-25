@@ -18,7 +18,7 @@ ELCLASS (constant, string) is the class of the dataset for neural network analys
 %%% ¡prop!
 NAME (constant, string) is the name of the dataset for neural network analysis.
 %%%% ¡default!
-'NN Dataset'
+'Neural Network Dataset'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the dataset for neural network analysis.

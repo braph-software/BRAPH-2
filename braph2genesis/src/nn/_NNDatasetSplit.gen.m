@@ -59,7 +59,7 @@ ELCLASS (constant, string) is the class of the splitter of a neural network data
 %%% ¡prop!
 NAME (constant, string) is the name of the splitter of a neural network dataset.
 %%%% ¡default!
-'NN Dataset Split'
+'Neural Network Dataset Combiner Dataset splitter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the splitter of a neural network dataset.
