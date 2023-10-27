@@ -2015,7 +2015,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %
             % See also encodeJSON.
             
-            struct = jsondecode(json);
+            struct = jsondecode(regexprep(json, '\\', '\\\\'));
             
             % manages special case when only one element
             if length(struct) == 1
@@ -2042,8 +2042,16 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             for i = 1:1:length(el_list)
                 el = el_list{i};
 
-                for prop = 1:1:el.getPropNumber()
-                    value = struct{i}.props(prop).value;
+                if isa(el, 'NoValue')
+                    continue
+                end
+                
+                for json_prop = 1:1:length(struct{i}.props)
+                    value = struct{i}.props(json_prop).value;
+                
+                    tag = struct{i}.props(json_prop).tag;
+                    prop = el.getPropProp(tag);
+
                     if isnumeric(value)
                         if ~isequal(el.getPropFormat(prop), 9) || (numel(value) == 1 && isa(el_list{value}, 'NoValue')) % case {Format.ITEM Format.IDICT}
                             el.props{prop}.value = el_list{value};
@@ -2069,9 +2077,9 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                                 el.props{prop}.value = Element.getNoValue(); % HANDLE and HANDLELIST properties are not saved
                         end
                     end
-                    el.props{prop}.seed = uint32(struct{i}.props(prop).seed);
-                    el.props{prop}.locked = struct{i}.props(prop).locked;
-                    el.props{prop}.checked = struct{i}.props(prop).checked;
+                    el.props{prop}.seed = uint32(struct{i}.props(json_prop).seed);
+                    el.props{prop}.locked = struct{i}.props(json_prop).locked;
+                    el.props{prop}.checked = struct{i}.props(json_prop).checked;
                 end
             end
             
