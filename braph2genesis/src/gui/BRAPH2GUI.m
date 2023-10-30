@@ -367,10 +367,10 @@ h_listbox = uilistbox( ...
     end
 
 if ispc
-    x_start =0.0025;
+    x_start = 0.0025;
     x_end = 0.0025;
 else
-    x_start =0;
+    x_start = 0;
     x_end = 0;
 end
 
