@@ -2,7 +2,7 @@
 MultilayerBUT < MultilayerWU (g, multilayer binary undirected with fixed thresholds graph) is a multilayer binary undirected graph with fixed thresholds.
 
 %%% ¡description!
-In a multilayer binary undirected with fixed thresholds graph (MultilayerBUT), the layers 
+In a multilayer binary undirected graph with fixed thresholds (MultilayerBUT), the layers 
  are those of binary undirected multilayer graphs derived from the same 
  weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency 
  matrix has a number of partitions equal to the number of thresholds. Layers
@@ -150,7 +150,7 @@ NAME (constant, string) is the name of the multilayer binary undirected graph wi
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the multilayer binary undirected graph with fixed thresholds.
 %%%% ¡default!
-'In a multilayer binary undirected with fixed thresholds graph (MultilayerBUT), the layers are those of binary undirected multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency  matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
+'In a multilayer binary undirected graph with fixed thresholds (MultilayerBUT), the layers are those of binary undirected multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different thresholds. The supra-adjacency  matrix has a number of partitions equal to the number of thresholds. Layers within the binary undirected multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the multilayer binary undirected graph with fixed thresholds.

@@ -2,7 +2,7 @@
 OrdMxBUD < OrdMxWU (g, ordinal multiplex binary undirected with fixed densities) is a ordinal multiplex binary undirected with fixed densities.
 
 %%% ¡description!
-In an ordinal multiplex binary undirected with fixed densities graph (OrdMxBUD), the layers are 
+In an ordinal multiplex binary undirected graph with fixed densities (OrdMxBUD), the layers are 
  those of binary undirected multiplex graphs derived from the same 
  weighted supra-adjacency matrices binarized at different densities.
 The supra-adjacency matrix has a number of partitions equal to the number of densities.
@@ -139,7 +139,7 @@ NAME (constant, string) is the name of the ordinal multiplex binary undirected w
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected with fixed densities.
 %%%% ¡default!
-'In an ordinal multiplex binary undirected with fixed densities graph (OrdMxBUD), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
+'In an ordinal multiplex binary undirected graph with fixed densities (OrdMxBUD), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities.The layers are connected in an ordinal fashion, where just consecutive layers are connected'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected with fixed densities.
