@@ -49,7 +49,7 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the graph analysis with averaged connectivity data.
+ELCLASS (constant, string) is the class of the graph analysis with averaged connectivity undirected data.
 %%%% ¡default!
 'AnalyzeGroup_CON_GA_WU'
 
