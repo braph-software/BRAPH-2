@@ -410,16 +410,19 @@ function cb_calculate(~, ~)
     
     wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
 
+    c_count = 1;
+    wb_x = 0.9/length(selected);
     for i = 1:1:length(m_list)
         if ismember(i, selected)
             measure = m_list{i};
             me = a.get('MEASUREENSEMBLE', measure);
 
-            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+            braph2waitbar(wb, .1 + wb_x*c_count, ['Calculating measure ' int2str(c_count) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 
             if isa(me.getr('M'), 'NoValue')
                 a.get('MEASUREENSEMBLE', measure).memorize('M');
             end
+            c_count = c_count + 1;
         end
     end
     
