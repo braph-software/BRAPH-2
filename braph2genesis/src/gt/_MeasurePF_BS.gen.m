@@ -130,6 +130,10 @@ SETUP (query, empty) calculates the measure value and stores it.
 x = pf.get('M').get('G').get('APARTITIONTICKS');
 
 nodes = pf.get('NODES');
+if isempty(nodes)
+    value = [];
+    return;
+end
 y = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
 
 pf.memorize('ST_LINE').set('X', x, 'Y', y)

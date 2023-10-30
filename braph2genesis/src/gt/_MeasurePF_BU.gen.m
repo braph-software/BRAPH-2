@@ -136,6 +136,10 @@ SETUP (query, empty) calculates the measure value and stores it.
 x = pf.get('M').get('G').get('APARTITIONTICKS');
 g = pf.get('M').get('G');
 nodes = pf.get('NODES');
+if isempty(nodes)
+    value = [];
+    return;
+end
 layer = pf.get('LAYER');
 m = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
 layers_num = length(g.get('ALAYERTICKS'));
