@@ -197,8 +197,6 @@ BA (data, item) is a brain atlas.
 
 %%% ¡prop!
 L (data, scalar) is the number of layers of subject data.
-%%%% ¡default!
-2
 %%%% ¡preset!
 value = abs(round(value));
 %%%% ¡postset!
