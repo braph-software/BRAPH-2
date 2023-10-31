@@ -513,18 +513,13 @@ function cb_calculate(~, ~)
     
     wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
 
-    m_count = 1;
-    wb_x = 0.9/length(selected);
-    for i = 1:1:length(m_list)
-        if ismember(i, selected)
-            measure = m_list{i};
-            
-            braph2waitbar(wb, .1 + wb_x*m_count , ['Calculating measure ' int2str(m_count) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+    for s = 1:1:length(selected)
+        measure = m_list{selected(s)};
 
-            if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
-                g.get('MEASURE', measure).memorize('M');
-            end
-            m_count = m_count + 1;
+        braph2waitbar(wb, .1 + s / length(selected), ['Calculating measure ' int2str(s) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+
+        if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
+            g.get('MEASURE', measure).memorize('M');
         end
     end
     
