@@ -49,14 +49,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the graph analysis with connectivity ordinal multiplex data.
 %%%% ¡default!
 'AnalyzeGroup_CON_OMP_GA_WU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with connectivity ordinal multiplex data.
 %%%% ¡default!
-'AnalyzeGroup_CON_OMP_GA_WU'
+'Multiplex Ordered Connectivity Weighted Undirected Group Average Analyze'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph analysis with connectivity ordinal multiplex data.

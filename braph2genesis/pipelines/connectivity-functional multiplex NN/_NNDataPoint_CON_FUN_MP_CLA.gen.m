@@ -14,14 +14,14 @@ SubjectCON_FUN_MP
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for classification with connectivity-functional multiplex data.
 %%%% ¡default!
 'NNDataPoint_CON_FUN_MP_CLA'
 
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with connectivity-functional multiplex data.
 %%%% ¡default!
-'NNDataPoint_CON_FUN_MP_CLA'
+'Neural Network Multiplex Connectivity-Functional Data Point for Classification'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with connectivity-functional multiplex data.

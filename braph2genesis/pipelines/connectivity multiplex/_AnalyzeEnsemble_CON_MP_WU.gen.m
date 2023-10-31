@@ -60,14 +60,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
 'AnalyzeEnsemble_CON_MP_WU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity multiplex data.
 %%%% ¡default!
-'AnalyzeEnsemble_CON_MP_WU'
+'Multiplex Connectivity Weighted Undirected Analyze Ensemble'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity multiplex data.

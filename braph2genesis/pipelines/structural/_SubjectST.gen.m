@@ -142,14 +142,14 @@ Subject NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the subject.
 %%%% ¡default!
 'SubjectST'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the subject.
 %%%% ¡default!
-'SubjectST'
+'Structural Subject'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the subject.
