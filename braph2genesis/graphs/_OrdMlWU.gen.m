@@ -2,7 +2,7 @@
 OrdMlWU < Graph (g, ordinal multilayer weighted undirected graph) is an ordinal multilayer weighted undirected graph.
 
 %%% ¡description!
-In an ordinal multilayer weighted undirected (OrdMlWU), layers could have different number 
+In an ordinal multilayer weighted undirected graph (OrdMlWU), layers could have different number 
  of nodes with within-layer weighted undirected edges, associated with a real 
  number between 0 and 1 and indicating the strength of the connection.
 The connectivity matrices are symmetric (within layer).
@@ -131,7 +131,7 @@ ELCLASS (constant, string) is the class of the ordinal multilayer weighted undir
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multilayer weighted undirected graph.
 %%%% ¡default!
-'Ordinal Multilayer Weightd Undirected'
+'Ordinal Multilayer Weightd Undirected Graph'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multilayer weighted undirected graph.
