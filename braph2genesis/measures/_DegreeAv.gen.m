@@ -60,7 +60,7 @@ ELCLASS (constant, string) is the class of the Average Degree.
 %%% ¡prop!
 NAME (constant, string) is the name of the Average Degree.
 %%%% ¡default!
-'DegreeAv'
+'Average Degree'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Degree.

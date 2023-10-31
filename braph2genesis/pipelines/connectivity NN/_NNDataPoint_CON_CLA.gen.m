@@ -13,14 +13,14 @@ SubjectCON
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for classification with connectivity data.
 %%%% ¡default!
 'NNDataPoint_CON_CLA'
 
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for classification with connectivity data.
 %%%% ¡default!
-'NNDataPoint_CON_CLA'
+'Neural Network Connectivity Data Point Classification'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for classification with connectivity data.

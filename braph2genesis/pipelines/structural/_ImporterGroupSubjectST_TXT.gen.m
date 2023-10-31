@@ -20,14 +20,14 @@ Group, SubjectST, ExporterGroupSubjectST_TXT
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ST subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectST_TXT'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ST subject group importer from TXT.
 %%%% ¡default!
-'ImporterGroupSubjectST_TXT'
+'Structural Subject Group TXT Importer'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.

@@ -28,7 +28,7 @@ ELCLASS (constant, string) is the class of the CON MP subject group importer fro
 %%% ¡prop!
 NAME (constant, string) is the name of the CON MP subject group importer from XLS/XLSX.
 %%%% ¡default!
-'ImporterGroupSubjectCON_MP_XLS'
+'Multiplex Connectivity Subject Group XLS Importer'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the CON MP subject group importer from XLS/XLSX.

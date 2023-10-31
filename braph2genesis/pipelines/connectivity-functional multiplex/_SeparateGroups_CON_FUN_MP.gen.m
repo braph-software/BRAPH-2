@@ -12,14 +12,14 @@ SubjectCON_FUN_MP, SubjectCON, SubjectFUN, CombineGroups_CON_FUN
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
 'SeparateGroups_CON_FUN_MP'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the separator of a CON_FUN_MP subject group.
 %%%% ¡default!
-'SeparateGroups_CON_FUN_MP'
+'Multiplex Connectivity-Functional Group Separator'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the separator of a CON_FUN_MP subject group.

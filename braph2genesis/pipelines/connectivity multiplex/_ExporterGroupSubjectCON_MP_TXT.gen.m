@@ -20,14 +20,14 @@ Group, SunbjectCON_MP, ImporterGroupSubjectCON_MP_TXT
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the CON MP subject group exporter in TXT.
 %%%% ¡default!
 'ExporterGroupSubjectCON_MP_TXT'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the CON MP subject group exporter in TXT.
 %%%% ¡default!
-'ExporterGroupSubjectCON_MP_TXT'
+'Multiplex Connectivity Subject Group TXT Exporter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the CON MP subject group exporter in TXT.

@@ -13,37 +13,37 @@ NNDataPoint_Graph_REG, NNDataPoint_Measure_REG, NNDataPoint_Measure_CLA
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for classification with a graph.
 %%%% ¡default!
 'NNDataPoint_Graph_CLA'
 
 %%% ¡prop!
-NAME (constant, string) is the name of a data point for classification with a graph.
+NAME (constant, string) is the name of the data point for classification with a graph.
 %%%% ¡default!
-'NNDataPoint_Graph_CLA'
+'Neural Network Data Point for Classification with a Graph'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of a data point for classification with a graph.
+DESCRIPTION (constant, string) is the description of the data point for classification with a graph.
 %%%% ¡default!
 'A data point for classification with a graph (NNDataPoint_Graph_CLA) contains both input and target for neural network analysis. The input is the value of the adjacency matrix extracted from the derived graph of the subject. The target is obtained from the variables of interest of the subject.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of a data point for classification with a graph.
+TEMPLATE (parameter, item) is the template of the data point for classification with a graph.
 %%%% ¡settings!
 'NNDataPoint_Graph_CLA'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for a data point for classification with a graph.
+ID (data, string) is a few-letter code for the data point for classification with a graph.
 %%%% ¡default!
 'NNDataPoint_Graph_CLA ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of a data point for classification with a graph.
+LABEL (metadata, string) is an extended label of the data point for classification with a graph.
 %%%% ¡default!
 'NNDataPoint_Graph_CLA label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about a data point for classification with a graph.
+NOTES (metadata, string) are some specific notes about the data point for classification with a graph.
 %%%% ¡default!
 'NNDataPoint_Graph_CLA notes'
 

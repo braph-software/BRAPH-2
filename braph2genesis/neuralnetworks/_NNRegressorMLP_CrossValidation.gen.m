@@ -1,5 +1,5 @@
 %% ¡header!
-NNRegressorMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation) is a process for evaluating multi-layer perceptron regressors using cross-validation.
+NNRegressorMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation for MLP regressors) is a process for evaluating multi-layer perceptron regressors using cross-validation.
 
 %%% ¡description!
 A cross validation for multi-layer perceptron regressors (NNRegressorMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron regressors using cross-validation. 
@@ -148,14 +148,14 @@ Cross Validation NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the cross-validation.
 %%%% ¡default!
 'NNRegressorMLP_CrossValidation'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the cross-validation.
 %%%% ¡default!
-'NNRegressorMLP_CrossValidation'
+'Neural Network Cross-Validation for Multi-layer Perceptron Regressors'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the cross-validation.

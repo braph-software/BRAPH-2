@@ -59,7 +59,7 @@ ELCLASS (constant, string) is the class of the Average Flexibility.
 %%% ¡prop!
 NAME (constant, string) is the name of the Average Flexibility.
 %%%% ¡default!
-'FlexibilityAv '
+'Average Flexibility'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the Average Flexibility.

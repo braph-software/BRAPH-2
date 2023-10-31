@@ -21,7 +21,7 @@ ELCLASS (constant, string) is the class of the combiner of CON and FUN subject g
 %%% ¡prop!
 NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
 %%%% ¡default!
-'CombineGroups_CON_FUN_MP'
+'Multiplex Connectivity-Functional Group Combiner'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.

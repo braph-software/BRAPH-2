@@ -1,8 +1,8 @@
 %% ¡header!
-NNRegressorMLP_Evaluator < NNEvaluator (nne, neural network evaluator for regressor) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
+NNRegressorMLP_Evaluator < NNEvaluator (nne, neural network evaluator for multi-layer perceptron regressor) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
 
 %%% ¡description!
-A neural network evaluator for regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
+A neural network evaluator for a multi-layer perceptron regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
 NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).
 
 %%% ¡seealso!
@@ -79,42 +79,42 @@ Evaluator NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the neural network evaluator for the regression task.
+NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron regressor.
 %%%% ¡default!
-'NNRegressorMLP_Evaluator'
+'Neural Network Evaluator for a Multi-layer Perceptron Regressor'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
+DESCRIPTION (constant, string) is the description of the neural network evaluator for multi-layer perceptron regressor.
 %%%% ¡default!
-'A neural network evaluator for regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset. NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).'
+'A neural network evaluator for a multi-layer perceptron regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset. NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
+TEMPLATE (parameter, item) is the template of the neural network evaluator for multi-layer perceptron regressor.
 %%%% ¡settings!
 'NNRegressorMLP_Evaluator'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
+ID (data, string) is a few-letter code for the neural network evaluator for multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
+LABEL (metadata, string) is an extended label of the neural network evaluator for multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
+NOTES (metadata, string) are some specific notes about the neural network evaluator for multi-layer perceptron regressor.
 %%%% ¡default!
 'NNRegressorMLP_Evaluator notes'
     
 %%% ¡prop!
-NN (data, item) contains a trained neural network regressor.
+NN (data, item) contains a trained neural network multi-layer perceptron regressor.
 %%%% ¡settings!
 'NNRegressorMLP'
 

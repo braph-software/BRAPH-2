@@ -85,14 +85,14 @@ Analysis NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
 'AnalyzeGroup_CON_FUN_MP_GA_BUD'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the graph analysis with connectivity and functional multiplex data of fixed density.
 %%%% ¡default!
-'AnalyzeGroup_CON_FUN_MP_GA_BUD'
+'Multiplex Connectivity-Functional Weighted Directed Group Average Analyze'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the graph analysis with connectivity and functional multiplex data of fixed density.

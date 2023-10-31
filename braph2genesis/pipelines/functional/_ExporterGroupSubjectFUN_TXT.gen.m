@@ -19,14 +19,14 @@ Group, SunbjectFUN, ImporterGroupSubjectFUN_TXT
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the FUN subject group exporter in TXT.
 %%%% ¡default!
 'ExporterGroupSubjectFUN_TXT'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the FUN subject group exporter in TXT.
 %%%% ¡default!
-'ExporterGroupSubjectFUN_TXT'
+'Functional Subject Group TXT Exporter'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the FUN subject group exporter in TXT.

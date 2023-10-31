@@ -20,7 +20,7 @@ ELCLASS (constant, string) is the class of the % % % .
 %%% ¡prop!
 NAME (constant, string) is the name of a data point for regression with connectivity data.
 %%%% ¡default!
-'NNDataPoint_CON_REG'
+'Neural Network Connectivity Data Point Regression'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of a data point for regression with connectivity data.

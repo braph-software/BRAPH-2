@@ -14,37 +14,37 @@ NNDataPoint_Graph_REG, NNDataPoint_Graph_REG, NNDataPoint_Measure_CLA
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the data point for regression with graph measures.
 %%%% ¡default!
 'NNDataPoint_Measure_REG'
 
 %%% ¡prop!
-NAME (constant, string) is the name of a data point for regression with graph measures.
+NAME (constant, string) is the name of the data point for regression with graph measures.
 %%%% ¡default!
-'NNDataPoint_Measure_REG'
+'Neural Network Data Point for Regression with Graph Measures'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of a data point for regression with graph measures.
+DESCRIPTION (constant, string) is the description of the data point for regression with graph measures.
 %%%% ¡default!
 'A data point for regression with graph measures (NNDataPoint_Measure_REG) contains both input and target for neural network analysis. The input is the value of the graph measures (e.g. Degree, DegreeAv, and Distance), calculated from the derived graph of the subject. The target is obtained from the variables of interest of the subject.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of a data point for regression with graph measures.
+TEMPLATE (parameter, item) is the template of the data point for regression with graph measures.
 %%%% ¡settings!
 'NNDataPoint_Measure_REG'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for a data point for regression with graph measures.
+ID (data, string) is a few-letter code for the data point for regression with graph measures.
 %%%% ¡default!
 'NNDataPoint_Measure_REG ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of a data point for regression with graph measures.
+LABEL (metadata, string) is an extended label of the data point for regression with graph measures.
 %%%% ¡default!
 'NNDataPoint_Measure_REG label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about a data point for regression with graph measures.
+NOTES (metadata, string) are some specific notes about the data point for regression with graph measures.
 %%%% ¡default!
 'NNDataPoint_Measure_REG notes'
 

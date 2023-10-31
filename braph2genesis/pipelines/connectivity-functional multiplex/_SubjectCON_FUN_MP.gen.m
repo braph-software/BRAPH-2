@@ -55,14 +55,14 @@ Subject NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the subject.
 %%%% ¡default!
 'SubjectCON_FUN_MP'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the subject.
 %%%% ¡default!
-'SubjectCON_FUN_MP'
+'Multiplex Connectivity-Functional Subject'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the subject.
