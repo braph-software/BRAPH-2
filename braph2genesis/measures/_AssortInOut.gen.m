@@ -3,7 +3,7 @@ AssortInOut < Measure (m, in-out-assortativity) is the graph In-Out-Assortativit
 
 %%% ¡description!
 The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between 
-  the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+  the inward and outward degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 The corresponding coefficient for directed and weighted networks is calculated by 
   using the weighted and directed variants of out-degree/out-strength.
 
@@ -66,7 +66,7 @@ NAME (constant, string) is the name of the In-Out-Assortativity.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the In-Out-Assortativity.
 %%%% ¡default!
-'The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.'
+'The In-Out-Assortativity coefficient (AssortInOut) of a graph is the correlation coefficient between the inward and outward degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the In-Out-Assortativity.
@@ -138,7 +138,7 @@ parfor li = 1:L
     end
     
     k_i(:, li) = d_in(i);  % in-degree/in-strength node i
-    k_j(:, li) = d_out(j);  % in-degree/in-strength node j
+    k_j(:, li) = d_out(j);  % out-degree/out-strength node j
     % compute assortativity
     assortativity_layer = (sum(k_i(:, li) .* k_j(:, li)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2)...
         / (sum(0.5 * (k_i(:, li).^2 + k_j(:, li).^2)) / M - (sum(0.5 * (k_i(:, li) + k_j(:, li))) / M)^2);
