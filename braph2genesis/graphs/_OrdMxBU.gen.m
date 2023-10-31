@@ -116,7 +116,7 @@ ELCLASS (constant, string) is the class of the ordinal multiplex binary undirect
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.
 %%%% ¡default!
-'Ordinal Multiplex Binary Undirected'
+'Ordinal Multiplex Binary Undirected Graph'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.
