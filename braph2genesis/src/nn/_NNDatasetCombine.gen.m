@@ -19,7 +19,7 @@ ELCLASS (constant, string) is the class of the combiner of neural networks datas
 %%% ¡prop!
 NAME (constant, string) is the name of the combiner of neural networks datasets.
 %%%% ¡default!
-'NNDatasetCombine'
+'Neural Network Dataset Combiner'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the combiner of neural networks datasets.

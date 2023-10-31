@@ -2,8 +2,10 @@
 NNClassifierMLP < NNBase (nn, multi-layer perceptron classifier) comprises a multi-layer perceptron classifier model and a given dataset.
 
 %%% ¡description!
-A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset.
-NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises
+ a multi-layer perceptron classifier model and a given dataset.
+NNClassifierMLP trains the multi-layer perceptron classifier with a formatted 
+ inputs ("CB", channel and batch) derived from the given dataset.
 
 %%% ¡seealso!
 NNDataPoint_CON_CLA, NNClassifier_Evaluator
@@ -91,14 +93,14 @@ Neural Networks NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.
 %%%% ¡default!
-'NNClassifierMLP'
+'Neural Network Multi-layer Perceptron Classifier'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.

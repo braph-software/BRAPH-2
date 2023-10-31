@@ -1,60 +1,50 @@
 %% ¡header!
-NNxMLP_xPP_FI_Data < PanelProp (pr, cell prop panel) plots the panel of a prop cell.
+NNxMLP_xPP_FI_Data < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the data of subjects.
 
 %%% ¡description!
-A Cell Prop Panel (NNxMLP_xPP_FI_Data) plots the panel for a CELL prop with a table and two sliders.
-It works for all categories.
-
-It can be personalized with the following props:
- TABLE_HEIGHT - Panel height in pixels when the table is shown.
- XSLIDERSHOW - Whether to show the x-slider.
- XSLIDERLABELS - Labels for the x-slider.
- XSLIDERHEIGHT - Height of x-slider in pixels.
- YSLIDERSHOW - Whether to show the y-slider.
- YSLIDERLABELS - Labels for the y-slider.
- YSLIDERWIDTH - Width of y-slider in pixels.
- XYSLIDERLOCK - Whether the sliders are locked so that only the diagonal is shown.
- ROWNAME - String list with row names (no names if empty; numbered if {'numbered'}). Dynamically updatable.
- COLUMNAME - String list with column names (no names if empty; numbered if {'numbered'}). Dynamically updatable.
- MENU_EXPORT - Whether to show the export menu. To be defined before drawing.
+A panel for feature importance of a neural network analysis with the data of subjects (NNxMLP_xPP_FI_Data) 
+ plots the panel to show the feature importance, matching the layer number and node number as of the subject data.
+It is supposed to be used with the property FEATURE_IMPORTANCE of 
+ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator,
+ and NNRegressorMLP_CrossValidation.
 
 %%% ¡seealso!
-uitable, uislider, GUI, PanelElement
+NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, NNRegressorMLP_CrossValidation.
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the % % % .
+ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
 'NNxMLP_xPP_FI_Data'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the cell prop panel.
+NAME (constant, string) is the name of the panel for feature importance.
 %%%% ¡default!
-'Cell Prop Panel'
+'A Panel for Feature Importance of a Neural Network Analysis'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the cell prop panel.
+DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A Cell Prop Panel (NNxMLP_xPP_FI_Data) plots the panel for a CELL prop with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.'
+'A panel for feature importance of a neural network analysis with the data of subjects (NNxMLP_xPP_FI_Data) plots the panel to show the feature importance, matching the layer number and node number as of the subject data. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the cell prop panel.
+TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
 'NNxMLP_xPP_FI_Data'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the cell prop panel.
+ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
 'NNxMLP_xPP_FI_Data ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the cell prop panel.
+LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
 'NNxMLP_xPP_FI_Data label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the cell prop panel.
+NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
 'NNxMLP_xPP_FI_Data notes'
 

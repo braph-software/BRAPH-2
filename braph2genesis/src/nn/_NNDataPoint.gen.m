@@ -19,7 +19,7 @@ ELCLASS (constant, string) is the class of the data point for neural network ana
 %%% ¡prop!
 NAME (constant, string) is the name of the data point for neural network analysis.
 %%%% ¡default!
-'NNDataPoint'
+'Neural Network Data Point'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the data point for neural network analysis.

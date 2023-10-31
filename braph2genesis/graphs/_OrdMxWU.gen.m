@@ -2,7 +2,7 @@
 OrdMxWU < Graph (g, ordinal multiplex weighted undirected graph) is an ordinal multiplex weighted undirected graph.
 
 %%% ¡description!
-In an ordinal multiplex weighted undirected (WU) graph, all layers have the 
+In an ordinal multiplex weighted undirected graph (OrdMxWU), all layers have the 
  same number of nodes with within-layer weighted undirected edges, 
  associated with a real number between 0 and 1 and indicating the strength 
  of the connection.
@@ -123,19 +123,19 @@ Graph NOTES
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the ordinal multiplex weighted undirected graph.
 %%%% ¡default!
 'OrdMxWU'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex weighted undirected graph.
 %%%% ¡default!
-'OrdMxWU'
+'Ordinal Multiplex Weighted Undirected'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex weighted undirected graph.
 %%%% ¡default!
-'In an ordinal multiplex weighted undirected (WU) graph, the edges are associated with a real number between 0 and 1 indicating the strength of the connection, and they are undirected. The connectivity matrix of each layer is symmetric. The layers are connected in an ordinal fashion, where just consecutive layers are connected.'
+'In an ordinal multiplex weighted undirected graph (OrdMxWU), the edges are associated with a real number between 0 and 1 indicating the strength of the connection, and they are undirected. The connectivity matrix of each layer is symmetric. The layers are connected in an ordinal fashion, where just consecutive layers are connected.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the ordinal multiplex weighted undirected graph.

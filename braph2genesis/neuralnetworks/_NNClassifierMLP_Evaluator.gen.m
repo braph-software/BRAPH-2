@@ -1,8 +1,8 @@
 %% ¡header!
-NNClassifierMLP_Evaluator < NNEvaluator (nne, neural network evaluator for classification) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
+NNClassifierMLP_Evaluator < NNEvaluator (nne, neural network evaluator for multi-layer perceptron classifier) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 
 %%% ¡description!
-A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
+A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).
 
 %%% ¡seealso!
@@ -61,42 +61,42 @@ Feature Importance
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the neural network evaluator for the classification task.
+NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
-'NNClassifierMLP_Evaluator'
+'Neural Network Evaluator for a Multi-layer Perceptron Classifier'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
+DESCRIPTION (constant, string) is the description of the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
-'A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).'
+'A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
+TEMPLATE (parameter, item) is the template of the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡settings!
 'NNClassifierMLP_Evaluator'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
+ID (data, string) is a few-letter code for the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
+LABEL (metadata, string) is an extended label of the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
+NOTES (metadata, string) are some specific notes about the neural network evaluator for a multi-layer perceptron classifier.
 %%%% ¡default!
 'NNClassifierMLP_Evaluator notes'
     
 %%% ¡prop!
-NN (data, item) contains a trained neural network classifier.
+NN (data, item) contains a trained neural network multi-layer perceptron classifier.
 %%%% ¡settings!
 'NNClassifierMLP'
 
