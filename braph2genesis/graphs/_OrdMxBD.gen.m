@@ -109,7 +109,7 @@ ELCLASS (constant, string) is the class of the ordinal multiplex binary directed
 %%% ¡prop!
 NAME (constant, string) is the name of the ordinal multiplex binary directed graph.
 %%%% ¡default!
-'Ordinal Multiplex Binary Directed'
+'Ordinal Multiplex Binary Directed Graph'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the ordinal multiplex binary directed graph.
