@@ -136,10 +136,6 @@ SETUP (query, empty) calculates the measure value and stores it.
 x = pf.get('M').get('G').get('APARTITIONTICKS');
 g = pf.get('M').get('G');
 node = pf.get('NODE');
-if isempty(node)
-    value = [];
-    return;
-end
 layer = pf.get('LAYER');
 m = cellfun(@(x) x(node), pf.get('M').get('M'))';
 layers_num = length(g.get('ALAYERTICKS'));
@@ -206,7 +202,7 @@ pr = MeasurePF_xUPP_Layer('EL', pf, 'PROP', MeasurePF_NU.LAYER);
 %% ¡tests!
 
 %%% ¡excluded_props!
-[MeasurePF_NU.PARENT MeasurePF_NU.H MeasurePF_NU.ST_POSITION MeasurePF_NU.ST_AXIS MeasurePF_NU.M MeasurePF_NU.ST_AREA MeasurePF_NU.ST_LINE MeasurePF_NU.ST_TITLE MeasurePF_NU.ST_XLABEL MeasurePF_NU.ST_YLABEL] 
+[MeasurePF_NU.PARENT MeasurePF_NU.PARENT MeasurePF_NU.H MeasurePF_NU.ST_POSITION MeasurePF_NU.ST_AXIS MeasurePF_NU.M MeasurePF_NU.ST_AREA MeasurePF_NU.ST_LINE MeasurePF_NU.ST_TITLE MeasurePF_NU.ST_XLABEL MeasurePF_NU.ST_YLABEL] 
 
 %%% ¡warning_off!
 true

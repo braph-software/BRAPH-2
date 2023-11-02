@@ -130,10 +130,6 @@ SETUP (query, empty) calculates the measure value and stores it.
 x = pf.get('M').get('G').get('APARTITIONTICKS');
 
 node = pf.get('NODE');
-if isempty(node)
-    value = [];
-    return;
-end
 y = cellfun(@(x) x(node), pf.get('M').get('M'))';
 
 pf.memorize('ST_LINE').set('X', x, 'Y', y)
@@ -180,7 +176,7 @@ pr = MeasurePF_NxPP_Node('EL', pf, 'PROP', MeasurePF_NS.NODE);
 %% ¡tests!
 
 %%% ¡excluded_props!
-[MeasurePF_NS.PARENT MeasurePF_NS.H MeasurePF_NS.ST_POSITION MeasurePF_NS.ST_AXIS MeasurePF_NS.ST_AREA MeasurePF_NS.ST_LINE MeasurePF_NS.ST_TITLE MeasurePF_NS.ST_XLABEL MeasurePF_NS.ST_YLABEL] 
+[MeasurePF_NS.PARENT MeasurePF_NS.PARENT MeasurePF_NS.H MeasurePF_NS.ST_POSITION MeasurePF_NS.ST_AXIS MeasurePF_NS.ST_AREA MeasurePF_NS.ST_LINE MeasurePF_NS.ST_TITLE MeasurePF_NS.ST_XLABEL MeasurePF_NS.ST_YLABEL] 
 
 %%% ¡warning_off!
 true
