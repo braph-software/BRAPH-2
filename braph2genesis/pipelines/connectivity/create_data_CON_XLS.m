@@ -59,7 +59,7 @@ if ~isfolder(data_dir)
         % axis equal
 
         A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
-        r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
+        r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted        
         A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
 
         writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
@@ -92,7 +92,7 @@ if ~isfolder(data_dir)
 
         A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
         r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
-        A2 = max(A2, transpose(A2));
+        A2 = max(A2, transpose(A2)); % make the adjacency matrix symmetric
 
         writetable(array2table(A2), [gr2_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
 
