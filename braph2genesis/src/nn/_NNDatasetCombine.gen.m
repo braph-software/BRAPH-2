@@ -74,7 +74,10 @@ dp_classes = cellfun(@(x) x.get('DP_CLASS'), dco.get('D_LIST'), 'UniformOutput',
 dp_list = horzcat(dp_list{:});
 
 % inspect whether there are overlapping datapoints
-if isempty(dp_list) | isempty(dp_classes)
+if isempty(dp_list)
+    unique_dp_list = {};
+    dp_class = dp_classes{1};
+elseif isempty(dp_classes)
     unique_dp_list = {};
     dp_class = 'NNDataPoint';
 else

@@ -284,14 +284,14 @@ NNE (metadata, item) is the neural network evaluator.
 %%% ¡prop!
 CLASSNAMES (metadata, stringlist) is the class names.
 %%%% ¡postprocessing!
-if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValue')
+if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
     pf.set('CLASSNAMES', cellstr(pf.memorize('NNE').get('NN').get('MODEL').Layers(end).Classes));
 end
 
 %%% ¡prop!
 X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.
 %%%% ¡postprocessing!
-if isa(pf.getr('X_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValue')
+if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
     predictions = cell2mat(pf.get('NNE').get('NN').get('PREDICT', pf.get('NNE').get('D')));
     ground_truth = categorical(pf.get('NNE').get('GROUND_TRUTH'));
@@ -306,7 +306,7 @@ end
 %%% ¡prop!
 Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.
 %%%% ¡postprocessing!
-if isa(pf.getr('Y_VALUES'), 'NoValue') && ~isa(pf.get('NNE').getr('NN'), 'NoValue')
+if isa(pf.getr('Y_VALUES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
     class_names = pf.get('CLASSNAMES');
     predictions = cell2mat(pf.get('NNE').get('NN').get('PREDICT', pf.get('NNE').get('D')));
     ground_truth = categorical(pf.get('NNE').get('GROUND_TRUTH'));
