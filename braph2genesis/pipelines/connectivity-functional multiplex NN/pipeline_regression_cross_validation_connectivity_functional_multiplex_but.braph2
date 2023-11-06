@@ -28,4 +28,4 @@ gr = CombineGroups_CON_FUN_MP('GR_CON', gr1_CON, 'GR_FUN', gr1_FUN, 'WAITBAR', t
 a_BUT = AnalyzeEnsemble_CON_FUN_MP_BUT('GR', gr, 'THRESHOLDS', .1:.1:.2); % Analyze Group % Group Analysis
 
 %% Cross-Validation
-nncv = NNRegressorMLP_CrossValidation('D', {NNDataset('DP_CLASS', 'NNDataPoint_Graph_REG', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_Graph_REG', 'IT_LIST', cellfun(@(g, sub) NNDataPoint_Graph_REG('ID', g.get('ID'), 'SUB', sub, 'TARGET_IDS', sub.get('VOI_DICT').get('KEYS')), a_BUT.get('G_DICT').get('IT_LIST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false)))}); % Cross-Validation % Cross-Validation Process
+nncv = NNRegressorMLP_CrossValidation('BA', ba, 'D', {NNDataset('DP_CLASS', 'NNDataPoint_Graph_REG', 'DP_DICT', IndexedDictionary('IT_CLASS', 'NNDataPoint_Graph_REG', 'IT_LIST', cellfun(@(g, sub) NNDataPoint_Graph_REG('ID', g.get('ID'), 'SUB', sub, 'TARGET_IDS', sub.get('VOI_DICT').get('KEYS')), a_BUT.get('G_DICT').get('IT_LIST'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false)))}); % Cross-Validation % Cross-Validation Process
