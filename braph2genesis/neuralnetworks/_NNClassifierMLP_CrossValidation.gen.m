@@ -208,6 +208,11 @@ value = cellfun(@(d, nn) NNClassifierMLP_Evaluator('TEMPLATE', nne_template, 'D'
 %% ¡props!
 
 %%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
 P (parameter, scalar) is the permutation number.
 %%%% ¡default!
 1e+2

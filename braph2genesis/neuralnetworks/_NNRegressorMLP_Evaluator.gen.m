@@ -121,6 +121,11 @@ NN (data, item) contains a trained neural network multi-layer perceptron regress
 %% ¡props!
 
 %%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
 GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
 %%%% ¡calculate!
 targets = nne.get('D').get('TARGETS');
@@ -213,7 +218,6 @@ else
         value(i) = sqrt(mean((predictions(:, i) - ground_truth(:, i)).^2));
     end
 end
-
 
 %%% ¡prop!
 P (parameter, scalar) is the permutation number.

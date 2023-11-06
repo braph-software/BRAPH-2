@@ -103,6 +103,11 @@ NN (data, item) contains a trained neural network multi-layer perceptron classif
 %% ¡props!
 
 %%% ¡prop!
+BA (data, item) is a brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
+
+%%% ¡prop!
 GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
 %%%% ¡calculate!
 targets = nne.get('D').get('TARGETS');
