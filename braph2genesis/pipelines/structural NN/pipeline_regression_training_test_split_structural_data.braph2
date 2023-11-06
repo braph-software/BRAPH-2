@@ -24,5 +24,5 @@ d_split = NNDatasetSplit('D', NNDataset('DP_CLASS', 'NNDataPoint_ST_REG', 'DP_DI
 nn = NNRegressorMLP('D', d_split.get('D_LIST_IT', 1), 'LAYERS', [20 20]); % Train Neural Network % Trained Neural Network
 
 %% Evaluation
-nne_training = NNRegressorMLP_Evaluator('D', d_split.get('D_LIST_IT', 1), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
-nne_test = NNRegressorMLP_Evaluator('D', d_split.get('D_LIST_IT', 2), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation
+nne_training = NNRegressorMLP_Evaluator('BA', ba, 'D', d_split.get('D_LIST_IT', 1), 'NN', nn); % Evaluate on Training Dataset % Training Dataset Evaluation
+nne_test = NNRegressorMLP_Evaluator('BA', ba, 'D', d_split.get('D_LIST_IT', 2), 'NN', nn); % Evaluate on Test Dataset % Test Dataset Evaluation
