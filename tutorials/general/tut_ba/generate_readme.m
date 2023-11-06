@@ -30,7 +30,20 @@ document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 
 % figures
-document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
+pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
+findings = regexp(document, pattern, 'tokens', 'all');
+for i = 1:length(findings)
+    finding = findings{i};
+    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ') \n '], 'once');
+    document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
+end
+
+pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)\}';
+findings = regexp(document, pattern, 'tokens', 'all');
+for i = 1:length(findings)
+    finding = findings{i};
+    document = regexprep(document, pattern, ['(' finding{1} ') \n ' finding{2} '\n' ], 'once');
+end
 
 %% Generate README file
 readme = [
