@@ -534,7 +534,7 @@ classdef NNDatasetCombine < ConcreteElement
 				case 1 % NNDatasetCombine.ELCLASS
 					prop_default = 'NNDatasetCombine';
 				case 2 % NNDatasetCombine.NAME
-					prop_default = 'NNDatasetCombine';
+					prop_default = 'Neural Network Dataset Combiner';
 				case 3 % NNDatasetCombine.DESCRIPTION
 					prop_default = 'A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.';
 				case 4 % NNDatasetCombine.TEMPLATE
@@ -669,7 +669,10 @@ classdef NNDatasetCombine < ConcreteElement
 					dp_list = horzcat(dp_list{:});
 					
 					% inspect whether there are overlapping datapoints
-					if isempty(dp_list) | isempty(dp_classes)
+					if isempty(dp_list) && ~isempty(dp_classes)
+					    unique_dp_list = {};
+					    dp_class = dp_classes{1};
+					elseif isempty(dp_classes) % works for dp_list being empty or not
 					    unique_dp_list = {};
 					    dp_class = 'NNDataPoint';
 					else
