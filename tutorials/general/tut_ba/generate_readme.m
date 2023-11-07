@@ -17,6 +17,7 @@ document = regexprep(document, '\\maketitle', '');
 document = regexprep(document, '\\noindent', '');
 document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
+document = regexprep(document, '\\end\{abstract\}', '');
 document = strtrim(document);
 
 % basic reformatting
@@ -38,7 +39,7 @@ for i = 1:length(findings)
     document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
 end
 
-pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)\}';
+pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
@@ -59,7 +60,6 @@ end
 tmp_listbox = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'tokens', 'all'); % hold it
 index_list = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'all');
 document = regexprep(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', ''); % remove it
-
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)\}';
 pattern2 = '\}..\]..([^\]\\]*)\\';
 for i = 1:length(tmp_listbox)
@@ -74,8 +74,9 @@ for i = 1:length(tmp_listbox)
     document = insertBefore(document, index_list(i),  section_title);
     document = insertBefore(document, index_list(i)+length(section_title),  section_explanation);
     document = insertBefore(document, index_list(i)+length(section_title)+length(section_explanation),  section_code{1});
-   
 end
+
+document = regexprep(document, '\.\s*\}', '');
 
 %% Generate README file
 readme = [
