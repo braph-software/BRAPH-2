@@ -68,16 +68,6 @@ for i = 1:length(tmp_listbox)
 
     % get code
     section_code = regexp(tmp_listbox{i}, pattern2, 'tokens', 'once');
-%     tmp_code_array = split(tmp_code{1}, ';');
-%     tmp_code_array = cellfun(@(x) strtrim(x), tmp_code_array, 'UniformOutput', false);
-%     
-%     final_code_string = '';
-%     for j = 1:length(tmp_code_array)
-% %         final_code_string = strcat(['> 'final_code_string tmp_code_array{j}], {sprintf("\n")});
-%         final_code_string = [final_code_string '>' tmp_code_array{j} '\n']; %#ok<AGROW> 
-%     end
-
-%     final_tmp_string = ['> **' tmp_finding{1}{1} '**' '* > ' tmp_finding{1}{2}  final_code_string];
     section_title =  ['> **' tmp_finding{1}{1} '**'];
     section_explanation = ['> ' tmp_finding{1}{2}];
     % insert into document
