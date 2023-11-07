@@ -276,39 +276,6 @@ pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRI
     'COLUMNNAME', class_names, ...
     varargin{:});
 
-%%% ¡prop!
-AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
-%%%% ¡calculate!
-e_list = nncv.get('EVALUATOR_LIST');
-wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Initialize feature importance permutation ...']);
-all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
-    e_list, 'UniformOutput', false);
-braph2waitbar(wb, 'close')
-if isempty(cell2mat(all_fi))
-    value = {};
-else
-    average_fi = zeros(size(all_fi{1}));
-    for i = 1:numel(all_fi)
-        % Add the current cell contents to the averageCell
-        average_fi = average_fi + all_fi{i};
-    end
-    average_fi = average_fi / numel(all_fi);
-    value = {average_fi};
-end
-%%%% ¡gui!
-input_datasets = nncv.get('D');
-input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
-dp_class = input_dataset.get('DP_CLASS');
-graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
-measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
-
-if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-else % DATA input
-    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-end
 
 %% ¡tests!
 
