@@ -58,34 +58,30 @@ end
 % listbox to code
 tmp_listbox = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'tokens', 'all'); % hold it
 index_list = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'all');
-% document = regexprep(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', ''); % remove it
+document = regexprep(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', ''); % remove it
 
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)\}';
-pattern2 = '\.\s*\}\](.*)\\';
+pattern2 = '\}..\]..([^\]\\]*)\\';
 for i = 1:length(tmp_listbox)
     % get sections
     tmp_finding = regexp(tmp_listbox{i}, pattern, 'tokens', 'once');
 
     % get code
-    tmp = tmp_finding{1}{3};
-    tmp_code = regexp(tmp, pattern2, 'tokens', 'once');
-    tmp_code_array = split(tmp_code, ';');
+    tmp_code = regexp(tmp_listbox{i}, pattern2, 'tokens', 'once');
+    tmp_code_array = split(tmp_code{1}, ';');
+    tmp_code_array = cellfun(@(x) strtrim(x), tmp_code_array, 'UniformOutput', false);
     
     final_code_string = '';
     for j = 1:length(tmp_code_array)
-        final_code_string = ['>' final_code_string ' \n \>' tmp_code_array{j} '\n']; %#ok<AGROW> 
+        final_code_string = [final_code_string '>' tmp_code_array{j} '\n']; %#ok<AGROW> 
     end
 
-    final_tmp_string = ['\> ' tmp_finding{1}{1} '\n  \> ' tmp_finding{1}{2} '\n' final_code_string];
+    final_tmp_string = ['> **' tmp_finding{1}{1} '**' '*\n> ' tmp_finding{1}{2}  final_code_string];
     
     % insert into document
     document = insertBefore(document, index_list(i),final_tmp_string);
    
 end
-
-
-
-
 
 %% Generate README file
 readme = [
