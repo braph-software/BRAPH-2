@@ -78,6 +78,12 @@ end
 
 document = regexprep(document, '\.\s*\}', '');
 
+% txt or xls
+document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
+document = regexprep(document, '\(\\fn\{\*\.xls\}\)', '(.xls)');
+document = regexprep(document, '\(\\fn\{\*\.xlsx\}\)', '(.xlsx)');
+document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or .xlsx)');
+
 %% Generate README file
 readme = [
     '# ' title newline() ...

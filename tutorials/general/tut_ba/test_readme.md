@@ -66,8 +66,8 @@ They are available in the BRAPH 2.0 folder \fn{atlases} in XLS and TXT formats, 
 
 ## Create a New Brain Atlas
 
-To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS file (\fn{*.xls} or \fn{*.xlsx}), as shown in \Figref{fig:06}. 
-(It is also possible to create it in TXT format (\fn{*.txt}), for which we refer to the examples available in the BRAPH 2.0 folder \fn{atlases}.)
+To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS file (.xls or .xlsx), as shown in \Figref{fig:06}. 
+(It is also possible to create it in TXT format (.txt), for which we refer to the examples available in the BRAPH 2.0 folder \fn{atlases}.)
 
 ![Create your own brain atlas](fig06.jpg) 
  > Overview of how the XLS file containing your atlas information should look like
