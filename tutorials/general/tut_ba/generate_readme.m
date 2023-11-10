@@ -31,12 +31,12 @@ document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 
 % figures
+document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ') \n '], 'once');
-    document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
+    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ') \n '], 'once');    
 end
 
 pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)';
@@ -45,7 +45,6 @@ for i = 1:length(findings)
     finding = findings{i};
     document = regexprep(document, pattern, ['(' finding{1} ') \n \> ' finding{2} '\n' ], 'once');
 end
-document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}([^\{\)]*)', 'Figure $1 $2'); % remove it
 
 % itemize
 document = regexprep(document, '\\begin\{itemize\}', '');
@@ -85,6 +84,18 @@ document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
 document = regexprep(document, '\(\\fn\{\*\.xls\}\)', '(.xls)');
 document = regexprep(document, '\(\\fn\{\*\.xlsx\}\)', '(.xlsx)');
 document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or .xlsx)');
+
+% web
+document = regexprep(document, '\(\\url\{.*\}\)', '');
+
+% references
+document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
+document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
+document = regexprep(document, '\\fn\{([^\{\}]*)\}', ''' $1 ''');
+document = regexprep(document, '\{([^\{\}]*)\}', ''' $1 ''');
+
+% extra
+document = regexprep(document, '\s*\\', '');
 
 %% Generate README file
 readme = [
