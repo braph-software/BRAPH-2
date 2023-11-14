@@ -93,6 +93,7 @@ document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$'
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '`$1`');
 document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
+document = regexprep(document, '\`([^\`\'']*)\', '"$1"');
 
 % extra
 document = regexprep(document, '\s*\\', '');
