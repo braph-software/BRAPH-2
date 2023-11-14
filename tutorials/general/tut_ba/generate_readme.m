@@ -77,7 +77,7 @@ for i = 1:length(tmp_listbox)
 end
 
 document = regexprep(document, '\.\s*\}', '');
-document = regexprep(document, '\\code\{([^=\}]*)\}', '''$1''');
+document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
@@ -91,8 +91,8 @@ document = regexprep(document, '\(\\url\{.*\}\)', '');
 % references
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
-document = regexprep(document, '\\fn\{([^\{\}]*)\}', '''$1''');
-document = regexprep(document, '\{([^\{\}]*)\}', '''$1''');
+document = regexprep(document, '\\fn\{([^\{\}]*)\}', '`$1`');
+document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
 
 % extra
 document = regexprep(document, '\s*\\', '');
