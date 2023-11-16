@@ -36,14 +36,14 @@ pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ') \n '], 'once');    
+    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');    
 end
 
 pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['(' finding{1} ') \n \> ' finding{2} '\n' ], 'once');
+    document = regexprep(document, pattern, ['(' finding{1} ') \n \> ' strtrim(finding{2}) ], 'once');
 end
 
 % itemize
@@ -77,7 +77,7 @@ for i = 1:length(tmp_listbox)
 end
 
 document = regexprep(document, '\.\s*\}', '');
-document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
+document = regexprep(document, '\\code\{([^=\}]*)\}', '"$1"');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
@@ -91,11 +91,12 @@ document = regexprep(document, '\(\\url\{.*\}\)', '');
 % references
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
-document = regexprep(document, '\\fn\{([^\{\}]*)\}', '`$1`');
-document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
+document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
+document = regexprep(document, '\{([^\{\}]*)\}', '"$1"');
 
 % extra
 document = regexprep(document, '\s*\\', '');
+document = strtrim(document);
 
 %% Generate README file
 readme = [
@@ -112,3 +113,9 @@ readme = [readme ...
 
 %% Save readme
 writelines(readme, 'test_readme.md')
+
+% % trick to remove white space
+% text = readlines('test_readme.md');
+% output = cellfun(@(x) strtrim(x), text);
+% writelines(output, 'test_readme.md');
+
