@@ -47,7 +47,7 @@ findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
     fig_number = finding{2};
-    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
+    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure ' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
 end
 
 % itemize
@@ -81,7 +81,7 @@ for i = 1:length(tmp_listbox)
 end
 
 document = regexprep(document, '\.\s*\}', '');
-document = regexprep(document, '\\code\{([^=\}]*)\}', '"$1"');
+document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
