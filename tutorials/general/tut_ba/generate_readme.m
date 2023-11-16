@@ -77,19 +77,23 @@ for i = 1:length(tmp_tcolorbox)
     section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
     % insert into document
     document = insertBefore(document, index_tcolorbox(i),  section_title);
-    document = insertBefore(document, index_tcolorbox(i)+length(section_title),  [section_explanation newline()]);
-%     document = insertBefore(document, index_tcolorbox(i)+length(section_title)+length(section_explanation)+2,  section_code{1});
+    document = insertBefore(document, index_tcolorbox(i)+length(section_title),  [section_explanation ':' newline()]);
     % code
-    init_position_code =index_tcolorbox(i)+length(section_title)+length(section_explanation)+1;
+    init_position_code =index_tcolorbox(i)+length(section_title)+length(section_explanation)+2; % +2, because im adding a newline and a ':'
+    % indicate it is matlab language
+    matlab_lang_tag = ['> ```matlab' newline()];
+    document = insertBefore(document, init_position_code,  matlab_lang_tag);
+    init_position_code = init_position_code+length(matlab_lang_tag);
     code_split = regexp(section_code{1}{1}, pattern3, 'tokens', 'all');
     accumulated_length = 0;
     for j = 1:length(code_split)
         line_of_code = code_split{j};
-        line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
-        line_of_code_position = init_position_code+accumulated_length;        
+        line_of_code_with_modifier = ['> ' line_of_code{1} newline()];             
+        line_of_code_position = init_position_code+accumulated_length;
         document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
         accumulated_length = accumulated_length + length(line_of_code_with_modifier);
     end
+    document = insertBefore(document, init_position_code+accumulated_length,  ['> ```' newline()]);
 end
 
 document = regexprep(document, '\.\s*\}', '');
