@@ -61,23 +61,35 @@ for i = 1:length(findings)
 end
 
 % tcolorbox
-tmp_listbox = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'tokens', 'all'); % hold it
-index_list = regexp(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', 'all');
-document = regexprep(document, '\\begin{tcolorbox}(.*)\\end{tcolorbox}', ''); % remove it
+tmp_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'tokens', 'all'); % hold it
+index_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'all');
+document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', ''); % remove it
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)\}';
 pattern2 = '\}..\]..([^\]\\]*)\\';
-for i = 1:length(tmp_listbox)
+pattern3= '(.*?)\n';
+for i = 1:length(tmp_tcolorbox)
     % get sections
-    tmp_finding = regexp(tmp_listbox{i}, pattern, 'tokens', 'once');
+    tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
 
     % get code
-    section_code = regexp(tmp_listbox{i}, pattern2, 'tokens', 'once');
-    section_title =  ['> **' tmp_finding{1}{1} '**'];
-    section_explanation = ['> ' tmp_finding{1}{2}];
+    section_code = regexp(tmp_tcolorbox{i}, pattern2, 'tokens', 'once');
+    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
+    section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
     % insert into document
-    document = insertBefore(document, index_list(i),  section_title);
-    document = insertBefore(document, index_list(i)+length(section_title),  section_explanation);
-    document = insertBefore(document, index_list(i)+length(section_title)+length(section_explanation),  section_code{1});
+    document = insertBefore(document, index_tcolorbox(i),  section_title);
+    document = insertBefore(document, index_tcolorbox(i)+length(section_title),  [section_explanation newline()]);
+%     document = insertBefore(document, index_tcolorbox(i)+length(section_title)+length(section_explanation)+2,  section_code{1});
+    % code
+    init_position_code =index_tcolorbox(i)+length(section_title)+length(section_explanation)+1;
+    code_split = regexp(section_code{1}{1}, pattern3, 'tokens', 'all');
+    accumulated_length = 0;
+    for j = 1:length(code_split)
+        line_of_code = code_split{j};
+        line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
+        line_of_code_position = init_position_code+accumulated_length;        
+        document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
+        accumulated_length = accumulated_length + length(line_of_code_with_modifier);
+    end
 end
 
 document = regexprep(document, '\.\s*\}', '');
