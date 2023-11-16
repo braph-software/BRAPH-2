@@ -39,12 +39,14 @@ for i = 1:length(findings)
     document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');    
 end
 
+document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
+
 pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
     fig_number = finding{2};
-    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure' fig_number(4:5) '.' finding{1} '.** ' strtrim(finding{3}) ], 'once');
+    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
 end
 
 % itemize
@@ -86,14 +88,14 @@ document = regexprep(document, '\(\\fn\{\*\.xls\}\)', '(.xls)');
 document = regexprep(document, '\(\\fn\{\*\.xlsx\}\)', '(.xlsx)');
 document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or .xlsx)');
 
-% web
-document = regexprep(document, '\(\\url\{.*\}\)', '');
-
 % references
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 document = regexprep(document, '\{([^\{\}]*)\}', '"$1"');
+
+% web
+document = regexprep(document, '\(\\url\{.*\}\)', '');
 
 % extra
 document = regexprep(document, '\s*\\', '');
