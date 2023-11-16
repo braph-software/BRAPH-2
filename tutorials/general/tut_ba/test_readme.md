@@ -3,7 +3,9 @@
 [![Tutorial Brain Atlas](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_ba.pdf)
 
 ![Brain atlas figure created with BRAPH 2.0](fig01.jpg) 
- > **Figure01. Brain atlas figure created with BRAPH 2.0.** Example of a brain surface image with some nodes representing brain regionsbegin"abstract"
+ > **Figure01. Brain atlas figure created with BRAPH 2.0.** Example of a brain surface image with some nodes representing brain regions
+
+
 
 This Tutorial explains how to work with the Graphical User Interface (GUI) to manage brain atlases.
 This is typically the first step required to perform a graph analysis in BRAPH 2.0. 
@@ -52,17 +54,17 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 04
 
 ![Brain Atlases](fig05.jpg) 
  > **Figure05. Brain Atlases.** Some brain atlases provided by BRAPH 2.0:
-	"bf AAL90" Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
-	"bf AAL116" Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
-	"bf BNA" Brainnetome atlas with 246 cortical and subcortical regions.
-	"bf Craddock" Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
-	"bf Desikan" Anatomical atlas with 68 cortical from the FreeSurfer software.
-	"bf Destrieux" Anatomical atlas with 148 cortical from the FreeSurfer software.
-	"bf Schaefer" Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
-	"bf Subcortical FreeSurfer" Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software
+	`bf AAL90` Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
+	`bf AAL116` Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
+	`bf BNA` Brainnetome atlas with 246 cortical and subcortical regions.
+	`bf Craddock` Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
+	`bf Desikan` Anatomical atlas with 68 cortical from the FreeSurfer software.
+	`bf Destrieux` Anatomical atlas with 148 cortical from the FreeSurfer software.
+	`bf Schaefer` Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
+	`bf Subcortical FreeSurfer` Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software
 
 Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 05). 
-They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website (url"http://braph.org/software/brain-atlases/").
+They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website .
 
 
 ## Create a New Brain Atlas
@@ -104,7 +106,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
 ![Brain atlas visualization](fig07.jpg) 
  > **Figure07. Brain atlas visualization.** Plotting the nodes of a brain atlas on a 3D brain surface
 	
-This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in Figure 08a), which opens the settings window shown inFigsref"fig:08"b-c.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in Figure 08a), which opens the settings window shown inFigsref`fig:08`b-c.
 
 ![Visualize the brain atlas](fig08.jpg) 
  > **Figure08. Visualize the brain atlas.** **a** The ``Settings Brain Surface'' button in the toolbar opens **b**-**c** A window with the settings available for this brain figure

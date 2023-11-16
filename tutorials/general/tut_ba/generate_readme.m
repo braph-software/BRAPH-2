@@ -17,6 +17,7 @@ document = regexprep(document, '\\maketitle', '');
 document = regexprep(document, '\\noindent', '');
 document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
+document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
 document = strtrim(document);
 
@@ -92,10 +93,10 @@ document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or 
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
-document = regexprep(document, '\{([^\{\}]*)\}', '"$1"');
+document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
 
 % web
-document = regexprep(document, '\(\\url\{.*\}\)', '');
+document = regexprep(document, '\(\\url\`.*\`\)', '');
 
 % extra
 document = regexprep(document, '\s*\\', '');
