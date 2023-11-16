@@ -82,6 +82,7 @@ end
 
 document = regexprep(document, '\.\s*\}', '');
 document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
+document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');

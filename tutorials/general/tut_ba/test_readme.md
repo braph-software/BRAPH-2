@@ -20,7 +20,7 @@ In this Tutorial, we will explain you how to upload a brain atlas, how to visual
 
 ## Open the GUI
 
-The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 03c-d) after clicking ``Load Atlas''. 
+The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 03c-d) after clicking "Load Atlas". 
 
 ![Upload a brain atlas](fig03.jpg) 
  > **Figure 03. Upload a brain atlas.** The different steps you need to follow to open a brain atlas using the GUI: 
@@ -100,16 +100,16 @@ Then, from row 5, you should include the IDs of the regions of your atlas (1 st 
 
 ## Plot the Brain Atlas
 
-Once you are satisfied with the brain atlas, you can plot it by pushing the button ``Plot Brain Atlas'' (Figure 07a). 
+Once you are satisfied with the brain atlas, you can plot it by pushing the button "Plot Brain Atlas" (Figure 07a). 
 This will open an image with a brain surface and nodes corresponding to the brain regions (Figure 07b).
 
 ![Brain atlas visualization](fig07.jpg) 
  > **Figure 07. Brain atlas visualization.** Plotting the nodes of a brain atlas on a 3D brain surface
 	
-This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in Figure 08a), which opens the settings window shown inFigsref`fig:08`b-c.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 08a), which opens the settings window shown inFigsref`fig:08`b-c.
 
 ![Visualize the brain atlas](fig08.jpg) 
- > **Figure 08. Visualize the brain atlas.** **a** The ``Settings Brain Surface'' button in the toolbar opens **b**-**c** A window with the settings available for this brain figure
+ > **Figure 08. Visualize the brain atlas.** **a** The "Settings Brain Surface" button in the toolbar opens **b**-**c** A window with the settings available for this brain figure
 
 The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
 
@@ -120,7 +120,7 @@ Spheres are objects that are rendered in 3D - often prettier, but also more comp
 Symbols are objects rendered in 2D - more stylized and less computationally expensive.
 IDs and labels are the texts associated to the brain region.
 
-If you wish to apply some properties to a set of brain regions, you can select multiple regions by clicking on the checkboxes on the right, and then right-click and select ``apply to selection'' before applying some property.
+If you wish to apply some properties to a set of brain regions, you can select multiple regions by clicking on the checkboxes on the right, and then right-click and select "apply to selection" before applying some property.
 
 ![Example of a visualization of the brain atlas](fig09.jpg) 
  > **Figure 09. Example of a visualization of the brain atlas.** A final figure was created with BRAPH 2.0 by changing different options in the menu
@@ -134,7 +134,7 @@ It is also possible to add additional brain surfaces by adding the required NV f
 
 ## Export the Figure
 
-To export and save a (publication-ready) figure, you can select ``Print'' from the brain atlas GUI and select one of the various provided options Figure 11.
+To export and save a (publication-ready) figure, you can select "Print" from the brain atlas GUI and select one of the various provided options Figure 11.
 
 ![Save a brain atlas figure](fig11.jpg) 
  > **Figure 11. Save a brain atlas figure.** BRAPH 2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publications
