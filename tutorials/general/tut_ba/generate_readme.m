@@ -39,11 +39,12 @@ for i = 1:length(findings)
     document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');    
 end
 
-pattern = '\(([^()]*)\)\s*\{\s*([^{}]*)';
+pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['(' finding{1} ') \n \> ' strtrim(finding{2}) ], 'once');
+    fig_number = finding{2};
+    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure' fig_number(4:5) '.' finding{1} '.** ' strtrim(finding{3}) ], 'once');
 end
 
 % itemize
