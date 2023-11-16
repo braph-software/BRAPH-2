@@ -135,9 +135,3 @@ readme = [readme ...
 
 %% Save readme
 writelines(readme, 'test_readme.md')
-
-% % trick to remove white space
-% text = readlines('test_readme.md');
-% output = cellfun(@(x) strtrim(x), text);
-% writelines(output, 'test_readme.md');
-
