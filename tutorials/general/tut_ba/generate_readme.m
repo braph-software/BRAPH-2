@@ -1,6 +1,6 @@
 clear all, clc
 
-tex_file = 'tut_ba.tex';
+tex_file = [ 'developers' filesep() 'dev_intro' filesep() 'dev_intro.tex'];
 
 tex = fileread(tex_file);
 
@@ -31,7 +31,7 @@ document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 
 % figures
-document = regexprep(document, '{\\bf ([a-z])}', '**$1**');
+document = regexprep(document, '{\\bf ([a-z])}', '>**$1**');
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
@@ -93,7 +93,6 @@ document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$'
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '`$1`');
 document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
-document = regexprep(document, '\`([^\`\'']*)\', '"$1"');
 
 % extra
 document = regexprep(document, '\s*\\', '');
