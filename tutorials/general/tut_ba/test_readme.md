@@ -26,14 +26,14 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 
 ![Upload a brain atlas](fig03.jpg) 
  > **Figure 03. Upload a brain atlas.** The different steps you need to follow to open a brain atlas using the GUI: 
-	**a** Open the brain atlas GUI.
-	**b** Import a brain atlas from an XLS or TXT file.
-	**c** Navigate to the BRAPH 2.0 folder "atlases".
-	**d** Select the desired atlas.
+	** a** Open the brain atlas GUI.
+	** b** Import a brain atlas from an XLS or TXT file.
+	** c** Navigate to the BRAPH 2.0 folder "atlases".
+	** d** Select the desired atlas.
 	
 
 > **Brain Atlas GUI launch from command line**
-> You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in:
+> You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in:
 > ```matlab
 > ba = BrainAtlas();
 > 
@@ -41,7 +41,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 > gui.get('DRAW')
 > gui.get('SHOW')
 > ```
-
+<
 
 
 ## Upload the Brain Atlas
@@ -52,24 +52,23 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 04
 	
 ![Edit the brain atlas information](fig04.png) 
  > **Figure 04. Edit the brain atlas information.** In the brain atlas GUI: 
-	**a** We can see the ID, name, brain regions and notes of the brain atlas.
-	**b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
+	** a** We can see the ID, name, brain regions and notes of the brain atlas.
+	** b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
 	
 
 ## Ready Brain Atlases
 
-![Brain Atlases](fig05.jpg)
-	{
-	Some brain atlases provided by BRAPH 2.0:
-	`AAL90` Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
-	`AAL116` Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
-	`BNA` Brainnetome atlas with 246 cortical and subcortical regions.
-	`Craddock` Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
-	`Desikan` Anatomical atlas with 68 cortical from the FreeSurfer software.
-	`Destrieux` Anatomical atlas with 148 cortical from the FreeSurfer software.
-	`Schaefer` Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
-	`Subcortical FreeSurfer` Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
-	}
+![Brain Atlases](fig05.jpg) 
+ > **Figure 05. Brain Atlases.** Some brain atlases provided by BRAPH 2.0:
+	** AAL90** Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
+	** AAL116** Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
+	** BNA** Brainnetome atlas with 246 cortical and subcortical regions.
+	** Craddock** Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
+	** Desikan** Anatomical atlas with 68 cortical from the FreeSurfer software.
+	** Destrieux** Anatomical atlas with 148 cortical from the FreeSurfer software.
+	** Schaefer** Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
+	** Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
+	
 
 Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 05). 
 They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website .
@@ -119,7 +118,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
 This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 08a), which opens the settings window shown inFigsref`fig:08`b-c.
 
 ![Visualize the brain atlas](fig08.jpg) 
- > **Figure 08. Visualize the brain atlas.** **a** The "Settings Brain Surface" button in the toolbar opens **b**-**c** A window with the settings available for this brain figure.
+ > **Figure 08. Visualize the brain atlas.** ** a** The "Settings Brain Surface" button in the toolbar opens ** b**-** c** A window with the settings available for this brain figure.
 	
 
 The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
