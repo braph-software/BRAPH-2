@@ -42,7 +42,7 @@ end
 
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 
-pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)';
+pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
@@ -96,7 +96,6 @@ for i = 1:length(tmp_tcolorbox)
     document = insertBefore(document, init_position_code+accumulated_length,  ['> ```' newline()]);
 end
 
-document = regexprep(document, '\.\s*\}', '');
 document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
 document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 
