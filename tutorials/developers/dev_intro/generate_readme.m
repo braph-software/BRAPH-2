@@ -77,7 +77,6 @@ document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1`
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
 
 % descriptions
-
 document = regexprep(document, '\\begin\{description\}', '> ');
 document = regexprep(document, '\\end\{description\}', '> ');
 
@@ -125,17 +124,24 @@ document = regexprep(document, '\<tcolorboxgoeshere>\*\*\!', ''); % remove mark
 tmp_lstlisting = regexp(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', 'tokens', 'all'); % hold it
 document = regexprep(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', '<lstlistinggoeshere>**!'); % put mark
 pattern = 'caption\=\{(.*?)\}(.*?)\](.*)';
-pattern2= '¥\\circled\{([^{}]*)}\\circlednote\{([^{}]*)\}\{([^{}]*)\}¥';
+% pattern2= '¥\\circled\{([^{}]*)}\\circlednote\{([^{}]*)\}\{([^{}]*)\}¥';
+pattern2 = '\¥\\circled\{([^{}]*)\}';
+pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
+pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
 for i = 1:length(tmp_lstlisting)
     % 
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
     % find circlenotes and replace them with anotations
-    tmp_circlenotes = regexp(tmp_lstlisting{i}, pattern2, 'tokens', 'all');
+   
+    tmp_circlenotes = regexp(tmp_lstlisting{i}, pattern3, 'tokens', 'all');
     tmp_circlenotes = tmp_circlenotes{1};
-    if ~isempty(tmp_circlenotes) && ~isempty(tmp_circlenotes{1})
-        % replace old pisitions with numbers
-        tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, '\`$1\`');
-    end
+    tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
+    tmp_two_circlenotes = tmp_two_circlenotes{1};
+
+    % replace old pisitions with numbers
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
 
     % get sections
     tmp_finding = regexp(tmp_lstlisting{i}, pattern, 'tokens', 'all');
@@ -149,12 +155,30 @@ for i = 1:length(tmp_lstlisting)
     document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
     document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length, code_with_no_notes);
 
+    n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
+    arr_circlenotes = cell(n_total_circlenotes, 1);
+    % arrange circlenotes
+    if ~isempty(tmp_circlenotes) && ~isempty(tmp_circlenotes{1})
+        arr_circlenotes(1:length(tmp_circlenotes)) = tmp_circlenotes(:);
+        
+    end
+
+    if  ~isempty(tmp_two_circlenotes) && ~isempty(tmp_two_circlenotes{1})
+        arr_circlenotes(length(tmp_circlenotes)+1:end) = tmp_two_circlenotes(:);
+    end
+
+
     % insert circlenotes info
     acumulated = 0;
-    if ~isempty(tmp_circlenotes) && ~isempty(tmp_circlenotes{1})
-        for j = 1:length(tmp_circlenotes)
-            tmp_circlenote = tmp_circlenotes{j};
-            note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
+    if ~isempty(arr_circlenotes) && ~isempty(arr_circlenotes{1})
+        for j = 1:length(arr_circlenotes)
+            tmp_circlenote = arr_circlenotes{j};
+            if length(tmp_circlenote) == 3
+                note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
+            else
+                note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
+            end
+            
             tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
             document = insertBefore(document, tmp_position,  note);
             acumulated = acumulated + length(note);
@@ -162,6 +186,7 @@ for i = 1:length(tmp_lstlisting)
     end
 end
 document = regexprep(document, '\<lstlistinggoeshere>\*\*\!', ''); % remove mark
+document = regexprep(document, '\¥', '');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
