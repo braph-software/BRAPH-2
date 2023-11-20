@@ -168,8 +168,8 @@ for i = 1:length(tmp_lstlisting)
         arr_circlenotes(length(tmp_circlenotes)+1:end) = tmp_two_circlenotes(:);
     end
 
-
     % insert circlenotes info
+    document = insertBefore(document, tmp_position,  note);
     acumulated = 0;
     if ~isempty(arr_circlenotes) && ~isempty(arr_circlenotes{1})
         for j = 1:length(arr_circlenotes)
@@ -181,6 +181,10 @@ for i = 1:length(tmp_lstlisting)
             end
             
             tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
+            if j == 1
+                document = insertBefore(document, tmp_position,  newline());
+                tmp_position = tmp_position+1;
+            end
             document = insertBefore(document, tmp_position,  note);
             acumulated = acumulated + length(note);
         end

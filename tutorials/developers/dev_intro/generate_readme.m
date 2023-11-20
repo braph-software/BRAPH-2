@@ -181,6 +181,10 @@ for i = 1:length(tmp_lstlisting)
             end
             
             tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
+            if j == 1
+                document = insertBefore(document, tmp_position,  newline());
+                tmp_position = tmp_position+1;
+            end
             document = insertBefore(document, tmp_position,  note);
             acumulated = acumulated + length(note);
         end
