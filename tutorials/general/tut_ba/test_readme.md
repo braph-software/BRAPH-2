@@ -33,7 +33,8 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 	
 
 > **Brain Atlas GUI launch from command line**
-> You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in:
+> You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in Figure 03a-d.
+>
 > ```matlab
 > ba = BrainAtlas();
 > 
@@ -115,7 +116,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
  > **Figure 07. Brain atlas visualization.** Plotting the nodes of a brain atlas on a 3D brain surface. 
 	
 	
-This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 08a), which opens the settings window shown inFigsref`fig:08`b-c.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 08a), which opens the settings window shown in Figures 08b-c.
 
 ![Visualize the brain atlas](fig08.jpg) 
  > **Figure 08. Visualize the brain atlas.** ** a** The "Settings Brain Surface" button in the toolbar opens ** b**-** c** A window with the settings available for this brain figure.
