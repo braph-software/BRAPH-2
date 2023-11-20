@@ -9,7 +9,6 @@ In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the e
 
 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
 ## Compilation and Element (Re)Generation
 
