@@ -42,6 +42,8 @@ document = regexprep(document, '\\emph\{([^=\}]*)\}', '`$1`');
 document = regexprep(document, '\\begin\{enumerate\}', '');
 document = regexprep(document, '\\end\{enumerate\}', '');
 document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
+document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
+document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
@@ -100,7 +102,7 @@ for i = 1:length(tmp_tcolorbox)
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code =index_tcolorbox(i)+length(section_title)+length(section_explanation)+2; % +2, because im adding a newline and a ':'
+        init_position_code =index_tcolorbox(i)-1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ':'
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -169,16 +171,15 @@ document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or 
 
 % references
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
-document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
-% document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
 
 % web
-document = regexprep(document, '\(\\url\`.*\`\)', '');
+document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 
 % extra
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
+document = regexprep(document,'\%\:', '>');
 document = regexprep(document,'\%\\bibliography(.*?)\}', '');
 document = strtrim(document);
 
