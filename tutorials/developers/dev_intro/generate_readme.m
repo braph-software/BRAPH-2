@@ -32,11 +32,16 @@ document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 
 % backet control
-document = regexprep(document, '\\code\{([^=\}]*)\}', '`$1`');
+document = regexprep(document, '\\begin\{fullwidth\}', '');
+document = regexprep(document, '\\end\{fullwidth\}', '');
+document = regexprep(document, '\\code\{(.*?)\}', '`$1`');
 document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
 document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 document = regexprep(document, '\\emph\{([^=\}]*)\}', '`$1`');
+document = regexprep(document, '\\begin\{enumerate\}', '');
+document = regexprep(document, '\\end\{enumerate\}', '');
+document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
 
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
@@ -65,9 +70,12 @@ for i = 1:length(findings)
     document = regexprep(document, pattern, ['- ' finding{1}], 'once');
 end
 
-% descriptions ([^{}]*)
+% item
 document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1` $2');
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
+
+% descriptions
+
 document = regexprep(document, '\\begin\{description\}', '> ');
 document = regexprep(document, '\\end\{description\}', '> ');
 
@@ -163,7 +171,7 @@ document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or 
 document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
 document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
-document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
+% document = regexprep(document, '\{([^\{\}]*)\}', '`$1`');
 
 % web
 document = regexprep(document, '\(\\url\`.*\`\)', '');
@@ -171,6 +179,7 @@ document = regexprep(document, '\(\\url\`.*\`\)', '');
 % extra
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
+document = regexprep(document,'\%\\bibliography(.*?)\}', '');
 document = strtrim(document);
 
 %% Generate README file
