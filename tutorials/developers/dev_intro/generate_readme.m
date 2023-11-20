@@ -124,7 +124,6 @@ document = regexprep(document, '\<tcolorboxgoeshere>\*\*\!', ''); % remove mark
 tmp_lstlisting = regexp(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', 'tokens', 'all'); % hold it
 document = regexprep(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', '<lstlistinggoeshere>**!'); % put mark
 pattern = 'caption\=\{(.*?)\}(.*?)\](.*)';
-% pattern2= '¥\\circled\{([^{}]*)}\\circlednote\{([^{}]*)\}\{([^{}]*)\}¥';
 pattern2 = '\¥\\circled\{([^{}]*)\}';
 pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
 pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
@@ -205,7 +204,7 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'\%\:', '>');
-document = regexprep(document,'\%\\bibliography(.*?)\}', '');
+document = regexprep(document,'\%bibliography(.*?)\}', '');
 document = strtrim(document);
 
 %% Generate README file

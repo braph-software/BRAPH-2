@@ -870,6 +870,3 @@ close(ef.get('FIG'))  `16`
 >`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
 >`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
 <
-
-%bibliography{biblio}
-%bibliographystyle{plainnat}
