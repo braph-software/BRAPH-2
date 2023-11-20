@@ -16,7 +16,7 @@ BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
-%
+
 ** Compilation of BRAPH 2.0.**
 		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
@@ -33,7 +33,7 @@ During the compilation, there are several phases to improve the computational ef
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
-%
+
 ** Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
 >> close all; delete(findall(0, 'type', 'figure')); clear all  `1`
@@ -168,23 +168,23 @@ Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as
 
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
-%
+
 ** Instantiation of `NoValue`.**
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
 Element.getNoValue()
 <
-%
+
 No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
 It should be instantiated using `callback`.
-%
+
 ** Instantiation of a `Callback`.**
 		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
 el.getCallback('PROP', PROP_NUMBER)
 el.getCallback('TAG', PROP_TAG)
 <
-%
+
 No element can be a subclass of `Callback`.
 
 A concrete element (`ConcreteElement`) provides the infrastructure necessary for all concrete elements. 
@@ -194,7 +194,7 @@ Even though it is possible to create instances of `ConcreteElement`, typically o
 ### Setting Props
 
 The value of a prop can be set with `set`.
-%
+
 ** Setting a prop.**
 		This script illustrates various ways in which props can be set.
 el.set('ID', 'new el id')  `1` `1 and 2`
@@ -211,7 +211,7 @@ el = el.set('ID', 'new el id')  `3`
 >`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
 <
-%
+
 When a prop is set to a certain value, the following operations are performed:
 
 	- The value is ** conditioned** before being set (by calling the protected `static` function `conditioning()`, which can be defined in each subelement).
@@ -255,7 +255,7 @@ When a prop is set to a certain value, the following operations are performed:
 ### Getting Props
 
 The value of a prop can be retrieved with `get`.
-%
+
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 value = el.get('ID');  `1`
@@ -280,7 +280,7 @@ If a property of category `RESULT`, `QUERY`, or `EVANESCENT` is not calculated (
 If the property is checked, it proceeds to check all properties after the calculation calling the function `check()`. If the check fails, it resets the property to `NoValue` and returns `NoValue`, does not lock the property, and throws a warning with warning id `BRAPH2:<Element Class>`.
 
 The raw value of a prop can be retrieved with `getr`.
-%
+
 ** Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
 value = el.getr('ID');
@@ -290,7 +290,7 @@ value = el.getr(ConcreteElement.ID);
 ### Memorizing Props  
 
 The value of a prop can be memorized using `memorize`.
-%
+
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 value = el.memorize('ID');  `1` `1 and 2`
@@ -313,7 +313,7 @@ If a property of category `QUERY` is memorized, a warning is thrown with warning
 ## Element tokens
 
 A generator file has the structure illustrated `tokens`.
-%
+
 
 ** Element tokens in a generator file.**
 		All tokens available in a generator file.
@@ -457,7 +457,7 @@ A generator file has the structure illustrated `tokens`.
 
 
 A list of special instructions is shown in `special`.
-%
+
 ** Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
 €ConcreteElement.NAME€  `1`
