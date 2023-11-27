@@ -97,11 +97,11 @@ for i = 1:length(tmp_tcolorbox)
     section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - 1,  section_title);
-    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ':' newline()]);
+    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ' ' newline()]);
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code =index_tcolorbox(i)-1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ':'
+        init_position_code =index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -155,8 +155,8 @@ for i = 1:length(tmp_lstlisting)
     code_length = length(code_with_no_notes);
 
     % insert into document
-    document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length, code_with_no_notes);
+    document = insertBefore(document, index_lstlisting(i) - 2,  section_title);
+    document = insertBefore(document, index_lstlisting(i) - 2 + explanation_length, code_with_no_notes);
 
     n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
     arr_circlenotes = cell(n_total_circlenotes, 1);
@@ -199,7 +199,7 @@ for i = 1:length(tmp_lstlisting)
                 note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
             end
 
-            tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
+            tmp_position = index_lstlisting(i) - 2 + explanation_length + code_length + acumulated;
             if j == 1
                 document = insertBefore(document, tmp_position,  newline());
                 tmp_position = tmp_position+1;
