@@ -198,7 +198,7 @@ The value of a prop can be set with `set`.
 
 ** Setting a prop.**
 		This script illustrates various ways in which props can be set.
-el.set('ID', 'new el id')  `1` `1 and 2`
+el.set('ID', 'new el id')  `1 and 2`
 el.set(5, 'new el id')  `2`
 
 el.set( ...  `3`
@@ -264,7 +264,7 @@ value = el.get('ID');  `1`
 
 value = el.get(ConcreteElement.ID);  `2`
 
-el.get('ID')  `3` `3 and 4`
+el.get('ID')  `3 and 4`
 el.get(ConcreteElement.ID)  `4`
 
 value = el.get('QUERY', ARG1, ARG2, ... );  `5`
@@ -296,10 +296,10 @@ The value of a prop can be memorized using `memorize`.
 
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
-value = el.memorize('ID');  `1` `1 and 2`
+value = el.memorize('ID');  `1 and 2`
 value = el.memorize(ConcreteElement.ID);  `2`
 
-el.memorize('ID')  `3` `3 and 4`
+el.memorize('ID')  `3 and 4`
 el.memorize(ConcreteElement.ID)  `4`
 
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
@@ -577,7 +577,7 @@ value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B
 
 %% ¡props!  `7`
 
-%%% ¡prop!  `8` `8 and 9`
+%%% ¡prop!  `8 and 9`
 A (data, scalar) is the first number.
 
 %%% ¡prop!  `9`
@@ -603,17 +603,17 @@ Simple test
 ao = ArithmeticOperations('A', 6, 'B', 4)
 
 string = ao.get('TOSTRING')
-assert(~ao.isLocked('A'))  `15` `15 and 16`
+assert(~ao.isLocked('A'))  `15 and 16`
 assert(~ao.isLocked('B'))  `16`
 
 sum = ao.get('SUM')
 
-assert(ao.isLocked('A'))  `17` `17 and 18`
+assert(ao.isLocked('A'))  `17 and 18`
 assert(ao.isLocked('B'))  `18`
 
 diff = ao.get('DIFF')
 
-sum_raw = ao.getr('SUM')  `19` `19 and 20`
+sum_raw = ao.getr('SUM')  `19 and 20`
 diff_raw = ao.getr('DIFF')  `20`
 assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 
@@ -688,7 +688,7 @@ Simple test
 sr1 = SeededRandomness()
 sr2 = SeededRandomness()
 
-assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3` `3 and 4`
+assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
 assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
 assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
 
@@ -755,9 +755,9 @@ Simple test
 %%%% ¡code!
 ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
 
-assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3` `3 and 4`
+assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3 and 4`
 assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
-assert(isnan(ao.get('SUM_OR_DIFF')))  `5` `5 and 6`
+assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
 assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
 
 >`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
