@@ -7,7 +7,7 @@ tex = fileread(tex_file);
 %% Analysis
 
 % title
-title = regexp(tex, '\\title{([^{}]*)}', 'tokens', 'once'); 
+title = regexp(tex, '\\title{([^{}]*)}', 'tokens', 'once');
 title = strtrim(title{1});
 
 % document
@@ -51,7 +51,7 @@ pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');    
+    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');
 end
 
 pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
@@ -92,16 +92,16 @@ for i = 1:length(tmp_tcolorbox)
     % get sections
     tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
 
-    % get code    
+    % get code
     section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
     section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - 1,  section_title);
-    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ':' newline()]);
+    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ' ' newline()]);
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code =index_tcolorbox(i)-1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ':'
+        init_position_code =index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -110,7 +110,7 @@ for i = 1:length(tmp_tcolorbox)
         accumulated_length = 0;
         for j = 1:length(code_split)
             line_of_code = code_split{j};
-            line_of_code_with_modifier = ['> ' line_of_code{1} newline()];             
+            line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
             line_of_code_position = init_position_code+accumulated_length;
             document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
             accumulated_length = accumulated_length + length(line_of_code_with_modifier);
@@ -129,20 +129,22 @@ pattern = 'caption\=\{(.*?)\}(.*?)\](.*)';
 pattern2 = '\¥\\circled\{([^{}]*)\}';
 pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
 pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
+pattern5 = '\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
 for i = 1:length(tmp_lstlisting)
-    % 
+    %
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
     % find circlenotes and replace them with anotations
-   
+
     tmp_circlenotes = regexp(tmp_lstlisting{i}, pattern3, 'tokens', 'all');
     tmp_circlenotes = tmp_circlenotes{1};
     tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
     tmp_two_circlenotes = tmp_two_circlenotes{1};
 
     % replace old pisitions with numbers
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');    
 
     % get sections
     tmp_finding = regexp(tmp_lstlisting{i}, pattern, 'tokens', 'all');
@@ -153,15 +155,14 @@ for i = 1:length(tmp_lstlisting)
     code_length = length(code_with_no_notes);
 
     % insert into document
-    document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length, code_with_no_notes);
+    document = insertBefore(document, index_lstlisting(i) - 2,  section_title);
+    document = insertBefore(document, index_lstlisting(i) - 2 + explanation_length, code_with_no_notes);
 
     n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
     arr_circlenotes = cell(n_total_circlenotes, 1);
     % arrange circlenotes
     if ~isempty(tmp_circlenotes) && ~isempty(tmp_circlenotes{1})
         arr_circlenotes(1:length(tmp_circlenotes)) = tmp_circlenotes(:);
-        
     end
 
     if  ~isempty(tmp_two_circlenotes) && ~isempty(tmp_two_circlenotes{1})
@@ -169,18 +170,36 @@ for i = 1:length(tmp_lstlisting)
     end
 
     % insert circlenotes info
-    document = insertBefore(document, tmp_position,  note);
     acumulated = 0;
     if ~isempty(arr_circlenotes) && ~isempty(arr_circlenotes{1})
+        count_circle = 1;
+        k = 1;
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
+%             while count_circle < length(arr_circlenotes) % this does not work
+%                 tmp = arr_circlenotes{k};
+%                 if count_circle == str2double(tmp{1})
+%                     tmp_circlenote = tmp;
+%                     if length(tmp) == 3
+%                         count_circle = count_circle + 2;
+%                         break;
+%                     else
+%                         count_circle = count_circle + 1;
+%                         break;
+%                     end
+%                 end
+%                 k = k +1;
+%                 if k > length(arr_circlenotes)
+%                     k = 1;
+%                 end
+%             end
             if length(tmp_circlenote) == 3
                 note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
             else
                 note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
             end
-            
-            tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
+
+            tmp_position = index_lstlisting(i) - 2 + explanation_length + code_length + acumulated;
             if j == 1
                 document = insertBefore(document, tmp_position,  newline());
                 tmp_position = tmp_position+1;
