@@ -16,6 +16,13 @@ BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
+** Compilation of BRAPH 2.0.**
+		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
+		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
+
+> 
+> >> braph2genesis
+> 
 
 <
 
@@ -29,6 +36,38 @@ During the compilation, there are several phases to improve the computational ef
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
+** Regeneration of elements.**
+		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
+
+> 
+> >> close all; delete(findall(0, 'type', 'figure')); clear all  `1`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'})  `2`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false)  `3`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false)  `4`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false)  `5`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false)  `6`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false)  `7`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false)  `8`
+> 
+> >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'})  `9`
+> 
+
+>`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).>`2` regenerates `Pipeline`.
+>`3` performs only one compilation.
+>`4` does not regenerate the element, but only the layout and the unit test.
+>`5` does not regenerate the layout.
+>`6` does not regenerate the unit test.
+>`7` does not perform the unit test.
+>`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
+>`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
+
 
 <
 
@@ -140,6 +179,12 @@ Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as
 
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
+** Instantiation of `NoValue`.**
+		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
+
+> 
+> Element.getNoValue()
+> 
 
 <
 
@@ -147,6 +192,13 @@ No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
 It should be instantiated using `callback`.
+** Instantiation of a `Callback`.**
+		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
+
+> 
+> el.getCallback('PROP', PROP_NUMBER)
+> el.getCallback('TAG', PROP_TAG)
+> 
 
 <
 
@@ -162,6 +214,7 @@ The value of a prop can be set with `set`.
 ** Setting a prop.**
 		This script illustrates various ways in which props can be set.
 
+> 
 > el.set('ID', 'new el id')  `1 and 2`
 > el.set(5, 'new el id')  `2`
 > 
@@ -172,6 +225,7 @@ The value of a prop can be set with `set`.
 > 	) 
 > 
 > el = el.set('ID', 'new el id')  `3`
+> 
 
 >`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
@@ -225,6 +279,7 @@ The value of a prop can be retrieved with `get`.
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 
+> 
 > value = el.get('ID');  `1`
 > 
 > value = el.get(ConcreteElement.ID);  `2`
@@ -233,6 +288,7 @@ The value of a prop can be retrieved with `get`.
 > el.get(ConcreteElement.ID)  `4`
 > 
 > value = el.get('QUERY', ARG1, ARG2, ... );  `5`
+> 
 
 >`1` gets the value of a prop using the prop tag.>`2` gets the value of a prop using the prop number.
 >`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
@@ -252,8 +308,10 @@ The raw value of a prop can be retrieved with `getr`.
 ** Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
 
+> 
 > value = el.getr('ID');
 > value = el.getr(ConcreteElement.ID);
+> 
 
 <
 
@@ -263,11 +321,13 @@ The value of a prop can be memorized using `memorize`.
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 
+> 
 > value = el.memorize('ID');  `1 and 2`
 > value = el.memorize(ConcreteElement.ID);  `2`
 > 
 > el.memorize('ID')  `3 and 4`
 > el.memorize(ConcreteElement.ID)  `4`
+> 
 
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
 
@@ -291,6 +351,7 @@ A generator file has the structure illustrated `tokens`.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
 
+> 
 > %% ¡header!
 >   <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
 >   %%% ¡class_attributes!
@@ -425,6 +486,7 @@ A generator file has the structure illustrated `tokens`.
 >   %%% ¡test_functions!
 >   Functions used in the test.
 >   Can be on multiple lines.
+> 
 
 <
 
@@ -433,6 +495,7 @@ A list of special instructions is shown in `special`.
 ** Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
 
+> 
 > €ConcreteElement.NAME€  `1`
 > 
 > __Category.CONSTANT__  `2`circlednote{2}{keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value.circled{3}-circled{5} It works similarly also for the other constants of `Category` and `Format`.}
@@ -443,6 +506,7 @@ A list of special instructions is shown in `special`.
 > ...
 > 
 > %%%__WARN_TBI__  `6`
+> 
 
 >`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
 
@@ -492,6 +556,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 
+> 
 > %% ¡header!  `1`
 > ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
 > 
@@ -603,6 +668,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > sum_raw = ao.getr('SUM')
 > diff_raw = ao.getr('DIFF')¤
 > assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
+> 
 
 >`1` The `¡header!` token is the only required one.>`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
 >`3` must be the name of the element.
@@ -630,6 +696,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 
+> 
 > %% ¡header!
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 > 
@@ -666,6 +733,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
 > assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
 > assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
+> 
 
 >`1` Here, a detailed description should be provided.>`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 >`6` checks that calls to the calculation of the random number of differen randomizers return different values.
@@ -680,6 +748,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 ** Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
 
+> 
 > %% ¡header!
 > ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
 > 
@@ -735,6 +804,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
 > assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
 > assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
+> 
 
 >`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 >`3 4` returns the sum or the difference depening on the argument.
@@ -749,6 +819,7 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 ** Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
 
+> 
 > %% ¡header!
 > ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
 > 
@@ -843,6 +914,7 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > ef.memorize('BUTTONS')  `15`
 > 
 > close(ef.get('FIG'))  `16`
+> 
 
 >`1` renders a figure and returns its handle.>`5` ensures that `FIG` is the parent of the panel.
 >`9` ensures that `PANEL` is the parent of each button.

@@ -144,7 +144,7 @@ pattern2 = '\¥\\circled\{([^{}]*)\}';
 pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
 pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
 pattern5 = '\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
-for i = 5:length(tmp_lstlisting)
+for i = 1:length(tmp_lstlisting)
     %
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
     % find circlenotes and replace them with anotations
@@ -167,7 +167,7 @@ for i = 5:length(tmp_lstlisting)
     explanation_length = length(section_title);
     
     % manage code section
-    codeSection = strtrim(tmp_finding{1}{3});
+    codeSection = tmp_finding{1}{3};
     codeSection = regexprep(codeSection, char(13), '');
     codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
     code_with_no_notes = [newline() '> ' codeSection newline()];
