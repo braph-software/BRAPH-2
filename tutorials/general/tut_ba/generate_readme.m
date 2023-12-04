@@ -19,7 +19,7 @@ document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
-document = strtrim(document);
+% document = strtrim(document);
 
 % basic reformatting
 document = regexprep(document, 'BRAPH~2.0', 'BRAPH 2.0');
@@ -47,19 +47,49 @@ document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
-pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
-findings = regexp(document, pattern, 'tokens', 'all');
-for i = 1:length(findings)
-    finding = findings{i};
-    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');
-end
+% pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
+% findings = regexp(document, pattern, 'tokens', 'all');
+% for i = 1:length(findings)
+%     finding = findings{i};
+%     document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');
+% end
+% 
+% pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
+% findings = regexp(document, pattern, 'tokens', 'all');
+% for i = 1:length(findings)
+%     finding = findings{i};
+%     fig_number = finding{2};
+%     document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure ' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
+% end
 
-pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
+% move figs to desired position
+pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
+figPattern = '\#\!(..)(?:\_)?(.*?)\n';
+newFigMods =  regexp(document, figPattern, 'tokens', 'all');
 findings = regexp(document, pattern, 'tokens', 'all');
+document = regexprep(document, pattern, '', 'all');
 for i = 1:length(findings)
+    % find marks index and remove them
     finding = findings{i};
-    fig_number = finding{2};
-    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure ' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
+    newPos = regexp(document, figPattern, 'once');
+    document = regexprep(document, figPattern, '', 'once');
+
+    % replace old info with new way in new position
+    figName = finding{2};
+    figTitle = finding{3};
+    
+    if length(newFigMods{i}{2}) > 1
+        figSizeMod = strtrim(newFigMods{i}{2});
+        newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
+    else
+        newFormat = ['<img src="' figName '" alt="' figTitle '>'];
+    end
+
+    tagSize = length(newFormat);    
+    document = insertBefore(document, newPos - 1,  newFormat);
+
+    % insert fig explanation
+    document = insertBefore(document, newPos - 1 + tagSize,  [newline() '> ' finding{end}]);
 end
 
 % itemize
@@ -101,7 +131,7 @@ for i = 1:length(tmp_tcolorbox)
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code =index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
+        init_position_code = index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
