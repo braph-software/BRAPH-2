@@ -82,7 +82,7 @@ for i = 1:length(findings)
         figSizeMod = strtrim(newFigMods{i}{2});
         newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
     else
-        newFormat = ['<img src="' figName '" alt="' figTitle '>'];
+        newFormat = ['<img src="' figName '" alt="' figTitle '">'];
     end
 
     tagSize = length(newFormat);    
