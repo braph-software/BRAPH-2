@@ -170,6 +170,7 @@ for i = 1:length(tmp_lstlisting)
     codeSection = tmp_finding{1}{3};
     codeSection = regexprep(codeSection, char(13), '');
     codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
+    codeSection = regexprep(codeSection, [newline() '\>([^\>\%]*)\s*\%'] , [newline() '>' newline() '>$1%' ]);
     code_with_no_notes = [newline() '> ' codeSection newline()];
     code_length = length(code_with_no_notes);
 
@@ -195,7 +196,6 @@ for i = 1:length(tmp_lstlisting)
         k = 1;
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
-%             while count_circle < length(arr_circlenotes) % this does not work
             if length(tmp_circlenote) == 3
                 note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
             else
