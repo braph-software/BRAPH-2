@@ -16,14 +16,14 @@ BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
-** Compilation of BRAPH 2.0.**
+
+** Compilation of BRAPH 2.0.**
 		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
 
 > 
 > >> braph2genesis
 > 
-
 <
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
@@ -36,7 +36,8 @@ During the compilation, there are several phases to improve the computational ef
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
-** Regeneration of elements.**
+
+** Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
 
 > 
@@ -67,7 +68,6 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 >`7` does not perform the unit test.
 >`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
 >`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
-
 
 <
 
@@ -179,27 +179,27 @@ Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as
 
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
-** Instantiation of `NoValue`.**
+
+** Instantiation of `NoValue`.**
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
 
 > 
 > Element.getNoValue()
 > 
-
 <
 
 No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
 It should be instantiated using `callback`.
-** Instantiation of a `Callback`.**
+
+** Instantiation of a `Callback`.**
 		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
 
 > 
 > el.getCallback('PROP', PROP_NUMBER)
 > el.getCallback('TAG', PROP_TAG)
 > 
-
 <
 
 No element can be a subclass of `Callback`.
@@ -211,7 +211,8 @@ Even though it is possible to create instances of `ConcreteElement`, typically o
 ### Setting Props
 
 The value of a prop can be set with `set`.
-** Setting a prop.**
+
+** Setting a prop.**
 		This script illustrates various ways in which props can be set.
 
 > 
@@ -229,7 +230,6 @@ The value of a prop can be set with `set`.
 
 >`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
-
 
 <
 
@@ -276,7 +276,8 @@ When a prop is set to a certain value, the following operations are performed:
 ### Getting Props
 
 The value of a prop can be retrieved with `get`.
-** Getting a prop.**
+
+** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 
 > 
@@ -294,7 +295,6 @@ The value of a prop can be retrieved with `get`.
 >`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 >`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
 
-
 <
 
 If the raw value of the property is a `NoValue`, it proceed to return the default property value (for categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
@@ -305,20 +305,21 @@ If a property of category `RESULT`, `QUERY`, or `EVANESCENT` is not calculated (
 If the property is checked, it proceeds to check all properties after the calculation calling the function `check()`. If the check fails, it resets the property to `NoValue` and returns `NoValue`, does not lock the property, and throws a warning with warning id `BRAPH2:<Element Class>`.
 
 The raw value of a prop can be retrieved with `getr`.
-** Getting the raw value of a prop.**
+
+** Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
 
 > 
 > value = el.getr('ID');
 > value = el.getr(ConcreteElement.ID);
 > 
-
 <
 
 ### Memorizing Props  
 
 The value of a prop can be memorized using `memorize`.
-** Getting a prop.**
+
+** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 
 > 
@@ -330,7 +331,6 @@ The value of a prop can be memorized using `memorize`.
 > 
 
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
-
 
 <
 
@@ -346,7 +346,8 @@ If a property of category `QUERY` is memorized, a warning is thrown with warning
 
 A generator file has the structure illustrated `tokens`.
 
-** Element tokens in a generator file.**
+
+** Element tokens in a generator file.**
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
@@ -487,12 +488,12 @@ A generator file has the structure illustrated `tokens`.
 >   Functions used in the test.
 >   Can be on multiple lines.
 > 
-
 <
 
 
 A list of special instructions is shown in `special`.
-** Special instruction in a generator file.**
+
+** Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
 
 > 
@@ -509,7 +510,6 @@ A list of special instructions is shown in `special`.
 > 
 
 >`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
-
 
 <
 
@@ -553,7 +553,8 @@ We will now see how to implement a few concrete elements.
 ### A Simple Calculator
 
 We will now create our first element (`ao`), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
-** Arithmetic Operation Calculator.**
+
+** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 
 > 
@@ -687,13 +688,13 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 >`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 >`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 
-
 <
 
 ### Calculator with Seeded Randomness
 
 We can now create an element that demonstrate how the seeded randomness works (`sr`).
-** Arithmetic Operation Calculator.**
+
+** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 
 > 
@@ -739,13 +740,13 @@ We can now create an element that demonstrate how the seeded randomness works (`
 >`6` checks that calls to the calculation of the random number of differen randomizers return different values.
 >`3 4` check that subsequent calls to the calculation of the random number return the same value.
 
-
 <
 
 ### Query
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (`ao2`).
-** Arithmetic Operation Calculator with Queries.**
+
+** Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
 
 > 
@@ -810,13 +811,13 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 >`3 4` returns the sum or the difference depening on the argument.
 >`5 6` retunrs `NaN` when the input is absent or unexpected.
 
-
 <
 
 ### Evanescent, Gui, Figure
 
 We can now demonstrate the use of evanescent props and graphical handles (`f`).
-** Element with figure.**
+
+** Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
 
 > 
@@ -925,6 +926,5 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 >`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
 >`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
 >`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
-
 
 <
