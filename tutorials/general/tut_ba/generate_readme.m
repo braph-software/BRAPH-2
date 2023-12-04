@@ -89,7 +89,7 @@ for i = 1:length(findings)
     document = insertBefore(document, newPos - 1,  newFormat);
 
     % insert fig explanation
-    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure ' finding{1} '.' finding{3} '**' newline() '> ' finding{end} newline()]);
+    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure ' newFigMods{i}{1} '.' finding{3} '**' newline() '> ' finding{end} newline()]);
 end
 
 % itemize
