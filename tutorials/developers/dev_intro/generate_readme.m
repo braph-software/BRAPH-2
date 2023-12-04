@@ -234,7 +234,7 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'bibliography(.*?)\}', '');
-% document = regexprep(document,'\<\n', '');
+% document = regexprep(document,'\<\n', ''); % does not work
 document = strtrim(document);
 
 %% Generate README file
