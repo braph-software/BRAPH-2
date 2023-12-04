@@ -197,9 +197,9 @@ for i = 1:length(tmp_lstlisting)
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
             if length(tmp_circlenote) == 3
-                note = ['\`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
+                note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
             else
-                note = ['\`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
+                note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
             end
 
             tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;

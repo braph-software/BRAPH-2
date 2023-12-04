@@ -58,7 +58,16 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 > >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false)  `8`
 > 
 > >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'})  `9`
->`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).`2` regenerates `Pipeline`.`3` performs only one compilation.`4` does not regenerate the element, but only the layout and the unit test.`5` does not regenerate the layout.`6` does not regenerate the unit test.`7` does not perform the unit test.`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
+> 
+
+>`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).>`2` regenerates `Pipeline`.
+>`3` performs only one compilation.
+>`4` does not regenerate the element, but only the layout and the unit test.
+>`5` does not regenerate the layout.
+>`6` does not regenerate the unit test.
+>`7` does not perform the unit test.
+>`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
+>`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
 
 <
 
@@ -217,7 +226,10 @@ The value of a prop can be set with `set`.
 > 	) 
 > 
 > el = el.set('ID', 'new el id')  `3`
->`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.`3` returns the element.`1 2` set the value of a prop with the prop tag or the prop number.
+> 
+
+>`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
+>`1 2` set the value of a prop with the prop tag or the prop number.
 
 <
 
@@ -277,7 +289,11 @@ The value of a prop can be retrieved with `get`.
 > el.get(ConcreteElement.ID)  `4`
 > 
 > value = el.get('QUERY', ARG1, ARG2, ... );  `5`
->`1` gets the value of a prop using the prop tag.`2` gets the value of a prop using the prop number.`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+> 
+
+>`1` gets the value of a prop using the prop tag.>`2` gets the value of a prop using the prop number.
+>`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
+>`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
 
 <
 
@@ -312,7 +328,9 @@ The value of a prop can be memorized using `memorize`.
 > 
 > el.memorize('ID')  `3 and 4`
 > el.memorize(ConcreteElement.ID)  `4`
->`1 2` memorize the value of a prop using the prop tag and the prop number.`3 4` do not return any output value.
+> 
+
+>`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
 
 <
 
@@ -489,7 +507,9 @@ A list of special instructions is shown in `special`.
 > ...
 > 
 > %%%__WARN_TBI__  `6`
->`1` substitutes the prop with its default value, when hard-coding the element.`6` adds a warning that the specific feature is not implemented yet.
+> 
+
+>`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
 
 <
 
@@ -649,7 +669,24 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > sum_raw = ao.getr('SUM')
 > diff_raw = ao.getr('DIFF')
 > assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
->`1` The `¡header!` token is the only required one.`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.`3` must be the name of the element.`4` must be the name of the element.`5` Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.`6` returns the string, which must be saved in the variable `value`.`7` The `¡props!` token permits to add additional props.`10` is a result prop.`11` calculates the sum of the two numbers. The result must be saved in the variable `value`.`12` is a result prop.`13` calculates the difference of the two numbers. The result must be saved in the variable `value`.`14` The `¡tests!` token permits to add unit tests.`21` alters the previous test to memorize the results.`8 9` are two data props.`15 16` Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+> 
+
+>`1` The `¡header!` token is the only required one.>`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
+>`3` must be the name of the element.
+>`4` must be the name of the element.
+>`5` Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
+>`6` returns the string, which must be saved in the variable `value`.
+>`7` The `¡props!` token permits to add additional props.
+>`10` is a result prop.
+>`11` calculates the sum of the two numbers. The result must be saved in the variable `value`.
+>`12` is a result prop.
+>`13` calculates the difference of the two numbers. The result must be saved in the variable `value`.
+>`14` The `¡tests!` token permits to add unit tests.
+>`21` alters the previous test to memorize the results.
+>`8 9` are two data props.
+>`15 16` Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
+>`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
+>`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 
 <
 
@@ -697,7 +734,11 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
 > assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
 > assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
->`1` Here, a detailed description should be provided.`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).`6` checks that calls to the calculation of the random number of differen randomizers return different values.`3 4` check that subsequent calls to the calculation of the random number return the same value.
+> 
+
+>`1` Here, a detailed description should be provided.>`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
+>`6` checks that calls to the calculation of the random number of differen randomizers return different values.
+>`3 4` check that subsequent calls to the calculation of the random number return the same value.
 
 <
 
@@ -764,7 +805,11 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
 > assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
 > assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
->`1` It is good practice to add some comments about the arguments for the query.`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.`3 4` returns the sum or the difference depening on the argument.`5 6` retunrs `NaN` when the input is absent or unexpected.
+> 
+
+>`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
+>`3 4` returns the sum or the difference depening on the argument.
+>`5 6` retunrs `NaN` when the input is absent or unexpected.
 
 <
 
@@ -870,6 +915,16 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > ef.memorize('BUTTONS')  `15`
 > 
 > close(ef.get('FIG'))  `16`
->`1` renders a figure and returns its handle.`5` ensures that `FIG` is the parent of the panel.`9` ensures that `PANEL` is the parent of each button.`10` defines the same callback for all buttons.`11` The callbacks are defined in the token `¡calculate_callbacks!`.`12` All callbacks have two parameters at least, corresponding to the source of the callback `src` and to its event (here, not used).`13` The token `¡excluded_props!` determines which props to exclude from testing. Often evanescent handle and handlelist properties need to be excluded from the unit testing.`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
+> 
+
+>`1` renders a figure and returns its handle.>`5` ensures that `FIG` is the parent of the panel.
+>`9` ensures that `PANEL` is the parent of each button.
+>`10` defines the same callback for all buttons.
+>`11` The callbacks are defined in the token `¡calculate_callbacks!`.
+>`12` All callbacks have two parameters at least, corresponding to the source of the callback `src` and to its event (here, not used).
+>`13` The token `¡excluded_props!` determines which props to exclude from testing. Often evanescent handle and handlelist properties need to be excluded from the unit testing.
+>`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
+>`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
+>`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
 
 <
