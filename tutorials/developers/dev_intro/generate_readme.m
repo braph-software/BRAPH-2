@@ -19,7 +19,7 @@ document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
-document = strtrim(document);
+% document = strtrim(document);
 
 % basic reformatting
 document = regexprep(document, 'BRAPH~2.0', 'BRAPH 2.0');
@@ -47,19 +47,33 @@ document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
-pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
+pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
+figPattern = '\#\!(..)(?:\_)?(.*?)\n';
+newFigMods =  regexp(document, figPattern, 'tokens', 'all');
 findings = regexp(document, pattern, 'tokens', 'all');
+document = regexprep(document, pattern, '', 'all');
 for i = 1:length(findings)
+    % find marks index and remove them
     finding = findings{i};
-    document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');
-end
+    newPos = regexp(document, figPattern, 'once');
+    document = regexprep(document, figPattern, '', 'once');
 
-pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
-findings = regexp(document, pattern, 'tokens', 'all');
-for i = 1:length(findings)
-    finding = findings{i};
-    fig_number = finding{2};
-    document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure ' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
+    % replace old info with new way in new position
+    figName = finding{2};
+    figTitle = finding{3};
+    
+    if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
+        figSizeMod = strtrim(newFigMods{i}{2});
+        newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
+    else
+        newFormat = ['<img src="' figName '" alt="' figTitle '">'];
+    end
+
+    tagSize = length(newFormat);    
+    document = insertBefore(document, newPos - 1,  newFormat);
+
+    % insert fig explanation
+    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure ' newFigMods{i}{1} '.' finding{3} '**' newline() '> ' finding{end} newline()]);
 end
 
 % itemize
@@ -101,7 +115,7 @@ for i = 1:length(tmp_tcolorbox)
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code =index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
+        init_position_code = index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -130,7 +144,7 @@ pattern2 = '\¥\\circled\{([^{}]*)\}';
 pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
 pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
 pattern5 = '\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
-for i = 1:length(tmp_lstlisting)
+for i = 5:length(tmp_lstlisting)
     %
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
     % find circlenotes and replace them with anotations
@@ -151,7 +165,12 @@ for i = 1:length(tmp_lstlisting)
     tmp_finding = tmp_finding{1};
     section_title = [strtrim(tmp_finding{1}{1}) newline()];
     explanation_length = length(section_title);
-    code_with_no_notes = [strtrim(tmp_finding{1}{3}) newline()];
+    
+    % manage code section
+    codeSection = strtrim(tmp_finding{1}{3});
+    codeSection = regexprep(codeSection, char(13), '');
+    codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
+    code_with_no_notes = [newline() '> ' codeSection newline()];
     code_length = length(code_with_no_notes);
 
     % insert into document
@@ -177,22 +196,6 @@ for i = 1:length(tmp_lstlisting)
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
 %             while count_circle < length(arr_circlenotes) % this does not work
-%                 tmp = arr_circlenotes{k};
-%                 if count_circle == str2double(tmp{1})
-%                     tmp_circlenote = tmp;
-%                     if length(tmp) == 3
-%                         count_circle = count_circle + 2;
-%                         break;
-%                     else
-%                         count_circle = count_circle + 1;
-%                         break;
-%                     end
-%                 end
-%                 k = k +1;
-%                 if k > length(arr_circlenotes)
-%                     k = 1;
-%                 end
-%             end
             if length(tmp_circlenote) == 3
                 note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
             else

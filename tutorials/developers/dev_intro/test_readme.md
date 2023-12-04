@@ -16,10 +16,6 @@ BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
-** Compilation of BRAPH 2.0.**
-		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
-		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
->> braph2genesis
 
 <
 
@@ -33,35 +29,6 @@ During the compilation, there are several phases to improve the computational ef
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
-** Regeneration of elements.**
-		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
->> close all; delete(findall(0, 'type', 'figure')); clear all  `1`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'})  `2`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false)  `3`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false)  `4`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false)  `5`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false)  `6`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false)  `7`
-
->> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false)  `8`
-
->> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'})  `9`
-
->`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).>`2` regenerates `Pipeline`.
->`3` performs only one compilation.
->`4` does not regenerate the element, but only the layout and the unit test.
->`5` does not regenerate the layout.
->`6` does not regenerate the unit test.
->`7` does not perform the unit test.
->`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
->`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
-
 
 <
 
@@ -161,17 +128,18 @@ It does not allow callbacks.
 Even though it is possible to create instances of `Element`, typically one uses its subclasses and does not have any props.
 Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure elements.
 
-![Element tree](fig01_big.jpg) 
- > **Figure 01. Element tree.** All elements derive from the base class `Element`. 
+
+<img src="fig01_big.jpg" alt="Element tree">
+
+> **Figure 01.Element tree**
+> All elements derive from the base class `Element`. 
 	Its direct children are `NoValue`, `Callback`, and `ConcreteElement`, whose properties are also indicated.
 	Concrete elements further derive directly or indirectly from `ConcreteElement`.
 	
 
+
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
-** Instantiation of `NoValue`.**
-		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
-Element.getNoValue()
 
 <
 
@@ -179,10 +147,6 @@ No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
 It should be instantiated using `callback`.
-** Instantiation of a `Callback`.**
-		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
-el.getCallback('PROP', PROP_NUMBER)
-el.getCallback('TAG', PROP_TAG)
 
 <
 
@@ -197,16 +161,17 @@ Even though it is possible to create instances of `ConcreteElement`, typically o
 The value of a prop can be set with `set`.
 ** Setting a prop.**
 		This script illustrates various ways in which props can be set.
-el.set('ID', 'new el id')  `1 and 2`
-el.set(5, 'new el id')  `2`
 
-el.set( ...  `3`
-	'ID', 'new el id', ...
-	'LABEL', 'new el label', ...
-	7, 'new el notes' ...
-	) 
-
-el = el.set('ID', 'new el id')  `3`
+> el.set('ID', 'new el id')  `1 and 2`
+> el.set(5, 'new el id')  `2`
+> 
+> el.set( ...  `3`
+> 	'ID', 'new el id', ...
+> 	'LABEL', 'new el label', ...
+> 	7, 'new el notes' ...
+> 	) 
+> 
+> el = el.set('ID', 'new el id')  `3`
 
 >`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
@@ -259,14 +224,15 @@ When a prop is set to a certain value, the following operations are performed:
 The value of a prop can be retrieved with `get`.
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
-value = el.get('ID');  `1`
 
-value = el.get(ConcreteElement.ID);  `2`
-
-el.get('ID')  `3 and 4`
-el.get(ConcreteElement.ID)  `4`
-
-value = el.get('QUERY', ARG1, ARG2, ... );  `5`
+> value = el.get('ID');  `1`
+> 
+> value = el.get(ConcreteElement.ID);  `2`
+> 
+> el.get('ID')  `3 and 4`
+> el.get(ConcreteElement.ID)  `4`
+> 
+> value = el.get('QUERY', ARG1, ARG2, ... );  `5`
 
 >`1` gets the value of a prop using the prop tag.>`2` gets the value of a prop using the prop number.
 >`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
@@ -285,8 +251,9 @@ If the property is checked, it proceeds to check all properties after the calcul
 The raw value of a prop can be retrieved with `getr`.
 ** Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
-value = el.getr('ID');
-value = el.getr(ConcreteElement.ID);
+
+> value = el.getr('ID');
+> value = el.getr(ConcreteElement.ID);
 
 <
 
@@ -295,11 +262,12 @@ value = el.getr(ConcreteElement.ID);
 The value of a prop can be memorized using `memorize`.
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
-value = el.memorize('ID');  `1 and 2`
-value = el.memorize(ConcreteElement.ID);  `2`
 
-el.memorize('ID')  `3 and 4`
-el.memorize(ConcreteElement.ID)  `4`
+> value = el.memorize('ID');  `1 and 2`
+> value = el.memorize(ConcreteElement.ID);  `2`
+> 
+> el.memorize('ID')  `3 and 4`
+> el.memorize(ConcreteElement.ID)  `4`
 
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
 
@@ -322,140 +290,141 @@ A generator file has the structure illustrated `tokens`.
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
-%% ¡header!
-  <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
-  %%% ¡class_attributes!
-   Class attributes is a single line, e.g. Abstract = true, Sealed = true.
-  %%% ¡description!
-   This is a plain description of the element.
-   It can occupy several lines.
-  %%% ¡seealso!
-   Related functions and classes in a single line, coma-separated and without fullstop.
-  
- %% ¡constants!
-  Constants.
- 
- %% ¡props!
-  %%% ¡prop!
-   <tag1> (<category>, <format>) <description>.
-   %%%% ¡settings!
-    Prop settings, depending on format.
-   %%%% ¡default!
-    Prop default value (seldom needed).
-   %%%% ¡conditioning!
-    Code to condition value (before checks and calculation).
-    Can be on multiple lines.
-    The prop value is in the variable 'value', 
-    where also the conditioned prop value is returned.
-   %%%% ¡preset!
-    Code to preset element (before checks and calculation).
-    Can be on multiple lines.
-    The prop value is in the variable 'value', 
-    where also the preset prop value is returned.
-   %%%% ¡check_prop!
-    Code to check prop format (before calculation).
-    Can be on multiple lines.
-    The prop value is in the variable 'value'.
-    The outcome should be in variable 'check'.
-   %%%% ¡postset!
-    Postset code (executed after setting, but before checking, value),
-    executed on ONLY the set property.
-    Can be on multiple lines.
-    Does not return anything.
-   %%%% ¡postprocessing!
-    Postprocessing code (executed after setting, but before checking,
-    value), executed on ALL unlocked props after each set operation.
-    Can be on multiple lines.
-    Does not return anything.
-   %%%% ¡check_value!
-    Code to check prop value (after calculation).
-    Can be on multiple lines.
-    The prop value is in the variable 'value'.
-    The outcome should be in variable 'check' and the message in 'msg'.
-   %%%% ¡calculate!
-    Code to calculate prop results (only for category RESULT).
-    Can be on multiple lines.
-    Can include callbacks as {@cb_get, 'TAG', varargin} and 
-    {@cb_set, 'TAG1', value1, ...}.
-    The result should be in variable 'value'.
-   %%%% ¡calculate_callbacks!
-    Callbacks to be used in calculate, typically as functions 
-    cb_name(src, event).
-    Can be on multiple lines.
-   %%%% ¡gui!
-    GUI code for representing the panel of the prop.
-    Can be on multiple lines.
-    Should return a PanelProp object in 'pr'.
-  %%% ¡prop!
-    <tag2> ...
-  
- %% ¡props_update!
-  %%% ¡prop!
-   <tag1> (<category>, <format>) <description>. [Only description can be different from original prop]
-   %%%% ¡settings!
-    Updated settings.
-   %%%% ¡default!
-    Updated default.
-   %%%% ¡conditioning!
-    Update value conditioning (before checks and calculation).
-   %%%% ¡preset!
-    Update element value preset (before checks and calculation).
-   %%%% ¡check_prop!
-    Updated check prop format (before calculation).
-   %%%% ¡postset!
-    Update postset (after setting, but before checking, value).
-   %%%% ¡postprocessing!
-    Update value postprocessing (after setting, but before checking, value).
-   %%%% ¡check_value!
-    Updated check prop value (after calculation).
-   %%%% ¡calculate!
-    Updated calculation.
-   %%%% ¡calculate_callbacks!
-    Updated calculate callbacks.
-   %%%% ¡gui!
-    Updated GUI.
-  %%% ¡prop!
-   <tag2> ...
 
- %% ¡gui!
-  %%% ¡menu_import!
-   Menu Import for the GUI figure. 
-   The element is el.
-   The menu is menu_import.
-   The plot element is pe.
-  %%% ¡menu_export!
-   Menu Export for the GUI figure. 
-   The element is el.
-   The menu is menu_export.
-   The plot element is pe.
-
-  %% ¡layout!
-  %%% ¡prop!
-   %%% ¡id!
-    Prop id, e.g., Element.TAG, ordered as they should appead.
-   %%% ¡title!
-    String containing the title of the prop panel.
-  %%% ¡prop!
-   ...
-  
- %% ¡tests!
-  %%% ¡excluded_props!
-   Row vector with list of props to be excluded from standard tests.
-  %%% ¡warning_off!
-   Switches off the warnings regarding the element.
-  %%% ¡test!
-   %%%% ¡name!
-   Name of the text on a single line.
-   %%%% ¡probability!
-   Probability with which this test is performed. By default it is 1.
-   %%%% ¡code!
-   Code of the test.
-   Can be on multiple lines.
-  %%% ¡test!
-   ...
-  %%% ¡test_functions!
-  Functions used in the test.
-  Can be on multiple lines.
+> %% ¡header!
+>   <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
+>   %%% ¡class_attributes!
+>    Class attributes is a single line, e.g. Abstract = true, Sealed = true.
+>   %%% ¡description!
+>    This is a plain description of the element.
+>    It can occupy several lines.
+>   %%% ¡seealso!
+>    Related functions and classes in a single line, coma-separated and without fullstop.
+>   
+>  %% ¡constants!
+>   Constants.
+>  
+>  %% ¡props!
+>   %%% ¡prop!
+>    <tag1> (<category>, <format>) <description>.
+>    %%%% ¡settings!
+>     Prop settings, depending on format.
+>    %%%% ¡default!
+>     Prop default value (seldom needed).
+>    %%%% ¡conditioning!
+>     Code to condition value (before checks and calculation).
+>     Can be on multiple lines.
+>     The prop value is in the variable 'value', 
+>     where also the conditioned prop value is returned.
+>    %%%% ¡preset!
+>     Code to preset element (before checks and calculation).
+>     Can be on multiple lines.
+>     The prop value is in the variable 'value', 
+>     where also the preset prop value is returned.
+>    %%%% ¡check_prop!
+>     Code to check prop format (before calculation).
+>     Can be on multiple lines.
+>     The prop value is in the variable 'value'.
+>     The outcome should be in variable 'check'.
+>    %%%% ¡postset!
+>     Postset code (executed after setting, but before checking, value),
+>     executed on ONLY the set property.
+>     Can be on multiple lines.
+>     Does not return anything.
+>    %%%% ¡postprocessing!
+>     Postprocessing code (executed after setting, but before checking,
+>     value), executed on ALL unlocked props after each set operation.
+>     Can be on multiple lines.
+>     Does not return anything.
+>    %%%% ¡check_value!
+>     Code to check prop value (after calculation).
+>     Can be on multiple lines.
+>     The prop value is in the variable 'value'.
+>     The outcome should be in variable 'check' and the message in 'msg'.
+>    %%%% ¡calculate!
+>     Code to calculate prop results (only for category RESULT).
+>     Can be on multiple lines.
+>     Can include callbacks as {@cb_get, 'TAG', varargin} and 
+>     {@cb_set, 'TAG1', value1, ...}.
+>     The result should be in variable 'value'.
+>    %%%% ¡calculate_callbacks!
+>     Callbacks to be used in calculate, typically as functions 
+>     cb_name(src, event).
+>     Can be on multiple lines.
+>    %%%% ¡gui!
+>     GUI code for representing the panel of the prop.
+>     Can be on multiple lines.
+>     Should return a PanelProp object in 'pr'.
+>   %%% ¡prop!
+>     <tag2> ...
+>   
+>  %% ¡props_update!
+>   %%% ¡prop!
+>    <tag1> (<category>, <format>) <description>. [Only description can be different from original prop]
+>    %%%% ¡settings!
+>     Updated settings.
+>    %%%% ¡default!
+>     Updated default.
+>    %%%% ¡conditioning!
+>     Update value conditioning (before checks and calculation).
+>    %%%% ¡preset!
+>     Update element value preset (before checks and calculation).
+>    %%%% ¡check_prop!
+>     Updated check prop format (before calculation).
+>    %%%% ¡postset!
+>     Update postset (after setting, but before checking, value).
+>    %%%% ¡postprocessing!
+>     Update value postprocessing (after setting, but before checking, value).
+>    %%%% ¡check_value!
+>     Updated check prop value (after calculation).
+>    %%%% ¡calculate!
+>     Updated calculation.
+>    %%%% ¡calculate_callbacks!
+>     Updated calculate callbacks.
+>    %%%% ¡gui!
+>     Updated GUI.
+>   %%% ¡prop!
+>    <tag2> ...
+> 
+>  %% ¡gui!
+>   %%% ¡menu_import!
+>    Menu Import for the GUI figure. 
+>    The element is el.
+>    The menu is menu_import.
+>    The plot element is pe.
+>   %%% ¡menu_export!
+>    Menu Export for the GUI figure. 
+>    The element is el.
+>    The menu is menu_export.
+>    The plot element is pe.
+> 
+>   %% ¡layout!
+>   %%% ¡prop!
+>    %%% ¡id!
+>     Prop id, e.g., Element.TAG, ordered as they should appead.
+>    %%% ¡title!
+>     String containing the title of the prop panel.
+>   %%% ¡prop!
+>    ...
+>   
+>  %% ¡tests!
+>   %%% ¡excluded_props!
+>    Row vector with list of props to be excluded from standard tests.
+>   %%% ¡warning_off!
+>    Switches off the warnings regarding the element.
+>   %%% ¡test!
+>    %%%% ¡name!
+>    Name of the text on a single line.
+>    %%%% ¡probability!
+>    Probability with which this test is performed. By default it is 1.
+>    %%%% ¡code!
+>    Code of the test.
+>    Can be on multiple lines.
+>   %%% ¡test!
+>    ...
+>   %%% ¡test_functions!
+>   Functions used in the test.
+>   Can be on multiple lines.
 
 <
 
@@ -463,16 +432,17 @@ A generator file has the structure illustrated `tokens`.
 A list of special instructions is shown in `special`.
 ** Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
-€ConcreteElement.NAME€  `1`
 
-__Category.CONSTANT__  `2`circlednote{2}{keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value.circled{3}-circled{5} It works similarly also for the other constants of `Category` and `Format`.}
-__Category.CONSTANT_TAG__  `3`
-...
-__Format.EMPTY__  `4`
-__Format.EMPTY_TAG__  `5`
-...
-
-%%%__WARN_TBI__  `6`
+> €ConcreteElement.NAME€  `1`
+> 
+> __Category.CONSTANT__  `2`circlednote{2}{keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value.circled{3}-circled{5} It works similarly also for the other constants of `Category` and `Format`.}
+> __Category.CONSTANT_TAG__  `3`
+> ...
+> __Format.EMPTY__  `4`
+> __Format.EMPTY_TAG__  `5`
+> ...
+> 
+> %%%__WARN_TBI__  `6`
 
 >`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
 
@@ -481,9 +451,13 @@ __Format.EMPTY_TAG__  `5`
 
 ## Overview of Elements
 
-![BRAPH 2.0 genesis.](../braph2genesis.png) 
- > **Figure br. BRAPH 2.0 genesis..** Directory structure of "braph2genesis" (left) and "braph2" (right).
+
+<img src="../braph2genesis.png" alt="BRAPH 2.0 genesis.">
+
+> **Figure 02.BRAPH 2.0 genesis.**
+> Directory structure of "braph2genesis" (left) and "braph2" (right).
 	
+
 
 The directory structure of "braph2" and the relation with "braph2genesis" is illustrated in Figure genesis.
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files "*.gen.m") that is compiled into the actual elements (files "*.m") by the command `braph2genesis` (some examples of these elements are shown).
@@ -517,117 +491,118 @@ We will now see how to implement a few concrete elements.
 We will now create our first element (`ao`), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
-%% ¡header!  `1`
-ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
 
-%%% ¡description!
-An Arithmetic Operation Calculator (ArithmeticOperations) contains two 
- numbers as data scalar props and calculates their sum and difference as 
- result scalar props.
-
-%%% ¡seealso!
-LogicalOperations, GeometricalOperations
-
-
-%% ¡props_update!  `2`
-
-%%% ¡prop!
-¤ELCLASS (constant, string) is the class of the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'ArithmeticOperations'  `3`
-
-%%% ¡prop!
-¤NAME (constant, string) is the name of the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'Arithmetic Operation Calculator'
-
-%%% ¡prop!
-¤DESCRIPTION (constant, string) is the description of the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'An Arithmetic Operations element (ArithmeticOperations) contains two numbers as data scalar props and calculates their sum and difference as result scalar props.'
-
-%%% ¡prop!
-¤TEMPLATE (parameter, item) is the template of the¤ arithmetic operation calculator¤.¤
-%%%% ¡settings!
-'ArithmeticOperations'  `4`
-
-%%% ¡prop!
-¤ID (data, string) is a few-letter code for the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'ArithmeticOperations ID'
-
-%%% ¡prop!
-¤LABEL (metadata, string) is an extended label of the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'ArithmeticOperations label'
-
-%%% ¡prop!
-¤NOTES (metadata, string) are some specific notes about the¤ arithmetic operation calculator¤.¤
-%%%% ¡default!
-'ArithmeticOperations notes'
-
-%%% ¡prop!  `5`
-¤TOSTRING (query, string) returns a string that represents the ¤ arithmetic operation calculator¤.¤
-%%%% ¡calcualte!  `6`
-a = ao.get('A');
-b = ao.get('B');
-value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B)];
-
-
-%% ¡props!  `7`
-
-%%% ¡prop!  `8 and 9`
-A (data, scalar) is the first number.
-
-%%% ¡prop!  `9`
-B (data, scalar) is the second number.
-
-%%% ¡prop!  `10`
-SUM (result, scalar) is the sum of the two numbers (A + B).
-%%%% ¡calculate!  `11`
-value = ao.get('A') + ao.get('B');
-
-%%% ¡prop!  `12`
-DIFF (result, scalar) is the difference of the two numbers (A - B).
-%%%% ¡calculate!  `13`
-value = ao.get('A') - ao.get('B');
-
-
-%% ¡tests!  `14`
-
-%%% ¡test!
-%%%% ¡name!
-Simple test
-%%%% ¡code!
-ao = ArithmeticOperations('A', 6, 'B', 4)
-
-string = ao.get('TOSTRING')
-assert(~ao.isLocked('A'))  `15 and 16`
-assert(~ao.isLocked('B'))  `16`
-
-sum = ao.get('SUM')
-
-assert(ao.isLocked('A'))  `17 and 18`
-assert(ao.isLocked('B'))  `18`
-
-diff = ao.get('DIFF')
-
-sum_raw = ao.getr('SUM')  `19 and 20`
-diff_raw = ao.getr('DIFF')  `20`
-assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
-
-%%% ¡test!   `21`
-%%%% ¡name!
-Simple test with memorization
-%%%% ¡code!
-¤ao = ArithmeticOperations('A', 6, 'B', 4)
-
-sum = ao.¤memorize¤('SUM')
-diff = ao.¤memorize¤('DIFF')
-
-sum_raw = ao.getr('SUM')
-diff_raw = ao.getr('DIFF')¤
-assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
+> %% ¡header!  `1`
+> ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
+> 
+> %%% ¡description!
+> An Arithmetic Operation Calculator (ArithmeticOperations) contains two 
+>  numbers as data scalar props and calculates their sum and difference as 
+>  result scalar props.
+> 
+> %%% ¡seealso!
+> LogicalOperations, GeometricalOperations
+> 
+> 
+> %% ¡props_update!  `2`
+> 
+> %%% ¡prop!
+> ¤ELCLASS (constant, string) is the class of the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'ArithmeticOperations'  `3`
+> 
+> %%% ¡prop!
+> ¤NAME (constant, string) is the name of the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'Arithmetic Operation Calculator'
+> 
+> %%% ¡prop!
+> ¤DESCRIPTION (constant, string) is the description of the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'An Arithmetic Operations element (ArithmeticOperations) contains two numbers as data scalar props and calculates their sum and difference as result scalar props.'
+> 
+> %%% ¡prop!
+> ¤TEMPLATE (parameter, item) is the template of the¤ arithmetic operation calculator¤.¤
+> %%%% ¡settings!
+> 'ArithmeticOperations'  `4`
+> 
+> %%% ¡prop!
+> ¤ID (data, string) is a few-letter code for the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'ArithmeticOperations ID'
+> 
+> %%% ¡prop!
+> ¤LABEL (metadata, string) is an extended label of the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'ArithmeticOperations label'
+> 
+> %%% ¡prop!
+> ¤NOTES (metadata, string) are some specific notes about the¤ arithmetic operation calculator¤.¤
+> %%%% ¡default!
+> 'ArithmeticOperations notes'
+> 
+> %%% ¡prop!  `5`
+> ¤TOSTRING (query, string) returns a string that represents the ¤ arithmetic operation calculator¤.¤
+> %%%% ¡calcualte!  `6`
+> a = ao.get('A');
+> b = ao.get('B');
+> value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B)];
+> 
+> 
+> %% ¡props!  `7`
+> 
+> %%% ¡prop!  `8 and 9`
+> A (data, scalar) is the first number.
+> 
+> %%% ¡prop!  `9`
+> B (data, scalar) is the second number.
+> 
+> %%% ¡prop!  `10`
+> SUM (result, scalar) is the sum of the two numbers (A + B).
+> %%%% ¡calculate!  `11`
+> value = ao.get('A') + ao.get('B');
+> 
+> %%% ¡prop!  `12`
+> DIFF (result, scalar) is the difference of the two numbers (A - B).
+> %%%% ¡calculate!  `13`
+> value = ao.get('A') - ao.get('B');
+> 
+> 
+> %% ¡tests!  `14`
+> 
+> %%% ¡test!
+> %%%% ¡name!
+> Simple test
+> %%%% ¡code!
+> ao = ArithmeticOperations('A', 6, 'B', 4)
+> 
+> string = ao.get('TOSTRING')
+> assert(~ao.isLocked('A'))  `15 and 16`
+> assert(~ao.isLocked('B'))  `16`
+> 
+> sum = ao.get('SUM')
+> 
+> assert(ao.isLocked('A'))  `17 and 18`
+> assert(ao.isLocked('B'))  `18`
+> 
+> diff = ao.get('DIFF')
+> 
+> sum_raw = ao.getr('SUM')  `19 and 20`
+> diff_raw = ao.getr('DIFF')  `20`
+> assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
+> 
+> %%% ¡test!   `21`
+> %%%% ¡name!
+> Simple test with memorization
+> %%%% ¡code!
+> ¤ao = ArithmeticOperations('A', 6, 'B', 4)
+> 
+> sum = ao.¤memorize¤('SUM')
+> diff = ao.¤memorize¤('DIFF')
+> 
+> sum_raw = ao.getr('SUM')
+> diff_raw = ao.getr('DIFF')¤
+> assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
 
 >`1` The `¡header!` token is the only required one.>`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
 >`3` must be the name of the element.
@@ -654,42 +629,43 @@ assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
 We can now create an element that demonstrate how the seeded randomness works (`sr`).
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
-%% ¡header!
-SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 
-%%% ¡description!
-¤...¤  `1`
-
-
-%% ¡props_update!
-
-%%% ¡prop!
-¤ELCLASS (constant, string) is the class of the¤ randomizer¤.¤
-%%%% ¡default!
-'SeededRandomness'
-
-¤...¤  `2`
-
-
-%% ¡props!
-
-%%% ¡prop!
-RANDOM_NUMBER (result, scalar) is a random number.
-%%%% ¡calculate!
-value = rand();
-
-
-%% ¡tests!
-
-%%% ¡test!
-Simple test
-%%%% ¡code!
-sr1 = SeededRandomness()
-sr2 = SeededRandomness()
-
-assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
-assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
-assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
+> %% ¡header!
+> SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
+> 
+> %%% ¡description!
+> ¤...¤  `1`
+> 
+> 
+> %% ¡props_update!
+> 
+> %%% ¡prop!
+> ¤ELCLASS (constant, string) is the class of the¤ randomizer¤.¤
+> %%%% ¡default!
+> 'SeededRandomness'
+> 
+> ¤...¤  `2`
+> 
+> 
+> %% ¡props!
+> 
+> %%% ¡prop!
+> RANDOM_NUMBER (result, scalar) is a random number.
+> %%%% ¡calculate!
+> value = rand();
+> 
+> 
+> %% ¡tests!
+> 
+> %%% ¡test!
+> Simple test
+> %%%% ¡code!
+> sr1 = SeededRandomness()
+> sr2 = SeededRandomness()
+> 
+> assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
+> assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
+> assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
 
 >`1` Here, a detailed description should be provided.>`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 >`6` checks that calls to the calculation of the random number of differen randomizers return different values.
@@ -703,61 +679,62 @@ assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (`ao2`).
 ** Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
-%% ¡header!
-ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
 
-%%% ¡description!
-¤...¤
-
-
-%% ¡props_update!
-
-%%% ¡prop!
-¤ELCLASS (constant, string) is the class of the ¤calculator with query¤.¤
-%%%% ¡default!
-'ArithmeticOperationsWithQuery'
-
-¤...¤
-
-
-%% ¡props!
-
-%%% ¡prop!
-SUM_OR_DIFF (query, scalar) returns the sum or difference depending on the argument.
-%%%% ¡calculate!
-% R = ao.get('SUM_OR_DIFF', SUM_OR_DIFF) returns the sum of A and B if  `1`
-%  SUM_OR_DIFF = 'SUM' or the difference of A and B if SUM_OR_DIFF = 'DIFF'.
-
-if isempty(varargin)  `2`
-    value = NaN;
-    return
-end    
-sum_or_diff = varargin{1};
-
-switch sum_or_diff 
-    case 'SUM'
-        value = ao.get('SUM');
-
-    case 'DIFF'
-        value = ao.get('DIFF');
-
-    otherwise
-        value = NaN;
-end
-
-
-
-%% ¡tests!
-
-%%% ¡test!
-Simple test
-%%%% ¡code!
-ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
-
-assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3 and 4`
-assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
-assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
-assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
+> %% ¡header!
+> ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
+> 
+> %%% ¡description!
+> ¤...¤
+> 
+> 
+> %% ¡props_update!
+> 
+> %%% ¡prop!
+> ¤ELCLASS (constant, string) is the class of the ¤calculator with query¤.¤
+> %%%% ¡default!
+> 'ArithmeticOperationsWithQuery'
+> 
+> ¤...¤
+> 
+> 
+> %% ¡props!
+> 
+> %%% ¡prop!
+> SUM_OR_DIFF (query, scalar) returns the sum or difference depending on the argument.
+> %%%% ¡calculate!
+> % R = ao.get('SUM_OR_DIFF', SUM_OR_DIFF) returns the sum of A and B if  `1`
+> %  SUM_OR_DIFF = 'SUM' or the difference of A and B if SUM_OR_DIFF = 'DIFF'.
+> 
+> if isempty(varargin)  `2`
+>     value = NaN;
+>     return
+> end    
+> sum_or_diff = varargin{1};
+> 
+> switch sum_or_diff 
+>     case 'SUM'
+>         value = ao.get('SUM');
+> 
+>     case 'DIFF'
+>         value = ao.get('DIFF');
+> 
+>     otherwise
+>         value = NaN;
+> end
+> 
+> 
+> 
+> %% ¡tests!
+> 
+> %%% ¡test!
+> Simple test
+> %%%% ¡code!
+> ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
+> 
+> assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3 and 4`
+> assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
+> assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
+> assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
 
 >`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 >`3 4` returns the sum or the difference depening on the argument.
@@ -771,100 +748,101 @@ assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
 We can now demonstrate the use of evanescent props and graphical handles (`f`).
 ** Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
-%% ¡header!
-ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
 
-%%% ¡description!
-¤...¤
-
-
-%% ¡props_update!
-
-%%% ¡prop!
-¤ELCLASS (constant, string) is the class of the¤ element with figure¤.¤
-%%%% ¡default!
-'ElementWithFigure'
-
-¤...¤
-
-
-%% ¡props!
-
-%%% ¡prop!
-FIG (evanescent, handle) is the handle of a figure.
-%%%% ¡calculate!
-value = uifigure( ...  `1`
-    'Name', 'Figure from ElementWithFigure', ...
-    'Color', BRAPH2.COL ...
-    );
-
-%%% ¡prop!
-PANEL (evanescent, handle) is the handle of the panel.
-%%%% ¡calculate!
-if ~check_graphics(ef.memorize('FIG'), 'figure')  `2`circlednote{2}{checks whether the figure still exists, otherwisecircled{3} erases it so thatcircled{4} recreates it.}
-    ef.set('FIG', Element.getNoValue());  `3`
-end
-
-fig = ef.memorize('FIG');  `4`
-
-value = uipanel( ...
-    'Parent', fig, ...  `5`
-    'Units', 'normalized', ...
-    'Position', [.25 .25 .50 .50], ...
-    'BackgroundColor', BRAPH2.COL_BKG ...
-    );
-
-%%% ¡prop!
-BUTTONS (evanescent, handlelist) is the list of handles of the buttons.
-%%%% ¡calculate!
-if ~check_graphics(ef.getr('PANEL'), 'uipanel')  `6`circlednote{6}{checks whether the panel still exists, otherwisecircled{7} erases it so thatcircled{8} recreates it.}
-    ef.set('PANEL', Element.getNoValue());  `7`
-end
-
-panel = ef.memorize('PANEL');  `8`
-
-value = {};
-for i = 1:1:10
-    value{i} = uibutton( ...
-        'Parent', panel, ...  `9`
-        'Text', ['B' int2str(i)], ...
-        'Position', [ ...
-            (i - 1) * w(panel, 'pixels') / 10 ...
-            (i - 1) * h(panel, 'pixels') / 10 ...
-            w(panel, 'pixels') / 10 ...
-            h(panel, 'pixels') / 10 ...
-            ], ...
-        'ButtonPushedFcn', {@cb_button} ...  `10`
-        );
-end
-%%%% ¡calculate_callbacks!  `11`
-function cb_button(src, ~)  `12`
-    disp(src.get('Text'))
-end
-
-
-%% ¡tests!
-
-%%% ¡excluded_props!  `13`
-[ElementWithFigure.PANEL ElementWithFigure.BUTTONS]
-
-%%% ¡test!  `14`
-%%%% ¡name!
-Remove Figures
-%%%% ¡code!
-warning('off', [BRAPH2.STR ':ElementWithFigure'])
-assert(length(findall(0, 'type', 'figure')) == 4) 
-delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':ElementWithFigure'])
-
-%%% ¡test!
-Simple test
-%%%% ¡code!
-ef = ElementWithFigure()
-
-ef.memorize('BUTTONS')  `15`
-
-close(ef.get('FIG'))  `16`
+> %% ¡header!
+> ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
+> 
+> %%% ¡description!
+> ¤...¤
+> 
+> 
+> %% ¡props_update!
+> 
+> %%% ¡prop!
+> ¤ELCLASS (constant, string) is the class of the¤ element with figure¤.¤
+> %%%% ¡default!
+> 'ElementWithFigure'
+> 
+> ¤...¤
+> 
+> 
+> %% ¡props!
+> 
+> %%% ¡prop!
+> FIG (evanescent, handle) is the handle of a figure.
+> %%%% ¡calculate!
+> value = uifigure( ...  `1`
+>     'Name', 'Figure from ElementWithFigure', ...
+>     'Color', BRAPH2.COL ...
+>     );
+> 
+> %%% ¡prop!
+> PANEL (evanescent, handle) is the handle of the panel.
+> %%%% ¡calculate!
+> if ~check_graphics(ef.memorize('FIG'), 'figure')  `2`circlednote{2}{checks whether the figure still exists, otherwisecircled{3} erases it so thatcircled{4} recreates it.}
+>     ef.set('FIG', Element.getNoValue());  `3`
+> end
+> 
+> fig = ef.memorize('FIG');  `4`
+> 
+> value = uipanel( ...
+>     'Parent', fig, ...  `5`
+>     'Units', 'normalized', ...
+>     'Position', [.25 .25 .50 .50], ...
+>     'BackgroundColor', BRAPH2.COL_BKG ...
+>     );
+> 
+> %%% ¡prop!
+> BUTTONS (evanescent, handlelist) is the list of handles of the buttons.
+> %%%% ¡calculate!
+> if ~check_graphics(ef.getr('PANEL'), 'uipanel')  `6`circlednote{6}{checks whether the panel still exists, otherwisecircled{7} erases it so thatcircled{8} recreates it.}
+>     ef.set('PANEL', Element.getNoValue());  `7`
+> end
+> 
+> panel = ef.memorize('PANEL');  `8`
+> 
+> value = {};
+> for i = 1:1:10
+>     value{i} = uibutton( ...
+>         'Parent', panel, ...  `9`
+>         'Text', ['B' int2str(i)], ...
+>         'Position', [ ...
+>             (i - 1) * w(panel, 'pixels') / 10 ...
+>             (i - 1) * h(panel, 'pixels') / 10 ...
+>             w(panel, 'pixels') / 10 ...
+>             h(panel, 'pixels') / 10 ...
+>             ], ...
+>         'ButtonPushedFcn', {@cb_button} ...  `10`
+>         );
+> end
+> %%%% ¡calculate_callbacks!  `11`
+> function cb_button(src, ~)  `12`
+>     disp(src.get('Text'))
+> end
+> 
+> 
+> %% ¡tests!
+> 
+> %%% ¡excluded_props!  `13`
+> [ElementWithFigure.PANEL ElementWithFigure.BUTTONS]
+> 
+> %%% ¡test!  `14`
+> %%%% ¡name!
+> Remove Figures
+> %%%% ¡code!
+> warning('off', [BRAPH2.STR ':ElementWithFigure'])
+> assert(length(findall(0, 'type', 'figure')) == 4) 
+> delete(findall(0, 'type', 'figure'))
+> warning('on', [BRAPH2.STR ':ElementWithFigure'])
+> 
+> %%% ¡test!
+> Simple test
+> %%%% ¡code!
+> ef = ElementWithFigure()
+> 
+> ef.memorize('BUTTONS')  `15`
+> 
+> close(ef.get('FIG'))  `16`
 
 >`1` renders a figure and returns its handle.>`5` ensures that `FIG` is the parent of the panel.
 >`9` ensures that `PANEL` is the parent of each button.

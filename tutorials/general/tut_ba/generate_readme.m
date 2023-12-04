@@ -47,22 +47,6 @@ document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
-% pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}';
-% findings = regexp(document, pattern, 'tokens', 'all');
-% for i = 1:length(findings)
-%     finding = findings{i};
-%     document = regexprep(document, pattern, ['![' finding{3} '](' finding{2} ')'], 'once');
-% end
-% 
-% pattern = '\!\[([^\[\]]*)\]\(([^()]*)\)\s*\{\s*([^{}]*)\}';
-% findings = regexp(document, pattern, 'tokens', 'all');
-% for i = 1:length(findings)
-%     finding = findings{i};
-%     fig_number = finding{2};
-%     document = regexprep(document, pattern, ['![' finding{1} '](' finding{2} ') \n \> **Figure ' fig_number(4:5) '. ' finding{1} '.** ' finding{3} ], 'once');
-% end
-
-% move figs to desired position
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
 figPattern = '\#\!(..)(?:\_)?(.*?)\n';
 newFigMods =  regexp(document, figPattern, 'tokens', 'all');
