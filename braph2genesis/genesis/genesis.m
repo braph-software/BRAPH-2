@@ -591,149 +591,146 @@ if compile_dir('pipelines')
 end
 
 %% CREATE TEST
-% % % % src
-% % % if compile_dir('util'))
-% % %     util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
-% % %     parfor i = 1:numel(util_gen_list)
-% % %         if ~any(strcmp(excluded, util_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if compile_dir('ds'))
-% % %     ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
-% % %     parfor i = 1:numel(ds_gen_list)
-% % %         if ~any(strcmp(excluded, ds_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if develop
-% % %     if compile_dir('examples'))
-% % %         ds_examples_gen_list = getGenerators([source_dir fp 'src' fp 'ds' fp 'examples']);
-% % %         parfor i = 1:numel(ds_examples_gen_list)
-% % %             if ~any(strcmp(excluded, ds_examples_gen_list{i}))
-% % %                 create_test_Element([source_dir fp 'src' fp 'ds' fp 'examples' fp ds_examples_gen_list{i}], [target_dir fp 'src' fp 'ds' fp 'examples'])
-% % %             end
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if compile_dir('atlas'))
-% % %     atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
-% % %     parfor i = 1:numel(atlas_gen_list)
-% % %         if ~any(strcmp(excluded, atlas_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if compile_dir('gt'))
-% % %     gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
-% % %     parfor i = 1:numel(gt_gen_list)
-% % %         if ~any(strcmp(excluded, gt_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if compile_dir('cohort'))
-% % %     cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
-% % %     parfor i = 1:numel(cohort_gen_list)
-% % %         if ~any(strcmp(excluded, cohort_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if compile_dir('analysis'))
-% % %     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-% % %     parfor i = 1:numel(analysis_gen_list)
-% % %         if ~any(strcmp(excluded, analysis_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % nn
-% % % if compile_dir('nn'))
-% % %     nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
-% % %     parfor i = 1:numel(nn_gen_list)
-% % %         if ~any(strcmp(excluded, nn_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % gui
-% % % if compile_dir('gui'))
-% % %     gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
-% % %     parfor i = 1:numel(gui_gen_list)
-% % %         if ~any(strcmp(excluded, gui_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % if develop
-% % %     if compile_dir('examples'))
-% % %         gui_examples_gen_list = getGenerators([source_dir fp 'src' fp 'gui' fp 'examples']);
-% % %         parfor i = 1:numel(gui_examples_gen_list)
-% % %             if ~any(strcmp(excluded, gui_examples_gen_list{i}))
-% % %                 create_test_Element([source_dir fp 'src' fp 'gui' fp 'examples' fp gui_examples_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'examples'])
-% % %             end
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % graphs
-% % % if compile_dir('graphs'))
-% % %     graphs_gen_list = getGenerators([source_dir fp 'graphs']);
-% % %     parfor i = 1:numel(graphs_gen_list)
-% % %         if ~any(strcmp(excluded, graphs_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % measures
-% % % if compile_dir('measures'))
-% % %     measures_gen_list = getGenerators([source_dir fp 'measures']);
-% % %     parfor i = 1:numel(measures_gen_list)
-% % %         if ~any(strcmp(excluded, measures_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % neuralnetworks
-% % % if compile_dir('neuralnetworks'))
-% % %     neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
-% % %     parfor i = 1:numel(neuralnetworks_gen_list)
-% % %         if ~any(strcmp(excluded, neuralnetworks_gen_list{i}))
-% % %             create_test_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
-% % %         end
-% % %     end
-% % % end
-% % % 
-% % % % pipelines
-% % % if compile_dir('pipelines'))
-% % %     pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
-% % %     pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
-% % %     pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
-% % %     for i = 1:1:length(pipelines_dir_list)
-% % %         pipeline_dir_name = pipelines_dir_list(i).name;
-% % %         if ~any(strcmp(excluded, pipeline_dir_name))
-% % %             pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
-% % %             parfor j = 1:numel(pipeline_gen_list)
-% % %                 if ~any(strcmp(excluded, pipeline_gen_list{j}))
-% % %                     create_test_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
-% % %                 end
-% % %             end
-% % %         end
-% % %     end
-% % % end
+% src
+if compile_dir('util')
+    util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
+    for i = 1:numel(util_gen_list)
+        if compile_el('util', util_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'util' fp util_gen_list{i}], [target_dir fp 'src' fp 'util'])
+        end
+    end
+end
+
+if compile_dir('ds')
+    ds_gen_list = getGenerators([source_dir fp 'src' fp 'ds']);
+    for i = 1:numel(ds_gen_list)
+        if compile_el('ds', ds_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'ds' fp ds_gen_list{i}], [target_dir fp 'src' fp 'ds'])
+        end
+    end
+
+    if compile_dir('ds_examples')
+        ds_examples_gen_list = getGenerators([source_dir fp 'src' fp 'ds' fp 'ds_examples']);
+        for i = 1:numel(ds_examples_gen_list)
+            if compile_el('ds_examples', ds_examples_gen_list{i})
+                create_test_Element([source_dir fp 'src' fp 'ds' fp 'ds_examples' fp ds_examples_gen_list{i}], [target_dir fp 'src' fp 'ds' fp 'ds_examples'])
+            end
+        end
+    end
+end
+
+
+if compile_dir('atlas')
+    atlas_gen_list = getGenerators([source_dir fp 'src' fp 'atlas']);
+    for i = 1:numel(atlas_gen_list)
+        if compile_el('atals', atlas_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'atlas' fp atlas_gen_list{i}], [target_dir fp 'src' fp 'atlas'])
+        end
+    end
+end
+
+if compile_dir('gt')
+    gt_gen_list = getGenerators([source_dir fp 'src' fp 'gt']);
+    for i = 1:numel(gt_gen_list)
+        if compile_el('gt', gt_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'gt' fp gt_gen_list{i}], [target_dir fp 'src' fp 'gt'])
+        end
+    end
+end
+
+if compile_dir('cohort')
+    cohort_gen_list = getGenerators([source_dir fp 'src' fp 'cohort']);
+    for i = 1:numel(cohort_gen_list)
+        if compile_el('cohort', cohort_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'cohort' fp cohort_gen_list{i}], [target_dir fp 'src' fp 'cohort'])
+        end
+    end
+end
+
+if compile_dir('analysis')
+    analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
+    for i = 1:numel(analysis_gen_list)
+        if compile_el('analysis', analysis_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'analysis'])
+        end
+    end
+end
+
+% nn
+if compile_dir('nn')
+    nn_gen_list = getGenerators([source_dir fp 'src' fp 'nn']);
+    for i = 1:numel(nn_gen_list)
+        if compile_el('nn', nn_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'nn' fp nn_gen_list{i}], [target_dir fp 'src' fp 'nn'])
+        end
+    end
+end
+
+% gui
+if compile_dir('gui')
+    gui_gen_list = getGenerators([source_dir fp 'src' fp 'gui']);
+    for i = 1:numel(gui_gen_list)
+        if compile_el('gui', gui_gen_list{i})
+            create_test_Element([source_dir fp 'src' fp 'gui' fp gui_gen_list{i}], [target_dir fp 'src' fp 'gui'])
+        end
+    end
+
+    if compile_dir('gui_examples')
+        gui_examples_gen_list = getGenerators([source_dir fp 'src' fp 'gui' fp 'gui_examples']);
+        for i = 1:numel(gui_examples_gen_list)
+            if compile_el('gui_examples', gui_examples_gen_list{i})
+                create_test_Element([source_dir fp 'src' fp 'gui' fp 'gui_examples' fp gui_examples_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'gui_examples'])
+            end
+        end
+    end
+end
+
+% graphs
+if compile_dir('graphs')
+    graphs_gen_list = getGenerators([source_dir fp 'graphs']);
+    for i = 1:numel(graphs_gen_list)
+        if compile_el('graphs', graphs_gen_list{i})
+            create_test_Element([source_dir fp 'graphs' fp graphs_gen_list{i}], [target_dir fp 'graphs'])
+        end
+    end
+end
+
+% measures
+if compile_dir('measures')
+    measures_gen_list = getGenerators([source_dir fp 'measures']);
+    for i = 1:numel(measures_gen_list)
+        if compile_el('measures', measures_gen_list{i})
+            create_test_Element([source_dir fp 'measures' fp measures_gen_list{i}], [target_dir fp 'measures'])
+        end
+    end
+end
+
+% neuralnetworks
+if compile_dir('neuralnetworks')
+    neuralnetworks_gen_list = getGenerators([source_dir fp 'neuralnetworks']);
+    for i = 1:numel(neuralnetworks_gen_list)
+        if compile_el('neuralnetworks', neuralnetworks_gen_list{i})
+            create_test_Element([source_dir fp 'neuralnetworks' fp neuralnetworks_gen_list{i}], [target_dir fp 'neuralnetworks'])
+        end
+    end
+end
+
+% pipelines
+if compile_dir('pipelines')
+    pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
+    pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+    pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+    for i = 1:1:length(pipelines_dir_list)
+        pipeline_dir_name = pipelines_dir_list(i).name;
+        if compile_pip_dir(pipeline_dir_name)
+            pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
+            for j = 1:numel(pipeline_gen_list)
+                if compile_pip_el('', pipeline_gen_list{j})
+                    create_test_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
+                end
+            end
+        end
+    end
+end
 
 end
