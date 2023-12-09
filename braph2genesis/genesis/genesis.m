@@ -262,8 +262,8 @@ if any(ismember({'+sandbox', '+sandbox*'}, rollcall))
 end
 
 %% CREATE ELEMENTS
-% % % for run = 1:1:run_number
-% % % 
+for run = 1:1:run_number
+
 % % %     disp(['¡! started run number ' int2str(run)])
 % % %     disp(' ')
 % % % 
@@ -424,9 +424,9 @@ end
 % % %     
 % % %     disp(['¡! completed run number ' int2str(run)])
 % % %     disp(' ')
-% % % end
-% % % 
-% % % %% CREATE LAYOUTS
+end
+
+%% CREATE LAYOUTS
 % % % % src
 % % % if ~any(strcmp(excluded, 'util'))
 % % %     util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
@@ -571,8 +571,8 @@ end
 % % %         end
 % % %     end
 % % % end
-% % % 
-% % % %% CREATE TEST
+
+%% CREATE TEST
 % % % % src
 % % % if ~any(strcmp(excluded, 'util'))
 % % %     util_gen_list = getGenerators([source_dir fp 'src' fp 'util']);
