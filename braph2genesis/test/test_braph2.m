@@ -74,6 +74,8 @@ end
 
 clear braph2_dir pipelines_dir pipelines_dir_list i
 
+directories_to_test = directories_to_test(cellfun(@(dir) exist(dir, 'dir') == 7, directories_to_test));
+
 %% Runs tests
 warning_backup = warning();
 results = runtests(directories_to_test, 'UseParallel', false, 'Strict', true);
