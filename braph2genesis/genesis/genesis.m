@@ -73,10 +73,30 @@ disp(' ')
         end
     end
     function bool = compile_pip_dir(pip_dir)
-        bool = false
+        if any(ismember('-pipelines', rollcall))
+            bool = false;
+        elseif any(ismember(['-' pip_dir], rollcall))
+            bool = false;
+        elseif any(ismember('+pipelines', rollcall)) ...
+                && ~any(ismember(['+' pip_dir], rollcall))
+            bool = false;
+        else
+            bool = true;
+        end
     end
-    function bool = compile_pip_el(pip_dir)
-        bool = false
+    function bool = compile_pip_el(pip_dir, pip_el)
+        if any(ismember('-pipelines', rollcall))
+            bool = false;
+        elseif any(ismember(['-' pip_dir], rollcall))
+            bool = false;
+        elseif any(ismember(['-' pip_el], rollcall))
+            bool = false;
+        elseif any(ismember(['+' pip_dir], rollcall)) ...
+                && ~any(ismember(['+' pip_el], rollcall))
+            bool = false;
+        else
+            bool = true;
+        end
     end
 
 %% CREATE DIR STRUCTURE
@@ -158,6 +178,18 @@ disp('¡! created dir structure - NEURALNETWORKS')
 % pipelines
 if compile_dir('pipelines')
     mkdir([target_dir fp 'pipelines'])
+
+    pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
+    pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+    pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+    for i = 1:1:length(pipelines_dir_list)
+        pipeline_dir_name = pipelines_dir_list(i).name;
+        if compile_pip_dir(pipeline_dir_name)
+            mkdir([target_dir fp 'pipelines' fp pipeline_dir_name])
+        end
+    end
+    disp('¡! copied ready files - pipelines')
+    disp(' ')
 end
 
 disp('¡! created dir structure - PIPELINES')
@@ -267,7 +299,17 @@ end
 
 % pipelines
 if compile_dir('pipelines')
-    copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'], Inf)
+    copydir([source_dir fp 'pipelines'], [target_dir fp 'pipelines'])
+
+    pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
+    pipelines_dir_list = pipelines_contents([pipelines_contents(:).isdir] == 1);  % remove all files (isdir property is 0)
+    pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, {'.', '..'}));  % remove '.' and '..'
+    for i = 1:1:length(pipelines_dir_list)
+        pipeline_dir_name = pipelines_dir_list(i).name;
+        if compile_pip_dir(pipeline_dir_name)
+            copydir([source_dir fp 'pipelines' fp pipeline_dir_name], [target_dir fp 'pipelines' fp pipeline_dir_name], Inf)
+        end
+    end
     disp('¡! copied ready files - pipelines')
     disp(' ')
 end
@@ -429,7 +471,7 @@ for run = 1:1:run_number
             if compile_pip_dir(pipeline_dir_name)
                 pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
                 for j = 1:numel(pipeline_gen_list)
-                    if compile_pip_el(pipeline_name, pipeline_gen_list{j})
+                    if compile_pip_el(pipeline_dir_name, pipeline_gen_list{j})
                         create_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
                     end
                 end
@@ -725,7 +767,7 @@ if compile_dir('pipelines')
         if compile_pip_dir(pipeline_dir_name)
             pipeline_gen_list = getGenerators([source_dir fp 'pipelines' fp pipeline_dir_name]);
             for j = 1:numel(pipeline_gen_list)
-                if compile_pip_el('', pipeline_gen_list{j})
+                if compile_pip_el(pipeline_dir_name, pipeline_gen_list{j})
                     create_test_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
                 end
             end
