@@ -1,4 +1,4 @@
-function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, develop, excluded)
+function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, develop, rollcall)
 %GENESIS generates BRAPH2.
 %
 % [TARGET_DIR, SOURCE_DIR] = GENESIS() generates BRAPH2 from the default
@@ -18,8 +18,18 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, 
 % GENESIS([], [], [], DEVELOP) determines whether to compile also the
 %  development examples (by default it does NOT compile them).
 %
-% GENESIS([], [], [], [], LIST) exclude from copilation the directories and
-%  elements contained in LIST, e.g., {'directory_name', '_element_name.gen.m'}.
+% GENESIS([], [], [], [], ROLLCALL) excludes or includes folders and
+%  elements based on the ROLLCALL cell array of strings, whose elements
+%  can be:
+%   '-folder'                  the folder and its elements will be excluded
+%
+%   '+folder'                  the folder is included, but not its elements
+%       '+_ElementName.gen.m'  the element is included,
+%                              if the folder is included
+%
+%   '+folder*'                 the folder and its elements are included
+%       '-_ElementName.gen.m'  the element is excluded,
+%                              if the folder and its elements are included
 %
 % See also braph2genesis, create_Element, create_layout,
 %  create_test_Element, hard_code_constants.
@@ -27,7 +37,7 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, 
 fp = filesep();
 
 if nargin < 5
-    excluded = {};
+    rollcall = {};
 end
 
 if nargin < 4 || isempty(develop)
@@ -108,6 +118,8 @@ mkdir([target_dir fp 'test'])
 disp('¡! created dir structure - TEST')
 
 disp(' ')
+
+return
 
 %% COPY READY FILES
 % braph2.m and license.rtf
