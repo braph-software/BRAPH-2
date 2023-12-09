@@ -78,7 +78,7 @@ disp(' ')
         elseif any(ismember(['-' pip_dir], rollcall))
             bool = false;
         elseif any(ismember('+pipelines', rollcall)) ...
-                && ~any(ismember(['+' pip_dir], rollcall))
+                && ~any(ismember({['+' pip_dir], ['+' pip_dir '*']}, rollcall))
             bool = false;
         else
             bool = true;
