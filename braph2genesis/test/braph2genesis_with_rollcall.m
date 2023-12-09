@@ -11,12 +11,12 @@ clc
 % '-folder'                 the folder and its elements will be excluded
 %
 % '+folder'                 the folder is included, but not its elements
-% '+_ElementName.gen.m'     the element is included
-%                           (only if the folder is included)
+%   '+_ElementName.gen.m'   the element is included,
+%                           if the folder is included
 %
 % '+folder*'                the folder and its elements are included
-% '-_ElementName.gen.m'     the element is excluded 
-%                           (only if the folder and its elements are included)
+%   '-_ElementName.gen.m'   the element is excluded,
+%                           if the folder and its elements are included
 rollcall = { ...
     '+util*', '-_Exporter.gen.m', '-_Importer.gen.m', ...
     '+ds*', ...
@@ -62,17 +62,17 @@ else
 end
 
 rollcall_per_line = 5;
-offset = max(cellfun(@(x) length(x), excluded)) + 2;
+offset = max(cellfun(@(x) length(x), rollcall)) + 2;
 for i = 1:rollcall_per_line:length(rollcall)
-    cellfun(@(x) fprintf([x repmat(' ', 1, offset - length(x))]), excluded(i:min(i + rollcall_per_line - 1, length(rollcall))))
+    cellfun(@(x) fprintf([x repmat(' ', 1, offset - length(x))]), rollcall(i:min(i + rollcall_per_line - 1, length(rollcall))))
     fprintf('\n')
 end
 disp(' ')
 
-addpath(fileparts(which('braph2genesis')))
-addpath([fileparts(which('braph2genesis')) filesep 'genesis'])
+addpath([fileparts(which('braph2genesis_with_rollcall')) filesep() '..'])
+addpath([fileparts(which('braph2genesis_with_rollcall')) filesep() '..' filesep 'genesis'])
 
-target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2_with_exclusions'];
+target_dir = [fileparts(fileparts(which('braph2genesis'))) filesep 'braph2_with_rollcall'];
 if exist(target_dir, 'dir') 
     if input([ ...
         'The target directory already exists:\n' ...
