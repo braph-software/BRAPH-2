@@ -5,11 +5,31 @@ NNFeatureImportanceBrainSurface < ConcreteElement (nnfb, neural network feature 
 A neural network feature importace on brain surface (NNFeatureImportanceBrainSurface) 
  manages the visualization of feature importance within neural network evaluators, particularly on the brain surface.
 It handles different types of neural network inputs, including graph data 
- (for visualizng the importance of connections between nodes), measures (for visualizing the importance of nodal measures)
- , and the subject data (connectivity data or structural data).
+ (for visualizng the importance of connections between nodes), measures (for visualizing the importance of nodal measures),
+ and the subject data (connectivity data or structural data).
 
 %%% ¡seealso!
 NNEvaluator, NNDataPoint_Graph_CLA, NNDataPoint_Measure_REG, NNDataPoint_CON_CLA, NNDataPoint_ST_CLA
+
+%% ¡layout!
+
+%%% ¡prop!
+%%%% ¡id!
+NNFeatureImportanceBrainSurface.ID
+%%%% ¡title!
+Feature Importance Brain Surface ID
+
+%%% ¡prop!
+%%%% ¡id!
+NNFeatureImportanceBrainSurface.LABEL
+%%%% ¡title!
+Feature Importance Brain Surface LABEL
+
+%%% ¡prop!
+%%%% ¡id!
+NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+%%%% ¡title!
+Average of Feature Importance
 
 %% ¡props_update!
 

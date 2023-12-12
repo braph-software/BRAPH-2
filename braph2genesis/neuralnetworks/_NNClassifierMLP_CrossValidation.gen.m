@@ -103,12 +103,6 @@ NNClassifierMLP_CrossValidation.PFROC
 %%%% ¡title!
 Plot ROC Curve
 
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-%%%% ¡title!
-Average of Feature Importance
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -275,7 +269,6 @@ pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRI
     'ROWNAME', class_names, ...
     'COLUMNNAME', class_names, ...
     varargin{:});
-
 
 %% ¡tests!
 
