@@ -1,5 +1,5 @@
 %% ¡header!
-NNFeatureImportanceBrainSurface < ConcreteElement (nnfb, neural network feature importace on brain surface) manages the visuazation of the feature importance on the brain surface within neural network evaluators.
+NNFeatureImportanceBrainSurface < ConcreteElement (nnfib, neural network feature importace on brain surface) manages the visuazation of the feature importance on the brain surface within neural network evaluators.
 
 %%% ¡description!
 A neural network feature importace on brain surface (NNFeatureImportanceBrainSurface) 
@@ -27,7 +27,19 @@ Feature Importance Brain Surface LABEL
 
 %%% ¡prop!
 %%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+NNFeatureImportanceBrainSurface.BA
+%%%% ¡title!
+Brain Atlas
+
+%%% ¡prop!
+%%%% ¡id!
+NNFeatureImportanceBrainSurface.EVALUATOR_LIST
+%%%% ¡title!
+Neural Network Evaluators
+
+%%% ¡prop!
+%%%% ¡id!
+NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
 Average of Feature Importance
 
@@ -76,12 +88,12 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-EVALUATOR_LIST (result, itemlist) contains the evaluators that contain feature importance values.
+EVALUATOR_LIST (data, itemlist) contains the evaluators that contain feature importance values.
 
 %%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) gets the averaged feature importances from all evaluators.
 %%%% ¡calculate!
-e_list = nnfb.get('EVALUATOR_LIST');
+e_list = nnfib.get('EVALUATOR_LIST');
 all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
     e_list, 'UniformOutput', false);
 if isempty(cell2mat(all_fi))
@@ -96,16 +108,16 @@ else
     value = {average_fi};
 end
 %%%% ¡gui!
-input_datasets = nncv.get('D');
-input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
+evaluators = nnfib.get('EVALUATOR_LIST');
+input_dataset = evaluators{1}.get('D');
 dp_class = input_dataset.get('DP_CLASS');
 graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
 measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 
 if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_FI_Graph('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
 elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_FI_Measure('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
 else % DATA input
-    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_FI_Data('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
 end

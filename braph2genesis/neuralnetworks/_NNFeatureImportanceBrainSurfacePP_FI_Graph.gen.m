@@ -1,9 +1,9 @@
 %% ¡header!
-NNxMLP_xPP_FI_Data < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the data of subjects.
+NNFeatureImportanceBrainSurfacePP_FI_Graph < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the graph.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with the data of subjects (NNxMLP_xPP_FI_Data) 
- plots the panel to show the feature importance, matching the layer number and node number as of the subject data.
+A panel for feature importance of a neural network analysis with the graph (NNFeatureImportanceBrainSurfacePP_FI_Graph) 
+ plots the panel to show the feature importance, mathcing the layer number and node number of the graph.
 It is supposed to be used with the property FEATURE_IMPORTANCE of 
  NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator,
  and NNRegressorMLP_CrossValidation.
@@ -16,7 +16,7 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Data'
+'NNFeatureImportanceBrainSurfacePP_FI_Graph'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
@@ -26,32 +26,32 @@ NAME (constant, string) is the name of the panel for feature importance.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with the data of subjects (NNxMLP_xPP_FI_Data) plots the panel to show the feature importance, matching the layer number and node number as of the subject data. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for feature importance of a neural network analysis with the graph (NNFeatureImportanceBrainSurfacePP_FI_Graph) plots the panel to show the feature importance, mathcing the layer number and node number of the graph. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNxMLP_xPP_FI_Data'
+'NNFeatureImportanceBrainSurfacePP_FI_Graph'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Data ID'
+'NNFeatureImportanceBrainSurfacePP_FI_Graph ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Data label'
+'NNFeatureImportanceBrainSurfacePP_FI_Graph label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Data notes'
+'NNFeatureImportanceBrainSurfacePP_FI_Graph notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation()
+NNFeatureImportanceBrainSurface()
 
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
@@ -86,20 +86,28 @@ if value
     el = pr.get('EL');
     prop = pr.get('PROP');
     
-    input_dataset = pr.get('D');
-
-    % % % if input_dataset.get('DP_DICT').get('LENGTH')
-    % % %     sub = input_dataset.get('DP_DICT').get('IT', 1).get('SUB');
-    % % % else
-    % % %     sub = SubjectCON();
-    % % % end
-    % % % pr.set('TABLE_HEIGHT', s(40), ...
-    % % %     'XSLIDERSHOW', true, ...
-    % % %     'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
-    % % %     'YSLIDERSHOW', false, ...
-    % % %     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-    % % %     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-    % % %     varargin{:});
+    input_dataset = pr.get('D'); 
+    
+    g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    if g.get('LAYERNUMBER') == 1
+        pr.set('TABLE_HEIGHT', s(40), ...
+            'XSLIDERSHOW', false, ...
+            'YSLIDERSHOW', false, ...
+            'ROWNAME', g.getCallback('ANODELABELS'), ...
+            'COLUMNNAME', g.getCallback('ANODELABELS'), ...
+            varargin{:} ...
+            );
+    else % multilayer
+        pr.set('TABLE_HEIGHT', s(40), ...
+            'XYSLIDERLOCK', true, ...
+            'XSLIDERSHOW', false, ...
+            'YSLIDERSHOW', true, ...
+            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
+            'YSLIDERWIDTH', s(5), ...
+            'ROWNAME', g.getCallback('ANODELABELS'), ...
+            'COLUMNNAME', g.getCallback('ANODELABELS'), ...
+            varargin{:});
+    end
 
     rowname = pr.get('ROWNAME');
     if isempty(rowname)
@@ -481,7 +489,7 @@ value = mappedCellArray;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_xPP_FI_Data.PARENT NNxMLP_xPP_FI_Data.H NNxMLP_xPP_FI_Data.LISTENER_CB NNxMLP_xPP_FI_Data.HEIGHT NNxMLP_xPP_FI_Data.XSLIDER NNxMLP_xPP_FI_Data.YSLIDER NNxMLP_xPP_FI_Data.TABLE NNxMLP_xPP_FI_Data.CONTEXTMENU]
+[NNFeatureImportanceBrainSurfacePP_FI_Graph.PARENT NNFeatureImportanceBrainSurfacePP_FI_Graph.H NNFeatureImportanceBrainSurfacePP_FI_Graph.LISTENER_CB NNFeatureImportanceBrainSurfacePP_FI_Graph.HEIGHT NNFeatureImportanceBrainSurfacePP_FI_Graph.XSLIDER NNFeatureImportanceBrainSurfacePP_FI_Graph.YSLIDER NNFeatureImportanceBrainSurfacePP_FI_Graph.TABLE NNFeatureImportanceBrainSurfacePP_FI_Graph.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -490,7 +498,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNxMLP_xPP_FI_Data'])
+warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_FI_Graph'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNxMLP_xPP_FI_Data'])
+warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_FI_Graph'])
