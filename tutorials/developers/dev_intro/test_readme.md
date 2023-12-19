@@ -24,7 +24,7 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 > 
 > >> braph2genesis
 > 
-<
+
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
 
@@ -69,7 +69,7 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 >`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
 >`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
 
-<
+
 
 ## Elements
 
@@ -150,7 +150,7 @@ It does not allow callbacks.
                 
  	> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 > 
-<
+
 
 
 
@@ -174,7 +174,7 @@ It does not allow callbacks.
 >  
 > 	- `MARKER` Marker represents the marker style.
 > ```
-<
+
 
 
 Even though it is possible to create instances of `Element`, typically one uses its subclasses and does not have any props.
@@ -199,7 +199,7 @@ It should be instantiated using `novalue`.
 > 
 > Element.getNoValue()
 > 
-<
+
 
 No element can be a subclass of NoValue.
   
@@ -213,7 +213,7 @@ It should be instantiated using `callback`.
 > el.getCallback('PROP', PROP_NUMBER)
 > el.getCallback('TAG', PROP_TAG)
 > 
-<
+
 
 No element can be a subclass of `Callback`.
 
@@ -244,7 +244,7 @@ The value of a prop can be set with `set`.
 >`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
 
-<
+
 
 When a prop is set to a certain value, the following operations are performed:
 
@@ -308,7 +308,7 @@ The value of a prop can be retrieved with `get`.
 >`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 >`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
 
-<
+
 
 If the raw value of the property is a `NoValue`, it proceed to return the default property value (for categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
  
@@ -326,7 +326,7 @@ The raw value of a prop can be retrieved with `getr`.
 > value = el.getr('ID');
 > value = el.getr(ConcreteElement.ID);
 > 
-<
+
 
 ### Memorizing Props  
 
@@ -345,7 +345,7 @@ The value of a prop can be memorized using `memorize`.
 
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
 
-<
+
 
 If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an ** event PropMemorized**.
 
@@ -501,7 +501,7 @@ A generator file has the structure illustrated `tokens`.
 >   Functions used in the test.
 >   Can be on multiple lines.
 > 
-<
+
 
 
 A list of special instructions is shown in `special`.
@@ -524,7 +524,7 @@ A list of special instructions is shown in `special`.
 
 >`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
 
-<
+
 
 ## Overview of Elements
 
@@ -560,7 +560,7 @@ We will now see how to implement a few concrete elements.
 > 	};
 > ...
 > ```
-<
+
 
 
 ### A Simple Calculator
@@ -701,7 +701,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 >`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 >`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 
-<
+
 
 ### Calculator with Seeded Randomness
 
@@ -753,7 +753,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 >`6` checks that calls to the calculation of the random number of differen randomizers return different values.
 >`3 4` check that subsequent calls to the calculation of the random number return the same value.
 
-<
+
 
 ### Query
 
@@ -824,7 +824,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 >`3 4` returns the sum or the difference depening on the argument.
 >`5 6` retunrs `NaN` when the input is absent or unexpected.
 
-<
+
 
 ### Evanescent, Gui, Figure
 
@@ -939,5 +939,3 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 >`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
 >`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
 >`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
-
-<

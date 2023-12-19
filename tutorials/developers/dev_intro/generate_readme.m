@@ -101,22 +101,24 @@ document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', '<tc
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
 pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
 pattern3= '(.*?)\n';
+nl = 1;
 for i = 1:length(tmp_tcolorbox)
     % get index
     index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
     % get sections
     tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
 
+
     % get code
     section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**']; 
     section_explanation = [ newline() ' ' strtrim(tmp_finding{1}{2})];
     % insert into document
-    document = insertBefore(document, index_tcolorbox(i) - 1,  section_title);
-    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ' ' newline()]);
+    document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
+    document = insertBefore(document, index_tcolorbox(i) - nl + length(section_title),  [section_explanation ' ' newline()]);
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code = index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
+        init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -126,14 +128,14 @@ for i = 1:length(tmp_tcolorbox)
         for j = 1:length(code_split)
             line_of_code = code_split{j};
             line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
-            line_of_code_position = init_position_code+accumulated_length;
+            line_of_code_position = init_position_code + accumulated_length;
             document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
             accumulated_length = accumulated_length + length(line_of_code_with_modifier);
         end
         document = insertBefore(document, init_position_code+accumulated_length,  ['> ```' newline()]);
     end
 end
-document = regexprep(document, '\<tcolorboxgoeshere>\*\*\!', ''); % remove mark
+document = regexprep(document, '<tcolorboxgoeshere>\*\*\!', ''); % remove mark
 document = regexprep(document,'\%\:', '>');
 
 % lstlisting
@@ -213,7 +215,7 @@ for i = 1:length(tmp_lstlisting)
         end
     end
 end
-document = regexprep(document, '\<lstlistinggoeshere>\*\*\!', ''); % remove mark
+document = regexprep(document, '<lstlistinggoeshere>\*\*\!', ''); % remove mark
 document = regexprep(document, '\¥', '');
 document = regexprep(document, '\€', '');
 document = regexprep(document, '\¤', '');
