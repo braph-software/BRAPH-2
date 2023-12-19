@@ -62,7 +62,7 @@ for i = 1:length(findings)
     figName = finding{2};
     figTitle = finding{3};
     
-    if length(newFigMods{i}{2}) > 1
+    if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
         figSizeMod = strtrim(newFigMods{i}{2});
         newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
     else
@@ -89,6 +89,7 @@ end
 % item
 document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1` $2');
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
+document = regexprep(document, '\[\`([^\[\]]*)\`\]', '`$1`');
 
 % descriptions
 document = regexprep(document, '\\begin\{description\}', '> ');
@@ -100,22 +101,24 @@ document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', '<tc
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
 pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
 pattern3= '(.*?)\n';
+nl = 1;
 for i = 1:length(tmp_tcolorbox)
     % get index
     index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
     % get sections
     tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
 
+
     % get code
-    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
-    section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
+    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**']; 
+    section_explanation = [ newline() ' ' strtrim(tmp_finding{1}{2})];
     % insert into document
-    document = insertBefore(document, index_tcolorbox(i) - 1,  section_title);
-    document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ' ' newline()]);
+    document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
+    document = insertBefore(document, index_tcolorbox(i) - nl + length(section_title),  [section_explanation ' ' newline()]);
     % code
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code = index_tcolorbox(i) - 1 + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
+        init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
         matlab_lang_tag = ['> ```matlab' newline()];
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
@@ -125,14 +128,14 @@ for i = 1:length(tmp_tcolorbox)
         for j = 1:length(code_split)
             line_of_code = code_split{j};
             line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
-            line_of_code_position = init_position_code+accumulated_length;
+            line_of_code_position = init_position_code + accumulated_length;
             document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
             accumulated_length = accumulated_length + length(line_of_code_with_modifier);
         end
         document = insertBefore(document, init_position_code+accumulated_length,  ['> ```' newline()]);
     end
 end
-document = regexprep(document, '\<tcolorboxgoeshere>\*\*\!', ''); % remove mark
+document = regexprep(document, '<tcolorboxgoeshere>\*\*\!', ''); % remove mark
 document = regexprep(document,'\%\:', '>');
 
 % lstlisting
@@ -154,7 +157,7 @@ for i = 1:length(tmp_lstlisting)
     tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
     tmp_two_circlenotes = tmp_two_circlenotes{1};
 
-    % replace old pisitions with numbers
+    % replace old positions with numbers
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
@@ -165,12 +168,18 @@ for i = 1:length(tmp_lstlisting)
     tmp_finding = tmp_finding{1};
     section_title = [strtrim(tmp_finding{1}{1}) newline()];
     explanation_length = length(section_title);
-    code_with_no_notes = [strtrim(tmp_finding{1}{3}) newline()];
+    
+    % manage code section
+    codeSection = tmp_finding{1}{3};
+%     codeSection = regexprep(codeSection, char(13), '');
+    codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
+    codeSection = regexprep(codeSection, [newline() '\>([^\>\%]*)\s*\%'] , [newline() '>' newline() '>$1%' ]);
+    code_with_no_notes = [newline() '> ' codeSection newline()];
     code_length = length(code_with_no_notes);
 
     % insert into document
-    document = insertBefore(document, index_lstlisting(i) - 2,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - 2 + explanation_length, code_with_no_notes);
+    document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
+    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length, code_with_no_notes);
 
     n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
     arr_circlenotes = cell(n_total_circlenotes, 1);
@@ -190,30 +199,13 @@ for i = 1:length(tmp_lstlisting)
         k = 1;
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
-%             while count_circle < length(arr_circlenotes) % this does not work
-%                 tmp = arr_circlenotes{k};
-%                 if count_circle == str2double(tmp{1})
-%                     tmp_circlenote = tmp;
-%                     if length(tmp) == 3
-%                         count_circle = count_circle + 2;
-%                         break;
-%                     else
-%                         count_circle = count_circle + 1;
-%                         break;
-%                     end
-%                 end
-%                 k = k +1;
-%                 if k > length(arr_circlenotes)
-%                     k = 1;
-%                 end
-%             end
             if length(tmp_circlenote) == 3
                 note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
             else
                 note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
             end
 
-            tmp_position = index_lstlisting(i) - 2 + explanation_length + code_length + acumulated;
+            tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
             if j == 1
                 document = insertBefore(document, tmp_position,  newline());
                 tmp_position = tmp_position+1;
@@ -223,8 +215,10 @@ for i = 1:length(tmp_lstlisting)
         end
     end
 end
-document = regexprep(document, '\<lstlistinggoeshere>\*\*\!', ''); % remove mark
+document = regexprep(document, '<lstlistinggoeshere>\*\*\!', ''); % remove mark
 document = regexprep(document, '\¥', '');
+document = regexprep(document, '\€', '');
+document = regexprep(document, '\¤', '');
 
 % txt or xls
 document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
@@ -243,6 +237,7 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'bibliography(.*?)\}', '');
+% document = regexprep(document,'\n\s*\<\n', ''); % does not work
 document = strtrim(document);
 
 %% Generate README file
