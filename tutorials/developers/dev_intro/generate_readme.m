@@ -155,7 +155,7 @@ for i = 1:length(tmp_lstlisting)
     tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
     tmp_two_circlenotes = tmp_two_circlenotes{1};
 
-    % replace old pisitions with numbers
+    % replace old positions with numbers
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
@@ -169,7 +169,7 @@ for i = 1:length(tmp_lstlisting)
     
     % manage code section
     codeSection = tmp_finding{1}{3};
-    codeSection = regexprep(codeSection, char(13), '');
+%     codeSection = regexprep(codeSection, char(13), '');
     codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
     codeSection = regexprep(codeSection, [newline() '\>([^\>\%]*)\s*\%'] , [newline() '>' newline() '>$1%' ]);
     code_with_no_notes = [newline() '> ' codeSection newline()];
@@ -235,7 +235,7 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'bibliography(.*?)\}', '');
-% document = regexprep(document,'\<\n', ''); % does not work
+% document = regexprep(document,'\n\s*\<\n', ''); % does not work
 document = strtrim(document);
 
 %% Generate README file
