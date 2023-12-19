@@ -89,6 +89,7 @@ end
 % item
 document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1` $2');
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
+document = regexprep(document, '\[\`([^\[\]]*)\`\]', '`$1`');
 
 % descriptions
 document = regexprep(document, '\\begin\{description\}', '> ');
@@ -107,8 +108,8 @@ for i = 1:length(tmp_tcolorbox)
     tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
 
     % get code
-    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
-    section_explanation = [ newline() '> ' strtrim(tmp_finding{1}{2})];
+    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**']; 
+    section_explanation = [ newline() ' ' strtrim(tmp_finding{1}{2})];
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - 1,  section_title);
     document = insertBefore(document, index_tcolorbox(i) - 1 + length(section_title),  [section_explanation ' ' newline()]);

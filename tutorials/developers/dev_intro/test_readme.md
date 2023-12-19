@@ -129,7 +129,7 @@ Additional functions to operate with these features can be found by using the co
 
 
 > **Property Categories**
-> >  
+ >  
  	> `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
  
  	> `METADATA` Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
@@ -155,11 +155,24 @@ It does not allow callbacks.
 
 
 > **Property Formats**
-> >  
-	- [`EMPTY` 
+ >  
+	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code. 
+ 
+	- `STRING` String is a char array.
+ 
+	- `STRINGLIST` StringList is a cell array with char arrays.
+ 
+	- `LOGICAL` Logical is a boolean value.
+ 
+	- `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
 > ```matlab
-> Empty has an empty value and is typically used as a result or query to execute some code. 
+> '` for red.
 >  
+> 	- `ALPHA` Alpha is a transparency level between 0 and 1.
+>  
+> 	- `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
+>  
+> 	- `MARKER` Marker represents the marker style.
 > ```
 <
 
@@ -537,7 +550,7 @@ We will now see how to implement a few concrete elements.
 
 
 > **Light compilation of BRAPH 2.0**
-> To speed up the compilation of BRAPH 2.0 when trying these examples, it is possible to perform a light version of the compilation using the script `braph2genesis 
+ To speed up the compilation of BRAPH 2.0 when trying these examples, it is possible to perform a light version of the compilation using the script `braph2genesis 
 > ```matlab
 > ...
 > excluded = { ...
