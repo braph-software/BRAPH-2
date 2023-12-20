@@ -28,6 +28,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 
 
 <img src="fig03.jpg" alt="Upload a brain atlas">
+
 > **Figure 3. Upload a brain atlas**
 > The different steps you need to follow to open a brain atlas using the GUI: 
 	**a** Open the brain atlas GUI.
