@@ -15,7 +15,7 @@
 	{
 	Example of a brain surface image with some nodes representing brain regions.
 	}
-#!01_300px
+#!FIG01 300px
 \begin{abstract}
 \noindent
 This Tutorial explains how to work with the Graphical User Interface (GUI) to manage brain atlases.
@@ -32,7 +32,7 @@ In this Tutorial, we will explain you how to upload a brain atlas, how to visual
 	{
 	Full graphical user interface to work with a brain atlas in BRAPH~2.0. 
 	}
-#!02
+#!FIG02
 \clearpage
 \section{Open the GUI}
 
@@ -52,7 +52,7 @@ The brain atlas GUI is the first step in most BRAPH~2.0 pipelines. You can open 
 	{\bf c} Navigate to the BRAPH~2.0 folder \fn{atlases}.
 	{\bf d} Select the desired atlas.
 	}
-#!03
+#!FIG03
 
 \begin{tcolorbox}[
 	title=Brain Atlas GUI launch from command line
@@ -93,7 +93,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in \Figref{f
 	{\bf a} We can see the ID, name, brain regions and notes of the brain atlas.
 	{\bf b} All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
 	}
-#!04
+#!FIG04
 
 \section{Ready Brain Atlases}
 
@@ -118,7 +118,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in \Figref{f
 
 Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in \Figref{fig:05}). 
 They are available in the BRAPH~2.0 folder \fn{atlases} in XLS and TXT formats, and they can also can be downloaded from our website (\url{http://braph.org/software/brain-atlases/}).
-#!05
+#!FIG05
 \clearpage
 \section{Create a New Brain Atlas}
 
@@ -132,7 +132,7 @@ To create a new brain Atlas in BRAPH~2.0 format, you should create a new XLS fil
 	{
 	Overview of how the XLS file containing your atlas information should look like.
 	}
-#!06
+#!FIG06
 Start by writing the following information in the first 4 rows:
 \begin{itemize}
 
@@ -164,7 +164,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
 	{
 	Plotting the nodes of a brain atlas on a 3D brain surface. 
 	}
-#!07
+#!FIG07
 	
 This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in \Figref{fig:08}a), which opens the settings window shown in \Figsref{fig:08}b-c.
 
@@ -176,12 +176,12 @@ This new window has a large toolbar that allows you to change the visualization 
 	{\bf a} The ``Settings Brain Surface'' button in the toolbar opens {\bf b}-{\bf c} A window with the settings available for this brain figure.
 	}
 
-#!08
+#!FIG08
 
 The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
 
 Most things in the settings window are intuitive. So we encourage you to try them out until you achieve the visualization you want. There are many possibilities for visualization. \Figref{fig:09} shows just one example.
-#!09
+#!FIG09
 Each brain region can be represented with spheres, symbols, IDs, and labels.
 Spheres are objects that are rendered in 3D --- often prettier, but also more computationally expensive.
 Symbols are objects rendered in 2D --- more stylized and less computationally expensive.
@@ -199,7 +199,7 @@ If you wish to apply some properties to a set of brain regions, you can select m
 
 Importantly, BRAPH~2.0 provides different brain surfaces, as shown in \Figref{fig:10}, for the human brain and cerebellum in addition to animals such as the ferret, macaque, mouse, and rat.
 It is also possible to add additional brain surfaces by adding the required NV files in the BRAPH~2.0 folder \fn{brainsurfs}.
-#!10
+#!FIG10
 \fig{figure}
 	{fig:10}
 	{\includegraphics{fig10.png}}
@@ -220,5 +220,5 @@ To export and save a (publication-ready) figure, you can select ``Print'' from t
 	{
 	BRAPH~2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publications.
 	}
-#!11
+#!FIG11
 \end{document}

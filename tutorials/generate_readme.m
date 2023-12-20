@@ -21,7 +21,6 @@ document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
-document = strtrim(document);
 
 % basic reformatting
 document = regexprep(document, 'BRAPH~2.0', 'BRAPH 2.0');
@@ -50,7 +49,7 @@ document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 % figures
 document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
-figPattern = '\#\!(..)(?:\_)?(.*?)\n';
+figPattern = '\#\!FIG(..)(?:s)?(.*?)\n';
 newFigMods =  regexp(document, figPattern, 'tokens', 'all');
 findings = regexp(document, pattern, 'tokens', 'all');
 document = regexprep(document, pattern, '', 'all');
