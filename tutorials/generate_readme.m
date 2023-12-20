@@ -65,9 +65,9 @@ for i = 1:length(findings)
 
     if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
         figSizeMod = strtrim(newFigMods{i}{2});
-        newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
+        newFormat = [newline() '<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
     else
-        newFormat = ['<img src="' figName '" alt="' figTitle '">'];
+        newFormat = [newline() '<img src="' figName '" alt="' figTitle '">'];
     end
 
     tagSize = length(newFormat);
