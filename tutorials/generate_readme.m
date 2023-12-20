@@ -1,5 +1,9 @@
 function generate_readme(tex_file, readme_file)
 
+if nargin < 2
+    readme_file = 'readme.md';
+end
+
 tex = fileread(tex_file);
 
 %% Analysis
