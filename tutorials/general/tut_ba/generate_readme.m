@@ -102,6 +102,8 @@ pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
 pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
 pattern3= '(.*?)\n';
 nl = 1;
+matlab_lang_tag = ['> ```matlab' newline()];
+mat_length = length(matlab_lang_tag);
 for i = 1:length(tmp_tcolorbox)
     % get index
     index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
@@ -119,10 +121,9 @@ for i = 1:length(tmp_tcolorbox)
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
         init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
-        % indicate it is matlab language
-        matlab_lang_tag = ['> ```matlab' newline()];
+        % indicate it is matlab language        
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
-        init_position_code = init_position_code+length(matlab_lang_tag);
+        init_position_code = init_position_code + mat_length;
         code_split = regexp(section_code{1}, pattern3, 'tokens', 'all');
         accumulated_length = 0;
         for j = 1:length(code_split)
@@ -150,8 +151,8 @@ pattern5 = '\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{(
 for i = 1:length(tmp_lstlisting)
     %
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
-    % find circlenotes and replace them with anotations
 
+    % find circlenotes and replace them with anotations
     tmp_circlenotes = regexp(tmp_lstlisting{i}, pattern3, 'tokens', 'all');
     tmp_circlenotes = tmp_circlenotes{1};
     tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
@@ -171,15 +172,16 @@ for i = 1:length(tmp_lstlisting)
     
     % manage code section
     codeSection = tmp_finding{1}{3};
-%     codeSection = regexprep(codeSection, char(13), '');
+    codeSection = regexprep(codeSection, char(13), '');
     codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
     codeSection = regexprep(codeSection, [newline() '\>([^\>\%]*)\s*\%'] , [newline() '>' newline() '>$1%' ]);
-    code_with_no_notes = [newline() '> ' codeSection newline()];
+    code_with_no_notes = ['> ' codeSection newline()];
     code_length = length(code_with_no_notes);
 
     % insert into document
     document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length, code_with_no_notes);
+    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length,  matlab_lang_tag);
+    document = insertBefore(document, index_lstlisting(i) - 1 + mat_length + explanation_length, code_with_no_notes);
 
     n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
     arr_circlenotes = cell(n_total_circlenotes, 1);
@@ -237,7 +239,6 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'bibliography(.*?)\}', '');
-% document = regexprep(document,'\n\s*\<\n', ''); % does not work
 document = strtrim(document);
 
 %% Generate README file
