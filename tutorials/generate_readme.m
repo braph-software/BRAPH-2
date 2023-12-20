@@ -47,7 +47,7 @@ document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
 document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
 
 % figures
-document = regexprep(document, '\{\\bf(.*?)\}', '**$1**');
+document = regexprep(document, '\{\\bf\s(.*?)\}', '**$1**');
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
 figPattern = '\#\!FIG(..)(?:s)?(.*?)\n';
 newFigMods =  regexp(document, figPattern, 'tokens', 'all');
@@ -74,7 +74,7 @@ for i = 1:length(findings)
     document = insertBefore(document, newPos - 1,  newFormat);
 
     % insert fig explanation
-    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure ' newFigMods{i}{1} '.' finding{3} '**' newline() '> ' finding{end} newline()]);
+    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure '  num2str(str2double(newFigMods{i}{1})) '. ' finding{3} '**' newline() '> ' finding{end} newline()]);
 end
 
 % itemize

@@ -2,9 +2,9 @@
 
 [![Tutorial Brain Atlas](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_ba.pdf)
 
-<img src="fig01.jpg" alt="Brain atlas figure created with BRAPH 2.0 " height="300px">
+<img src="fig01.jpg" alt="Brain atlas figure created with BRAPH 2.0 " height="200px">
 
-> **Figure 01.Brain atlas figure created with BRAPH 2.0**
+> **Figure 1. Brain atlas figure created with BRAPH 2.0**
 > Example of a brain surface image with some nodes representing brain regions.
 	
 
@@ -19,7 +19,7 @@ In this Tutorial, we will explain you how to upload a brain atlas, how to visual
 
 <img src="fig02.jpg" alt="Brain Atlas GUI">
 
-> **Figure 02.Brain Atlas GUI**
+> **Figure 2. Brain Atlas GUI**
 > Full graphical user interface to work with a brain atlas in BRAPH 2.0. 
 	
 
@@ -30,12 +30,12 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 
 <img src="fig03.jpg" alt="Upload a brain atlas">
 
-> **Figure 03.Upload a brain atlas**
+> **Figure 3. Upload a brain atlas**
 > The different steps you need to follow to open a brain atlas using the GUI: 
-	** a** Open the brain atlas GUI.
-	** b** Import a brain atlas from an XLS or TXT file.
-	** c** Navigate to the BRAPH 2.0 folder "atlases".
-	** d** Select the desired atlas.
+	**a** Open the brain atlas GUI.
+	**b** Import a brain atlas from an XLS or TXT file.
+	**c** Navigate to the BRAPH 2.0 folder "atlases".
+	**d** Select the desired atlas.
 	
 
 
@@ -59,10 +59,10 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 04
 	
 <img src="fig04.png" alt="Edit the brain atlas information">
 
-> **Figure 04.Edit the brain atlas information**
+> **Figure 4. Edit the brain atlas information**
 > In the brain atlas GUI: 
-	** a** We can see the ID, name, brain regions and notes of the brain atlas.
-	** b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
+	**a** We can see the ID, name, brain regions and notes of the brain atlas.
+	**b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
 	
 
 
@@ -73,16 +73,16 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 04
 Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 05). 
 They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website .<img src="fig05.jpg" alt="Brain Atlases">
 
-> **Figure 05.Brain Atlases**
+> **Figure 5. Brain Atlases**
 > Some brain atlases provided by BRAPH 2.0:
-	** AAL90** Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
-	** AAL116** Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
-	** BNA** Brainnetome atlas with 246 cortical and subcortical regions.
-	** Craddock** Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
-	** Desikan** Anatomical atlas with 68 cortical from the FreeSurfer software.
-	** Destrieux** Anatomical atlas with 148 cortical from the FreeSurfer software.
-	** Schaefer** Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
-	** Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
+	**AAL90** Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
+	**AAL116** Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
+	**BNA** Brainnetome atlas with 246 cortical and subcortical regions.
+	**Craddock** Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
+	**Desikan** Anatomical atlas with 68 cortical from the FreeSurfer software.
+	**Destrieux** Anatomical atlas with 148 cortical from the FreeSurfer software.
+	**Schaefer** Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
+	**Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 	
 
 
@@ -93,7 +93,7 @@ To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS fil
 
 <img src="fig06.jpg" alt="Create your own brain atlas">
 
-> **Figure 06.Create your own brain atlas**
+> **Figure 6. Create your own brain atlas**
 > Overview of how the XLS file containing your atlas information should look like.
 	
 
@@ -127,7 +127,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
 
 <img src="fig07.jpg" alt="Brain atlas visualization">
 
-> **Figure 07.Brain atlas visualization**
+> **Figure 7. Brain atlas visualization**
 > Plotting the nodes of a brain atlas on a 3D brain surface. 
 	
 
@@ -137,8 +137,8 @@ This new window has a large toolbar that allows you to change the visualization 
 
 <img src="fig08.jpg" alt="Visualize the brain atlas">
 
-> **Figure 08.Visualize the brain atlas**
-> ** a** The "Settings Brain Surface" button in the toolbar opens ** b**-** c** A window with the settings available for this brain figure.
+> **Figure 8. Visualize the brain atlas**
+> **a** The "Settings Brain Surface" button in the toolbar opens **b**-**c** A window with the settings available for this brain figure.
 	
 
 
@@ -146,7 +146,7 @@ The settings window allows you to optimize how the brain regions included in you
 
 Most things in the settings window are intuitive. So we encourage you to try them out until you achieve the visualization you want. There are many possibilities for visualization. Figure 09 shows just one example.<img src="fig09.jpg" alt="Example of a visualization of the brain atlas">
 
-> **Figure 09.Example of a visualization of the brain atlas**
+> **Figure 9. Example of a visualization of the brain atlas**
 > A final figure was created with BRAPH 2.0 by changing different options in the menu.
 	
 
@@ -162,7 +162,7 @@ If you wish to apply some properties to a set of brain regions, you can select m
 Importantly, BRAPH 2.0 provides different brain surfaces, as shown in Figure 10, for the human brain and cerebellum in addition to animals such as the ferret, macaque, mouse, and rat.
 It is also possible to add additional brain surfaces by adding the required NV files in the BRAPH 2.0 folder "brainsurfs".<img src="fig10.png" alt="Brain surfaces in BRAPH 2.0">
 
-> **Figure 10.Brain surfaces in BRAPH 2.0**
+> **Figure 10. Brain surfaces in BRAPH 2.0**
 > Some of the brain surfaces available in BRAPH 2.0 to plot the brain atlas.
 	
 
@@ -175,5 +175,5 @@ To export and save a (publication-ready) figure, you can select "Print" from the
 
 <img src="fig11.jpg" alt="Save a brain atlas figure">
 
-> **Figure 11.Save a brain atlas figure**
+> **Figure 11. Save a brain atlas figure**
 > BRAPH 2.0 provides different options that allow saving a figure with different resolutions and color modes, adequate to any requirement for presentations and publications.
