@@ -20,7 +20,7 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 ** Compilation of BRAPH 2.0.**
 		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
-
+> ```matlab
 > 
 > >> braph2genesis
 > 
@@ -39,7 +39,7 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 
 ** Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
-
+> ```matlab
 > 
 > >> close all; delete(findall(0, 'type', 'figure')); clear all  `1`
 > 
@@ -57,9 +57,7 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 > 
 > >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false)  `8`
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'})  `9`
-> 
-
+> >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'
 >`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).>`2` regenerates `Pipeline`.
 >`3` performs only one compilation.
 >`4` does not regenerate the element, but only the layout and the unit test.
@@ -69,6 +67,8 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 >`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
 >`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
 
+})  `9`
+> 
 
 
 ## Elements
@@ -195,7 +195,7 @@ It should be instantiated using `novalue`.
 
 ** Instantiation of `NoValue`.**
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
-
+> ```matlab
 > 
 > Element.getNoValue()
 > 
@@ -208,7 +208,7 @@ It should be instantiated using `callback`.
 
 ** Instantiation of a `Callback`.**
 		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
-
+> ```matlab
 > 
 > el.getCallback('PROP', PROP_NUMBER)
 > el.getCallback('TAG', PROP_TAG)
@@ -227,7 +227,7 @@ The value of a prop can be set with `set`.
 
 ** Setting a prop.**
 		This script illustrates various ways in which props can be set.
-
+> ```matlab
 > 
 > el.set('ID', 'new el id')  `1 and 2`
 > el.set(5, 'new el id')  `2`
@@ -238,12 +238,12 @@ The value of a prop can be set with `set`.
 > 	7, 'new el notes' ...
 > 	) 
 > 
-> el = el.set('ID', 'new el id')  `3`
-> 
-
+> el = el.set('ID', 'new el id
 >`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
 >`1 2` set the value of a prop with the prop tag or the prop number.
 
+')  `3`
+> 
 
 
 When a prop is set to a certain value, the following operations are performed:
@@ -292,7 +292,7 @@ The value of a prop can be retrieved with `get`.
 
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
-
+> ```matlab
 > 
 > value = el.get('ID');  `1`
 > 
@@ -301,13 +301,13 @@ The value of a prop can be retrieved with `get`.
 > el.get('ID')  `3 and 4`
 > el.get(ConcreteElement.ID)  `4`
 > 
-> value = el.get('QUERY', ARG1, ARG2, ... );  `5`
-> 
-
+> value = el.get('QUERY', ARG1, ARG2, ... 
 >`1` gets the value of a prop using the prop tag.>`2` gets the value of a prop using the prop number.
 >`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 >`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
 
+);  `5`
+> 
 
 
 If the raw value of the property is a `NoValue`, it proceed to return the default property value (for categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
@@ -321,7 +321,7 @@ The raw value of a prop can be retrieved with `getr`.
 
 ** Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
-
+> ```matlab
 > 
 > value = el.getr('ID');
 > value = el.getr(ConcreteElement.ID);
@@ -334,17 +334,17 @@ The value of a prop can be memorized using `memorize`.
 
 ** Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
-
+> ```matlab
 > 
 > value = el.memorize('ID');  `1 and 2`
 > value = el.memorize(ConcreteElement.ID);  `2`
 > 
 > el.memorize('ID')  `3 and 4`
-> el.memorize(ConcreteElement.ID)  `4`
-> 
-
+> el.memorize(ConcreteElement.I
 >`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
 
+D)  `4`
+> 
 
 
 If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an ** event PropMemorized**.
@@ -364,7 +364,7 @@ A generator file has the structure illustrated `tokens`.
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
-
+> ```matlab
 > 
 > %% ¡header!
 >   <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
@@ -508,7 +508,7 @@ A list of special instructions is shown in `special`.
 
 ** Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
-
+> ```matlab
 > 
 > ConcreteElement.NAME  `1`
 > 
@@ -519,11 +519,11 @@ A list of special instructions is shown in `special`.
 > __Format.EMPTY_TAG__  `5`
 > ...
 > 
-> %%%__WARN_TBI__  `6`
-> 
-
+> %%%__WARN_TBI
 >`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
 
+__  `6`
+> 
 
 
 ## Overview of Elements
@@ -569,7 +569,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
-
+> ```matlab
 > 
 > %% ¡header!  `1`
 > ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
@@ -681,9 +681,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > 
 > sum_raw = ao.getr('SUM')
 > diff_raw = ao.getr('DIFF')
-> assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
-> 
-
+> assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'No
 >`1` The `¡header!` token is the only required one.>`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
 >`3` must be the name of the element.
 >`4` must be the name of the element.
@@ -701,6 +699,8 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 >`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 >`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 
+Value'))
+> 
 
 
 ### Calculator with Seeded Randomness
@@ -709,7 +709,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 
 ** Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
-
+> ```matlab
 > 
 > %% ¡header!
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
@@ -746,13 +746,13 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > 
 > assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
 > assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
-> assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'))  `6`
-> 
-
+> assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'
 >`1` Here, a detailed description should be provided.>`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 >`6` checks that calls to the calculation of the random number of differen randomizers return different values.
 >`3 4` check that subsequent calls to the calculation of the random number return the same value.
 
+))  `6`
+> 
 
 
 ### Query
@@ -761,7 +761,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 
 ** Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
-
+> ```matlab
 > 
 > %% ¡header!
 > ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
@@ -817,13 +817,13 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3 and 4`
 > assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
 > assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
-> assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')))  `6`
-> 
-
+> assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')
 >`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 >`3 4` returns the sum or the difference depening on the argument.
 >`5 6` retunrs `NaN` when the input is absent or unexpected.
 
+))  `6`
+> 
 
 
 ### Evanescent, Gui, Figure
@@ -832,7 +832,7 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 
 ** Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
-
+> ```matlab
 > 
 > %% ¡header!
 > ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
@@ -927,9 +927,7 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > 
 > ef.memorize('BUTTONS')  `15`
 > 
-> close(ef.get('FIG'))  `16`
-> 
-
+> close(ef.get('FIG')
 >`1` renders a figure and returns its handle.>`5` ensures that `FIG` is the parent of the panel.
 >`9` ensures that `PANEL` is the parent of each button.
 >`10` defines the same callback for all buttons.
@@ -939,3 +937,6 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 >`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
 >`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
 >`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
+
+)  `16`
+>
