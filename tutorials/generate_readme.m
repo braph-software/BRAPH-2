@@ -43,8 +43,18 @@ document = regexprep(document, '\\emph\{([^=\}]*)\}', '`$1`');
 document = regexprep(document, '\\begin\{enumerate\}', '');
 document = regexprep(document, '\\end\{enumerate\}', '');
 document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
-document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', 'Figure $1');
-document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', 'Figures $1');
+
+% figrefs
+figrefs1 = regexp(document, '\\Figref\{fig:([^:\}]*)\}', 'tokens', 'all');
+for i = 1:length(figrefs1)
+    document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', ['Figure ' num2str(str2double(figrefs1{i}{1}))], 'once');
+end
+figrefs2 = regexp(document, '\\Figsref\{fig:([^:\}]*)\}', 'tokens', 'all');
+for i = 1:length(figrefs2)
+   document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', ['Figures ' num2str(str2double(figrefs2{i}{1}))], 'once');
+end
+
+
 
 % figures
 document = regexprep(document, '\{\\bf\s(.*?)\}', '**$1**');

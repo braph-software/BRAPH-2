@@ -15,7 +15,7 @@ In this Tutorial, we will explain you how to upload a brain atlas, how to visual
 > Full graphical user interface to work with a brain atlas in BRAPH 2.0. 
 ## Open the GUI
 
-The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 03c-d) after clicking "Load Atlas". 
+The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 3c-d) after clicking "Load Atlas". 
 <img src="fig03.jpg" alt="Upload a brain atlas">
 
 > **Figure 3. Upload a brain atlas**
@@ -25,7 +25,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 	**c** Navigate to the BRAPH 2.0 folder "atlases".
 	**d** Select the desired atlas.
 > **Brain Atlas GUI launch from command line**
- You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in Figure 03a-d. 
+ You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in Figure 3a-d. 
 > ```matlab
 > ba = BrainAtlas();
 > 
@@ -35,9 +35,9 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 > ```
 ## Upload the Brain Atlas
 
-In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (Figure 03b) either by loading one of the already-available atlases in the BRAPH 2.0 folder "atlases" (Figure 03c) or by loading a file you have created. In this example, we are uploading the Desikan atlas (Figure 03d).
+In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (Figure 3b) either by loading one of the already-available atlases in the BRAPH 2.0 folder "atlases" (Figure 3c) or by loading a file you have created. In this example, we are uploading the Desikan atlas (Figure 3d).
 
-You can change the ID, name, and notes of the brain atlas (as shown in Figure 04a) as well as the IDs, labels, coordinates, and notes of the brain regions (Figure 04b).
+You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a) as well as the IDs, labels, coordinates, and notes of the brain regions (Figure 4b).
 <img src="fig04.png" alt="Edit the brain atlas information">
 
 > **Figure 4. Edit the brain atlas information**
@@ -45,7 +45,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 04
 	**a** We can see the ID, name, brain regions and notes of the brain atlas.
 	**b** All of this information can be changed, in this example we have renamed the ID, name and notes of the brain atlas but you can also edit the IDs, labels, coordinates, and notes of the brain regions.
 ## Ready Brain Atlases
-Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 05). 
+Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 5). 
 They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website .
 <img src="fig05.jpg" alt="Brain Atlases">
 
@@ -61,7 +61,7 @@ They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and
 	**Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 ## Create a New Brain Atlas
 
-To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS file ("*.xls" or "*.xlsx"), as shown in Figure 06. 
+To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS file ("*.xls" or "*.xlsx"), as shown in Figure 6. 
 (It is also possible to create it in TXT format ("*.txt"), for which we refer to the examples available in the BRAPH 2.0 folder "atlases".)
 <img src="fig06.jpg" alt="Create your own brain atlas">
 
@@ -84,20 +84,20 @@ For example: BrainMeshICBM152.nv
 Then, from row 5, you should include the IDs of the regions of your atlas (1 st column), the labels of the regions of your atlas (2 nd column), the X, Y and Z coordinates (3 rd, 4 th, and 5 th columns), and any relevant notes (in this case, the brain hemisphere, 6 th column).	
 ## Plot the Brain Atlas
 
-Once you are satisfied with the brain atlas, you can plot it by pushing the button "Plot Brain Atlas" (Figure 07a). 
-This will open an image with a brain surface and nodes corresponding to the brain regions (Figure 07b).
+Once you are satisfied with the brain atlas, you can plot it by pushing the button "Plot Brain Atlas" (Figure 7a). 
+This will open an image with a brain surface and nodes corresponding to the brain regions (Figure 7b).
 <img src="fig07.jpg" alt="Brain atlas visualization">
 
 > **Figure 7. Brain atlas visualization**
 > Plotting the nodes of a brain atlas on a 3D brain surface. 
-This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 08a), which opens the settings window shown in Figures 08b-c.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called "Settings Brain Surface" (highlighted in Figure 8a), which opens the settings window shown in Figures 8b-c.
 <img src="fig08.jpg" alt="Visualize the brain atlas">
 
 > **Figure 8. Visualize the brain atlas**
 > **a** The "Settings Brain Surface" button in the toolbar opens **b**-**c** A window with the settings available for this brain figure.
 The settings window allows you to optimize how the brain regions included in your analysis are visualized. This is often included as a first figure in a manuscript.
 
-Most things in the settings window are intuitive. So we encourage you to try them out until you achieve the visualization you want. There are many possibilities for visualization. Figure 09 shows just one example.
+Most things in the settings window are intuitive. So we encourage you to try them out until you achieve the visualization you want. There are many possibilities for visualization. Figure 9 shows just one example.
 <img src="fig09.jpg" alt="Example of a visualization of the brain atlas">
 
 > **Figure 9. Example of a visualization of the brain atlas**
