@@ -1,6 +1,4 @@
-clear all, clc
-
-tex_file = 'tut_ba.tex';
+function generate_readme(tex_file, readme_file)
 
 tex = fileread(tex_file);
 
@@ -19,7 +17,7 @@ document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
-% document = strtrim(document);
+document = strtrim(document);
 
 % basic reformatting
 document = regexprep(document, 'BRAPH~2.0', 'BRAPH 2.0');
@@ -61,7 +59,7 @@ for i = 1:length(findings)
     % replace old info with new way in new position
     figName = finding{2};
     figTitle = finding{3};
-    
+
     if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
         figSizeMod = strtrim(newFigMods{i}{2});
         newFormat = ['<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
@@ -69,7 +67,7 @@ for i = 1:length(findings)
         newFormat = ['<img src="' figName '" alt="' figTitle '">'];
     end
 
-    tagSize = length(newFormat);    
+    tagSize = length(newFormat);
     document = insertBefore(document, newPos - 1,  newFormat);
 
     % insert fig explanation
@@ -112,7 +110,7 @@ for i = 1:length(tmp_tcolorbox)
 
 
     % get code
-    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**']; 
+    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
     section_explanation = [ newline() ' ' strtrim(tmp_finding{1}{2})];
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
@@ -121,7 +119,7 @@ for i = 1:length(tmp_tcolorbox)
     if ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
         init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
-        % indicate it is matlab language        
+        % indicate it is matlab language
         document = insertBefore(document, init_position_code,  matlab_lang_tag);
         init_position_code = init_position_code + mat_length;
         code_split = regexp(section_code{1}, pattern3, 'tokens', 'all');
@@ -162,14 +160,14 @@ for i = 1:length(tmp_lstlisting)
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');    
+    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');
 
     % get sections
     tmp_finding = regexp(tmp_lstlisting{i}, pattern, 'tokens', 'all');
     tmp_finding = tmp_finding{1};
     section_title = [strtrim(tmp_finding{1}{1}) newline()];
     explanation_length = length(section_title);
-    
+
     % manage code section
     codeSection = tmp_finding{1}{3};
     codeSection = regexprep(codeSection, char(13), '');
@@ -197,8 +195,6 @@ for i = 1:length(tmp_lstlisting)
     % insert circlenotes info
     acumulated = 0;
     if ~isempty(arr_circlenotes) && ~isempty(arr_circlenotes{1})
-        count_circle = 1;
-        k = 1;
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
             if length(tmp_circlenote) == 3
@@ -255,4 +251,4 @@ readme = [readme ...
 
 
 %% Save readme
-writelines(readme, 'test_readme.md')
+writelines(readme, readme_file)
