@@ -24,6 +24,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 	**b** Import a brain atlas from an XLS or TXT file.
 	**c** Navigate to the BRAPH 2.0 folder "atlases".
 	**d** Select the desired atlas.
+
 > **Brain Atlas GUI launch from command line**
  You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in `launch`. In this case, you can upload the atlas as shown in Figure 3a-d. 
 > ```matlab
