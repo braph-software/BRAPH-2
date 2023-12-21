@@ -54,8 +54,6 @@ for i = 1:length(figrefs2)
    document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', ['Figures ' num2str(str2double(figrefs2{i}{1}))], 'once');
 end
 
-
-
 % figures
 document = regexprep(document, '\{\\bf\s(.*?)\}', '**$1**');
 pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
@@ -112,7 +110,7 @@ document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', '<tc
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
 pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
 pattern3= '(.*?)\n';
-nl = 1;
+nl = 2;
 matlab_lang_tag = ['> ```matlab' newline()];
 mat_length = length(matlab_lang_tag);
 for i = 1:length(tmp_tcolorbox)
@@ -159,6 +157,7 @@ pattern2 = '\¥\\circled\{([^{}]*)\}';
 pattern3= '\\circlednote{([^{}]*)}\{([^{}]*)\}';
 pattern4 = '\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
 pattern5 = '\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥';
+unicode_circled = 9311; % utf 16
 for i = 1:length(tmp_lstlisting)
     %
     index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
@@ -169,10 +168,28 @@ for i = 1:length(tmp_lstlisting)
     tmp_two_circlenotes = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
     tmp_two_circlenotes = tmp_two_circlenotes{1};
 
-    % replace old positions with numbers
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
-    tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
+    % replace old positions with numbers and enclosed circles
+    %     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, '\\twocirclednotes\{$2\}\{$3\}\{$4\}\¥');
+    circles5 = regexp(tmp_lstlisting{i}, pattern5, 'tokens', 'all');
+    if ~isempty(circles5) && ~isempty(circles5{1})
+        for k = 1:length(circles5{1})
+            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern5, ['\\twocirclednotes\{' char(unicode_circled+str2double(circles5{1}{k}{2})) '\}\{' char(unicode_circled+str2double(circles5{1}{k}{3})) '\}\{' circles5{1}{k}{4} '\}\¥'], 'once');
+        end
+    end
+%     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, ' \`$1 and $2\`');
+    circles4 = regexp(tmp_lstlisting{i}, pattern4, 'tokens', 'all');
+    if ~isempty(circles4) && ~isempty(circles4{1})
+        for k = 1:length(circles4{1})
+            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern4, '$1 and $2', 'once');
+        end
+    end
+%     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, ' \`$1\`');
+    circles2 = regexp(tmp_lstlisting{i}, pattern2, 'tokens', 'all');
+    if ~isempty(circles2) && ~isempty(circles2{1})
+        for k = 1:length(circles2{1})
+            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern2, [char(unicode_circled+str2double(circles2{1}{k}{1}))], 'once');
+        end
+    end
     tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, pattern3, '');
 
     % get sections
@@ -190,9 +207,9 @@ for i = 1:length(tmp_lstlisting)
     code_length = length(code_with_no_notes);
 
     % insert into document
-    document = insertBefore(document, index_lstlisting(i) - 1,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - 1 + explanation_length,  matlab_lang_tag);
-    document = insertBefore(document, index_lstlisting(i) - 1 + mat_length + explanation_length, code_with_no_notes);
+    document = insertBefore(document, index_lstlisting(i) - nl,  section_title);
+    document = insertBefore(document, index_lstlisting(i) - nl + explanation_length,  matlab_lang_tag);
+    document = insertBefore(document, index_lstlisting(i) - nl + mat_length + explanation_length, code_with_no_notes);
 
     n_total_circlenotes = length(tmp_circlenotes) + length(tmp_two_circlenotes);
     arr_circlenotes = cell(n_total_circlenotes, 1);
@@ -211,15 +228,16 @@ for i = 1:length(tmp_lstlisting)
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
             if length(tmp_circlenote) == 3
-                note = ['> \`' tmp_circlenote{1} ' ' tmp_circlenote{2} '\` ' tmp_circlenote{end} newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1})) ' ' char(unicode_circled+str2double(tmp_circlenote{2})) ' ' tmp_circlenote{end} newline()];
             else
-                note = ['> \`' tmp_circlenote{1} '\` ' tmp_circlenote{end} newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1}))  ' ' tmp_circlenote{end} newline()];
             end
 
-            tmp_position = index_lstlisting(i) - 1 + explanation_length + code_length + acumulated;
+            tmp_position = index_lstlisting(i) - nl + explanation_length + mat_length + code_length + acumulated;
             if j == 1
                 document = insertBefore(document, tmp_position,  newline());
                 tmp_position = tmp_position+1;
+                acumulated = acumulated + 1;
             end
             document = insertBefore(document, tmp_position,  note);
             acumulated = acumulated + length(note);
