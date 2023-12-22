@@ -16,8 +16,7 @@ BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are _elements_, which contain a set of _props_ of various _categories_ and _formats_, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
-
-**Compilation of BRAPH 2.0.**
+**Compilation of BRAPH 2.0.**
 		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
 > ```matlab
@@ -27,8 +26,7 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 
 
 
-During the compilation, there are several phases to improve the computational efficiency of the executable code:
-
+During the compilation, there are several phases to improve the computational efficiency of the executable code:
 1. **First compilation**, where the elements are created.
 2. **Second compilation**, where the elements are computationally optimized.
 3. **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
@@ -37,8 +35,7 @@ During the compilation, there are several phases to improve the computational ef
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
-
-**Regeneration of elements.**
+**Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
 > ```matlab
 > 
@@ -133,34 +130,33 @@ Furthermore, each instance of a prop has the following features:
 
 Additional functions to operate with these features can be found by using the command `help Element` in the MatLab command line.
 
-
-> **Property Categories**
-
->  
-> `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
-> 
-> `METADATA` Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
-> 
-> `PARAMETER` Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
-> `DATA` Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
-> 
-> `RESULT` Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
-> 
-> `QUERY` Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
+> **Property Categories**
+ >  
+ 	> `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
+ 
+ 	> `METADATA` Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
+ 
+ 	> `PARAMETER` Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
+ 
+ 	> `DATA` Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
+ 
+ 	> `RESULT` Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
+ 
+ 	> `QUERY` Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
 It does not allow callbacks.
-> 
-> `EVANESCENT` Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
+ 
+ 	> `EVANESCENT` Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
 It does not allow callbacks.
+ 
+ 	> `FIGURE` Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+                
+ 	> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 > 
-> `FIGURE` Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
->              
-> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 
 
 
 
-
-> **Property Formats**
+> **Property Formats**
  >  
 	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code.
 - `STRING` String is a char array.
@@ -194,8 +190,7 @@ Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as
 
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
-
-**Instantiation of `NoValue`.**
+**Instantiation of `NoValue`.**
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
 > ```matlab
 > 
@@ -208,8 +203,7 @@ No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
 It should be instantiated using `callback`.
-
-**Instantiation of a `Callback`.**
+**Instantiation of a `Callback`.**
 		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
 > ```matlab
 > 
@@ -228,8 +222,7 @@ Even though it is possible to create instances of `ConcreteElement`, typically o
 ### Setting Props
 
 The value of a prop can be set with `set`.
-
-**Setting a prop.**
+**Setting a prop.**
 		This script illustrates various ways in which props can be set.
 > ```matlab
 > 
@@ -254,8 +247,7 @@ The value of a prop can be set with `set`.
 
 
 
-When a prop is set to a certain value, the following operations are performed:
-
+When a prop is set to a certain value, the following operations are performed:
 1. The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
 
 This can be set with the token `¡conditioning!`.
@@ -297,8 +289,7 @@ If the check fails an error is thrown with error id
 ### Getting Props
 
 The value of a prop can be retrieved with `get`.
-
-**Getting a prop.**
+**Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
@@ -331,8 +322,7 @@ If a property of category `RESULT`, `QUERY`, or `EVANESCENT` is not calculated (
 If the property is checked, it proceeds to check all properties after the calculation calling the function `check()`. If the check fails, it resets the property to `NoValue` and returns `NoValue`, does not lock the property, and throws a warning with warning id `BRAPH2:<Element Class>`.
 
 The raw value of a prop can be retrieved with `getr`.
-
-**Getting the raw value of a prop.**
+**Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
 > ```matlab
 > 
@@ -345,8 +335,7 @@ The raw value of a prop can be retrieved with `getr`.
 ### Memorizing Props  
 
 The value of a prop can be memorized using `memorize`.
-
-**Getting a prop.**
+**Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
@@ -376,8 +365,7 @@ If a property of category `QUERY` is memorized, a warning is thrown with warning
 
 A generator file has the structure illustrated `tokens`.
 
-
-**Element tokens in a generator file.**
+**Element tokens in a generator file.**
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
@@ -523,8 +511,7 @@ A generator file has the structure illustrated `tokens`.
 
 
 A list of special instructions is shown in `special`.
-
-**Special instruction in a generator file.**
+**Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
 > ```matlab
 > 
@@ -570,8 +557,7 @@ Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the comma
 
 We will now see how to implement a few concrete elements.
 
-
-> **Light compilation of BRAPH 2.0**
+> **Light compilation of BRAPH 2.0**
  To speed up the compilation of BRAPH 2.0 when trying these examples, it is possible to perform a light version of the compilation using the script `braph2genesis 
 > ```matlab
 > ...
@@ -613,8 +599,7 @@ We will now see how to implement a few concrete elements.
 ### A Simple Calculator
 
 We will now create our first element (`ao`), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
-
-**Arithmetic Operation Calculator.**
+**Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 > ```matlab
 > 
@@ -771,8 +756,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 ### Calculator with Seeded Randomness
 
 We can now create an element that demonstrate how the seeded randomness works (`sr`).
-
-**Arithmetic Operation Calculator.**
+**Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 > ```matlab
 > 
@@ -828,8 +812,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 ### Query
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (`ao2`).
-
-**Arithmetic Operation Calculator with Queries.**
+**Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
 > ```matlab
 > 
@@ -904,8 +887,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 ### Evanescent, Gui, Figure
 
 We can now demonstrate the use of evanescent props and graphical handles (`f`).
-
-**Element with figure.**
+**Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
 > ```matlab
 > 
