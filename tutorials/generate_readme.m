@@ -56,7 +56,7 @@ for i = 1:length(enumerate_objs)
     acumulated_tmp = 0;
     for j = 1:length(tmp_ind)
         infotmp = [num2str(j) '. '];
-        tmp_obj = insertBefore(tmp_obj, tmp_ind(j) - 1 + acumulated_tmp, infotmp);
+        tmp_obj = insertBefore(tmp_obj, tmp_ind(j)  + acumulated_tmp, infotmp);
         acumulated_tmp = acumulated_tmp + length(infotmp);
     end
     % insert into document

@@ -26,10 +26,10 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 
 
 
-During the compilation, there are several phases to improve the computational efficiency of the executable code:1. 
-- **First compilation**, where the elements are created.2. 
-- **Second compilation**, where the elements are computationally optimized.3. 
-- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
+During the compilation, there are several phases to improve the computational efficiency of the executable code:
+1. - **First compilation**, where the elements are created.
+2. - **Second compilation**, where the elements are computationally optimized.
+3. - **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
 
 
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
@@ -246,22 +246,22 @@ The value of a prop can be set with `set`.
 
 
 
-When a prop is set to a certain value, the following operations are performed:1. 
-- The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
+When a prop is set to a certain value, the following operations are performed:
+1. - The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
 
 This can be set with the token `¡conditioning!`.
-2. 
-- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
+
+2. - The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
 
 This can be set with the token `¡preset!`.
-3. 
-- If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
+
+3. - If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
 If the check fails, the property is not set and an error is thrown with error id
 `BRAPH2:<Element Class>:WrongInput`.
 
 This can be set with the token `¡checkProp!`.
-4. 
-- The value is **set**.
+
+4. - The value is **set**.
 
 If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
 If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
@@ -269,20 +269,20 @@ If the value is a callback, a warning is thrown if the element, property number 
 `BRAPH2:<Element Class>`.
  
 If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to `Element.getNoValue()`.
-5. 
-- The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
+
+5. - The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
 
 This can be set with the token `¡postset!`.
-6. 
-- **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
+
+6. - **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
 
 This can be set with the token `¡postprocessing!`.
-7. 
-- If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
+
+7. - If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
 If the check fails an error is thrown with error id
 `BRAPH2:<Element Class>:WrongInput`.
-8. 
-- When a prop is successfully set, an **event** `PropSet()` is **notified**
+
+8. - When a prop is successfully set, an **event** `PropSet()` is **notified**
  
 
 ### Getting Props
