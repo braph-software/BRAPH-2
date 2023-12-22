@@ -33,12 +33,6 @@ Brain Atlas
 
 %%% ¡prop!
 %%%% ¡id!
-NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-%%%% ¡title!
-Neural Network Evaluators
-
-%%% ¡prop!
-%%%% ¡id!
 NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
 Average of Feature Importance
@@ -88,28 +82,14 @@ BA (data, item) is a brain atlas.
 'BrainAtlas'
 
 %%% ¡prop!
-EVALUATOR_LIST (data, itemlist) contains the evaluators that contain feature importance values.
+D (data, item) is a NN dataset.
+%%%% ¡settings!
+'NNDataset'
 
 %%% ¡prop!
-AV_FEATURE_IMPORTANCE (result, cell) gets the averaged feature importances from all evaluators.
-%%%% ¡calculate!
-e_list = nnfib.get('EVALUATOR_LIST');
-all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
-    e_list, 'UniformOutput', false);
-if isempty(cell2mat(all_fi))
-    value = {};
-else
-    average_fi = zeros(size(all_fi{1}));
-    for i = 1:numel(all_fi)
-        % Add the current cell contents to the averageCell
-        average_fi = average_fi + all_fi{i};
-    end
-    average_fi = average_fi / numel(all_fi);
-    value = {average_fi};
-end
+AV_FEATURE_IMPORTANCE (data, cell) is the feature importances.
 %%%% ¡gui!
-evaluators = nnfib.get('EVALUATOR_LIST');
-input_dataset = evaluators{1}.get('D');
+input_dataset = nnfib.get('D');
 dp_class = input_dataset.get('DP_CLASS');
 graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
 measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};

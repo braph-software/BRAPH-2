@@ -178,7 +178,6 @@ if value
     end
 end
 
-
 %%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
 %%%% ¡calculate!
@@ -351,79 +350,79 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_open_mbrain(~, ~)
-    % % % input_dataset = pr.get('D');
-    % % % m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-    % % % 
-    % % % f = ancestor(pr.get('H'), 'figure'); % parent GUI
-    % % % N = ceil(sqrt(length(m_list))); % number of row and columns of figures
-    % % % 
-    % % % gui_b_dict = pr.memorize('GUI_B_DICT');
-    % % % selected = pr.get('SELECTED');
-    % % % for s = 1:1:length(selected)
-    % % %     i = selected(s);
-    % % % 
-    % % %     measure = m_list{i}; % also key
-    % % % 
-    % % %     values_vectored = el.get(prop);
-    % % %     cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
-    % % %     values = pr.get('MAP_TO_CELL', cell2mat(values_vectored), cell_template);
-    % % %     value = values(i);
-    % % % 
-    % % %     if ~gui_b_dict.get('CONTAINS_KEY', measure)
-    % % % 
-    % % %         brain_atlas = pr.get('BA'); 
-    % % %         %brain_atlas = ImporterBrainAtlasXLS('WAITBAR', false, 'FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'desikan_atlas.xlsx']).get('BA');
-    % % %         switch Element.getPropDefault(measure, 'SHAPE')
-    % % %             case Measure.GLOBAL % __Measure.GLOBAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %             case Measure.NODAL % __Measure.NODAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %             case Measure.BINODAL % __Measure.BINODAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %         end
-    % % % 
-    % % %         gui = GUIFig( ...
-    % % %             'ID', measure, ... % this is the dictionary key
-    % % %             'PF', mbfipf, ...
-    % % %             'POSITION', [ ...
-    % % %             x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
-    % % %             y0(f, 'normalized') ...
-    % % %             w(f, 'normalized') * 3 ...
-    % % %             .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
-    % % %             ], ...
-    % % %             'WAITBAR', pr.getCallback('WAITBAR'), ...
-    % % %             'CLOSEREQ', false ...
-    % % %             );
-    % % %         gui_b_dict.get('ADD', gui)
-    % % %     end
-    % % % 
-    % % %     gui = gui_b_dict.get('IT', measure);
-    % % %     if ~gui.get('DRAWN')
-    % % %         gui.get('DRAW')
-    % % %     end
-    % % %     gui.get('SHOW')
-    % % % end
+    input_dataset = pr.get('D');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+
+        measure = m_list{i}; % also key
+
+        values_vectored = el.get(prop);
+        cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+        values = pr.get('MAP_TO_CELL', cell2mat(values_vectored), cell_template);
+        value = values(i);
+
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+
+            brain_atlas = pr.get('BA'); 
+            %brain_atlas = ImporterBrainAtlasXLS('WAITBAR', false, 'FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'desikan_atlas.xlsx']).get('BA');
+            switch Element.getPropDefault(measure, 'SHAPE')
+                case Measure.GLOBAL % __Measure.GLOBAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_GS('FI', value, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_GU('FI', value, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_GB('FI', value, 'BA', brain_atlas);
+                    end
+                case Measure.NODAL % __Measure.NODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_NS('FI', value, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_NU('FI', value, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_NB('FI', value, 'BA', brain_atlas);
+                    end
+                case Measure.BINODAL % __Measure.BINODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_BS('FI', value, 'BA', brain_atlas);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_BU('FI', value, 'BA', brain_atlas);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_FI_Measure_BB('FI', value, 'BA', brain_atlas);
+                    end
+            end
+
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', mbfipf, ...
+                'POSITION', [ ...
+                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                y0(f, 'normalized') ...
+                w(f, 'normalized') * 3 ...
+                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
 end
 function cb_hide_mbrain(~, ~)
     % % % input_dataset = pr.get('D');

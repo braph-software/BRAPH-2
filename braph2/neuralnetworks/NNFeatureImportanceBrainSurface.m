@@ -102,14 +102,14 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 		BA_CATEGORY = Category.DATA;
 		BA_FORMAT = Format.ITEM;
 		
-		EVALUATOR_LIST = ConcreteElement.getPropNumber() + 2;
-		EVALUATOR_LIST_TAG = 'EVALUATOR_LIST';
-		EVALUATOR_LIST_CATEGORY = Category.DATA;
-		EVALUATOR_LIST_FORMAT = Format.ITEMLIST;
+		D = ConcreteElement.getPropNumber() + 2;
+		D_TAG = 'D';
+		D_CATEGORY = Category.DATA;
+		D_FORMAT = Format.ITEM;
 		
 		AV_FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 3;
 		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
-		AV_FEATURE_IMPORTANCE_CATEGORY = Category.RESULT;
+		AV_FEATURE_IMPORTANCE_CATEGORY = Category.DATA;
 		AV_FEATURE_IMPORTANCE_FORMAT = Format.CELL;
 	end
 	methods % constructor
@@ -185,7 +185,7 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 				prop_list = [ ...
 					ConcreteElement.getProps() ...
 						NNFeatureImportanceBrainSurface.BA ...
-						NNFeatureImportanceBrainSurface.EVALUATOR_LIST ...
+						NNFeatureImportanceBrainSurface.D ...
 						NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE ...
 						];
 				return
@@ -208,12 +208,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_list = [ ...
 						ConcreteElement.getProps(Category.DATA) ...
 						NNFeatureImportanceBrainSurface.BA ...
-						NNFeatureImportanceBrainSurface.EVALUATOR_LIST ...
+						NNFeatureImportanceBrainSurface.D ...
+						NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE ...
 						];
 				case Category.RESULT
 					prop_list = [
 						ConcreteElement.getProps(Category.RESULT) ...
-						NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE ...
 						];
 				case Category.QUERY
 					prop_list = [ ...
@@ -385,8 +385,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 				switch prop
 					case NNFeatureImportanceBrainSurface.BA
 						tag = NNFeatureImportanceBrainSurface.BA_TAG;
-					case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-						tag = NNFeatureImportanceBrainSurface.EVALUATOR_LIST_TAG;
+					case NNFeatureImportanceBrainSurface.D
+						tag = NNFeatureImportanceBrainSurface.D_TAG;
 					case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 						tag = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_TAG;
 					otherwise
@@ -419,8 +419,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA
 					prop_category = NNFeatureImportanceBrainSurface.BA_CATEGORY;
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-					prop_category = NNFeatureImportanceBrainSurface.EVALUATOR_LIST_CATEGORY;
+				case NNFeatureImportanceBrainSurface.D
+					prop_category = NNFeatureImportanceBrainSurface.D_CATEGORY;
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 					prop_category = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_CATEGORY;
 				otherwise
@@ -452,8 +452,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA
 					prop_format = NNFeatureImportanceBrainSurface.BA_FORMAT;
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-					prop_format = NNFeatureImportanceBrainSurface.EVALUATOR_LIST_FORMAT;
+				case NNFeatureImportanceBrainSurface.D
+					prop_format = NNFeatureImportanceBrainSurface.D_FORMAT;
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 					prop_format = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_FORMAT;
 				otherwise
@@ -485,10 +485,10 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA
 					prop_description = 'BA (data, item) is a brain atlas.';
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-					prop_description = 'EVALUATOR_LIST (data, itemlist) contains the evaluators that contain feature importance values.';
+				case NNFeatureImportanceBrainSurface.D
+					prop_description = 'D (data, item) is a NN dataset.';
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
-					prop_description = 'AV_FEATURE_IMPORTANCE (result, cell) gets the averaged feature importances from all evaluators.';
+					prop_description = 'AV_FEATURE_IMPORTANCE (data, cell) is the feature importances.';
 				case NNFeatureImportanceBrainSurface.ELCLASS
 					prop_description = 'ELCLASS (constant, string) is the class of the element to manage the visuazation of the neural network feature importance on the brain surface.';
 				case NNFeatureImportanceBrainSurface.NAME
@@ -532,8 +532,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA
 					prop_settings = 'BrainAtlas';
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-					prop_settings = Format.getFormatSettings(Format.ITEMLIST);
+				case NNFeatureImportanceBrainSurface.D
+					prop_settings = 'NNDataset';
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(Format.CELL);
 				case NNFeatureImportanceBrainSurface.TEMPLATE
@@ -567,8 +567,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA
 					prop_default = Format.getFormatDefault(Format.ITEM, NNFeatureImportanceBrainSurface.getPropSettings(prop));
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST
-					prop_default = Format.getFormatDefault(Format.ITEMLIST, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.D
+					prop_default = Format.getFormatDefault(Format.ITEM, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(Format.CELL, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.ELCLASS
@@ -651,8 +651,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			switch prop
 				case NNFeatureImportanceBrainSurface.BA % __NNFeatureImportanceBrainSurface.BA__
 					check = Format.checkFormat(Format.ITEM, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
-				case NNFeatureImportanceBrainSurface.EVALUATOR_LIST % __NNFeatureImportanceBrainSurface.EVALUATOR_LIST__
-					check = Format.checkFormat(Format.ITEMLIST, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.D % __NNFeatureImportanceBrainSurface.D__
+					check = Format.checkFormat(Format.ITEM, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE__
 					check = Format.checkFormat(Format.CELL, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.TEMPLATE % __NNFeatureImportanceBrainSurface.TEMPLATE__
@@ -674,53 +674,6 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			end
 		end
 	end
-	methods (Access=protected) % calculate value
-		function value = calculateValue(nnfib, prop, varargin)
-			%CALCULATEVALUE calculates the value of a property.
-			%
-			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
-			%  returns the default value for the prop and should be implemented in the
-			%  subclasses of Element when needed.
-			%
-			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
-			%
-			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
-			%  postset, postprocessing, checkValue.
-			
-			switch prop
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE__
-					rng_settings_ = rng(); rng(nnfib.getPropSeed(NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE), 'twister')
-					
-					e_list = nnfib.get('EVALUATOR_LIST');
-					all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
-					    e_list, 'UniformOutput', false);
-					if isempty(cell2mat(all_fi))
-					    value = {};
-					else
-					    average_fi = zeros(size(all_fi{1}));
-					    for i = 1:numel(all_fi)
-					        % Add the current cell contents to the averageCell
-					        average_fi = average_fi + all_fi{i};
-					    end
-					    average_fi = average_fi / numel(all_fi);
-					    value = {average_fi};
-					end
-					
-					rng(rng_settings_)
-					
-				otherwise
-					if prop <= ConcreteElement.getPropNumber()
-						value = calculateValue@ConcreteElement(nnfib, prop, varargin{:});
-					else
-						value = calculateValue@Element(nnfib, prop, varargin{:});
-					end
-			end
-			
-		end
-	end
 	methods % GUI
 		function pr = getPanelProp(nnfib, prop, varargin)
 			%GETPANELPROP returns a prop panel.
@@ -739,8 +692,7 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			
 			switch prop
 				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE__
-					evaluators = nnfib.get('EVALUATOR_LIST');
-					input_dataset = evaluators{1}.get('D');
+					input_dataset = nnfib.get('D');
 					dp_class = input_dataset.get('DP_CLASS');
 					graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
 					measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
