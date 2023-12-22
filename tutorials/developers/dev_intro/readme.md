@@ -27,9 +27,8 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
-1. - **First compilation**, where the elements are created.
-2.
-- **Second compilation**, where the elements are computationally optimized.
+1. **First compilation**, where the elements are created.
+2. - **Second compilation**, where the elements are computationally optimized.
 3.
 - **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
 
@@ -238,12 +237,11 @@ The value of a prop can be set with `set`.
 
 
 When a prop is set to a certain value, the following operations are performed:
-1. - The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
+1. The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
 
 This can be set with the token `¡conditioning!`.
 
-2.
-- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
+2. - The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
 
 This can be set with the token `¡preset!`.
 

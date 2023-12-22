@@ -47,6 +47,7 @@ enumerate_objs = regexp(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}',
 document = regexprep(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', '<enumerategoeshere>**!'); % put mark
 document = regexprep(document, '\\begin\{enumerate\}', '');
 document = regexprep(document, '\\end\{enumerate\}', '');
+patternItem = '\\item\s+([^\\]*)';
 for i = 1:length(enumerate_objs)
     index_enumerate = regexp(document, '<enumerategoeshere>\*\*\!', 'all');
     tmp_obj = enumerate_objs{i};
@@ -59,6 +60,13 @@ for i = 1:length(enumerate_objs)
         tmp_obj = insertBefore(tmp_obj, tmp_ind(j)  + acumulated_tmp, infotmp);
         acumulated_tmp = acumulated_tmp + length(infotmp);
     end
+    % modify the item
+    findItem = regexp(tmp_obj, patternItem, 'tokens', 'all');
+    for k = 1:length(findItem)
+        finding = findItem{k};
+        tmp_obj = regexprep(tmp_obj, patternItem, strtrim(finding{1}), 'once');
+    end
+
     % insert into document
     document = insertBefore(document, index_enumerate(i) - 1,  tmp_obj{1}(1:end-3));
 end
