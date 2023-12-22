@@ -129,8 +129,7 @@ document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
 document = regexprep(document, '\[\`([^\[\]]*)\`\]', '`$1`');
 
 % descriptions
-document = regexprep(document, '\\begin\{description\}', '> ');
-document = regexprep(document, '\\end\{description\}', '> ');
+
 
 % tcolorbox
 tmp_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'tokens', 'all'); % hold it
@@ -138,25 +137,45 @@ document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', '<tc
 pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
 pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
 pattern3= '(.*?)\n';
+pattern4 = '\\begin{description}(.*?)\\end\{description\}';
+pattern5 = 'title=([^=\]]*)';
 nl = 2;
 matlab_lang_tag = ['> ```matlab' newline()];
 mat_length = length(matlab_lang_tag);
 for i = 1:length(tmp_tcolorbox)
     % get index
     index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
-    % get sections
-    tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
+    % optional for developer
+    tmp_description = regexp(tmp_tcolorbox{i}, pattern4, 'tokens', 'once');
+  
+    if ~isempty(tmp_description) && ~isempty(tmp_description{1})
+        % get sections
+%         tmp_finding = regexp(tmp_tcolorbox{i}{1}, pattern5, 'tokens', 'once');
+        % remove description
+        section_title = regexp(tmp_tcolorbox{i}{1}, pattern5, 'tokens', 'once');
+        section_title =  ['> **' strtrim(section_title{1}) '**'];
+        section_explanation = [newline() ' ' strtrim(tmp_description{1}{1})];
+        section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
+        section_explanation = regexprep(section_explanation, [newline() '\s*' newline() '\s*'], [newline() '>' newline()]); % remove tabs
+        tmp_finding{1}{1} = section_title;
+        tmp_finding{1}{2} = section_explanation;
+    else
+        % get sections
+        tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
+        tmp_finding{1}{2} = regexprep(tmp_finding{1}{2}, '\\begin\{description\}', '> ');
+        tmp_finding{1}{2} = regexprep(tmp_finding{1}{2}, '\\end\{description\}', '> ');
 
-    % get code
-    section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
-    section_explanation = [newline() ' ' strtrim(tmp_finding{1}{2})];
-    section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
-    section_explanation = regexprep(section_explanation, [newline() '\s*' newline() '\s*'], [newline() '>' newline()]); % remove tabs
+        section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
+        section_explanation = [newline() ' ' strtrim(tmp_finding{1}{2})];
+        section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
+        section_explanation = regexprep(section_explanation, [newline() '\s*' newline() '\s*'], [newline() '>' newline()]); % remove tabs
+    end
+
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
     document = insertBefore(document, index_tcolorbox(i) - nl + length(section_title),  [section_explanation ' ' newline()]);
     % code
-    if ~isempty(tmp_finding{1}{3})
+    if length(tmp_finding{1}) >2 && ~isempty(tmp_finding{1}{3})
         section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
         init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
         % indicate it is matlab language
