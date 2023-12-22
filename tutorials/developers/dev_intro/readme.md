@@ -2,13 +2,18 @@
 
 [![Tutorial General Developer Tutorial for BRAPH 2.0](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_intro.pdf)
 
-The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (`elements`) in BRAPH 2.0 are derived from the base object `Element`. Developers can easily add new elements by writing the new elements in the simplified BRAPH 2.0 pseudocode. 
+The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (_elements_) in BRAPH 2.0 are derived from the base object `Element`. Developers can easily add new elements by writing the new elements in the simplified BRAPH 2.0 pseudocode. 
 By recompiling BRAPH 2.0, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
 In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
+
+
+
+
+
 ## Compilation and Element (Re)Generation
 
 BRAPH 2.0 is a compiled object-oriented programming software.
-Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
+Its objects are _elements_, which contain a set of _props_ of various _categories_ and _formats_, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
 To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
 **Compilation of BRAPH 2.0.**
@@ -18,11 +23,16 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 > 
 > >> braph2genesis
 > 
+
+
+
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
 
 	- **First compilation**, where the elements are created.
 	- **Second compilation**, where the elements are computationally optimized.
 	- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+
+
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in `regenerate`.
@@ -58,27 +68,30 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 > ⑦ does not perform the unit test.
 > ⑧ Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
 > ⑨ Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
+
+
+
 ## Elements
 
 The base class for all elements is `Element`. 
-Each element is essentially a container for a series of `props` (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
+Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
 
-	- A `sequential number` (integer starting from 1).
+	- A _sequential number_ (integer starting from 1).
 		
-	- A `tag` (a string).
+	- A _tag_ (a string).
 	
-	- A `category`, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
+	- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
 	
-	- A `format`, which determines what a prop can contain.
+	- A _format_, which determines what a prop can contain.
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
 
 Furthermore, each instance of a prop has the following features:
 
-	- A `value`. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
+	- A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
 	The functions to set, get, and memorize a value will be discussed in the following sections.
 	
-	- A `seed` for the random number generator to ensure the reproducibility of the results. 
+	- A _seed_ for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
@@ -86,7 +99,7 @@ Furthermore, each instance of a prop has the following features:
 	where `pointer` can be either a prop number or tag.
 	It cannot be changed.
  	
-	- A `checked` status, which is true by default.
+	- A _checked_ status, which is true by default.
 	Checked props are checked for format when they are set and for value when they are set/calculated. When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changes in the file "BRAPH2.m".
 	
 	The checked status of a prop can be altered with the functions:
@@ -96,7 +109,7 @@ Furthermore, each instance of a prop has the following features:
 	`checked = el.isChecked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-	- A `locked` status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
+	- A _locked_ status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
 	
 	A prop can be locked with the function:
 	`el.lock(pointer)`
@@ -105,11 +118,13 @@ Furthermore, each instance of a prop has the following features:
 	`locked = el.isLocked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-	- A `callback` instance. Callbacks are not used with `METADATA` props.
+	- A _callback_ instance. Callbacks are not used with `METADATA` props.
 	
 	The callback to a prop can be obtained using the function:
 	`cb = el.getCallback(pointer)`
 	where `pointer` can be either a prop number or tag.
+	
+
 Additional functions to operate with these features can be found by using the command `help Element` in the MatLab command line.
 
 > **Property Categories**
@@ -134,6 +149,10 @@ It does not allow callbacks.
                 
  	> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 > 
+
+
+
+
 > **Property Formats**
  >  
 	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code. 
@@ -154,14 +173,24 @@ It does not allow callbacks.
 >  
 > 	- `MARKER` Marker represents the marker style.
 > ```
+
+
+
+
 Even though it is possible to create instances of `Element`, typically one uses its subclasses and does not have any props.
 Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure NaN.
+
+
+
 <img src="fig01_big.jpg" alt="Element tree">
 
 > **Figure 1. Element tree**
 > All elements derive from the base class `Element`. 
 	Its direct children are `NoValue`, `Callback`, and `ConcreteElement`, whose properties are also indicated.
 	Concrete elements further derive directly or indirectly from `ConcreteElement`.
+	
+
+
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
 It should be instantiated using `novalue`.
 **Instantiation of `NoValue`.**
@@ -170,6 +199,9 @@ It should be instantiated using `novalue`.
 > 
 > Element.getNoValue()
 > 
+
+
+
 No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
@@ -181,6 +213,9 @@ It should be instantiated using `callback`.
 > el.getCallback('PROP', PROP_NUMBER)
 > el.getCallback('TAG', PROP_TAG)
 > 
+
+
+
 No element can be a subclass of `Callback`.
 
 A concrete element (`ConcreteElement`) provides the infrastructure necessary for all concrete elements. 
@@ -209,13 +244,16 @@ The value of a prop can be set with `set`.
 > ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
 > ③ returns the element.
 > ① ② set the value of a prop with the prop tag or the prop number.
+
+
+
 When a prop is set to a certain value, the following operations are performed:
 
-	- The value is **conditioned** before being set (by calling the protected `static` function `conditioning()`, which can be defined in each subelement).
+	- The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
 	
 	This can be set with the token `¡conditioning!`.
 	
-	- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the `static` function `conditioning()`, the function `preset()` has access to the element instance.
+	- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
 
 	This can be set with the token `¡preset!`.
 	
@@ -247,6 +285,8 @@ When a prop is set to a certain value, the following operations are performed:
 	`BRAPH2:<Element Class>:WrongInput`.
 	
 	- When a prop is successfully set, an **event** `PropSet()` is **notified**.
+ 
+
 ### Getting Props
 
 The value of a prop can be retrieved with `get`.
@@ -268,6 +308,9 @@ The value of a prop can be retrieved with `get`.
 > ② gets the value of a prop using the prop number.
 > ⑤ can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 > ③ ④ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+
+
+
 If the raw value of the property is a `NoValue`, it proceed to return the default property value (for categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
  
 If the raw value of the property is a callback, it retrieves the value of the linked property (for categories `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
@@ -283,6 +326,9 @@ The raw value of a prop can be retrieved with `getr`.
 > value = el.getr('ID');
 > value = el.getr(ConcreteElement.ID);
 > 
+
+
+
 ### Memorizing Props  
 
 The value of a prop can be memorized using `memorize`.
@@ -299,11 +345,14 @@ The value of a prop can be memorized using `memorize`.
 
 > ① ② memorize the value of a prop using the prop tag and the prop number.
 > ③ ④ do not return any output value.
+
+
+
 If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an **event PropMemorized**.
 
-If the property is `not` of category `RESULT`, `QUERY`, or `EVANESCENT` and has not been set yet, it sets it to its default value.
+If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and has not been set yet, it sets it to its default value.
  
-If the property is `not` of category `RESULT`, `QUERY`, or `EVANESCENT` and is a callback, it iteratively memorizes the property of the element in the callback.
+If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and is a callback, it iteratively memorizes the property of the element in the callback.
  
 If a property of category `QUERY` is memorized, a warning is thrown with warning id `BRAPH2:<Element Class>`, because query properties are generally not supposed to be memorized. If such behavior is intended, consider enclosing the command between warning off and warning on.
 
@@ -452,6 +501,10 @@ A generator file has the structure illustrated `tokens`.
 >   Functions used in the test.
 >   Can be on multiple lines.
 > 
+
+
+
+
 A list of special instructions is shown in `special`.
 **Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
@@ -471,11 +524,20 @@ A list of special instructions is shown in `special`.
 
 > ① substitutes the prop with its default value, when hard-coding the element.
 > ⑥ adds a warning that the specific feature is not implemented yet.
+
+
+
 ## Overview of Elements
+
+
+
 <img src="../braph2genesis.png" alt="BRAPH 2.0 genesis.">
 
 > **Figure 2. BRAPH 2.0 genesis.**
 > Directory structure of "braph2genesis" (left) and "braph2" (right).
+	
+
+
 The directory structure of "braph2" and the relation with "braph2genesis" is illustrated in Figure NaN.
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files "*.gen.m") that is compiled into the actual elements (files "*.m") by the command `braph2genesis` (some examples of these elements are shown).
 The compiled code can be launched by the command `braph2`.
@@ -523,6 +585,10 @@ We will now see how to implement a few concrete elements.
 >     };
 > ...
 > ```
+
+
+
+
 ### A Simple Calculator
 
 We will now create our first element (`ao`), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
@@ -660,6 +726,9 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > ⑮ ⑯ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
 > ⑰ ⑱ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 > ⑲ ⑳ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+
+
+
 ### Calculator with Seeded Randomness
 
 We can now create an element that demonstrate how the seeded randomness works (`sr`).
@@ -709,6 +778,9 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > ② Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 > ⑥ checks that calls to the calculation of the random number of differen randomizers return different values.
 > ③ ④ check that subsequent calls to the calculation of the random number return the same value.
+
+
+
 ### Query
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (`ao2`).
@@ -777,6 +849,9 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 > ③ ④ returns the sum or the difference depening on the argument.
 > ⑤ ⑥ retunrs `NaN` when the input is absent or unexpected.
+
+
+
 ### Evanescent, Gui, Figure
 
 We can now demonstrate the use of evanescent props and graphical handles (`f`).

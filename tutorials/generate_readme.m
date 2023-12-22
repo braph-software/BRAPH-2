@@ -39,7 +39,7 @@ document = regexprep(document, '\\code\{(.*?)\}', '`$1`');
 document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
 document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
-document = regexprep(document, '\\emph\{([^=\}]*)\}', '`$1`');
+document = regexprep(document, '\\emph\{([^=\}]*)\}', '_$1_');
 document = regexprep(document, '\\begin\{enumerate\}', '');
 document = regexprep(document, '\\end\{enumerate\}', '');
 document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
@@ -228,9 +228,9 @@ for i = 1:length(tmp_lstlisting)
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
             if length(tmp_circlenote) == 3
-                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1})) ' ' char(unicode_circled+str2double(tmp_circlenote{2})) ' ' tmp_circlenote{end} newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1})) ' ' char(unicode_circled+str2double(tmp_circlenote{2})) ' ' tmp_circlenote{end} char(13) newline()];
             else
-                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1}))  ' ' tmp_circlenote{end} newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1}))  ' ' tmp_circlenote{end} char(13) newline()];
             end
 
             tmp_position = index_lstlisting(i) - nl + explanation_length + mat_length + code_length + acumulated;
