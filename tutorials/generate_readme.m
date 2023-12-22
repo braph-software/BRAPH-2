@@ -52,7 +52,13 @@ for i = 1:length(enumerate_objs)
     tmp_obj = enumerate_objs{i};
     % put a 1 at the beginning of each line
     tmp_obj = regexprep(tmp_obj, char(9), '');
-    tmp_obj = regexprep(tmp_obj, '\\item', '1. \\item');
+    tmp_ind = regexp(tmp_obj{1}, '\\item', 'all');
+    acumulated_tmp = 0;
+    for j = 1:length(tmp_ind)
+        infotmp = [num2str(j) '. '];
+        tmp_obj = insertBefore(tmp_obj, tmp_ind(j) - 1 + acumulated_tmp, infotmp);
+        acumulated_tmp = acumulated_tmp + length(infotmp);
+    end
     % insert into document
     document = insertBefore(document, index_enumerate(i) - 1,  tmp_obj{1}(1:end-3));
 end
