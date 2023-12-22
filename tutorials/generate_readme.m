@@ -36,11 +36,31 @@ document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 document = regexprep(document, '\\begin\{fullwidth\}', '');
 document = regexprep(document, '\\end\{fullwidth\}', '');
 document = regexprep(document, '\\code\{(.*?)\}', '`$1`');
-document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
 document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 document = regexprep(document, '\\emph\{([^=\}]*)\}', '_$1_');
 document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
+
+% code refences
+% document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
+% find all coderefences
+references = regexp(document, '\\Coderef\{..\:([^\:\}]*)\}', 'tokens', 'all');
+document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '<refgoeshere>**!'); % put mark
+for i = 1:length(references)
+    index_ref = regexp(document, '<refgoeshere>\*\*\!', 'all');
+    tmp_ref = references{i}{1};
+    pattern = ['cd:' tmp_ref ',\s*caption\=\{\s*\{\\bf\s(.*?)\}'];
+    tmp_finding_ref= regexp(document, pattern, 'tokens', 'once');
+    if ~isempty(tmp_finding_ref)
+        tmp_finding_ref = tmp_finding_ref{1}(1:end-1);
+    else
+        tmp_finding_ref = tmp_ref;
+    end
+    section_title = strtrim(tmp_finding_ref);
+    % insert into document
+    document = insertBefore(document, index_ref(i),  section_title);
+end
+document = regexprep(document, '<refgoeshere>\*\*\!', ''); % remove mark
 
 % enumerate
 enumerate_objs = regexp(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', 'tokens', 'all');
