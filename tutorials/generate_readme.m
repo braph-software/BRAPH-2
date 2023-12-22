@@ -304,7 +304,7 @@ document = regexprep(document, '\(\\fn\{\*\.xlsx\}\)', '(.xlsx)');
 document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or .xlsx)');
 
 % references
-document = regexprep(document, '\$([^\$\^]*)\^\{(?:\^\{)?\\rm\s*([^\s*\}]*)\}\$', '$1 $2');
+document = regexprep(document,  ['\$([^\$\^]*)\^\{(?:\^\{)?(?:' char(13) char(10) ')?\\rm\s*([^\s*\}]*)\}\$'], '$1 $2');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 
 % web

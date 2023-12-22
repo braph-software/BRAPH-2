@@ -107,13 +107,10 @@ Start by writing the following information in the first 4 rows:
 
 - Brain Atlas ID (row 1, column 1). 
 For example: Desikan FreeSurfer
-
 - Brain Atlas LABEL (row 2, column 1). 
 For example: Desikan Labels
-
 - Brain Atlas NOTES (row 3, column 1).
 For example: Desikan Nodes
-
 - Brain Surface Name (row 4, column 1).
 For example: BrainMeshICBM152.nv
 
