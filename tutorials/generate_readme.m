@@ -62,8 +62,8 @@ for i = 1:length(enumerate_objs)
     end
     % modify the item
     findItem = regexp(tmp_obj, patternItem, 'tokens', 'all');
-    for k = 1:length(findItem)
-        finding = findItem{k};
+    for k = 1:length(findItem{1})
+        finding = findItem{1}{k};
         tmp_obj = regexprep(tmp_obj, patternItem, strtrim(finding{1}), 'once');
     end
 
