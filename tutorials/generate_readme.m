@@ -255,9 +255,9 @@ for i = 1:length(tmp_lstlisting)
         for j = 1:length(arr_circlenotes)
             tmp_circlenote = arr_circlenotes{j};
             if length(tmp_circlenote) == 3
-                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1})) ' ' char(unicode_circled+str2double(tmp_circlenote{2})) ' ' tmp_circlenote{end} char(13) newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1})) ' ' char(unicode_circled+str2double(tmp_circlenote{2})) ' ' tmp_circlenote{end} char(13) newline() '>' newline()];
             else
-                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1}))  ' ' tmp_circlenote{end} char(13) newline()];
+                note = ['> ' char(unicode_circled+str2double(tmp_circlenote{1}))  ' ' tmp_circlenote{end} char(13) newline() '>' newline()];
             end
 
             tmp_position = index_lstlisting(i) - nl + explanation_length + mat_length + code_length + acumulated;

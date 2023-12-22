@@ -59,14 +59,23 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 > 
 
 > ① clears the workspace (not always necessary, but needed is some element instances are still in the workspace).
+>
 > ② regenerates `Pipeline`.
+>
 > ③ performs only one compilation.
+>
 > ④ does not regenerate the element, but only the layout and the unit test.
+>
 > ⑤ does not regenerate the layout.
+>
 > ⑥ does not regenerate the unit test.
+>
 > ⑦ does not perform the unit test.
+>
 > ⑧ Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
+>
 > ⑨ Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
+>
 
 
 
@@ -230,8 +239,11 @@ The value of a prop can be set with `set`.
 > 
 
 > ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
+>
 > ③ returns the element.
+>
 > ① ② set the value of a prop with the prop tag or the prop number.
+>
 
 
 
@@ -292,9 +304,13 @@ The value of a prop can be retrieved with `get`.
 > 
 
 > ① gets the value of a prop using the prop tag.
+>
 > ② gets the value of a prop using the prop number.
+>
 > ⑤ can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
+>
 > ③ ④ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+>
 
 
 
@@ -331,7 +347,9 @@ The value of a prop can be memorized using `memorize`.
 > 
 
 > ① ② memorize the value of a prop using the prop tag and the prop number.
+>
 > ③ ④ do not return any output value.
+>
 
 
 
@@ -510,7 +528,9 @@ A list of special instructions is shown in `special`.
 > 
 
 > ① substitutes the prop with its default value, when hard-coding the element.
+>
 > ⑥ adds a warning that the specific feature is not implemented yet.
+>
 
 
 
@@ -697,22 +717,39 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > 
 
 > ① The `¡header!` token is the only required one.
+>
 > ② The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
+>
 > ③ must be the name of the element.
+>
 > ④ must be the name of the element.
+>
 > ⑤ Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
+>
 > ⑥ returns the string, which must be saved in the variable `value`.
+>
 > ⑦ The `¡props!` token permits to add additional props.
+>
 > ⑩ is a result prop.
+>
 > ⑪ calculates the sum of the two numbers. The result must be saved in the variable `value`.
+>
 > ⑫ is a result prop.
+>
 > ⑬ calculates the difference of the two numbers. The result must be saved in the variable `value`.
+>
 > ⑭ The `¡tests!` token permits to add unit tests.
+>
 > ⑴ alters the previous test to memorize the results.
+>
 > ⑧ ⑨ are two data props.
+>
 > ⑮ ⑯ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
+>
 > ⑰ ⑱ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
+>
 > ⑲ ⑳ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+>
 
 
 
@@ -762,9 +799,13 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > 
 
 > ① Here, a detailed description should be provided.
+>
 > ② Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
+>
 > ⑥ checks that calls to the calculation of the random number of differen randomizers return different values.
+>
 > ③ ④ check that subsequent calls to the calculation of the random number return the same value.
+>
 
 
 
@@ -833,9 +874,13 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > 
 
 > ① It is good practice to add some comments about the arguments for the query.
+>
 > ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
+>
 > ③ ④ returns the sum or the difference depening on the argument.
+>
 > ⑤ ⑥ retunrs `NaN` when the input is absent or unexpected.
+>
 
 
 
@@ -943,12 +988,22 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > 
 
 > ① renders a figure and returns its handle.
+>
 > ⑤ ensures that `FIG` is the parent of the panel.
+>
 > ⑨ ensures that `PANEL` is the parent of each button.
+>
 > ⑩ defines the same callback for all buttons.
+>
 > ⑪ The callbacks are defined in the token `¡calculate_callbacks!`.
+>
 > ⑫ All callbacks have two parameters at least, corresponding to the source of the callback `src` and to its event (here, not used).
+>
 > ⑬ The token `¡excluded_props!` determines which props to exclude from testing. Often evanescent handle and handlelist properties need to be excluded from the unit testing.
+>
 > ⑭ This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
+>
 > ⑮ memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
+>
 > ⑯ closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
+>
