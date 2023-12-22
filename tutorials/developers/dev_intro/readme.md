@@ -78,12 +78,9 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
 
-- A _sequential number_ (integer starting from 1).
-		
-- A _tag_ (a string).
-	
-- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
-	
+- A _sequential number_ (integer starting from 1).		
+- A _tag_ (a string).	
+- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.	
 - A _format_, which determines what a prop can contain.
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
