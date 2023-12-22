@@ -134,12 +134,33 @@ for i = 1:length(findings)
 end
 
 % itemize
-document = regexprep(document, '\\begin\{itemize\}', '');
-document = regexprep(document, '\\end\{itemize\}', '');
+% document = regexprep(document, '\\begin\{itemize\}', '');
+% document = regexprep(document, '\\end\{itemize\}', '');
+tmp_itemizes = regexp(document, '\\begin{itemize}(.*?)\\end\{itemize\}', 'tokens', 'all'); % hold it
+document = regexprep(document, '\\begin{itemize}(.*?)\\end\{itemize\}', '<itemizegoeshere>**!'); % put mark
 pattern = '\\item\s+([^\\]*)';
+for i = 1:length(tmp_itemizes)
+    % get index
+    index_itemize = regexp(document, '\<itemizegoeshere>\*\*\!', 'all');
+    tmp_itemize = tmp_itemizes{i};
+
+    % go through each item
+    tmp_items = regexp(strtrim(tmp_itemize{1}), pattern, 'tokens', 'all');
+    hold_this_paragraph = '';
+    for j = 1:length(tmp_items)
+        tmp_item = tmp_items{j};
+        hold_this_line = ['- ' strtrim(tmp_item{1}) char(13) newline()];
+        hold_this_paragraph = [hold_this_paragraph  hold_this_line]; %#ok<AGROW> 
+    end
+    document = insertBefore(document, index_itemize(i) - 1,  hold_this_paragraph);
+
+end
+document = regexprep(document, '<itemizegoeshere>\*\*\!', ''); % remove mark
+
+% for non itemize items
 findings = regexp(document, pattern, 'tokens', 'all');
-for i = 1:length(findings)
-    finding = findings{i};
+for j = 1:length(findings)
+    finding = findings{j};
     document = regexprep(document, pattern, ['- ' strtrim(finding{1}) char(13) newline()], 'once');
 end
 
@@ -147,9 +168,6 @@ end
 document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1` $2');
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
 document = regexprep(document, '\[\`([^\[\]]*)\`\]', '`$1`');
-
-% descriptions
-
 
 % tcolorbox
 tmp_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'tokens', 'all'); % hold it
