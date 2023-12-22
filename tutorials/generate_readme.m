@@ -51,7 +51,7 @@ for i = 1:length(enumerate_objs)
     index_enumerate = regexp(document, '<enumerategoeshere>\*\*\!', 'all');
     tmp_obj = enumerate_objs{i};
     % put a 1 at the beginning of each line
-    tmp_obj = regexprep(tmp_obj, '\item', '1. \item');
+    tmp_obj = regexprep(tmp_obj, '\\item', '1. \\item');
     % insert into document
     document = insertBefore(document, index_enumerate(i) - 1,  tmp_obj{1}(1:end-3));
 end
