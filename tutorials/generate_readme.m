@@ -32,7 +32,7 @@ document = regexprep(document, '\\section{([^{}]*)}', '## $1');
 document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 
-% backet control
+% bracket control
 document = regexprep(document, '\\begin\{fullwidth\}', '');
 document = regexprep(document, '\\end\{fullwidth\}', '');
 document = regexprep(document, '\\code\{(.*?)\}', '`$1`');
@@ -40,9 +40,22 @@ document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
 document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
 document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
 document = regexprep(document, '\\emph\{([^=\}]*)\}', '_$1_');
+document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
+
+% enumerate
+enumerate_objs = regexp(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', 'tokens', 'all');
+document = regexprep(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', '<enumerategoeshere>**!'); % put mark
 document = regexprep(document, '\\begin\{enumerate\}', '');
 document = regexprep(document, '\\end\{enumerate\}', '');
-document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
+for i = 1:length(enumerate_objs)
+    index_enumerate = regexp(document, '<enumerategoeshere>\*\*\!', 'all');
+    tmp_obj = enumerate_objs{i};
+    % put a 1 at the beginning of each line
+    tmp_obj = regexprep(tmp_obj, '\item', '1. \item');
+    % insert into document
+    document = insertBefore(document, index_enumerate(i) - 1,  tmp_obj{1}(1:end-3));
+end
+document = regexprep(document, '<enumerategoeshere>\*\*\!', ''); % remove mark
 
 % figrefs
 figrefs1 = regexp(document, '\\Figref\{fig:([^:\}]*)\}', 'tokens', 'all');
@@ -118,7 +131,6 @@ for i = 1:length(tmp_tcolorbox)
     index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
     % get sections
     tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
-
 
     % get code
     section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
