@@ -149,7 +149,8 @@ for i = 1:length(tmp_tcolorbox)
 
     % get code
     section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
-    section_explanation = [ newline() ' ' strtrim(tmp_finding{1}{2})];
+    section_explanation = [newline() ' ' strtrim(tmp_finding{1}{2})];
+    section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
     % insert into document
     document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
     document = insertBefore(document, index_tcolorbox(i) - nl + length(section_title),  [section_explanation ' ' newline()]);
