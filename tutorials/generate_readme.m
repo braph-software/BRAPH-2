@@ -112,7 +112,7 @@ pattern = '\\item\s+([^\\]*)';
 findings = regexp(document, pattern, 'tokens', 'all');
 for i = 1:length(findings)
     finding = findings{i};
-    document = regexprep(document, pattern, ['- ' finding{1}], 'once');
+    document = regexprep(document, pattern, ['- ' strtrim(finding{1})], 'once');
 end
 
 % item

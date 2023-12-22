@@ -28,14 +28,13 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
 1. - **First compilation**, where the elements are created.
-2. - **Second compilation**, where the elements are computationally optimized.
-3. - **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
+2.- **Second compilation**, where the elements are computationally optimized.
+3.- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
 
 
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
-This can be done with the function `regenerate()`, as shown in `regenerate`.
-**Regeneration of elements.**
+This can be done with the function `regenerate()`, as shown in `regenerate`.**Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
 > ```matlab
 > 
@@ -75,22 +74,12 @@ This can be done with the function `regenerate()`, as shown in `regenerate`.
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
 
-	- A _sequential number_ (integer starting from 1).
-		
-	- A _tag_ (a string).
-	
-	- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
-	
-	- A _format_, which determines what a prop can contain.
+	- A _sequential number_ (integer starting from 1).- A _tag_ (a string).- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.- A _format_, which determines what a prop can contain.
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
 
-Furthermore, each instance of a prop has the following features:
-
-	- A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
-	The functions to set, get, and memorize a value will be discussed in the following sections.
-	
-	- A _seed_ for the random number generator to ensure the reproducibility of the results. 
+Furthermore, each instance of a prop has the following features:- A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
+	The functions to set, get, and memorize a value will be discussed in the following sections.- A _seed_ for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
@@ -154,23 +143,9 @@ It does not allow callbacks.
 
 > **Property Formats**
  >  
-	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code. 
- 
-	- `STRING` String is a char array.
- 
-	- `STRINGLIST` StringList is a cell array with char arrays.
- 
-	- `LOGICAL` Logical is a boolean value.
- 
-	- `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
+	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code.- `STRING` String is a char array.- `STRINGLIST` StringList is a cell array with char arrays.- `LOGICAL` Logical is a boolean value.- `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
 > ```matlab
-> '` for red.
->  
-> 	- `ALPHA` Alpha is a transparency level between 0 and 1.
->  
-> 	- `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
->  
-> 	- `MARKER` Marker represents the marker style.
+> '` for red.- `ALPHA` Alpha is a transparency level between 0 and 1.- `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).- `MARKER` Marker represents the marker style.
 > ```
 
 
@@ -251,11 +226,11 @@ When a prop is set to a certain value, the following operations are performed:
 
 This can be set with the token `¡conditioning!`.
 
-2. - The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
+2.- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
 
 This can be set with the token `¡preset!`.
 
-3. - If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
+3.- If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
 If the check fails, the property is not set and an error is thrown with error id
 `BRAPH2:<Element Class>:WrongInput`.
 
@@ -274,11 +249,11 @@ If the property is of category RESULT, QUERY or EVANESCENT, the value can only b
 
 This can be set with the token `¡postset!`.
 
-6. - **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
+6.- **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
 
 This can be set with the token `¡postprocessing!`.
 
-7. - If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
+7.- If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
 If the check fails an error is thrown with error id
 `BRAPH2:<Element Class>:WrongInput`.
 
@@ -287,8 +262,7 @@ If the check fails an error is thrown with error id
 
 ### Getting Props
 
-The value of a prop can be retrieved with `get`.
-**Getting a prop.**
+The value of a prop can be retrieved with `get`.**Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
