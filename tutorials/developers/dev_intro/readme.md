@@ -135,6 +135,7 @@ Additional functions to operate with these features can be found by using the co
 
 
 > **Property Categories**
+
 >  
 > `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
 > 
@@ -154,7 +155,6 @@ It does not allow callbacks.
 > `FIGURE` Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 >              
 > `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
-> 
 
 
 
