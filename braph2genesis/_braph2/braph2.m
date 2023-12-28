@@ -24,6 +24,7 @@ function braph2(gui, ewm)
 %  <a href="matlab:help neuralnetworks  ">neuralnetworks</a> - neural networks
 %  <a href="matlab:help pipelines       ">pipelines</a>      - pipelines
 %  <a href="matlab:help test            ">test</a>           - unit testing
+%  <a href="matlab:help sandbox         ">sandbox</a>        - sandbox
 %
 % See also BRAPH2GUI.
 
@@ -75,6 +76,9 @@ pipelines_dir_list = pipelines_dir_list(~ismember({pipelines_dir_list(:).name}, 
 for i = 1:1:length(pipelines_dir_list)
     add_dir([pipelines_dir filesep pipelines_dir_list(i).name])
 end
+
+sandbox_dir = [braph2_dir filesep 'sandbox'];
+add_dir(sandbox_dir)
 
 if nargin < 2
     ewm = 'msgbox';

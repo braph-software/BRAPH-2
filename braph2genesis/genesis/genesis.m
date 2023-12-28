@@ -460,7 +460,6 @@ for run = 1:1:run_number
         end
     end
 
-
     % pipelines
     if compile_dir('pipelines')
         pipelines_contents = dir([source_dir fp 'pipelines']);  % get the folder contents
@@ -479,6 +478,16 @@ for run = 1:1:run_number
         end
     end
 
+    % sandbox
+    if compile_dir('sandbox')
+        sandbox_gen_list = getGenerators([source_dir fp 'sandbox']);
+        for i = 1:numel(sandbox_gen_list)
+            if compile_el('sandbox', sandbox_gen_list{i})
+                create_Element([source_dir fp 'sandbox' fp sandbox_gen_list{i}], [target_dir fp 'sandbox'])
+            end
+        end
+    end
+    
     % LOAD BRAPH2
     addpath(target_dir)
     braph2(false, 'warning')
@@ -632,6 +641,16 @@ if compile_dir('pipelines')
     end
 end
 
+% sandbox
+if compile_dir('sandbox')
+    sandbox_gen_list = getGenerators([source_dir fp 'sandbox']);
+    for i = 1:numel(sandbox_gen_list)
+        if compile_el('sandbox', sandbox_gen_list{i})
+            create_layout([source_dir fp 'sandbox' fp sandbox_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
+        end
+    end
+end
+
 %% CREATE TEST
 % src
 if compile_dir('util')
@@ -771,6 +790,16 @@ if compile_dir('pipelines')
                     create_test_Element([source_dir fp 'pipelines' fp pipeline_dir_name fp pipeline_gen_list{j}], [target_dir fp 'pipelines' fp pipeline_dir_name])
                 end
             end
+        end
+    end
+end
+
+% sandbox
+if compile_dir('sandbox')
+    sandbox_gen_list = getGenerators([source_dir fp 'sandbox']);
+    for i = 1:numel(sandbox_gen_list)
+        if compile_el('sandbox', sandbox_gen_list{i})
+            create_test_Element([source_dir fp 'sandbox' fp sandbox_gen_list{i}], [target_dir fp 'sandbox'])
         end
     end
 end
