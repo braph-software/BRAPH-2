@@ -16,7 +16,11 @@ TOSTRING
 NaN
 Brain Atlas
 3
-Neural Network Evaluators
+D
 NaN
-Average of Feature Importance
+Feature Importance Score
 4
+RESHAPED_FEATURE_IMPORTANCE
+NaN
+MAP_TO_CELL
+NaN

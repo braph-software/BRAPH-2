@@ -6,6 +6,7 @@ el_class_list = {'NNFeatureImportanceBrainSurface', 'NNFeatureImportanceBrainSur
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])
+    delete([fileparts(which('braph2')) filesep() 'src' filesep() 'gui' filesep() 'layouts' filesep() el_class '.layout'])
     create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
     %create_Element([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
     create_layout([fileparts(which('braph2genesis')) el_path filesep() '_' el_class '.gen.m'], [fileparts(which('braph2')) el_path])
@@ -13,6 +14,20 @@ for i = 1:1:length(el_class_list)
     ['test_' el_class]
     %eval(['test_' el_class])
 end
+
+%%
+clc; clear;
+load('test_file_yc_fi.mat')
+
+%% Measure FI Visualization
+gui = GUIElement('PE', nnfibs_measure);
+gui.get('DRAW');
+gui.get('SHOW')
+
+%% Graph FI Visualization
+gui = GUIElement('PE', nnfibs_graph);
+gui.get('DRAW');
+gui.get('SHOW')
 
 %% GUI test
 % ensure the example data is generated
@@ -151,28 +166,16 @@ nne_template = NNClassifierMLP_Evaluator('P', 2);
 nncv_measure = NNClassifierMLP_CrossValidation('D', {d1_measure, d2_measure}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv_measure.get('TRAIN');
 nncv_measure.memorize('AV_FEATURE_IMPORTANCE')
-nnfibs_measure = NNFeatureImportanceBrainSurface('BA', ba, 'D', d1_measure, 'AV_FEATURE_IMPORTANCE', nncv_measure.get('AV_FEATURE_IMPORTANCE'));
 
 %% Create a classifier cross-validation graph
 nne_template = NNClassifierMLP_Evaluator('P', 2);
 nncv_graph = NNClassifierMLP_CrossValidation('D', {d1_graph, d2_graph}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
 nncv_graph.get('TRAIN');
 nncv_graph.memorize('AV_FEATURE_IMPORTANCE');
-nnfibs_graph = NNFeatureImportanceBrainSurface('BA', ba, 'D', d1_graph, 'AV_FEATURE_IMPORTANCE', nncv_graph.get('AV_FEATURE_IMPORTANCE'));
+
+%% init the brain surface element
+nnfibs_measure = NNFeatureImportanceBrainSurface('BA', ba, 'D', d1_measure, 'FEATURE_IMPORTANCE', nncv_measure.get('AV_FEATURE_IMPORTANCE'));
+nnfibs_graph = NNFeatureImportanceBrainSurface('BA', ba, 'D', d1_graph, 'FEATURE_IMPORTANCE', nncv_graph.get('AV_FEATURE_IMPORTANCE'));
 
 %%
 save('test_file_yc_fi.mat')
-
-%%
-clc; clear;
-load('test_file_yc_fi.mat')
-
-%% Measure FI Visualization
-gui = GUIElement('PE', nnfibs_measure);
-gui.get('DRAW');
-gui.get('SHOW')
-
-%% Graph FI Visualization
-gui = GUIElement('PE', nnfibs_graph);
-gui.get('DRAW');
-gui.get('SHOW')

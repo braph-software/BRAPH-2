@@ -107,10 +107,20 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 		D_CATEGORY = Category.DATA;
 		D_FORMAT = Format.ITEM;
 		
-		AV_FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 3;
-		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
-		AV_FEATURE_IMPORTANCE_CATEGORY = Category.DATA;
-		AV_FEATURE_IMPORTANCE_FORMAT = Format.CELL;
+		FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 3;
+		FEATURE_IMPORTANCE_TAG = 'FEATURE_IMPORTANCE';
+		FEATURE_IMPORTANCE_CATEGORY = Category.DATA;
+		FEATURE_IMPORTANCE_FORMAT = Format.CELL;
+		
+		RESHAPED_FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 4;
+		RESHAPED_FEATURE_IMPORTANCE_TAG = 'RESHAPED_FEATURE_IMPORTANCE';
+		RESHAPED_FEATURE_IMPORTANCE_CATEGORY = Category.QUERY;
+		RESHAPED_FEATURE_IMPORTANCE_FORMAT = Format.EMPTY;
+		
+		MAP_TO_CELL = ConcreteElement.getPropNumber() + 5;
+		MAP_TO_CELL_TAG = 'MAP_TO_CELL';
+		MAP_TO_CELL_CATEGORY = Category.QUERY;
+		MAP_TO_CELL_FORMAT = Format.EMPTY;
 	end
 	methods % constructor
 		function nnfib = NNFeatureImportanceBrainSurface(varargin)
@@ -186,7 +196,9 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					ConcreteElement.getProps() ...
 						NNFeatureImportanceBrainSurface.BA ...
 						NNFeatureImportanceBrainSurface.D ...
-						NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE ...
+						NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE ...
+						NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE ...
+						NNFeatureImportanceBrainSurface.MAP_TO_CELL ...
 						];
 				return
 			end
@@ -209,7 +221,7 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 						ConcreteElement.getProps(Category.DATA) ...
 						NNFeatureImportanceBrainSurface.BA ...
 						NNFeatureImportanceBrainSurface.D ...
-						NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE ...
+						NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE ...
 						];
 				case Category.RESULT
 					prop_list = [
@@ -218,6 +230,8 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 				case Category.QUERY
 					prop_list = [ ...
 						ConcreteElement.getProps(Category.QUERY) ...
+						NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE ...
+						NNFeatureImportanceBrainSurface.MAP_TO_CELL ...
 						];
 				case Category.EVANESCENT
 					prop_list = [ ...
@@ -387,8 +401,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 						tag = NNFeatureImportanceBrainSurface.BA_TAG;
 					case NNFeatureImportanceBrainSurface.D
 						tag = NNFeatureImportanceBrainSurface.D_TAG;
-					case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
-						tag = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_TAG;
+					case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+						tag = NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE_TAG;
+					case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+						tag = NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE_TAG;
+					case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+						tag = NNFeatureImportanceBrainSurface.MAP_TO_CELL_TAG;
 					otherwise
 						tag = getPropTag@ConcreteElement(prop);
 				end
@@ -421,8 +439,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_category = NNFeatureImportanceBrainSurface.BA_CATEGORY;
 				case NNFeatureImportanceBrainSurface.D
 					prop_category = NNFeatureImportanceBrainSurface.D_CATEGORY;
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
-					prop_category = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_CATEGORY;
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+					prop_category = NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE_CATEGORY;
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+					prop_category = NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE_CATEGORY;
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+					prop_category = NNFeatureImportanceBrainSurface.MAP_TO_CELL_CATEGORY;
 				otherwise
 					prop_category = getPropCategory@ConcreteElement(prop);
 			end
@@ -454,8 +476,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_format = NNFeatureImportanceBrainSurface.BA_FORMAT;
 				case NNFeatureImportanceBrainSurface.D
 					prop_format = NNFeatureImportanceBrainSurface.D_FORMAT;
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
-					prop_format = NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE_FORMAT;
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+					prop_format = NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE_FORMAT;
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+					prop_format = NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE_FORMAT;
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+					prop_format = NNFeatureImportanceBrainSurface.MAP_TO_CELL_FORMAT;
 				otherwise
 					prop_format = getPropFormat@ConcreteElement(prop);
 			end
@@ -487,8 +513,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_description = 'BA (data, item) is a brain atlas.';
 				case NNFeatureImportanceBrainSurface.D
 					prop_description = 'D (data, item) is a NN dataset.';
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
-					prop_description = 'AV_FEATURE_IMPORTANCE (data, cell) is the feature importances.';
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+					prop_description = 'FEATURE_IMPORTANCE (data, cell) is the feature importances.';
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+					prop_description = 'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.';
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+					prop_description = 'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.';
 				case NNFeatureImportanceBrainSurface.ELCLASS
 					prop_description = 'ELCLASS (constant, string) is the class of the element to manage the visuazation of the neural network feature importance on the brain surface.';
 				case NNFeatureImportanceBrainSurface.NAME
@@ -534,8 +564,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_settings = 'BrainAtlas';
 				case NNFeatureImportanceBrainSurface.D
 					prop_settings = 'NNDataset';
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(Format.CELL);
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(Format.EMPTY);
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+					prop_settings = Format.getFormatSettings(Format.EMPTY);
 				case NNFeatureImportanceBrainSurface.TEMPLATE
 					prop_settings = 'NNFeatureImportanceBrainSurface';
 				otherwise
@@ -569,8 +603,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					prop_default = Format.getFormatDefault(Format.ITEM, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.D
 					prop_default = Format.getFormatDefault(Format.ITEM, NNFeatureImportanceBrainSurface.getPropSettings(prop));
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(Format.CELL, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(Format.EMPTY, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL
+					prop_default = Format.getFormatDefault(Format.EMPTY, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.ELCLASS
 					prop_default = 'NNFeatureImportanceBrainSurface';
 				case NNFeatureImportanceBrainSurface.NAME
@@ -653,8 +691,12 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 					check = Format.checkFormat(Format.ITEM, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.D % __NNFeatureImportanceBrainSurface.D__
 					check = Format.checkFormat(Format.ITEM, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE__
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE__
 					check = Format.checkFormat(Format.CELL, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE__
+					check = Format.checkFormat(Format.EMPTY, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL % __NNFeatureImportanceBrainSurface.MAP_TO_CELL__
+					check = Format.checkFormat(Format.EMPTY, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				case NNFeatureImportanceBrainSurface.TEMPLATE % __NNFeatureImportanceBrainSurface.TEMPLATE__
 					check = Format.checkFormat(Format.ITEM, value, NNFeatureImportanceBrainSurface.getPropSettings(prop));
 				otherwise
@@ -674,6 +716,67 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			end
 		end
 	end
+	methods (Access=protected) % calculate value
+		function value = calculateValue(nnfib, prop, varargin)
+			%CALCULATEVALUE calculates the value of a property.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  returns the default value for the prop and should be implemented in the
+			%  subclasses of Element when needed.
+			%
+			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
+			%  Category.QUERY.
+			%
+			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
+			%  postset, postprocessing, checkValue.
+			
+			switch prop
+				case NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE__
+					cell1 = nnfib.get('FEATURE_IMPORTANCE');
+					cell2 = nnfib.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+					if ~isequal(numel(cell1), numel(cell2)) 
+					    cell1 = nnfib.get('MAP_TO_CELL', cell2mat(cell1), cell2);
+					end
+					
+					value = cell1;
+					
+				case NNFeatureImportanceBrainSurface.MAP_TO_CELL % __NNFeatureImportanceBrainSurface.MAP_TO_CELL__
+					if isempty(varargin)
+					    value = {};
+					    return
+					end
+					vector = varargin{1};
+					cell_template = varargin{2};
+					mappedCellArray = cell_template;
+					index = 1;
+					for i = 1:numel(cell_template)
+					    cellData = cell_template{i};
+					    if iscell(cellData)
+					        % Map the vector to nested cell arrays recursively
+					        nestedVector = nnfib.get('MAP_TO_CELL', vector(index:end), cellData);
+					        mappedCellArray{i} = nestedVector;
+					    else
+					        % Assign elements from the vector to cells
+					        numElements = numel(cellData);
+					        mappedCellArray{i} = reshape(vector(index:index+numElements-1), size(cellData));
+					        index = index + numElements;
+					    end
+					end
+					
+					value = mappedCellArray;
+					
+				otherwise
+					if prop <= ConcreteElement.getPropNumber()
+						value = calculateValue@ConcreteElement(nnfib, prop, varargin{:});
+					else
+						value = calculateValue@Element(nnfib, prop, varargin{:});
+					end
+			end
+			
+		end
+	end
 	methods % GUI
 		function pr = getPanelProp(nnfib, prop, varargin)
 			%GETPANELPROP returns a prop panel.
@@ -691,18 +794,18 @@ classdef NNFeatureImportanceBrainSurface < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE__
+				case NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE % __NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE__
 					input_dataset = nnfib.get('D');
 					dp_class = input_dataset.get('DP_CLASS');
 					graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
 					measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 					
 					if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-					    pr = NNFeatureImportanceBrainSurfacePP_FI_Graph('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNFeatureImportanceBrainSurfacePP_FI_Graph('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 					elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-					    pr = NNFeatureImportanceBrainSurfacePP_FI_Measure('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNFeatureImportanceBrainSurfacePP_FI_Measure('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 					else % DATA input
-					    pr = NNFeatureImportanceBrainSurfacePP_FI_Data('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNFeatureImportanceBrainSurfacePP_FI_Data('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 					end
 					
 				otherwise

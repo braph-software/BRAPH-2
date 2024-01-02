@@ -362,10 +362,8 @@ function cb_open_mbrain(~, ~)
         i = selected(s);
 
         measure = m_list{i}; % also key
-
-        values_vectored = el.get(prop);
-        cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
-        values = pr.get('MAP_TO_CELL', cell2mat(values_vectored), cell_template);
+        el = pr.get('EL');
+        values = el.get('RESHAPED_FEATURE_IMPORTANCE');
         value = values(i);
 
         if ~gui_b_dict.get('CONTAINS_KEY', measure)
@@ -450,32 +448,6 @@ GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
 %%%% ¡settings!
 'GUIFig'
 
-%%% ¡prop!
-MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
-%%%% ¡calculate!
-if isempty(varargin)
-    value = {};
-    return
-end
-vector = varargin{1};
-cell_template = varargin{2};
-mappedCellArray = cell_template;
-index = 1;
-for i = 1:numel(cell_template)
-    cellData = cell_template{i};
-    if iscell(cellData)
-        % Map the vector to nested cell arrays recursively
-        nestedVector = pr.get('MAP_TO_CELL', vector(index:end), cellData);
-        mappedCellArray{i} = nestedVector;
-    else
-        % Assign elements from the vector to cells
-        numElements = numel(cellData);
-        mappedCellArray{i} = reshape(vector(index:index+numElements-1), size(cellData));
-        index = index + numElements;
-    end
-end
-
-value = mappedCellArray;
 
 %% ¡tests!
 
