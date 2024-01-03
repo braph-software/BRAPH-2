@@ -2,7 +2,7 @@
 \usepackage{../braph2_tut}
 %\geometry{showframe} % display margins for debugging page layout
 
-\title[Comparison of Structural Data using WU]{Pipeline for Comparison of Weighted Structural Data using Weighted Graphs}
+\title{Pipeline for Comparison of Weighted Structural Data using Weighted Graphs}
 
 \begin{document}
 
@@ -19,6 +19,7 @@
 	{
 	Examples of displays of \code{Clustering} with weighted structural data obtained using BRAPH 2.
 	}
+#!FIG01 200px
  
 \begin{abstract}
 \noindent
@@ -57,7 +58,7 @@ The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's t
 {
 	BRAPH 2 main GUI with the pipeline \emph{Pipeline Structural Comparison WU} selected.
 }
-
+#!FIG02
 
 \begin{tcolorbox}[
 	title=Pipeline launch from command line
@@ -94,6 +95,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps: 
 	{
 	These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 	}
+#!FIG03
 \clearpage
 
 \section{Step 1: Load the Brain Atlas}
@@ -111,6 +113,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps: 
 	{\bf a} Click on \fn{Load Atlas} from the pipeline GUI.
 	{\bf b} Navigate to the \fn{./braph2/pipelines/structural/Example data ST XLS} and select the atlas file \fn{atlas.xlsx} that would be used in this example. You can also plot the brain atlas by pressing \fn{Plot Brain Atlas}. 
 	}
+#!FIG04
  
 \section{Step 2: Load the Structural Group Data}
 
@@ -128,6 +131,7 @@ After you loaded the brain atlas, you can upload the \emph{structural data} for 
 	{\bf a} From the pipeline GUI, click on \fn{Load Group ST 1 XLS} to load the data of group 1, and \fn{Load Group ST 2 XLS} to load the data of group 2.
 	{\bf b} Data for group 1 is uploaded. {\bf c} Data for group 2 is uploaded.
 	}
+#!FIG05
 
 \section{Step 3: Analyzing the Data of Group 1}
  
@@ -158,6 +162,7 @@ In the \code{NEGATIVE WEIGHTS RULE} you can decide how you want to analyze the n
 	{\bf a} Click on \fn{Analyze Group 1} in the pipeline's GUI.
         {\bf b} After clicking on \fn{Analyze Group 1} in the pipeline's GUI, a new window will appear where first you can select the parameters for the graph construction {\bf c}. In this pipeline, you can select the statistical test to be used for the correlations {\bf d}, and what you want to do with the negative correlation weights {\bf e}.
 	}
+#!FIG06
 	\fig{figure}
 	{fig:07}
 	{
@@ -170,6 +175,7 @@ In the \code{NEGATIVE WEIGHTS RULE} you can decide how you want to analyze the n
  	{\bf c} This new window shows the array of values for the measure, in this case \fn{Clustering}.
  	{\bf d} After the calculation of the measure, a new table appears with the measure results, and the rule is blocked (in blue).
  }
+#!FIG07
  
 \subsection{Calculate Measures}
 After the rule is set, you can calculate the measure by pressing the "C" (\Figref{fig:07}c) and the results will appear in a new table within the same panel (\Figref{fig:07}d). Also notice that after the measure is calculated, the rule is blocked (\Figref{fig:07}d).
@@ -186,6 +192,7 @@ If you want to visualize the results, select the measure and press \fn{Plot Sele
 	{\bf a} Click on \fn{Plot Selected Measures on Brain} in the analysis' GUI and a brain surface with the results from the calculated measures will appear. The size of the spheres and the color are proportional to the measure's value.   
         {\bf b} In the new window, press the button settings to obtain further visualization options of the results {\bf c}. 
 	}
+#!FIG08
  
  Finally, when you do right click, in the \fn{GRAPH $\&$ MEASURES} panel, there are other options you can explore such as \fn{Plot Graph Plot} (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
   
@@ -203,6 +210,7 @@ After the analysis of group 1, you can proceed with the analysis of the second g
 	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
 	{\bf b} In this new window, you can see that the graph properties such as \fn{Correlation rule} and \fn{Negative weights rule} are blocked since they are the same as the ones set in the analysis of group 1. If you select a measure, in this case \fn{Clustering}, and press \fn{Data Selected Measures} {\bf c}, you can observe that the measure's rules and parameters are also set in case you calculated the measures in analysis 1, and if not, you can set the rule by pressing at the "@" {\bf d}.
 	}
+#!FIG09
  
 \section{Step 5: Comparing Groups}
 
@@ -217,6 +225,7 @@ Once you have explored the network measures for each group, you can proceed with
 	{\bf a} Click on \fn{Compare Groups} in the pipeline's GUI.
 	{\bf b} In this new window, you can select what to turn ON/OFF the wait bar and verbose functions, you can change the number of permutations, and whether to perform a longitudinal group comparison. We set the number of permutations to 10 for this tutorial {\bf c}. Finally, you can calculate the comparison of some graph measures between groups {\bf d}.
 	}
+#!FIG10
  
 To obtain the results from the measure/s comparison, select the measures in the \fn{GRAPH $\&$ MEASURES} panel and press \fn{Data Selected Comparisons}({\Figref{fig:11}a}), and a new window will open ({\Figref{fig:11}b}) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
@@ -230,6 +239,7 @@ To obtain the results from the measure/s comparison, select the measures in the 
 	{\bf a} Click on \fn{Data Selected Comparisons} in the Comparisons panel.
 	{\bf b} In this new window, you can see the results from the comparison: the difference values between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 	}
+#!FIG11
 Finally, we can visualize the comparison results on a brain surface by selecting the measure comparisons we want and right click and press \fn{Plot Selected Comparisons on Brain} ({\Figref{fig:12}a}). A new window with comparison results on a brain surface will appear, where blue color indicates group 1 > group 2 and red color group 2 > group 1, and the size of the spheres is proportional to the absolute difference value between groups. If you press the Settings button ({\Figref{fig:12}b}), then you will have available more options, for example to apply FDR correction to your plot ({\Figref{fig:12}c}), which by default is set to off.
   	\fig{figure*}
 	{fig:12}
@@ -242,4 +252,5 @@ Finally, we can visualize the comparison results on a brain surface by selecting
         {\bf b} In the new window, press the button settings to obtain further visualization options of the results. 
         {\bf c} In the settings, you can activate the FDR correction by setting the desired q value and changing from off to on the button.
         }
+#!FIG12
 \end{document}
