@@ -2,7 +2,8 @@ close all; delete(findall(0, 'type', 'figure')); clear all; clc
 
 %% neural network
 el_path = '/neuralnetworks';
-el_class_list = {'NNFeatureImportanceBrainSurface', 'NNFeatureImportanceBrainSurfacePP_FI_Data', 'NNFeatureImportanceBrainSurfacePP_FI_Graph', 'NNFeatureImportanceBrainSurfacePP_FI_Measure'}; 
+el_class_list = {'NNFeatureImportanceBrainSurface', 'NNFeatureImportanceBrainSurfacePP_Data', 'NNFeatureImportanceBrainSurfacePP_Graph', 'NNFeatureImportanceBrainSurfacePP_Measure', 'NNFeatureImportanceBrainSurfacePF_Measure', 'NNFeatureImportanceBrainSurfacePF_Measure_NU', 'NNFeatureImportanceBrainSurfacePF_Measure_NS', 'NNFeatureImportanceBrainSurfacePF_Measure_NB', 'NNFeatureImportanceBrainSurfacePF_Measure_GU', 'NNFeatureImportanceBrainSurfacePF_Measure_GS', 'NNFeatureImportanceBrainSurfacePF_Measure_GB', 'NNFeatureImportanceBrainSurfacePF_Measure_BU', 'NNFeatureImportanceBrainSurfacePF_Measure_BS', 'NNFeatureImportanceBrainSurfacePF_Measure_BB', 'NNFeatureImportanceBrainSurfacePF_x_xUPP_Layer', 'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'}; 
+%el_class_list = {'NNFeatureImportanceBrainSurfacePP_Graph', 'NNFeatureImportanceBrainSurfacePP_Measure', 'NNFeatureImportanceBrainSurfacePF_Measure', 'NNFeatureImportanceBrainSurfacePF_Measure_NU', 'NNFeatureImportanceBrainSurfacePF_Measure_NS', 'NNFeatureImportanceBrainSurfacePF_Measure_NB', 'NNFeatureImportanceBrainSurfacePF_Measure_GU', 'NNFeatureImportanceBrainSurfacePF_Measure_GS', 'NNFeatureImportanceBrainSurfacePF_Measure_GB', 'NNFeatureImportanceBrainSurfacePF_Measure_BU', 'NNFeatureImportanceBrainSurfacePF_Measure_BS', 'NNFeatureImportanceBrainSurfacePF_Measure_BB', 'NNFeatureImportanceBrainSurfacePF_x_xUPP_Layer', 'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'}; 
 for i = 1:1:length(el_class_list)
     el_class = el_class_list{i};
     delete([fileparts(which('braph2')) el_path filesep() el_class '.m'])

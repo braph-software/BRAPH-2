@@ -95,11 +95,11 @@ graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG()
 measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 
 if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNFeatureImportanceBrainSurfacePP_FI_Graph('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_Graph('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNFeatureImportanceBrainSurfacePP_FI_Measure('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_Measure('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 else % DATA input
-    pr = NNFeatureImportanceBrainSurfacePP_FI_Data('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
+    pr = NNFeatureImportanceBrainSurfacePP_Data('EL', nnfib, 'D', input_dataset, 'PROP', NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE, varargin{:});
 end
 
 %%% ¡prop!
