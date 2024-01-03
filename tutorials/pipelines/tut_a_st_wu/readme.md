@@ -158,7 +158,7 @@ If you want to visualize the results, select the measure and press "Plot Selecte
 
 
  
- Finally, when you do right click, in the "GRAPH $&$ MEASURES" panel, there are other options you can explore such as "Plot Graph Plot" (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
+ Finally, when you do right click, in the "GRAPH & MEASURES" panel, there are other options you can explore such as "Plot Graph Plot" (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
   
 ## Step 4: Analyzing the Data of Group 2
 
@@ -185,7 +185,7 @@ Once you have explored the network measures for each group, you can proceed with
 
 
  
-To obtain the results from the measure/s comparison, select the measures in the "GRAPH $&$ MEASURES" panel and press "Data Selected Comparisons"({Figure 11a}), and a new window will open ({Figure 11b}) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
+To obtain the results from the measure/s comparison, select the measures in the "GRAPH & MEASURES" panel and press "Data Selected Comparisons"({Figure 11a}), and a new window will open ({Figure 11b}) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
 
 <img src="fig12.jpg" alt="Visualize the comparison results on a brain surface">

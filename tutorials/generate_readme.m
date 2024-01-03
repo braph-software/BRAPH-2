@@ -352,6 +352,7 @@ document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
 document = regexprep(document, '\s*\\', '');
 document = regexprep(document, '\`bf\s*', '\`');
 document = regexprep(document,'bibliography(.*?)\}', '');
+document = regexprep(document,'\$\&\$', '&');
 % document = regexprep(document, [newline() '\s*' newline() '\s*' newline()], newline());
 document = strtrim(document);
 
