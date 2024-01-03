@@ -8,7 +8,7 @@
 
 > **Figure 1. Figure examples**
 > Examples of displays of `Clustering` with weighted structural data obtained using BRAPH 2.
-	
+
 
  
 
