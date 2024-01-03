@@ -102,9 +102,13 @@ for i = 1:length(figrefs2)
    document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', ['Figures ' num2str(str2double(figrefs2{i}{1}))], 'once');
 end
 
+% change includegraphics
+includegraphpatter = '\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}';
+document = regexprep(document, includegraphpatter, '!*$1!*');
+
 % figures
 document = regexprep(document, '\{\\bf\s(.*?)\}', '**$1**');
-pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}(?:\s*)?\}\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
+pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?([^{}]*)\}(?:\s*)?\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
 figPattern = '\#\!FIG(..)(?:s)?(.*?)\n';
 newFigMods =  regexp(document, figPattern, 'tokens', 'all');
 findings = regexp(document, pattern, 'tokens', 'all');
@@ -116,21 +120,30 @@ for i = 1:length(findings)
     document = regexprep(document, figPattern, '', 'once');
 
     % replace old info with new way in new position
-    figName = finding{2};
+    figNameTMP = finding{2};
     figTitle = finding{3};
 
-    if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
-        figSizeMod = strtrim(newFigMods{i}{2});
-        newFormat = [newline() '<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
-    else
-        newFormat = [newline() '<img src="' figName '" alt="' figTitle '">'];
-    end
+    % check if multi figure
+    fig_tokens = regexp(figNameTMP, '\!\*([^\*\!]*)\!\*', 'tokens', 'all');
+    tagSize_tmp = 1;
+    for j = 1:length(fig_tokens)
+        figName = fig_tokens{j}{1};
+        if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
+            figSizeMod = strtrim(newFigMods{i}{2});
+            newFormat = [newline() '<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
+        else
+            newFormat = [newline() '<img src="' figName '" alt="' figTitle '">'];
+        end
 
-    tagSize = length(newFormat);
-    document = insertBefore(document, newPos - 1,  newFormat);
+        
+        document = insertBefore(document, newPos - 2 + tagSize_tmp,  newFormat);
 
-    % insert fig explanation
-    document = insertBefore(document, newPos - 1 + tagSize,  [newline() newline() '> **Figure '  num2str(str2double(newFigMods{i}{1})) '. ' finding{3} '**' newline() '> ' finding{end} newline()]);
+        % insert fig explanation
+        tagSize = length(newFormat);
+        tagSize_tmp = tagSize_tmp + tagSize;        
+    end  
+
+    document = insertBefore(document, newPos - 2 + tagSize_tmp,  [newline() newline() '> **Figure '  num2str(str2double(newFigMods{i}{1})) '. ' finding{3} '**' newline() '> ' finding{end} newline()]);
 end
 
 % itemize
