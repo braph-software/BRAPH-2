@@ -241,7 +241,7 @@ The value of a prop can be set with Setting a prop.
 > el = el.set('ID', 'new el id') ③
 > 
 
-> ① set the value of a prop with the prop tag or the prop number.
+> ① ② set the value of a prop with the prop tag or the prop number.
 >
 > ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
 >
@@ -310,7 +310,7 @@ The value of a prop can be retrieved with Getting a prop.
 >
 > ② gets the value of a prop using the prop number.
 >
-> ③ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+> ③ ④ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
 >
 > ⑤ can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 >
@@ -349,9 +349,9 @@ The value of a prop can be memorized using memorize.
 > el.memorize(ConcreteElement.ID) ④
 > 
 
-> ① memorize the value of a prop using the prop tag and the prop number.
+> ① ② memorize the value of a prop using the prop tag and the prop number.
 >
-> ③ do not return any output value.
+> ③ ④ do not return any output value.
 >
 
 
@@ -733,7 +733,7 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 >
 > ⑦ The `¡props!` token permits to add additional props.
 >
-> ⑧ are two data props.
+> ⑧ ⑨ are two data props.
 >
 > ⑩ is a result prop.
 >
@@ -745,11 +745,11 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 >
 > ⑭ The `¡tests!` token permits to add unit tests.
 >
-> ⑮ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
+> ⑮ ⑯ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
 >
-> ⑰ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
+> ⑰ ⑱ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 >
-> ⑲ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+> ⑲ ⑳ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 >
 > ⑴ alters the previous test to memorize the results.
 >
@@ -805,7 +805,7 @@ We can now create an element that demonstrate how the seeded randomness works (A
 >
 > ② Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 >
-> ③ check that subsequent calls to the calculation of the random number return the same value.
+> ③ ④ check that subsequent calls to the calculation of the random number return the same value.
 >
 > ⑥ checks that calls to the calculation of the random number of differen randomizers return different values.
 >
@@ -880,9 +880,9 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 >
 > ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 >
-> ③ returns the sum or the difference depening on the argument.
+> ③ ④ returns the sum or the difference depening on the argument.
 >
-> ⑤ retunrs `NaN` when the input is absent or unexpected.
+> ⑤ ⑥ retunrs `NaN` when the input is absent or unexpected.
 >
 
 

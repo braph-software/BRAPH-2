@@ -309,7 +309,7 @@ for i = 1:length(tmp_lstlisting)
             % cases
             if length(tmp_circlexp_note) == 4 % case 4
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{3})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
-            elseif length(tmp_circlexp_note) == 5  % case 3
+            elseif length(tmp_circlexp_note) == 3  % case 3
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
             else % case 2
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
