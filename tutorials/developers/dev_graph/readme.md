@@ -66,7 +66,7 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 > %%%% ¡default!
 > 'GraphBD notes'
 > 
-> %%% ¡prop! ①circlednote{1}{defines the _graph type_: `Graph.GRAPH` (single layer), `Graph.MULTIGRAPH` (multiple unconnected layers), `Graph.MULTILAYER` (multiple layers), `Graph.ORDERED_MULTILAYER` (multiple layers with subsequent layers) `Graph.MULTIPLEX` (multilayer with connections between corresponding nodes), and `Graph.ORDERED_MULTIPLEX` (multilayer with connections between corresponding nodes in subsequent layers).}circlednote{2}{defines the _graph connectivity_: `Graph.BINARY` (0 or 1) or `Graph.WEIGHTED`.}circlednote{3}{defines the _edge directionality_: `Graph.DIRECTED` or `Graph.UNDIRECTED`.}circlednote{4}{defines the _graph self-connectivity_: `Graph.NONSELFCONNECTED` or `Graph.SELFCONNECTED`.}circlednote{5}{defines the _graph negativity_: `Graph.NONNEGATIVE` or `Graph.NEGATIVE`.}circlednote{6}{The property `A` contains the supra-adjacency matrix of the graph, which is calculated by the code under `¡calculate!`.}circlednote{7}{retrieves the adjacency matrix of the graph `B`, defined in the new properties below.}threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: `diagonalize` (removes the off-diagonal), `dediagonalize` (removes the diagonal), `binarize` (binarizes with threshold=0), `semipositivize` (removes negative weights), `standardize` (normalizes between 0 and 1) or `symmetrize` (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}circlednote{11}{preallocates the adjacency matrix to be calcualted.}circlednote{12}{randomizes adjacency matrix when `'RANDOMIZE'` is `true` by calling the function of the graph named `RANDOMIZATION`}circlednote{13}{returns the calculated graph `A` assigning it to the output variable `value`.}circlednote{14}{employes the property panel `PanelPropCell` to be employed to visualize `A`, setting also its properties.}
+> %%% ¡prop! ①
 > GRAPH_TYPE (constant, scalar) returns the graph type __Graph.GRAPH__.
 > %%%% ¡default!
 > Graph.GRAPH
@@ -96,7 +96,7 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 > %%%% ¡calculate!
 > B = g.get('B'); ⑦
 > 
-> B = dediagonalize(B);  ⑧
+> B = dediagonalize(B);  ⑧ ⑨ ⑩
 > B = semipositivize(B, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); ⑨
 > B = binarize(B); ⑩
 > 
