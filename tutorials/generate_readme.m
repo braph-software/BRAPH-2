@@ -307,9 +307,9 @@ for i = 1:length(tmp_lstlisting)
             tmp_circlexp_note = tmp_circlexp{j};
 
             % cases
-            if length(tmp_marking) == 5 % case 4
+            if length(tmp_circlexp_note) == 4 % case 4
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{3})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
-            elseif length(tmp_marking) == 4  % case 3
+            elseif length(tmp_circlexp_note) == 5  % case 3
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
             else % case 2
                 note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
@@ -318,7 +318,7 @@ for i = 1:length(tmp_lstlisting)
             tmp_position = index_lstlisting(i) - nl + explanation_length + mat_length + code_length + acumulated;
             if j == 1
                 document = insertBefore(document, tmp_position,  newline());
-                tmp_position = tmp_position+1;
+                tmp_position = tmp_position + 1;
                 acumulated = acumulated + 1;
             end
             document = insertBefore(document, tmp_position,  note);
