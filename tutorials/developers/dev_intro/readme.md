@@ -238,14 +238,14 @@ The value of a prop can be set with Setting a prop.
 > 	7, 'new el notes' ...
 > 	) 
 > 
-> el = el.set('ID', 'new el id') ③
+> el = el.set('ID', 'new el id') ④
 > 
 
 > ① ② set the value of a prop with the prop tag or the prop number.
 >
 > ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
 >
-> ③ returns the element.
+> ④ returns the element.
 >
 
 

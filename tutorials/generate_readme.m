@@ -9,8 +9,15 @@ tex = fileread(tex_file);
 %% Analysis
 
 % title
-title = regexp(tex, '\\title{([^{}]*)}', 'tokens', 'once');
+title = regexp(tex, '\\title(?:(.*?))?{([^{}]*)}', 'tokens', 'all'); %
 title = strtrim(title{1});
+
+if length(title) == 2
+    title = strtrim(title{2});
+
+else
+    title = strtrim(title{1});
+end
 
 % document
 document = regexp(tex, '\\begin{document}(.*)\\end{document}', 'tokens', 'once');
