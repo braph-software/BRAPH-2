@@ -1,8 +1,8 @@
 %% ¡header!
-NNxMLP_xPP_FI_Graph < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the graph.
+NNFeatureImportanceBrainSurfacePP_Graph < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the graph.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with the graph (NNxMLP_xPP_FI_Graph) 
+A panel for feature importance of a neural network analysis with the graph (NNFeatureImportanceBrainSurfacePP_Graph) 
  plots the panel to show the feature importance, mathcing the layer number and node number of the graph.
 It is supposed to be used with the property FEATURE_IMPORTANCE of 
  NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator,
@@ -16,7 +16,7 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Graph'
+'NNFeatureImportanceBrainSurfacePP_Graph'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
@@ -26,32 +26,32 @@ NAME (constant, string) is the name of the panel for feature importance.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with the graph (NNxMLP_xPP_FI_Graph) plots the panel to show the feature importance, mathcing the layer number and node number of the graph. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for feature importance of a neural network analysis with the graph (NNFeatureImportanceBrainSurfacePP_Graph) plots the panel to show the feature importance, mathcing the layer number and node number of the graph. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNxMLP_xPP_FI_Graph'
+'NNFeatureImportanceBrainSurfacePP_Graph'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Graph ID'
+'NNFeatureImportanceBrainSurfacePP_Graph ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Graph label'
+'NNFeatureImportanceBrainSurfacePP_Graph label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Graph notes'
+'NNFeatureImportanceBrainSurfacePP_Graph notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation()
+NNFeatureImportanceBrainSurface()
 
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
@@ -489,7 +489,7 @@ value = mappedCellArray;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_xPP_FI_Graph.PARENT NNxMLP_xPP_FI_Graph.H NNxMLP_xPP_FI_Graph.LISTENER_CB NNxMLP_xPP_FI_Graph.HEIGHT NNxMLP_xPP_FI_Graph.XSLIDER NNxMLP_xPP_FI_Graph.YSLIDER NNxMLP_xPP_FI_Graph.TABLE NNxMLP_xPP_FI_Graph.CONTEXTMENU]
+[NNFeatureImportanceBrainSurfacePP_Graph.PARENT NNFeatureImportanceBrainSurfacePP_Graph.H NNFeatureImportanceBrainSurfacePP_Graph.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Graph.HEIGHT NNFeatureImportanceBrainSurfacePP_Graph.XSLIDER NNFeatureImportanceBrainSurfacePP_Graph.YSLIDER NNFeatureImportanceBrainSurfacePP_Graph.TABLE NNFeatureImportanceBrainSurfacePP_Graph.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -498,7 +498,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNxMLP_xPP_FI_Graph'])
+warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Graph'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNxMLP_xPP_FI_Graph'])
+warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Graph'])

@@ -1,8 +1,8 @@
 %% ¡header!
-NNxMLP_xPP_FI_Measure < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with graph measures.
+NNFeatureImportanceBrainSurfacePP_Measure < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with graph measures.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with graph measures (NNxMLP_xPP_FI_Measure) 
+A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePF_Measure) 
  plots the panel to select a measure, of which the feature importance will be 
  plotted, from a drop-down list.
 It is supposed to be used with the property FEATURE_IMPORTANCE of 
@@ -17,7 +17,7 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Measure'
+'NNFeatureImportanceBrainSurfacePF_Measure'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
@@ -27,32 +27,32 @@ NAME (constant, string) is the name of the panel for feature importance.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with graph measures (NNxMLP_xPP_FI_Measure) plots the panel to select a measure, of which the feature importance will be plotted, from a drop-down list. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePF_Measure) plots the panel to select a measure, of which the feature importance will be plotted, from a drop-down list. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNxMLP_xPP_FI_Measure'
+'NNFeatureImportanceBrainSurfacePF_Measure'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Measure ID'
+'NNFeatureImportanceBrainSurfacePF_Measure ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Measure label'
+'NNFeatureImportanceBrainSurfacePF_Measure label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNxMLP_xPP_FI_Measure notes'
+'NNFeatureImportanceBrainSurfacePF_Measure notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation()
+NNFeatureImportanceBrainSurface()
 
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
@@ -177,7 +177,6 @@ if value
         end
     end
 end
-
 
 %%% ¡prop!
 DELETE (query, logical) resets the handles when the panel is deleted.
@@ -351,99 +350,96 @@ function cb_invert_selection(~, ~)
     pr.get('UPDATE')
 end
 function cb_open_mbrain(~, ~)
-    % % % input_dataset = pr.get('D');
-    % % % m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-    % % % 
-    % % % f = ancestor(pr.get('H'), 'figure'); % parent GUI
-    % % % N = ceil(sqrt(length(m_list))); % number of row and columns of figures
-    % % % 
-    % % % gui_b_dict = pr.memorize('GUI_B_DICT');
-    % % % selected = pr.get('SELECTED');
-    % % % for s = 1:1:length(selected)
-    % % %     i = selected(s);
-    % % % 
-    % % %     measure = m_list{i}; % also key
-    % % % 
-    % % %     values_vectored = el.get(prop);
-    % % %     cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
-    % % %     values = pr.get('MAP_TO_CELL', cell2mat(values_vectored), cell_template);
-    % % %     value = values(i);
-    % % % 
-    % % %     if ~gui_b_dict.get('CONTAINS_KEY', measure)
-    % % % 
-    % % %         brain_atlas = pr.get('BA'); 
-    % % %         %brain_atlas = ImporterBrainAtlasXLS('WAITBAR', false, 'FILE', [fileparts(which('braph2')) filesep() 'atlases' filesep() 'desikan_atlas.xlsx']).get('BA');
-    % % %         switch Element.getPropDefault(measure, 'SHAPE')
-    % % %             case Measure.GLOBAL % __Measure.GLOBAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_GB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %             case Measure.NODAL % __Measure.NODAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_NB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %             case Measure.BINODAL % __Measure.BINODAL__
-    % % %                 switch Element.getPropDefault(measure, 'SCOPE')
-    % % %                     case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BS('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.UNILAYER % __Measure.UNILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BU('FI', value, 'BA', brain_atlas);
-    % % %                     case Measure.BILAYER % __Measure.BILAYER__
-    % % %                         mbfipf = NNxMLP_xPF_FI_MeasureBrain_BB('FI', value, 'BA', brain_atlas);
-    % % %                 end
-    % % %         end
-    % % % 
-    % % %         gui = GUIFig( ...
-    % % %             'ID', measure, ... % this is the dictionary key
-    % % %             'PF', mbfipf, ...
-    % % %             'POSITION', [ ...
-    % % %             x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
-    % % %             y0(f, 'normalized') ...
-    % % %             w(f, 'normalized') * 3 ...
-    % % %             .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
-    % % %             ], ...
-    % % %             'WAITBAR', pr.getCallback('WAITBAR'), ...
-    % % %             'CLOSEREQ', false ...
-    % % %             );
-    % % %         gui_b_dict.get('ADD', gui)
-    % % %     end
-    % % % 
-    % % %     gui = gui_b_dict.get('IT', measure);
-    % % %     if ~gui.get('DRAWN')
-    % % %         gui.get('DRAW')
-    % % %     end
-    % % %     gui.get('SHOW')
-    % % % end
+    input_dataset = pr.get('D');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+
+        measure = m_list{i}; % also key
+        el = pr.get('EL');
+        values = el.get('RESHAPED_FEATURE_IMPORTANCE');
+        value = values{i};
+
+        if ~gui_b_dict.get('CONTAINS_KEY', measure)
+
+            brain_atlas = el.get('BA'); 
+            switch Element.getPropDefault(measure, 'SHAPE')
+                case Measure.GLOBAL % __Measure.GLOBAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                    end
+                case Measure.NODAL % __Measure.NODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                    end
+                case Measure.BINODAL % __Measure.BINODAL__
+                    switch Element.getPropDefault(measure, 'SCOPE')
+                        case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.UNILAYER % __Measure.UNILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                        case Measure.BILAYER % __Measure.BILAYER__
+                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                    end
+            end
+
+            gui = GUIFig( ...
+                'ID', measure, ... % this is the dictionary key
+                'PF', mbfipf, ...
+                'POSITION', [ ...
+                x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ...
+                y0(f, 'normalized') ...
+                w(f, 'normalized') * 3 ...
+                .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ...
+                ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_b_dict.get('ADD', gui)
+        end
+
+        gui = gui_b_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+    end
 end
 function cb_hide_mbrain(~, ~)
-    % % % input_dataset = pr.get('D');
-    % % % m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-    % % % 
-    % % % gui_b_dict = pr.memorize('GUI_B_DICT');
-    % % % 
-    % % % selected = pr.get('SELECTED');
-    % % % for s = 1:1:length(selected)
-    % % %     i = selected(s);
-    % % % 
-    % % %     measure = m_list{i}; % also key
-    % % % 
-    % % %     if gui_b_dict.get('CONTAINS_KEY', measure)
-    % % %         gui = gui_b_dict.get('IT', measure);
-    % % %         if gui.get('DRAWN')
-    % % %             gui.get('HIDE')
-    % % %         end
-    % % %     end
-    % % % end
+    input_dataset = pr.get('D');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+
+    gui_b_dict = pr.memorize('GUI_B_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+
+        measure = m_list{i}; % also key
+
+        if gui_b_dict.get('CONTAINS_KEY', measure)
+            gui = gui_b_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
 end
 
 %%% ¡prop!
@@ -451,37 +447,11 @@ GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
 %%%% ¡settings!
 'GUIFig'
 
-%%% ¡prop!
-MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
-%%%% ¡calculate!
-if isempty(varargin)
-    value = {};
-    return
-end
-vector = varargin{1};
-cell_template = varargin{2};
-mappedCellArray = cell_template;
-index = 1;
-for i = 1:numel(cell_template)
-    cellData = cell_template{i};
-    if iscell(cellData)
-        % Map the vector to nested cell arrays recursively
-        nestedVector = pr.get('MAP_TO_CELL', vector(index:end), cellData);
-        mappedCellArray{i} = nestedVector;
-    else
-        % Assign elements from the vector to cells
-        numElements = numel(cellData);
-        mappedCellArray{i} = reshape(vector(index:index+numElements-1), size(cellData));
-        index = index + numElements;
-    end
-end
-
-value = mappedCellArray;
 
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_xPP_FI_Measure.PARENT NNxMLP_xPP_FI_Measure.H NNxMLP_xPP_FI_Measure.LISTENER_CB NNxMLP_xPP_FI_Measure.HEIGHT NNxMLP_xPP_FI_Measure.XSLIDER NNxMLP_xPP_FI_Measure.YSLIDER NNxMLP_xPP_FI_Measure.TABLE NNxMLP_xPP_FI_Measure.CONTEXTMENU]
+[NNFeatureImportanceBrainSurfacePF_Measure.PARENT NNFeatureImportanceBrainSurfacePF_Measure.H NNFeatureImportanceBrainSurfacePF_Measure.LISTENER_CB NNFeatureImportanceBrainSurfacePF_Measure.HEIGHT NNFeatureImportanceBrainSurfacePF_Measure.XSLIDER NNFeatureImportanceBrainSurfacePF_Measure.YSLIDER NNFeatureImportanceBrainSurfacePF_Measure.TABLE NNFeatureImportanceBrainSurfacePF_Measure.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -490,7 +460,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNxMLP_xPP_FI_Measure'])
+warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_Measure'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNxMLP_xPP_FI_Measure'])
+warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_Measure'])
