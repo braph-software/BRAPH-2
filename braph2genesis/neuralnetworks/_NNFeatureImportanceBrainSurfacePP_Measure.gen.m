@@ -161,6 +161,14 @@ if value
             gui.get('SHOW')
         end
     end
+    % element for feature importance
+    gui_fi_dict = pr.get('GUI_FI_DICT');
+    for i = 1:1:gui_fi_dict.get('LENGTH')
+        gui = gui_fi_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('SHOW')
+        end
+    end
 end
 
 %%% ¡prop!
@@ -172,6 +180,14 @@ if value
     gui_b_dict = pr.get('GUI_B_DICT');
     for i = 1:1:gui_b_dict.get('LENGTH')
         gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('HIDE')
+        end
+    end
+    % element for feature importance
+    gui_fi_dict = pr.get('GUI_FI_DICT');
+    for i = 1:1:gui_fi_dict.get('LENGTH')
+        gui = gui_fi_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('HIDE')
         end
@@ -196,6 +212,14 @@ if value
     gui_b_dict = pr.get('GUI_B_DICT');
     for i = 1:1:gui_b_dict.get('LENGTH')
         gui = gui_b_dict.get('IT', i);
+        if gui.get('DRAWN')
+            gui.get('CLOSE')
+        end
+    end
+    % element for feature importance
+    gui_fi_dict = pr.get('GUI_FI_DICT');
+    for i = 1:1:gui_fi_dict.get('LENGTH')
+        gui = gui_fi_dict.get('IT', i);
         if gui.get('DRAWN')
             gui.get('CLOSE')
         end
@@ -308,20 +332,32 @@ menu_invert_selection = uimenu( ...
     'Text', 'Invert Selection', ...
     'MenuSelectedFcn', {@cb_invert_selection} ...
     );
+menu_open_mbrain = uimenu( ...
+	'Separator', 'on', ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_OPEN_MBRAIN', ...
+    'Text', 'Plot Selected Measures on Brain ...', ...
+    'MenuSelectedFcn', {@cb_open_mbrain} ...
+    );
+menu_hide_mbrain = uimenu( ...
+    'Parent', contextmenu, ...
+    'Tag', 'MENU_HIDE_MBRAIN', ...
+    'Text', 'Hide Selected Brain-Plots', ...
+	'MenuSelectedFcn', {@cb_hide_mbrain} ...
+    );
 menu_open_elements = uimenu( ...
 	'Separator', 'on', ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_OPEN_ELEMENTS', ...
-    'Text', 'Plot Selected Measures on Brain ...', ...
-    'MenuSelectedFcn', {@cb_open_mbrain} ...
+    'Text', 'Data Selected Measures ...', ...
+    'MenuSelectedFcn', {@cb_open_elements} ...
     );
 menu_hide_elements = uimenu( ...
     'Parent', contextmenu, ...
     'Tag', 'MENU_HIDE_ELEMENTS', ...
-    'Text', 'Hide Selected Brain-Plots', ...
-	'MenuSelectedFcn', {@cb_hide_mbrain} ...
+    'Text', 'Hide Selected Data', ...
+	'MenuSelectedFcn', {@cb_hide_elements} ...
     );
-
 set(pr.get('TABLE'), 'ContextMenu', contextmenu)
 
 value = contextmenu;
@@ -441,11 +477,85 @@ function cb_hide_mbrain(~, ~)
         end
     end
 end
+function cb_open_elements(~, ~)
+    input_dataset = pr.get('D');
+    g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    g.memorize('A'); % memorizing A to get correct ALAYERLABELS
+
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+    
+    f = ancestor(pr.get('H'), 'figure'); % parent GUI 
+    N = ceil(sqrt(length(m_list))); % number of row and columns of figures
+
+    gui_fi_dict = pr.memorize('GUI_FI_DICT');
+    
+    selected = pr.get('SELECTED');
+	for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = m_list{i}; % also key
+        m_template = g.get('M_DICT').get('IT', measure).get('TEMPLATE');
+        
+        el = pr.get('EL');
+        values = el.get('RESHAPED_FEATURE_IMPORTANCE');
+        value = values{i};
+        
+        fim = NNFeatureImportanceMeasure('G', g, 'M', m_template, 'FI', value);
+        
+        if ~gui_fi_dict.get('CONTAINS_KEY', measure)
+            gui = GUIElement( ...
+                'ID', measure, ... % this is the dictionary key
+                'PE', fim, ... 
+                'POSITION', [ ...
+                    x0(f, 'normalized') + w(f, 'normalized') + mod(i - 1, N) * (1 - x0(f, 'normalized') - 2 * w(f, 'normalized')) / N ... % x = (f_gr_x + f_gr_w) / screen_w + mod(selected_it - 1, N) * (screen_w - f_gr_x - 2 * f_gr_w) / N / screen_w;
+                    y0(f, 'normalized') ... % y = f_gr_y / screen_h;
+                    w(f, 'normalized') ... % w = f_gr_w / screen_w;
+                    .5 * h(f, 'normalized') + .5 * h(f, 'normalized') * (N - floor((i - .5) / N )) / N ... % h = .5 * f_gr_h / screen_h + .5 * f_gr_h * (N - floor((selected_it - .5) / N)) / N / screen_h;
+                    ], ...
+                'WAITBAR', pr.getCallback('WAITBAR'), ...
+                'CLOSEREQ', false ...
+                );
+            gui_fi_dict.get('ADD', gui)
+        end
+        
+        gui = gui_fi_dict.get('IT', measure);
+        if ~gui.get('DRAWN')
+            gui.get('DRAW')
+        end
+        gui.get('SHOW')
+	end
+end
+function cb_hide_elements(~, ~)
+    input_dataset = pr.get('D');
+    g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+
+    gui_fi_dict = pr.memorize('GUI_FI_DICT');
+
+    selected = pr.get('SELECTED');
+    for s = 1:1:length(selected)
+        i = selected(s);
+        
+        measure = m_list{i}; % also key
+        
+        if gui_fi_dict.get('CONTAINS_KEY', measure)
+            gui = gui_fi_dict.get('IT', measure);
+            if gui.get('DRAWN')
+                gui.get('HIDE')
+            end
+        end
+    end
+end
 
 %%% ¡prop!
 GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
 %%%% ¡settings!
 'GUIFig'
+
+%%% ¡prop!
+GUI_FI_DICT (gui, idict) contains the GUIs for the feature measures.
+%%%% ¡settings!
+'GUIElement'
 
 
 %% ¡tests!
