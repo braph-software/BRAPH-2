@@ -3,7 +3,7 @@ NNFeatureImportanceMeasure < ConcreteElement (fim, feature importance for graph 
 
 %%% ¡description!
 A feature importance for graph measure (NNFeatureImportanceMeasure) provides 
-the necessary mnethods to fit feature importance for all kinds of graph mearsures.
+the necessary mnethods to present the value of feature importance for all kinds of graph mearsures.
 
 %%% ¡seealso!
 NNFeatureImportanceBrainSurfacePP_Measure
