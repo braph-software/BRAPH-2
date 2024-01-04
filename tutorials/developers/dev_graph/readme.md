@@ -66,7 +66,7 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 > %%%% ¡default!
 > 'GraphBD notes'
 > 
-> %%% ¡prop! ①threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: `diagonalize` (removes the off-diagonal), `dediagonalize` (removes the diagonal), `binarize` (binarizes with threshold=0), `semipositivize` (removes negative weights), `standardize` (normalizes between 0 and 1) or `symmetrize` (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}
+> %%% ¡prop! ①circlednote{1}{defines the _graph type_: `Graph.GRAPH` (single layer), `Graph.MULTIGRAPH` (multiple unconnected layers), `Graph.MULTILAYER` (multiple layers), `Graph.ORDERED_MULTILAYER` (multiple layers with subsequent layers) `Graph.MULTIPLEX` (multilayer with connections between corresponding nodes), and `Graph.ORDERED_MULTIPLEX` (multilayer with connections between corresponding nodes in subsequent layers).}circlednote{2}{defines the _graph connectivity_: `Graph.BINARY` (0 or 1) or `Graph.WEIGHTED`.}circlednote{3}{defines the _edge directionality_: `Graph.DIRECTED` or `Graph.UNDIRECTED`.}circlednote{4}{defines the _graph self-connectivity_: `Graph.NONSELFCONNECTED` or `Graph.SELFCONNECTED`.}circlednote{5}{defines the _graph negativity_: `Graph.NONNEGATIVE` or `Graph.NEGATIVE`.}circlednote{6}{The property `A` contains the supra-adjacency matrix of the graph, which is calculated by the code under `¡calculate!`.}circlednote{7}{retrieves the adjacency matrix of the graph `B`, defined in the new properties below.}threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: `diagonalize` (removes the off-diagonal), `dediagonalize` (removes the diagonal), `binarize` (binarizes with threshold=0), `semipositivize` (removes negative weights), `standardize` (normalizes between 0 and 1) or `symmetrize` (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}circlednote{11}{preallocates the adjacency matrix to be calcualted.}circlednote{12}{randomizes adjacency matrix when `'RANDOMIZE'` is `true` by calling the function of the graph named `RANDOMIZATION`}circlednote{13}{returns the calculated graph `A` assigning it to the output variable `value`.}circlednote{14}{employes the property panel `PanelPropCell` to be employed to visualize `A`, setting also its properties.}
 > GRAPH_TYPE (constant, scalar) returns the graph type __Graph.GRAPH__.
 > %%%% ¡default!
 > Graph.GRAPH
@@ -136,6 +136,8 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 >
 > ⑦ retrieves the adjacency matrix of the graph `B`, defined in the new properties below.
 >
+> ⑧ ⑨ ⑩ condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: `diagonalize` (removes the off-diagonal), `dediagonalize` (removes the diagonal), `binarize` (binarizes with threshold=0), `semipositivize` (removes negative weights), `standardize` (normalizes between 0 and 1) or `symmetrize` (symmetrizes the matrix). Use the MatLab help to see additional functionalities.
+>
 > ⑪ preallocates the adjacency matrix to be calcualted.
 >
 > ⑫ randomizes adjacency matrix when `'RANDOMIZE'` is `true` by calling the function of the graph named `RANDOMIZATION`
@@ -161,7 +163,7 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 > 	'TABLE_HEIGHT' , s(40), ...
 > 	'ROWNAME' , g.getCallback('ANODELABELS'), ... 
 > 	'COLUMNNAME', g.getCallback('ANODELABELS'), ...
-> 	varargin{:});
+> 	varargin{:});circlednote{3}{defines the semi-positivation rule (i.e., how to remove the negative edges) to be used when generating the adjacency matrix `A` from the intput property `B`. The admissible options are: 'zero' (default, convert negative values to zeros) or 'absolute' (convert negative values to absolute value). }
 > 
 > %%% ¡prop! ③
 > SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
@@ -602,7 +604,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > 	A = g.get('RANDOMIZATION', A);
 > end
 > value = A;
-> %%%% ¡gui!
+> %%%% ¡gui!circlednote{2}{These are some properties of graph adjacency matrix `A` that can be used in the gui to make the visualization user friendly. The list of properties that can be used are: `ALAYERTICKS` (to set ticks for each layer according to the layer number), `ALAYERLABELS` (to set labels for each layer), and `ANODELABELS` (to set the nodel labels for each layer)).}
 > pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.A, ...
 > 	'TABLE_HEIGHT', s(40), ...
 > 	'XYSLIDERLOCK', true, ... 
