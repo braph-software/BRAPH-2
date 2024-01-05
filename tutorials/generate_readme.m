@@ -278,9 +278,9 @@ for i = 1:length(tmp_lstlisting)
         % get the item
         tmp_marking = tmp_circlenotes{j};
         if length(tmp_marking) == 5 % case 4
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2})) ' ' char(unicode_circled+str2double(tmp_marking{3})) ' ' char(unicode_circled+str2double(tmp_marking{4}))], 'once');
+            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
         elseif length(tmp_marking) == 4  % case 3
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2})) ' ' char(unicode_circled+str2double(tmp_marking{3}))], 'once');
+            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
         elseif length(tmp_marking) == 3 % case 2
             tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
         else % case 1

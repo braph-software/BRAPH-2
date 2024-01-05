@@ -229,7 +229,7 @@ The value of a prop can be set with Setting a prop.
 		This script illustrates various ways in which props can be set.
 > ```matlab
 > 
-> el.set('ID', 'new el id') ① ②
+> el.set('ID', 'new el id') ①
 > el.set(5, 'new el id') ②
 > 
 > el.set( ... ③
@@ -300,7 +300,7 @@ The value of a prop can be retrieved with Getting a prop.
 > 
 > value = el.get(ConcreteElement.ID); ②
 > 
-> el.get('ID') ③ ④
+> el.get('ID') ③
 > el.get(ConcreteElement.ID) ④
 > 
 > value = el.get('QUERY', ARG1, ARG2, ... ); ⑤
@@ -342,10 +342,10 @@ The value of a prop can be memorized using memorize.
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
-> value = el.memorize('ID'); ① ②
+> value = el.memorize('ID'); ①
 > value = el.memorize(ConcreteElement.ID); ②
 > 
-> el.memorize('ID') ③ ④
+> el.memorize('ID') ③
 > el.memorize(ConcreteElement.ID) ④
 > 
 
@@ -665,7 +665,7 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 > 
 > %% ¡props! ⑦
 > 
-> %%% ¡prop! ⑧ ⑨
+> %%% ¡prop! ⑧
 > A (data, scalar) is the first number.
 > 
 > %%% ¡prop! ⑨
@@ -691,17 +691,17 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 > ao = ArithmeticOperations('A', 6, 'B', 4)
 > 
 > string = ao.get('TOSTRING')
-> assert(~ao.isLocked('A')) ⑮ ⑯
+> assert(~ao.isLocked('A')) ⑮
 > assert(~ao.isLocked('B')) ⑯
 > 
 > sum = ao.get('SUM')
 > 
-> assert(ao.isLocked('A')) ⑰ ⑱
+> assert(ao.isLocked('A')) ⑰
 > assert(ao.isLocked('B')) ⑱
 > 
 > diff = ao.get('DIFF')
 > 
-> sum_raw = ao.getr('SUM') ⑲ ⑳
+> sum_raw = ao.getr('SUM') ⑲
 > diff_raw = ao.getr('DIFF') ⑳
 > assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 > 
@@ -796,7 +796,7 @@ We can now create an element that demonstrate how the seeded randomness works (A
 > sr1 = SeededRandomness()
 > sr2 = SeededRandomness()
 > 
-> assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER')) ③ ④
+> assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER')) ③
 > assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER')) ⑤
 > assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER')) ⑥
 > 
@@ -870,9 +870,9 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %%%% ¡code!
 > ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
 > 
-> assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ③ ④
+> assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ③
 > assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF')) ④
-> assert(isnan(ao.get('SUM_OR_DIFF'))) ⑤ ⑥
+> assert(isnan(ao.get('SUM_OR_DIFF'))) ⑤
 > assert(isnan(ao.get('SUM_OR_DIFF', 'anything else'))) ⑥
 > 
 
