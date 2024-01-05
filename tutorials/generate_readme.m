@@ -48,7 +48,7 @@ acum = 0;
 for i = 1:length(patternSection)
     tmp_section_title = patternSection{i}{1};
     link_string = replace(strtrim(tmp_section_title), ' ', '-');
-    new_table_line = ['[' strtrim(tmp_section_title) '](#' link_string ')' char(13) newline()];    
+    new_table_line = [newline() '[' strtrim(tmp_section_title) '](#' link_string ')' char(13) newline()];    
     document = insertBefore(document, table_index - 1 + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end

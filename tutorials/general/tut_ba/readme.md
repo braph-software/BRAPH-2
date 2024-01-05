@@ -14,11 +14,17 @@ This Tutorial explains how to work with the Graphical User Interface (GUI) to ma
 This is typically the first step required to perform a graph analysis in BRAPH 2.0. 
 In this Tutorial, we will explain you how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 
-[Open the GUI](#Open-the-GUI)
+
+[Open the GUI](#Open-the-GUI)
+
 [Upload the Brain Atlas](#Upload-the-Brain-Atlas)
+
 [Ready Brain Atlases](#Ready-Brain-Atlases)
+
 [Create a New Brain Atlas](#Create-a-New-Brain-Atlas)
+
 [Plot the Brain Atlas](#Plot-the-Brain-Atlas)
+
 [Export the Figure](#Export-the-Figure)
 
 
