@@ -248,7 +248,7 @@ A concrete element (`ConcreteElement`) provides the infrastructure necessary for
 In particular, it has the constant props `ELCLASS` (string), `NAME` (string) and `DESCRIPTION` (string), the property `TEMPLATE` (item), the indexing properties `ID` (string), `LABEL` (string), and `NOTES` (string), and the query prop `TOSTRING` (string).
 Even though it is possible to create instances of `ConcreteElement`, typically one uses its subclasses.
 
-## Setting Props
+### Setting Props
 [Go back to Table of contents](#table-of-contents)
 
 The value of a prop can be set with Setting a prop.
@@ -316,7 +316,7 @@ If the check fails an error is thrown with error id
 8. When a prop is successfully set, an **event** `PropSet()` is **notified**
  
 
-## Getting Props
+### Getting Props
 [Go back to Table of contents](#table-of-contents)
 
 The value of a prop can be retrieved with Getting a prop.
@@ -363,7 +363,7 @@ The raw value of a prop can be retrieved with Getting the raw value of a prop.
 
 
 
-## Memorizing Props
+### Memorizing Props
 [Go back to Table of contents](#table-of-contents)  
 
 The value of a prop can be memorized using memorize.
@@ -631,7 +631,7 @@ We will now see how to implement a few concrete elements.
 
 
 
-## A Simple Calculator
+### A Simple Calculator
 [Go back to Table of contents](#table-of-contents)
 
 We will now create our first element (Arithmetic Operation Calculator), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
@@ -789,7 +789,7 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 
 
 
-## Calculator with Seeded Randomness
+### Calculator with Seeded Randomness
 [Go back to Table of contents](#table-of-contents)
 
 We can now create an element that demonstrate how the seeded randomness works (Arithmetic Operation Calculator).
@@ -846,7 +846,7 @@ We can now create an element that demonstrate how the seeded randomness works (A
 
 
 
-## Query
+### Query
 [Go back to Table of contents](#table-of-contents)
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (Arithmetic Operation Calculator with Queries).
@@ -922,7 +922,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 
 
 
-## Evanescent, Gui, Figure
+### Evanescent, Gui, Figure
 [Go back to Table of contents](#table-of-contents)
 
 We can now demonstrate the use of evanescent props and graphical handles (Element with figure).

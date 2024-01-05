@@ -35,8 +35,8 @@ document = regexprep(document, '\\\\\n', '\n');
 
 % (sub)section
 document = regexprep(document, '\\section{([^{}]*)}', ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
-document = regexprep(document, '\\subsection{([^{}]*)}',  ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
-document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
+document = regexprep(document, '\\subsection{([^{}]*)}',  ['### $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
+document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['#### $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
 
 % table of contents
 % document = regexprep(document, '\\tableofcontents', ''); old way
@@ -50,13 +50,10 @@ patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '
 acum = 0;
 for i = 2:length(patternSection)
     tmp_section_title = patternSection{i}{1};
-%     occur_tmp = regexp(strtrim(tmp_section_title), '#');
-%     name_string = replace(strtrim(tmp_section_title), '#', '');
-    link_string = replace(strtrim(tmp_section_title), ' ', '-');
-    new_table_line = [newline() '[' strtrim(tmp_section_title) '](#' link_string ')' char(13) newline()];
-%     for j = 1:length(occur_tmp)
-%         new_table_line = insertBefore(new_table_line, 2, char(9));
-%     end
+%     occur_tmp = regexp(tmp_section_title, '#');
+    name_string = strtrim(replace(tmp_section_title, '#', ''));
+    link_string = replace(name_string, ' ', '-');
+    new_table_line = [newline() '[' name_string '](#' link_string ')' char(13) newline()];
     document = insertAfter(document, table_index + tc_l  + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
