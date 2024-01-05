@@ -53,7 +53,7 @@ for i = 2:length(patternSection)
 %     occur_tmp = regexp(tmp_section_title, '#');
     name_string = strtrim(replace(tmp_section_title, '#', ''));
     link_string = replace(name_string, ' ', '-');
-    new_table_line = [newline() '[' name_string '](#' link_string ')' char(13) newline()];
+    new_table_line = ['>' newline() '> [' name_string '](#' link_string ')' char(13) newline()];
     document = insertAfter(document, table_index + tc_l  + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
