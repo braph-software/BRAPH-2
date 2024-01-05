@@ -44,16 +44,19 @@ document = regexprep(document, '\\tableofcontents', '## Table of contents');
 table_index = regexp(document, '## Table of contents');
 tc_l = length('## Table of contents');
 
-patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
-% patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
+% patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
+patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
 
 acum = 0;
 for i = 2:length(patternSection)
     tmp_section_title = patternSection{i}{1};
-%     occur_tmp = regexp(tmp_section_title, '#');
+    occur_tmp = regexp(tmp_section_title, '#');
     name_string = strtrim(replace(tmp_section_title, '#', ''));
     link_string = replace(name_string, ' ', '-');
     new_table_line = ['>' newline() '> [' name_string '](#' link_string ')' char(13) newline()];
+    for j = 1:length(occur_tmp)
+        new_table_line = insertAfter(new_table_line, 3, '>');
+    end
     document = insertAfter(document, table_index + tc_l  + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
