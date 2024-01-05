@@ -42,12 +42,13 @@ document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 % document = regexprep(document, '\\tableofcontents', ''); old way
 document = regexprep(document, '\\tableofcontents', '## Table of contents');
 table_index = regexp(document, '## Table of contents');
+tc_l = length('## Table of contents');
 
 patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
 % patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
 
 acum = 0;
-for i = 1:length(patternSection)
+for i = 2:length(patternSection)
     tmp_section_title = patternSection{i}{1};
 %     occur_tmp = regexp(strtrim(tmp_section_title), '#');
 %     name_string = replace(strtrim(tmp_section_title), '#', '');
@@ -56,7 +57,7 @@ for i = 1:length(patternSection)
 %     for j = 1:length(occur_tmp)
 %         new_table_line = insertBefore(new_table_line, 2, char(9));
 %     end
-    document = insertAfter(document, table_index  + acum,  new_table_line);
+    document = insertAfter(document, table_index + tc_l  + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
 

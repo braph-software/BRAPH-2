@@ -7,9 +7,7 @@ By recompiling BRAPH 2.0, the new elements and their functionalities are immedia
 In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
 
 
-#
-[Table of contents](#Table-of-contents)
-
+## Table of contents
 [Compilation and Element (Re)Generation](#Compilation-and-Element-(Re)Generation)
 
 [Elements](#Elements)
@@ -33,7 +31,7 @@ In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the e
 [Query](#Query)
 
 [Evanescent, Gui, Figure](#Evanescent,-Gui,-Figure)
-# Table of contents
+
 
 
 ## Compilation and Element (Re)Generation
