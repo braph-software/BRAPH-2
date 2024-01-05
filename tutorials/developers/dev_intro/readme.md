@@ -161,44 +161,44 @@ It does not allow callbacks.
 
 
 > **Property Formats**
- - `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code.
-- `STRING` String is a char array.
-- `STRINGLIST` StringList is a cell array with char arrays.
-- `LOGICAL` Logical is a boolean value.
-- `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
+ - > `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code.
+- > `STRING` String is a char array.
+- > `STRINGLIST` StringList is a cell array with char arrays.
+- > `LOGICAL` Logical is a boolean value.
+- > `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
                 Settings: cell array of chars representing the options, e.g., `{'plus', 'minus', 'zero'`}.
 >
-- `CLASS` Class is a char array corresponding to an element class.
+- > `CLASS` Class is a char array corresponding to an element class.
                 Settings: class name of a subclass of Element (or Element itself).
 >
-- `CLASSLIST` ClassList is a cell array with char arrays corresponding to element classes.
+- > `CLASSLIST` ClassList is a cell array with char arrays corresponding to element classes.
                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >
-- `ITEM` Item is a pointer to an element of a class defined in the element. 
+- > `ITEM` Item is a pointer to an element of a class defined in the element. 
                 Settings: class name of a subclass of Element (or Element itself).
 >
-- `ITEMLIST` ItemList is a cell array with pointers to elements of a class defined in the element.
+- > `ITEMLIST` ItemList is a cell array with pointers to elements of a class defined in the element.
                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >
-- `IDICT` Idict is an indexed dictionary of elements of a class defined in the element.
+- > `IDICT` Idict is an indexed dictionary of elements of a class defined in the element.
                 Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
 >
-- `SCALAR` Scalar is a scalar numerical value.
-- `RVECTOR` RVector is a numerical row vector.
-- `CVECTOR` CVector is a numerical column vector.
-- `MATRIX` Matrix is a numerical matrix.
-- `SMATRIX` SMatrix is a numerical square matrix.
-- `CELL` Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
-- `NET` Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
-- `HANDLE` Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
-- `HANDLELIST` HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
-- `COLOR` Color is an RGB color, e.g., `'[1 0 0]'` for red.
-- `ALPHA` Alpha is a transparency level between 0 and 1.
-- `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
-- `MARKER` Marker represents the marker style.
+- > `SCALAR` Scalar is a scalar numerical value.
+- > `RVECTOR` RVector is a numerical row vector.
+- > `CVECTOR` CVector is a numerical column vector.
+- > `MATRIX` Matrix is a numerical matrix.
+- > `SMATRIX` SMatrix is a numerical square matrix.
+- > `CELL` Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
+- > `NET` Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
+- > `HANDLE` Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
+- > `HANDLELIST` HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
+- > `COLOR` Color is an RGB color, e.g., `'[1 0 0]'` for red.
+- > `ALPHA` Alpha is a transparency level between 0 and 1.
+- > `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
+- > `MARKER` Marker represents the marker style.
                 It can be `'o'`, `'+'`, `'*'`, `'.'`, 'x', `'_'`, `'|'`, `'s'`, `'d'`, `'^'`, `'v'`, `'>'`, `'<'`, `'p'`, `'h'`, `''` (no marker).
 >
-- `LINE` Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line). 
+- > `LINE` Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line). 
 
 
 

@@ -207,9 +207,9 @@ for j = 1:length(findings)
 end
 
 % item
-document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '`$1` $2');
+document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '> `$1` $2');
 document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
-document = regexprep(document, '\[\`([^\[\]]*)\`\]', '`$1`');
+document = regexprep(document, '\[\`([^\[\]]*)\`\]', '> `$1`');
 
 % tcolorbox
 tmp_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'tokens', 'all'); % hold it
