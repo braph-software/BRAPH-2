@@ -35,6 +35,7 @@ In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the e
 
 
 ## Compilation and Element (Re)Generation
+[Go back to Table of contents](#table-of-contents)
 
 BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are _elements_, which contain a set of _props_ of various _categories_ and _formats_, as described in detail in the following sections. 
@@ -104,6 +105,7 @@ This can be done with the function `regenerate()`, as shown in Regeneration of e
 
 
 ## Elements
+[Go back to Table of contents](#table-of-contents)
 
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
@@ -246,7 +248,8 @@ A concrete element (`ConcreteElement`) provides the infrastructure necessary for
 In particular, it has the constant props `ELCLASS` (string), `NAME` (string) and `DESCRIPTION` (string), the property `TEMPLATE` (item), the indexing properties `ID` (string), `LABEL` (string), and `NOTES` (string), and the query prop `TOSTRING` (string).
 Even though it is possible to create instances of `ConcreteElement`, typically one uses its subclasses.
 
-### Setting Props
+## Setting Props
+[Go back to Table of contents](#table-of-contents)
 
 The value of a prop can be set with Setting a prop.
 **Setting a prop.**
@@ -313,7 +316,8 @@ If the check fails an error is thrown with error id
 8. When a prop is successfully set, an **event** `PropSet()` is **notified**
  
 
-### Getting Props
+## Getting Props
+[Go back to Table of contents](#table-of-contents)
 
 The value of a prop can be retrieved with Getting a prop.
 **Getting a prop.**
@@ -359,7 +363,8 @@ The raw value of a prop can be retrieved with Getting the raw value of a prop.
 
 
 
-### Memorizing Props  
+## Memorizing Props
+[Go back to Table of contents](#table-of-contents)  
 
 The value of a prop can be memorized using memorize.
 **Getting a prop.**
@@ -389,6 +394,7 @@ If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and is a
 If a property of category `QUERY` is memorized, a warning is thrown with warning id `BRAPH2:<Element Class>`, because query properties are generally not supposed to be memorized. If such behavior is intended, consider enclosing the command between warning off and warning on.
 
 ## Element tokens
+[Go back to Table of contents](#table-of-contents)
 
 A generator file has the structure illustrated Element tokens in a generator file.
 
@@ -562,6 +568,7 @@ A list of special instructions is shown in Special instruction in a generator fi
 
 
 ## Overview of Elements
+[Go back to Table of contents](#table-of-contents)
 
 
 
@@ -581,6 +588,7 @@ Furthermore, the users can add new elements such as new graphs (e.g., `GraphWU` 
 Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the command "test_braph2") that ensure the formal correctness of the code, including that of any newly added elements.
 
 ## Implementation of an Element
+[Go back to Table of contents](#table-of-contents)
 
 We will now see how to implement a few concrete elements.
 
@@ -623,7 +631,8 @@ We will now see how to implement a few concrete elements.
 
 
 
-### A Simple Calculator
+## A Simple Calculator
+[Go back to Table of contents](#table-of-contents)
 
 We will now create our first element (Arithmetic Operation Calculator), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
 **Arithmetic Operation Calculator.**
@@ -780,7 +789,8 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 
 
 
-### Calculator with Seeded Randomness
+## Calculator with Seeded Randomness
+[Go back to Table of contents](#table-of-contents)
 
 We can now create an element that demonstrate how the seeded randomness works (Arithmetic Operation Calculator).
 **Arithmetic Operation Calculator.**
@@ -836,7 +846,8 @@ We can now create an element that demonstrate how the seeded randomness works (A
 
 
 
-### Query
+## Query
+[Go back to Table of contents](#table-of-contents)
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (Arithmetic Operation Calculator with Queries).
 **Arithmetic Operation Calculator with Queries.**
@@ -911,7 +922,8 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 
 
 
-### Evanescent, Gui, Figure
+## Evanescent, Gui, Figure
+[Go back to Table of contents](#table-of-contents)
 
 We can now demonstrate the use of evanescent props and graphical handles (Element with figure).
 **Element with figure.**

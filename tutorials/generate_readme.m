@@ -34,9 +34,9 @@ document = regexprep(document, '---', '-');
 document = regexprep(document, '\\\\\n', '\n');
 
 % (sub)section
-document = regexprep(document, '\\section{([^{}]*)}', '## $1');
-document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
-document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
+document = regexprep(document, '\\section{([^{}]*)}', ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
+document = regexprep(document, '\\subsection{([^{}]*)}',  ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
+document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
 
 % table of contents
 % document = regexprep(document, '\\tableofcontents', ''); old way
