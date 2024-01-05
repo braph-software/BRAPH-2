@@ -7,6 +7,30 @@ By recompiling BRAPH 2.0, the new elements and their functionalities are immedia
 In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
 
 
+[Compilation and Element (Re)Generation](#Compilation-and-Element-(Re)Generation)
+
+[Elements](#Elements)
+
+[# Setting Props](##-Setting-Props)
+
+[# Getting Props](##-Getting-Props)
+
+[# Memorizing Props](##-Memorizing-Props)
+
+[Element tokens](#Element-tokens)
+
+[Overview of Elements](#Overview-of-Elements)
+
+[Implementation of an Element](#Implementation-of-an-Element)
+
+[# A Simple Calculator](##-A-Simple-Calculator)
+
+[# Calculator with Seeded Randomness](##-Calculator-with-Seeded-Randomness)
+
+[# Query](##-Query)
+
+[# Evanescent, Gui, Figure](##-Evanescent,-Gui,-Figure)
+
 
 
 
