@@ -109,28 +109,28 @@ This can be done with the function `regenerate()`, as shown in Regeneration of e
 
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
-> - A _sequential number_ (integer starting from 1).
-> - A _tag_ (a string).
-> - A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
-> - A _format_, which determines what a prop can contain.
+- A _sequential number_ (integer starting from 1).
+- A _tag_ (a string).
+- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
+- A _format_, which determines what a prop can contain.
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
 
 Furthermore, each instance of a prop has the following features:
-> - A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
+- A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
 	The functions to set, get, and memorize a value will be discussed in the following sections.
-> - A _seed_ for the random number generator to ensure the reproducibility of the results. 
+- A _seed_ for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
-> - A _checked_ status, which is true by default.
+- A _checked_ status, which is true by default.
 	Checked props are checked for format when they are set and for value when they are set/calculated. When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changes in the file "BRAPH2.m".
 	
 	The checked status of a prop can be altered with the functions:
-> - A _locked_ status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
+- A _locked_ status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
 	
 	A prop can be locked with the function:
-> - A _callback_ instance. Callbacks are not used with `METADATA` props.
+- A _callback_ instance. Callbacks are not used with `METADATA` props.
 	
 	The callback to a prop can be obtained using the function:
 

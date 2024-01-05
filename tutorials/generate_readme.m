@@ -191,7 +191,7 @@ for i = 1:length(tmp_itemizes)
     hold_this_paragraph = '';
     for j = 1:length(tmp_items)
         tmp_item = tmp_items{j};
-        hold_this_line = ['> - ' strtrim(tmp_item{1}) char(13) newline()];
+        hold_this_line = ['- ' strtrim(tmp_item{1}) char(13) newline()];
         hold_this_paragraph = [hold_this_paragraph  hold_this_line]; %#ok<AGROW> 
     end
     document = insertBefore(document, index_itemize(i) - 1,  hold_this_paragraph);
