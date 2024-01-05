@@ -14,11 +14,17 @@ This Tutorial explains how to work with the Graphical User Interface (GUI) to ma
 This is typically the first step required to perform a graph analysis in BRAPH 2.0. 
 In this Tutorial, we will explain you how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 
-[Open the GUI](#Open-the-GUI)
+
+[Open the GUI](#Open-the-GUI)
+
 [Upload the Brain Atlas](#Upload-the-Brain-Atlas)
+
 [Ready Brain Atlases](#Ready-Brain-Atlases)
+
 [Create a New Brain Atlas](#Create-a-New-Brain-Atlas)
+
 [Plot the Brain Atlas](#Plot-the-Brain-Atlas)
+
 [Export the Figure](#Export-the-Figure)
 
 
@@ -46,7 +52,8 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 	**d** Select the desired atlas.
 	
 
-> **Brain Atlas GUI launch from command line**
+
+> **Brain Atlas GUI launch from command line**
  You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code to launch the Brain Atlas GUI. In this case, you can upload the atlas as shown in Figure 3a-d. 
 > ```matlab
 > ba = BrainAtlas();
