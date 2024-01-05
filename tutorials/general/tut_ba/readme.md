@@ -14,6 +14,12 @@ This Tutorial explains how to work with the Graphical User Interface (GUI) to ma
 This is typically the first step required to perform a graph analysis in BRAPH 2.0. 
 In this Tutorial, we will explain you how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 
+[Open the GUI](#Open the GUI)
+[Upload the Brain Atlas](#Upload the Brain Atlas)
+[Ready Brain Atlases](#Ready Brain Atlases)
+[Create a New Brain Atlas](#Create a New Brain Atlas)
+[Plot the Brain Atlas](#Plot the Brain Atlas)
+[Export the Figure](#Export the Figure)
 
 
 
@@ -103,8 +109,6 @@ To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS fil
 	
 
 Start by writing the following information in the first 4 rows:
-
-
 - Brain Atlas ID (row 1, column 1). 
 For example: Desikan FreeSurfer
 - Brain Atlas LABEL (row 2, column 1). 
@@ -113,11 +117,6 @@ For example: Desikan Labels
 For example: Desikan Nodes
 - Brain Surface Name (row 4, column 1).
 For example: BrainMeshICBM152.nv
-
-
-Then, from row 5, you should include the IDs of the regions of your atlas (Brain Surface Name (row 4, column 1).
-For example: BrainMeshICBM152.nv
-
 
 Then, from row 5, you should include the IDs of the regions of your atlas (1 st column), the labels of the regions of your atlas (2 nd column), the X, Y and Z coordinates (3 rd, 4 th, and 5 th columns), and any relevant notes (in this case, the brain hemisphere, 6 th column).	
 

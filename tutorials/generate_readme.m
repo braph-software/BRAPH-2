@@ -24,7 +24,6 @@ document = regexp(tex, '\\begin{document}(.*)\\end{document}', 'tokens', 'once')
 document = document{1};
 document = regexprep(document, '\\maketitle', '');
 document = regexprep(document, '\\noindent', '');
-document = regexprep(document, '\\tableofcontents', '');
 document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
@@ -38,6 +37,20 @@ document = regexprep(document, '\\\\\n', '\n');
 document = regexprep(document, '\\section{([^{}]*)}', '## $1');
 document = regexprep(document, '\\subsection{([^{}]*)}', '### $1');
 document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
+
+% table of contents
+% document = regexprep(document, '\\tableofcontents', ''); old way
+table_index = regexp(document, '\\tableofcontents');
+document = regexprep(document, '\\tableofcontents', '');
+
+patternSection = regexp(document, ['##(.*?)' char(13)], 'tokens', 'all');
+acum = 0;
+for i = 1:length(patternSection)
+    tmp_section_title = patternSection{i}{1};
+    new_table_line = ['[' strtrim(tmp_section_title) '](#' strtrim(tmp_section_title) ')' newline()];    
+    document = insertBefore(document, table_index - 1 + acum,  new_table_line);
+    acum = acum + length(new_table_line);
+end
 
 % bracket control
 document = regexprep(document, '\\begin\{fullwidth\}', '');
