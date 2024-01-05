@@ -96,7 +96,7 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 > %%%% ¡calculate!
 > B = g.get('B'); ⑦
 > 
-> B = dediagonalize(B);  ⑧ ⑨ ⑩
+> B = dediagonalize(B);  ⑧
 > B = semipositivize(B, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); ⑨
 > B = binarize(B); ⑩
 > 
