@@ -49,9 +49,13 @@ patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
 acum = 0;
 for i = 1:length(patternSection)
     tmp_section_title = patternSection{i}{1};
-    name_string = replace(strtrim(tmp_section_title), '#', char(9));
+    occur_tmp = regexp(strtrim(tmp_section_title), '#');
+    name_string = replace(strtrim(tmp_section_title), '#', '');
     link_string = replace(strtrim(tmp_section_title), ' ', '-');
-    new_table_line = [newline() '[' name_string '](#' link_string ')' char(13) newline()];    
+    new_table_line = [newline() '[' name_string '](#' link_string ')' char(13) newline()];
+    for j = 1:length(occur_tmp)
+        new_table_line = insertBefore(new_table_line, 2, char(9));
+    end
     document = insertBefore(document, table_index - 1 + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
