@@ -43,12 +43,15 @@ document = regexprep(document, '\\subsubsection{([^{}]*)}', '#### $1');
 table_index = regexp(document, '\\tableofcontents');
 document = regexprep(document, '\\tableofcontents', '');
 
-patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
+% patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
+patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
+
 acum = 0;
 for i = 1:length(patternSection)
     tmp_section_title = patternSection{i}{1};
+    name_string = replace(strtrim(tmp_section_title), '#', char(9));
     link_string = replace(strtrim(tmp_section_title), ' ', '-');
-    new_table_line = [newline() '[' strtrim(tmp_section_title) '](#' link_string ')' char(13) newline()];    
+    new_table_line = [newline() '[' name_string '](#' link_string ')' char(13) newline()];    
     document = insertBefore(document, table_index - 1 + acum,  new_table_line);
     acum = acum + length(new_table_line);
 end
