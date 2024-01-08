@@ -15,12 +15,31 @@
 
 This tutorial shows how to perform a network analysis using _structural data_ (see tutorialhref{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_st}{Group of Subjects with Structural Data}), where one connectivity matrix per group is calculated, as in T1-weighted imaging, static arterial spin labelling and positron emission tomography Step by step, this pipeline guides you to compare the data from two groups of subjects using their unthresholded weighted matrices, which correspond, for example, to correlation coefficients in cortical thickness, blood perfusion or glucose metabolism. You will also be able to generate publication-quality figures.
 
+## Table of contents>
+> [Generate Example Data](#Generate-Example-Data)
+>
+> [Open the GUI](#Open-the-GUI)
+>
+> [Step 1: Load the Brain Atlas](#Step-1:-Load-the-Brain-Atlas)
+>
+> [Step 2: Load the Structural Group Data](#Step-2:-Load-the-Structural-Group-Data)
+>
+> [Step 3: Analyzing the Data of Group 1](#Step-3:-Analyzing-the-Data-of-Group-1)
+>
+>> [Setting Analysis Parameters](#Setting-Analysis-Parameters)
+>
+>> [Calculate Measures](#Calculate-Measures)
+>
+> [Step 4: Analyzing the Data of Group 2](#Step-4:-Analyzing-the-Data-of-Group-2)
+>
+> [Step 5: Comparing Groups](#Step-5:-Comparing-Groups)
 
 
 
 
 
 ## Generate Example Data
+[Go back to Table of contents](#table-of-contents)
 
 You can generate the example data by typing in the command line the instruction in Command to generate example data.
 **Command to generate example data.**
@@ -34,6 +53,7 @@ You can generate the example data by typing in the command line the instruction 
 
 
 ## Open the GUI
+[Go back to Table of contents](#table-of-contents)
 
 The general GUI of BRAPH 2.0 can be opened by typing `braph2` in MatLab's terminal. This GUI allows you to select a pipeline, in this case, _Pipeline Structural Comparison WU_, as shown in Figure 3.
 
@@ -72,6 +92,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps: 
 
 
 ## Step 1: Load the Brain Atlas
+[Go back to Table of contents](#table-of-contents)
 Figure 4 shows how to upload and plot the brain atlas that you used to extract the _structural data_ for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check thehref{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba}{Brain Atlas} tutorial.
 
  This figure should be changed -> remove b
@@ -86,6 +107,7 @@ Figure 4 shows how to upload and plot the brain atlas that you used to extract t
 
  
 ## Step 2: Load the Structural Group Data
+[Go back to Table of contents](#table-of-contents)
 
 After you loaded the brain atlas, you can upload the _structural data_ for each group as in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s structural values by selecting the subject, right click, and select “Open selection” (for more information check the tutorialhref{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_st}{Group of Subjects with Structural Data}).	
 
@@ -101,6 +123,7 @@ After you loaded the brain atlas, you can upload the _structural data_ for each 
 
 
 ## Step 3: Analyzing the Data of Group 1
+[Go back to Table of contents](#table-of-contents)
  
 After you have loaded the data for both groups, you can analyze the data of your first group by clicking on "Analyze Group 1" (Figure 6a-b). A new interface will be shown that allows you to pre-calculate network measures for this group and explore them. First of all, you can specify the parameters for constructing the graph from the structural group data (Figure 6c): you can select the statistical test to calculate correlations in structural values between pairs of brain regions (Figure 6d), and you can decide how you want to analyze the negative weights from the correlations (Figure 6e). 
 
@@ -113,6 +136,7 @@ Before these network measures are calculated, it is important to ensure the foll
 Importantly, the parameters you select at the beginning will remain fixed for the rest of pipeline (including the analysis of the second group and the comparison between groups). We will now guide you through the process of preparing these parameters for both measures and graphs. It is important to keep in mind that the default parameters should work well for most cases.
 
 ### Setting Analysis Parameters
+[Go back to Table of contents](#table-of-contents)
 
 
 First of all, you can specify the parameters for constructing the graph from the structural group data (Figure 6c).In the `CORRELATION RULE` section, you can select the statistical test to calculate correlations in structural values between pairs of brain regions (Figure 6d).
@@ -138,6 +162,7 @@ In the `NEGATIVE WEIGHTS RULE` you can decide how you want to analyze the negati
 
  
 ### Calculate Measures
+[Go back to Table of contents](#table-of-contents)
 After the rule is set, you can calculate the measure by pressing the "C" (Figure 7c) and the results will appear in a new table within the same panel (Figure 7d). Also notice that after the measure is calculated, the rule is blocked (Figure 7d).
  
 If you want to visualize the results, select the measure and press "Plot Selected Measures on Brain" in the analysis' GUI (Figure 8a). In settings (Figure 8b-c), you can change the visualization of the plots and save them. 
@@ -154,6 +179,7 @@ If you want to visualize the results, select the measure and press "Plot Selecte
  Finally, when you do right click, in the "GRAPH & MEASURES" panel, there are other options you can explore such as "Plot Graph Plot" (connectivity adjacency matrix) as well as Data Graph (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
   
 ## Step 4: Analyzing the Data of Group 2
+[Go back to Table of contents](#table-of-contents)
 
 After the analysis of group 1, you can proceed with the analysis of the second group by clicking on "Analyze Group 2" (Figure 9a). You will notice that, in the new window that is shown (Figure 9b-d), the parameters you selected for group 1 are already selected and fixed for this analysis (both graph and measure parameters). If you realize that some of the options you previously selected are not the ones you would like, you can reset the analysis parameters of group 1 by clicking on the C checkbox next to it.
 
@@ -167,6 +193,7 @@ After the analysis of group 1, you can proceed with the analysis of the second g
 
  
 ## Step 5: Comparing Groups
+[Go back to Table of contents](#table-of-contents)
 
 Once you have explored the network measures for each group, you can proceed with their statistical comparison. To do this, you should click on "Compare Groups" (Figure 10a) and in the new window select if you want a waiting bar and verbose functions ON while you wait for the analysis to finish, as well as how many permutations you want to use to assess differences between groups ({Figure 10b}). If the groups are not independent but represent the same subjects in two different points in time, you can select the longitudinal comparison option, which will permute the values within each subject ({Figure 10b}). We set the permutations to 10 for computational time purposes ({Figure 10c}), but for your research analysis we recommend using 1000 or 10000 permutations to guarantee the results are robust. Finally, you can select the graph measures you want to compare between groups and once you have selected all the measures you are interested in, you should right click and select "Calculate all selected comparisons" ({Figure 10d}). If you turn ON the wait bar and verbose functions, two window bars will open that show you at which point in time the comparison calculation is. There is one last option on this GUI that you can select to save intermediate results during the permutations.
 
