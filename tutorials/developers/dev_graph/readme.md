@@ -7,15 +7,17 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 
 
 ## Table of contents>
->> [Unilayer Binary Directed Graph (GraphBD)  [](#Unilayer-Binary-Directed-Graph-(GraphBD)--[)
+> [Implementation of Unilayer Graphs](#Implementation-of-Unilayer-Graphs)
 >
-> [Implementation of Multilayer Graphs  [](#Implementation-of-Multilayer-Graphs--[)
+>> [Unilayer Binary Directed Graph (GraphBD)](#Unilayer-Binary-Directed-Graph-(GraphBD))
 >
->> [Weigthed Directed Multilayer Graph (MultilayerWD )  [](#Weigthed-Directed-Multilayer-Graph-(MultilayerWD-)--[)
+> [Implementation of Multilayer Graphs](#Implementation-of-Multilayer-Graphs)
 >
->> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-(MultiplexBUT)--[)
+>> [Weigthed Directed Multilayer Graph (MultilayerWD )](#Weigthed-Directed-Multilayer-Graph-(MultilayerWD-))
 >
->> [Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)  [](#Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-(OrdMxBUT)--[)
+>> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-(MultiplexBUT))
+>
+>> [Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)](#Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-(OrdMxBUT))
 
 
     

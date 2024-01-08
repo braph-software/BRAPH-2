@@ -46,11 +46,13 @@ table_index = regexp(document, '## Table of contents');
 tc_l = length('## Table of contents');
 
 % patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
-patternSection = regexp(document, ['##(.*?)' arrow_up_icon ], 'tokens', 'all');
+patternSection = regexp(document, ['##(.*?)' char(13)], 'tokens', 'all');
 
 acum = 0;
 for i = 2:length(patternSection)
     tmp_section_title = patternSection{i}{1};
+    tmp_section_title_array = split(tmp_section_title, '[');
+    tmp_section_title = tmp_section_title_array{1};
     occur_tmp = regexp(tmp_section_title, '#');
     name_string = strtrim(replace(tmp_section_title, '#', ''));
     link_string = replace(name_string, ' ', '-');
