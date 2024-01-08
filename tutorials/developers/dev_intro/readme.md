@@ -34,8 +34,7 @@ In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the e
 
 
 
-## Compilation and Element (Re)Generation
-[Go back to Table of contents](#table-of-contents)
+## Compilation and Element (Re)Generation  [⬆](#table-of-contents)
 
 BRAPH 2.0 is a compiled object-oriented programming software.
 Its objects are _elements_, which contain a set of _props_ of various _categories_ and _formats_, as described in detail in the following sections. 
@@ -104,8 +103,7 @@ This can be done with the function `regenerate()`, as shown in Regeneration of e
 
 
 
-## Elements
-[Go back to Table of contents](#table-of-contents)
+## Elements  [⬆](#table-of-contents)
 
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
@@ -248,8 +246,7 @@ A concrete element (`ConcreteElement`) provides the infrastructure necessary for
 In particular, it has the constant props `ELCLASS` (string), `NAME` (string) and `DESCRIPTION` (string), the property `TEMPLATE` (item), the indexing properties `ID` (string), `LABEL` (string), and `NOTES` (string), and the query prop `TOSTRING` (string).
 Even though it is possible to create instances of `ConcreteElement`, typically one uses its subclasses.
 
-### Setting Props
-[Go back to Table of contents](#table-of-contents)
+### Setting Props  [⬆](#table-of-contents)
 
 The value of a prop can be set with Setting a prop.
 **Setting a prop.**
@@ -316,8 +313,7 @@ If the check fails an error is thrown with error id
 8. When a prop is successfully set, an **event** `PropSet()` is **notified**
  
 
-### Getting Props
-[Go back to Table of contents](#table-of-contents)
+### Getting Props  [⬆](#table-of-contents)
 
 The value of a prop can be retrieved with Getting a prop.
 **Getting a prop.**
@@ -363,8 +359,7 @@ The raw value of a prop can be retrieved with Getting the raw value of a prop.
 
 
 
-### Memorizing Props
-[Go back to Table of contents](#table-of-contents)  
+### Memorizing Props  [⬆](#table-of-contents)  
 
 The value of a prop can be memorized using memorize.
 **Getting a prop.**
@@ -393,8 +388,7 @@ If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and is a
  
 If a property of category `QUERY` is memorized, a warning is thrown with warning id `BRAPH2:<Element Class>`, because query properties are generally not supposed to be memorized. If such behavior is intended, consider enclosing the command between warning off and warning on.
 
-## Element tokens
-[Go back to Table of contents](#table-of-contents)
+## Element tokens  [⬆](#table-of-contents)
 
 A generator file has the structure illustrated Element tokens in a generator file.
 
@@ -550,7 +544,7 @@ A list of special instructions is shown in Special instruction in a generator fi
 > 
 > ConcreteElement.NAME ①
 > 
-> __Category.CONSTANT__ ②circlednote{2}{keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value.circled{3}-circled{5} It works similarly also for the other constants of `Category` and `Format`.}
+> __Category.CONSTANT__ ②
 > __Category.CONSTANT_TAG__ ③
 > ...
 > __Format.EMPTY__ ④
@@ -567,8 +561,7 @@ A list of special instructions is shown in Special instruction in a generator fi
 
 
 
-## Overview of Elements
-[Go back to Table of contents](#table-of-contents)
+## Overview of Elements  [⬆](#table-of-contents)
 
 
 
@@ -587,8 +580,7 @@ The users can easily add new brain surfaces ("brainsurfs"), atlases ("atlases"),
 Furthermore, the users can add new elements such as new graphs (e.g., `GraphWU` in "graphs"), measures (e.g., `Strength` in "measures"), data types (e.g., `SubjectCON` in "pipelines/connectivity"), data importers (e.g., `ImporterGroupSubjectCON_XLS` in "pipelines/connectivity"), data exporters (e.g., `ExporterGroupSubjectCON_XLS` in "pipelines/connectivity"), and analyses (e.g., `AnalyzeEnsemble_CON_WU` in "pipelines/connectivity") by writing new elements and recompiling the whole code: the new elements and their functionalities will be immediately available also in the GUI.
 Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the command "test_braph2") that ensure the formal correctness of the code, including that of any newly added elements.
 
-## Implementation of an Element
-[Go back to Table of contents](#table-of-contents)
+## Implementation of an Element  [⬆](#table-of-contents)
 
 We will now see how to implement a few concrete elements.
 
@@ -631,8 +623,7 @@ We will now see how to implement a few concrete elements.
 
 
 
-### A Simple Calculator
-[Go back to Table of contents](#table-of-contents)
+### A Simple Calculator  [⬆](#table-of-contents)
 
 We will now create our first element (Arithmetic Operation Calculator), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
 **Arithmetic Operation Calculator.**
@@ -789,8 +780,7 @@ We will now create our first element (Arithmetic Operation Calculator), a simple
 
 
 
-### Calculator with Seeded Randomness
-[Go back to Table of contents](#table-of-contents)
+### Calculator with Seeded Randomness  [⬆](#table-of-contents)
 
 We can now create an element that demonstrate how the seeded randomness works (Arithmetic Operation Calculator).
 **Arithmetic Operation Calculator.**
@@ -846,8 +836,7 @@ We can now create an element that demonstrate how the seeded randomness works (A
 
 
 
-### Query
-[Go back to Table of contents](#table-of-contents)
+### Query  [⬆](#table-of-contents)
 
 We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (Arithmetic Operation Calculator with Queries).
 **Arithmetic Operation Calculator with Queries.**
@@ -922,8 +911,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 
 
 
-### Evanescent, Gui, Figure
-[Go back to Table of contents](#table-of-contents)
+### Evanescent, Gui, Figure  [⬆](#table-of-contents)
 
 We can now demonstrate the use of evanescent props and graphical handles (Element with figure).
 **Element with figure.**
@@ -960,7 +948,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Elemen
 > %%% ¡prop!
 > PANEL (evanescent, handle) is the handle of the panel.
 > %%%% ¡calculate!
-> if ~check_graphics(ef.memorize('FIG'), 'figure') ②circlednote{2}{checks whether the figure still exists, otherwisecircled{3} erases it so thatcircled{4} recreates it.}
+> if ~check_graphics(ef.memorize('FIG'), 'figure') ②
 >     ef.set('FIG', Element.getNoValue()); ③
 > end
 > 
@@ -976,7 +964,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Elemen
 > %%% ¡prop!
 > BUTTONS (evanescent, handlelist) is the list of handles of the buttons.
 > %%%% ¡calculate!
-> if ~check_graphics(ef.getr('PANEL'), 'uipanel') ⑥circlednote{6}{checks whether the panel still exists, otherwisecircled{7} erases it so thatcircled{8} recreates it.}
+> if ~check_graphics(ef.getr('PANEL'), 'uipanel') ⑥
 >     ef.set('PANEL', Element.getNoValue()); ⑦
 > end
 > 
