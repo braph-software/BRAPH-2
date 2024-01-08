@@ -6,13 +6,27 @@ This is the developer tutorial for implementing a new graph.
 In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new graph, which can then be compiled by `braph2genesis`. All graphs are (direct or indirect) extensions of the base element `Graph`. Here, we will use as examples the graphs `GraphBD` (Binary Directed graph), `MultilayerWU` (Weighted Undirected multilayer graph), `MultiplexBUT` (Binary Undirected multiplex at fixed Thresholds), and `OrdMxBUT` (Binary Undirected ordinal multiplex with fixed Thresholds).
 
 
+## Table of contents>
+> [Implementation of Unilayer Graphs](#Implementation-of-Unilayer-Graphs)
+>
+>> [Unilayer Binary Directed Graph (GraphBD)](#Unilayer-Binary-Directed-Graph-(GraphBD))
+>
+> [Implementation of Multilayer Graphs](#Implementation-of-Multilayer-Graphs)
+>
+>> [Weigthed Directed Multilayer Graph (MultilayerWD )](#Weigthed-Directed-Multilayer-Graph-(MultilayerWD-))
+>
+>> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-(MultiplexBUT))
+>
+>> [Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)](#Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-(OrdMxBUT))
 
 
     
 
 ## Implementation of Unilayer Graphs
+[Go back to Table of contents](#table-of-contents)
 
 ### Unilayer Binary Directed Graph (GraphBD)
+[Go back to Table of contents](#table-of-contents)
 
 We will start by implementing in detail `GraphBD`, which  is a direct extension of  `Graph`.
 A unilayer graph is constituted by nodes connected by edges, where the edges are directed and they can be either 0 (absence of connection) or 1 (existence of connection).
@@ -478,8 +492,10 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
     
 
 ## Implementation of Multilayer Graphs
+[Go back to Table of contents](#table-of-contents)
 
 ### Weigthed Directed Multilayer Graph (MultilayerWD )
+[Go back to Table of contents](#table-of-contents)
 
 We can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. The parts of the code that are modified are highlighted.
 A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
@@ -838,6 +854,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 
 ### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)
+[Go back to Table of contents](#table-of-contents)
 
 Now we implement the `MultiplexBUT` graph based on previous codes `GraphBD` and `MultilayerWD`, again highlighting the differences.
 A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
@@ -1186,6 +1203,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 
 ### Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)
+[Go back to Table of contents](#table-of-contents)
 
 Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `MultilayerWD` and `MultiplexBUT`, again highlighting the differences. An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with ordinal edges between corresponding nodes in subsequent layers.
 
