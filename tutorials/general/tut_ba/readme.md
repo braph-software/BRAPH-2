@@ -15,18 +15,18 @@ This is typically the first step required to perform a graph analysis in BRAPH 2
 In this Tutorial, we will explain you how to upload a brain atlas, how to visualize it, and how to export publication-ready brain figures.
 
 
-[Open the GUI](#Open-the-GUI)
-
-[Upload the Brain Atlas](#Upload-the-Brain-Atlas)
-
-[Ready Brain Atlases](#Ready-Brain-Atlases)
-
-[Create a New Brain Atlas](#Create-a-New-Brain-Atlas)
-
-[Plot the Brain Atlas](#Plot-the-Brain-Atlas)
-
-[Export the Figure](#Export-the-Figure)
-
+## Table of contents>
+> [Open the GUI](#Open-the-GUI)
+>
+> [Upload the Brain Atlas](#Upload-the-Brain-Atlas)
+>
+> [Ready Brain Atlases](#Ready-Brain-Atlases)
+>
+> [Create a New Brain Atlas](#Create-a-New-Brain-Atlas)
+>
+> [Plot the Brain Atlas](#Plot-the-Brain-Atlas)
+>
+> [Export the Figure](#Export-the-Figure)
 
 
 
@@ -38,6 +38,7 @@ In this Tutorial, we will explain you how to upload a brain atlas, how to visual
 
 
 ## Open the GUI
+[Go back to Table of contents](#table-of-contents)
 
 The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 3c-d) after clicking "Load Atlas". 
 
@@ -66,6 +67,7 @@ The brain atlas GUI is the first step in most BRAPH 2.0 pipelines. You can open 
 
 
 ## Upload the Brain Atlas
+[Go back to Table of contents](#table-of-contents)
 
 In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (Figure 3b) either by loading one of the already-available atlases in the BRAPH 2.0 folder "atlases" (Figure 3c) or by loading a file you have created. In this example, we are uploading the Desikan atlas (Figure 3d).
 
@@ -82,6 +84,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a
 
 
 ## Ready Brain Atlases
+[Go back to Table of contents](#table-of-contents)
 
 
 
@@ -103,6 +106,7 @@ They are available in the BRAPH 2.0 folder "atlases" in XLS and TXT formats, and
 
 
 ## Create a New Brain Atlas
+[Go back to Table of contents](#table-of-contents)
 
 To create a new brain Atlas in BRAPH 2.0 format, you should create a new XLS file ("*.xls" or "*.xlsx"), as shown in Figure 6. 
 (It is also possible to create it in TXT format ("*.txt"), for which we refer to the examples available in the BRAPH 2.0 folder "atlases".)
@@ -128,6 +132,7 @@ Then, from row 5, you should include the IDs of the regions of your atlas (1 st 
 
 
 ## Plot the Brain Atlas
+[Go back to Table of contents](#table-of-contents)
 
 Once you are satisfied with the brain atlas, you can plot it by pushing the button "Plot Brain Atlas" (Figure 7a). 
 This will open an image with a brain surface and nodes corresponding to the brain regions (Figure 7b).
@@ -181,6 +186,7 @@ It is also possible to add additional brain surfaces by adding the required NV f
 
 
 ## Export the Figure
+[Go back to Table of contents](#table-of-contents)
 
 To export and save a (publication-ready) figure, you can select "Print" from the brain atlas GUI and select one of the various provided options Figure 11.
 
