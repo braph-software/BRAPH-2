@@ -34,9 +34,10 @@ document = regexprep(document, '---', '-');
 document = regexprep(document, '\\\\\n', '\n');
 
 % (sub)section
-document = regexprep(document, '\\section{([^{}]*)}', ['## $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
-document = regexprep(document, '\\subsection{([^{}]*)}',  ['### $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
-document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['#### $1' char(13) newline() '[Go back to Table of contents](#table-of-contents)']);
+arrow_up_icon = char(11014);
+document = regexprep(document, '\\section{([^{}]*)}', ['## $1  [' arrow_up_icon '](#table-of-contents)']);
+document = regexprep(document, '\\subsection{([^{}]*)}',  ['### $1  [' arrow_up_icon '](#table-of-contents)']);
+document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['#### $1  [' arrow_up_icon '](#table-of-contents)']);
 
 % table of contents
 % document = regexprep(document, '\\tableofcontents', ''); old way
@@ -45,7 +46,7 @@ table_index = regexp(document, '## Table of contents');
 tc_l = length('## Table of contents');
 
 % patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
-patternSection = regexp(document, ['##(.*?)' char(13) ], 'tokens', 'all');
+patternSection = regexp(document, ['##(.*?)' arrow_up_icon ], 'tokens', 'all');
 
 acum = 0;
 for i = 2:length(patternSection)
@@ -281,7 +282,7 @@ tmp_lstlisting = regexp(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}',
 document = regexprep(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', '<lstlistinggoeshere>**!'); % put mark
 document = regexprep(document, '\%', ''); % put mark
 pattern = 'caption\=\{(.*?)\}(.*?)\](.*)';
-patternOR = '\¥\\circled\{([^{}]*)\}\\threecirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥|\¥\\circled\{([^{}]*)\}\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\¥|\¥\\circled\{([^{}]*)\}\\circlednote\{([^{}]*)\}\{([^{}]*)\}\¥|\¥\\circled\{([^{}]*)\}';
+patternOR = '\¥\\circled\{([^{}]*)\}(.*?)\¥';
 patternOR2 = '\\threecirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}|\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}|\\circlednote\{([^{}]*)\}\{([^{}]*)\}';
 unicode_circled = 9311; % utf 16
 for i = 1:length(tmp_lstlisting)
@@ -299,15 +300,7 @@ for i = 1:length(tmp_lstlisting)
     for j = 1:length(tmp_circlenotes)
         % get the item
         tmp_marking = tmp_circlenotes{j};
-        if length(tmp_marking) == 5 % case 4
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
-        elseif length(tmp_marking) == 4  % case 3
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
-        elseif length(tmp_marking) == 3 % case 2
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{2}))], 'once');
-        else % case 1
-            tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{1}))], 'once');
-        end
+        tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{1}))], 'once');
     end
 
     % get sections

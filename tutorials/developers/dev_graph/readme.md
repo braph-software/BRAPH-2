@@ -7,26 +7,22 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 
 
 ## Table of contents>
-> [Implementation of Unilayer Graphs](#Implementation-of-Unilayer-Graphs)
+>> [Unilayer Binary Directed Graph (GraphBD)  [](#Unilayer-Binary-Directed-Graph-(GraphBD)--[)
 >
->> [Unilayer Binary Directed Graph (GraphBD)](#Unilayer-Binary-Directed-Graph-(GraphBD))
+> [Implementation of Multilayer Graphs  [](#Implementation-of-Multilayer-Graphs--[)
 >
-> [Implementation of Multilayer Graphs](#Implementation-of-Multilayer-Graphs)
+>> [Weigthed Directed Multilayer Graph (MultilayerWD )  [](#Weigthed-Directed-Multilayer-Graph-(MultilayerWD-)--[)
 >
->> [Weigthed Directed Multilayer Graph (MultilayerWD )](#Weigthed-Directed-Multilayer-Graph-(MultilayerWD-))
+>> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-(MultiplexBUT)--[)
 >
->> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-(MultiplexBUT))
->
->> [Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)](#Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-(OrdMxBUT))
+>> [Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)  [](#Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-(OrdMxBUT)--[)
 
 
     
 
-## Implementation of Unilayer Graphs
-[Go back to Table of contents](#table-of-contents)
+## Implementation of Unilayer Graphs  [⬆](#table-of-contents)
 
-### Unilayer Binary Directed Graph (GraphBD)
-[Go back to Table of contents](#table-of-contents)
+### Unilayer Binary Directed Graph (GraphBD)  [⬆](#table-of-contents)
 
 We will start by implementing in detail `GraphBD`, which  is a direct extension of  `Graph`.
 A unilayer graph is constituted by nodes connected by edges, where the edges are directed and they can be either 0 (absence of connection) or 1 (existence of connection).
@@ -491,11 +487,9 @@ A unilayer graph is constituted by nodes connected by edges, where the edges are
 
     
 
-## Implementation of Multilayer Graphs
-[Go back to Table of contents](#table-of-contents)
+## Implementation of Multilayer Graphs  [⬆](#table-of-contents)
 
-### Weigthed Directed Multilayer Graph (MultilayerWD )
-[Go back to Table of contents](#table-of-contents)
+### Weigthed Directed Multilayer Graph (MultilayerWD )  [⬆](#table-of-contents)
 
 We can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. The parts of the code that are modified are highlighted.
 A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
@@ -600,7 +594,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > B = g.get('B'); 
 > L = length(B); 
 > A = cell(L, L);
-> for i = 1:1:L ①circlednote{1}{For each layer in "MultilayerWD" graph, the corresponding functions are applied as in the notescircled{8},circled{9}, andcircled{10} ofCoderef{cd:m:GraphBD:prop_update}.}
+> for i = 1:1:L ①
 > 	M = dediagonalize(B{i,i}); 
 > 	M = semipositivize(M, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE'));
 > 	M = standardize(M, 'StandardizeRule', g.get('STANDARDIZE_RULE'));  
@@ -672,7 +666,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > B (data, cell) is the input cell containing the multilayer adjacency matrices.
 > %%%% ¡default!
 > {[] []; [] []}
-> %%%% ¡gui! ①circlednote{1}{Same as in notecircled{2} ofCoderef{cd:m:GraphBD:props}.}
+> %%%% ¡gui! ①
 > pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.B, ...
 > 	'TABLE_HEIGHT', s(40), ...
 > 	'XSLIDERSHOW', true, ...
@@ -689,7 +683,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > %%%% ¡settings!
 > {'zero', 'absolute'}
 > 
-> %%% ¡prop!  ②circlednote{2}{Same as in  notecircled{3} ofCoderef{cd:m:GraphBD:props}.}
+> %%% ¡prop!  ②
 > STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
 > %%%% ¡settings!
 > {'threshold' 'range'}
@@ -829,7 +823,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > A2 = g2.get('A');
 > random_A = g2.get('RANDOMIZATION', A2);
 > 
-> for i = 1:length(A2) ①circlednote{1}{tests `RANDOMIZATION` as inCoderef{cd:m:GraphBD:tests} for each layer in `A2`.}
+> for i = 1:length(A2) ①
 > 	if all(A2{i, i}==0, "all") %if all edges are zero, the new random matrix is all zeros
 > 		assert(isequal(A2{i, i}, random_A{i, i}), ...
 > 		[BRAPH2.STR ':MultilayerWD:' BRAPH2.FAIL_TEST], ...
@@ -853,8 +847,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 
 
-### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)
-[Go back to Table of contents](#table-of-contents)
+### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [⬆](#table-of-contents)
 
 Now we implement the `MultiplexBUT` graph based on previous codes `GraphBD` and `MultilayerWD`, again highlighting the differences.
 A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
@@ -979,7 +972,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > end
 > value = A;
 > 
-> %%%% ¡gui! ⑧circlednote{8}{Same as in notecircled{2} ofCoderef{cd:m:GraphBD:prop_update}.}
+> %%%% ¡gui! ⑧
 > pr = PanelPropCell('EL', g, 'PROP', MultiplexBUT.A, ...
 > 	'TABLE_HEIGHT', s(40), ...
 > 	'XYSLIDERLOCK', true, ... 
@@ -1046,7 +1039,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > for i = 1:length(A)
 > 	tmp_a = A{i,i};
 > 
-> 	random_g = GraphBU();  ⑩circlednote{10}{Same as inCoderef{cd:m:MultilayerWD:prop_update} but using `GraphBU`}
+> 	random_g = GraphBU();  ⑩
 > 	random_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
 > 	random_A = random_g.get('RANDOMIZATION', {tmp_a});
 > 	A{i, i} = random_A;
@@ -1202,8 +1195,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 
 
-### Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)
-[Go back to Table of contents](#table-of-contents)
+### Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)  [⬆](#table-of-contents)
 
 Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `MultilayerWD` and `MultiplexBUT`, again highlighting the differences. An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with ordinal edges between corresponding nodes in subsequent layers.
 
@@ -1308,7 +1300,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > %%%% ¡calculate!
 > A_WU = calculateValue@OrdMxWU(g, prop);①
 > 	
-> thresholds = g.get('THRESHOLDS');  ②circlednote{2}{Same as in notescircled{2},circled{3}, andcircled{4} ofCoderef{cd:m:MultiplexBUT:prop_update}..}
+> thresholds = g.get('THRESHOLDS');  ②
 > L = length(A_WU); % number of layers 
 > A = cell(length(thresholds)*L);
 > 	
@@ -1388,7 +1380,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > 5
 > 
 > %%% ¡prop!
-> RANDOMIZATION (query, cell) is the attempts to rewire each edge. ⑧circlednote{8}{same as inCoderef{cd:m:MultiplexBUT:prop_update}}
+> RANDOMIZATION (query, cell) is the attempts to rewire each edge. ⑧
 > %%%% ¡calculate!
 > rng(g.get('RANDOM_SEED'), 'twister')
 > 
@@ -1496,7 +1488,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > 
 > %%% ¡test!
 > %%%% ¡name!
-> Randomize Rules  ①circlednote{1}{same as inCoderef{cd:m:MultiplexBUT:tests}}
+> Randomize Rules  ①
 > %%%% ¡probability!
 > .01
 > %%%% ¡code!
