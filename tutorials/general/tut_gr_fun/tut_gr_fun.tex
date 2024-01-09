@@ -22,6 +22,7 @@ For \emph{functional data}, we will upload a folder containing the functional fi
 	{
 	Full graphical user interface to upload a group with functional data in BRAPH~2.0. 
 	}
+#!FIG01
 
 \clearpage
 \section{Generation of Example Data}
@@ -56,6 +57,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	To upload the test functional data:
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{functional},  {\bf e} \fn{Example data FUN XLS}, and {\bf f} select the folder with functional values of one group \fn{FUN\_Group\_1\_XLSX}.
 	}
+#!FIG02
 	
 \begin{tcolorbox}[
 	title=GUI launch from command line
@@ -91,6 +93,7 @@ After completing the steps described in \Figref{fig:02}, you can see the data (\
 	{\bf a} The GUI of the group's functional data. 
 	{\bf b} The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 	}
+#!FIG03
 
 \section{Visualize Each Subject's Data}
 
@@ -105,6 +108,7 @@ Finally, you can open each subject's functional values by selecting the subject,
 	{\bf a} Each subject's functional values can be opened by selecting the subject, right click, and select ``Open selection''
 	{\bf b} In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the functional values. 
 	}
+#!FIG04
 
 \clearpage
 \section{Preparation of the Data to be Imported}
@@ -122,7 +126,8 @@ To be able to import functional data into BRAPH~2.0, you need to include the fun
 	The data should be organised in the following format:
 	{\bf a} The functional values from each subject should be included in a separate file (for example, \fn{FUN\_Group\_1\_xlsx}). 
 	{\bf b} This file should contain the functional values for each brain region belonging to a brain atlas. In this example, the (simulated) values correspond to brain activation signals of 90 brain regions derived from functional MRI.
-	} 
+	}
+#!FIG05
 
 \section{Adding Covariates}
 
@@ -150,6 +155,7 @@ Column B (and subsequent columns) should contain the variables of interest (one 
 In this example we have ``Age'' and ``Sex'', as in the example file, as well as the additional ``Education''.
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like ``Sex'' and ``Education''), and the subsequent rows the values of the variable of interest for each subject.
 
-\end{itemize}	
+\end{itemize}
+#!FIG06
 
 \end{document}

@@ -235,7 +235,7 @@ Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{Concr
 	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.
 	}
 
-#!01
+#!FIG01
 
 The element \code{NoValue} is used to represent a value that has not been set (for properties of categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE} or \code{GUI}) or calculated (for properties of category \code{RESULT}, \code{QUERY}, \code{EVANESCENT}), while it should not be used for properties of category \code{CONSTANT}.
 It should be instantiated using \Coderef{cd:novalue}.
@@ -292,7 +292,7 @@ el.set( ... ¥\circled{3}\circlednote{3}{sets the values of multiple props at on
 	7, 'new el notes' ...
 	) 
 
-el = el.set('ID', 'new el id') ¥\circled{3}\circlednote{3}{returns the element.}¥
+el = el.set('ID', 'new el id') ¥\circled{4}\circlednote{4}{returns the element.}¥
 \end{lstlisting}
 %
 When a prop is set to a certain value, the following operations are performed:
@@ -584,7 +584,7 @@ __Format.EMPTY_TAG__ ¥\circled{5}¥
 	Directory structure of \fn{braph2genesis} (left) and \fn{braph2} (right).
 	}
 
-#!02
+#!FIG02
 
 The directory structure of \fn{braph2} and the relation with \fn{braph2genesis} is illustrated in \Figref{fig:genesis}.
 All objects are derived from a base object called \code{Element} and written in a simplified pseudocode (files \fn{*.gen.m}) that is compiled into the actual elements (files \fn{*.m}) by the command \code{braph2genesis} (some examples of these elements are shown).

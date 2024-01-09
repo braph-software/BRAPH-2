@@ -2,22 +2,45 @@
 
 [![Tutorial General Developer Tutorial for BRAPH 2.0](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_intro.pdf)
 
-The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (`elements`) in BRAPH 2.0 are derived from the base object `Element`. Developers can easily add new elements by writing the new elements in the simplified BRAPH 2.0 pseudocode. 
+The software architecture of BRAPH 2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (_elements_) in BRAPH 2.0 are derived from the base object `Element`. Developers can easily add new elements by writing the new elements in the simplified BRAPH 2.0 pseudocode. 
 By recompiling BRAPH 2.0, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
 In this Developer Tutorial, we will explain how BRAPH 2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
 
 
+## Table of contents>
+> [Compilation and Element (Re)Generation](#Compilation-and-Element-(Re)Generation)
+>
+> [Elements](#Elements)
+>
+>> [Setting Props](#Setting-Props)
+>
+>> [Getting Props](#Getting-Props)
+>
+>> [Memorizing Props](#Memorizing-Props)
+>
+> [Element tokens](#Element-tokens)
+>
+> [Overview of Elements](#Overview-of-Elements)
+>
+> [Implementation of an Element](#Implementation-of-an-Element)
+>
+>> [A Simple Calculator](#A-Simple-Calculator)
+>
+>> [Calculator with Seeded Randomness](#Calculator-with-Seeded-Randomness)
+>
+>> [Query](#Query)
+>
+>> [Evanescent, Gui, Figure](#Evanescent,-Gui,-Figure)
 
 
 
-## Compilation and Element (Re)Generation
+## Compilation and Element (Re)Generation  [⬆](#table-of-contents)
 
 BRAPH 2.0 is a compiled object-oriented programming software.
-Its objects are `elements`, which contain a set of `props` of various `categories` and `formats`, as described in detail in the following sections. 
+Its objects are _elements_, which contain a set of _props_ of various _categories_ and _formats_, as described in detail in the following sections. 
 These elements are written in the BRAPH 2.0 pseudocode, which simplifies and streamlines the coding process.
-To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in `compilation`.
-
-** Compilation of BRAPH 2.0.**
+To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in Compilation of BRAPH 2.0.
+**Compilation of BRAPH 2.0.**
 		Executing the script `braph2genesis` compiles BRAPH 2.0 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
 > ```matlab
@@ -26,164 +49,166 @@ To convert them into usable matlab objects, BRAPH 2.0 needs to be compiled, whic
 > 
 
 
-During the compilation, there are several phases to improve the computational efficiency of the executable code:
 
-	- ** First compilation**, where the elements are created.
-	- ** Second compilation**, where the elements are computationally optimized.
-	- ** Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+During the compilation, there are several phases to improve the computational efficiency of the executable code:
+1. **First compilation**, where the elements are created.
+2. **Second compilation**, where the elements are computationally optimized.
+3. **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time
 
 
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2.0. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
-This can be done with the function `regenerate()`, as shown in `regenerate`.
-
-** Regeneration of elements.**
+This can be done with the function `regenerate()`, as shown in Regeneration of elements.
+**Regeneration of elements.**
 		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2.0 with `braph2genesis`.
 > ```matlab
 > 
-> >> close all; delete(findall(0, 'type', 'figure')); clear all  `1`
+> >> close all; delete(findall(0, 'type', 'figure')); clear all ①
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'})  `2`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}) ②
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false)  `3`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'DoubleCompilation', false) ③
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false)  `4`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateElement', false) ④
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false)  `5`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false) ⑤
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false)  `6`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateTest', false) ⑥
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false)  `7`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false) ⑦
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false)  `8`
+> >> regenerate(regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ⑧
 > 
-> >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'
->`1` clears the workspace (not always necessary, but needed is some element instances are still in the workspace).>`2` regenerates `Pipeline`.
->`3` performs only one compilation.
->`4` does not regenerate the element, but only the layout and the unit test.
->`5` does not regenerate the layout.
->`6` does not regenerate the unit test.
->`7` does not perform the unit test.
->`8` Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
->`9` Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
-
-})  `9`
+> >> regenerate(regenerate('/src/gui', {'Pipeline', 'GUI'}) ⑨
 > 
 
+> ① clears the workspace (not always necessary, but needed is some element instances are still in the workspace).
+>
+> ② regenerates `Pipeline`.
+>
+> ③ performs only one compilation.
+>
+> ④ does not regenerate the element, but only the layout and the unit test.
+>
+> ⑤ does not regenerate the layout.
+>
+> ⑥ does not regenerate the unit test.
+>
+> ⑦ does not perform the unit test.
+>
+> ⑧ Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
+>
+> ⑨ Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
+>
 
-## Elements
+
+
+## Elements  [⬆](#table-of-contents)
 
 The base class for all elements is `Element`. 
-Each element is essentially a container for a series of `props` (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
-
-	- A `sequential number` (integer starting from 1).
-		
-	- A `tag` (a string).
-	
-	- A `category`, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
-	
-	- A `format`, which determines what a prop can contain.
+Each element is essentially a container for a series of _props_ (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
+- A _sequential number_ (integer starting from 1).
+- A _tag_ (a string).
+- A _category_, which determines for how a prop is used. The possible categories and formats are shown in the boxes below.
+- A _format_, which determines what a prop can contain.
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
 
 Furthermore, each instance of a prop has the following features:
-
-	- A `value`. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
+- A _value_. The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.
 	The functions to set, get, and memorize a value will be discussed in the following sections.
-	
-	- A `seed` for the random number generator to ensure the reproducibility of the results. 
+- A _seed_ for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
-	`seed = el.getPropSeed(pointer)`
-	where `pointer` can be either a prop number or tag.
-	It cannot be changed.
- 	
-	- A `checked` status, which is true by default.
+- A _checked_ status, which is true by default.
 	Checked props are checked for format when they are set and for value when they are set/calculated. When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changes in the file "BRAPH2.m".
 	
 	The checked status of a prop can be altered with the functions:
-	`el.checked(pointer)`
-	`el.unchecked(pointer)`
-	The checked status of a prop can be assessed with the function:
-	`checked = el.isChecked(pointer)`
-	where `pointer` can be either a prop number or tag.
-	
-	- A `locked` status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
+- A _locked_ status, which is false by default. The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.
 	
 	A prop can be locked with the function:
-	`el.lock(pointer)`
-	Once locked, it cannot be unlocked.
-	The locked status of a prop can be assessed with the function:
-	`locked = el.isLocked(pointer)`
-	where `pointer` can be either a prop number or tag.
-	
-	- A `callback` instance. Callbacks are not used with `METADATA` props.
+- A _callback_ instance. Callbacks are not used with `METADATA` props.
 	
 	The callback to a prop can be obtained using the function:
-	`cb = el.getCallback(pointer)`
-	where `pointer` can be either a prop number or tag.
-	
 
 Additional functions to operate with these features can be found by using the command `help Element` in the MatLab command line.
 
-
-> **Property Categories**
- >  
- 	> `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
- 
- 	> `METADATA` Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
- 
- 	> `PARAMETER` Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
- 
- 	> `DATA` Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
- 
- 	> `RESULT` Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
- 
- 	> `QUERY` Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
+> **Property Categories**
+ > `CONSTANT` Static constant equal for all instances of the element. It allows incoming callbacks.
+>
+> `METADATA` Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
+>
+> `PARAMETER` Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
+>
+> `DATA` Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
+>
+> `RESULT` Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
+>
+> `QUERY` Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
 It does not allow callbacks.
- 
- 	> `EVANESCENT` Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
+>
+> `EVANESCENT` Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
 It does not allow callbacks.
- 
- 	> `FIGURE` Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
-                
- 	> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
-> 
+>
+> `FIGURE` Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+>
+> `GUI` Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated. 
 
 
 
 
-> **Property Formats**
- >  
-	- `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code. 
- 
-	- `STRING` String is a char array.
- 
-	- `STRINGLIST` StringList is a cell array with char arrays.
- 
-	- `LOGICAL` Logical is a boolean value.
- 
-	- `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
-> ```matlab
-> '` for red.
->  
-> 	- `ALPHA` Alpha is a transparency level between 0 and 1.
->  
-> 	- `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
->  
-> 	- `MARKER` Marker represents the marker style.
-> ```
+> **Property Formats**
+ > - `EMPTY` Empty has an empty value and is typically used as a result or query to execute some code.
+> - `STRING` String is a char array.
+> - `STRINGLIST` StringList is a cell array with char arrays.
+> - `LOGICAL` Logical is a boolean value.
+> - `OPTION` Option is a char array representing an option within a set defined in the element (case sensitive). 
+                Settings: cell array of chars representing the options, e.g., `{'plus', 'minus', 'zero'`}.
+>
+> - `CLASS` Class is a char array corresponding to an element class.
+                Settings: class name of a subclass of Element (or Element itself).
+>
+> - `CLASSLIST` ClassList is a cell array with char arrays corresponding to element classes.
+                Settings: class name of a subclass of Element (or Element itself), which represents the base element.
+>
+> - `ITEM` Item is a pointer to an element of a class defined in the element. 
+                Settings: class name of a subclass of Element (or Element itself).
+>
+> - `ITEMLIST` ItemList is a cell array with pointers to elements of a class defined in the element.
+                Settings: class name of a subclass of Element (or Element itself), which represents the base element.
+>
+> - `IDICT` Idict is an indexed dictionary of elements of a class defined in the element.
+                Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
+>
+> - `SCALAR` Scalar is a scalar numerical value.
+> - `RVECTOR` RVector is a numerical row vector.
+> - `CVECTOR` CVector is a numerical column vector.
+> - `MATRIX` Matrix is a numerical matrix.
+> - `SMATRIX` SMatrix is a numerical square matrix.
+> - `CELL` Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
+> - `NET` Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
+> - `HANDLE` Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
+> - `HANDLELIST` HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
+> - `COLOR` Color is an RGB color, e.g., `'[1 0 0]'` for red.
+> - `ALPHA` Alpha is a transparency level between 0 and 1.
+> - `SIZE` Size represents the size of a graphical componet. It is a positive number (default = 1).
+> - `MARKER` Marker represents the marker style.
+                It can be `'o'`, `'+'`, `'*'`, `'.'`, 'x', `'_'`, `'|'`, `'s'`, `'d'`, `'^'`, `'v'`, `'>'`, `'<'`, `'p'`, `'h'`, `''` (no marker).
+>
+> - `LINE` Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line). 
+
 
 
 
 Even though it is possible to create instances of `Element`, typically one uses its subclasses and does not have any props.
-Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure elements.
+Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure NaN.
+
 
 
 <img src="fig01_big.jpg" alt="Element tree">
 
-> **Figure 01.Element tree**
+> **Figure 1. Element tree**
 > All elements derive from the base class `Element`. 
 	Its direct children are `NoValue`, `Callback`, and `ConcreteElement`, whose properties are also indicated.
 	Concrete elements further derive directly or indirectly from `ConcreteElement`.
@@ -191,9 +216,8 @@ Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as
 
 
 The element `NoValue` is used to represent a value that has not been set (for properties of categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE` or `GUI`) or calculated (for properties of category `RESULT`, `QUERY`, `EVANESCENT`), while it should not be used for properties of category `CONSTANT`.
-It should be instantiated using `novalue`.
-
-** Instantiation of `NoValue`.**
+It should be instantiated using Instantiation of `NoValue`.
+**Instantiation of `NoValue`.**
 		For computational efficiency, it is best to use only one instance using this script, instead of creating new instances using the constructor `NoValue()`.
 > ```matlab
 > 
@@ -201,12 +225,12 @@ It should be instantiated using `novalue`.
 > 
 
 
+
 No element can be a subclass of NoValue.
   
 A `Callback` refers to a prop of another element `el`, identified by prop number or tag.
-It should be instantiated using `callback`.
-
-** Instantiation of a `Callback`.**
+It should be instantiated using Instantiation of a `Callback`.
+**Instantiation of a `Callback`.**
 		For computational efficiency, it is best to use only one instance of `Callback` for each prop of an instance of a concrete element `el` with the code shown below, instead of creating new callback instances using its constructor.
 > ```matlab
 > 
@@ -215,99 +239,106 @@ It should be instantiated using `callback`.
 > 
 
 
+
 No element can be a subclass of `Callback`.
 
 A concrete element (`ConcreteElement`) provides the infrastructure necessary for all concrete elements. 
 In particular, it has the constant props `ELCLASS` (string), `NAME` (string) and `DESCRIPTION` (string), the property `TEMPLATE` (item), the indexing properties `ID` (string), `LABEL` (string), and `NOTES` (string), and the query prop `TOSTRING` (string).
 Even though it is possible to create instances of `ConcreteElement`, typically one uses its subclasses.
 
-### Setting Props
+### Setting Props  [⬆](#table-of-contents)
 
-The value of a prop can be set with `set`.
-
-** Setting a prop.**
+The value of a prop can be set with Setting a prop.
+**Setting a prop.**
 		This script illustrates various ways in which props can be set.
 > ```matlab
 > 
-> el.set('ID', 'new el id')  `1 and 2`
-> el.set(5, 'new el id')  `2`
+> el.set('ID', 'new el id') ①
+> el.set(5, 'new el id') ②
 > 
-> el.set( ...  `3`
+> el.set( ... ③
 > 	'ID', 'new el id', ...
 > 	'LABEL', 'new el label', ...
 > 	7, 'new el notes' ...
 > 	) 
 > 
-> el = el.set('ID', 'new el id
->`3` sets the values of multiple props at once. The pointers can be either property numbers or property tags.>`3` returns the element.
->`1 2` set the value of a prop with the prop tag or the prop number.
-
-')  `3`
+> el = el.set('ID', 'new el id') ④
 > 
 
+> ① ② set the value of a prop with the prop tag or the prop number.
+>
+> ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
+>
+> ④ returns the element.
+>
 
-When a prop is set to a certain value, the following operations are performed:
 
-	- The value is ** conditioned** before being set (by calling the protected `static` function `conditioning()`, which can be defined in each subelement).
-	
-	This can be set with the token `¡conditioning!`.
-	
-	- The value is ** preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the `static` function `conditioning()`, the function `preset()` has access to the element instance.
 
-	This can be set with the token `¡preset!`.
-	
-	- If a property is checked, its ** format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
-	If the check fails, the property is not set and an error is thrown with error id
-	`BRAPH2:<Element Class>:WrongInput`.
-	
-	This can be set with the token `¡checkProp!`.
+When a prop is set to a certain value, the following operations are performed:
+1. The value is **conditioned** before being set (by calling the protected _static_ function `conditioning()`, which can be defined in each subelement).
 
-	- The value is ** set**.
+This can be set with the token `¡conditioning!`.
 
-		If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
-		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
-		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id
-		`BRAPH2:<Element Class>`.
+2. The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). Differently from the _static_ function `conditioning()`, the function `preset()` has access to the element instance.
+
+This can be set with the token `¡preset!`.
+
+3. If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
+If the check fails, the property is not set and an error is thrown with error id
+`BRAPH2:<Element Class>:WrongInput`.
+
+This can be set with the token `¡checkProp!`.
+
+4. The value is **set**.
+
+If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
+If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
+If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id
+`BRAPH2:<Element Class>`.
  
-		If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to `Element.getNoValue()`.
+If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to `Element.getNoValue()`.
 
-	- The value is ** postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
-	
-	This can be set with the token `¡postset!`.
+5. The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
 
-	- ** All props** are ** postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
-	
-	This can be set with the token `¡postprocessing!`.
+This can be set with the token `¡postset!`.
 
-	- If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of ** all pros** are ** checked**.
-	If the check fails an error is thrown with error id
-	`BRAPH2:<Element Class>:WrongInput`.
-	
-	- When a prop is successfully set, an ** event** `PropSet()` is ** notified**.
+6. **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
+
+This can be set with the token `¡postprocessing!`.
+
+7. If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
+If the check fails an error is thrown with error id
+`BRAPH2:<Element Class>:WrongInput`.
+
+8. When a prop is successfully set, an **event** `PropSet()` is **notified**
  
 
-### Getting Props
+### Getting Props  [⬆](#table-of-contents)
 
-The value of a prop can be retrieved with `get`.
-
-** Getting a prop.**
+The value of a prop can be retrieved with Getting a prop.
+**Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
-> value = el.get('ID');  `1`
+> value = el.get('ID'); ①
 > 
-> value = el.get(ConcreteElement.ID);  `2`
+> value = el.get(ConcreteElement.ID); ②
 > 
-> el.get('ID')  `3 and 4`
-> el.get(ConcreteElement.ID)  `4`
+> el.get('ID') ③
+> el.get(ConcreteElement.ID) ④
 > 
-> value = el.get('QUERY', ARG1, ARG2, ... 
->`1` gets the value of a prop using the prop tag.>`2` gets the value of a prop using the prop number.
->`5` can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
->`3 4` do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+> value = el.get('QUERY', ARG1, ARG2, ... ); ⑤
+> 
 
-);  `5`
-> 
+> ① gets the value of a prop using the prop tag.
+>
+> ② gets the value of a prop using the prop number.
+>
+> ③ ④ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+>
+> ⑤ can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
+>
+
 
 
 If the raw value of the property is a `NoValue`, it proceed to return the default property value (for categories `METADATA`, `PARAMETER`, `DATA`, `FIGURE`, and `GUI`).
@@ -317,9 +348,8 @@ If the raw value of the property is a callback, it retrieves the value of the li
 If a property of category `RESULT`, `QUERY`, or `EVANESCENT` is not calculated (i.e., its raw value is `NoValue`), it proceeds to calculate it (but not to memorize it, i.e., its raw value remains `NoValue`). After the calculation of a property of category `RESULT` all properties of categories `PARAMETER` and `DATA` are irreversibly locked.
 If the property is checked, it proceeds to check all properties after the calculation calling the function `check()`. If the check fails, it resets the property to `NoValue` and returns `NoValue`, does not lock the property, and throws a warning with warning id `BRAPH2:<Element Class>`.
 
-The raw value of a prop can be retrieved with `getr`.
-
-** Getting the raw value of a prop.**
+The raw value of a prop can be retrieved with Getting the raw value of a prop.
+**Getting the raw value of a prop.**
 		This script illustrates various ways in which the raw value of a prop can be retrieved.
 > ```matlab
 > 
@@ -328,39 +358,41 @@ The raw value of a prop can be retrieved with `getr`.
 > 
 
 
-### Memorizing Props  
 
-The value of a prop can be memorized using `memorize`.
+### Memorizing Props  [⬆](#table-of-contents)  
 
-** Getting a prop.**
+The value of a prop can be memorized using memorize.
+**Getting a prop.**
 		This script illustrates various ways in which the value of a prop can be retrieved.
 > ```matlab
 > 
-> value = el.memorize('ID');  `1 and 2`
-> value = el.memorize(ConcreteElement.ID);  `2`
+> value = el.memorize('ID'); ①
+> value = el.memorize(ConcreteElement.ID); ②
 > 
-> el.memorize('ID')  `3 and 4`
-> el.memorize(ConcreteElement.I
->`1 2` memorize the value of a prop using the prop tag and the prop number.>`3 4` do not return any output value.
-
-D)  `4`
+> el.memorize('ID') ③
+> el.memorize(ConcreteElement.ID) ④
 > 
 
+> ① ② memorize the value of a prop using the prop tag and the prop number.
+>
+> ③ ④ do not return any output value.
+>
 
-If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an ** event PropMemorized**.
 
-If the property is `not` of category `RESULT`, `QUERY`, or `EVANESCENT` and has not been set yet, it sets it to its default value.
+
+If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an **event PropMemorized**.
+
+If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and has not been set yet, it sets it to its default value.
  
-If the property is `not` of category `RESULT`, `QUERY`, or `EVANESCENT` and is a callback, it iteratively memorizes the property of the element in the callback.
+If the property is _not_ of category `RESULT`, `QUERY`, or `EVANESCENT` and is a callback, it iteratively memorizes the property of the element in the callback.
  
 If a property of category `QUERY` is memorized, a warning is thrown with warning id `BRAPH2:<Element Class>`, because query properties are generally not supposed to be memorized. If such behavior is intended, consider enclosing the command between warning off and warning on.
 
-## Element tokens
+## Element tokens  [⬆](#table-of-contents)
 
-A generator file has the structure illustrated `tokens`.
+A generator file has the structure illustrated Element tokens in a generator file.
 
-
-** Element tokens in a generator file.**
+**Element tokens in a generator file.**
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
 		The token `¡header!` is required, while the rest is optional.
@@ -504,39 +536,43 @@ A generator file has the structure illustrated `tokens`.
 
 
 
-A list of special instructions is shown in `special`.
 
-** Special instruction in a generator file.**
+A list of special instructions is shown in Special instruction in a generator file.
+**Special instruction in a generator file.**
 		There are some special and specialized instructions that can be used in a generator file.
 > ```matlab
 > 
-> ConcreteElement.NAME  `1`
+> ConcreteElement.NAME ①
 > 
-> __Category.CONSTANT__  `2`circlednote{2}{keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value.circled{3}-circled{5} It works similarly also for the other constants of `Category` and `Format`.}
-> __Category.CONSTANT_TAG__  `3`
+> __Category.CONSTANT__ ②
+> __Category.CONSTANT_TAG__ ③
 > ...
-> __Format.EMPTY__  `4`
-> __Format.EMPTY_TAG__  `5`
+> __Format.EMPTY__ ④
+> __Format.EMPTY_TAG__ ⑤
 > ...
 > 
-> %%%__WARN_TBI
->`1` substitutes the prop with its default value, when hard-coding the element.>`6` adds a warning that the specific feature is not implemented yet.
-
-__  `6`
+> %%%__WARN_TBI__ ⑥
 > 
 
+> ① substitutes the prop with its default value, when hard-coding the element.
+>
+> ⑥ adds a warning that the specific feature is not implemented yet.
+>
 
-## Overview of Elements
+
+
+## Overview of Elements  [⬆](#table-of-contents)
+
 
 
 <img src="../braph2genesis.png" alt="BRAPH 2.0 genesis.">
 
-> **Figure 02.BRAPH 2.0 genesis.**
+> **Figure 2. BRAPH 2.0 genesis.**
 > Directory structure of "braph2genesis" (left) and "braph2" (right).
 	
 
 
-The directory structure of "braph2" and the relation with "braph2genesis" is illustrated in Figure genesis.
+The directory structure of "braph2" and the relation with "braph2genesis" is illustrated in Figure NaN.
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files "*.gen.m") that is compiled into the actual elements (files "*.m") by the command `braph2genesis` (some examples of these elements are shown).
 The compiled code can be launched by the command `braph2`.
 The core of BRAPH 2.0 (gray shaded area) includes the compiler (`genesis`), the essential source code ("src"), and the essential functionalities for the GUI ("gui", yellow-shaded area).
@@ -544,12 +580,11 @@ The users can easily add new brain surfaces ("brainsurfs"), atlases ("atlases"),
 Furthermore, the users can add new elements such as new graphs (e.g., `GraphWU` in "graphs"), measures (e.g., `Strength` in "measures"), data types (e.g., `SubjectCON` in "pipelines/connectivity"), data importers (e.g., `ImporterGroupSubjectCON_XLS` in "pipelines/connectivity"), data exporters (e.g., `ExporterGroupSubjectCON_XLS` in "pipelines/connectivity"), and analyses (e.g., `AnalyzeEnsemble_CON_WU` in "pipelines/connectivity") by writing new elements and recompiling the whole code: the new elements and their functionalities will be immediately available also in the GUI.
 Finally, BRAPH 2.0 is provided with a set of unit tests (executable by the command "test_braph2") that ensure the formal correctness of the code, including that of any newly added elements.
 
-## Implementation of an Element
+## Implementation of an Element  [⬆](#table-of-contents)
 
 We will now see how to implement a few concrete elements.
 
-
-> **Light compilation of BRAPH 2.0**
+> **Light compilation of BRAPH 2.0**
  To speed up the compilation of BRAPH 2.0 when trying these examples, it is possible to perform a light version of the compilation using the script `braph2genesis 
 > ```matlab
 > ...
@@ -587,15 +622,15 @@ We will now see how to implement a few concrete elements.
 
 
 
-### A Simple Calculator
 
-We will now create our first element (`ao`), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
+### A Simple Calculator  [⬆](#table-of-contents)
 
-** Arithmetic Operation Calculator.**
+We will now create our first element (Arithmetic Operation Calculator), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
+**Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 > ```matlab
 > 
-> %% ¡header!  `1`
+> %% ¡header! ①
 > ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
 > 
 > %%% ¡description!
@@ -607,12 +642,12 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > LogicalOperations, GeometricalOperations
 > 
 > 
-> %% ¡props_update!  `2`
+> %% ¡props_update! ②
 > 
 > %%% ¡prop!
 > ELCLASS (constant, string) is the class of the arithmetic operation calculator.
 > %%%% ¡default!
-> 'ArithmeticOperations'  `3`
+> 'ArithmeticOperations' ③
 > 
 > %%% ¡prop!
 > NAME (constant, string) is the name of the arithmetic operation calculator.
@@ -627,7 +662,7 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > %%% ¡prop!
 > TEMPLATE (parameter, item) is the template of the arithmetic operation calculator.
 > %%%% ¡settings!
-> 'ArithmeticOperations'  `4`
+> 'ArithmeticOperations' ④
 > 
 > %%% ¡prop!
 > ID (data, string) is a few-letter code for the arithmetic operation calculator.
@@ -644,34 +679,34 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > %%%% ¡default!
 > 'ArithmeticOperations notes'
 > 
-> %%% ¡prop!  `5`
+> %%% ¡prop! ⑤
 > TOSTRING (query, string) returns a string that represents the  arithmetic operation calculator.
-> %%%% ¡calcualte!  `6`
+> %%%% ¡calcualte! ⑥
 > a = ao.get('A');
 > b = ao.get('B');
 > value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B)];
 > 
 > 
-> %% ¡props!  `7`
+> %% ¡props! ⑦
 > 
-> %%% ¡prop!  `8 and 9`
+> %%% ¡prop! ⑧
 > A (data, scalar) is the first number.
 > 
-> %%% ¡prop!  `9`
+> %%% ¡prop! ⑨
 > B (data, scalar) is the second number.
 > 
-> %%% ¡prop!  `10`
+> %%% ¡prop! ⑩
 > SUM (result, scalar) is the sum of the two numbers (A + B).
-> %%%% ¡calculate!  `11`
+> %%%% ¡calculate! ⑪
 > value = ao.get('A') + ao.get('B');
 > 
-> %%% ¡prop!  `12`
+> %%% ¡prop! ⑫
 > DIFF (result, scalar) is the difference of the two numbers (A - B).
-> %%%% ¡calculate!  `13`
+> %%%% ¡calculate! ⑬
 > value = ao.get('A') - ao.get('B');
 > 
 > 
-> %% ¡tests!  `14`
+> %% ¡tests! ⑭
 > 
 > %%% ¡test!
 > %%%% ¡name!
@@ -680,21 +715,21 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > ao = ArithmeticOperations('A', 6, 'B', 4)
 > 
 > string = ao.get('TOSTRING')
-> assert(~ao.isLocked('A'))  `15 and 16`
-> assert(~ao.isLocked('B'))  `16`
+> assert(~ao.isLocked('A')) ⑮
+> assert(~ao.isLocked('B')) ⑯
 > 
 > sum = ao.get('SUM')
 > 
-> assert(ao.isLocked('A'))  `17 and 18`
-> assert(ao.isLocked('B'))  `18`
+> assert(ao.isLocked('A')) ⑰
+> assert(ao.isLocked('B')) ⑱
 > 
 > diff = ao.get('DIFF')
 > 
-> sum_raw = ao.getr('SUM')  `19 and 20`
-> diff_raw = ao.getr('DIFF')  `20`
+> sum_raw = ao.getr('SUM') ⑲
+> diff_raw = ao.getr('DIFF') ⑳
 > assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 > 
-> %%% ¡test!   `21`
+> %%% ¡test!  ⑴
 > %%%% ¡name!
 > Simple test with memorization
 > %%%% ¡code!
@@ -705,33 +740,50 @@ We will now create our first element (`ao`), a simple calcualator that contains 
 > 
 > sum_raw = ao.getr('SUM')
 > diff_raw = ao.getr('DIFF')
-> assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'No
->`1` The `¡header!` token is the only required one.>`2` The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
->`3` must be the name of the element.
->`4` must be the name of the element.
->`5` Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
->`6` returns the string, which must be saved in the variable `value`.
->`7` The `¡props!` token permits to add additional props.
->`10` is a result prop.
->`11` calculates the sum of the two numbers. The result must be saved in the variable `value`.
->`12` is a result prop.
->`13` calculates the difference of the two numbers. The result must be saved in the variable `value`.
->`14` The `¡tests!` token permits to add unit tests.
->`21` alters the previous test to memorize the results.
->`8 9` are two data props.
->`15 16` Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
->`17 18` Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
->`19 20` Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
-
-Value'))
+> assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
 > 
 
+> ① The `¡header!` token is the only required one.
+>
+> ② The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
+>
+> ③ must be the name of the element.
+>
+> ④ must be the name of the element.
+>
+> ⑤ Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
+>
+> ⑥ returns the string, which must be saved in the variable `value`.
+>
+> ⑦ The `¡props!` token permits to add additional props.
+>
+> ⑧ ⑨ are two data props.
+>
+> ⑩ is a result prop.
+>
+> ⑪ calculates the sum of the two numbers. The result must be saved in the variable `value`.
+>
+> ⑫ is a result prop.
+>
+> ⑬ calculates the difference of the two numbers. The result must be saved in the variable `value`.
+>
+> ⑭ The `¡tests!` token permits to add unit tests.
+>
+> ⑮ ⑯ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
+>
+> ⑰ ⑱ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
+>
+> ⑲ ⑳ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+>
+> ⑴ alters the previous test to memorize the results.
+>
 
-### Calculator with Seeded Randomness
 
-We can now create an element that demonstrate how the seeded randomness works (`sr`).
 
-** Arithmetic Operation Calculator.**
+### Calculator with Seeded Randomness  [⬆](#table-of-contents)
+
+We can now create an element that demonstrate how the seeded randomness works (Arithmetic Operation Calculator).
+**Arithmetic Operation Calculator.**
 		This is a simple element direclty deriving from `ConcreteElement`.
 > ```matlab
 > 
@@ -739,7 +791,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 > 
 > %%% ¡description!
-> ...  `1`
+> ... ①
 > 
 > 
 > %% ¡props_update!
@@ -749,7 +801,7 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > %%%% ¡default!
 > 'SeededRandomness'
 > 
-> ...  `2`
+> ... ②
 > 
 > 
 > %% ¡props!
@@ -768,22 +820,26 @@ We can now create an element that demonstrate how the seeded randomness works (`
 > sr1 = SeededRandomness()
 > sr2 = SeededRandomness()
 > 
-> assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER'))  `3 and 4`
-> assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER'))  `5`
-> assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER'
->`1` Here, a detailed description should be provided.>`2` Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
->`6` checks that calls to the calculation of the random number of differen randomizers return different values.
->`3 4` check that subsequent calls to the calculation of the random number return the same value.
-
-))  `6`
+> assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER')) ③
+> assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER')) ⑤
+> assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER')) ⑥
 > 
 
+> ① Here, a detailed description should be provided.
+>
+> ② Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
+>
+> ③ ④ check that subsequent calls to the calculation of the random number return the same value.
+>
+> ⑥ checks that calls to the calculation of the random number of differen randomizers return different values.
+>
 
-### Query
 
-We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (`ao2`).
 
-** Arithmetic Operation Calculator with Queries.**
+### Query  [⬆](#table-of-contents)
+
+We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (Arithmetic Operation Calculator with Queries).
+**Arithmetic Operation Calculator with Queries.**
 		This element derives from `ArithmeticOperations` to include a query with arguments.
 > ```matlab
 > 
@@ -809,10 +865,10 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %%% ¡prop!
 > SUM_OR_DIFF (query, scalar) returns the sum or difference depending on the argument.
 > %%%% ¡calculate!
-> % R = ao.get('SUM_OR_DIFF', SUM_OR_DIFF) returns the sum of A and B if  `1`
+> % R = ao.get('SUM_OR_DIFF', SUM_OR_DIFF) returns the sum of A and B if ①
 > %  SUM_OR_DIFF = 'SUM' or the difference of A and B if SUM_OR_DIFF = 'DIFF'.
 > 
-> if isempty(varargin)  `2`
+> if isempty(varargin) ②
 >     value = NaN;
 >     return
 > end    
@@ -838,23 +894,27 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %%%% ¡code!
 > ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
 > 
-> assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM'))  `3 and 4`
-> assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF'))  `4`
-> assert(isnan(ao.get('SUM_OR_DIFF')))  `5 and 6`
-> assert(isnan(ao.get('SUM_OR_DIFF', 'anything else')
->`1` It is good practice to add some comments about the arguments for the query.>`2` It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
->`3 4` returns the sum or the difference depening on the argument.
->`5 6` retunrs `NaN` when the input is absent or unexpected.
-
-))  `6`
+> assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ③
+> assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF')) ④
+> assert(isnan(ao.get('SUM_OR_DIFF'))) ⑤
+> assert(isnan(ao.get('SUM_OR_DIFF', 'anything else'))) ⑥
 > 
 
+> ① It is good practice to add some comments about the arguments for the query.
+>
+> ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
+>
+> ③ ④ returns the sum or the difference depening on the argument.
+>
+> ⑤ ⑥ retunrs `NaN` when the input is absent or unexpected.
+>
 
-### Evanescent, Gui, Figure
 
-We can now demonstrate the use of evanescent props and graphical handles (`f`).
 
-** Element with figure.**
+### Evanescent, Gui, Figure  [⬆](#table-of-contents)
+
+We can now demonstrate the use of evanescent props and graphical handles (Element with figure).
+**Element with figure.**
 		Element with a figure to illustrate how to use evanescent handles.
 > ```matlab
 > 
@@ -880,7 +940,7 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > %%% ¡prop!
 > FIG (evanescent, handle) is the handle of a figure.
 > %%%% ¡calculate!
-> value = uifigure( ...  `1`
+> value = uifigure( ... ①
 >     'Name', 'Figure from ElementWithFigure', ...
 >     'Color', BRAPH2.COL ...
 >     );
@@ -888,14 +948,14 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > %%% ¡prop!
 > PANEL (evanescent, handle) is the handle of the panel.
 > %%%% ¡calculate!
-> if ~check_graphics(ef.memorize('FIG'), 'figure')  `2`circlednote{2}{checks whether the figure still exists, otherwisecircled{3} erases it so thatcircled{4} recreates it.}
->     ef.set('FIG', Element.getNoValue());  `3`
+> if ~check_graphics(ef.memorize('FIG'), 'figure') ②
+>     ef.set('FIG', Element.getNoValue()); ③
 > end
 > 
-> fig = ef.memorize('FIG');  `4`
+> fig = ef.memorize('FIG'); ④
 > 
 > value = uipanel( ...
->     'Parent', fig, ...  `5`
+>     'Parent', fig, ... ⑤
 >     'Units', 'normalized', ...
 >     'Position', [.25 .25 .50 .50], ...
 >     'BackgroundColor', BRAPH2.COL_BKG ...
@@ -904,16 +964,16 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > %%% ¡prop!
 > BUTTONS (evanescent, handlelist) is the list of handles of the buttons.
 > %%%% ¡calculate!
-> if ~check_graphics(ef.getr('PANEL'), 'uipanel')  `6`circlednote{6}{checks whether the panel still exists, otherwisecircled{7} erases it so thatcircled{8} recreates it.}
->     ef.set('PANEL', Element.getNoValue());  `7`
+> if ~check_graphics(ef.getr('PANEL'), 'uipanel') ⑥
+>     ef.set('PANEL', Element.getNoValue()); ⑦
 > end
 > 
-> panel = ef.memorize('PANEL');  `8`
+> panel = ef.memorize('PANEL'); ⑧
 > 
 > value = {};
 > for i = 1:1:10
 >     value{i} = uibutton( ...
->         'Parent', panel, ...  `9`
+>         'Parent', panel, ... ⑨
 >         'Text', ['B' int2str(i)], ...
 >         'Position', [ ...
 >             (i - 1) * w(panel, 'pixels') / 10 ...
@@ -921,21 +981,21 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 >             w(panel, 'pixels') / 10 ...
 >             h(panel, 'pixels') / 10 ...
 >             ], ...
->         'ButtonPushedFcn', {@cb_button} ...  `10`
+>         'ButtonPushedFcn', {@cb_button} ... ⑩
 >         );
 > end
-> %%%% ¡calculate_callbacks!  `11`
-> function cb_button(src, ~)  `12`
+> %%%% ¡calculate_callbacks! ⑪
+> function cb_button(src, ~) ⑫
 >     disp(src.get('Text'))
 > end
 > 
 > 
 > %% ¡tests!
 > 
-> %%% ¡excluded_props!  `13`
+> %%% ¡excluded_props! ⑬
 > [ElementWithFigure.PANEL ElementWithFigure.BUTTONS]
 > 
-> %%% ¡test!  `14`
+> %%% ¡test! ⑭
 > %%%% ¡name!
 > Remove Figures
 > %%%% ¡code!
@@ -949,18 +1009,28 @@ We can now demonstrate the use of evanescent props and graphical handles (`f`).
 > %%%% ¡code!
 > ef = ElementWithFigure()
 > 
-> ef.memorize('BUTTONS')  `15`
+> ef.memorize('BUTTONS') ⑮
 > 
-> close(ef.get('FIG')
->`1` renders a figure and returns its handle.>`5` ensures that `FIG` is the parent of the panel.
->`9` ensures that `PANEL` is the parent of each button.
->`10` defines the same callback for all buttons.
->`11` The callbacks are defined in the token `¡calculate_callbacks!`.
->`12` All callbacks have two parameters at least, corresponding to the source of the callback `src` and to its event (here, not used).
->`13` The token `¡excluded_props!` determines which props to exclude from testing. Often evanescent handle and handlelist properties need to be excluded from the unit testing.
->`14` This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
->`15` memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
->`16` closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
+> close(ef.get('FIG')) ⑯
+> 
 
-)  `16`
+> ① renders a figure and returns its handle.
+>
+> ⑤ ensures that `FIG` is the parent of the panel.
+>
+> ⑨ ensures that `PANEL` is the parent of each button.
+>
+> ⑩ defines the same callback for all buttons.
+>
+> ⑪ The callbacks are defined in the token `¡calculate_callbacks!`.
+>
+> ⑫ All callbacks have two parameters at least, corresponding to the source of the callback `src` and to its event (here, not used).
+>
+> ⑬ The token `¡excluded_props!` determines which props to exclude from testing. Often evanescent handle and handlelist properties need to be excluded from the unit testing.
+>
+> ⑭ This test removes the figures left over from the basic unit testing. It is good practice to ensure that no figures are left over at the end of the unit testing.
+>
+> ⑮ memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
+>
+> ⑯ closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
 >

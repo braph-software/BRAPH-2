@@ -23,6 +23,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 	{
 	Full graphical user interface to upload a group of subjects with connectivity data in BRAPH~2.0. 
 	}
+#!FIG01
 
 \clearpage
 \section{Generation of Example Data}
@@ -43,7 +44,6 @@ create_data_CON_TXT()¥\circled{2}\circlednote{2}{generates the example connecti
 \section{Open the GUI}
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing \code{braph2} in the MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (\Figref{fig:02}c-f) after clicking ``Load Group''. 
-
 \fig{figure}
 	{fig:02}
 	{
@@ -57,6 +57,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	To upload the test connectivity data:
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{connectivity},  {\bf e} \fn{Example data CON XLS}, and {\bf f} select the folder containing the connectivity matrices of one group \fn{CON\_Group\_1\_XLS}.
 	}
+#!FIG02
 
 \begin{tcolorbox}[
 	title=GUI launch from command line
@@ -92,7 +93,7 @@ After completing the steps described in \Figref{fig:02}, you can see the data (\
 	{\bf a} The GUI of the group's connectivity data. 
 	{\bf b} The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 	}
-
+#!FIG03
 \section{Visualize Each Subject's Data}
 
 Finally, you can open each subject's connectivity matrix by selecting the subject, right click, and select ``Open selection'' (\Figref{fig:04}a), which shows the matrix values (\Figref{fig:04}b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the values of its connectivity matrix.
@@ -106,6 +107,7 @@ Finally, you can open each subject's connectivity matrix by selecting the subjec
 	{\bf a}  Each subject's connectivity matrix can be opened by selecting the subject, right click, and select ``Open selection''
 	{\bf b} In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the values of the connectivity matrix. 
 	}
+#!FIG04
 
 \clearpage
 \section{Preparation of the Data to be Imported}
@@ -124,6 +126,7 @@ To be able to import connectivity data into BRAPH~2.0, you need to include the c
 	{\bf a} The connectivity matrices from each subject should be included in one folder (for example, \fn{CON\_group\_1\_XLS}). 
 	{\bf b} Each matrix should contain the connectivity values between each pair of brain regions denoted by the rows and columns. In example, the (simulated) values in the matrix correspond to the fractional anisotropy (white matter integrity) of anatomical connections derived from diffusion weighted imaging.
 	} 
+#!FIG05
 
 \section{Adding Covariates}
 
@@ -151,6 +154,8 @@ Column B (and subsequent columns) should contain the variables of interest (one 
 In this example we have ``Age'' and ``Sex'', as in the example file, as well as the additional ``Education''.
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like ``Sex'' and ``Education''), and the subsequent rows the values of the variable of interest for each subject.
 
-\end{itemize}	
+\end{itemize}
+#!FIG06
+
 
 \end{document}

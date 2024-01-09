@@ -22,6 +22,7 @@ For \emph{structural data}, we will upload a file containing the structural valu
 	{
 	Full graphical user interface to upload a group with structural data in BRAPH~2.0. 
 	}
+#!FIG01
 
 \clearpage
 \section{Generation of Example Data}
@@ -56,6 +57,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	To upload the test structural data:
 	{\bf c}-{\bf f} navigate to the BRAPH~2.0 folder \fn{pipelines}, {\bf d} \fn{structural},  {\bf e} \fn{Example data ST XLS}, and {\bf f} select the structural values of one group \fn{ST\_Group\_1\_XLSX}.
 	}
+#!FIG02
 
 \begin{tcolorbox}[
 	title=GUI launch from command line
@@ -91,6 +93,7 @@ After completing the steps described in \Figref{fig:02}, you can see the data (\
 	{\bf a} The GUI of the group's structural data. 
 	{\bf b} The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 	}
+#!FIG03
 
 \section{Visualize Each Subject's Data}
 
@@ -105,6 +108,7 @@ Finally, you can open each subject's structural values by selecting the subject,
 	{\bf a}  Each subject's structural values can be opened by selecting the subject, right click, and select ``Open selection''
 	{\bf b} In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the structural values. 
 	}
+#!FIG04
 
 \clearpage
 \section{Preparation of the Data to be Imported}
@@ -123,6 +127,7 @@ To be able to import structural data into BRAPH~2.0, you need to include the str
 	{\bf a} The structural values from each subject belonging to the same group should be included in a single file (for example, \fn{ST\_Group\_1\_xlsx}). 
 	{\bf b} This file should contain the subject's IDs, label and any relevant notes, followed by the structural values for each brain region belonging to a brain atlas. In this example, the (simulated) values correspond to the cortical thickness of 148 brain regions derived from T1-weighted MRI.
 	} 
+#!FIG05
 
 \section{Adding Covariates}
 
@@ -151,5 +156,6 @@ In this example we have ``Age'' and ``Sex'', as in the example file, as well as 
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like ``Sex'' and ``Education''), and the subsequent rows the values of the variable of interest for each subject.
 
 \end{itemize}	
+#!FIG06
 
 \end{document}
