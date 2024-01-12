@@ -83,7 +83,8 @@ function create_Element(generator_file, target_dir)
 %   The prop value is in the variable 'value'.
 %   The outcome should be in variable 'check' and the message in 'msg'.
 %  <strong>%%%% ¡calculate!</strong>
-%   Code to calculate prop results (only for category RESULT).
+%   Code to calculate prop results 
+%   (only for categories RESULT, QUERY and EVANESCENT).
 %   Can be on multiple lines.
 %   Can include callbacks as {@cb_get, 'TAG', varargin} and 
 %   {@cb_set, 'TAG1', value1, ...}.
