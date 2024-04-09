@@ -1855,7 +1855,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 build = BRAPH2.BUILD;
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
-                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', '-v7.3');
                 
                 saved = true;
                 
