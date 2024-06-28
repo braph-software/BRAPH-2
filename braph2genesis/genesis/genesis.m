@@ -557,8 +557,8 @@ end
 
 if compile_dir('analysis')
     analysis_gen_list = getGenerators([source_dir fp 'src' fp 'analysis']);
-    parfor i = 1:numel(analysis_gen_list)
-        if ~any(strcmp(excluded, analysis_gen_list{i}))
+    for i = 1:numel(analysis_gen_list)
+        if ~any(strcmp('analysis', analysis_gen_list{i}))
             create_layout([source_dir fp 'src' fp 'analysis' fp analysis_gen_list{i}], [target_dir fp 'src' fp 'gui' fp 'layouts'])
         end
     end
