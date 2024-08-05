@@ -1350,7 +1350,21 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	end
 end
 
-%% Test 12: No Figures Left
+%% Test 12: Assigning shuffiled input data
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	shuffled_input = {[1 2 3]};
+	
+	known_shuffled_input = {[1 2 3]};
+	
+	shuffled_dp = NNDataPoint_Shuffled('SHUFFLED_INPUT', shuffled_input);
+	
+	calculated_shuffled_input = shuffled_dp.get('INPUT');
+	assert(isequal(calculated_shuffled_input, known_shuffled_input), ...
+	    [BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.FAIL_TEST], ...
+	    ['The shuffled input is not being calculated correctly for NNDataPoint_Shuffled.'])
+end
+
+%% Test 13: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.FAIL_TEST], ...
@@ -1359,7 +1373,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 13: Delete Figures
+%% Test 14: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end

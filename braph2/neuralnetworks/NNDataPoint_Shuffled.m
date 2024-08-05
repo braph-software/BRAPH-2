@@ -1,9 +1,9 @@
 classdef NNDataPoint_Shuffled < NNDataPoint
-	%NNDataPoint_Shuffled is a data point with permuted features for for multi-layer perceptron neural network.
+	%NNDataPoint_Shuffled is a data point with shuffled features for for multi-layer perceptron neural network.
 	% It is a subclass of <a href="matlab:help NNDataPoint">NNDataPoint</a>.
 	%
-	% A permuted neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its permuted inputs and original targets for multi-layer perceptron neural network analysis.
-	% The permuted inputs are used to evaluate the impact of specific features on the performance of the multi-layer perceptron neural network.
+	% A shuffled neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its shuffled inputs and original targets for multi-layer perceptron neural network analysis.
+	% The shuffled inputs are used to evaluate the impact of specific feature (or composite features) on the performance of the multi-layer perceptron neural network.
 	%
 	% NNDataPoint_Shuffled methods (constructor):
 	%  NNDataPoint_Shuffled - constructor
@@ -23,33 +23,33 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNDataPoint_Shuffled methods (display):
-	%  tostring - string with information about the permuted neural network data point for multi-layer perceptron
-	%  disp - displays information about the permuted neural network data point for multi-layer perceptron
-	%  tree - displays the tree of the permuted neural network data point for multi-layer perceptron
+	%  tostring - string with information about the shuffled neural network data point for multi-layer perceptron
+	%  disp - displays information about the shuffled neural network data point for multi-layer perceptron
+	%  tree - displays the tree of the shuffled neural network data point for multi-layer perceptron
 	%
 	% NNDataPoint_Shuffled methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two permuted neural network data point for multi-layer perceptron are equal (values, locked)
+	%  isequal - determines whether two shuffled neural network data point for multi-layer perceptron are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the permuted neural network data point for multi-layer perceptron
+	%  copy - copies the shuffled neural network data point for multi-layer perceptron
 	%
 	% NNDataPoint_Shuffled methods (save/load, Static):
-	%  save - saves BRAPH2 permuted neural network data point for multi-layer perceptron as b2 file
-	%  load - loads a BRAPH2 permuted neural network data point for multi-layer perceptron from a b2 file
+	%  save - saves BRAPH2 shuffled neural network data point for multi-layer perceptron as b2 file
+	%  load - loads a BRAPH2 shuffled neural network data point for multi-layer perceptron from a b2 file
 	%
 	% NNDataPoint_Shuffled method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the permuted neural network data point for multi-layer perceptron
+	%  encodeJSON - returns a JSON string encoding the shuffled neural network data point for multi-layer perceptron
 	%
 	% NNDataPoint_Shuffled method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the permuted neural network data point for multi-layer perceptron
+	%   decodeJSON - returns a JSON string encoding the shuffled neural network data point for multi-layer perceptron
 	%
 	% NNDataPoint_Shuffled methods (inspection, Static):
-	%  getClass - returns the class of the permuted neural network data point for multi-layer perceptron
+	%  getClass - returns the class of the shuffled neural network data point for multi-layer perceptron
 	%  getSubclasses - returns all subclasses of NNDataPoint_Shuffled
-	%  getProps - returns the property list of the permuted neural network data point for multi-layer perceptron
-	%  getPropNumber - returns the property number of the permuted neural network data point for multi-layer perceptron
+	%  getProps - returns the property list of the shuffled neural network data point for multi-layer perceptron
+	%  getPropNumber - returns the property number of the shuffled neural network data point for multi-layer perceptron
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -101,7 +101,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 	end
 	methods % constructor
 		function dp = NNDataPoint_Shuffled(varargin)
-			%NNDataPoint_Shuffled() creates a permuted neural network data point for multi-layer perceptron.
+			%NNDataPoint_Shuffled() creates a shuffled neural network data point for multi-layer perceptron.
 			%
 			% NNDataPoint_Shuffled(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -118,12 +118,12 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 	end
 	methods (Static) % inspection
 		function dp_class = getClass()
-			%GETCLASS returns the class of the permuted neural network data point for multi-layer perceptron.
+			%GETCLASS returns the class of the shuffled neural network data point for multi-layer perceptron.
 			%
 			% CLASS = NNDataPoint_Shuffled.GETCLASS() returns the class 'NNDataPoint_Shuffled'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = DP.GETCLASS() returns the class of the permuted neural network data point for multi-layer perceptron DP.
+			%  CLASS = DP.GETCLASS() returns the class of the shuffled neural network data point for multi-layer perceptron DP.
 			%  CLASS = Element.GETCLASS(DP) returns the class of 'DP'.
 			%  CLASS = Element.GETCLASS('NNDataPoint_Shuffled') returns 'NNDataPoint_Shuffled'.
 			%
@@ -133,12 +133,12 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			dp_class = 'NNDataPoint_Shuffled';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the permuted neural network data point for multi-layer perceptron.
+			%GETSUBCLASSES returns all subclasses of the shuffled neural network data point for multi-layer perceptron.
 			%
 			% LIST = NNDataPoint_Shuffled.GETSUBCLASSES() returns all subclasses of 'NNDataPoint_Shuffled'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = DP.GETSUBCLASSES() returns all subclasses of the permuted neural network data point for multi-layer perceptron DP.
+			%  LIST = DP.GETSUBCLASSES() returns all subclasses of the shuffled neural network data point for multi-layer perceptron DP.
 			%  LIST = Element.GETSUBCLASSES(DP) returns all subclasses of 'DP'.
 			%  LIST = Element.GETSUBCLASSES('NNDataPoint_Shuffled') returns all subclasses of 'NNDataPoint_Shuffled'.
 			%
@@ -150,16 +150,16 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			subclass_list = subclasses('NNDataPoint_Shuffled', [], [], true);
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of permuted neural network data point for multi-layer perceptron.
+			%GETPROPS returns the property list of shuffled neural network data point for multi-layer perceptron.
 			%
-			% PROPS = NNDataPoint_Shuffled.GETPROPS() returns the property list of permuted neural network data point for multi-layer perceptron
+			% PROPS = NNDataPoint_Shuffled.GETPROPS() returns the property list of shuffled neural network data point for multi-layer perceptron
 			%  as a row vector.
 			%
 			% PROPS = NNDataPoint_Shuffled.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = DP.GETPROPS([CATEGORY]) returns the property list of the permuted neural network data point for multi-layer perceptron DP.
+			%  PROPS = DP.GETPROPS([CATEGORY]) returns the property list of the shuffled neural network data point for multi-layer perceptron DP.
 			%  PROPS = Element.GETPROPS(DP[, CATEGORY]) returns the property list of 'DP'.
 			%  PROPS = Element.GETPROPS('NNDataPoint_Shuffled'[, CATEGORY]) returns the property list of 'NNDataPoint_Shuffled'.
 			%
@@ -217,15 +217,15 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of permuted neural network data point for multi-layer perceptron.
+			%GETPROPNUMBER returns the property number of shuffled neural network data point for multi-layer perceptron.
 			%
-			% N = NNDataPoint_Shuffled.GETPROPNUMBER() returns the property number of permuted neural network data point for multi-layer perceptron.
+			% N = NNDataPoint_Shuffled.GETPROPNUMBER() returns the property number of shuffled neural network data point for multi-layer perceptron.
 			%
-			% N = NNDataPoint_Shuffled.GETPROPNUMBER(CATEGORY) returns the property number of permuted neural network data point for multi-layer perceptron
+			% N = NNDataPoint_Shuffled.GETPROPNUMBER(CATEGORY) returns the property number of shuffled neural network data point for multi-layer perceptron
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = DP.GETPROPNUMBER([CATEGORY]) returns the property number of the permuted neural network data point for multi-layer perceptron DP.
+			%  N = DP.GETPROPNUMBER([CATEGORY]) returns the property number of the shuffled neural network data point for multi-layer perceptron DP.
 			%  N = Element.GETPROPNUMBER(DP) returns the property number of 'DP'.
 			%  N = Element.GETPROPNUMBER('NNDataPoint_Shuffled') returns the property number of 'NNDataPoint_Shuffled'.
 			%
@@ -237,7 +237,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			prop_number = numel(NNDataPoint_Shuffled.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in permuted neural network data point for multi-layer perceptron/error.
+			%EXISTSPROP checks whether property exists in shuffled neural network data point for multi-layer perceptron/error.
 			%
 			% CHECK = NNDataPoint_Shuffled.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -275,7 +275,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in permuted neural network data point for multi-layer perceptron/error.
+			%EXISTSTAG checks whether tag exists in shuffled neural network data point for multi-layer perceptron/error.
 			%
 			% CHECK = NNDataPoint_Shuffled.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -457,21 +457,21 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 				case NNDataPoint_Shuffled.SHUFFLED_INPUT
 					prop_description = 'SHUFFLED_INPUT (data, cell) is the shuffled input value for this data point.';
 				case NNDataPoint_Shuffled.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the data point for neural network analysis .';
+					prop_description = 'ELCLASS (constant, string) is the class of the shuffled data point for neural network analysis .';
 				case NNDataPoint_Shuffled.NAME
-					prop_description = 'NAME (constant, string) is the name of the data point for neural network analysis.';
+					prop_description = 'NAME (constant, string) is the name of the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the data point for neural network analysis.';
+					prop_description = 'DESCRIPTION (constant, string) is the description of the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the data point for neural network analysis.';
+					prop_description = 'TEMPLATE (parameter, item) is the template of the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.ID
-					prop_description = 'ID (data, string) is a few-letter code for the data point for neural network analysis.';
+					prop_description = 'ID (data, string) is a few-letter code for the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the data point for neural network analysis.';
+					prop_description = 'LABEL (metadata, string) is an extended label of the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the data point for neural network analysis.';
+					prop_description = 'NOTES (metadata, string) are some specific notes about the shuffled data point for neural network analysis.';
 				case NNDataPoint_Shuffled.INPUT
-					prop_description = 'INPUT (result, cell) is the input value for this data point.';
+					prop_description = 'INPUT (result, cell) is the input value for this data point for neural network analysis.';
 				otherwise
 					prop_description = getPropDescription@NNDataPoint(prop);
 			end
@@ -502,7 +502,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 				case NNDataPoint_Shuffled.SHUFFLED_INPUT
 					prop_settings = Format.getFormatSettings(Format.CELL);
 				case NNDataPoint_Shuffled.TEMPLATE
-					prop_settings = 'NNDataPoint_Permuted';
+					prop_settings = 'NNDataPoint_Shuffled';
 				otherwise
 					prop_settings = getPropSettings@NNDataPoint(prop);
 			end
@@ -533,17 +533,17 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 				case NNDataPoint_Shuffled.SHUFFLED_INPUT
 					prop_default = Format.getFormatDefault(Format.CELL, NNDataPoint_Shuffled.getPropSettings(prop));
 				case NNDataPoint_Shuffled.ELCLASS
-					prop_default = 'NNDataPoint_Permuted';
+					prop_default = 'NNDataPoint_Shuffled';
 				case NNDataPoint_Shuffled.NAME
-					prop_default = 'Permuted Neural Network Data Point';
+					prop_default = 'Shuffled Neural Network Data Point';
 				case NNDataPoint_Shuffled.DESCRIPTION
-					prop_default = 'A permuted neural network data point (NNDataPoint_Permuted) contains a data point with its permuted inputs and original targets for neural network analysis. The permuted inputs are used to evaluate the impact of specific features on the performance of the neural network.';
+					prop_default = 'A shuffled neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its shuffled inputs and original targets for multi-layer perceptron neural network analysis. The shuffled inputs are used to evaluate the impact of specific feature (or composite features) on the performance of the multi-layer perceptron neural network.';
 				case NNDataPoint_Shuffled.TEMPLATE
 					prop_default = Format.getFormatDefault(Format.ITEM, NNDataPoint_Shuffled.getPropSettings(prop));
 				case NNDataPoint_Shuffled.ID
-					prop_default = 'NNDataPoint_Permuted ID';
+					prop_default = 'NNDataPoint_Shuffled ID';
 				case NNDataPoint_Shuffled.LABEL
-					prop_default = 'NNDataPoint_Permuted label';
+					prop_default = 'NNDataPoint_Shuffled label';
 				case NNDataPoint_Shuffled.NOTES
 					prop_default = 'NNDataPoint_Permuted notes';
 				otherwise
