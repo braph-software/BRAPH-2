@@ -93,22 +93,22 @@ DESCRIPTION (constant, string) is the description of the feature importance anal
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡settings!
-'NNFeatureImportanceBrainSurface'
+'NNxMLP_FeatureImportanceAcrossMeasures_CrossValidation'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurface ID'
+'NNxMLP_FeatureImportanceAcrossMeasures_CrossValidation ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurface label'
+'NNxMLP_FeatureImportanceAcrossMeasures_CrossValidation label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurface notes'
+'NNxMLP_FeatureImportanceAcrossMeasures_CrossValidation notes'
     
 %%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.

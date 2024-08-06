@@ -81,7 +81,7 @@ ELCLASS (constant, string) is the class of the feature importance analysis for m
 %%% ¡prop!
 NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'Feature Importace for Multi-layer Perceptron on Brain Surface'
+'Feature Importace for Multi-layer Perceptron Across Graph Measures'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
