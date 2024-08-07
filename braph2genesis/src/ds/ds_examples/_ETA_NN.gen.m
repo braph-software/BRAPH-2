@@ -7,6 +7,9 @@ ETA_NN tests the prop scalar.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

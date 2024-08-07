@@ -8,6 +8,9 @@ The first layer contains a connectivity matrix and the second layer contains fun
 %%% ¡seealso!
 CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

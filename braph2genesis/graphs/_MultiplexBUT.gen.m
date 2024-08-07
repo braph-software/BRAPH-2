@@ -7,6 +7,9 @@ In a binary undirected multiplex graph with fixed thresholds (MultiplexBUT), the
  weighted supra-connectivity matrices binarized at different thresholds.
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

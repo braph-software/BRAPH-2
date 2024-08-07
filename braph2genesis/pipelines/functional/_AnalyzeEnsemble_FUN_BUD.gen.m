@@ -8,6 +8,9 @@ using binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectFUN, MultigraphBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

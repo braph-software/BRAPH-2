@@ -4,6 +4,9 @@ GlobalEfficiencyOutAv < GlobalEfficiencyOut (m, average out-global efficiency) i
 %%% ¡description!
 The Average Out-Global Efficiency (GlobalEfficiencyOutAv) is the average inverse shortest out-path length within each layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

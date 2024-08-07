@@ -7,6 +7,9 @@ GTA_HL tests PanelPropHansleList.
 %%% ¡seealso!
 PanelPropHansleList
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

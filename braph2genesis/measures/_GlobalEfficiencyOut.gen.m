@@ -5,6 +5,9 @@ GlobalEfficiencyOut < Distance (m, out-global efficiency) is the graph Out-Globa
 The Out-Global Efficiency (GlobalEfficiencyOut) is the average inverse shortest out-path length within each layer. 
 It is inversely related to the characteristic out-path length.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

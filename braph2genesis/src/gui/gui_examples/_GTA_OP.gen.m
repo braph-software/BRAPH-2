@@ -7,6 +7,9 @@ GTA_OP tests PanelPropOption.
 %%% ¡seealso!
 PanelPropOption
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

@@ -18,6 +18,9 @@ The variables of interest are from another TXT file named "GROUP_ID.vois.txt"
 %%% ¡seealso!
 Group, SubjectFUN_MP, ExporterGroupSubjectFUN_MP_TXT
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

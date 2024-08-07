@@ -4,6 +4,9 @@ ETE_checkvalue_0 < ConcreteElement (et, test E check_value) tests check_value.
 %%% ¡description!
 ETE_checkvalue_0 tests the use of check_value.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

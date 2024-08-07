@@ -7,6 +7,9 @@ ComparisonGroupPF_NB manages the basic functionalities to plot of a nodal bilaye
 %%% ¡seealso!
 ComparisonGroup
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

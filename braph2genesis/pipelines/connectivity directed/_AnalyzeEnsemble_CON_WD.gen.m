@@ -7,6 +7,9 @@ This graph analysis uses connectivity data and analyzes them using weighted dire
 %%% ¡seealso!
 SubjectCON, GraphWD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

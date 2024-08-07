@@ -20,6 +20,9 @@ The variables of interest are from another XLSX file named "GROUP_ID.vois.xlsx"
 %%% ¡seealso!
 Group, SubjectST_MP, ImporterGroupSubjectST_MP_XLS
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

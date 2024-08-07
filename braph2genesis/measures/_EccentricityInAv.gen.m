@@ -5,6 +5,9 @@ EccentricityInAv < EccentricityIn (m, average in-eccentricity) is the graph Aver
 The Average In-Eccentricity (EccentricityInAv) of a node is the sum of the nodal 
 in-eccentricities divided by their number within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

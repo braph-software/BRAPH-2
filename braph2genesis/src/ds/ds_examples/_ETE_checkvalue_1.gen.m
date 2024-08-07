@@ -4,6 +4,9 @@ ETE_checkvalue_1 < ETE_checkvalue_0 (et, test E check_value) tests check_value.
 %%% ¡description!
 ETE_checkvalue_1 tests the update of check_value.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

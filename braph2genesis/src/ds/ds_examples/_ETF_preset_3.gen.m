@@ -4,6 +4,9 @@ ETF_preset_3 < ETF_preset_2 (et, test F preset) tests preset.
 %%% ¡description!
 ETF_preset_3 tests the update of preset skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

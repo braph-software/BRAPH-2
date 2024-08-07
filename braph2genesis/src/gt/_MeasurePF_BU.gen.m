@@ -7,6 +7,9 @@ A Panel Figure for Binodal Unilayer Measure (MeasurePF_BU) manages the basic fun
 %%% ¡seealso!
 Measure
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

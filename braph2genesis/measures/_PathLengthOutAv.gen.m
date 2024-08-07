@@ -4,6 +4,9 @@ PathLengthOutAv < PathLengthOut (m, average out-path length) is the graph Averag
 %%% ¡description!
 The Average Out-Path Length (PathLengthOutAv) is the average shortest out-path lengths of one node to all other nodes within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

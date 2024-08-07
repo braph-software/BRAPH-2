@@ -804,4 +804,17 @@ if compile_dir('sandbox')
     end
 end
 
+%% LOG ELEMENT BUILD
+build_log{1, 1} = 'BRAPH2';
+build_log{1, 2} = BRAPH2.BUILD;
+el_list = Element.getSubclasses();
+for i = 1:numel(el_list)
+    el = el_list{i};
+    build_log{1 + i, 1} = el;
+    build_log{1 + i, 2} = Element.getBuild(el);
+end
+
+save([target_dir filesep() 'build_log.mat'], 'build_log')
+writecell(build_log, [target_dir filesep() 'build_log.txt'])
+
 end

@@ -21,6 +21,9 @@ The variables of interest are from another XLS/XLSX file named "GROUP_ID.vois.xl
 %%% ¡seealso!
 Group, SubjectST_MP, ExporterGroupSubjectST_MP_XLS
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

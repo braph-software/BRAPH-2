@@ -4,6 +4,9 @@ ETF_preset_2 < ETF_preset_1 (et, test F preset) tests preset.
 %%% ¡description!
 ETF_preset_2 tests that preset still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

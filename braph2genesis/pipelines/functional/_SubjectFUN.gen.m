@@ -7,6 +7,9 @@ Subject with a functional matrix (e.g. obtained from fMRI).
 %%% ¡seealso!
 ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
 
+%%% ¡build!
+1
+
 %% ¡gui!
 
 %%% ¡menu_import!

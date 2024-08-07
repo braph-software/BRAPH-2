@@ -7,6 +7,9 @@ GTA_CA tests PanelPropClass.
 %%% ¡seealso!
 PanelPropClass
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

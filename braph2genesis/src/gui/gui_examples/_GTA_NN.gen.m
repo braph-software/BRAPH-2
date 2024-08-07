@@ -7,6 +7,9 @@ GTA_NN tests PanelPropScalar.
 %%% ¡seealso!
 PanelPropScalar
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

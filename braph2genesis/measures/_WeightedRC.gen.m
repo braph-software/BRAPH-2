@@ -8,6 +8,9 @@ The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the frac
  Parameter s is set by the user and it can be a vector containing all the 
  strength thresholds; the default value is equal to 1.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

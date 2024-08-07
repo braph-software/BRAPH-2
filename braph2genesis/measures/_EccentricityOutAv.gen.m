@@ -5,6 +5,9 @@ EccentricityOutAv < EccentricityOut (m, average eccentricity) is the graph Avera
 The Average Out-Eccentricity (EccentricityOutAv) of a node is the sum of the nodal 
 out-eccentricities divided by their number within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -14,6 +14,9 @@ To obtain the prediction on a dataset D use: predictions = nn.get('PREDICT', D)
 %%% ¡seealso!
 NNDataPoint, NNDataset, NNEvaluator
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

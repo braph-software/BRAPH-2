@@ -4,6 +4,9 @@ ETG_postset_0 < ConcreteElement (et, test G postset) tests postset.
 %%% ¡description!
 ETG_postset_0 tests the use of postset.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

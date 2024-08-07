@@ -9,6 +9,9 @@ or binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectCON_MP, MultiplexWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

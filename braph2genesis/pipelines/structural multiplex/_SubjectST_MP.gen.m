@@ -7,6 +7,9 @@ Subject with data for each brain region correspponding to L structural layers (e
 %%% ¡seealso!
 ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS
 
+%%% ¡build!
+1
+
 %% ¡gui!
 
 %%% ¡menu_import!

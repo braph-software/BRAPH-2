@@ -4,6 +4,9 @@ ETG_postset_1 < ETG_postset_0 (et, test G postset) tests postset.
 %%% ¡description!
 ETG_postset_1 tests the update of postset.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

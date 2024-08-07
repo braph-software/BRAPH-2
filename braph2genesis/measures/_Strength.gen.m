@@ -5,6 +5,9 @@ Strength < Measure (m, strength) is the graph Strength.
 The Strength (Strength) of a graph is the sum of all weights of the edges connected to 
  a node within a layer. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

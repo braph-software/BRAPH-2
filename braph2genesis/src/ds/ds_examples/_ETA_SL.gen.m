@@ -7,6 +7,9 @@ ETA_SL tests the prop stringlist.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -5,6 +5,9 @@ EigenVectorCentrality < Measure (m, eigenvector centrality) is the graph Eigenve
 The Eigenvector Centrality (EigenVectorCentrality) of a node is the ith element in the eigenvector corresponding 
 to the largest eigenvalue of the largest eigenvalue of the graphs adjacency matrix.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

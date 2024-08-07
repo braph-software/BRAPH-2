@@ -9,6 +9,9 @@ The receiver operating characteristic panel for an evaluator of MLP classifier
 %%% ¡seealso!
 NNClassifierMLP_Evaluator
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

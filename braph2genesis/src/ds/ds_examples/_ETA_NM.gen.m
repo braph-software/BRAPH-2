@@ -7,6 +7,9 @@ ETA_NM tests the prop matrix.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -5,6 +5,9 @@ GlobalEfficiencyAv < GlobalEfficiency (m, average global efficiency) is the grap
 The Average Global Efficiency (GlobalEfficiencyAv) is the average of the 
 global efficiency within each layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

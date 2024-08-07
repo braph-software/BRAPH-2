@@ -4,6 +4,9 @@ ETC_calc_3 < ETC_calc_2 (et, test C calculate) tests calculate.
 %%% ¡description!
 ETC_calc_3 tests the update of calculate skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

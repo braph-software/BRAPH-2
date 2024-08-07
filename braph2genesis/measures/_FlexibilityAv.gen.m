@@ -5,6 +5,9 @@ FlexibilityAv < Flexibility (m, average flexibility) is the graph Average Flexib
 The Average Flexibility (FlexibilityAv) of a multilayer graph is the average of the flexibility 
 of all nodes.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

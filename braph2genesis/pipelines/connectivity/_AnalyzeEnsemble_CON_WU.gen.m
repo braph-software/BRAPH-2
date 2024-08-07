@@ -7,6 +7,9 @@ This ensemble-based graph analysis (AnalyzeEnsemble_CON_WU) analyzes connectivit
 %%% ¡seealso!
 SubjectCON, GraphWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

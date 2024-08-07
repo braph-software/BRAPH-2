@@ -7,6 +7,9 @@ ETA_NC tests the prop cvector.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

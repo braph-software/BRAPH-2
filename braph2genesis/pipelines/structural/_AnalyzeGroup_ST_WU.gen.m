@@ -7,6 +7,9 @@ AnalyzeGroup_ST_WU uses structural data and analyzes them using weighted undirec
 %%% ¡seealso!
 SubjectST, GraphWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

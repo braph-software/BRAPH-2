@@ -7,6 +7,9 @@ GTA_PanelProp tests PanelProp.
 %%% ¡seealso!
 PanelProp
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

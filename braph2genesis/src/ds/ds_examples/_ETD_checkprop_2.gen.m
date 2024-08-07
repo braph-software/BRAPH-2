@@ -4,6 +4,9 @@ ETD_checkprop_2 < ETD_checkprop_1 (et, test D check_prop) tests check_prop.
 %%% ¡description!
 ETD_checkprop_2 tests that check_prop still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

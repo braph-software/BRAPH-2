@@ -10,6 +10,9 @@ NNRegressorMLP trains the multi-layer perceptron regressor with a formatted
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressor_Evaluator
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

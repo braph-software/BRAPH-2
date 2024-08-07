@@ -8,6 +8,9 @@ Specifically, it contains the one-tailed and two-tailed p-values and the 95%% co
 %%% ¡seealso!
 AnalyzeGroup, CompareGroup
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ GTA_SL tests PanelPropStringList.
 %%% ¡seealso!
 PanelPropStringList
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

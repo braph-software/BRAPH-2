@@ -7,6 +7,9 @@ GTA_NC tests PanelPropCVector.
 %%% ¡seealso!
 PanelPropCVector
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

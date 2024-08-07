@@ -6,6 +6,9 @@ The Core-Periphery (CorePeriphery) of a node is the value of the rank correspond
 to the maximum richness nodes. It returns 1 for a node belonging to the 
 core and zero otherwise. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

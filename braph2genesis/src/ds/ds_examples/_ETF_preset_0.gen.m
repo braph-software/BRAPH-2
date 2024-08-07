@@ -4,6 +4,9 @@ ETF_preset_0 < ConcreteElement (et, test F preset) tests preset.
 %%% ¡description!
 ETF_preset_0 tests the use of preset.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

@@ -4,6 +4,9 @@ ETG_postset_3 < ETG_postset_2 (et, test G postset) tests postset.
 %%% ¡description!
 ETG_postset_3 tests the update of postset skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

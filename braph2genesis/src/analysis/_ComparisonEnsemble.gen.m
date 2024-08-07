@@ -9,6 +9,9 @@ and the 95%% confidence interval.
 %%% ¡seealso!
 CompareEnsemble, AnalyzeEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

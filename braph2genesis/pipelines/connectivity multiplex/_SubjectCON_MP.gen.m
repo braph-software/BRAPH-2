@@ -7,6 +7,9 @@ Subject with L connectivity matrices (e.g. obtained from DTI).
 %%% ¡seealso!
 ImporterGroupSubjectCON_MP_TXT, ExporterGroupSubjectCON_MP_TXT, ImporterGroupSubjectCON_MP_XLS, ExporterGroupSubjectCON_MP_XLS
 
+%%% ¡build!
+1
+
 %% ¡gui!
 
 %%% ¡menu_import!

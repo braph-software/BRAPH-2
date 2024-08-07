@@ -8,6 +8,9 @@ using weighted undirected graphs.
 %%% ¡seealso!
 SubjectFUN_MP, MultiplexWU.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

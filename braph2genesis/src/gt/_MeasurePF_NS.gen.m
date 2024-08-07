@@ -7,6 +7,9 @@ A Panel Figure for Nodal Superglobal Measure (MeasurePF_NS) manages the basic fu
 %%% ¡seealso!
 Measure
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

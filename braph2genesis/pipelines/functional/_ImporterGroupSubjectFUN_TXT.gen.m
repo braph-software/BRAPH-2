@@ -16,6 +16,9 @@ The variables of interest are from another tab-separated TXT file named
 %%% ¡seealso!
 Group, SubjectFUN, ExporterGroupSubjectFUN_TXT
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

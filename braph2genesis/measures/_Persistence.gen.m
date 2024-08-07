@@ -10,6 +10,9 @@ of the number of nodes that do not change community assignments, whereas
 in ordinal multilayer networks (e.g. temporal), it is the number of nodes 
 that do not change community assignments between consecutive layers.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

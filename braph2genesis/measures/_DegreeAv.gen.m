@@ -6,6 +6,9 @@ The Average Degree (DegreeAv) of a graph is the average of all number of edges
 connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

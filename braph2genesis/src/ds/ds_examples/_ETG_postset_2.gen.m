@@ -4,6 +4,9 @@ ETG_postset_2 < ETG_postset_1 (et, test G postset) tests postset.
 %%% ¡description!
 ETG_postset_2 tests that postset still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

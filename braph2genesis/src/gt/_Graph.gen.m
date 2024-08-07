@@ -23,6 +23,9 @@ The kinds of graphs are:
 %%% ¡seealso! 
 Measure
 
+%%% ¡build!
+1
+
 %% ¡constants!
 % Graph types
 GRAPH = 1

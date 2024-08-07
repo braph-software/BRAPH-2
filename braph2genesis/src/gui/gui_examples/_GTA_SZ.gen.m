@@ -7,6 +7,9 @@ GTA_SZ tests PanelPropSize.
 %%% ¡seealso!
 PanelPropSize
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ MeasureEnsemblePF_GU manages the basic functionalities to plot of a global unila
 %%% ¡seealso!
 MeasureEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

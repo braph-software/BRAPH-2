@@ -7,6 +7,9 @@ ComparisonGroupPF_GU manages the basic functionalities to plot of a global unila
 %%% ¡seealso!
 ComparisonGroup
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

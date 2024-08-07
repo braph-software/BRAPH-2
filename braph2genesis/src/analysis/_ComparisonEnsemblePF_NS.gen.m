@@ -7,6 +7,9 @@ ComparisonEnsemblePF_NS manages the basic functionalities to plot of a nodal sup
 %%% ¡seealso!
 ComparisonEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -4,6 +4,9 @@ ETE_checkvalue_3 < ETE_checkvalue_2 (et, test E check_prop) tests check_value.
 %%% ¡description!
 ETE_checkvalue_3 tests the update of check_value skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

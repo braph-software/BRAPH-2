@@ -7,6 +7,9 @@ GTA_LO tests PanelPropLogical.
 %%% ¡seealso!
 PanelPropLogical
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

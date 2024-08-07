@@ -7,6 +7,9 @@ ComparisonEnsemblePF_GU manages the basic functionalities to plot of a global un
 %%% ¡seealso!
 ComparisonEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

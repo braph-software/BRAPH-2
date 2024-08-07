@@ -8,6 +8,9 @@ using binary undirected multigraphs with fixed thresholds.
 %%% ¡seealso!
 SubjectFUN_MP, MultiplexBUT
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ ComparisonGroupPF_GS manages the basic functionalities to plot of a global super
 %%% ¡seealso!
 ComparisonGroup
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

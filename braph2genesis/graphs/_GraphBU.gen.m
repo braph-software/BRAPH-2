@@ -6,6 +6,9 @@ In a binary undirected graph (GraphBU) , the edges are undirected and can be
  either 0 (absence of connection) or 1 (existence of connection).
 The connectivity matrix is symmetric.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -4,6 +4,9 @@ DegreeOutAv < DegreeOut (m, average out-degree) is the graph Average Out-Degree.
 %%% ¡description!
 The Average Out-Degree (DegreeOutAv) of a graph is the average of all number of outward edges connected to a node within a layer. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

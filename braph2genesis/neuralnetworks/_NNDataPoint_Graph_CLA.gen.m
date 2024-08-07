@@ -10,6 +10,9 @@ The target is obtained from the variables of interest of the subject.
 %%% ¡seealso!
 NNDataPoint_Graph_REG, NNDataPoint_Measure_REG, NNDataPoint_Measure_CLA
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ GTA_NR tests PanelPropRVector.
 %%% ¡seealso!
 PanelPropRVector
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ Subject with a connectivity matrix (e.g. obtained from DTI).
 %%% ¡seealso!
 ImporterGroupSubjectCON_TXT, ExporterGroupSubjectCON_TXT, ImporterGroupSubjectCON_XLS, ExporterGroupSubjectCON_XLS
 
+%%% ¡build!
+1
+
 %% ¡gui!
 
 %%% ¡menu_import!

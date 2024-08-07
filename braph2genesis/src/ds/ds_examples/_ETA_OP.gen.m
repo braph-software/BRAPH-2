@@ -7,6 +7,9 @@ ETA_OP tests the prop option.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

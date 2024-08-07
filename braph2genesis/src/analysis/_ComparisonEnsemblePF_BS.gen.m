@@ -7,6 +7,9 @@ ComparisonEnsemblePF_BS manages the basic functionalities to plot of a binodal s
 %%% ¡seealso!
 ComparisonEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -5,6 +5,9 @@ Participation < Measure (m, participation) is the graph Participation.
 The Participation (Participation) of a node is the ratio of edges that a node forms within 
  a single layer community to the total number of edges that forms within the whole single layer graph.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

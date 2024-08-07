@@ -7,6 +7,9 @@ GTA_AL tests PanelPropAlpha.
 %%% ¡seealso!
 PanelPropAlpha
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

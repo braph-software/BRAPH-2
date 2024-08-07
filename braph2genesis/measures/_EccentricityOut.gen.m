@@ -5,6 +5,9 @@ EccentricityOut < Measure (m, out-eccentricity) is the graph Out-Eccentricity.
 The Out-Eccentricity (EccentricityOut) of a node is the maximal shortest out-path length 
 between a node and any other node within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

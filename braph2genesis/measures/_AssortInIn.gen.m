@@ -7,6 +7,9 @@ The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation c
 The corresponding coefficient for directed and weighted networks is calculated by 
   using the weighted and directed variants of in-degree/in-strength.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

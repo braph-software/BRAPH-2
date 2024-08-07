@@ -7,6 +7,9 @@ MeasureEnsemblePF_BS manages the basic functionalities to plot of a binodal supe
 %%% ¡seealso!
 MeasureEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

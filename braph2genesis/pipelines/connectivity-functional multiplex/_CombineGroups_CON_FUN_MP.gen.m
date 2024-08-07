@@ -11,6 +11,9 @@ The brain atlas and variables of interest are copied from the SubjectCON group.
 %%% ¡seealso!
 SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

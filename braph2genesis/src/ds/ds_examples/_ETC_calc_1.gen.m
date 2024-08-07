@@ -4,6 +4,9 @@ ETC_calc_1 < ETC_calc_0 (et, test C calculate) tests calculate.
 %%% ¡description!
 ETC_calc_1 tests the update of calculate.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

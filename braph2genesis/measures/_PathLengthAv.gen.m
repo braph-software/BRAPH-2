@@ -5,6 +5,9 @@ PathLengthAv < PathLength (m, average path length) is the graph Average Path Len
 The Average Path Length (PathLengthAv) of a graph is the average of the sum of 
  the path lengths within each layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

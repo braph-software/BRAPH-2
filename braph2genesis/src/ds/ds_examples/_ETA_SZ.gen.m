@@ -7,6 +7,9 @@ ETA_SZ tests the prop size.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

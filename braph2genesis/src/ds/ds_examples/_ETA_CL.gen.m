@@ -7,6 +7,9 @@ ETA_CL tests the prop classlist.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

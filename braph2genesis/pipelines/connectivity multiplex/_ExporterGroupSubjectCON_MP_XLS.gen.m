@@ -17,6 +17,9 @@ The variables of interest (if existing) are saved in another tab-separated
 %%% ¡seealso!
 Group, SunbjectCON_MP, ImporterGroupSubjectCON_MP_XLS
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

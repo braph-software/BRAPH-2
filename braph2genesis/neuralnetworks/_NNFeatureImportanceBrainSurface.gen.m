@@ -11,6 +11,9 @@ It handles different types of neural network inputs, including graph data
 %%% ¡seealso!
 NNEvaluator, NNDataPoint_Graph_CLA, NNDataPoint_Measure_REG, NNDataPoint_CON_CLA, NNDataPoint_ST_CLA
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

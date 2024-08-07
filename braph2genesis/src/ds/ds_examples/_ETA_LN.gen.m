@@ -7,6 +7,9 @@ ETA_LN tests the prop line.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -8,6 +8,9 @@ It works for all categories.
 %%% ¡seealso!
 uibutton, GUI, PanelElement, PanelProp
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

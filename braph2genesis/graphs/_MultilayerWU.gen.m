@@ -10,6 +10,9 @@ All node connections are allowed between layers.
 On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and standardized.
 On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

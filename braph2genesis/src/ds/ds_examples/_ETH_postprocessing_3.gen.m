@@ -4,6 +4,9 @@ ETH_postprocessing_3 < ETH_postprocessing_2 (et, test H postprocessing) tests po
 %%% ¡description!
 ETH_postprocessing_3 tests the update of postprocessing skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

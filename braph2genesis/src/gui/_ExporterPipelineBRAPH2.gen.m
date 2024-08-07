@@ -7,6 +7,9 @@ A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline t
 %%% ¡seealso!
 Exporter, Pipeline, ImporterPipelineBRAPH2
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

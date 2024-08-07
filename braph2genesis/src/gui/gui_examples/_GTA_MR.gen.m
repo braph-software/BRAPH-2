@@ -7,6 +7,9 @@ GTA_MR tests PanelPropMarker.
 %%% ¡seealso!
 PanelPropMarker
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

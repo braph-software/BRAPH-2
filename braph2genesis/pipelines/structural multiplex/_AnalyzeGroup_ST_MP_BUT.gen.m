@@ -8,6 +8,9 @@ analyzes them using binary undirected graphs.
 %%% ¡seealso!
 SubjectST_MP, MultiplexBUT
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

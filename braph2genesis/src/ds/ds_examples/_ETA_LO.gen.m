@@ -7,6 +7,9 @@ ETA_LO tests the prop logical.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

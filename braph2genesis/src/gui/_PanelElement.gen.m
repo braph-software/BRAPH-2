@@ -33,6 +33,9 @@ CALLBACKS - These are the public callback (to be further implemented by the deri
 %%% ¡seealso!
 uigridlayout, GUI, GUIElement, PanelProp
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

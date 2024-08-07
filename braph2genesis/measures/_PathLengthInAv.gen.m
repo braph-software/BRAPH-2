@@ -4,6 +4,9 @@ PathLengthInAv < PathLengthIn (m, average in-path length) is the graph Average I
 %%% ¡description!
 The Average In-Path Length (PathLengthInAv) of a graph is the average of the sum of the in-path lengths within each layer. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

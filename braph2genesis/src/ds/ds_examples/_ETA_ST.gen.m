@@ -7,6 +7,9 @@ ETA_ST tests the prop string.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

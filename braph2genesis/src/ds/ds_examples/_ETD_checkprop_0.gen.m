@@ -4,6 +4,9 @@ ETD_checkprop_0 < ConcreteElement (et, test D check_prop) tests check_prop.
 %%% ¡description!
 ETD_checkprop_0 tests the use of check_prop.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

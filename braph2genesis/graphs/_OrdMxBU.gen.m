@@ -8,6 +8,9 @@ In an ordinal multiplex binary undirected graph (OrdMxBU), all layers have the s
 The connectivity matrices are symmetric.
 There are connections between layers connecting the corresponding nodes.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!
