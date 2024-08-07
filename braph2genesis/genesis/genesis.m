@@ -58,7 +58,7 @@ disp(' ')
 %% ROLLCALL FUNCTIONS
     function bool = compile_dir(dir)
         bool = any(ismember({['+' dir], ['+' dir '*']}, rollcall)) ...
-            || ~any(ismember(['-' dir], rollcall));
+            || ~any(ismember({['-' dir], ['-' dir '*']}, rollcall));
     end
     function bool = compile_el(dir, el)
         if any(ismember(['-' dir], rollcall))
