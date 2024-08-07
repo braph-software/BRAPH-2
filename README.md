@@ -1,6 +1,6 @@
 ![BRAPH 2.0](braph2banner.png)
 
-# BRAPH 2.0 — Multimodal and AI-powered Brain Connectivity Analysis
+# BRAPH 2.0 — Multimodal and AI-Powered Brain Connectivity Analysis
 
 [![BRAPH 2](https://img.shields.io/twitter/url?label=BRAPH%202&style=social&url=https%3A%2F%2Ftwitter.com%2Fbraph2software)](https://twitter.com/braph2software)
 [![Website](https://img.shields.io/website?up_message=braph.org&url=http%3A%2F%2Fbraph.org%2F)](http://braph.org/)
@@ -16,16 +16,16 @@ BRAPH 2.0 is an open-source MATLAB-based software that provides advanced capabil
 
 ## Welcome to BRAPH 2.0
 
-BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using various neuroimaging modalities and cutting-edge techniques. It enables researchers to assess brain organization with multimodal data and advanced tools such as deep learning. BRAPH 2.0 provides an extensive set of analysis pipelines accessible through a graphical user interface (GUI) and sample scripts, allowing users to perform ready-to-use analyses or develop customized pipelines for their specific needs.
+BRAPH 2.0 is designed to facilitate the analysis of brain connectivity using various neuroimaging modalities and cutting-edge techniques. It enables researchers to assess brain organization with multimodal data and advanced tools such as deep learning. BRAPH 2.0 provides an extensive set of analysis pipelines accessible through a graphical user interface (GUI) and through sample scripts, allowing users to perform ready-to-use analyses or develop customized pipelines for their specific needs.
 
 ### Installation
 
 To install BRAPH 2.0, follow these steps:
 
-1. Ensure that you have **MATLAB R2022a or a later version** installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, macOS, and Linux operating systems.
+1. Ensure that you have **MATLAB R2022a or a later version** installed on your system. BRAPH 2.0 is compatible with the versions of MATLAB for Microsoft Windows, MacOS, and Linux operating systems.
 
 2. Make sure you have the following toolboxes installed in MATLAB:
-    * **Statistics and Machine Learning Toolbox** (required)
+    * **Statistics and Machine Learning Toolbox** (required for most pipelines)
     * **Parallel Computing Toolbox** (optional)
     * **Deep Learning Toolbox** (optional, for deep learning analysis)
 
@@ -50,6 +50,7 @@ A &check; indicates that we have unit-tested the current release BRAPH 2.0 on th
 | R2022b                | ?       | ?      | ?       |
 | R2023a                | ?       | ?      | ?       |
 | R2023b                | ?       | ?      | ?       |
+| R2024a                | ?       | ?      | ?       |
 
 ### Use Cases & Analysis Pipelines
 
@@ -67,11 +68,11 @@ BRAPH 2.0 is designed to be an open community-driven project, and the code is fr
 
 ## Contribute to BRAPH 2.0
 
-BRAPH 2.0 is an open-source project, and contributions from the community are highly encouraged. Whether you want to report a bug, suggest a new feature, or contribute code improvements, your contributions are valuable and help make BRAPH 2.0 even better.
+BRAPH 2.0 is an open-source project, and contributions from the community are highly encouraged. Whether you want to report a bug, suggest a new feature, or contribute code improvements, your involvement is valuable and will help make BRAPH 2.0 even better.
 
 ### Bug Reports and Feature Requests
 
-If you encounter any issues or have ideas for new features, please submit detailed information for bug reports using the [Bug Report](../../issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature Request](../../issues/new?template=feature_request.md) template. Your contributions help us improve BRAPH 2.0 and make it even better.
+If you encounter any issues or have ideas for new features, please submit detailed information for bug reports using the [Bug Report](../../issues/new?template=bug_report.md) template and clear descriptions for feature requests using the [Feature Request](../../issues/new?template=feature_request.md) template.
 
 ### Code Contributions
 
@@ -97,10 +98,6 @@ Improvements to the documentation are welcome. Submit a pull request as indicate
 
 Join discussions on the [BRAPH 2.0 Discussion Forum](https://github.com/braph-software/BRAPH-2/discussions) to provide support, answer questions, and share your expertise.
 
-By contributing to BRAPH 2.0, you play a crucial role in its growth and improvement. Your contributions shape the future development of the software and advance brain connectivity analysis.
-
-We appreciate your support and look forward to your contributions!
-
 ## Cite BRAPH 2.0
 
 If you use BRAPH 2.0 in your research work, please cite the following publication:
@@ -111,5 +108,3 @@ BRAPH: A graph theory software for the analysis of brain connectivity.
 PLOS ONE 12, e0178798.
 https://doi.org/10.1371/journal.pone.0178798
 ```
-
-We appreciate your acknowledgment of BRAPH 2.0 in your research!
