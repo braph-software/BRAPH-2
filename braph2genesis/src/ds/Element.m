@@ -1879,7 +1879,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 build = BRAPH2.BUILD;
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
-                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');
+                build_log = load('build_log.mat', '-mat');  % % % double-check
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
                 
                 saved = true;
                 
@@ -1926,11 +1927,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 wb = braph2waitbar(waitbar, .5, 'Loading file (this might take a while) ...'); 
                 drawnow()
                 
-                tmp = load(filename, '-mat', 'el', 'build', 'matlab_version', 'matlab_version_details');
+                tmp = load(filename, '-mat', 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
                 el = tmp.el;
                 build  = tmp.build;
                 matlab_version = tmp.matlab_version;
                 matlab_version_details = tmp.matlab_version_details;
+                build_log = tmp.build_log;  % % % double-check
                 
                 braph2waitbar(wb, 'close')                
             else
