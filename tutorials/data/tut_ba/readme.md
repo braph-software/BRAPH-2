@@ -90,7 +90,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a
 
 
 Currently, we provide several brain atlases that are commonly used in the field of brain connectomics, some of which are shown in Figure 5. 
-They are available in the BRAPH 2 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website (\url{http://braph.org/software/brain-atlases/}).
+They are available in the BRAPH 2 folder "atlases" in XLS and TXT formats, and they can also can be downloaded from our website ([http://braph.org/software/brain-atlases/](http://braph.org/software/brain-atlases/)).
 
 <img src="fig05.jpg" alt="Brain Atlases">
 
