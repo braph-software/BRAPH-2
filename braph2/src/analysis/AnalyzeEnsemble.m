@@ -5,22 +5,6 @@ classdef AnalyzeEnsemble < ConcreteElement
 	% AnalyzeEnsemble provides the methods necessary for all ensemble-based analysis subclasses.
 	% Instances of this class should not be created. Use one of its subclasses instead.
 	%
-	% The list of AnalyzeEnsemble properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-	%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph ensemble obtained from this analysis.
-	%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-	%
 	% AnalyzeEnsemble methods (constructor):
 	%  AnalyzeEnsemble - constructor
 	%
@@ -110,35 +94,35 @@ classdef AnalyzeEnsemble < ConcreteElement
 	% See also CompareEnsemble.
 	
 	properties (Constant) % properties
-		WAITBAR = 9; %CET: Computational Efficiency Trick
+		WAITBAR = ConcreteElement.getPropNumber() + 1;
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = 9;
-		WAITBAR_FORMAT = 4;
+		WAITBAR_CATEGORY = Category.GUI;
+		WAITBAR_FORMAT = Format.LOGICAL;
 		
-		GR = 10; %CET: Computational Efficiency Trick
+		GR = ConcreteElement.getPropNumber() + 2;
 		GR_TAG = 'GR';
-		GR_CATEGORY = 4;
-		GR_FORMAT = 8;
+		GR_CATEGORY = Category.DATA;
+		GR_FORMAT = Format.ITEM;
 		
-		GRAPH_TEMPLATE = 11; %CET: Computational Efficiency Trick
+		GRAPH_TEMPLATE = ConcreteElement.getPropNumber() + 3;
 		GRAPH_TEMPLATE_TAG = 'GRAPH_TEMPLATE';
-		GRAPH_TEMPLATE_CATEGORY = 3;
-		GRAPH_TEMPLATE_FORMAT = 8;
+		GRAPH_TEMPLATE_CATEGORY = Category.PARAMETER;
+		GRAPH_TEMPLATE_FORMAT = Format.ITEM;
 		
-		G_DICT = 12; %CET: Computational Efficiency Trick
+		G_DICT = ConcreteElement.getPropNumber() + 4;
 		G_DICT_TAG = 'G_DICT';
-		G_DICT_CATEGORY = 5;
-		G_DICT_FORMAT = 10;
+		G_DICT_CATEGORY = Category.RESULT;
+		G_DICT_FORMAT = Format.IDICT;
 		
-		ME_DICT = 13; %CET: Computational Efficiency Trick
+		ME_DICT = ConcreteElement.getPropNumber() + 5;
 		ME_DICT_TAG = 'ME_DICT';
-		ME_DICT_CATEGORY = 5;
-		ME_DICT_FORMAT = 10;
+		ME_DICT_CATEGORY = Category.RESULT;
+		ME_DICT_FORMAT = Format.IDICT;
 		
-		MEASUREENSEMBLE = 14; %CET: Computational Efficiency Trick
+		MEASUREENSEMBLE = ConcreteElement.getPropNumber() + 6;
 		MEASUREENSEMBLE_TAG = 'MEASUREENSEMBLE';
-		MEASUREENSEMBLE_CATEGORY = 6;
-		MEASUREENSEMBLE_FORMAT = 8;
+		MEASUREENSEMBLE_CATEGORY = Category.QUERY;
+		MEASUREENSEMBLE_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function a = AnalyzeEnsemble(varargin)
@@ -151,21 +135,6 @@ classdef AnalyzeEnsemble < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeEnsemble properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class.
-			%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the graph ensemble obtained from this analysis.
-			%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
 			%
 			% See also Category, Format.
 			
@@ -203,7 +172,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeEnsemble'  'AnalyzeEnsemble_CON_BUD'  'AnalyzeEnsemble_CON_BUT'  'AnalyzeEnsemble_CON_WU'  'AnalyzeEnsemble_CON_WD'  'AnalyzeEnsemble_CON_MP_BUD'  'AnalyzeEnsemble_CON_MP_BUT'  'AnalyzeEnsemble_CON_MP_WU'  'AnalyzeEnsemble_CON_OMP_WU'  'AnalyzeEnsemble_CON_FUN_MP_BUD'  'AnalyzeEnsemble_CON_FUN_MP_BUT'  'AnalyzeEnsemble_CON_FUN_MP_WU'  'AnalyzeEnsemble_FUN_BUD'  'AnalyzeEnsemble_FUN_BUT'  'AnalyzeEnsemble_FUN_WU'  'AnalyzeEnsemble_FUN_MP_BUD'  'AnalyzeEnsemble_FUN_MP_BUT'  'AnalyzeEnsemble_FUN_MP_WU'  'AnalyzeEnsemble_FUN_OMP_WU' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('AnalyzeEnsemble', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ensemble-based graph analysis.
@@ -224,30 +193,62 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						AnalyzeEnsemble.WAITBAR ...
+						AnalyzeEnsemble.GR ...
+						AnalyzeEnsemble.GRAPH_TEMPLATE ...
+						AnalyzeEnsemble.G_DICT ...
+						AnalyzeEnsemble.ME_DICT ...
+						AnalyzeEnsemble.MEASUREENSEMBLE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 11];
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = [12 13];
-				case 6 % Category.QUERY
-					prop_list = [8 14];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						AnalyzeEnsemble.GRAPH_TEMPLATE ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						AnalyzeEnsemble.GR ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						AnalyzeEnsemble.G_DICT ...
+						AnalyzeEnsemble.ME_DICT ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						AnalyzeEnsemble.MEASUREENSEMBLE ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						AnalyzeEnsemble.WAITBAR ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -268,31 +269,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 14;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 2;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(AnalyzeEnsemble.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in ensemble-based graph analysis/error.
@@ -320,14 +297,14 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == AnalyzeEnsemble.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeEnsemble.'] ...
 					)
 			end
@@ -358,14 +335,15 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); %CET: Computational Efficiency Trick
+			analyzeensemble_tag_list = cellfun(@(x) AnalyzeEnsemble.getPropTag(x), num2cell(AnalyzeEnsemble.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, analyzeensemble_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeEnsemble.'] ...
 					)
 			end
@@ -391,7 +369,8 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' })); % tag = pointer %CET: Computational Efficiency Trick
+				analyzeensemble_tag_list = cellfun(@(x) AnalyzeEnsemble.getPropTag(x), num2cell(AnalyzeEnsemble.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, analyzeensemble_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -419,9 +398,24 @@ classdef AnalyzeEnsemble < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				analyzeensemble_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE' };
-				tag = analyzeensemble_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case AnalyzeEnsemble.WAITBAR
+						tag = AnalyzeEnsemble.WAITBAR_TAG;
+					case AnalyzeEnsemble.GR
+						tag = AnalyzeEnsemble.GR_TAG;
+					case AnalyzeEnsemble.GRAPH_TEMPLATE
+						tag = AnalyzeEnsemble.GRAPH_TEMPLATE_TAG;
+					case AnalyzeEnsemble.G_DICT
+						tag = AnalyzeEnsemble.G_DICT_TAG;
+					case AnalyzeEnsemble.ME_DICT
+						tag = AnalyzeEnsemble.ME_DICT_TAG;
+					case AnalyzeEnsemble.MEASUREENSEMBLE
+						tag = AnalyzeEnsemble.MEASUREENSEMBLE_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -446,9 +440,22 @@ classdef AnalyzeEnsemble < ConcreteElement
 			
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_category_list = { 1  1  1  3  4  2  2  6  9  4  3  5  5  6 };
-			prop_category = analyzeensemble_category_list{prop};
+			switch prop
+				case AnalyzeEnsemble.WAITBAR
+					prop_category = AnalyzeEnsemble.WAITBAR_CATEGORY;
+				case AnalyzeEnsemble.GR
+					prop_category = AnalyzeEnsemble.GR_CATEGORY;
+				case AnalyzeEnsemble.GRAPH_TEMPLATE
+					prop_category = AnalyzeEnsemble.GRAPH_TEMPLATE_CATEGORY;
+				case AnalyzeEnsemble.G_DICT
+					prop_category = AnalyzeEnsemble.G_DICT_CATEGORY;
+				case AnalyzeEnsemble.ME_DICT
+					prop_category = AnalyzeEnsemble.ME_DICT_CATEGORY;
+				case AnalyzeEnsemble.MEASUREENSEMBLE
+					prop_category = AnalyzeEnsemble.MEASUREENSEMBLE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -472,9 +479,22 @@ classdef AnalyzeEnsemble < ConcreteElement
 			
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_format_list = { 2  2  2  8  2  2  2  2  4  8  8  10  10  8 };
-			prop_format = analyzeensemble_format_list{prop};
+			switch prop
+				case AnalyzeEnsemble.WAITBAR
+					prop_format = AnalyzeEnsemble.WAITBAR_FORMAT;
+				case AnalyzeEnsemble.GR
+					prop_format = AnalyzeEnsemble.GR_FORMAT;
+				case AnalyzeEnsemble.GRAPH_TEMPLATE
+					prop_format = AnalyzeEnsemble.GRAPH_TEMPLATE_FORMAT;
+				case AnalyzeEnsemble.G_DICT
+					prop_format = AnalyzeEnsemble.G_DICT_FORMAT;
+				case AnalyzeEnsemble.ME_DICT
+					prop_format = AnalyzeEnsemble.ME_DICT_FORMAT;
+				case AnalyzeEnsemble.MEASUREENSEMBLE
+					prop_format = AnalyzeEnsemble.MEASUREENSEMBLE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -498,9 +518,36 @@ classdef AnalyzeEnsemble < ConcreteElement
 			
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ensemble-based graph analysis.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.' };
-			prop_description = analyzeensemble_description_list{prop};
+			switch prop
+				case AnalyzeEnsemble.WAITBAR
+					prop_description = 'WAITBAR (gui, logical) detemines whether to show the waitbar.';
+				case AnalyzeEnsemble.GR
+					prop_description = 'GR (data, item) is the subject group, which also defines the subject class.';
+				case AnalyzeEnsemble.GRAPH_TEMPLATE
+					prop_description = 'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.';
+				case AnalyzeEnsemble.G_DICT
+					prop_description = 'G_DICT (result, idict) is the graph ensemble obtained from this analysis.';
+				case AnalyzeEnsemble.ME_DICT
+					prop_description = 'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.';
+				case AnalyzeEnsemble.MEASUREENSEMBLE
+					prop_description = 'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.';
+				case AnalyzeEnsemble.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
+				case AnalyzeEnsemble.NAME
+					prop_description = 'NAME (constant, string) is the name of the ensemble-based graph analysis.';
+				case AnalyzeEnsemble.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis.';
+				case AnalyzeEnsemble.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis.';
+				case AnalyzeEnsemble.ID
+					prop_description = 'ID (data, string) is a few-letter code for the ensemble-based graph analysis.';
+				case AnalyzeEnsemble.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis.';
+				case AnalyzeEnsemble.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -524,20 +571,20 @@ classdef AnalyzeEnsemble < ConcreteElement
 			
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % AnalyzeEnsemble.WAITBAR
-					prop_settings = Format.getFormatSettings(4);
-				case 10 % AnalyzeEnsemble.GR
+			switch prop
+				case AnalyzeEnsemble.WAITBAR
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case AnalyzeEnsemble.GR
 					prop_settings = 'Group';
-				case 11 % AnalyzeEnsemble.GRAPH_TEMPLATE
+				case AnalyzeEnsemble.GRAPH_TEMPLATE
 					prop_settings = 'Graph';
-				case 12 % AnalyzeEnsemble.G_DICT
+				case AnalyzeEnsemble.G_DICT
 					prop_settings = 'Graph';
-				case 13 % AnalyzeEnsemble.ME_DICT
+				case AnalyzeEnsemble.ME_DICT
 					prop_settings = 'MeasureEnsemble';
-				case 14 % AnalyzeEnsemble.MEASUREENSEMBLE
+				case AnalyzeEnsemble.MEASUREENSEMBLE
 					prop_settings = 'MeasureEnsemble';
-				case 4 % AnalyzeEnsemble.TEMPLATE
+				case AnalyzeEnsemble.TEMPLATE
 					prop_settings = 'AnalyzeEnsemble';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -565,32 +612,32 @@ classdef AnalyzeEnsemble < ConcreteElement
 			
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % AnalyzeEnsemble.WAITBAR
+			switch prop
+				case AnalyzeEnsemble.WAITBAR
 					prop_default = true;
-				case 10 % AnalyzeEnsemble.GR
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble.getPropSettings(prop));
-				case 11 % AnalyzeEnsemble.GRAPH_TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble.G_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble.getPropSettings(prop));
-				case 13 % AnalyzeEnsemble.ME_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble.getPropSettings(prop));
-				case 14 % AnalyzeEnsemble.MEASUREENSEMBLE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble.getPropSettings(prop));
-				case 1 % AnalyzeEnsemble.ELCLASS
+				case AnalyzeEnsemble.GR
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.GRAPH_TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.G_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.ME_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.MEASUREENSEMBLE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.ELCLASS
 					prop_default = 'AnalyzeEnsemble';
-				case 2 % AnalyzeEnsemble.NAME
+				case AnalyzeEnsemble.NAME
 					prop_default = 'AnalyzeEnsemble';
-				case 3 % AnalyzeEnsemble.DESCRIPTION
+				case AnalyzeEnsemble.DESCRIPTION
 					prop_default = 'AnalyzeEnsemble provides the methods necessary for all ensemble-based analysis subclasses. Instances of this class should not be created. Use one of its subclasses instead.';
-				case 4 % AnalyzeEnsemble.TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble.getPropSettings(prop));
-				case 5 % AnalyzeEnsemble.ID
+				case AnalyzeEnsemble.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.ID
 					prop_default = 'AnalyzeEnsemble ID';
-				case 6 % AnalyzeEnsemble.LABEL
+				case AnalyzeEnsemble.LABEL
 					prop_default = 'AnalyzeEnsemble label';
-				case 7 % AnalyzeEnsemble.NOTES
+				case AnalyzeEnsemble.NOTES
 					prop_default = 'AnalyzeEnsemble notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -637,15 +684,15 @@ classdef AnalyzeEnsemble < ConcreteElement
 			% 
 			% A.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeEnsemble:WrongInput
+			%  Error id: €BRAPH2.STR€:AnalyzeEnsemble:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  A.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of A.
-			%   Error id: BRAPH2:AnalyzeEnsemble:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(AnalyzeEnsemble, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble.
-			%   Error id: BRAPH2:AnalyzeEnsemble:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble:€BRAPH2.WRONG_INPUT€
 			%  A.CHECKPROP(AnalyzeEnsemble, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble.
-			%   Error id: BRAPH2:AnalyzeEnsemble:WrongInput]
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(A) and Element.CHECKPROP('AnalyzeEnsemble')
 			%  are less computationally efficient.
@@ -656,22 +703,22 @@ classdef AnalyzeEnsemble < ConcreteElement
 			prop = AnalyzeEnsemble.getPropProp(pointer);
 			
 			switch prop
-				case 9 % AnalyzeEnsemble.WAITBAR
-					check = Format.checkFormat(4, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 10 % AnalyzeEnsemble.GR
-					check = Format.checkFormat(8, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 11 % AnalyzeEnsemble.GRAPH_TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble.G_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 13 % AnalyzeEnsemble.ME_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 14 % AnalyzeEnsemble.MEASUREENSEMBLE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble.getPropSettings(prop));
-				case 4 % AnalyzeEnsemble.TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.WAITBAR % __AnalyzeEnsemble.WAITBAR__
+					check = Format.checkFormat(Format.LOGICAL, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.GR % __AnalyzeEnsemble.GR__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.GRAPH_TEMPLATE % __AnalyzeEnsemble.GRAPH_TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.G_DICT % __AnalyzeEnsemble.G_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.ME_DICT % __AnalyzeEnsemble.ME_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.MEASUREENSEMBLE % __AnalyzeEnsemble.MEASUREENSEMBLE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble.getPropSettings(prop));
+				case AnalyzeEnsemble.TEMPLATE % __AnalyzeEnsemble.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -680,8 +727,8 @@ classdef AnalyzeEnsemble < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeEnsemble.getPropTag(prop) ' (' AnalyzeEnsemble.getFormatTag(AnalyzeEnsemble.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -701,13 +748,13 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 4 % AnalyzeEnsemble.TEMPLATE
-					a.postset@ConcreteElement(4)
+				case AnalyzeEnsemble.TEMPLATE % __AnalyzeEnsemble.TEMPLATE__
+					a.postset@ConcreteElement(AnalyzeEnsemble.TEMPLATE)
 					
 					a.get('TEMPLATE').memorize('GRAPH_TEMPLATE')
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						postset@ConcreteElement(a, prop);
 					end
 			end
@@ -718,35 +765,35 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % AnalyzeEnsemble.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(12), 'twister')
+				case AnalyzeEnsemble.G_DICT % __AnalyzeEnsemble.G_DICT__
+					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeEnsemble.G_DICT), 'twister')
 					
 					a.memorize('GRAPH_TEMPLATE');
 					value = IndexedDictionary('IT_CLASS', 'Graph');
 					
 					rng(rng_settings_)
 					
-				case 13 % AnalyzeEnsemble.ME_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(13), 'twister')
+				case AnalyzeEnsemble.ME_DICT % __AnalyzeEnsemble.ME_DICT__
+					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeEnsemble.ME_DICT), 'twister')
 					
 					a.memorize('GRAPH_TEMPLATE');
-					value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', 9);
+					value = IndexedDictionary('IT_CLASS', 'MeasureEnsemble', 'IT_KEY', MeasureEnsemble.MEASURE);
 					
 					rng(rng_settings_)
 					
-				case 14 % AnalyzeEnsemble.MEASUREENSEMBLE
+				case AnalyzeEnsemble.MEASUREENSEMBLE % __AnalyzeEnsemble.MEASUREENSEMBLE__
 					% ME = a.get('MEASUREENSEMBLE', MEASURE_CLASS) checks whether the 
 					%  measure ensemble exists in the property ME_DICT. If not it creates a new
 					%  measure M of class MEASURE_CLASS with properties defined by the graph
@@ -757,8 +804,8 @@ classdef AnalyzeEnsemble < ConcreteElement
 					    
 					    % % Warning commented because it most likely will lead to an error anyways
 					    % warning( ...
-					    %     ['BRAPH2' ':' class(a)], ...
-					    %     ['BRAPH2' ':' class(a) '\n' ...
+					    %     [BRAPH2.STR ':' class(a)], ...
+					    %     [BRAPH2.STR ':' class(a) '\n' ...
 					    %     'Missing argument MEASURE_CLASS when using Analysis.get(''MEASUREENSEMBLE'', MEASURE_CLASS).'] ...
 					    %     )
 					    
@@ -769,8 +816,8 @@ classdef AnalyzeEnsemble < ConcreteElement
 					m_list = a.memorize('GRAPH_TEMPLATE').get('COMPATIBLE_MEASURES');
 					if ~contains(measure_class, m_list)
 					    error(...
-					        ['BRAPH2' ':Analysis:' 'WrongInput'], ...
-					        ['BRAPH2' ':Analysis:' 'WrongInput' ' \n' ...
+					        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT], ...
+					        [BRAPH2.STR ':Analysis:' BRAPH2.WRONG_INPUT ' \n' ...
 					        a.getClass() ' utilizes graphs of type ' a.memorize('GRAPH_TEMPLATE').getClass() '. \n' ...
 					        measure_class ' is not a compatible Measure with ' a.memorize('GRAPH_TEMPLATE').getClass() '. \n' ...
 					        'Use ' a.memorize('GRAPH_TEMPLATE').getClass() '().get(''COMPATIBLE_MEASURES'') for a list of compatible measures.'])
@@ -797,7 +844,7 @@ classdef AnalyzeEnsemble < ConcreteElement
 					value = me;
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						value = calculateValue@ConcreteElement(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -823,23 +870,23 @@ classdef AnalyzeEnsemble < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 10 % AnalyzeEnsemble.GR
-					pr = PanelPropItem('EL', a, 'PROP', 10, ...
+				case AnalyzeEnsemble.GR % __AnalyzeEnsemble.GR__
+					pr = PanelPropItem('EL', a, 'PROP', AnalyzeEnsemble.GR, ...
 					    'BUTTON_TEXT', a.get('GR').get('ID'), ...
 					    varargin{:});
 					
-				case 11 % AnalyzeEnsemble.GRAPH_TEMPLATE
-					pr = PanelPropItem('EL', a, 'PROP', 11, ...
+				case AnalyzeEnsemble.GRAPH_TEMPLATE % __AnalyzeEnsemble.GRAPH_TEMPLATE__
+					pr = PanelPropItem('EL', a, 'PROP', AnalyzeEnsemble.GRAPH_TEMPLATE, ...
 					    'BUTTON_TEXT', ['GRAPH TEMPLATE (' a.get('GRAPH_TEMPLATE').getClass() ')'], ...
 					    varargin{:});
 					
-				case 12 % AnalyzeEnsemble.G_DICT
-					pr = AnalyzeEnsemblePP_GDict('EL', a, 'PROP', 12, ...
+				case AnalyzeEnsemble.G_DICT % __AnalyzeEnsemble.G_DICT__
+					pr = AnalyzeEnsemblePP_GDict('EL', a, 'PROP', AnalyzeEnsemble.G_DICT, ...
 					    'WAITBAR', a.getCallback('WAITBAR'), ...
 					    varargin{:});
 					
-				case 13 % AnalyzeEnsemble.ME_DICT
-					pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', 13, ...
+				case AnalyzeEnsemble.ME_DICT % __AnalyzeEnsemble.ME_DICT__
+					pr = AnalyzeEnsemblePP_MeDict('EL', a, 'PROP', AnalyzeEnsemble.ME_DICT, ...
 					    'WAITBAR', a.getCallback('WAITBAR'), ...
 					    varargin{:});
 					

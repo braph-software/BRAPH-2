@@ -538,7 +538,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 				case NNxMLP_FeatureImportanceAcrossMeasures.ELCLASS
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures';
 				case NNxMLP_FeatureImportanceAcrossMeasures.NAME
-					prop_default = 'Feature Importace for Multi-layer Perceptron on Brain Surface';
+					prop_default = 'Feature Importace for Multi-layer Perceptron Across Graph Measures';
 				case NNxMLP_FeatureImportanceAcrossMeasures.DESCRIPTION
 					prop_default = 'Neural Network Feature Importance Across Graph Measures (NNxMLP_FeatureImportanceAcrossMeasures) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled.';
 				case NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE

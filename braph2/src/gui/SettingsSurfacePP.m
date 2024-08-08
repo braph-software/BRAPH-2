@@ -7,50 +7,6 @@ classdef SettingsSurfacePP < SettingsPP
 	%  and edge alpha.
 	% It works for all categories.
 	%
-	% The list of SettingsSurfacePP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel for surface settings.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel for surface settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel for surface settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel for surface settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel for surface settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel for surface settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel for surface settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel for surface settings.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>37</strong> <strong>BUTTON_FACECOLOR</strong> 	BUTTON_FACECOLOR (evanescent, handle) is the face color button.
-	%  <strong>38</strong> <strong>EDITFIELD_FACEALPHA</strong> 	EDITFIELD_FACEALPHA (evanescent, handle) is the face alpha edit field.
-	%  <strong>39</strong> <strong>SLIDER_FACEALPHA</strong> 	SLIDER_FACEALPHA (evanescent, handle) is the face alpha slider.
-	%  <strong>40</strong> <strong>BUTTON_EDGECOLOR</strong> 	BUTTON_EDGECOLOR (evanescent, handle) is the edge color button.
-	%  <strong>41</strong> <strong>EDITFIELD_EDGEALPHA</strong> 	EDITFIELD_EDGEALPHA (evanescent, handle) is the edge alpha edit field.
-	%  <strong>42</strong> <strong>SLIDER_EDGEALPHA</strong> 	SLIDER_EDGEALPHA (evanescent, handle) is the edge alpha slider.
-	%
 	% SettingsSurfacePP methods (constructor):
 	%  SettingsSurfacePP - constructor
 	%
@@ -140,40 +96,40 @@ classdef SettingsSurfacePP < SettingsPP
 	% See also SettingsPosition, uipushbutton, uieditfield, uislider.
 	
 	properties (Constant) % properties
-		ENABLE = 36; %CET: Computational Efficiency Trick
+		ENABLE = SettingsPP.getPropNumber() + 1;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		BUTTON_FACECOLOR = 37; %CET: Computational Efficiency Trick
+		BUTTON_FACECOLOR = SettingsPP.getPropNumber() + 2;
 		BUTTON_FACECOLOR_TAG = 'BUTTON_FACECOLOR';
-		BUTTON_FACECOLOR_CATEGORY = 7;
-		BUTTON_FACECOLOR_FORMAT = 18;
+		BUTTON_FACECOLOR_CATEGORY = Category.EVANESCENT;
+		BUTTON_FACECOLOR_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_FACEALPHA = 38; %CET: Computational Efficiency Trick
+		EDITFIELD_FACEALPHA = SettingsPP.getPropNumber() + 3;
 		EDITFIELD_FACEALPHA_TAG = 'EDITFIELD_FACEALPHA';
-		EDITFIELD_FACEALPHA_CATEGORY = 7;
-		EDITFIELD_FACEALPHA_FORMAT = 18;
+		EDITFIELD_FACEALPHA_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_FACEALPHA_FORMAT = Format.HANDLE;
 		
-		SLIDER_FACEALPHA = 39; %CET: Computational Efficiency Trick
+		SLIDER_FACEALPHA = SettingsPP.getPropNumber() + 4;
 		SLIDER_FACEALPHA_TAG = 'SLIDER_FACEALPHA';
-		SLIDER_FACEALPHA_CATEGORY = 7;
-		SLIDER_FACEALPHA_FORMAT = 18;
+		SLIDER_FACEALPHA_CATEGORY = Category.EVANESCENT;
+		SLIDER_FACEALPHA_FORMAT = Format.HANDLE;
 		
-		BUTTON_EDGECOLOR = 40; %CET: Computational Efficiency Trick
+		BUTTON_EDGECOLOR = SettingsPP.getPropNumber() + 5;
 		BUTTON_EDGECOLOR_TAG = 'BUTTON_EDGECOLOR';
-		BUTTON_EDGECOLOR_CATEGORY = 7;
-		BUTTON_EDGECOLOR_FORMAT = 18;
+		BUTTON_EDGECOLOR_CATEGORY = Category.EVANESCENT;
+		BUTTON_EDGECOLOR_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_EDGEALPHA = 41; %CET: Computational Efficiency Trick
+		EDITFIELD_EDGEALPHA = SettingsPP.getPropNumber() + 6;
 		EDITFIELD_EDGEALPHA_TAG = 'EDITFIELD_EDGEALPHA';
-		EDITFIELD_EDGEALPHA_CATEGORY = 7;
-		EDITFIELD_EDGEALPHA_FORMAT = 18;
+		EDITFIELD_EDGEALPHA_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_EDGEALPHA_FORMAT = Format.HANDLE;
 		
-		SLIDER_EDGEALPHA = 42; %CET: Computational Efficiency Trick
+		SLIDER_EDGEALPHA = SettingsPP.getPropNumber() + 7;
 		SLIDER_EDGEALPHA_TAG = 'SLIDER_EDGEALPHA';
-		SLIDER_EDGEALPHA_CATEGORY = 7;
-		SLIDER_EDGEALPHA_FORMAT = 18;
+		SLIDER_EDGEALPHA_CATEGORY = Category.EVANESCENT;
+		SLIDER_EDGEALPHA_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = SettingsSurfacePP(varargin)
@@ -186,49 +142,6 @@ classdef SettingsSurfacePP < SettingsPP
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SettingsSurfacePP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel for surface settings.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel for surface settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel for surface settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel for surface settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel for surface settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel for surface settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel for surface settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel for surface settings.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>37</strong> <strong>BUTTON_FACECOLOR</strong> 	BUTTON_FACECOLOR (evanescent, handle) is the face color button.
-			%  <strong>38</strong> <strong>EDITFIELD_FACEALPHA</strong> 	EDITFIELD_FACEALPHA (evanescent, handle) is the face alpha edit field.
-			%  <strong>39</strong> <strong>SLIDER_FACEALPHA</strong> 	SLIDER_FACEALPHA (evanescent, handle) is the face alpha slider.
-			%  <strong>40</strong> <strong>BUTTON_EDGECOLOR</strong> 	BUTTON_EDGECOLOR (evanescent, handle) is the edge color button.
-			%  <strong>41</strong> <strong>EDITFIELD_EDGEALPHA</strong> 	EDITFIELD_EDGEALPHA (evanescent, handle) is the edge alpha edit field.
-			%  <strong>42</strong> <strong>SLIDER_EDGEALPHA</strong> 	SLIDER_EDGEALPHA (evanescent, handle) is the edge alpha slider.
 			%
 			% See also Category, Format.
 			
@@ -266,7 +179,7 @@ classdef SettingsSurfacePP < SettingsPP
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SettingsSurfacePP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SettingsSurfacePP', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel for surface settings.
@@ -287,32 +200,64 @@ classdef SettingsSurfacePP < SettingsPP
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
+				prop_list = [ ...
+					SettingsPP.getProps() ...
+						SettingsSurfacePP.ENABLE ...
+						SettingsSurfacePP.BUTTON_FACECOLOR ...
+						SettingsSurfacePP.EDITFIELD_FACEALPHA ...
+						SettingsSurfacePP.SLIDER_FACEALPHA ...
+						SettingsSurfacePP.BUTTON_EDGECOLOR ...
+						SettingsSurfacePP.EDITFIELD_EDGEALPHA ...
+						SettingsSurfacePP.SLIDER_EDGEALPHA ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39 40 41 42];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						SettingsPP.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						SettingsPP.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						SettingsPP.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.EVANESCENT) ...
+						SettingsSurfacePP.BUTTON_FACECOLOR ...
+						SettingsSurfacePP.EDITFIELD_FACEALPHA ...
+						SettingsSurfacePP.SLIDER_FACEALPHA ...
+						SettingsSurfacePP.BUTTON_EDGECOLOR ...
+						SettingsSurfacePP.EDITFIELD_EDGEALPHA ...
+						SettingsSurfacePP.SLIDER_EDGEALPHA ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						SettingsPP.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						SettingsPP.getProps(Category.GUI) ...
+						SettingsSurfacePP.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -333,33 +278,7 @@ classdef SettingsSurfacePP < SettingsPP
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 42;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 16;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SettingsSurfacePP.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in prop panel for surface settings/error.
@@ -387,14 +306,14 @@ classdef SettingsSurfacePP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SettingsSurfacePP.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsSurfacePP.'] ...
 					)
 			end
@@ -425,14 +344,15 @@ classdef SettingsSurfacePP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_FACECOLOR'  'EDITFIELD_FACEALPHA'  'SLIDER_FACEALPHA'  'BUTTON_EDGECOLOR'  'EDITFIELD_EDGEALPHA'  'SLIDER_EDGEALPHA' })); %CET: Computational Efficiency Trick
+			settingssurfacepp_tag_list = cellfun(@(x) SettingsSurfacePP.getPropTag(x), num2cell(SettingsSurfacePP.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settingssurfacepp_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsSurfacePP.'] ...
 					)
 			end
@@ -458,7 +378,8 @@ classdef SettingsSurfacePP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_FACECOLOR'  'EDITFIELD_FACEALPHA'  'SLIDER_FACEALPHA'  'BUTTON_EDGECOLOR'  'EDITFIELD_EDGEALPHA'  'SLIDER_EDGEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
+				settingssurfacepp_tag_list = cellfun(@(x) SettingsSurfacePP.getPropTag(x), num2cell(SettingsSurfacePP.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settingssurfacepp_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -486,9 +407,26 @@ classdef SettingsSurfacePP < SettingsPP
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settingssurfacepp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'BUTTON_FACECOLOR'  'EDITFIELD_FACEALPHA'  'SLIDER_FACEALPHA'  'BUTTON_EDGECOLOR'  'EDITFIELD_EDGEALPHA'  'SLIDER_EDGEALPHA' };
-				tag = settingssurfacepp_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SettingsSurfacePP.ENABLE
+						tag = SettingsSurfacePP.ENABLE_TAG;
+					case SettingsSurfacePP.BUTTON_FACECOLOR
+						tag = SettingsSurfacePP.BUTTON_FACECOLOR_TAG;
+					case SettingsSurfacePP.EDITFIELD_FACEALPHA
+						tag = SettingsSurfacePP.EDITFIELD_FACEALPHA_TAG;
+					case SettingsSurfacePP.SLIDER_FACEALPHA
+						tag = SettingsSurfacePP.SLIDER_FACEALPHA_TAG;
+					case SettingsSurfacePP.BUTTON_EDGECOLOR
+						tag = SettingsSurfacePP.BUTTON_EDGECOLOR_TAG;
+					case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+						tag = SettingsSurfacePP.EDITFIELD_EDGEALPHA_TAG;
+					case SettingsSurfacePP.SLIDER_EDGEALPHA
+						tag = SettingsSurfacePP.SLIDER_EDGEALPHA_TAG;
+					otherwise
+						tag = getPropTag@SettingsPP(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -513,9 +451,24 @@ classdef SettingsSurfacePP < SettingsPP
 			
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingssurfacepp_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7 };
-			prop_category = settingssurfacepp_category_list{prop};
+			switch prop
+				case SettingsSurfacePP.ENABLE
+					prop_category = SettingsSurfacePP.ENABLE_CATEGORY;
+				case SettingsSurfacePP.BUTTON_FACECOLOR
+					prop_category = SettingsSurfacePP.BUTTON_FACECOLOR_CATEGORY;
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA
+					prop_category = SettingsSurfacePP.EDITFIELD_FACEALPHA_CATEGORY;
+				case SettingsSurfacePP.SLIDER_FACEALPHA
+					prop_category = SettingsSurfacePP.SLIDER_FACEALPHA_CATEGORY;
+				case SettingsSurfacePP.BUTTON_EDGECOLOR
+					prop_category = SettingsSurfacePP.BUTTON_EDGECOLOR_CATEGORY;
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+					prop_category = SettingsSurfacePP.EDITFIELD_EDGEALPHA_CATEGORY;
+				case SettingsSurfacePP.SLIDER_EDGEALPHA
+					prop_category = SettingsSurfacePP.SLIDER_EDGEALPHA_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@SettingsPP(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -539,9 +492,24 @@ classdef SettingsSurfacePP < SettingsPP
 			
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingssurfacepp_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18 };
-			prop_format = settingssurfacepp_format_list{prop};
+			switch prop
+				case SettingsSurfacePP.ENABLE
+					prop_format = SettingsSurfacePP.ENABLE_FORMAT;
+				case SettingsSurfacePP.BUTTON_FACECOLOR
+					prop_format = SettingsSurfacePP.BUTTON_FACECOLOR_FORMAT;
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA
+					prop_format = SettingsSurfacePP.EDITFIELD_FACEALPHA_FORMAT;
+				case SettingsSurfacePP.SLIDER_FACEALPHA
+					prop_format = SettingsSurfacePP.SLIDER_FACEALPHA_FORMAT;
+				case SettingsSurfacePP.BUTTON_EDGECOLOR
+					prop_format = SettingsSurfacePP.BUTTON_EDGECOLOR_FORMAT;
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+					prop_format = SettingsSurfacePP.EDITFIELD_EDGEALPHA_FORMAT;
+				case SettingsSurfacePP.SLIDER_EDGEALPHA
+					prop_format = SettingsSurfacePP.SLIDER_EDGEALPHA_FORMAT;
+				otherwise
+					prop_format = getPropFormat@SettingsPP(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -565,9 +533,52 @@ classdef SettingsSurfacePP < SettingsPP
 			
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingssurfacepp_description_list = { 'ELCLASS (constant, string) is the class of the property panel for surface settings.'  'NAME (constant, string) is the name of the property panel for surface settings.'  'DESCRIPTION (constant, string) is the description of the property panel for surface settings.'  'TEMPLATE (parameter, item) is the template of the property panel for surface settings.'  'ID (data, string) is a few-letter code for the property panel for surface settings.'  'LABEL (metadata, string) is an extended label of the property panel for surface settings.'  'NOTES (metadata, string) are some specific notes about the property panel for surface settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel for surface settings.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'BUTTON_FACECOLOR (evanescent, handle) is the face color button.'  'EDITFIELD_FACEALPHA (evanescent, handle) is the face alpha edit field.'  'SLIDER_FACEALPHA (evanescent, handle) is the face alpha slider.'  'BUTTON_EDGECOLOR (evanescent, handle) is the edge color button.'  'EDITFIELD_EDGEALPHA (evanescent, handle) is the edge alpha edit field.'  'SLIDER_EDGEALPHA (evanescent, handle) is the edge alpha slider.' };
-			prop_description = settingssurfacepp_description_list{prop};
+			switch prop
+				case SettingsSurfacePP.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.';
+				case SettingsSurfacePP.BUTTON_FACECOLOR
+					prop_description = 'BUTTON_FACECOLOR (evanescent, handle) is the face color button.';
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA
+					prop_description = 'EDITFIELD_FACEALPHA (evanescent, handle) is the face alpha edit field.';
+				case SettingsSurfacePP.SLIDER_FACEALPHA
+					prop_description = 'SLIDER_FACEALPHA (evanescent, handle) is the face alpha slider.';
+				case SettingsSurfacePP.BUTTON_EDGECOLOR
+					prop_description = 'BUTTON_EDGECOLOR (evanescent, handle) is the edge color button.';
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+					prop_description = 'EDITFIELD_EDGEALPHA (evanescent, handle) is the edge alpha edit field.';
+				case SettingsSurfacePP.SLIDER_EDGEALPHA
+					prop_description = 'SLIDER_EDGEALPHA (evanescent, handle) is the edge alpha slider.';
+				case SettingsSurfacePP.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the property panel for surface settings.';
+				case SettingsSurfacePP.NAME
+					prop_description = 'NAME (constant, string) is the name of the property panel for surface settings.';
+				case SettingsSurfacePP.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the property panel for surface settings.';
+				case SettingsSurfacePP.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the property panel for surface settings.';
+				case SettingsSurfacePP.ID
+					prop_description = 'ID (data, string) is a few-letter code for the property panel for surface settings.';
+				case SettingsSurfacePP.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the property panel for surface settings.';
+				case SettingsSurfacePP.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the property panel for surface settings.';
+				case SettingsSurfacePP.EL
+					prop_description = 'EL (data, item) is the element.';
+				case SettingsSurfacePP.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case SettingsSurfacePP.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the property panel for surface settings.';
+				case SettingsSurfacePP.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case SettingsSurfacePP.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.';
+				case SettingsSurfacePP.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case SettingsSurfacePP.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@SettingsPP(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -591,22 +602,22 @@ classdef SettingsSurfacePP < SettingsPP
 			
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsSurfacePP.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 37 % SettingsSurfacePP.BUTTON_FACECOLOR
-					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsSurfacePP.EDITFIELD_FACEALPHA
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsSurfacePP.SLIDER_FACEALPHA
-					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsSurfacePP.BUTTON_EDGECOLOR
-					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsSurfacePP.EDITFIELD_EDGEALPHA
-					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsSurfacePP.SLIDER_EDGEALPHA
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % SettingsSurfacePP.TEMPLATE
+			switch prop
+				case SettingsSurfacePP.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SettingsSurfacePP.BUTTON_FACECOLOR
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.SLIDER_FACEALPHA
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.BUTTON_EDGECOLOR
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.SLIDER_EDGEALPHA
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsSurfacePP.TEMPLATE
 					prop_settings = 'SettingsSurfacePP';
 				otherwise
 					prop_settings = getPropSettings@SettingsPP(prop);
@@ -634,41 +645,41 @@ classdef SettingsSurfacePP < SettingsPP
 			
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsSurfacePP.ENABLE
+			switch prop
+				case SettingsSurfacePP.ENABLE
 					prop_default = true;
-				case 37 % SettingsSurfacePP.BUTTON_FACECOLOR
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 38 % SettingsSurfacePP.EDITFIELD_FACEALPHA
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 39 % SettingsSurfacePP.SLIDER_FACEALPHA
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 40 % SettingsSurfacePP.BUTTON_EDGECOLOR
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 41 % SettingsSurfacePP.EDITFIELD_EDGEALPHA
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 42 % SettingsSurfacePP.SLIDER_EDGEALPHA
-					prop_default = Format.getFormatDefault(18, SettingsSurfacePP.getPropSettings(prop));
-				case 1 % SettingsSurfacePP.ELCLASS
+				case SettingsSurfacePP.BUTTON_FACECOLOR
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.SLIDER_FACEALPHA
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.BUTTON_EDGECOLOR
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.SLIDER_EDGEALPHA
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.ELCLASS
 					prop_default = 'SettingsSurfacePP';
-				case 2 % SettingsSurfacePP.NAME
+				case SettingsSurfacePP.NAME
 					prop_default = 'Prop Panel for Surface Settings';
-				case 3 % SettingsSurfacePP.DESCRIPTION
+				case SettingsSurfacePP.DESCRIPTION
 					prop_default = 'A Prop Panel for Surface Settings (SettingsSurfacePP) plots the panel for surface settings, including face color, face alpha, edge color, and edge alpha. It works for all categories.';
-				case 4 % SettingsSurfacePP.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SettingsSurfacePP.getPropSettings(prop));
-				case 5 % SettingsSurfacePP.ID
+				case SettingsSurfacePP.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.ID
 					prop_default = 'SettingsSurfacePP ID';
-				case 6 % SettingsSurfacePP.LABEL
+				case SettingsSurfacePP.LABEL
 					prop_default = 'SettingsSurfacePP label';
-				case 7 % SettingsSurfacePP.NOTES
+				case SettingsSurfacePP.NOTES
 					prop_default = 'SettingsSurfacePP notes';
-				case 23 % SettingsSurfacePP.EL
+				case SettingsSurfacePP.EL
 					prop_default = BrainSurfacePF();
-				case 24 % SettingsSurfacePP.PROP
-					prop_default = 31;
-				case 25 % SettingsSurfacePP.HEIGHT
-					prop_default = 81;
+				case SettingsSurfacePP.PROP
+					prop_default = BrainSurfacePF.ST_SURFACE;
+				case SettingsSurfacePP.HEIGHT
+					prop_default = s(6.7);
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
 			end
@@ -714,15 +725,15 @@ classdef SettingsSurfacePP < SettingsPP
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SettingsSurfacePP:WrongInput
+			%  Error id: €BRAPH2.STR€:SettingsSurfacePP:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:SettingsSurfacePP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsSurfacePP:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SettingsSurfacePP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSurfacePP.
-			%   Error id: BRAPH2:SettingsSurfacePP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsSurfacePP:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(SettingsSurfacePP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSurfacePP.
-			%   Error id: BRAPH2:SettingsSurfacePP:WrongInput]
+			%   Error id: €BRAPH2.STR€:SettingsSurfacePP:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('SettingsSurfacePP')
 			%  are less computationally efficient.
@@ -733,24 +744,24 @@ classdef SettingsSurfacePP < SettingsPP
 			prop = SettingsSurfacePP.getPropProp(pointer);
 			
 			switch prop
-				case 36 % SettingsSurfacePP.ENABLE
-					check = Format.checkFormat(4, value, SettingsSurfacePP.getPropSettings(prop));
-				case 37 % SettingsSurfacePP.BUTTON_FACECOLOR
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 38 % SettingsSurfacePP.EDITFIELD_FACEALPHA
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 39 % SettingsSurfacePP.SLIDER_FACEALPHA
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 40 % SettingsSurfacePP.BUTTON_EDGECOLOR
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 41 % SettingsSurfacePP.EDITFIELD_EDGEALPHA
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 42 % SettingsSurfacePP.SLIDER_EDGEALPHA
-					check = Format.checkFormat(18, value, SettingsSurfacePP.getPropSettings(prop));
-				case 4 % SettingsSurfacePP.TEMPLATE
-					check = Format.checkFormat(8, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.ENABLE % __SettingsSurfacePP.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.BUTTON_FACECOLOR % __SettingsSurfacePP.BUTTON_FACECOLOR__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA % __SettingsSurfacePP.EDITFIELD_FACEALPHA__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.SLIDER_FACEALPHA % __SettingsSurfacePP.SLIDER_FACEALPHA__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.BUTTON_EDGECOLOR % __SettingsSurfacePP.BUTTON_EDGECOLOR__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA % __SettingsSurfacePP.EDITFIELD_EDGEALPHA__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.SLIDER_EDGEALPHA % __SettingsSurfacePP.SLIDER_EDGEALPHA__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsSurfacePP.getPropSettings(prop));
+				case SettingsSurfacePP.TEMPLATE % __SettingsSurfacePP.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SettingsSurfacePP.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -759,8 +770,8 @@ classdef SettingsSurfacePP < SettingsPP
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsSurfacePP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsSurfacePP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsSurfacePP.getPropTag(prop) ' (' SettingsSurfacePP.getFormatTag(SettingsSurfacePP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -771,19 +782,19 @@ classdef SettingsSurfacePP < SettingsPP
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % SettingsSurfacePP.BUTTON_FACECOLOR
+				case SettingsSurfacePP.BUTTON_FACECOLOR % __SettingsSurfacePP.BUTTON_FACECOLOR__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					button_facecolor = uibutton( ...
@@ -797,33 +808,33 @@ classdef SettingsSurfacePP < SettingsPP
 					    );
 					value = button_facecolor;
 					
-				case 38 % SettingsSurfacePP.EDITFIELD_FACEALPHA
+				case SettingsSurfacePP.EDITFIELD_FACEALPHA % __SettingsSurfacePP.EDITFIELD_FACEALPHA__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_facealpha = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'EDITFIELD_FACEALPHA', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FACEALPHA')) ' ' el.get(prop).getPropDescription('FACEALPHA')], ...
 					    'ValueChangedFcn', {@cb_editfield_facealpha} ...
 					    );
 					value = editfield_facealpha;
 					
-				case 39 % SettingsSurfacePP.SLIDER_FACEALPHA
+				case SettingsSurfacePP.SLIDER_FACEALPHA % __SettingsSurfacePP.SLIDER_FACEALPHA__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_facealpha = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_FACEALPHA', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('FACEALPHA')) ' ' el.get(prop).getPropDescription('FACEALPHA')], ...
 					    'ValueChangedFcn', {@cb_slider_facealpha} ...
 					    );
 					value = slider_facealpha;
 					
-				case 40 % SettingsSurfacePP.BUTTON_EDGECOLOR
+				case SettingsSurfacePP.BUTTON_EDGECOLOR % __SettingsSurfacePP.BUTTON_EDGECOLOR__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					button_edgecolor = uibutton( ...
@@ -837,34 +848,34 @@ classdef SettingsSurfacePP < SettingsPP
 					    );
 					value = button_edgecolor;
 					
-				case 41 % SettingsSurfacePP.EDITFIELD_EDGEALPHA
+				case SettingsSurfacePP.EDITFIELD_EDGEALPHA % __SettingsSurfacePP.EDITFIELD_EDGEALPHA__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_edgealpha = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'EDITFIELD_EDGEALPHA', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('EDGEALPHA')) ' ' el.get(prop).getPropDescription('EDGEALPHA')], ...
 					    'ValueChangedFcn', {@cb_editfield_edgealpha} ...
 					    );
 					value = editfield_edgealpha;
 					
-				case 42 % SettingsSurfacePP.SLIDER_EDGEALPHA
+				case SettingsSurfacePP.SLIDER_EDGEALPHA % __SettingsSurfacePP.SLIDER_EDGEALPHA__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_edgealpha = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_EDGEALPHA', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('EDGEALPHA')) ' ' el.get(prop).getPropDescription('EDGEALPHA')], ...
 					    'ValueChangedFcn', {@cb_slider_edgealpha} ...
 					    );
 					value = slider_edgealpha;
 					
-				case 20 % SettingsSurfacePP.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case SettingsSurfacePP.X_DRAW % __SettingsSurfacePP.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('BUTTON_FACECOLOR')
 					    pr.memorize('EDITFIELD_FACEALPHA')
@@ -875,8 +886,8 @@ classdef SettingsSurfacePP < SettingsPP
 					    pr.memorize('SLIDER_EDGEALPHA')
 					end
 					
-				case 21 % SettingsSurfacePP.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case SettingsSurfacePP.UPDATE % __SettingsSurfacePP.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -898,7 +909,7 @@ classdef SettingsSurfacePP < SettingsPP
 					    end
 					
 					    switch el.getPropCategory(prop)
-					        case 2
+					        case Category.METADATA
 					            set(pr.get('BUTTON_FACECOLOR'), 'BackgroundColor', el.get(prop).get('FACECOLOR'))
 					            set(pr.get('EDITFIELD_FACEALPHA'), 'Value', el.get(prop).get('FACEALPHA'))
 					            set(pr.get('SLIDER_FACEALPHA'), 'Value', el.get(prop).get('FACEALPHA'))
@@ -907,7 +918,7 @@ classdef SettingsSurfacePP < SettingsPP
 					            set(pr.get('EDITFIELD_EDGEALPHA'), 'Value', el.get(prop).get('EDGEALPHA'))
 					            set(pr.get('SLIDER_EDGEALPHA'), 'Value', el.get(prop).get('EDGEALPHA'))
 					
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            set(pr.get('BUTTON_FACECOLOR'), 'BackgroundColor', el.get(prop).get('FACECOLOR'))
 					            set(pr.get('EDITFIELD_FACEALPHA'), 'Value', el.get(prop).get('FACEALPHA'))
 					            set(pr.get('SLIDER_FACEALPHA'), 'Value', el.get(prop).get('FACEALPHA'))
@@ -938,7 +949,7 @@ classdef SettingsSurfacePP < SettingsPP
 					                set(pr.get('SLIDER_EDGEALPHA'), 'Enable', pr.get('ENABLE'))
 					            end
 					            
-					        case 5
+					        case Category.RESULT
 					            value = el.getr(prop);
 					
 					            if isa(value, 'NoValue')
@@ -1001,22 +1012,22 @@ classdef SettingsSurfacePP < SettingsPP
 					    end
 					end
 					
-				case 22 % SettingsSurfacePP.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case SettingsSurfacePP.REDRAW % __SettingsSurfacePP.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('BUTTON_FACECOLOR'),    'Position', [4                  39  .20*w_p   21])
-					    set(pr.get('EDITFIELD_FACEALPHA'), 'Position', [8+.20*w_p          39  .15*w_p   21])
-					    set(pr.get('SLIDER_FACEALPHA'),    'Position', [8+.35*w_p+21   57 .50*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('BUTTON_FACECOLOR'),    'Position', [s(.3)                  s(3.2)  .20*w_p   s(1.7)])
+					    set(pr.get('EDITFIELD_FACEALPHA'), 'Position', [s(.6)+.20*w_p          s(3.2)  .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_FACEALPHA'),    'Position', [s(.6)+.35*w_p+s(1.7)   s(4.75) .50*w_p   3]) % the height of a slider cannot be changed
 					    
-					    set(pr.get('BUTTON_EDGECOLOR'),    'Position', [4                  9   .20*w_p   21])
-					    set(pr.get('EDITFIELD_EDGEALPHA'), 'Position', [8+.20*w_p          9   .15*w_p   21])
-					    set(pr.get('SLIDER_EDGEALPHA'),    'Position', [8+.35*w_p+21   27 .50*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('BUTTON_EDGECOLOR'),    'Position', [s(.3)                  s(.7)   .20*w_p   s(1.7)])
+					    set(pr.get('EDITFIELD_EDGEALPHA'), 'Position', [s(.6)+.20*w_p          s(.7)   .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_EDGEALPHA'),    'Position', [s(.6)+.35*w_p+s(1.7)   s(2.25) .50*w_p   3]) % the height of a slider cannot be changed
 					end
 					
-				case 18 % SettingsSurfacePP.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case SettingsSurfacePP.DELETE % __SettingsSurfacePP.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('BUTTON_FACECOLOR', Element.getNoValue())
 					    pr.set('EDITFIELD_FACEALPHA', Element.getNoValue())
@@ -1028,7 +1039,7 @@ classdef SettingsSurfacePP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

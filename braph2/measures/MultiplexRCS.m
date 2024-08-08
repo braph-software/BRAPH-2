@@ -7,25 +7,6 @@ classdef MultiplexRCS < RCS
 	% The relevance of each layer is controlled by the coefficients c that are 
 	%  between 0 and 1; the default coefficients are (1/layernumber).
 	%
-	% The list of MultiplexRCS properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Strength.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) is the strength level.
-	%  <strong>17</strong> <strong>WEIGHTED_MULTIRICHCLUB_COEFFICIENTS</strong> 	WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients
-	%
 	% MultiplexRCS methods (constructor):
 	%  MultiplexRCS - constructor
 	%
@@ -113,10 +94,10 @@ classdef MultiplexRCS < RCS
 	%
 	
 	properties (Constant) % properties
-		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS = 17; %CET: Computational Efficiency Trick
+		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS = RCS.getPropNumber() + 1;
 		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_TAG = 'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS';
-		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_CATEGORY = 3;
-		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_FORMAT = 12;
+		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_CATEGORY = Category.PARAMETER;
+		WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_FORMAT = Format.RVECTOR;
 	end
 	methods % constructor
 		function m = MultiplexRCS(varargin)
@@ -129,24 +110,6 @@ classdef MultiplexRCS < RCS
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of MultiplexRCS properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex Rich-Club Strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex Rich-Club Strength.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) is the strength level.
-			%  <strong>17</strong> <strong>WEIGHTED_MULTIRICHCLUB_COEFFICIENTS</strong> 	WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients
 			%
 			% See also Category, Format.
 			
@@ -184,7 +147,7 @@ classdef MultiplexRCS < RCS
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'MultiplexRCS' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('MultiplexRCS', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of multi rich-club strength.
@@ -205,30 +168,52 @@ classdef MultiplexRCS < RCS
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17];
+				prop_list = [ ...
+					RCS.getProps() ...
+						MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16 17];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						RCS.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						RCS.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						RCS.getProps(Category.PARAMETER) ...
+						MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						RCS.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						RCS.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						RCS.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						RCS.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						RCS.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						RCS.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -249,31 +234,7 @@ classdef MultiplexRCS < RCS
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 17;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 3;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(MultiplexRCS.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in multi rich-club strength/error.
@@ -301,14 +262,14 @@ classdef MultiplexRCS < RCS
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 17 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == MultiplexRCS.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiplexRCS.'] ...
 					)
 			end
@@ -339,14 +300,15 @@ classdef MultiplexRCS < RCS
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS' })); %CET: Computational Efficiency Trick
+			multiplexrcs_tag_list = cellfun(@(x) MultiplexRCS.getPropTag(x), num2cell(MultiplexRCS.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, multiplexrcs_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for MultiplexRCS.'] ...
 					)
 			end
@@ -372,7 +334,8 @@ classdef MultiplexRCS < RCS
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS' })); % tag = pointer %CET: Computational Efficiency Trick
+				multiplexrcs_tag_list = cellfun(@(x) MultiplexRCS.getPropTag(x), num2cell(MultiplexRCS.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, multiplexrcs_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -400,9 +363,14 @@ classdef MultiplexRCS < RCS
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				multiplexrcs_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE'  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS' };
-				tag = multiplexrcs_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+						tag = MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_TAG;
+					otherwise
+						tag = getPropTag@RCS(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -427,9 +395,12 @@ classdef MultiplexRCS < RCS
 			
 			prop = MultiplexRCS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexrcs_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3 };
-			prop_category = multiplexrcs_category_list{prop};
+			switch prop
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+					prop_category = MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@RCS(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -453,9 +424,12 @@ classdef MultiplexRCS < RCS
 			
 			prop = MultiplexRCS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexrcs_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  12  12 };
-			prop_format = multiplexrcs_format_list{prop};
+			switch prop
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+					prop_format = MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS_FORMAT;
+				otherwise
+					prop_format = getPropFormat@RCS(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -479,9 +453,36 @@ classdef MultiplexRCS < RCS
 			
 			prop = MultiplexRCS.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			multiplexrcs_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.'  'NAME (constant, string) is the name of the Multiplex Rich-Club Strength.'  'DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.'  'TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.'  'ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.'  'LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.'  'NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex Rich-Club Strength.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) is the strength level.'  'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients' };
-			prop_description = multiplexrcs_description_list{prop};
+			switch prop
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+					prop_description = 'WEIGHTED_MULTIRICHCLUB_COEFFICIENTS (parameter, RVECTOR) is the multi rich-club strength coefficients';
+				case MultiplexRCS.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.NAME
+					prop_description = 'NAME (constant, string) is the name of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Multiplex Rich-Club Strength.';
+				case MultiplexRCS.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case MultiplexRCS.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case MultiplexRCS.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case MultiplexRCS.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case MultiplexRCS.M
+					prop_description = 'M (result, cell) is the Multiplex Rich-Club Strength.';
+				otherwise
+					prop_description = getPropDescription@RCS(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -505,10 +506,10 @@ classdef MultiplexRCS < RCS
 			
 			prop = MultiplexRCS.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 17 % MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
-					prop_settings = Format.getFormatSettings(12);
-				case 4 % Multiplex4
+			switch prop
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case MultiplexRCS.TEMPLATE
 					prop_settings = 'MultiplexRCS';
 				otherwise
 					prop_settings = getPropSettings@RCS(prop);
@@ -536,30 +537,30 @@ classdef MultiplexRCS < RCS
 			
 			prop = MultiplexRCS.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 17 % MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
+			switch prop
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
 					prop_default = [0];
-				case 1 % Multiplex1
+				case MultiplexRCS.ELCLASS
 					prop_default = 'MultiplexRCS';
-				case 2 % Multiplex2
+				case MultiplexRCS.NAME
 					prop_default = 'Multiplex Rich-Club Strength';
-				case 3 % Multiplex3
+				case MultiplexRCS.DESCRIPTION
 					prop_default = 'The Multiplex Rich-Club Strength (MultiplexRCS) of a node at level s is the sum of the weighted edges that connect nodes of strength s or higher in all layers. The relevance of each layer is controlled by the coefficients c that are between 0 and 1; the default coefficients are (1/layernumber).';
-				case 4 % Multiplex4
-					prop_default = Format.getFormatDefault(8, MultiplexRCS.getPropSettings(prop));
-				case 5 % Multiplex5
+				case MultiplexRCS.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, MultiplexRCS.getPropSettings(prop));
+				case MultiplexRCS.ID
 					prop_default = 'MultiplexRCS ID';
-				case 6 % Multiplex6
+				case MultiplexRCS.LABEL
 					prop_default = 'Multiplex Rich-Club Strength label';
-				case 7 % Multiplex7
+				case MultiplexRCS.NOTES
 					prop_default = 'Multiplex Rich-Club Strength notes';
-				case 9 % Multiplex9
-					prop_default = 2;
-				case 10 % Multiplex10
-					prop_default = 1;
-				case 11 % Multiplex11
-					prop_default = 2;
-				case 12 % Multiplex12
+				case MultiplexRCS.SHAPE
+					prop_default = Measure.NODAL;
+				case MultiplexRCS.SCOPE
+					prop_default = Measure.SUPERGLOBAL;
+				case MultiplexRCS.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case MultiplexRCS.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'MultiplexWD' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@RCS(prop);
@@ -606,15 +607,15 @@ classdef MultiplexRCS < RCS
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MultiplexRCS:WrongInput
+			%  Error id: €BRAPH2.STR€:MultiplexRCS:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:MultiplexRCS:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiplexRCS:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(MultiplexRCS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexRCS.
-			%   Error id: BRAPH2:MultiplexRCS:WrongInput
+			%   Error id: €BRAPH2.STR€:MultiplexRCS:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(MultiplexRCS, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexRCS.
-			%   Error id: BRAPH2:MultiplexRCS:WrongInput]
+			%   Error id: €BRAPH2.STR€:MultiplexRCS:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('MultiplexRCS')
 			%  are less computationally efficient.
@@ -625,12 +626,12 @@ classdef MultiplexRCS < RCS
 			prop = MultiplexRCS.getPropProp(pointer);
 			
 			switch prop
-				case 17 % MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS
-					check = Format.checkFormat(12, value, MultiplexRCS.getPropSettings(prop));
-				case 4 % Multiplex4
-					check = Format.checkFormat(8, value, MultiplexRCS.getPropSettings(prop));
+				case MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS % __MultiplexRCS.WEIGHTED_MULTIRICHCLUB_COEFFICIENTS__
+					check = Format.checkFormat(Format.RVECTOR, value, MultiplexRCS.getPropSettings(prop));
+				case MultiplexRCS.TEMPLATE % __MultiplexRCS.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, MultiplexRCS.getPropSettings(prop));
 				otherwise
-					if prop <= 16
+					if prop <= RCS.getPropNumber()
 						check = checkProp@RCS(prop, value);
 					end
 			end
@@ -639,8 +640,8 @@ classdef MultiplexRCS < RCS
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput'], ...
-					['BRAPH2' ':MultiplexRCS:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MultiplexRCS:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiplexRCS.getPropTag(prop) ' (' MultiplexRCS.getFormatTag(MultiplexRCS.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -651,20 +652,20 @@ classdef MultiplexRCS < RCS
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % Multiplex14
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case MultiplexRCS.M % __MultiplexRCS.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(MultiplexRCS.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -682,13 +683,13 @@ classdef MultiplexRCS < RCS
 					
 					    weighted_multi_rich_club_coefficients = m.get('WEIGHTED_MULTIRICHCLUB_COEFFICIENTS');
 					    assert(length(weighted_multi_rich_club_coefficients) == l || all(weighted_multi_rich_club_coefficients == 0), ...
-					        ['BRAPH2' ':WeightedMultiRichClubCoefficients:' 'WrongInput'], ...
+					        [BRAPH2.STR ':WeightedMultiRichClubCoefficients:' BRAPH2.WRONG_INPUT], ...
 					        ['WeightedMultiRichClubCoefficients coefficients must have the same length than the ' ...
 					        'number of layers (' tostring(l) ') while its length is ' tostring(length(weighted_multi_rich_club_coefficients))])
 					    
 					    if length(weighted_multi_rich_club_coefficients) == l
 					        assert(all(weighted_multi_rich_club_coefficients <= 1) && all(weighted_multi_rich_club_coefficients >= 0), ...
-					            ['BRAPH2' ':WeightedMultiRichClubCoefficients:' 'WrongInput'], ...
+					            [BRAPH2.STR ':WeightedMultiRichClubCoefficients:' BRAPH2.WRONG_INPUT], ...
 					            ['WeightedMultiRichClubCoefficients coefficients must be between 0 and 1 ' ...
 					            'while they are ' tostring(weighted_multi_rich_club_coefficients)])
 					        c = weighted_multi_rich_club_coefficients;
@@ -710,7 +711,7 @@ classdef MultiplexRCS < RCS
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 16
+					if prop <= RCS.getPropNumber()
 						value = calculateValue@RCS(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

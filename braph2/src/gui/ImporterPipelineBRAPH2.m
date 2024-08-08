@@ -5,20 +5,6 @@ classdef ImporterPipelineBRAPH2 < Importer
 	% A Pipeline Importer from BRAPH2 File (ImporterPipelineBRAPH2) imports a pipeline from a BRAPH2 file.
 	% The format of the BRAPH2 file should include the label, description and at least one code section.
 	%
-	% The list of ImporterPipelineBRAPH2 properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file from where to load the pipeline.
-	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.
-	%  <strong>12</strong> <strong>PIP</strong> 	PIP (result, item) is a pipeline.
-	%
 	% ImporterPipelineBRAPH2 methods (constructor):
 	%  ImporterPipelineBRAPH2 - constructor
 	%
@@ -108,20 +94,20 @@ classdef ImporterPipelineBRAPH2 < Importer
 	% See also Importer, Pipeline, ExporterPipelineBRAPH2.
 	
 	properties (Constant) % properties
-		FILE = 10; %CET: Computational Efficiency Trick
+		FILE = Importer.getPropNumber() + 1;
 		FILE_TAG = 'FILE';
-		FILE_CATEGORY = 4;
-		FILE_FORMAT = 2;
+		FILE_CATEGORY = Category.DATA;
+		FILE_FORMAT = Format.STRING;
 		
-		GET_FILE = 11; %CET: Computational Efficiency Trick
+		GET_FILE = Importer.getPropNumber() + 2;
 		GET_FILE_TAG = 'GET_FILE';
-		GET_FILE_CATEGORY = 6;
-		GET_FILE_FORMAT = 8;
+		GET_FILE_CATEGORY = Category.QUERY;
+		GET_FILE_FORMAT = Format.ITEM;
 		
-		PIP = 12; %CET: Computational Efficiency Trick
+		PIP = Importer.getPropNumber() + 3;
 		PIP_TAG = 'PIP';
-		PIP_CATEGORY = 5;
-		PIP_FORMAT = 8;
+		PIP_CATEGORY = Category.RESULT;
+		PIP_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function im = ImporterPipelineBRAPH2(varargin)
@@ -134,19 +120,6 @@ classdef ImporterPipelineBRAPH2 < Importer
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ImporterPipelineBRAPH2 properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the BRAPH2 file from where to load the pipeline.
-			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.
-			%  <strong>12</strong> <strong>PIP</strong> 	PIP (result, item) is a pipeline.
 			%
 			% See also Category, Format.
 			
@@ -184,7 +157,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ImporterPipelineBRAPH2' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('ImporterPipelineBRAPH2', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of importer of pipeline from BRAPH2.
@@ -205,30 +178,56 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
+				prop_list = [ ...
+					Importer.getProps() ...
+						ImporterPipelineBRAPH2.FILE ...
+						ImporterPipelineBRAPH2.GET_FILE ...
+						ImporterPipelineBRAPH2.PIP ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = 12;
-				case 6 % Category.QUERY
-					prop_list = [8 11];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Importer.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Importer.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Importer.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Importer.getProps(Category.DATA) ...
+						ImporterPipelineBRAPH2.FILE ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Importer.getProps(Category.RESULT) ...
+						ImporterPipelineBRAPH2.PIP ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Importer.getProps(Category.QUERY) ...
+						ImporterPipelineBRAPH2.GET_FILE ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Importer.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Importer.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Importer.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -249,31 +248,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 12;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(ImporterPipelineBRAPH2.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in importer of pipeline from BRAPH2/error.
@@ -301,14 +276,14 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == ImporterPipelineBRAPH2.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ImporterPipelineBRAPH2.'] ...
 					)
 			end
@@ -339,14 +314,15 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'PIP' })); %CET: Computational Efficiency Trick
+			importerpipelinebraph2_tag_list = cellfun(@(x) ImporterPipelineBRAPH2.getPropTag(x), num2cell(ImporterPipelineBRAPH2.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, importerpipelinebraph2_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for ImporterPipelineBRAPH2.'] ...
 					)
 			end
@@ -372,7 +348,8 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'PIP' })); % tag = pointer %CET: Computational Efficiency Trick
+				importerpipelinebraph2_tag_list = cellfun(@(x) ImporterPipelineBRAPH2.getPropTag(x), num2cell(ImporterPipelineBRAPH2.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, importerpipelinebraph2_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -400,9 +377,18 @@ classdef ImporterPipelineBRAPH2 < Importer
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				importerpipelinebraph2_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'PIP' };
-				tag = importerpipelinebraph2_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case ImporterPipelineBRAPH2.FILE
+						tag = ImporterPipelineBRAPH2.FILE_TAG;
+					case ImporterPipelineBRAPH2.GET_FILE
+						tag = ImporterPipelineBRAPH2.GET_FILE_TAG;
+					case ImporterPipelineBRAPH2.PIP
+						tag = ImporterPipelineBRAPH2.PIP_TAG;
+					otherwise
+						tag = getPropTag@Importer(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -427,9 +413,16 @@ classdef ImporterPipelineBRAPH2 < Importer
 			
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerpipelinebraph2_category_list = { 1  1  1  3  4  2  2  6  9  4  6  5 };
-			prop_category = importerpipelinebraph2_category_list{prop};
+			switch prop
+				case ImporterPipelineBRAPH2.FILE
+					prop_category = ImporterPipelineBRAPH2.FILE_CATEGORY;
+				case ImporterPipelineBRAPH2.GET_FILE
+					prop_category = ImporterPipelineBRAPH2.GET_FILE_CATEGORY;
+				case ImporterPipelineBRAPH2.PIP
+					prop_category = ImporterPipelineBRAPH2.PIP_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Importer(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -453,9 +446,16 @@ classdef ImporterPipelineBRAPH2 < Importer
 			
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerpipelinebraph2_format_list = { 2  2  2  8  2  2  2  2  4  2  8  8 };
-			prop_format = importerpipelinebraph2_format_list{prop};
+			switch prop
+				case ImporterPipelineBRAPH2.FILE
+					prop_format = ImporterPipelineBRAPH2.FILE_FORMAT;
+				case ImporterPipelineBRAPH2.GET_FILE
+					prop_format = ImporterPipelineBRAPH2.GET_FILE_FORMAT;
+				case ImporterPipelineBRAPH2.PIP
+					prop_format = ImporterPipelineBRAPH2.PIP_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Importer(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -479,9 +479,30 @@ classdef ImporterPipelineBRAPH2 < Importer
 			
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importerpipelinebraph2_description_list = { 'ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.'  'NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.'  'DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.'  'TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.'  'ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.'  'LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.'  'NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the BRAPH2 file from where to load the pipeline.'  'GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.'  'PIP (result, item) is a pipeline.' };
-			prop_description = importerpipelinebraph2_description_list{prop};
+			switch prop
+				case ImporterPipelineBRAPH2.FILE
+					prop_description = 'FILE (data, string) is the BRAPH2 file from where to load the pipeline.';
+				case ImporterPipelineBRAPH2.GET_FILE
+					prop_description = 'GET_FILE (query, item) opens a dialog box to get the BRAPH2 file from where to load the pipeline.';
+				case ImporterPipelineBRAPH2.PIP
+					prop_description = 'PIP (result, item) is a pipeline.';
+				case ImporterPipelineBRAPH2.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.NAME
+					prop_description = 'NAME (constant, string) is the name of the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.ID
+					prop_description = 'ID (data, string) is a few-letter code for the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the importer of a pipeline from a BRAPH2 file.';
+				case ImporterPipelineBRAPH2.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the importer of a pipeline from a BRAPH2 file.';
+				otherwise
+					prop_description = getPropDescription@Importer(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -505,14 +526,14 @@ classdef ImporterPipelineBRAPH2 < Importer
 			
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterPipelineBRAPH2.FILE
-					prop_settings = Format.getFormatSettings(2);
-				case 11 % ImporterPipelineBRAPH2.GET_FILE
+			switch prop
+				case ImporterPipelineBRAPH2.FILE
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case ImporterPipelineBRAPH2.GET_FILE
 					prop_settings = 'ImporterPipelineBRAPH2';
-				case 12 % ImporterPipelineBRAPH2.PIP
+				case ImporterPipelineBRAPH2.PIP
 					prop_settings = 'Pipeline';
-				case 4 % ImporterPipelineBRAPH2.TEMPLATE
+				case ImporterPipelineBRAPH2.TEMPLATE
 					prop_settings = 'ImporterPipelineBRAPH2';
 				otherwise
 					prop_settings = getPropSettings@Importer(prop);
@@ -540,26 +561,26 @@ classdef ImporterPipelineBRAPH2 < Importer
 			
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterPipelineBRAPH2.FILE
+			switch prop
+				case ImporterPipelineBRAPH2.FILE
 					prop_default = 'pipeline_atlas.braph2';
-				case 11 % ImporterPipelineBRAPH2.GET_FILE
-					prop_default = Format.getFormatDefault(8, ImporterPipelineBRAPH2.getPropSettings(prop));
-				case 12 % ImporterPipelineBRAPH2.PIP
+				case ImporterPipelineBRAPH2.GET_FILE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.PIP
 					prop_default = Pipeline();
-				case 1 % ImporterPipelineBRAPH2.ELCLASS
+				case ImporterPipelineBRAPH2.ELCLASS
 					prop_default = 'ImporterPipelineBRAPH2';
-				case 2 % ImporterPipeline'BRAPH 2.0'
+				case ImporterPipelineBRAPH2.NAME
 					prop_default = 'Pipeline Importer from BRAPH2 File';
-				case 3 % ImporterPipelineBRAPH2.DESCRIPTION
+				case ImporterPipelineBRAPH2.DESCRIPTION
 					prop_default = 'A Pipeline Importer from BRAPH2 File (ImporterPipelineBRAPH2) imports a pipeline from a BRAPH2 file. The format of the BRAPH2 file should include the label, description and at least one code section.';
-				case 4 % ImporterPipelineBRAPH2.TEMPLATE
-					prop_default = Format.getFormatDefault(8, ImporterPipelineBRAPH2.getPropSettings(prop));
-				case 5 % ImporterPipelineBRAPH2.ID
+				case ImporterPipelineBRAPH2.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.ID
 					prop_default = 'ImporterPipelineBRAPH2 ID';
-				case 6 % ImporterPipelineBRAPH2.LABEL
+				case ImporterPipelineBRAPH2.LABEL
 					prop_default = 'ImporterPipelineBRAPH2 label';
-				case 7 % ImporterPipelineBRAPH2.NOTES
+				case ImporterPipelineBRAPH2.NOTES
 					prop_default = 'ImporterPipelineBRAPH2 notes';
 				otherwise
 					prop_default = getPropDefault@Importer(prop);
@@ -606,15 +627,15 @@ classdef ImporterPipelineBRAPH2 < Importer
 			% 
 			% IM.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ImporterPipelineBRAPH2:WrongInput
+			%  Error id: €BRAPH2.STR€:ImporterPipelineBRAPH2:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  IM.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of IM.
-			%   Error id: BRAPH2:ImporterPipelineBRAPH2:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterPipelineBRAPH2:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(ImporterPipelineBRAPH2, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterPipelineBRAPH2.
-			%   Error id: BRAPH2:ImporterPipelineBRAPH2:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterPipelineBRAPH2:€BRAPH2.WRONG_INPUT€
 			%  IM.CHECKPROP(ImporterPipelineBRAPH2, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterPipelineBRAPH2.
-			%   Error id: BRAPH2:ImporterPipelineBRAPH2:WrongInput]
+			%   Error id: €BRAPH2.STR€:ImporterPipelineBRAPH2:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(IM) and Element.CHECKPROP('ImporterPipelineBRAPH2')
 			%  are less computationally efficient.
@@ -625,16 +646,16 @@ classdef ImporterPipelineBRAPH2 < Importer
 			prop = ImporterPipelineBRAPH2.getPropProp(pointer);
 			
 			switch prop
-				case 10 % ImporterPipelineBRAPH2.FILE
-					check = Format.checkFormat(2, value, ImporterPipelineBRAPH2.getPropSettings(prop));
-				case 11 % ImporterPipelineBRAPH2.GET_FILE
-					check = Format.checkFormat(8, value, ImporterPipelineBRAPH2.getPropSettings(prop));
-				case 12 % ImporterPipelineBRAPH2.PIP
-					check = Format.checkFormat(8, value, ImporterPipelineBRAPH2.getPropSettings(prop));
-				case 4 % ImporterPipelineBRAPH2.TEMPLATE
-					check = Format.checkFormat(8, value, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.FILE % __ImporterPipelineBRAPH2.FILE__
+					check = Format.checkFormat(Format.STRING, value, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.GET_FILE % __ImporterPipelineBRAPH2.GET_FILE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.PIP % __ImporterPipelineBRAPH2.PIP__
+					check = Format.checkFormat(Format.ITEM, value, ImporterPipelineBRAPH2.getPropSettings(prop));
+				case ImporterPipelineBRAPH2.TEMPLATE % __ImporterPipelineBRAPH2.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterPipelineBRAPH2.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -643,8 +664,8 @@ classdef ImporterPipelineBRAPH2 < Importer
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterPipelineBRAPH2:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ImporterPipelineBRAPH2.getPropTag(prop) ' (' ImporterPipelineBRAPH2.getFormatTag(ImporterPipelineBRAPH2.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -655,19 +676,19 @@ classdef ImporterPipelineBRAPH2 < Importer
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ImporterPipelineBRAPH2.GET_FILE
+				case ImporterPipelineBRAPH2.GET_FILE % __ImporterPipelineBRAPH2.GET_FILE__
 					[filename, filepath, filterindex] = uigetfile(BRAPH2.EXT_PIPELINE, 'Select BRAPH2 file');
 					if filterindex
 					    file = [filepath filename];
@@ -675,8 +696,8 @@ classdef ImporterPipelineBRAPH2 < Importer
 					end
 					value = im;
 					
-				case 12 % ImporterPipelineBRAPH2.PIP
-					rng_settings_ = rng(); rng(im.getPropSeed(12), 'twister')
+				case ImporterPipelineBRAPH2.PIP % __ImporterPipelineBRAPH2.PIP__
+					rng_settings_ = rng(); rng(im.getPropSeed(ImporterPipelineBRAPH2.PIP), 'twister')
 					
 					% creates empty Pipeline
 					pip = Pipeline();
@@ -743,7 +764,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 					            section_txt = section_txt(section_newlines(1):end);
 					            code_marks = [regexp(section_txt, newline(), 'all') length(section_txt) + 1];
 					            for c = 1:1:length(code_marks) - 1
-					                braph2waitbar(wb,  1.00 * (s - 1 + c / (length(code_marks) - 1)) / (length(section_marks) - 1), ...
+					                braph2waitbar(wb, 0 + 1.00 * (s - 1 + c / (length(code_marks) - 1)) / (length(section_marks) - 1), ...
 					                    ['Loading pipeline section ' num2str(s) ' of ' num2str(length(section_marks) - 1) ...
 					                    ', code line ' num2str(c) ' of ' num2str(length(code_marks) - 1) ' ...'])
 					                
@@ -772,8 +793,8 @@ classdef ImporterPipelineBRAPH2 < Importer
 					    
 					    braph2waitbar(wb, 'close')
 					else
-					    error(['BRAPH2' ':ImporterPipelineBRAPH2:' 'CancelIO'], ...
-					        ['BRAPH2' ':ImporterPipelineBRAPH2:' 'CancelIO' '\n' ...
+					    error([BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.CANCEL_IO], ...
+					        [BRAPH2.STR ':ImporterPipelineBRAPH2:' BRAPH2.CANCEL_IO '\n' ...
 					        'The prop FILE must be an existing file, but it is ''' file '''.'] ...
 					        );
 					end
@@ -783,7 +804,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});

@@ -10,50 +10,6 @@ classdef PanelPropRVectorView < PanelProp
 	%   from -90 to 90 degrees corresponds to a rotation from the negative z-axis to the positive z-axis.
 	% It works for all categories.
 	%
-	% The list of PanelPropRVectorView properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel of a view with azimuth and elevation angles.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel of a view with azimuth and elevation angles.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel of a view with azimuth and elevation angles.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel of a view with azimuth and elevation angles.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>37</strong> <strong>LABEL_AZ</strong> 	LABEL_AZ (evanescent, handle) is the azimuthal angle label.
-	%  <strong>38</strong> <strong>EDITFIELD_AZ</strong> 	EDITFIELD_AZ (evanescent, handle) is the azimuthal angle edit field.
-	%  <strong>39</strong> <strong>SLIDER_AZ</strong> 	SLIDER_AZ (evanescent, handle) is the azimuthal angle slider.
-	%  <strong>40</strong> <strong>LABEL_EL</strong> 	LABEL_EL (evanescent, handle) is the elevation angle label.
-	%  <strong>41</strong> <strong>EDITFIELD_EL</strong> 	EDITFIELD_EL (evanescent, handle) is the elevation angle edit field.
-	%  <strong>42</strong> <strong>SLIDER_EL</strong> 	SLIDER_EL (evanescent, handle) is the elevation angle slider.
-	%
 	% PanelPropRVectorView methods (constructor):
 	%  PanelPropRVectorView - constructor
 	%
@@ -143,40 +99,40 @@ classdef PanelPropRVectorView < PanelProp
 	% See also GUI, PanelElement, view, uieditfield, uislider.
 	
 	properties (Constant) % properties
-		ENABLE = 36; %CET: Computational Efficiency Trick
+		ENABLE = PanelProp.getPropNumber() + 1;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		LABEL_AZ = 37; %CET: Computational Efficiency Trick
+		LABEL_AZ = PanelProp.getPropNumber() + 2;
 		LABEL_AZ_TAG = 'LABEL_AZ';
-		LABEL_AZ_CATEGORY = 7;
-		LABEL_AZ_FORMAT = 18;
+		LABEL_AZ_CATEGORY = Category.EVANESCENT;
+		LABEL_AZ_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_AZ = 38; %CET: Computational Efficiency Trick
+		EDITFIELD_AZ = PanelProp.getPropNumber() + 3;
 		EDITFIELD_AZ_TAG = 'EDITFIELD_AZ';
-		EDITFIELD_AZ_CATEGORY = 7;
-		EDITFIELD_AZ_FORMAT = 18;
+		EDITFIELD_AZ_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_AZ_FORMAT = Format.HANDLE;
 		
-		SLIDER_AZ = 39; %CET: Computational Efficiency Trick
+		SLIDER_AZ = PanelProp.getPropNumber() + 4;
 		SLIDER_AZ_TAG = 'SLIDER_AZ';
-		SLIDER_AZ_CATEGORY = 7;
-		SLIDER_AZ_FORMAT = 18;
+		SLIDER_AZ_CATEGORY = Category.EVANESCENT;
+		SLIDER_AZ_FORMAT = Format.HANDLE;
 		
-		LABEL_EL = 40; %CET: Computational Efficiency Trick
+		LABEL_EL = PanelProp.getPropNumber() + 5;
 		LABEL_EL_TAG = 'LABEL_EL';
-		LABEL_EL_CATEGORY = 7;
-		LABEL_EL_FORMAT = 18;
+		LABEL_EL_CATEGORY = Category.EVANESCENT;
+		LABEL_EL_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_EL = 41; %CET: Computational Efficiency Trick
+		EDITFIELD_EL = PanelProp.getPropNumber() + 6;
 		EDITFIELD_EL_TAG = 'EDITFIELD_EL';
-		EDITFIELD_EL_CATEGORY = 7;
-		EDITFIELD_EL_FORMAT = 18;
+		EDITFIELD_EL_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_EL_FORMAT = Format.HANDLE;
 		
-		SLIDER_EL = 42; %CET: Computational Efficiency Trick
+		SLIDER_EL = PanelProp.getPropNumber() + 7;
 		SLIDER_EL_TAG = 'SLIDER_EL';
-		SLIDER_EL_CATEGORY = 7;
-		SLIDER_EL_FORMAT = 18;
+		SLIDER_EL_CATEGORY = Category.EVANESCENT;
+		SLIDER_EL_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = PanelPropRVectorView(varargin)
@@ -189,49 +145,6 @@ classdef PanelPropRVectorView < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PanelPropRVectorView properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel of a view with azimuth and elevation angles.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel of a view with azimuth and elevation angles.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel of a view with azimuth and elevation angles.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel of a view with azimuth and elevation angles.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>37</strong> <strong>LABEL_AZ</strong> 	LABEL_AZ (evanescent, handle) is the azimuthal angle label.
-			%  <strong>38</strong> <strong>EDITFIELD_AZ</strong> 	EDITFIELD_AZ (evanescent, handle) is the azimuthal angle edit field.
-			%  <strong>39</strong> <strong>SLIDER_AZ</strong> 	SLIDER_AZ (evanescent, handle) is the azimuthal angle slider.
-			%  <strong>40</strong> <strong>LABEL_EL</strong> 	LABEL_EL (evanescent, handle) is the elevation angle label.
-			%  <strong>41</strong> <strong>EDITFIELD_EL</strong> 	EDITFIELD_EL (evanescent, handle) is the elevation angle edit field.
-			%  <strong>42</strong> <strong>SLIDER_EL</strong> 	SLIDER_EL (evanescent, handle) is the elevation angle slider.
 			%
 			% See also Category, Format.
 			
@@ -269,7 +182,7 @@ classdef PanelPropRVectorView < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelPropRVectorView' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PanelPropRVectorView', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of view prop panel.
@@ -290,32 +203,64 @@ classdef PanelPropRVectorView < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42];
+				prop_list = [ ...
+					PanelProp.getProps() ...
+						PanelPropRVectorView.ENABLE ...
+						PanelPropRVectorView.LABEL_AZ ...
+						PanelPropRVectorView.EDITFIELD_AZ ...
+						PanelPropRVectorView.SLIDER_AZ ...
+						PanelPropRVectorView.LABEL_EL ...
+						PanelPropRVectorView.EDITFIELD_EL ...
+						PanelPropRVectorView.SLIDER_EL ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39 40 41 42];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelProp.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelProp.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelProp.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelProp.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelProp.getProps(Category.EVANESCENT) ...
+						PanelPropRVectorView.LABEL_AZ ...
+						PanelPropRVectorView.EDITFIELD_AZ ...
+						PanelPropRVectorView.SLIDER_AZ ...
+						PanelPropRVectorView.LABEL_EL ...
+						PanelPropRVectorView.EDITFIELD_EL ...
+						PanelPropRVectorView.SLIDER_EL ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelProp.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelProp.getProps(Category.GUI) ...
+						PanelPropRVectorView.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -336,33 +281,7 @@ classdef PanelPropRVectorView < PanelProp
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 42;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 16;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PanelPropRVectorView.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in view prop panel/error.
@@ -390,14 +309,14 @@ classdef PanelPropRVectorView < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 42 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PanelPropRVectorView.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropRVectorView.'] ...
 					)
 			end
@@ -428,14 +347,15 @@ classdef PanelPropRVectorView < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_AZ'  'EDITFIELD_AZ'  'SLIDER_AZ'  'LABEL_EL'  'EDITFIELD_EL'  'SLIDER_EL' })); %CET: Computational Efficiency Trick
+			panelproprvectorview_tag_list = cellfun(@(x) PanelPropRVectorView.getPropTag(x), num2cell(PanelPropRVectorView.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, panelproprvectorview_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropRVectorView.'] ...
 					)
 			end
@@ -461,7 +381,8 @@ classdef PanelPropRVectorView < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_AZ'  'EDITFIELD_AZ'  'SLIDER_AZ'  'LABEL_EL'  'EDITFIELD_EL'  'SLIDER_EL' })); % tag = pointer %CET: Computational Efficiency Trick
+				panelproprvectorview_tag_list = cellfun(@(x) PanelPropRVectorView.getPropTag(x), num2cell(PanelPropRVectorView.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, panelproprvectorview_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -489,9 +410,26 @@ classdef PanelPropRVectorView < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				panelproprvectorview_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_AZ'  'EDITFIELD_AZ'  'SLIDER_AZ'  'LABEL_EL'  'EDITFIELD_EL'  'SLIDER_EL' };
-				tag = panelproprvectorview_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case PanelPropRVectorView.ENABLE
+						tag = PanelPropRVectorView.ENABLE_TAG;
+					case PanelPropRVectorView.LABEL_AZ
+						tag = PanelPropRVectorView.LABEL_AZ_TAG;
+					case PanelPropRVectorView.EDITFIELD_AZ
+						tag = PanelPropRVectorView.EDITFIELD_AZ_TAG;
+					case PanelPropRVectorView.SLIDER_AZ
+						tag = PanelPropRVectorView.SLIDER_AZ_TAG;
+					case PanelPropRVectorView.LABEL_EL
+						tag = PanelPropRVectorView.LABEL_EL_TAG;
+					case PanelPropRVectorView.EDITFIELD_EL
+						tag = PanelPropRVectorView.EDITFIELD_EL_TAG;
+					case PanelPropRVectorView.SLIDER_EL
+						tag = PanelPropRVectorView.SLIDER_EL_TAG;
+					otherwise
+						tag = getPropTag@PanelProp(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -516,9 +454,24 @@ classdef PanelPropRVectorView < PanelProp
 			
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorview_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7 };
-			prop_category = panelproprvectorview_category_list{prop};
+			switch prop
+				case PanelPropRVectorView.ENABLE
+					prop_category = PanelPropRVectorView.ENABLE_CATEGORY;
+				case PanelPropRVectorView.LABEL_AZ
+					prop_category = PanelPropRVectorView.LABEL_AZ_CATEGORY;
+				case PanelPropRVectorView.EDITFIELD_AZ
+					prop_category = PanelPropRVectorView.EDITFIELD_AZ_CATEGORY;
+				case PanelPropRVectorView.SLIDER_AZ
+					prop_category = PanelPropRVectorView.SLIDER_AZ_CATEGORY;
+				case PanelPropRVectorView.LABEL_EL
+					prop_category = PanelPropRVectorView.LABEL_EL_CATEGORY;
+				case PanelPropRVectorView.EDITFIELD_EL
+					prop_category = PanelPropRVectorView.EDITFIELD_EL_CATEGORY;
+				case PanelPropRVectorView.SLIDER_EL
+					prop_category = PanelPropRVectorView.SLIDER_EL_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelProp(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -542,9 +495,24 @@ classdef PanelPropRVectorView < PanelProp
 			
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorview_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18 };
-			prop_format = panelproprvectorview_format_list{prop};
+			switch prop
+				case PanelPropRVectorView.ENABLE
+					prop_format = PanelPropRVectorView.ENABLE_FORMAT;
+				case PanelPropRVectorView.LABEL_AZ
+					prop_format = PanelPropRVectorView.LABEL_AZ_FORMAT;
+				case PanelPropRVectorView.EDITFIELD_AZ
+					prop_format = PanelPropRVectorView.EDITFIELD_AZ_FORMAT;
+				case PanelPropRVectorView.SLIDER_AZ
+					prop_format = PanelPropRVectorView.SLIDER_AZ_FORMAT;
+				case PanelPropRVectorView.LABEL_EL
+					prop_format = PanelPropRVectorView.LABEL_EL_FORMAT;
+				case PanelPropRVectorView.EDITFIELD_EL
+					prop_format = PanelPropRVectorView.EDITFIELD_EL_FORMAT;
+				case PanelPropRVectorView.SLIDER_EL
+					prop_format = PanelPropRVectorView.SLIDER_EL_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelProp(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -568,9 +536,52 @@ classdef PanelPropRVectorView < PanelProp
 			
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelproprvectorview_description_list = { 'ELCLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.'  'NAME (constant, string) is the name of the panel of a view with azimuth and elevation angles.'  'DESCRIPTION (constant, string) is the description of the panel of a view with azimuth and elevation angles.'  'TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.'  'ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.'  'LABEL (metadata, string) is an extended label of the panel of a view with azimuth and elevation angles.'  'NOTES (metadata, string) are some specific notes about the panel of a view with azimuth and elevation angles.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'LABEL_AZ (evanescent, handle) is the azimuthal angle label.'  'EDITFIELD_AZ (evanescent, handle) is the azimuthal angle edit field.'  'SLIDER_AZ (evanescent, handle) is the azimuthal angle slider.'  'LABEL_EL (evanescent, handle) is the elevation angle label.'  'EDITFIELD_EL (evanescent, handle) is the elevation angle edit field.'  'SLIDER_EL (evanescent, handle) is the elevation angle slider.' };
-			prop_description = panelproprvectorview_description_list{prop};
+			switch prop
+				case PanelPropRVectorView.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.';
+				case PanelPropRVectorView.LABEL_AZ
+					prop_description = 'LABEL_AZ (evanescent, handle) is the azimuthal angle label.';
+				case PanelPropRVectorView.EDITFIELD_AZ
+					prop_description = 'EDITFIELD_AZ (evanescent, handle) is the azimuthal angle edit field.';
+				case PanelPropRVectorView.SLIDER_AZ
+					prop_description = 'SLIDER_AZ (evanescent, handle) is the azimuthal angle slider.';
+				case PanelPropRVectorView.LABEL_EL
+					prop_description = 'LABEL_EL (evanescent, handle) is the elevation angle label.';
+				case PanelPropRVectorView.EDITFIELD_EL
+					prop_description = 'EDITFIELD_EL (evanescent, handle) is the elevation angle edit field.';
+				case PanelPropRVectorView.SLIDER_EL
+					prop_description = 'SLIDER_EL (evanescent, handle) is the elevation angle slider.';
+				case PanelPropRVectorView.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.NAME
+					prop_description = 'NAME (constant, string) is the name of the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.ID
+					prop_description = 'ID (data, string) is a few-letter code for the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the panel of a view with azimuth and elevation angles.';
+				case PanelPropRVectorView.EL
+					prop_description = 'EL (data, item) is the element.';
+				case PanelPropRVectorView.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case PanelPropRVectorView.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the settings position panel.';
+				case PanelPropRVectorView.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case PanelPropRVectorView.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.';
+				case PanelPropRVectorView.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects.';
+				case PanelPropRVectorView.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@PanelProp(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -594,22 +605,22 @@ classdef PanelPropRVectorView < PanelProp
 			
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % PanelPropRVectorView.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 37 % PanelPropRVectorView.LABEL_AZ
-					prop_settings = Format.getFormatSettings(18);
-				case 38 % PanelPropRVectorView.EDITFIELD_AZ
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % PanelPropRVectorView.SLIDER_AZ
-					prop_settings = Format.getFormatSettings(18);
-				case 40 % PanelPropRVectorView.LABEL_EL
-					prop_settings = Format.getFormatSettings(18);
-				case 41 % PanelPropRVectorView.EDITFIELD_EL
-					prop_settings = Format.getFormatSettings(18);
-				case 42 % PanelPropRVectorView.SLIDER_EL
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % PanelPropRVectorView.TEMPLATE
+			switch prop
+				case PanelPropRVectorView.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelPropRVectorView.LABEL_AZ
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.EDITFIELD_AZ
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.SLIDER_AZ
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.LABEL_EL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.EDITFIELD_EL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.SLIDER_EL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropRVectorView.TEMPLATE
 					prop_settings = 'PanelPropRVectorView';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -637,41 +648,41 @@ classdef PanelPropRVectorView < PanelProp
 			
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % PanelPropRVectorView.ENABLE
+			switch prop
+				case PanelPropRVectorView.ENABLE
 					prop_default = true;
-				case 37 % PanelPropRVectorView.LABEL_AZ
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 38 % PanelPropRVectorView.EDITFIELD_AZ
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 39 % PanelPropRVectorView.SLIDER_AZ
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 40 % PanelPropRVectorView.LABEL_EL
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 41 % PanelPropRVectorView.EDITFIELD_EL
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 42 % PanelPropRVectorView.SLIDER_EL
-					prop_default = Format.getFormatDefault(18, PanelPropRVectorView.getPropSettings(prop));
-				case 1 % PanelPropRVectorView.ELCLASS
+				case PanelPropRVectorView.LABEL_AZ
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.EDITFIELD_AZ
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.SLIDER_AZ
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.LABEL_EL
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.EDITFIELD_EL
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.SLIDER_EL
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.ELCLASS
 					prop_default = 'PanelPropRVectorView';
-				case 2 % PanelPropRVectorView.NAME
+				case PanelPropRVectorView.NAME
 					prop_default = 'View Prop Panel';
-				case 3 % PanelPropRVectorView.DESCRIPTION
+				case PanelPropRVectorView.DESCRIPTION
 					prop_default = 'A View Prop Panel (PanelPropRVectorView) plots the panel for the azimuth and elevation angles of the camera''s line of sight. Azimuth — The angle of rotation around the z-axis, as measured from the negative y-axis. Increasing this angle corresponds to counterclockwise rotation about the z-axis when viewing the xy plane from above. Elevation — The minimum angle between the line of sight and the xy plane. Increasing the elevation from -90 to 90 degrees corresponds to a rotation from the negative z-axis to the positive z-axis.It works for all categories.';
-				case 4 % PanelPropRVectorView.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PanelPropRVectorView.getPropSettings(prop));
-				case 5 % PanelPropRVectorView.ID
+				case PanelPropRVectorView.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.ID
 					prop_default = 'PanelPropRVectorView ID';
-				case 6 % PanelPropRVectorView.LABEL
+				case PanelPropRVectorView.LABEL
 					prop_default = 'PanelPropRVectorView label';
-				case 7 % PanelPropRVectorView.NOTES
+				case PanelPropRVectorView.NOTES
 					prop_default = 'PanelPropRVectorView notes';
-				case 23 % PanelPropRVectorView.EL
+				case PanelPropRVectorView.EL
 					prop_default = BrainSurfacePF();
-				case 24 % PanelPropRVectorView.PROP
-					prop_default = 24;
-				case 25 % PanelPropRVectorView.HEIGHT
-					prop_default = 77;
+				case PanelPropRVectorView.PROP
+					prop_default = BrainSurfacePF.VIEW;
+				case PanelPropRVectorView.HEIGHT
+					prop_default = s(6.4);
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -717,15 +728,15 @@ classdef PanelPropRVectorView < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PanelPropRVectorView:WrongInput
+			%  Error id: €BRAPH2.STR€:PanelPropRVectorView:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:PanelPropRVectorView:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorView:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PanelPropRVectorView, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropRVectorView.
-			%   Error id: BRAPH2:PanelPropRVectorView:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorView:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(PanelPropRVectorView, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropRVectorView.
-			%   Error id: BRAPH2:PanelPropRVectorView:WrongInput]
+			%   Error id: €BRAPH2.STR€:PanelPropRVectorView:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropRVectorView')
 			%  are less computationally efficient.
@@ -736,24 +747,24 @@ classdef PanelPropRVectorView < PanelProp
 			prop = PanelPropRVectorView.getPropProp(pointer);
 			
 			switch prop
-				case 36 % PanelPropRVectorView.ENABLE
-					check = Format.checkFormat(4, value, PanelPropRVectorView.getPropSettings(prop));
-				case 37 % PanelPropRVectorView.LABEL_AZ
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 38 % PanelPropRVectorView.EDITFIELD_AZ
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 39 % PanelPropRVectorView.SLIDER_AZ
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 40 % PanelPropRVectorView.LABEL_EL
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 41 % PanelPropRVectorView.EDITFIELD_EL
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 42 % PanelPropRVectorView.SLIDER_EL
-					check = Format.checkFormat(18, value, PanelPropRVectorView.getPropSettings(prop));
-				case 4 % PanelPropRVectorView.TEMPLATE
-					check = Format.checkFormat(8, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.ENABLE % __PanelPropRVectorView.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.LABEL_AZ % __PanelPropRVectorView.LABEL_AZ__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.EDITFIELD_AZ % __PanelPropRVectorView.EDITFIELD_AZ__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.SLIDER_AZ % __PanelPropRVectorView.SLIDER_AZ__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.LABEL_EL % __PanelPropRVectorView.LABEL_EL__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.EDITFIELD_EL % __PanelPropRVectorView.EDITFIELD_EL__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.SLIDER_EL % __PanelPropRVectorView.SLIDER_EL__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropRVectorView.getPropSettings(prop));
+				case PanelPropRVectorView.TEMPLATE % __PanelPropRVectorView.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PanelPropRVectorView.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -762,8 +773,8 @@ classdef PanelPropRVectorView < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropRVectorView:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropRVectorView:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropRVectorView.getPropTag(prop) ' (' PanelPropRVectorView.getFormatTag(PanelPropRVectorView.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -774,100 +785,100 @@ classdef PanelPropRVectorView < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % PanelPropRVectorView.LABEL_AZ
+				case PanelPropRVectorView.LABEL_AZ % __PanelPropRVectorView.LABEL_AZ__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_az =  uilabel( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'LABEL_AZ', ...
 					    'Text', 'azimuth', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_az;
 					
-				case 38 % PanelPropRVectorView.EDITFIELD_AZ
+				case PanelPropRVectorView.EDITFIELD_AZ % __PanelPropRVectorView.EDITFIELD_AZ__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_az = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'EDITFIELD_AZ', ...
 					    'Limits', [-180 180], ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_editfield_az} ...
 					    );
 					value = editfield_az;
 					
-				case 39 % PanelPropRVectorView.SLIDER_AZ
+				case PanelPropRVectorView.SLIDER_AZ % __PanelPropRVectorView.SLIDER_AZ__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_az = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_AZ', ...
 					    'Limits', [-180 180], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_slider_az} ...
 					    );
 					value = slider_az;
 					
-				case 40 % PanelPropRVectorView.LABEL_EL
+				case PanelPropRVectorView.LABEL_EL % __PanelPropRVectorView.LABEL_EL__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_el =  uilabel( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'LABEL_EL', ...
 					    'Text', 'elevation', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_el;
 					
-				case 41 % PanelPropRVectorView.EDITFIELD_EL
+				case PanelPropRVectorView.EDITFIELD_EL % __PanelPropRVectorView.EDITFIELD_EL__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_el = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'EDITFIELD_EL', ...
 					    'Limits', [-90 90], ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_editfield_el} ...
 					    );
 					value = editfield_el;
 					
-				case 42 % PanelPropRVectorView.SLIDER_EL
+				case PanelPropRVectorView.SLIDER_EL % __PanelPropRVectorView.SLIDER_EL__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					slider_el = uislider( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'SLIDER_EL', ...
 					    'Limits', [-90 90], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_slider_el} ...
 					    );
 					value = slider_el;
 					
-				case 20 % PanelPropRVectorView.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case PanelPropRVectorView.X_DRAW % __PanelPropRVectorView.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('LABEL_AZ')
 					    pr.memorize('EDITFIELD_AZ')
@@ -878,8 +889,8 @@ classdef PanelPropRVectorView < PanelProp
 					    pr.memorize('SLIDER_EL')
 					end
 					
-				case 21 % PanelPropRVectorView.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case PanelPropRVectorView.UPDATE % __PanelPropRVectorView.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -898,14 +909,14 @@ classdef PanelPropRVectorView < PanelProp
 					    end
 					
 					    switch el.getPropCategory(prop)
-					        case 2
+					        case Category.METADATA
 					            v = el.get(prop);
 					            set(pr.get('EDITFIELD_AZ'), 'Value', v(1))
 					            set(pr.get('SLIDER_AZ'), 'Value', v(1))
 					            set(pr.get('EDITFIELD_EL'), 'Value', v(2))
 					            set(pr.get('SLIDER_EL'), 'Value', v(2))
 					
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            v = el.get(prop);
 					            set(pr.get('EDITFIELD_AZ'), 'Value', v(1))
 					            set(pr.get('SLIDER_AZ'), 'Value', v(1))
@@ -926,7 +937,7 @@ classdef PanelPropRVectorView < PanelProp
 					                set(pr.get('SLIDER_EL'), 'Enable', pr.get('ENABLE'))
 					            end
 					
-					        case 5
+					        case Category.RESULT
 					            prop_value = el.getr(prop);
 					
 					            if isa(prop_value, 'NoValue')
@@ -973,21 +984,21 @@ classdef PanelPropRVectorView < PanelProp
 					    end
 					end
 					
-				case 22 % PanelPropRVectorView.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case PanelPropRVectorView.REDRAW % __PanelPropRVectorView.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('LABEL_AZ'),     'Position', [4                 39  .20*w_p   21])
-					    set(pr.get('EDITFIELD_AZ'), 'Position', [8+.20*w_p         39  .15*w_p   21])
-					    set(pr.get('SLIDER_AZ'),    'Position', [8+.35*w_p+21  57 .50*w_p   3]) % the height of a slider cannot be changed
-					    set(pr.get('LABEL_EL'),     'Position', [4                 9   .20*w_p   21])
-					    set(pr.get('EDITFIELD_EL'), 'Position', [8+.20*w_p         9   .15*w_p   21])
-					    set(pr.get('SLIDER_EL'),    'Position', [8+.35*w_p+21  27 .50*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('LABEL_AZ'),     'Position', [s(.3)                 s(3.2)  .20*w_p   s(1.7)])
+					    set(pr.get('EDITFIELD_AZ'), 'Position', [s(.6)+.20*w_p         s(3.2)  .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_AZ'),    'Position', [s(.6)+.35*w_p+s(1.7)  s(4.75) .50*w_p   3]) % the height of a slider cannot be changed
+					    set(pr.get('LABEL_EL'),     'Position', [s(.3)                 s(.7)   .20*w_p   s(1.7)])
+					    set(pr.get('EDITFIELD_EL'), 'Position', [s(.6)+.20*w_p         s(.7)   .15*w_p   s(1.7)])
+					    set(pr.get('SLIDER_EL'),    'Position', [s(.6)+.35*w_p+s(1.7)  s(2.25) .50*w_p   3]) % the height of a slider cannot be changed
 					end
 					
-				case 18 % PanelPropRVectorView.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case PanelPropRVectorView.DELETE % __PanelPropRVectorView.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('LABEL_AZ', Element.getNoValue())
 					    pr.set('EDITFIELD_AZ', Element.getNoValue())
@@ -999,7 +1010,7 @@ classdef PanelPropRVectorView < PanelProp
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

@@ -4,24 +4,6 @@ classdef Radius < Measure
 	%
 	% The Radius (Radius) is the minimum eccentricity among the vertices within a layer.
 	%
-	% The list of Radius properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Radius.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Radius.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Radius.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Radius.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Radius.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Radius.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Radius.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Radius.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION) % calculation in a graph or its subgraph
-	%
 	% Radius methods (constructor):
 	%  Radius - constructor
 	%
@@ -109,10 +91,10 @@ classdef Radius < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = 16; %CET: Computational Efficiency Trick
+		RULE = Measure.getPropNumber() + 1;
 		RULE_TAG = 'RULE';
-		RULE_CATEGORY = 3;
-		RULE_FORMAT = 5;
+		RULE_CATEGORY = Category.PARAMETER;
+		RULE_FORMAT = Format.OPTION;
 	end
 	methods % constructor
 		function m = Radius(varargin)
@@ -125,23 +107,6 @@ classdef Radius < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Radius properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Radius.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Radius.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Radius.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Radius.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Radius.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Radius.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Radius.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Radius.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION) % calculation in a graph or its subgraph
 			%
 			% See also Category, Format.
 			
@@ -179,7 +144,7 @@ classdef Radius < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Radius' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Radius', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of radius.
@@ -200,30 +165,52 @@ classdef Radius < Measure
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					Measure.getProps() ...
+						Radius.RULE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Measure.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Measure.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Measure.getProps(Category.PARAMETER) ...
+						Radius.RULE ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Measure.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Measure.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Measure.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Measure.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Measure.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Measure.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -244,31 +231,7 @@ classdef Radius < Measure
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Radius.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in radius/error.
@@ -296,14 +259,14 @@ classdef Radius < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Radius.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Radius:' 'WrongInput'], ...
-					['BRAPH2' ':Radius:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Radius.'] ...
 					)
 			end
@@ -334,14 +297,15 @@ classdef Radius < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
+			radius_tag_list = cellfun(@(x) Radius.getPropTag(x), num2cell(Radius.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, radius_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Radius:' 'WrongInput'], ...
-					['BRAPH2' ':Radius:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Radius.'] ...
 					)
 			end
@@ -367,7 +331,8 @@ classdef Radius < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
+				radius_tag_list = cellfun(@(x) Radius.getPropTag(x), num2cell(Radius.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, radius_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -395,9 +360,14 @@ classdef Radius < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				radius_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
-				tag = radius_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case Radius.RULE
+						tag = Radius.RULE_TAG;
+					otherwise
+						tag = getPropTag@Measure(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -422,9 +392,12 @@ classdef Radius < Measure
 			
 			prop = Radius.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			radius_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = radius_category_list{prop};
+			switch prop
+				case Radius.RULE
+					prop_category = Radius.RULE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Measure(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -448,9 +421,12 @@ classdef Radius < Measure
 			
 			prop = Radius.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			radius_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
-			prop_format = radius_format_list{prop};
+			switch prop
+				case Radius.RULE
+					prop_format = Radius.RULE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Measure(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -474,9 +450,36 @@ classdef Radius < Measure
 			
 			prop = Radius.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			radius_description_list = { 'ELCLASS (constant, string) is the class of the Radius.'  'NAME (constant, string) is the name of the Radius.'  'DESCRIPTION (constant, string) is the description of the Radius.'  'TEMPLATE (parameter, item) is the template of the Radius.'  'ID (data, string) is a few-letter code of the Radius.'  'LABEL (metadata, string) is an extended label of the Radius.'  'NOTES (metadata, string) are some specific notes about the Radius.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Radius.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION) % calculation in a graph or its subgraph' };
-			prop_description = radius_description_list{prop};
+			switch prop
+				case Radius.RULE
+					prop_description = 'RULE (parameter, OPTION) % calculation in a graph or its subgraph';
+				case Radius.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Radius.';
+				case Radius.NAME
+					prop_description = 'NAME (constant, string) is the name of the Radius.';
+				case Radius.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Radius.';
+				case Radius.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Radius.';
+				case Radius.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Radius.';
+				case Radius.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Radius.';
+				case Radius.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Radius.';
+				case Radius.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
+				case Radius.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case Radius.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case Radius.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case Radius.M
+					prop_description = 'M (result, cell) is the Radius.';
+				otherwise
+					prop_description = getPropDescription@Measure(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -500,10 +503,10 @@ classdef Radius < Measure
 			
 			prop = Radius.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % Radius.RULE
+			switch prop
+				case Radius.RULE
 					prop_settings = {'all', 'subgraphs'};
-				case 4 % Radius.TEMPLATE
+				case Radius.TEMPLATE
 					prop_settings = 'Radius';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -531,30 +534,30 @@ classdef Radius < Measure
 			
 			prop = Radius.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % Radius.RULE
+			switch prop
+				case Radius.RULE
 					prop_default = 'all';
-				case 1 % Radius.ELCLASS
+				case Radius.ELCLASS
 					prop_default = 'Radius';
-				case 2 % Radius.NAME
+				case Radius.NAME
 					prop_default = 'Radius';
-				case 3 % Radius.DESCRIPTION
+				case Radius.DESCRIPTION
 					prop_default = 'The Radius (Radius) is the minimum eccentricity among the vertices within a layer.';
-				case 4 % Radius.TEMPLATE
-					prop_default = Format.getFormatDefault(8, Radius.getPropSettings(prop));
-				case 5 % Radius.ID
+				case Radius.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, Radius.getPropSettings(prop));
+				case Radius.ID
 					prop_default = 'Radius ID';
-				case 6 % Radius.LABEL
+				case Radius.LABEL
 					prop_default = 'Radius label';
-				case 7 % Radius.NOTES
+				case Radius.NOTES
 					prop_default = 'Radius notes';
-				case 9 % Radius.SHAPE
-					prop_default = 1;
-				case 10 % Radius.SCOPE
-					prop_default = 2;
-				case 11 % Radius.PARAMETRICITY
-					prop_default = 2;
-				case 12 % Radius.COMPATIBLE_GRAPHS
+				case Radius.SHAPE
+					prop_default = Measure.GLOBAL;
+				case Radius.SCOPE
+					prop_default = Measure.UNILAYER;
+				case Radius.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case Radius.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -601,15 +604,15 @@ classdef Radius < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Radius:WrongInput
+			%  Error id: €BRAPH2.STR€:Radius:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:Radius:WrongInput
+			%   Error id: €BRAPH2.STR€:Radius:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Radius, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Radius.
-			%   Error id: BRAPH2:Radius:WrongInput
+			%   Error id: €BRAPH2.STR€:Radius:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(Radius, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Radius.
-			%   Error id: BRAPH2:Radius:WrongInput]
+			%   Error id: €BRAPH2.STR€:Radius:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Radius')
 			%  are less computationally efficient.
@@ -620,12 +623,12 @@ classdef Radius < Measure
 			prop = Radius.getPropProp(pointer);
 			
 			switch prop
-				case 16 % Radius.RULE
-					check = Format.checkFormat(5, value, Radius.getPropSettings(prop));
-				case 4 % Radius.TEMPLATE
-					check = Format.checkFormat(8, value, Radius.getPropSettings(prop));
+				case Radius.RULE % __Radius.RULE__
+					check = Format.checkFormat(Format.OPTION, value, Radius.getPropSettings(prop));
+				case Radius.TEMPLATE % __Radius.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, Radius.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= Measure.getPropNumber()
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -634,8 +637,8 @@ classdef Radius < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Radius:' 'WrongInput'], ...
-					['BRAPH2' ':Radius:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Radius:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Radius.getPropTag(prop) ' (' Radius.getFormatTag(Radius.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -646,20 +649,20 @@ classdef Radius < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % Radius.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case Radius.M % __Radius.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(Radius.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell matrix for graph, multigraph, or multiplex, etc
@@ -676,7 +679,7 @@ classdef Radius < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= Measure.getPropNumber()
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

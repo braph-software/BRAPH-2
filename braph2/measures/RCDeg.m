@@ -6,24 +6,6 @@ classdef RCDeg < Degree
 	%  the edges that connect nodes of degree k or higher within a layer. 
 	%  k is set by the user; the default value is equal to 1.
 	%
-	% The list of RCDeg properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Degree.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Degree.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Degree.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Degree.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Degree.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Degree.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Degree.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Degree.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
-	%
 	% RCDeg methods (constructor):
 	%  RCDeg - constructor
 	%
@@ -111,10 +93,10 @@ classdef RCDeg < Degree
 	%
 	
 	properties (Constant) % properties
-		PARAMETRIC_VALUE = 16; %CET: Computational Efficiency Trick
+		PARAMETRIC_VALUE = Degree.getPropNumber() + 1;
 		PARAMETRIC_VALUE_TAG = 'PARAMETRIC_VALUE';
-		PARAMETRIC_VALUE_CATEGORY = 3;
-		PARAMETRIC_VALUE_FORMAT = 11;
+		PARAMETRIC_VALUE_CATEGORY = Category.PARAMETER;
+		PARAMETRIC_VALUE_FORMAT = Format.SCALAR;
 	end
 	methods % constructor
 		function m = RCDeg(varargin)
@@ -127,23 +109,6 @@ classdef RCDeg < Degree
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of RCDeg properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Rich-Club Degree.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Rich-Club Degree.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Rich-Club Degree.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Rich-Club Degree.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Rich-Club Degree.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Rich-Club Degree.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Rich-Club Degree.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Rich-Club Degree.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, SCALAR) 
 			%
 			% See also Category, Format.
 			
@@ -181,7 +146,7 @@ classdef RCDeg < Degree
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'RCDeg'  'MultiplexRCDeg' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('RCDeg', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of rich-club degree.
@@ -202,30 +167,52 @@ classdef RCDeg < Degree
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
+				prop_list = [ ...
+					Degree.getProps() ...
+						RCDeg.PARAMETRIC_VALUE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Degree.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Degree.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Degree.getProps(Category.PARAMETER) ...
+						RCDeg.PARAMETRIC_VALUE ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Degree.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Degree.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Degree.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Degree.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Degree.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Degree.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -246,31 +233,7 @@ classdef RCDeg < Degree
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 16;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(RCDeg.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in rich-club degree/error.
@@ -298,14 +261,14 @@ classdef RCDeg < Degree
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == RCDeg.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RCDeg:' 'WrongInput'], ...
-					['BRAPH2' ':RCDeg:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for RCDeg.'] ...
 					)
 			end
@@ -336,14 +299,15 @@ classdef RCDeg < Degree
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); %CET: Computational Efficiency Trick
+			rcdeg_tag_list = cellfun(@(x) RCDeg.getPropTag(x), num2cell(RCDeg.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, rcdeg_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RCDeg:' 'WrongInput'], ...
-					['BRAPH2' ':RCDeg:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for RCDeg.'] ...
 					)
 			end
@@ -369,7 +333,8 @@ classdef RCDeg < Degree
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); % tag = pointer %CET: Computational Efficiency Trick
+				rcdeg_tag_list = cellfun(@(x) RCDeg.getPropTag(x), num2cell(RCDeg.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, rcdeg_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -397,9 +362,14 @@ classdef RCDeg < Degree
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				rcdeg_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' };
-				tag = rcdeg_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case RCDeg.PARAMETRIC_VALUE
+						tag = RCDeg.PARAMETRIC_VALUE_TAG;
+					otherwise
+						tag = getPropTag@Degree(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -424,9 +394,12 @@ classdef RCDeg < Degree
 			
 			prop = RCDeg.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			rcdeg_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
-			prop_category = rcdeg_category_list{prop};
+			switch prop
+				case RCDeg.PARAMETRIC_VALUE
+					prop_category = RCDeg.PARAMETRIC_VALUE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Degree(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -450,9 +423,12 @@ classdef RCDeg < Degree
 			
 			prop = RCDeg.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			rcdeg_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11 };
-			prop_format = rcdeg_format_list{prop};
+			switch prop
+				case RCDeg.PARAMETRIC_VALUE
+					prop_format = RCDeg.PARAMETRIC_VALUE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Degree(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -476,9 +452,36 @@ classdef RCDeg < Degree
 			
 			prop = RCDeg.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			rcdeg_description_list = { 'ELCLASS (constant, string) is the class of the Rich-Club Degree.'  'NAME (constant, string) is the name of the Rich-Club Degree.'  'DESCRIPTION (constant, string) is the description of the Rich-Club Degree.'  'TEMPLATE (parameter, item) is the template of the Rich-Club Degree.'  'ID (data, string) is a few-letter code of the Rich-Club Degree.'  'LABEL (metadata, string) is an extended label of the Rich-Club Degree.'  'NOTES (metadata, string) are some specific notes about the Rich-Club Degree.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Rich-Club Degree.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, SCALAR) ' };
-			prop_description = rcdeg_description_list{prop};
+			switch prop
+				case RCDeg.PARAMETRIC_VALUE
+					prop_description = 'PARAMETRIC_VALUE (parameter, SCALAR) ';
+				case RCDeg.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Rich-Club Degree.';
+				case RCDeg.NAME
+					prop_description = 'NAME (constant, string) is the name of the Rich-Club Degree.';
+				case RCDeg.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Rich-Club Degree.';
+				case RCDeg.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Rich-Club Degree.';
+				case RCDeg.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Rich-Club Degree.';
+				case RCDeg.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Rich-Club Degree.';
+				case RCDeg.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Rich-Club Degree.';
+				case RCDeg.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
+				case RCDeg.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case RCDeg.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.PARAMETRIC__.';
+				case RCDeg.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case RCDeg.M
+					prop_description = 'M (result, cell) is the Rich-Club Degree.';
+				otherwise
+					prop_description = getPropDescription@Degree(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -502,10 +505,10 @@ classdef RCDeg < Degree
 			
 			prop = RCDeg.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % RCDeg.PARAMETRIC_VALUE
-					prop_settings = Format.getFormatSettings(11);
-				case 4 % RCDeg.TEMPLATE
+			switch prop
+				case RCDeg.PARAMETRIC_VALUE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case RCDeg.TEMPLATE
 					prop_settings = 'RCDeg';
 				otherwise
 					prop_settings = getPropSettings@Degree(prop);
@@ -533,30 +536,30 @@ classdef RCDeg < Degree
 			
 			prop = RCDeg.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 16 % RCDeg.PARAMETRIC_VALUE
+			switch prop
+				case RCDeg.PARAMETRIC_VALUE
 					prop_default = 1;
-				case 1 % RCDeg.ELCLASS
+				case RCDeg.ELCLASS
 					prop_default = 'RCDeg';
-				case 2 % RCDeg.NAME
+				case RCDeg.NAME
 					prop_default = 'Rich-Club Degree';
-				case 3 % RCDeg.DESCRIPTION
+				case RCDeg.DESCRIPTION
 					prop_default = 'The Rich-Club Degree (RCDeg) of a node at level k is the sum of the edges that connect nodes of degree k or higher within a layer. k is set by the user; the default value is equal to 1.';
-				case 4 % RCDeg.TEMPLATE
-					prop_default = Format.getFormatDefault(8, RCDeg.getPropSettings(prop));
-				case 5 % RCDeg.ID
+				case RCDeg.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, RCDeg.getPropSettings(prop));
+				case RCDeg.ID
 					prop_default = 'RCDeg ID';
-				case 6 % RCDeg.LABEL
+				case RCDeg.LABEL
 					prop_default = 'Rich-Club Degree label';
-				case 7 % RCDeg.NOTES
+				case RCDeg.NOTES
 					prop_default = 'Rich-Club Degree notes';
-				case 9 % RCDeg.SHAPE
-					prop_default = 2;
-				case 10 % RCDeg.SCOPE
-					prop_default = 2;
-				case 11 % RCDeg.PARAMETRICITY
-					prop_default = 1;
-				case 12 % RCDeg.COMPATIBLE_GRAPHS
+				case RCDeg.SHAPE
+					prop_default = Measure.NODAL;
+				case RCDeg.SCOPE
+					prop_default = Measure.UNILAYER;
+				case RCDeg.PARAMETRICITY
+					prop_default = Measure.PARAMETRIC;
+				case RCDeg.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@Degree(prop);
@@ -603,15 +606,15 @@ classdef RCDeg < Degree
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:RCDeg:WrongInput
+			%  Error id: €BRAPH2.STR€:RCDeg:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:RCDeg:WrongInput
+			%   Error id: €BRAPH2.STR€:RCDeg:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(RCDeg, PROP, VALUE) throws error if VALUE has not a valid format for PROP of RCDeg.
-			%   Error id: BRAPH2:RCDeg:WrongInput
+			%   Error id: €BRAPH2.STR€:RCDeg:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(RCDeg, PROP, VALUE) throws error if VALUE has not a valid format for PROP of RCDeg.
-			%   Error id: BRAPH2:RCDeg:WrongInput]
+			%   Error id: €BRAPH2.STR€:RCDeg:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('RCDeg')
 			%  are less computationally efficient.
@@ -622,12 +625,12 @@ classdef RCDeg < Degree
 			prop = RCDeg.getPropProp(pointer);
 			
 			switch prop
-				case 16 % RCDeg.PARAMETRIC_VALUE
-					check = Format.checkFormat(11, value, RCDeg.getPropSettings(prop));
-				case 4 % RCDeg.TEMPLATE
-					check = Format.checkFormat(8, value, RCDeg.getPropSettings(prop));
+				case RCDeg.PARAMETRIC_VALUE % __RCDeg.PARAMETRIC_VALUE__
+					check = Format.checkFormat(Format.SCALAR, value, RCDeg.getPropSettings(prop));
+				case RCDeg.TEMPLATE % __RCDeg.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, RCDeg.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= Degree.getPropNumber()
 						check = checkProp@Degree(prop, value);
 					end
 			end
@@ -636,8 +639,8 @@ classdef RCDeg < Degree
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':RCDeg:' 'WrongInput'], ...
-					['BRAPH2' ':RCDeg:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' RCDeg.getPropTag(prop) ' (' RCDeg.getFormatTag(RCDeg.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -648,20 +651,20 @@ classdef RCDeg < Degree
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % RCDeg.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case RCDeg.M % __RCDeg.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(RCDeg.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -672,7 +675,7 @@ classdef RCDeg < Degree
 					directionality_type = g.get('DIRECTIONALITY_TYPE', L);
 					richclub_threshold = m.get('PARAMETRIC_VALUE');
 					assert(mod(richclub_threshold, 1) == 0, ...
-					    ['BRAPH2' ':RCDeg:' 'WrongInput'], ...
+					    [BRAPH2.STR ':RCDeg:' BRAPH2.WRONG_INPUT], ...
 					    ['RCDeg threshold must be an integer value ' ...
 					    'while it is ' tostring(richclub_threshold)])
 					
@@ -682,7 +685,7 @@ classdef RCDeg < Degree
 					    Aii = A{li, li};
 					    directionality_layer = directionality_type(li, li);
 					
-					    if directionality_layer == 2  % undirected graphs
+					    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
 					       
 					        degree = calculateValue@Degree(m, prop); 
 					        deg = degree{li};
@@ -703,7 +706,7 @@ classdef RCDeg < Degree
 					        subAii(low_rich_nodes, :) = 0;  % remove rows
 					        subAii(:, low_rich_nodes) = 0;  % remove columns
 					
-					        if directionality_layer == 2  % undirected graphs
+					        if directionality_layer == Graph.UNDIRECTED  % undirected graphs
 					            richclub_layer(:, :, k) = sum(subAii, 1)';  % degree of high rich nodes
 					        else
 					            richclub_layer(:, :, k) = (sum(subAii, 1)' + sum(subAii, 2))/2;  % degree of high rich nodes
@@ -718,7 +721,7 @@ classdef RCDeg < Degree
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= Degree.getPropNumber()
 						value = calculateValue@Degree(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

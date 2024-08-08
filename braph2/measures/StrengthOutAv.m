@@ -6,23 +6,6 @@ classdef StrengthOutAv < StrengthOut
 	% connected to a node within a layer, i.e., it is the sum of the rows of 
 	% the adjacency matrix.
 	%
-	% The list of StrengthOutAv properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Strength.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Strength.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Strength.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Strength.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Strength.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Strength.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Strength.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Out-Strength.
-	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
-	%
 	% StrengthOutAv methods (constructor):
 	%  StrengthOutAv - constructor
 	%
@@ -120,22 +103,6 @@ classdef StrengthOutAv < StrengthOut
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of StrengthOutAv properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Out-Strength.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Out-Strength.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Out-Strength.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Out-Strength.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Out-Strength.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Out-Strength.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Out-Strength.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
-			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
-			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
-			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
-			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
-			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Out-Strength.
-			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -173,7 +140,7 @@ classdef StrengthOutAv < StrengthOut
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'StrengthOutAv' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('StrengthOutAv', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average out-strength.
@@ -194,30 +161,50 @@ classdef StrengthOutAv < StrengthOut
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
+				prop_list = [ ...
+					StrengthOut.getProps() ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3 9 10 11 12];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 13];
-				case 5 % Category.RESULT
-					prop_list = 14;
-				case 6 % Category.QUERY
-					prop_list = 8;
-				case 9 % Category.GUI
-					prop_list = 15;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						StrengthOut.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						StrengthOut.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						StrengthOut.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						StrengthOut.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						StrengthOut.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						StrengthOut.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						StrengthOut.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						StrengthOut.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						StrengthOut.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -238,31 +225,7 @@ classdef StrengthOutAv < StrengthOut
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 15;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 7;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(StrengthOutAv.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average out-strength/error.
@@ -290,14 +253,14 @@ classdef StrengthOutAv < StrengthOut
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == StrengthOutAv.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for StrengthOutAv.'] ...
 					)
 			end
@@ -328,14 +291,15 @@ classdef StrengthOutAv < StrengthOut
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
+			strengthoutav_tag_list = cellfun(@(x) StrengthOutAv.getPropTag(x), num2cell(StrengthOutAv.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, strengthoutav_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for StrengthOutAv.'] ...
 					)
 			end
@@ -361,7 +325,8 @@ classdef StrengthOutAv < StrengthOut
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
+				strengthoutav_tag_list = cellfun(@(x) StrengthOutAv.getPropTag(x), num2cell(StrengthOutAv.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, strengthoutav_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -389,9 +354,12 @@ classdef StrengthOutAv < StrengthOut
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				strengthoutav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
-				tag = strengthoutav_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					otherwise
+						tag = getPropTag@StrengthOut(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -416,9 +384,10 @@ classdef StrengthOutAv < StrengthOut
 			
 			prop = StrengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			strengthoutav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
-			prop_category = strengthoutav_category_list{prop};
+			switch prop
+				otherwise
+					prop_category = getPropCategory@StrengthOut(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -442,9 +411,10 @@ classdef StrengthOutAv < StrengthOut
 			
 			prop = StrengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			strengthoutav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
-			prop_format = strengthoutav_format_list{prop};
+			switch prop
+				otherwise
+					prop_format = getPropFormat@StrengthOut(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -468,9 +438,34 @@ classdef StrengthOutAv < StrengthOut
 			
 			prop = StrengthOutAv.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			strengthoutav_description_list = { 'ELCLASS (constant, string) is the class of the Average Out-Strength.'  'NAME (constant, string) is the name of the Average Out-Strength.'  'DESCRIPTION (constant, string) is the description of the Average Out-Strength.'  'TEMPLATE (parameter, item) is the template of the Average Out-Strength.'  'ID (data, string) is a few-letter code of the Average Out-Strength.'  'LABEL (metadata, string) is an extended label of the Average Out-Strength.'  'NOTES (metadata, string) are some specific notes about the Average Out-Strength.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Out-Strength.'  'PFM (gui, item) contains the panel figure of the measure.' };
-			prop_description = strengthoutav_description_list{prop};
+			switch prop
+				case StrengthOutAv.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the Average Out-Strength.';
+				case StrengthOutAv.NAME
+					prop_description = 'NAME (constant, string) is the name of the Average Out-Strength.';
+				case StrengthOutAv.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the Average Out-Strength.';
+				case StrengthOutAv.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the Average Out-Strength.';
+				case StrengthOutAv.ID
+					prop_description = 'ID (data, string) is a few-letter code of the Average Out-Strength.';
+				case StrengthOutAv.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the Average Out-Strength.';
+				case StrengthOutAv.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the Average Out-Strength.';
+				case StrengthOutAv.SHAPE
+					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
+				case StrengthOutAv.SCOPE
+					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
+				case StrengthOutAv.PARAMETRICITY
+					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
+				case StrengthOutAv.COMPATIBLE_GRAPHS
+					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
+				case StrengthOutAv.M
+					prop_description = 'M (result, cell) is the Average Out-Strength.';
+				otherwise
+					prop_description = getPropDescription@StrengthOut(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -494,8 +489,8 @@ classdef StrengthOutAv < StrengthOut
 			
 			prop = StrengthOutAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 4 % StrengthOutAv.TEMPLATE
+			switch prop
+				case StrengthOutAv.TEMPLATE
 					prop_settings = 'StrengthOutAv';
 				otherwise
 					prop_settings = getPropSettings@StrengthOut(prop);
@@ -523,28 +518,28 @@ classdef StrengthOutAv < StrengthOut
 			
 			prop = StrengthOutAv.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 1 % StrengthOutAv.ELCLASS
+			switch prop
+				case StrengthOutAv.ELCLASS
 					prop_default = 'StrengthOutAv';
-				case 2 % StrengthOutAv.NAME
+				case StrengthOutAv.NAME
 					prop_default = 'Average Out-Strength';
-				case 3 % StrengthOutAv.DESCRIPTION
+				case StrengthOutAv.DESCRIPTION
 					prop_default = 'The Average Out-Strength (StrengthOutAv) of a graph is the mean of the sum of all weights of the outward edges connected to a node within a layer, i.e., it is the sum of the rows of the adjacency matrix.';
-				case 4 % StrengthOutAv.TEMPLATE
-					prop_default = Format.getFormatDefault(8, StrengthOutAv.getPropSettings(prop));
-				case 5 % StrengthOutAv.ID
+				case StrengthOutAv.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, StrengthOutAv.getPropSettings(prop));
+				case StrengthOutAv.ID
 					prop_default = 'StrengthOutAv ID';
-				case 6 % StrengthOutAv.LABEL
+				case StrengthOutAv.LABEL
 					prop_default = 'Average Out-Strength label';
-				case 7 % StrengthOutAv.NOTES
+				case StrengthOutAv.NOTES
 					prop_default = 'Average Out-Strength notes';
-				case 9 % StrengthOutAv.SHAPE
-					prop_default = 1;
-				case 10 % StrengthOutAv.SCOPE
-					prop_default = 2;
-				case 11 % StrengthOutAv.PARAMETRICITY
-					prop_default = 2;
-				case 12 % StrengthOutAv.COMPATIBLE_GRAPHS
+				case StrengthOutAv.SHAPE
+					prop_default = Measure.GLOBAL;
+				case StrengthOutAv.SCOPE
+					prop_default = Measure.UNILAYER;
+				case StrengthOutAv.PARAMETRICITY
+					prop_default = Measure.NONPARAMETRIC;
+				case StrengthOutAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWD' 'MultiplexWD' 'OrdMxWD' 'MultilayerWD' 'OrdMlWD'};
 				otherwise
 					prop_default = getPropDefault@StrengthOut(prop);
@@ -591,15 +586,15 @@ classdef StrengthOutAv < StrengthOut
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:StrengthOutAv:WrongInput
+			%  Error id: €BRAPH2.STR€:StrengthOutAv:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: BRAPH2:StrengthOutAv:WrongInput
+			%   Error id: €BRAPH2.STR€:StrengthOutAv:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(StrengthOutAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of StrengthOutAv.
-			%   Error id: BRAPH2:StrengthOutAv:WrongInput
+			%   Error id: €BRAPH2.STR€:StrengthOutAv:€BRAPH2.WRONG_INPUT€
 			%  M.CHECKPROP(StrengthOutAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of StrengthOutAv.
-			%   Error id: BRAPH2:StrengthOutAv:WrongInput]
+			%   Error id: €BRAPH2.STR€:StrengthOutAv:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('StrengthOutAv')
 			%  are less computationally efficient.
@@ -610,10 +605,10 @@ classdef StrengthOutAv < StrengthOut
 			prop = StrengthOutAv.getPropProp(pointer);
 			
 			switch prop
-				case 4 % StrengthOutAv.TEMPLATE
-					check = Format.checkFormat(8, value, StrengthOutAv.getPropSettings(prop));
+				case StrengthOutAv.TEMPLATE % __StrengthOutAv.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, StrengthOutAv.getPropSettings(prop));
 				otherwise
-					if prop <= 15
+					if prop <= StrengthOut.getPropNumber()
 						check = checkProp@StrengthOut(prop, value);
 					end
 			end
@@ -622,8 +617,8 @@ classdef StrengthOutAv < StrengthOut
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput'], ...
-					['BRAPH2' ':StrengthOutAv:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':StrengthOutAv:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' StrengthOutAv.getPropTag(prop) ' (' StrengthOutAv.getFormatTag(StrengthOutAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -634,20 +629,20 @@ classdef StrengthOutAv < StrengthOut
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 14 % StrengthOutAv.M
-					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
+				case StrengthOutAv.M % __StrengthOutAv.M__
+					rng_settings_ = rng(); rng(m.getPropSeed(StrengthOutAv.M), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					out_strength = calculateValue@StrengthOut(m, prop);
@@ -664,7 +659,7 @@ classdef StrengthOutAv < StrengthOut
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 15
+					if prop <= StrengthOut.getPropNumber()
 						value = calculateValue@StrengthOut(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

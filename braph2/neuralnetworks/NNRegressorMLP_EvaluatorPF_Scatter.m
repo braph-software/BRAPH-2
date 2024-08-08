@@ -1,51 +1,10 @@
 classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
-	%NNRegressorMLP_EvaluatorPF_Scatter is the base element to plot an ensemble-based comparison.
+	%NNRegressorMLP_EvaluatorPF_Scatter is the panel for scatter plots in a regression task.
 	% It is a subclass of <a href="matlab:help PanelFig">PanelFig</a>.
 	%
-	% NNRegressorMLP_EvaluatorPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.
-	%
-	% The list of NNRegressorMLP_EvaluatorPF_Scatter properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel ensemble-based comparison figure.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>26</strong> <strong>NNE</strong> 	NNE (metadata, item) is the ensemble-based comparison.
-	%  <strong>27</strong> <strong>PREDICTIONS_VALUE</strong> 	PREDICTIONS_VALUE (metadata, matrix) is the predictions value.
-	%  <strong>28</strong> <strong>GROUNDTRUTH_VALUE</strong> 	GROUNDTRUTH_VALUE (metadata, matrix) is the ground truth value.
-	%  <strong>29</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
-	%  <strong>30</strong> <strong>H_PREDICTIONS</strong> 	H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.
-	%  <strong>31</strong> <strong>PREDICTIONS</strong> 	PREDICTIONS (figure, logical) determines whether the prediction plot are shown.
-	%  <strong>32</strong> <strong>PREDICTION_DICT</strong> 	PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
-	%  <strong>33</strong> <strong>H_LINE_BASE</strong> 	H_LINE_BASE (evanescent, handle) is the handle for the ensemble-based comparison line.
-	%  <strong>34</strong> <strong>ST_LINE_BASE</strong> 	ST_LINE_BASE (figure, item) determines the line settings.
-	%  <strong>35</strong> <strong>LISTENER_ST_LINE_BASE</strong> 	LISTENER_ST_LINE_BASE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-	%  <strong>36</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-	%  <strong>37</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-	%  <strong>38</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-	%  <strong>39</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-	%  <strong>40</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-	%  <strong>41</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	% The scatter plot panel for an evaluator with a MLP regressor
+	%  (NNRegressorMLP_EvaluatorPF_Scatter) manages the functionalities to plot 
+	%  a panel of the scatter plot in a regression task.
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter methods (constructor):
 	%  NNRegressorMLP_EvaluatorPF_Scatter - constructor
@@ -65,33 +24,33 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter methods (display):
-	%  tostring - string with information about the panel ensemble-based comparison figure
-	%  disp - displays information about the panel ensemble-based comparison figure
-	%  tree - displays the tree of the panel ensemble-based comparison figure
+	%  tostring - string with information about the panel scatter plot figure
+	%  disp - displays information about the panel scatter plot figure
+	%  tree - displays the tree of the panel scatter plot figure
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two panel ensemble-based comparison figure are equal (values, locked)
+	%  isequal - determines whether two panel scatter plot figure are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the panel ensemble-based comparison figure
+	%  copy - copies the panel scatter plot figure
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter methods (save/load, Static):
-	%  save - saves BRAPH2 panel ensemble-based comparison figure as b2 file
-	%  load - loads a BRAPH2 panel ensemble-based comparison figure from a b2 file
+	%  save - saves BRAPH2 panel scatter plot figure as b2 file
+	%  load - loads a BRAPH2 panel scatter plot figure from a b2 file
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the panel ensemble-based comparison figure
+	%  encodeJSON - returns a JSON string encoding the panel scatter plot figure
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the panel ensemble-based comparison figure
+	%   decodeJSON - returns a JSON string encoding the panel scatter plot figure
 	%
 	% NNRegressorMLP_EvaluatorPF_Scatter methods (inspection, Static):
-	%  getClass - returns the class of the panel ensemble-based comparison figure
+	%  getClass - returns the class of the panel scatter plot figure
 	%  getSubclasses - returns all subclasses of NNRegressorMLP_EvaluatorPF_Scatter
-	%  getProps - returns the property list of the panel ensemble-based comparison figure
-	%  getPropNumber - returns the property number of the panel ensemble-based comparison figure
+	%  getProps - returns the property list of the panel scatter plot figure
+	%  getPropNumber - returns the property number of the panel scatter plot figure
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -133,107 +92,107 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 	% To print full list of constants, click here <a href="matlab:metaclass = ?NNRegressorMLP_EvaluatorPF_Scatter; properties = metaclass.PropertyList;for i = 1:1:length(properties), if properties(i).Constant, disp([properties(i).Name newline() tostring(properties(i).DefaultValue) newline()]), end, end">NNRegressorMLP_EvaluatorPF_Scatter constants</a>.
 	%
 	%
-	% See also ComparisonEnsemble.
+	% See also NNRegressorMLP_Evaluator.
 	
 	properties (Constant) % properties
-		H_AXES = 23; %CET: Computational Efficiency Trick
+		H_AXES = PanelFig.getPropNumber() + 1;
 		H_AXES_TAG = 'H_AXES';
-		H_AXES_CATEGORY = 7;
-		H_AXES_FORMAT = 18;
+		H_AXES_CATEGORY = Category.EVANESCENT;
+		H_AXES_FORMAT = Format.HANDLE;
 		
-		ST_AXIS = 24; %CET: Computational Efficiency Trick
+		ST_AXIS = PanelFig.getPropNumber() + 2;
 		ST_AXIS_TAG = 'ST_AXIS';
-		ST_AXIS_CATEGORY = 8;
-		ST_AXIS_FORMAT = 8;
+		ST_AXIS_CATEGORY = Category.FIGURE;
+		ST_AXIS_FORMAT = Format.ITEM;
 		
-		LISTENER_ST_AXIS = 25; %CET: Computational Efficiency Trick
+		LISTENER_ST_AXIS = PanelFig.getPropNumber() + 3;
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
-		LISTENER_ST_AXIS_CATEGORY = 7;
-		LISTENER_ST_AXIS_FORMAT = 18;
+		LISTENER_ST_AXIS_CATEGORY = Category.EVANESCENT;
+		LISTENER_ST_AXIS_FORMAT = Format.HANDLE;
 		
-		NNE = 26; %CET: Computational Efficiency Trick
+		NNE = PanelFig.getPropNumber() + 4;
 		NNE_TAG = 'NNE';
-		NNE_CATEGORY = 2;
-		NNE_FORMAT = 8;
+		NNE_CATEGORY = Category.METADATA;
+		NNE_FORMAT = Format.ITEM;
 		
-		PREDICTIONS_VALUE = 27; %CET: Computational Efficiency Trick
+		PREDICTIONS_VALUE = PanelFig.getPropNumber() + 5;
 		PREDICTIONS_VALUE_TAG = 'PREDICTIONS_VALUE';
-		PREDICTIONS_VALUE_CATEGORY = 2;
-		PREDICTIONS_VALUE_FORMAT = 14;
+		PREDICTIONS_VALUE_CATEGORY = Category.METADATA;
+		PREDICTIONS_VALUE_FORMAT = Format.MATRIX;
 		
-		GROUNDTRUTH_VALUE = 28; %CET: Computational Efficiency Trick
+		GROUNDTRUTH_VALUE = PanelFig.getPropNumber() + 6;
 		GROUNDTRUTH_VALUE_TAG = 'GROUNDTRUTH_VALUE';
-		GROUNDTRUTH_VALUE_CATEGORY = 2;
-		GROUNDTRUTH_VALUE_FORMAT = 14;
+		GROUNDTRUTH_VALUE_CATEGORY = Category.METADATA;
+		GROUNDTRUTH_VALUE_FORMAT = Format.MATRIX;
 		
-		SETUP = 29; %CET: Computational Efficiency Trick
+		SETUP = PanelFig.getPropNumber() + 7;
 		SETUP_TAG = 'SETUP';
-		SETUP_CATEGORY = 6;
-		SETUP_FORMAT = 1;
+		SETUP_CATEGORY = Category.QUERY;
+		SETUP_FORMAT = Format.EMPTY;
 		
-		H_PREDICTIONS = 30; %CET: Computational Efficiency Trick
+		H_PREDICTIONS = PanelFig.getPropNumber() + 8;
 		H_PREDICTIONS_TAG = 'H_PREDICTIONS';
-		H_PREDICTIONS_CATEGORY = 7;
-		H_PREDICTIONS_FORMAT = 19;
+		H_PREDICTIONS_CATEGORY = Category.EVANESCENT;
+		H_PREDICTIONS_FORMAT = Format.HANDLELIST;
 		
-		PREDICTIONS = 31; %CET: Computational Efficiency Trick
+		PREDICTIONS = PanelFig.getPropNumber() + 9;
 		PREDICTIONS_TAG = 'PREDICTIONS';
-		PREDICTIONS_CATEGORY = 8;
-		PREDICTIONS_FORMAT = 4;
+		PREDICTIONS_CATEGORY = Category.FIGURE;
+		PREDICTIONS_FORMAT = Format.LOGICAL;
 		
-		PREDICTION_DICT = 32; %CET: Computational Efficiency Trick
+		PREDICTION_DICT = PanelFig.getPropNumber() + 10;
 		PREDICTION_DICT_TAG = 'PREDICTION_DICT';
-		PREDICTION_DICT_CATEGORY = 8;
-		PREDICTION_DICT_FORMAT = 10;
+		PREDICTION_DICT_CATEGORY = Category.FIGURE;
+		PREDICTION_DICT_FORMAT = Format.IDICT;
 		
-		H_LINE_BASE = 33; %CET: Computational Efficiency Trick
+		H_LINE_BASE = PanelFig.getPropNumber() + 11;
 		H_LINE_BASE_TAG = 'H_LINE_BASE';
-		H_LINE_BASE_CATEGORY = 7;
-		H_LINE_BASE_FORMAT = 18;
+		H_LINE_BASE_CATEGORY = Category.EVANESCENT;
+		H_LINE_BASE_FORMAT = Format.HANDLE;
 		
-		ST_LINE_BASE = 34; %CET: Computational Efficiency Trick
+		ST_LINE_BASE = PanelFig.getPropNumber() + 12;
 		ST_LINE_BASE_TAG = 'ST_LINE_BASE';
-		ST_LINE_BASE_CATEGORY = 8;
-		ST_LINE_BASE_FORMAT = 8;
+		ST_LINE_BASE_CATEGORY = Category.FIGURE;
+		ST_LINE_BASE_FORMAT = Format.ITEM;
 		
-		LISTENER_ST_LINE_BASE = 35; %CET: Computational Efficiency Trick
+		LISTENER_ST_LINE_BASE = PanelFig.getPropNumber() + 13;
 		LISTENER_ST_LINE_BASE_TAG = 'LISTENER_ST_LINE_BASE';
-		LISTENER_ST_LINE_BASE_CATEGORY = 7;
-		LISTENER_ST_LINE_BASE_FORMAT = 18;
+		LISTENER_ST_LINE_BASE_CATEGORY = Category.EVANESCENT;
+		LISTENER_ST_LINE_BASE_FORMAT = Format.HANDLE;
 		
-		H_TITLE = 36; %CET: Computational Efficiency Trick
+		H_TITLE = PanelFig.getPropNumber() + 14;
 		H_TITLE_TAG = 'H_TITLE';
-		H_TITLE_CATEGORY = 7;
-		H_TITLE_FORMAT = 18;
+		H_TITLE_CATEGORY = Category.EVANESCENT;
+		H_TITLE_FORMAT = Format.HANDLE;
 		
-		ST_TITLE = 37; %CET: Computational Efficiency Trick
+		ST_TITLE = PanelFig.getPropNumber() + 15;
 		ST_TITLE_TAG = 'ST_TITLE';
-		ST_TITLE_CATEGORY = 8;
-		ST_TITLE_FORMAT = 8;
+		ST_TITLE_CATEGORY = Category.FIGURE;
+		ST_TITLE_FORMAT = Format.ITEM;
 		
-		H_XLABEL = 38; %CET: Computational Efficiency Trick
+		H_XLABEL = PanelFig.getPropNumber() + 16;
 		H_XLABEL_TAG = 'H_XLABEL';
-		H_XLABEL_CATEGORY = 7;
-		H_XLABEL_FORMAT = 18;
+		H_XLABEL_CATEGORY = Category.EVANESCENT;
+		H_XLABEL_FORMAT = Format.HANDLE;
 		
-		ST_XLABEL = 39; %CET: Computational Efficiency Trick
+		ST_XLABEL = PanelFig.getPropNumber() + 17;
 		ST_XLABEL_TAG = 'ST_XLABEL';
-		ST_XLABEL_CATEGORY = 8;
-		ST_XLABEL_FORMAT = 8;
+		ST_XLABEL_CATEGORY = Category.FIGURE;
+		ST_XLABEL_FORMAT = Format.ITEM;
 		
-		H_YLABEL = 40; %CET: Computational Efficiency Trick
+		H_YLABEL = PanelFig.getPropNumber() + 18;
 		H_YLABEL_TAG = 'H_YLABEL';
-		H_YLABEL_CATEGORY = 7;
-		H_YLABEL_FORMAT = 18;
+		H_YLABEL_CATEGORY = Category.EVANESCENT;
+		H_YLABEL_FORMAT = Format.HANDLE;
 		
-		ST_YLABEL = 41; %CET: Computational Efficiency Trick
+		ST_YLABEL = PanelFig.getPropNumber() + 19;
 		ST_YLABEL_TAG = 'ST_YLABEL';
-		ST_YLABEL_CATEGORY = 8;
-		ST_YLABEL_FORMAT = 8;
+		ST_YLABEL_CATEGORY = Category.FIGURE;
+		ST_YLABEL_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function pf = NNRegressorMLP_EvaluatorPF_Scatter(varargin)
-			%NNRegressorMLP_EvaluatorPF_Scatter() creates a panel ensemble-based comparison figure.
+			%NNRegressorMLP_EvaluatorPF_Scatter() creates a panel scatter plot figure.
 			%
 			% NNRegressorMLP_EvaluatorPF_Scatter(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -242,48 +201,6 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of NNRegressorMLP_EvaluatorPF_Scatter properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel ensemble-based comparison figure.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
-			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>26</strong> <strong>NNE</strong> 	NNE (metadata, item) is the ensemble-based comparison.
-			%  <strong>27</strong> <strong>PREDICTIONS_VALUE</strong> 	PREDICTIONS_VALUE (metadata, matrix) is the predictions value.
-			%  <strong>28</strong> <strong>GROUNDTRUTH_VALUE</strong> 	GROUNDTRUTH_VALUE (metadata, matrix) is the ground truth value.
-			%  <strong>29</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.
-			%  <strong>30</strong> <strong>H_PREDICTIONS</strong> 	H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.
-			%  <strong>31</strong> <strong>PREDICTIONS</strong> 	PREDICTIONS (figure, logical) determines whether the prediction plot are shown.
-			%  <strong>32</strong> <strong>PREDICTION_DICT</strong> 	PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
-			%  <strong>33</strong> <strong>H_LINE_BASE</strong> 	H_LINE_BASE (evanescent, handle) is the handle for the ensemble-based comparison line.
-			%  <strong>34</strong> <strong>ST_LINE_BASE</strong> 	ST_LINE_BASE (figure, item) determines the line settings.
-			%  <strong>35</strong> <strong>LISTENER_ST_LINE_BASE</strong> 	LISTENER_ST_LINE_BASE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
-			%  <strong>36</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
-			%  <strong>37</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
-			%  <strong>38</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
-			%  <strong>39</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
-			%  <strong>40</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
-			%  <strong>41</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 			%
 			% See also Category, Format.
 			
@@ -292,12 +209,12 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 	end
 	methods (Static) % inspection
 		function pf_class = getClass()
-			%GETCLASS returns the class of the panel ensemble-based comparison figure.
+			%GETCLASS returns the class of the panel scatter plot figure.
 			%
 			% CLASS = NNRegressorMLP_EvaluatorPF_Scatter.GETCLASS() returns the class 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = PF.GETCLASS() returns the class of the panel ensemble-based comparison figure PF.
+			%  CLASS = PF.GETCLASS() returns the class of the panel scatter plot figure PF.
 			%  CLASS = Element.GETCLASS(PF) returns the class of 'PF'.
 			%  CLASS = Element.GETCLASS('NNRegressorMLP_EvaluatorPF_Scatter') returns 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
@@ -307,12 +224,12 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			pf_class = 'NNRegressorMLP_EvaluatorPF_Scatter';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the panel ensemble-based comparison figure.
+			%GETSUBCLASSES returns all subclasses of the panel scatter plot figure.
 			%
 			% LIST = NNRegressorMLP_EvaluatorPF_Scatter.GETSUBCLASSES() returns all subclasses of 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel ensemble-based comparison figure PF.
+			%  LIST = PF.GETSUBCLASSES() returns all subclasses of the panel scatter plot figure PF.
 			%  LIST = Element.GETSUBCLASSES(PF) returns all subclasses of 'PF'.
 			%  LIST = Element.GETSUBCLASSES('NNRegressorMLP_EvaluatorPF_Scatter') returns all subclasses of 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
@@ -321,19 +238,19 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNRegressorMLP_EvaluatorPF_Scatter' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NNRegressorMLP_EvaluatorPF_Scatter', [], [], true);
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of panel ensemble-based comparison figure.
+			%GETPROPS returns the property list of panel scatter plot figure.
 			%
-			% PROPS = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPS() returns the property list of panel ensemble-based comparison figure
+			% PROPS = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPS() returns the property list of panel scatter plot figure
 			%  as a row vector.
 			%
 			% PROPS = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel ensemble-based comparison figure PF.
+			%  PROPS = PF.GETPROPS([CATEGORY]) returns the property list of the panel scatter plot figure PF.
 			%  PROPS = Element.GETPROPS(PF[, CATEGORY]) returns the property list of 'PF'.
 			%  PROPS = Element.GETPROPS('NNRegressorMLP_EvaluatorPF_Scatter'[, CATEGORY]) returns the property list of 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
@@ -342,44 +259,100 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
+				prop_list = [ ...
+					PanelFig.getProps() ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_AXES ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.NNE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.SETUP ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7 26 27 28];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 29];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 21 22 23 25 30 33 35 36 38 40];
-				case 8 % Category.FIGURE
-					prop_list = [14 20 24 31 32 34 37 39 41];
-				case 9 % Category.GUI
-					prop_list = [9 13];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelFig.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelFig.getProps(Category.METADATA) ...
+						NNRegressorMLP_EvaluatorPF_Scatter.NNE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelFig.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelFig.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelFig.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelFig.getProps(Category.QUERY) ...
+						NNRegressorMLP_EvaluatorPF_Scatter.SETUP ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelFig.getProps(Category.EVANESCENT) ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_AXES ...
+						NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL ...
+						NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelFig.getProps(Category.FIGURE) ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS ...
+						NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL ...
+						NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelFig.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of panel ensemble-based comparison figure.
+			%GETPROPNUMBER returns the property number of panel scatter plot figure.
 			%
-			% N = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPNUMBER() returns the property number of panel ensemble-based comparison figure.
+			% N = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPNUMBER() returns the property number of panel scatter plot figure.
 			%
-			% N = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPNUMBER(CATEGORY) returns the property number of panel ensemble-based comparison figure
+			% N = NNRegressorMLP_EvaluatorPF_Scatter.GETPROPNUMBER(CATEGORY) returns the property number of panel scatter plot figure
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel ensemble-based comparison figure PF.
+			%  N = PF.GETPROPNUMBER([CATEGORY]) returns the property number of the panel scatter plot figure PF.
 			%  N = Element.GETPROPNUMBER(PF) returns the property number of 'PF'.
 			%  N = Element.GETPROPNUMBER('NNRegressorMLP_EvaluatorPF_Scatter') returns the property number of 'NNRegressorMLP_EvaluatorPF_Scatter'.
 			%
@@ -388,36 +361,10 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 41;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 5;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 8;
-				case 7 % Category.EVANESCENT
-					prop_number = 12;
-				case 8 % Category.FIGURE
-					prop_number = 9;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NNRegressorMLP_EvaluatorPF_Scatter.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in panel ensemble-based comparison figure/error.
+			%EXISTSPROP checks whether property exists in panel scatter plot figure/error.
 			%
 			% CHECK = NNRegressorMLP_EvaluatorPF_Scatter.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -442,20 +389,20 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NNRegressorMLP_EvaluatorPF_Scatter.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNRegressorMLP_EvaluatorPF_Scatter.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in panel ensemble-based comparison figure/error.
+			%EXISTSTAG checks whether tag exists in panel scatter plot figure/error.
 			%
 			% CHECK = NNRegressorMLP_EvaluatorPF_Scatter.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -480,14 +427,15 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'PREDICTIONS_VALUE'  'GROUNDTRUTH_VALUE'  'SETUP'  'H_PREDICTIONS'  'PREDICTIONS'  'PREDICTION_DICT'  'H_LINE_BASE'  'ST_LINE_BASE'  'LISTENER_ST_LINE_BASE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); %CET: Computational Efficiency Trick
+			nnregressormlp_evaluatorpf_scatter_tag_list = cellfun(@(x) NNRegressorMLP_EvaluatorPF_Scatter.getPropTag(x), num2cell(NNRegressorMLP_EvaluatorPF_Scatter.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, nnregressormlp_evaluatorpf_scatter_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NNRegressorMLP_EvaluatorPF_Scatter.'] ...
 					)
 			end
@@ -513,7 +461,8 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'PREDICTIONS_VALUE'  'GROUNDTRUTH_VALUE'  'SETUP'  'H_PREDICTIONS'  'PREDICTIONS'  'PREDICTION_DICT'  'H_LINE_BASE'  'ST_LINE_BASE'  'LISTENER_ST_LINE_BASE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); % tag = pointer %CET: Computational Efficiency Trick
+				nnregressormlp_evaluatorpf_scatter_tag_list = cellfun(@(x) NNRegressorMLP_EvaluatorPF_Scatter.getPropTag(x), num2cell(NNRegressorMLP_EvaluatorPF_Scatter.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, nnregressormlp_evaluatorpf_scatter_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -541,9 +490,50 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				nnregressormlp_evaluatorpf_scatter_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'PREDICTIONS_VALUE'  'GROUNDTRUTH_VALUE'  'SETUP'  'H_PREDICTIONS'  'PREDICTIONS'  'PREDICTION_DICT'  'H_LINE_BASE'  'ST_LINE_BASE'  'LISTENER_ST_LINE_BASE'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' };
-				tag = nnregressormlp_evaluatorpf_scatter_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_AXES_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.NNE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.NNE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.SETUP_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL_TAG;
+					case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+						tag = NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL_TAG;
+					otherwise
+						tag = getPropTag@PanelFig(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -568,9 +558,48 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluatorpf_scatter_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  2  2  6  7  8  8  7  8  7  7  8  7  8  7  8 };
-			prop_category = nnregressormlp_evaluatorpf_scatter_category_list{prop};
+			switch prop
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_AXES_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.NNE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.SETUP_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL_CATEGORY;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+					prop_category = NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelFig(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -594,9 +623,48 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluatorpf_scatter_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  14  14  1  19  4  10  18  8  18  18  8  18  8  18  8 };
-			prop_format = nnregressormlp_evaluatorpf_scatter_format_list{prop};
+			switch prop
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_AXES_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.NNE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.SETUP_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL_FORMAT;
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+					prop_format = NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelFig(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -620,9 +688,68 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluatorpf_scatter_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel ensemble-based comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.'  'ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.'  'LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'NNE (metadata, item) is the ensemble-based comparison.'  'PREDICTIONS_VALUE (metadata, matrix) is the predictions value.'  'GROUNDTRUTH_VALUE (metadata, matrix) is the ground truth value.'  'SETUP (query, empty) calculates the ensemble-based comparison value and stores it to be implemented in the subelements.'  'H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.'  'PREDICTIONS (figure, logical) determines whether the prediction plot are shown.'  'PREDICTION_DICT (figure, idict) contains the prediction plot for each target.'  'H_LINE_BASE (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_BASE (figure, item) determines the line settings.'  'LISTENER_ST_LINE_BASE (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
-			prop_description = nnregressormlp_evaluatorpf_scatter_description_list{prop};
+			switch prop
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+					prop_description = 'H_AXES (evanescent, handle) is the handle for the axes.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+					prop_description = 'ST_AXIS (figure, item) determines the axis settings.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+					prop_description = 'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE
+					prop_description = 'NNE (metadata, item) is the neural network evaluator.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+					prop_description = 'PREDICTIONS_VALUE (metadata, matrix) is the predictions value.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+					prop_description = 'GROUNDTRUTH_VALUE (metadata, matrix) is the ground truth value.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+					prop_description = 'SETUP (query, empty) calculates the prediction value and ground truth value, and then initializes the panel figure.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+					prop_description = 'H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+					prop_description = 'PREDICTIONS (figure, logical) determines whether the prediction plot are shown.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+					prop_description = 'PREDICTION_DICT (figure, idict) contains the prediction plot for each target.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+					prop_description = 'H_LINE_BASE (evanescent, handle) is the handle for the base line.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+					prop_description = 'ST_LINE_BASE (figure, item) determines the base line settings.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+					prop_description = 'LISTENER_ST_LINE_BASE (evanescent, handle) contains the listener to the base line settings to update the pushbutton.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+					prop_description = 'H_TITLE (evanescent, handle) is the axis title.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+					prop_description = 'ST_TITLE (figure, item) determines the title settings.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+					prop_description = 'H_XLABEL (evanescent, handle) is the axis x-label.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+					prop_description = 'ST_XLABEL (figure, item) determines the x-label settings.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+					prop_description = 'H_YLABEL (evanescent, handle) is the axis y-label.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+					prop_description = 'ST_YLABEL (figure, item) determines the y-label settings.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the panel scatter plot for an evaluator with MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.NAME
+					prop_description = 'NAME (constant, string) is the name of the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.ID
+					prop_description = 'ID (data, string) is a few-letter code for the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the panel scatter plot for an evaluator with a MLP regressor.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.DRAW
+					prop_description = 'DRAW (query, logical) draws the scatter plot figure.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel figure graph is deleted.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TOOLS
+					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.';
+				otherwise
+					prop_description = getPropDescription@PanelFig(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -646,46 +773,46 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 23 % NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
-					prop_settings = Format.getFormatSettings(18);
-				case 24 % NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+			switch prop
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case 25 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
-					prop_settings = Format.getFormatSettings(18);
-				case 26 % NNRegressorMLP_EvaluatorPF_Scatter.NNE
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE
 					prop_settings = 'NNRegressorMLP_Evaluator';
-				case 27 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
-					prop_settings = Format.getFormatSettings(14);
-				case 28 % NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
-					prop_settings = Format.getFormatSettings(14);
-				case 29 % NNRegressorMLP_EvaluatorPF_Scatter.SETUP
-					prop_settings = Format.getFormatSettings(1);
-				case 30 % NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
-					prop_settings = Format.getFormatSettings(19);
-				case 31 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
-					prop_settings = Format.getFormatSettings(4);
-				case 32 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+					prop_settings = Format.getFormatSettings(Format.EMPTY);
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
 					prop_settings = 'SettingsLine';
-				case 33 % NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
-					prop_settings = Format.getFormatSettings(18);
-				case 34 % NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
 					prop_settings = 'SettingsLine';
-				case 35 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
-					prop_settings = Format.getFormatSettings(18);
-				case 36 % NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
-					prop_settings = Format.getFormatSettings(18);
-				case 37 % NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
 					prop_settings = 'SettingsText';
-				case 38 % NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
 					prop_settings = 'SettingsText';
-				case 40 % NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
-					prop_settings = Format.getFormatSettings(18);
-				case 41 % NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
 					prop_settings = 'SettingsText';
-				case 4 % NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
+				case NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
 					prop_settings = 'NNRegressorMLP_EvaluatorPF_Scatter';
 				otherwise
 					prop_settings = getPropSettings@PanelFig(prop);
@@ -713,58 +840,58 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 23 % NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 24 % NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+			switch prop
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
 					prop_default = SettingsAxis('AXIS', true, 'GRID', false, 'EQUAL', false);
-				case 25 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 26 % NNRegressorMLP_EvaluatorPF_Scatter.NNE
-					prop_default = Format.getFormatDefault(8, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 27 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
-					prop_default = Format.getFormatDefault(14, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 28 % NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
-					prop_default = Format.getFormatDefault(14, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 29 % NNRegressorMLP_EvaluatorPF_Scatter.SETUP
-					prop_default = Format.getFormatDefault(1, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 30 % NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
-					prop_default = Format.getFormatDefault(19, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 31 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
+					prop_default = Format.getFormatDefault(Format.MATRIX, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
+					prop_default = Format.getFormatDefault(Format.MATRIX, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+					prop_default = Format.getFormatDefault(Format.EMPTY, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
 					prop_default = true;
-				case 32 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
-					prop_default = Format.getFormatDefault(10, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 33 % NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 34 % NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
-					prop_default = Format.getFormatDefault(8, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 35 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 36 % NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 37 % NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
-				case 38 % NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 39 % NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
-				case 40 % NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
-					prop_default = Format.getFormatDefault(18, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 41 % NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90);
-				case 1 % NNRegressorMLP_EvaluatorPF_Scatter.ELCLASS
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle');
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle');
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+					prop_default = Format.getFormatDefault(Format.HANDLE, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90);
+				case NNRegressorMLP_EvaluatorPF_Scatter.ELCLASS
 					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter';
-				case 2 % NNRegressorMLP_EvaluatorPF_Scatter.NAME
-					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter';
-				case 3 % NNRegressorMLP_EvaluatorPF_Scatter.DESCRIPTION
-					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter manages the basic functionalities to plot of an ensemble-based comparison.';
-				case 4 % NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
-					prop_default = Format.getFormatDefault(8, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 5 % NNRegressorMLP_EvaluatorPF_Scatter.ID
+				case NNRegressorMLP_EvaluatorPF_Scatter.NAME
+					prop_default = 'Scatter Plot Panel for an Evaluator with MLP Regressor';
+				case NNRegressorMLP_EvaluatorPF_Scatter.DESCRIPTION
+					prop_default = 'The scatter plot panel for an evaluator with a MLP regressor (NNRegressorMLP_EvaluatorPF_Scatter) manages the functionalities to plot a panel of the scatter plots in a regression task.';
+				case NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ID
 					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter ID';
-				case 6 % NNRegressorMLP_EvaluatorPF_Scatter.LABEL
+				case NNRegressorMLP_EvaluatorPF_Scatter.LABEL
 					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter label';
-				case 7 % NNRegressorMLP_EvaluatorPF_Scatter.NOTES
+				case NNRegressorMLP_EvaluatorPF_Scatter.NOTES
 					prop_default = 'NNRegressorMLP_EvaluatorPF_Scatter notes';
 				otherwise
 					prop_default = getPropDefault@PanelFig(prop);
@@ -811,15 +938,15 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NNRegressorMLP_EvaluatorPF_Scatter:WrongInput
+			%  Error id: €BRAPH2.STR€:NNRegressorMLP_EvaluatorPF_Scatter:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: BRAPH2:NNRegressorMLP_EvaluatorPF_Scatter:WrongInput
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP_EvaluatorPF_Scatter:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NNRegressorMLP_EvaluatorPF_Scatter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNRegressorMLP_EvaluatorPF_Scatter.
-			%   Error id: BRAPH2:NNRegressorMLP_EvaluatorPF_Scatter:WrongInput
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP_EvaluatorPF_Scatter:€BRAPH2.WRONG_INPUT€
 			%  PF.CHECKPROP(NNRegressorMLP_EvaluatorPF_Scatter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNRegressorMLP_EvaluatorPF_Scatter.
-			%   Error id: BRAPH2:NNRegressorMLP_EvaluatorPF_Scatter:WrongInput]
+			%   Error id: €BRAPH2.STR€:NNRegressorMLP_EvaluatorPF_Scatter:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('NNRegressorMLP_EvaluatorPF_Scatter')
 			%  are less computationally efficient.
@@ -830,48 +957,48 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			prop = NNRegressorMLP_EvaluatorPF_Scatter.getPropProp(pointer);
 			
 			switch prop
-				case 23 % NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 24 % NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 25 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 26 % NNRegressorMLP_EvaluatorPF_Scatter.NNE
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 27 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE
-					check = Format.checkFormat(14, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 28 % NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE
-					check = Format.checkFormat(14, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 29 % NNRegressorMLP_EvaluatorPF_Scatter.SETUP
-					check = Format.checkFormat(1, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 30 % NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
-					check = Format.checkFormat(19, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 31 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
-					check = Format.checkFormat(4, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 32 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
-					check = Format.checkFormat(10, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 33 % NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 34 % NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 35 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 36 % NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 37 % NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 38 % NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 39 % NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 40 % NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
-					check = Format.checkFormat(18, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 41 % NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
-				case 4 % NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE
-					check = Format.checkFormat(8, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES % __NNRegressorMLP_EvaluatorPF_Scatter.H_AXES__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS % __NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS % __NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.NNE % __NNRegressorMLP_EvaluatorPF_Scatter.NNE__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS_VALUE__
+					check = Format.checkFormat(Format.MATRIX, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE % __NNRegressorMLP_EvaluatorPF_Scatter.GROUNDTRUTH_VALUE__
+					check = Format.checkFormat(Format.MATRIX, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP % __NNRegressorMLP_EvaluatorPF_Scatter.SETUP__
+					check = Format.checkFormat(Format.EMPTY, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS % __NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS__
+					check = Format.checkFormat(Format.HANDLELIST, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS__
+					check = Format.checkFormat(Format.LOGICAL, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT__
+					check = Format.checkFormat(Format.IDICT, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE % __NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE % __NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL__
+					check = Format.checkFormat(Format.HANDLE, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
+				case NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE % __NNRegressorMLP_EvaluatorPF_Scatter.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, NNRegressorMLP_EvaluatorPF_Scatter.getPropSettings(prop));
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -880,8 +1007,8 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput'], ...
-					['BRAPH2' ':NNRegressorMLP_EvaluatorPF_Scatter:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNRegressorMLP_EvaluatorPF_Scatter.getPropTag(prop) ' (' NNRegressorMLP_EvaluatorPF_Scatter.getFormatTag(NNRegressorMLP_EvaluatorPF_Scatter.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -901,7 +1028,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case 24 % NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS % __NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS__
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -910,7 +1037,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					    end
 					end
 					
-				case 31 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTIONS__
 					if ~pf.get('PREDICTIONS') % false
 					    h_predictions = pf.get('H_PREDICTIONS');
 					    for i = 1:1:length(h_predictions)
@@ -929,7 +1056,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					
 					pf.get('SETUP');
 					
-				case 32 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT__
 					if pf.get('PREDICTIONS') && ~isa(pf.getr('NNE'), 'NoValue')
 					    predictions = pf.memorize('PREDICTIONS_VALUE');
 					    ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
@@ -944,7 +1071,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					                'Y', predictions(:, i), ...
 					                'I', i, ...
 					                'PANEL', pf, ...
-					                'PROP', 30, ...
+					                'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS, ...
 					                'LINESTYLE', 'none', ...
 					                'VISIBLE', false ...
 					                );
@@ -957,11 +1084,11 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					    end
 					end
 					
-				case 37 % NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE % __NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE__
 					pf.get('SETUP');
 					
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -972,19 +1099,19 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 23 % NNRegressorMLP_EvaluatorPF_Scatter.H_AXES
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_AXES % __NNRegressorMLP_EvaluatorPF_Scatter.H_AXES__
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -997,10 +1124,10 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					hold(h_axes, 'on')
 					value = h_axes;
 					
-				case 25 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS % __NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_AXIS__
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case 29 % NNRegressorMLP_EvaluatorPF_Scatter.SETUP
+				case NNRegressorMLP_EvaluatorPF_Scatter.SETUP % __NNRegressorMLP_EvaluatorPF_Scatter.SETUP__
 					pf.memorize('H_PREDICTIONS');
 					
 					nne = pf.get('NNE');
@@ -1059,7 +1186,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					
 					value = [];
 					
-				case 30 % NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS % __NNRegressorMLP_EvaluatorPF_Scatter.H_PREDICTIONS__
 					targets = pf.memorize('NNE').get('D').get('DP_DICT').get('IT', 1).get('TARGET_IDS');
 					L = length(targets);
 					h_predictions = cell(1, L);
@@ -1068,13 +1195,13 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					end
 					value = h_predictions;
 					
-				case 33 % NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE__
 					value = plot(pf.get('H_AXES'), [0], [0], 'b', 'LineWidth', 2);
 					
-				case 35 % NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE
+				case NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.LISTENER_ST_LINE_BASE__
 					value = listener(pf.get('ST_LINE_BASE'), 'PropSet', @cb_listener_st_line_base);
 					
-				case 36 % NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE % __NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE__
 					value = title(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_TITLE'), 'NoValue')
@@ -1089,7 +1216,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					        )
 					end
 					
-				case 38 % NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL__
 					value = xlabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_XLABEL'), 'NoValue')
@@ -1104,7 +1231,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					        )
 					end
 					
-				case 40 % NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL__
 					value = ylabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_YLABEL'), 'NoValue')
@@ -1119,34 +1246,34 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					        )
 					end
 					
-				case 11 % NNRegressorMLP_EvaluatorPF_Scatter.DRAW
-					value = calculateValue@PanelFig(pf, 11, varargin{:}); % also warning
+				case NNRegressorMLP_EvaluatorPF_Scatter.DRAW % __NNRegressorMLP_EvaluatorPF_Scatter.DRAW__
+					value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					    
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_AXES).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					    
 					    pf.memorize('H_PREDICTIONS')
 					    
 					    pf.memorize('H_LINE_BASE')
-					    pf.memorize('ST_LINE_BASE').set('PANEL', pf, 'PROP', 33).get('SETUP')
+					    pf.memorize('ST_LINE_BASE').set('PANEL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_LINE_BASE).get('SETUP')
 						pf.memorize('LISTENER_ST_LINE_BASE');
 					
 					    pf.memorize('H_TITLE')
-					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', 36).get('SETUP')
+					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_TITLE).get('SETUP')
 					
 					    pf.memorize('H_XLABEL')
-					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', 38).get('SETUP')
+					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_XLABEL).get('SETUP')
 					    
 					    pf.memorize('H_YLABEL')
-					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', 40).get('SETUP')
+					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.H_YLABEL).get('SETUP')
 					
 					    pf.get('SETUP')
 					end
 					
-				case 18 % NNRegressorMLP_EvaluatorPF_Scatter.DELETE
-					value = calculateValue@PanelFig(pf, 18, varargin{:}); % also warning
+				case NNRegressorMLP_EvaluatorPF_Scatter.DELETE % __NNRegressorMLP_EvaluatorPF_Scatter.DELETE__
+					value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					
@@ -1164,10 +1291,10 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					    pf.set('H_YLABEL', Element.getNoValue())
 					end
 					
-				case 22 % NNRegressorMLP_EvaluatorPF_Scatter.H_TOOLS
+				case NNRegressorMLP_EvaluatorPF_Scatter.H_TOOLS % __NNRegressorMLP_EvaluatorPF_Scatter.H_TOOLS__
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, 22);
+					    value = calculateValue@PanelFig(pf, PanelFig.H_TOOLS);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1221,7 +1348,7 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 					end
 					
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1285,28 +1412,28 @@ classdef NNRegressorMLP_EvaluatorPF_Scatter < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 24 % NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS
-					pr = SettingsAxisPP('EL', pf, 'PROP', 24, varargin{:});
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS % __NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS__
+					pr = SettingsAxisPP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_AXIS, varargin{:});
 					
-				case 32 % NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT
+				case NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT % __NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT__
 					SETUP = pf.getPropProp('SETUP');
 					EL = PanelPropIDictTable.getPropProp('EL');
-					pr = PanelPropIDictTable('EL', pf, 'PROP', 32, ...
+					pr = PanelPropIDictTable('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.PREDICTION_DICT, ...
 					    'CB_TAB_EDIT', ['cb_table_edit_default(); pr.get(' num2str(EL) ').get(' num2str(SETUP) ')'], ...
-					    'COLS', [-1 15 22 23 24 25], ...
+					    'COLS', [PanelPropIDictTable.SELECTOR SettingsLine.VISIBLE SettingsLine.SYMBOL SettingsLine.SYMBOLSIZE SettingsLine.EDGECOLOR SettingsLine.FACECOLOR], ...
 					    varargin{:});
 					
-				case 34 % NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE
-					pr = SettingsLinePP('EL', pf, 'PROP', 34, varargin{:});
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE % __NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE__
+					pr = SettingsLinePP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_LINE_BASE, varargin{:});
 					
-				case 37 % NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE
-					pr = SettingsTextPP('EL', pf, 'PROP', 37, varargin{:});
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE % __NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE__
+					pr = SettingsTextPP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_TITLE, varargin{:});
 					
-				case 39 % NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL
-					pr = SettingsTextPP('EL', pf, 'PROP', 39, varargin{:});
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL__
+					pr = SettingsTextPP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_XLABEL, varargin{:});
 					
-				case 41 % NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL
-					pr = SettingsTextPP('EL', pf, 'PROP', 41, varargin{:});
+				case NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL % __NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL__
+					pr = SettingsTextPP('EL', pf, 'PROP', NNRegressorMLP_EvaluatorPF_Scatter.ST_YLABEL, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

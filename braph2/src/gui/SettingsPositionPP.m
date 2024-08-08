@@ -7,53 +7,6 @@ classdef SettingsPositionPP < SettingsPP
 	%  and numeric edit fields for x0, y0, height and width.
 	% It works for all categories.
 	%
-	% The list of SettingsPositionPP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel for position settings.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel for position settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel for position settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel for position settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel for position settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel for position settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel for position settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel for position settings.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-	%  <strong>37</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
-	%  <strong>38</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
-	%  <strong>39</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
-	%  <strong>40</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
-	%  <strong>41</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
-	%  <strong>42</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
-	%  <strong>43</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
-	%  <strong>44</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
-	%  <strong>45</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
-	%
 	% SettingsPositionPP methods (constructor):
 	%  SettingsPositionPP - constructor
 	%
@@ -143,55 +96,55 @@ classdef SettingsPositionPP < SettingsPP
 	% See also SettingsPosition, uicheckbox, uieditfield.
 	
 	properties (Constant) % properties
-		ENABLE = 36; %CET: Computational Efficiency Trick
+		ENABLE = SettingsPP.getPropNumber() + 1;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		CHECKBOX_AUTOPOS = 37; %CET: Computational Efficiency Trick
+		CHECKBOX_AUTOPOS = SettingsPP.getPropNumber() + 2;
 		CHECKBOX_AUTOPOS_TAG = 'CHECKBOX_AUTOPOS';
-		CHECKBOX_AUTOPOS_CATEGORY = 7;
-		CHECKBOX_AUTOPOS_FORMAT = 18;
+		CHECKBOX_AUTOPOS_CATEGORY = Category.EVANESCENT;
+		CHECKBOX_AUTOPOS_FORMAT = Format.HANDLE;
 		
-		LABEL_X0 = 38; %CET: Computational Efficiency Trick
+		LABEL_X0 = SettingsPP.getPropNumber() + 3;
 		LABEL_X0_TAG = 'LABEL_X0';
-		LABEL_X0_CATEGORY = 7;
-		LABEL_X0_FORMAT = 18;
+		LABEL_X0_CATEGORY = Category.EVANESCENT;
+		LABEL_X0_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_X0 = 39; %CET: Computational Efficiency Trick
+		EDITFIELD_X0 = SettingsPP.getPropNumber() + 4;
 		EDITFIELD_X0_TAG = 'EDITFIELD_X0';
-		EDITFIELD_X0_CATEGORY = 7;
-		EDITFIELD_X0_FORMAT = 18;
+		EDITFIELD_X0_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_X0_FORMAT = Format.HANDLE;
 		
-		LABEL_Y0 = 40; %CET: Computational Efficiency Trick
+		LABEL_Y0 = SettingsPP.getPropNumber() + 5;
 		LABEL_Y0_TAG = 'LABEL_Y0';
-		LABEL_Y0_CATEGORY = 7;
-		LABEL_Y0_FORMAT = 18;
+		LABEL_Y0_CATEGORY = Category.EVANESCENT;
+		LABEL_Y0_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_Y0 = 41; %CET: Computational Efficiency Trick
+		EDITFIELD_Y0 = SettingsPP.getPropNumber() + 6;
 		EDITFIELD_Y0_TAG = 'EDITFIELD_Y0';
-		EDITFIELD_Y0_CATEGORY = 7;
-		EDITFIELD_Y0_FORMAT = 18;
+		EDITFIELD_Y0_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_Y0_FORMAT = Format.HANDLE;
 		
-		LABEL_W = 42; %CET: Computational Efficiency Trick
+		LABEL_W = SettingsPP.getPropNumber() + 7;
 		LABEL_W_TAG = 'LABEL_W';
-		LABEL_W_CATEGORY = 7;
-		LABEL_W_FORMAT = 18;
+		LABEL_W_CATEGORY = Category.EVANESCENT;
+		LABEL_W_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_W = 43; %CET: Computational Efficiency Trick
+		EDITFIELD_W = SettingsPP.getPropNumber() + 8;
 		EDITFIELD_W_TAG = 'EDITFIELD_W';
-		EDITFIELD_W_CATEGORY = 7;
-		EDITFIELD_W_FORMAT = 18;
+		EDITFIELD_W_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_W_FORMAT = Format.HANDLE;
 		
-		LABEL_H = 44; %CET: Computational Efficiency Trick
+		LABEL_H = SettingsPP.getPropNumber() + 9;
 		LABEL_H_TAG = 'LABEL_H';
-		LABEL_H_CATEGORY = 7;
-		LABEL_H_FORMAT = 18;
+		LABEL_H_CATEGORY = Category.EVANESCENT;
+		LABEL_H_FORMAT = Format.HANDLE;
 		
-		EDITFIELD_H = 45; %CET: Computational Efficiency Trick
+		EDITFIELD_H = SettingsPP.getPropNumber() + 10;
 		EDITFIELD_H_TAG = 'EDITFIELD_H';
-		EDITFIELD_H_CATEGORY = 7;
-		EDITFIELD_H_FORMAT = 18;
+		EDITFIELD_H_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_H_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = SettingsPositionPP(varargin)
@@ -204,52 +157,6 @@ classdef SettingsPositionPP < SettingsPP
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SettingsPositionPP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel for position settings.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel for position settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel for position settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel for position settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel for position settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel for position settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel for position settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel for position settings.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
-			%  <strong>37</strong> <strong>CHECKBOX_AUTOPOS</strong> 	CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.
-			%  <strong>38</strong> <strong>LABEL_X0</strong> 	LABEL_X0 (evanescent, handle) is the label of the x0 edit field.
-			%  <strong>39</strong> <strong>EDITFIELD_X0</strong> 	EDITFIELD_X0 (evanescent, handle) is the x0 edit field.
-			%  <strong>40</strong> <strong>LABEL_Y0</strong> 	LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.
-			%  <strong>41</strong> <strong>EDITFIELD_Y0</strong> 	EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.
-			%  <strong>42</strong> <strong>LABEL_W</strong> 	LABEL_W (evanescent, handle) is the label of the witdth edit field.
-			%  <strong>43</strong> <strong>EDITFIELD_W</strong> 	EDITFIELD_W (evanescent, handle) is the width edit field.
-			%  <strong>44</strong> <strong>LABEL_H</strong> 	LABEL_H (evanescent, handle) is the label of the height edit field.
-			%  <strong>45</strong> <strong>EDITFIELD_H</strong> 	EDITFIELD_H (evanescent, handle) is the height edit field.
 			%
 			% See also Category, Format.
 			
@@ -287,7 +194,7 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SettingsPositionPP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SettingsPositionPP', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel for position settings.
@@ -308,32 +215,70 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45];
+				prop_list = [ ...
+					SettingsPP.getProps() ...
+						SettingsPositionPP.ENABLE ...
+						SettingsPositionPP.CHECKBOX_AUTOPOS ...
+						SettingsPositionPP.LABEL_X0 ...
+						SettingsPositionPP.EDITFIELD_X0 ...
+						SettingsPositionPP.LABEL_Y0 ...
+						SettingsPositionPP.EDITFIELD_Y0 ...
+						SettingsPositionPP.LABEL_W ...
+						SettingsPositionPP.EDITFIELD_W ...
+						SettingsPositionPP.LABEL_H ...
+						SettingsPositionPP.EDITFIELD_H ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39 40 41 42 43 44 45];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						SettingsPP.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						SettingsPP.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						SettingsPP.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						SettingsPP.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						SettingsPP.getProps(Category.EVANESCENT) ...
+						SettingsPositionPP.CHECKBOX_AUTOPOS ...
+						SettingsPositionPP.LABEL_X0 ...
+						SettingsPositionPP.EDITFIELD_X0 ...
+						SettingsPositionPP.LABEL_Y0 ...
+						SettingsPositionPP.EDITFIELD_Y0 ...
+						SettingsPositionPP.LABEL_W ...
+						SettingsPositionPP.EDITFIELD_W ...
+						SettingsPositionPP.LABEL_H ...
+						SettingsPositionPP.EDITFIELD_H ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						SettingsPP.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						SettingsPP.getProps(Category.GUI) ...
+						SettingsPositionPP.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -354,33 +299,7 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 45;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 19;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SettingsPositionPP.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in prop panel for position settings/error.
@@ -408,14 +327,14 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 45 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SettingsPositionPP.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsPositionPP.'] ...
 					)
 			end
@@ -446,14 +365,15 @@ classdef SettingsPositionPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); %CET: Computational Efficiency Trick
+			settingspositionpp_tag_list = cellfun(@(x) SettingsPositionPP.getPropTag(x), num2cell(SettingsPositionPP.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settingspositionpp_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsPositionPP.'] ...
 					)
 			end
@@ -479,7 +399,8 @@ classdef SettingsPositionPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' })); % tag = pointer %CET: Computational Efficiency Trick
+				settingspositionpp_tag_list = cellfun(@(x) SettingsPositionPP.getPropTag(x), num2cell(SettingsPositionPP.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settingspositionpp_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -507,9 +428,32 @@ classdef SettingsPositionPP < SettingsPP
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settingspositionpp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'CHECKBOX_AUTOPOS'  'LABEL_X0'  'EDITFIELD_X0'  'LABEL_Y0'  'EDITFIELD_Y0'  'LABEL_W'  'EDITFIELD_W'  'LABEL_H'  'EDITFIELD_H' };
-				tag = settingspositionpp_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SettingsPositionPP.ENABLE
+						tag = SettingsPositionPP.ENABLE_TAG;
+					case SettingsPositionPP.CHECKBOX_AUTOPOS
+						tag = SettingsPositionPP.CHECKBOX_AUTOPOS_TAG;
+					case SettingsPositionPP.LABEL_X0
+						tag = SettingsPositionPP.LABEL_X0_TAG;
+					case SettingsPositionPP.EDITFIELD_X0
+						tag = SettingsPositionPP.EDITFIELD_X0_TAG;
+					case SettingsPositionPP.LABEL_Y0
+						tag = SettingsPositionPP.LABEL_Y0_TAG;
+					case SettingsPositionPP.EDITFIELD_Y0
+						tag = SettingsPositionPP.EDITFIELD_Y0_TAG;
+					case SettingsPositionPP.LABEL_W
+						tag = SettingsPositionPP.LABEL_W_TAG;
+					case SettingsPositionPP.EDITFIELD_W
+						tag = SettingsPositionPP.EDITFIELD_W_TAG;
+					case SettingsPositionPP.LABEL_H
+						tag = SettingsPositionPP.LABEL_H_TAG;
+					case SettingsPositionPP.EDITFIELD_H
+						tag = SettingsPositionPP.EDITFIELD_H_TAG;
+					otherwise
+						tag = getPropTag@SettingsPP(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -534,9 +478,30 @@ classdef SettingsPositionPP < SettingsPP
 			
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingspositionpp_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7 };
-			prop_category = settingspositionpp_category_list{prop};
+			switch prop
+				case SettingsPositionPP.ENABLE
+					prop_category = SettingsPositionPP.ENABLE_CATEGORY;
+				case SettingsPositionPP.CHECKBOX_AUTOPOS
+					prop_category = SettingsPositionPP.CHECKBOX_AUTOPOS_CATEGORY;
+				case SettingsPositionPP.LABEL_X0
+					prop_category = SettingsPositionPP.LABEL_X0_CATEGORY;
+				case SettingsPositionPP.EDITFIELD_X0
+					prop_category = SettingsPositionPP.EDITFIELD_X0_CATEGORY;
+				case SettingsPositionPP.LABEL_Y0
+					prop_category = SettingsPositionPP.LABEL_Y0_CATEGORY;
+				case SettingsPositionPP.EDITFIELD_Y0
+					prop_category = SettingsPositionPP.EDITFIELD_Y0_CATEGORY;
+				case SettingsPositionPP.LABEL_W
+					prop_category = SettingsPositionPP.LABEL_W_CATEGORY;
+				case SettingsPositionPP.EDITFIELD_W
+					prop_category = SettingsPositionPP.EDITFIELD_W_CATEGORY;
+				case SettingsPositionPP.LABEL_H
+					prop_category = SettingsPositionPP.LABEL_H_CATEGORY;
+				case SettingsPositionPP.EDITFIELD_H
+					prop_category = SettingsPositionPP.EDITFIELD_H_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@SettingsPP(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -560,9 +525,30 @@ classdef SettingsPositionPP < SettingsPP
 			
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingspositionpp_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18 };
-			prop_format = settingspositionpp_format_list{prop};
+			switch prop
+				case SettingsPositionPP.ENABLE
+					prop_format = SettingsPositionPP.ENABLE_FORMAT;
+				case SettingsPositionPP.CHECKBOX_AUTOPOS
+					prop_format = SettingsPositionPP.CHECKBOX_AUTOPOS_FORMAT;
+				case SettingsPositionPP.LABEL_X0
+					prop_format = SettingsPositionPP.LABEL_X0_FORMAT;
+				case SettingsPositionPP.EDITFIELD_X0
+					prop_format = SettingsPositionPP.EDITFIELD_X0_FORMAT;
+				case SettingsPositionPP.LABEL_Y0
+					prop_format = SettingsPositionPP.LABEL_Y0_FORMAT;
+				case SettingsPositionPP.EDITFIELD_Y0
+					prop_format = SettingsPositionPP.EDITFIELD_Y0_FORMAT;
+				case SettingsPositionPP.LABEL_W
+					prop_format = SettingsPositionPP.LABEL_W_FORMAT;
+				case SettingsPositionPP.EDITFIELD_W
+					prop_format = SettingsPositionPP.EDITFIELD_W_FORMAT;
+				case SettingsPositionPP.LABEL_H
+					prop_format = SettingsPositionPP.LABEL_H_FORMAT;
+				case SettingsPositionPP.EDITFIELD_H
+					prop_format = SettingsPositionPP.EDITFIELD_H_FORMAT;
+				otherwise
+					prop_format = getPropFormat@SettingsPP(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -586,9 +572,58 @@ classdef SettingsPositionPP < SettingsPP
 			
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingspositionpp_description_list = { 'ELCLASS (constant, string) is the class of the property panel for position settings.'  'NAME (constant, string) is the name of the property panel for position settings.'  'DESCRIPTION (constant, string) is the description of the property panel for position settings.'  'TEMPLATE (parameter, item) is the template of the property panel for position settings.'  'ID (data, string) is a few-letter code for the property panel for position settings.'  'LABEL (metadata, string) is an extended label of the property panel for position settings.'  'NOTES (metadata, string) are some specific notes about the property panel for position settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel for position settings.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.'  'LABEL_X0 (evanescent, handle) is the label of the x0 edit field.'  'EDITFIELD_X0 (evanescent, handle) is the x0 edit field.'  'LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.'  'EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.'  'LABEL_W (evanescent, handle) is the label of the witdth edit field.'  'EDITFIELD_W (evanescent, handle) is the width edit field.'  'LABEL_H (evanescent, handle) is the label of the height edit field.'  'EDITFIELD_H (evanescent, handle) is the height edit field.' };
-			prop_description = settingspositionpp_description_list{prop};
+			switch prop
+				case SettingsPositionPP.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.';
+				case SettingsPositionPP.CHECKBOX_AUTOPOS
+					prop_description = 'CHECKBOX_AUTOPOS (evanescent, handle) is the autopositioning checkbox.';
+				case SettingsPositionPP.LABEL_X0
+					prop_description = 'LABEL_X0 (evanescent, handle) is the label of the x0 edit field.';
+				case SettingsPositionPP.EDITFIELD_X0
+					prop_description = 'EDITFIELD_X0 (evanescent, handle) is the x0 edit field.';
+				case SettingsPositionPP.LABEL_Y0
+					prop_description = 'LABEL_Y0 (evanescent, handle) is the label of the y0 edit field.';
+				case SettingsPositionPP.EDITFIELD_Y0
+					prop_description = 'EDITFIELD_Y0 (evanescent, handle) is the y0 edit field.';
+				case SettingsPositionPP.LABEL_W
+					prop_description = 'LABEL_W (evanescent, handle) is the label of the witdth edit field.';
+				case SettingsPositionPP.EDITFIELD_W
+					prop_description = 'EDITFIELD_W (evanescent, handle) is the width edit field.';
+				case SettingsPositionPP.LABEL_H
+					prop_description = 'LABEL_H (evanescent, handle) is the label of the height edit field.';
+				case SettingsPositionPP.EDITFIELD_H
+					prop_description = 'EDITFIELD_H (evanescent, handle) is the height edit field.';
+				case SettingsPositionPP.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the property panel for position settings.';
+				case SettingsPositionPP.NAME
+					prop_description = 'NAME (constant, string) is the name of the property panel for position settings.';
+				case SettingsPositionPP.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the property panel for position settings.';
+				case SettingsPositionPP.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the property panel for position settings.';
+				case SettingsPositionPP.ID
+					prop_description = 'ID (data, string) is a few-letter code for the property panel for position settings.';
+				case SettingsPositionPP.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the property panel for position settings.';
+				case SettingsPositionPP.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the property panel for position settings.';
+				case SettingsPositionPP.EL
+					prop_description = 'EL (data, item) is the element.';
+				case SettingsPositionPP.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case SettingsPositionPP.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the property panel for position settings.';
+				case SettingsPositionPP.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case SettingsPositionPP.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.';
+				case SettingsPositionPP.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case SettingsPositionPP.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@SettingsPP(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -612,28 +647,28 @@ classdef SettingsPositionPP < SettingsPP
 			
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsPositionPP.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 37 % SettingsPositionPP.CHECKBOX_AUTOPOS
-					prop_settings = Format.getFormatSettings(18);
-				case 38 % SettingsPositionPP.LABEL_X0
-					prop_settings = Format.getFormatSettings(18);
-				case 39 % SettingsPositionPP.EDITFIELD_X0
-					prop_settings = Format.getFormatSettings(18);
-				case 40 % SettingsPositionPP.LABEL_Y0
-					prop_settings = Format.getFormatSettings(18);
-				case 41 % SettingsPositionPP.EDITFIELD_Y0
-					prop_settings = Format.getFormatSettings(18);
-				case 42 % SettingsPositionPP.LABEL_W
-					prop_settings = Format.getFormatSettings(18);
-				case 43 % SettingsPositionPP.EDITFIELD_W
-					prop_settings = Format.getFormatSettings(18);
-				case 44 % SettingsPositionPP.LABEL_H
-					prop_settings = Format.getFormatSettings(18);
-				case 45 % SettingsPositionPP.EDITFIELD_H
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % SettingsPositionPP.TEMPLATE
+			switch prop
+				case SettingsPositionPP.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SettingsPositionPP.CHECKBOX_AUTOPOS
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.LABEL_X0
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.EDITFIELD_X0
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.LABEL_Y0
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.EDITFIELD_Y0
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.LABEL_W
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.EDITFIELD_W
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.LABEL_H
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.EDITFIELD_H
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case SettingsPositionPP.TEMPLATE
 					prop_settings = 'SettingsPositionPP';
 				otherwise
 					prop_settings = getPropSettings@SettingsPP(prop);
@@ -661,47 +696,47 @@ classdef SettingsPositionPP < SettingsPP
 			
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % SettingsPositionPP.ENABLE
+			switch prop
+				case SettingsPositionPP.ENABLE
 					prop_default = true;
-				case 37 % SettingsPositionPP.CHECKBOX_AUTOPOS
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 38 % SettingsPositionPP.LABEL_X0
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 39 % SettingsPositionPP.EDITFIELD_X0
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 40 % SettingsPositionPP.LABEL_Y0
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 41 % SettingsPositionPP.EDITFIELD_Y0
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 42 % SettingsPositionPP.LABEL_W
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 43 % SettingsPositionPP.EDITFIELD_W
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 44 % SettingsPositionPP.LABEL_H
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 45 % SettingsPositionPP.EDITFIELD_H
-					prop_default = Format.getFormatDefault(18, SettingsPositionPP.getPropSettings(prop));
-				case 1 % SettingsPositionPP.ELCLASS
+				case SettingsPositionPP.CHECKBOX_AUTOPOS
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_X0
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_X0
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_Y0
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_Y0
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_W
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_W
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_H
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_H
+					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.ELCLASS
 					prop_default = 'SettingsPositionPP';
-				case 2 % SettingsPositionPP.NAME
+				case SettingsPositionPP.NAME
 					prop_default = 'Prop Panel for Position Settings';
-				case 3 % SettingsPositionPP.DESCRIPTION
+				case SettingsPositionPP.DESCRIPTION
 					prop_default = 'A Prop Panel for Position Settings (SettingsPositionPP) plots the panel for position settings, including a checkbox for autopositioning and numeric edit fields for x0, y0, height and width. It works for all categories.';
-				case 4 % SettingsPositionPP.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SettingsPositionPP.getPropSettings(prop));
-				case 5 % SettingsPositionPP.ID
+				case SettingsPositionPP.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.ID
 					prop_default = 'SettingsPositionPP ID';
-				case 6 % SettingsPositionPP.LABEL
+				case SettingsPositionPP.LABEL
 					prop_default = 'SettingsPositionPP label';
-				case 7 % SettingsPositionPP.NOTES
+				case SettingsPositionPP.NOTES
 					prop_default = 'SettingsPositionPP notes';
-				case 23 % SettingsPositionPP.EL
+				case SettingsPositionPP.EL
 					prop_default = PanelFig();
-				case 24 % SettingsPositionPP.PROP
-					prop_default = 20;
-				case 25 % SettingsPositionPP.HEIGHT
-					prop_default = 48;
+				case SettingsPositionPP.PROP
+					prop_default = PanelFig.ST_POSITION;
+				case SettingsPositionPP.HEIGHT
+					prop_default = s(4);
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
 			end
@@ -747,15 +782,15 @@ classdef SettingsPositionPP < SettingsPP
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SettingsPositionPP:WrongInput
+			%  Error id: €BRAPH2.STR€:SettingsPositionPP:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:SettingsPositionPP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsPositionPP:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SettingsPositionPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsPositionPP.
-			%   Error id: BRAPH2:SettingsPositionPP:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsPositionPP:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(SettingsPositionPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsPositionPP.
-			%   Error id: BRAPH2:SettingsPositionPP:WrongInput]
+			%   Error id: €BRAPH2.STR€:SettingsPositionPP:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('SettingsPositionPP')
 			%  are less computationally efficient.
@@ -766,30 +801,30 @@ classdef SettingsPositionPP < SettingsPP
 			prop = SettingsPositionPP.getPropProp(pointer);
 			
 			switch prop
-				case 36 % SettingsPositionPP.ENABLE
-					check = Format.checkFormat(4, value, SettingsPositionPP.getPropSettings(prop));
-				case 37 % SettingsPositionPP.CHECKBOX_AUTOPOS
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 38 % SettingsPositionPP.LABEL_X0
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 39 % SettingsPositionPP.EDITFIELD_X0
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 40 % SettingsPositionPP.LABEL_Y0
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 41 % SettingsPositionPP.EDITFIELD_Y0
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 42 % SettingsPositionPP.LABEL_W
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 43 % SettingsPositionPP.EDITFIELD_W
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 44 % SettingsPositionPP.LABEL_H
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 45 % SettingsPositionPP.EDITFIELD_H
-					check = Format.checkFormat(18, value, SettingsPositionPP.getPropSettings(prop));
-				case 4 % SettingsPositionPP.TEMPLATE
-					check = Format.checkFormat(8, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.ENABLE % __SettingsPositionPP.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.CHECKBOX_AUTOPOS % __SettingsPositionPP.CHECKBOX_AUTOPOS__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_X0 % __SettingsPositionPP.LABEL_X0__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_X0 % __SettingsPositionPP.EDITFIELD_X0__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_Y0 % __SettingsPositionPP.LABEL_Y0__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_Y0 % __SettingsPositionPP.EDITFIELD_Y0__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_W % __SettingsPositionPP.LABEL_W__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_W % __SettingsPositionPP.EDITFIELD_W__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.LABEL_H % __SettingsPositionPP.LABEL_H__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.EDITFIELD_H % __SettingsPositionPP.EDITFIELD_H__
+					check = Format.checkFormat(Format.HANDLE, value, SettingsPositionPP.getPropSettings(prop));
+				case SettingsPositionPP.TEMPLATE % __SettingsPositionPP.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SettingsPositionPP.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -798,8 +833,8 @@ classdef SettingsPositionPP < SettingsPP
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsPositionPP:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsPositionPP:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsPositionPP.getPropTag(prop) ' (' SettingsPositionPP.getFormatTag(SettingsPositionPP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -810,32 +845,32 @@ classdef SettingsPositionPP < SettingsPP
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % SettingsPositionPP.CHECKBOX_AUTOPOS
+				case SettingsPositionPP.CHECKBOX_AUTOPOS % __SettingsPositionPP.CHECKBOX_AUTOPOS__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					checkbox_autopos = uicheckbox( ...
 						'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'CHECKBOX_AUTOPOS', ...
 					    'Text', 'auto', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('AUTOPOS')) ' ' el.get(prop).getPropDescription('AUTOPOS')], ...
 					    'ValueChangedFcn', {@cb_position} ...
 					    );
 					value = checkbox_autopos;
 					
-				case 38 % SettingsPositionPP.LABEL_X0
+				case SettingsPositionPP.LABEL_X0 % __SettingsPositionPP.LABEL_X0__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_x0 =  uilabel( ...
@@ -843,26 +878,26 @@ classdef SettingsPositionPP < SettingsPP
 					    'Tag', 'LABEL_X0', ...
 					    'Text', 'x<sub>0</sub>', ...
 					    'Interpreter', 'html', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('X0')) ' ' el.get(prop).getPropDescription('X0')], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_x0;
 					
-				case 39 % SettingsPositionPP.EDITFIELD_X0
+				case SettingsPositionPP.EDITFIELD_X0 % __SettingsPositionPP.EDITFIELD_X0__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_x0 = uieditfield('numeric', ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD_X0', ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('X0')) ' ' el.get(prop).getPropDescription('X0')], ...
 					    'ValueChangedFcn', {@cb_position} ... % callback in CHECKBOX_AUTOPOS
 					    );
 					value = editfield_x0;
 					
-				case 40 % SettingsPositionPP.LABEL_Y0
+				case SettingsPositionPP.LABEL_Y0 % __SettingsPositionPP.LABEL_Y0__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_y0 =  uilabel( ...
@@ -870,26 +905,26 @@ classdef SettingsPositionPP < SettingsPP
 						'Tag', 'LABEL_Y0', ...
 						'Text', 'y<sub>0</sub>', ...
 						'Interpreter', 'html', ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'HorizontalAlignment', 'right', ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('Y0')) ' ' el.get(prop).getPropDescription('Y0')], ...
 						'BackgroundColor', pr.get('BKGCOLOR') ...
 						);
 					value = label_y0;
 					
-				case 41 % SettingsPositionPP.EDITFIELD_Y0
+				case SettingsPositionPP.EDITFIELD_Y0 % __SettingsPositionPP.EDITFIELD_Y0__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_y0 = uieditfield('numeric', ...
 						'Parent', pr.memorize('H'), ... % H = p for Panel
 						'Tag', 'EDITFIELD_Y0', ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('Y0')) ' ' el.get(prop).getPropDescription('Y0')], ...
 						'ValueChangedFcn', {@cb_position} ... % callback in CHECKBOX_AUTOPOS
 						);
 					value = editfield_y0;
 					
-				case 42 % SettingsPositionPP.LABEL_W
+				case SettingsPositionPP.LABEL_W % __SettingsPositionPP.LABEL_W__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_w =  uilabel( ...
@@ -897,27 +932,27 @@ classdef SettingsPositionPP < SettingsPP
 						'Tag', 'LABEL_W', ...
 						'Text', 'w', ...
 						'Interpreter', 'html', ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'HorizontalAlignment', 'right', ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('WIDTH')) ' ' el.get(prop).getPropDescription('WIDTH')], ...
 						'BackgroundColor', pr.get('BKGCOLOR') ...
 						);
 					value = label_w;
 					
-				case 43 % SettingsPositionPP.EDITFIELD_W
+				case SettingsPositionPP.EDITFIELD_W % __SettingsPositionPP.EDITFIELD_W__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_w = uieditfield('numeric', ...
 						'Parent', pr.memorize('H'), ... % H = p for Panel
 						'Tag', 'EDITFIELD_W', ...
 						'Limits', [0 +Inf], ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('WIDTH')) ' ' el.get(prop).getPropDescription('WIDTH')], ...
 						'ValueChangedFcn', {@cb_position} ... % callback in CHECKBOX_AUTOPOS
 						);
 					value = editfield_w;
 					
-				case 44 % SettingsPositionPP.LABEL_H
+				case SettingsPositionPP.LABEL_H % __SettingsPositionPP.LABEL_H__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_h =  uilabel( ...
@@ -925,28 +960,28 @@ classdef SettingsPositionPP < SettingsPP
 						'Tag', 'LABEL_H', ...
 						'Text', 'h', ...
 						'Interpreter', 'html', ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'HorizontalAlignment', 'right', ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('HEIGHT')) ' ' el.get(prop).getPropDescription('HEIGHT')], ...
 						'BackgroundColor', pr.get('BKGCOLOR') ...
 						);
 					value = label_h;
 					
-				case 45 % SettingsPositionPP.EDITFIELD_H
+				case SettingsPositionPP.EDITFIELD_H % __SettingsPositionPP.EDITFIELD_H__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					editfield_h = uieditfield('numeric', ...
 						'Parent', pr.memorize('H'), ... % H = p for Panel
 						'Tag', 'EDITFIELD_H', ...
 						'Limits', [0 +Inf], ...
-						'FontSize', 12, ...
+						'FontSize', BRAPH2.FONTSIZE, ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('HEIGHT')) ' ' el.get(prop).getPropDescription('HEIGHT')], ...
 						'ValueChangedFcn', {@cb_position} ... % callback in CHECKBOX_AUTOPOS
 					    );
 					value = editfield_h;
 					
-				case 20 % SettingsPositionPP.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case SettingsPositionPP.X_DRAW % __SettingsPositionPP.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('CHECKBOX_AUTOPOS')
 					    
@@ -963,13 +998,13 @@ classdef SettingsPositionPP < SettingsPP
 					    pr.memorize('EDITFIELD_H')
 					end
 					
-				case 21 % SettingsPositionPP.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case SettingsPositionPP.UPDATE % __SettingsPositionPP.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					    
-					    if el.isLocked(prop) || el.getPropCategory(prop) == 1
+					    if el.isLocked(prop) || el.getPropCategory(prop) == Category.CONSTANT
 					        set(pr.checkbox_autopos, 'Enable', pr.get('ENABLE'))
 					        set(pr.editfield_x0, ...
 					            'Editable', 'off', ...
@@ -990,21 +1025,21 @@ classdef SettingsPositionPP < SettingsPP
 					    end
 					    
 					    switch el.getPropCategory(prop)
-					        case 1
+					        case Category.CONSTANT
 					            set(pr.get('CHECKBOX_AUTOPOS'), 'Value', el.get(prop).get('AUTOPOS'))
 					            set(pr.get('EDITFIELD_X0'), 'Value', el.get(prop).get('X0'))
 					            set(pr.get('EDITFIELD_Y0'), 'Value', el.get(prop).get('Y0'))
 					            set(pr.get('EDITFIELD_W'), 'Value', el.get(prop).get('WIDTH'))
 					            set(pr.get('EDITFIELD_H'), 'Value', el.get(prop).get('HEIGHT'))
 					            
-					        case 2
+					        case Category.METADATA
 					            set(pr.get('CHECKBOX_AUTOPOS'), 'Value', el.get(prop).get('AUTOPOS'))
 					            set(pr.get('EDITFIELD_X0'), 'Value', el.get(prop).get('X0'))
 					            set(pr.get('EDITFIELD_Y0'), 'Value', el.get(prop).get('Y0'))
 					            set(pr.get('EDITFIELD_W'), 'Value', el.get(prop).get('WIDTH'))
 					            set(pr.get('EDITFIELD_H'), 'Value', el.get(prop).get('HEIGHT'))
 					
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            set(pr.get('CHECKBOX_AUTOPOS'), 'Value', el.get(prop).get('AUTOPOS'))
 					            set(pr.get('EDITFIELD_X0'), 'Value', el.get(prop).get('X0'))
 					            set(pr.get('EDITFIELD_Y0'), 'Value', el.get(prop).get('Y0'))
@@ -1039,7 +1074,7 @@ classdef SettingsPositionPP < SettingsPP
 					                    )
 					            end
 					
-					        case {5 6 7}
+					        case {Category.RESULT Category.QUERY Category.EVANESCENT}
 					            value = el.getr(prop);
 					
 					            if isa(value, 'NoValue')
@@ -1096,28 +1131,28 @@ classdef SettingsPositionPP < SettingsPP
 						end
 					end
 					
-				case 22 % SettingsPositionPP.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case SettingsPositionPP.REDRAW % __SettingsPositionPP.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('CHECKBOX_AUTOPOS'), 'Position', [4 4 .15*w_p 21])
+					    set(pr.get('CHECKBOX_AUTOPOS'), 'Position', [s(.3) s(.3) .15*w_p s(1.7)])
 					
-					    set(pr.get('LABEL_X0'), 'Position', [.20*w_p 4 .04*w_p 21])
-					    set(pr.get('EDITFIELD_X0'), 'Position', [.25*w_p 4 .12*w_p 21])
+					    set(pr.get('LABEL_X0'), 'Position', [.20*w_p s(.3) .04*w_p s(1.7)])
+					    set(pr.get('EDITFIELD_X0'), 'Position', [.25*w_p s(.3) .12*w_p s(1.7)])
 					    
-					    set(pr.get('LABEL_Y0'), 'Position', [.40*w_p 4 .04*w_p 21])
-					    set(pr.get('EDITFIELD_Y0'), 'Position', [.45*w_p 4 .12*w_p 21])
+					    set(pr.get('LABEL_Y0'), 'Position', [.40*w_p s(.3) .04*w_p s(1.7)])
+					    set(pr.get('EDITFIELD_Y0'), 'Position', [.45*w_p s(.3) .12*w_p s(1.7)])
 					
-					    set(pr.get('LABEL_W'), 'Position', [.60*w_p 4 .04*w_p 21])
-					    set(pr.get('EDITFIELD_W'), 'Position', [.65*w_p 4 .12*w_p 21])
+					    set(pr.get('LABEL_W'), 'Position', [.60*w_p s(.3) .04*w_p s(1.7)])
+					    set(pr.get('EDITFIELD_W'), 'Position', [.65*w_p s(.3) .12*w_p s(1.7)])
 					
-					    set(pr.get('LABEL_H'), 'Position', [.80*w_p 4 .04*w_p 21])
-					    set(pr.get('EDITFIELD_H'), 'Position', [.85*w_p 4 .12*w_p 21])
+					    set(pr.get('LABEL_H'), 'Position', [.80*w_p s(.3) .04*w_p s(1.7)])
+					    set(pr.get('EDITFIELD_H'), 'Position', [.85*w_p s(.3) .12*w_p s(1.7)])
 					end
 					
-				case 18 % SettingsPositionPP.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case SettingsPositionPP.DELETE % __SettingsPositionPP.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('CHECKBOX_AUTOPOS', Element.getNoValue())
 					    
@@ -1135,7 +1170,7 @@ classdef SettingsPositionPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= SettingsPP.getPropNumber()
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

@@ -8,22 +8,6 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 	%  calculated from the derived graph of the subject.
 	% The target is obtained from the variables of interest of the subject.
 	%
-	% The list of NNDataPoint_Measure_REG properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for regression with graph measures.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for regression with graph measures.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for regression with graph measures.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for regression with graph measures.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for regression with graph measures.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for regression with graph measures.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
-	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is a graph containing the added graph measures (M_DICT).
-	%  <strong>12</strong> <strong>M_LIST</strong> 	M_LIST (parameter, classlist) is a list of graph measure to be used as the input
-	%  <strong>13</strong> <strong>SUB</strong> 	SUB (data, item) is a subject.
-	%  <strong>14</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
-	%
 	% NNDataPoint_Measure_REG methods (constructor):
 	%  NNDataPoint_Measure_REG - constructor
 	%
@@ -113,25 +97,25 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 	% See also NNDataPoint_Graph_REG, NNDataPoint_Graph_REG, NNDataPoint_Measure_CLA.
 	
 	properties (Constant) % properties
-		G = 11; %CET: Computational Efficiency Trick
+		G = NNDataPoint.getPropNumber() + 1;
 		G_TAG = 'G';
-		G_CATEGORY = 4;
-		G_FORMAT = 8;
+		G_CATEGORY = Category.DATA;
+		G_FORMAT = Format.ITEM;
 		
-		M_LIST = 12; %CET: Computational Efficiency Trick
+		M_LIST = NNDataPoint.getPropNumber() + 2;
 		M_LIST_TAG = 'M_LIST';
-		M_LIST_CATEGORY = 3;
-		M_LIST_FORMAT = 7;
+		M_LIST_CATEGORY = Category.PARAMETER;
+		M_LIST_FORMAT = Format.CLASSLIST;
 		
-		SUB = 13; %CET: Computational Efficiency Trick
+		SUB = NNDataPoint.getPropNumber() + 3;
 		SUB_TAG = 'SUB';
-		SUB_CATEGORY = 4;
-		SUB_FORMAT = 8;
+		SUB_CATEGORY = Category.DATA;
+		SUB_FORMAT = Format.ITEM;
 		
-		TARGET_IDS = 14; %CET: Computational Efficiency Trick
+		TARGET_IDS = NNDataPoint.getPropNumber() + 4;
 		TARGET_IDS_TAG = 'TARGET_IDS';
-		TARGET_IDS_CATEGORY = 3;
-		TARGET_IDS_FORMAT = 3;
+		TARGET_IDS_CATEGORY = Category.PARAMETER;
+		TARGET_IDS_FORMAT = Format.STRINGLIST;
 	end
 	methods % constructor
 		function dp = NNDataPoint_Measure_REG(varargin)
@@ -144,21 +128,6 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of NNDataPoint_Measure_REG properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for regression with graph measures.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for regression with graph measures.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for regression with graph measures.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for regression with graph measures.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for regression with graph measures.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for regression with graph measures.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
-			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is a graph containing the added graph measures (M_DICT).
-			%  <strong>12</strong> <strong>M_LIST</strong> 	M_LIST (parameter, classlist) is a list of graph measure to be used as the input
-			%  <strong>13</strong> <strong>SUB</strong> 	SUB (data, item) is a subject.
-			%  <strong>14</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 			%
 			% See also Category, Format.
 			
@@ -196,7 +165,7 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNDataPoint_Measure_REG' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NNDataPoint_Measure_REG', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of measure regression data point.
@@ -217,28 +186,58 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [ ...
+					NNDataPoint.getProps() ...
+						NNDataPoint_Measure_REG.G ...
+						NNDataPoint_Measure_REG.M_LIST ...
+						NNDataPoint_Measure_REG.SUB ...
+						NNDataPoint_Measure_REG.TARGET_IDS ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 12 14];
-				case 4 % Category.DATA
-					prop_list = [5 11 13];
-				case 5 % Category.RESULT
-					prop_list = [9 10];
-				case 6 % Category.QUERY
-					prop_list = 8;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.PARAMETER) ...
+						NNDataPoint_Measure_REG.M_LIST ...
+						NNDataPoint_Measure_REG.TARGET_IDS ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.DATA) ...
+						NNDataPoint_Measure_REG.G ...
+						NNDataPoint_Measure_REG.SUB ...
+						];
+				case Category.RESULT
+					prop_list = [
+						NNDataPoint.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						NNDataPoint.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -259,29 +258,7 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 14;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 3;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 2;
-				case 6 % Category.QUERY
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NNDataPoint_Measure_REG.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in measure regression data point/error.
@@ -309,14 +286,14 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NNDataPoint_Measure_REG.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput'], ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNDataPoint_Measure_REG.'] ...
 					)
 			end
@@ -347,14 +324,15 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'SUB'  'TARGET_IDS' })); %CET: Computational Efficiency Trick
+			nndatapoint_measure_reg_tag_list = cellfun(@(x) NNDataPoint_Measure_REG.getPropTag(x), num2cell(NNDataPoint_Measure_REG.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, nndatapoint_measure_reg_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput'], ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NNDataPoint_Measure_REG.'] ...
 					)
 			end
@@ -380,7 +358,8 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'SUB'  'TARGET_IDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				nndatapoint_measure_reg_tag_list = cellfun(@(x) NNDataPoint_Measure_REG.getPropTag(x), num2cell(NNDataPoint_Measure_REG.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, nndatapoint_measure_reg_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -408,9 +387,20 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				nndatapoint_measure_reg_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'SUB'  'TARGET_IDS' };
-				tag = nndatapoint_measure_reg_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case NNDataPoint_Measure_REG.G
+						tag = NNDataPoint_Measure_REG.G_TAG;
+					case NNDataPoint_Measure_REG.M_LIST
+						tag = NNDataPoint_Measure_REG.M_LIST_TAG;
+					case NNDataPoint_Measure_REG.SUB
+						tag = NNDataPoint_Measure_REG.SUB_TAG;
+					case NNDataPoint_Measure_REG.TARGET_IDS
+						tag = NNDataPoint_Measure_REG.TARGET_IDS_TAG;
+					otherwise
+						tag = getPropTag@NNDataPoint(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -435,9 +425,18 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatapoint_measure_reg_category_list = { 1  1  1  3  4  2  2  6  5  5  4  3  4  3 };
-			prop_category = nndatapoint_measure_reg_category_list{prop};
+			switch prop
+				case NNDataPoint_Measure_REG.G
+					prop_category = NNDataPoint_Measure_REG.G_CATEGORY;
+				case NNDataPoint_Measure_REG.M_LIST
+					prop_category = NNDataPoint_Measure_REG.M_LIST_CATEGORY;
+				case NNDataPoint_Measure_REG.SUB
+					prop_category = NNDataPoint_Measure_REG.SUB_CATEGORY;
+				case NNDataPoint_Measure_REG.TARGET_IDS
+					prop_category = NNDataPoint_Measure_REG.TARGET_IDS_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@NNDataPoint(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -461,9 +460,18 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatapoint_measure_reg_format_list = { 2  2  2  8  2  2  2  2  16  16  8  7  8  3 };
-			prop_format = nndatapoint_measure_reg_format_list{prop};
+			switch prop
+				case NNDataPoint_Measure_REG.G
+					prop_format = NNDataPoint_Measure_REG.G_FORMAT;
+				case NNDataPoint_Measure_REG.M_LIST
+					prop_format = NNDataPoint_Measure_REG.M_LIST_FORMAT;
+				case NNDataPoint_Measure_REG.SUB
+					prop_format = NNDataPoint_Measure_REG.SUB_FORMAT;
+				case NNDataPoint_Measure_REG.TARGET_IDS
+					prop_format = NNDataPoint_Measure_REG.TARGET_IDS_FORMAT;
+				otherwise
+					prop_format = getPropFormat@NNDataPoint(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -487,9 +495,36 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nndatapoint_measure_reg_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of a data point for regression with graph measures.'  'DESCRIPTION (constant, string) is the description of a data point for regression with graph measures.'  'TEMPLATE (parameter, item) is the template of a data point for regression with graph measures.'  'ID (data, string) is a few-letter code for a data point for regression with graph measures.'  'LABEL (metadata, string) is an extended label of a data point for regression with graph measures.'  'NOTES (metadata, string) are some specific notes about a data point for regression with graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target value for this data point.'  'G (data, item) is a graph containing the added graph measures (M_DICT).'  'M_LIST (parameter, classlist) is a list of graph measure to be used as the input'  'SUB (data, item) is a subject.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
-			prop_description = nndatapoint_measure_reg_description_list{prop};
+			switch prop
+				case NNDataPoint_Measure_REG.G
+					prop_description = 'G (data, item) is a graph containing the added graph measures (M_DICT).';
+				case NNDataPoint_Measure_REG.M_LIST
+					prop_description = 'M_LIST (parameter, classlist) is a list of graph measure to be used as the input';
+				case NNDataPoint_Measure_REG.SUB
+					prop_description = 'SUB (data, item) is a subject.';
+				case NNDataPoint_Measure_REG.TARGET_IDS
+					prop_description = 'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.';
+				case NNDataPoint_Measure_REG.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.NAME
+					prop_description = 'NAME (constant, string) is the name of the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.ID
+					prop_description = 'ID (data, string) is a few-letter code for the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the data point for regression with graph measures.';
+				case NNDataPoint_Measure_REG.INPUT
+					prop_description = 'INPUT (result, cell) is the input value for this data point.';
+				case NNDataPoint_Measure_REG.TARGET
+					prop_description = 'TARGET (result, cell) is the target value for this data point.';
+				otherwise
+					prop_description = getPropDescription@NNDataPoint(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -513,16 +548,16 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 11 % NNDataPoint_Measure_REG.G
+			switch prop
+				case NNDataPoint_Measure_REG.G
 					prop_settings = 'Graph';
-				case 12 % NNDataPoint_Measure_REG.M_LIST
-					prop_settings = Format.getFormatSettings(7);
-				case 13 % NNDataPoint_Measure_REG.SUB
+				case NNDataPoint_Measure_REG.M_LIST
+					prop_settings = Format.getFormatSettings(Format.CLASSLIST);
+				case NNDataPoint_Measure_REG.SUB
 					prop_settings = 'Subject';
-				case 14 % NNDataPoint_Measure_REG.TARGET_IDS
-					prop_settings = Format.getFormatSettings(3);
-				case 4 % NNDataPoint_Measure_REG.TEMPLATE
+				case NNDataPoint_Measure_REG.TARGET_IDS
+					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
+				case NNDataPoint_Measure_REG.TEMPLATE
 					prop_settings = 'NNDataPoint_Measure_REG';
 				otherwise
 					prop_settings = getPropSettings@NNDataPoint(prop);
@@ -550,28 +585,28 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 11 % NNDataPoint_Measure_REG.G
-					prop_default = Format.getFormatDefault(8, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 12 % NNDataPoint_Measure_REG.M_LIST
-					prop_default = Format.getFormatDefault(7, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 13 % NNDataPoint_Measure_REG.SUB
-					prop_default = Format.getFormatDefault(8, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 14 % NNDataPoint_Measure_REG.TARGET_IDS
-					prop_default = Format.getFormatDefault(3, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 1 % NNDataPoint_Measure_REG.ELCLASS
+			switch prop
+				case NNDataPoint_Measure_REG.G
+					prop_default = Format.getFormatDefault(Format.ITEM, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.M_LIST
+					prop_default = Format.getFormatDefault(Format.CLASSLIST, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.SUB
+					prop_default = Format.getFormatDefault(Format.ITEM, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.TARGET_IDS
+					prop_default = Format.getFormatDefault(Format.STRINGLIST, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.ELCLASS
 					prop_default = 'NNDataPoint_Measure_REG';
-				case 2 % NNDataPoint_Measure_REG.NAME
-					prop_default = 'NNDataPoint_Measure_REG';
-				case 3 % NNDataPoint_Measure_REG.DESCRIPTION
+				case NNDataPoint_Measure_REG.NAME
+					prop_default = 'Neural Network Data Point for Regression with Graph Measures';
+				case NNDataPoint_Measure_REG.DESCRIPTION
 					prop_default = 'A data point for regression with graph measures (NNDataPoint_Measure_REG) contains both input and target for neural network analysis. The input is the value of the graph measures (e.g. Degree, DegreeAv, and Distance), calculated from the derived graph of the subject. The target is obtained from the variables of interest of the subject.';
-				case 4 % NNDataPoint_Measure_REG.TEMPLATE
-					prop_default = Format.getFormatDefault(8, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 5 % NNDataPoint_Measure_REG.ID
+				case NNDataPoint_Measure_REG.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.ID
 					prop_default = 'NNDataPoint_Measure_REG ID';
-				case 6 % NNDataPoint_Measure_REG.LABEL
+				case NNDataPoint_Measure_REG.LABEL
 					prop_default = 'NNDataPoint_Measure_REG label';
-				case 7 % NNDataPoint_Measure_REG.NOTES
+				case NNDataPoint_Measure_REG.NOTES
 					prop_default = 'NNDataPoint_Measure_REG notes';
 				otherwise
 					prop_default = getPropDefault@NNDataPoint(prop);
@@ -618,15 +653,15 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			% 
 			% DP.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NNDataPoint_Measure_REG:WrongInput
+			%  Error id: €BRAPH2.STR€:NNDataPoint_Measure_REG:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DP.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of DP.
-			%   Error id: BRAPH2:NNDataPoint_Measure_REG:WrongInput
+			%   Error id: €BRAPH2.STR€:NNDataPoint_Measure_REG:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NNDataPoint_Measure_REG, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDataPoint_Measure_REG.
-			%   Error id: BRAPH2:NNDataPoint_Measure_REG:WrongInput
+			%   Error id: €BRAPH2.STR€:NNDataPoint_Measure_REG:€BRAPH2.WRONG_INPUT€
 			%  DP.CHECKPROP(NNDataPoint_Measure_REG, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDataPoint_Measure_REG.
-			%   Error id: BRAPH2:NNDataPoint_Measure_REG:WrongInput]
+			%   Error id: €BRAPH2.STR€:NNDataPoint_Measure_REG:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(DP) and Element.CHECKPROP('NNDataPoint_Measure_REG')
 			%  are less computationally efficient.
@@ -637,18 +672,18 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			prop = NNDataPoint_Measure_REG.getPropProp(pointer);
 			
 			switch prop
-				case 11 % NNDataPoint_Measure_REG.G
-					check = Format.checkFormat(8, value, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 12 % NNDataPoint_Measure_REG.M_LIST
-					check = Format.checkFormat(7, value, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 13 % NNDataPoint_Measure_REG.SUB
-					check = Format.checkFormat(8, value, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 14 % NNDataPoint_Measure_REG.TARGET_IDS
-					check = Format.checkFormat(3, value, NNDataPoint_Measure_REG.getPropSettings(prop));
-				case 4 % NNDataPoint_Measure_REG.TEMPLATE
-					check = Format.checkFormat(8, value, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.G % __NNDataPoint_Measure_REG.G__
+					check = Format.checkFormat(Format.ITEM, value, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.M_LIST % __NNDataPoint_Measure_REG.M_LIST__
+					check = Format.checkFormat(Format.CLASSLIST, value, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.SUB % __NNDataPoint_Measure_REG.SUB__
+					check = Format.checkFormat(Format.ITEM, value, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.TARGET_IDS % __NNDataPoint_Measure_REG.TARGET_IDS__
+					check = Format.checkFormat(Format.STRINGLIST, value, NNDataPoint_Measure_REG.getPropSettings(prop));
+				case NNDataPoint_Measure_REG.TEMPLATE % __NNDataPoint_Measure_REG.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, NNDataPoint_Measure_REG.getPropSettings(prop));
 				otherwise
-					if prop <= 10
+					if prop <= NNDataPoint.getPropNumber()
 						check = checkProp@NNDataPoint(prop, value);
 					end
 			end
@@ -657,8 +692,8 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput'], ...
-					['BRAPH2' ':NNDataPoint_Measure_REG:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNDataPoint_Measure_REG:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNDataPoint_Measure_REG.getPropTag(prop) ' (' NNDataPoint_Measure_REG.getFormatTag(NNDataPoint_Measure_REG.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -669,34 +704,34 @@ classdef NNDataPoint_Measure_REG < NNDataPoint
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 9 % NNDataPoint_Measure_REG.INPUT
-					rng_settings_ = rng(); rng(dp.getPropSeed(9), 'twister')
+				case NNDataPoint_Measure_REG.INPUT % __NNDataPoint_Measure_REG.INPUT__
+					rng_settings_ = rng(); rng(dp.getPropSeed(NNDataPoint_Measure_REG.INPUT), 'twister')
 					
 					value = cellfun(@(m_class) dp.get('G').get('MEASURE', m_class).get('M'), dp.get('M_LIST'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
-				case 10 % NNDataPoint_Measure_REG.TARGET
-					rng_settings_ = rng(); rng(dp.getPropSeed(10), 'twister')
+				case NNDataPoint_Measure_REG.TARGET % __NNDataPoint_Measure_REG.TARGET__
+					rng_settings_ = rng(); rng(dp.getPropSeed(NNDataPoint_Measure_REG.TARGET), 'twister')
 					
 					value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 10
+					if prop <= NNDataPoint.getPropNumber()
 						value = calculateValue@NNDataPoint(dp, prop, varargin{:});
 					else
 						value = calculateValue@Element(dp, prop, varargin{:});

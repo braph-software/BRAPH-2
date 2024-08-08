@@ -44,43 +44,6 @@ classdef PanelProp < Panel
 	%     pn.get('<strong>DELETE</strong>') - resets the handles when the panel is deleted.
 	%     pn.get('<strong>CLOSE</strong>') - closes the figure containing the panel.
 	%
-	% The list of PanelProp properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the graphical objects of the prop panel [to be implemented in subelements].
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content of the prop panel and its graphical objects.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects [accept Width-value pair].
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%
 	% PanelProp methods (constructor):
 	%  PanelProp - constructor
 	%
@@ -170,85 +133,85 @@ classdef PanelProp < Panel
 	% See also uipanel, uilabel, uibutton, GUI, GUIElement, PanelElement.
 	
 	properties (Constant) % properties
-		X_DRAW = 20; %CET: Computational Efficiency Trick
+		X_DRAW = Panel.getPropNumber() + 1;
 		X_DRAW_TAG = 'X_DRAW';
-		X_DRAW_CATEGORY = 6;
-		X_DRAW_FORMAT = 4;
+		X_DRAW_CATEGORY = Category.QUERY;
+		X_DRAW_FORMAT = Format.LOGICAL;
 		
-		UPDATE = 21; %CET: Computational Efficiency Trick
+		UPDATE = Panel.getPropNumber() + 2;
 		UPDATE_TAG = 'UPDATE';
-		UPDATE_CATEGORY = 6;
-		UPDATE_FORMAT = 4;
+		UPDATE_CATEGORY = Category.QUERY;
+		UPDATE_FORMAT = Format.LOGICAL;
 		
-		REDRAW = 22; %CET: Computational Efficiency Trick
+		REDRAW = Panel.getPropNumber() + 3;
 		REDRAW_TAG = 'REDRAW';
-		REDRAW_CATEGORY = 6;
-		REDRAW_FORMAT = 4;
+		REDRAW_CATEGORY = Category.QUERY;
+		REDRAW_FORMAT = Format.LOGICAL;
 		
-		EL = 23; %CET: Computational Efficiency Trick
+		EL = Panel.getPropNumber() + 4;
 		EL_TAG = 'EL';
-		EL_CATEGORY = 4;
-		EL_FORMAT = 8;
+		EL_CATEGORY = Category.DATA;
+		EL_FORMAT = Format.ITEM;
 		
-		PROP = 24; %CET: Computational Efficiency Trick
+		PROP = Panel.getPropNumber() + 5;
 		PROP_TAG = 'PROP';
-		PROP_CATEGORY = 4;
-		PROP_FORMAT = 11;
+		PROP_CATEGORY = Category.DATA;
+		PROP_FORMAT = Format.SCALAR;
 		
-		HEIGHT = 25; %CET: Computational Efficiency Trick
+		HEIGHT = Panel.getPropNumber() + 6;
 		HEIGHT_TAG = 'HEIGHT';
-		HEIGHT_CATEGORY = 9;
-		HEIGHT_FORMAT = 22;
+		HEIGHT_CATEGORY = Category.GUI;
+		HEIGHT_FORMAT = Format.SIZE;
 		
-		TITLE = 26; %CET: Computational Efficiency Trick
+		TITLE = Panel.getPropNumber() + 7;
 		TITLE_TAG = 'TITLE';
-		TITLE_CATEGORY = 9;
-		TITLE_FORMAT = 2;
+		TITLE_CATEGORY = Category.GUI;
+		TITLE_FORMAT = Format.STRING;
 		
-		LABEL_TITLE = 27; %CET: Computational Efficiency Trick
+		LABEL_TITLE = Panel.getPropNumber() + 8;
 		LABEL_TITLE_TAG = 'LABEL_TITLE';
-		LABEL_TITLE_CATEGORY = 7;
-		LABEL_TITLE_FORMAT = 18;
+		LABEL_TITLE_CATEGORY = Category.EVANESCENT;
+		LABEL_TITLE_FORMAT = Format.HANDLE;
 		
-		BUTTON_CB = 28; %CET: Computational Efficiency Trick
+		BUTTON_CB = Panel.getPropNumber() + 9;
 		BUTTON_CB_TAG = 'BUTTON_CB';
-		BUTTON_CB_CATEGORY = 7;
-		BUTTON_CB_FORMAT = 18;
+		BUTTON_CB_CATEGORY = Category.EVANESCENT;
+		BUTTON_CB_FORMAT = Format.HANDLE;
 		
-		GUI_CB = 29; %CET: Computational Efficiency Trick
+		GUI_CB = Panel.getPropNumber() + 10;
 		GUI_CB_TAG = 'GUI_CB';
-		GUI_CB_CATEGORY = 4;
-		GUI_CB_FORMAT = 8;
+		GUI_CB_CATEGORY = Category.DATA;
+		GUI_CB_FORMAT = Format.ITEM;
 		
-		LISTENER_CB = 30; %CET: Computational Efficiency Trick
+		LISTENER_CB = Panel.getPropNumber() + 11;
 		LISTENER_CB_TAG = 'LISTENER_CB';
-		LISTENER_CB_CATEGORY = 7;
-		LISTENER_CB_FORMAT = 18;
+		LISTENER_CB_CATEGORY = Category.EVANESCENT;
+		LISTENER_CB_FORMAT = Format.HANDLE;
 		
-		BUTTON_CALC = 31; %CET: Computational Efficiency Trick
+		BUTTON_CALC = Panel.getPropNumber() + 12;
 		BUTTON_CALC_TAG = 'BUTTON_CALC';
-		BUTTON_CALC_CATEGORY = 7;
-		BUTTON_CALC_FORMAT = 18;
+		BUTTON_CALC_CATEGORY = Category.EVANESCENT;
+		BUTTON_CALC_FORMAT = Format.HANDLE;
 		
-		BUTTON_DEL = 32; %CET: Computational Efficiency Trick
+		BUTTON_DEL = Panel.getPropNumber() + 13;
 		BUTTON_DEL_TAG = 'BUTTON_DEL';
-		BUTTON_DEL_CATEGORY = 7;
-		BUTTON_DEL_FORMAT = 18;
+		BUTTON_DEL_CATEGORY = Category.EVANESCENT;
+		BUTTON_DEL_FORMAT = Format.HANDLE;
 		
-		LISTENER_SET = 33; %CET: Computational Efficiency Trick
+		LISTENER_SET = Panel.getPropNumber() + 14;
 		LISTENER_SET_TAG = 'LISTENER_SET';
-		LISTENER_SET_CATEGORY = 7;
-		LISTENER_SET_FORMAT = 19;
+		LISTENER_SET_CATEGORY = Category.EVANESCENT;
+		LISTENER_SET_FORMAT = Format.HANDLELIST;
 		
-		LISTENER_MEMORIZED = 34; %CET: Computational Efficiency Trick
+		LISTENER_MEMORIZED = Panel.getPropNumber() + 15;
 		LISTENER_MEMORIZED_TAG = 'LISTENER_MEMORIZED';
-		LISTENER_MEMORIZED_CATEGORY = 7;
-		LISTENER_MEMORIZED_FORMAT = 19;
+		LISTENER_MEMORIZED_CATEGORY = Category.EVANESCENT;
+		LISTENER_MEMORIZED_FORMAT = Format.HANDLELIST;
 		
-		LISTENER_LOCKED = 35; %CET: Computational Efficiency Trick
+		LISTENER_LOCKED = Panel.getPropNumber() + 16;
 		LISTENER_LOCKED_TAG = 'LISTENER_LOCKED';
-		LISTENER_LOCKED_CATEGORY = 7;
-		LISTENER_LOCKED_FORMAT = 19;
+		LISTENER_LOCKED_CATEGORY = Category.EVANESCENT;
+		LISTENER_LOCKED_FORMAT = Format.HANDLELIST;
 	end
 	methods % constructor
 		function pr = PanelProp(varargin)
@@ -261,42 +224,6 @@ classdef PanelProp < Panel
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PanelProp properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the property panel.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the property panel.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the property panel.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the property panel.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the property panel.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the property panel.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the property panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the graphical objects of the prop panel [to be implemented in subelements].
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content of the prop panel and its graphical objects.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the prop panel and repositions its graphical objects [accept Width-value pair].
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
 			%
 			% See also Category, Format.
 			
@@ -334,7 +261,7 @@ classdef PanelProp < Panel
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelProp'  'NNxMLP_xPP_FI_Data'  'NNxMLP_xPP_FI_Graph'  'NNxMLP_xPP_FI_Measure'  'AnalyzeEnsemblePP_GDict'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroupPP_G'  'CompareEnsemblePP_CpDict'  'CompareGroupPP_CpDict'  'ComparisonEnsembleBrainPF_xSPP_Layer'  'ComparisonEnsembleBrainPF_xUPP_Layer'  'ComparisonEnsemblePF_BxPP_Nodes'  'ComparisonEnsemblePF_NxPP_Node'  'ComparisonEnsemblePF_xUPP_Layer'  'ComparisonGroupBrainPF_xSPP_Layer'  'ComparisonGroupBrainPF_xUPP_Layer'  'ComparisonGroupPF_BxPP_Nodes'  'ComparisonGroupPF_NxPP_Node'  'ComparisonGroupPF_xUPP_Layer'  'MeasureEnsembleBrainPF_xSPP_Layer'  'MeasureEnsembleBrainPF_xUPP_Layer'  'MeasureEnsemblePF_BxPP_Nodes'  'MeasureEnsemblePF_NxPP_Node'  'MeasureEnsemblePF_xUPP_Layer'  'MeasureGroupBrainPF_xSPP_Layer'  'MeasureGroupBrainPF_xUPP_Layer'  'PanelPropCellFDR'  'SubjectPP_VOIDict'  'GraphPP_MDict'  'LayersPP'  'MeasurePF_BxPP_Nodes'  'MeasurePF_NxPP_Node'  'MeasurePF_xUPP_Layer'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'PipelinePP_Notes'  'PipelinePP_PSDict'  'SettingsAmbientPP'  'SettingsAreaPP'  'SettingsAxisPP'  'SettingsLinePP'  'SettingsPP'  'SettingsPositionPP'  'SettingsSurfacePP'  'SettingsTextPP' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PanelProp', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel.
@@ -355,32 +282,82 @@ classdef PanelProp < Panel
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35];
+				prop_list = [ ...
+					Panel.getProps() ...
+						PanelProp.X_DRAW ...
+						PanelProp.UPDATE ...
+						PanelProp.REDRAW ...
+						PanelProp.EL ...
+						PanelProp.PROP ...
+						PanelProp.HEIGHT ...
+						PanelProp.TITLE ...
+						PanelProp.LABEL_TITLE ...
+						PanelProp.BUTTON_CB ...
+						PanelProp.GUI_CB ...
+						PanelProp.LISTENER_CB ...
+						PanelProp.BUTTON_CALC ...
+						PanelProp.BUTTON_DEL ...
+						PanelProp.LISTENER_SET ...
+						PanelProp.LISTENER_MEMORIZED ...
+						PanelProp.LISTENER_LOCKED ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Panel.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Panel.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Panel.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Panel.getProps(Category.DATA) ...
+						PanelProp.EL ...
+						PanelProp.PROP ...
+						PanelProp.GUI_CB ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Panel.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Panel.getProps(Category.QUERY) ...
+						PanelProp.X_DRAW ...
+						PanelProp.UPDATE ...
+						PanelProp.REDRAW ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Panel.getProps(Category.EVANESCENT) ...
+						PanelProp.LABEL_TITLE ...
+						PanelProp.BUTTON_CB ...
+						PanelProp.LISTENER_CB ...
+						PanelProp.BUTTON_CALC ...
+						PanelProp.BUTTON_DEL ...
+						PanelProp.LISTENER_SET ...
+						PanelProp.LISTENER_MEMORIZED ...
+						PanelProp.LISTENER_LOCKED ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Panel.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Panel.getProps(Category.GUI) ...
+						PanelProp.HEIGHT ...
+						PanelProp.TITLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -401,33 +378,7 @@ classdef PanelProp < Panel
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 35;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 10;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 4;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PanelProp.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in prop panel/error.
@@ -455,14 +406,14 @@ classdef PanelProp < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 35 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PanelProp.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelProp:' 'WrongInput'], ...
-					['BRAPH2' ':PanelProp:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelProp.'] ...
 					)
 			end
@@ -493,14 +444,15 @@ classdef PanelProp < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED' })); %CET: Computational Efficiency Trick
+			panelprop_tag_list = cellfun(@(x) PanelProp.getPropTag(x), num2cell(PanelProp.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, panelprop_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelProp:' 'WrongInput'], ...
-					['BRAPH2' ':PanelProp:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PanelProp.'] ...
 					)
 			end
@@ -526,7 +478,8 @@ classdef PanelProp < Panel
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED' })); % tag = pointer %CET: Computational Efficiency Trick
+				panelprop_tag_list = cellfun(@(x) PanelProp.getPropTag(x), num2cell(PanelProp.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, panelprop_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -554,9 +507,44 @@ classdef PanelProp < Panel
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				panelprop_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED' };
-				tag = panelprop_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case PanelProp.X_DRAW
+						tag = PanelProp.X_DRAW_TAG;
+					case PanelProp.UPDATE
+						tag = PanelProp.UPDATE_TAG;
+					case PanelProp.REDRAW
+						tag = PanelProp.REDRAW_TAG;
+					case PanelProp.EL
+						tag = PanelProp.EL_TAG;
+					case PanelProp.PROP
+						tag = PanelProp.PROP_TAG;
+					case PanelProp.HEIGHT
+						tag = PanelProp.HEIGHT_TAG;
+					case PanelProp.TITLE
+						tag = PanelProp.TITLE_TAG;
+					case PanelProp.LABEL_TITLE
+						tag = PanelProp.LABEL_TITLE_TAG;
+					case PanelProp.BUTTON_CB
+						tag = PanelProp.BUTTON_CB_TAG;
+					case PanelProp.GUI_CB
+						tag = PanelProp.GUI_CB_TAG;
+					case PanelProp.LISTENER_CB
+						tag = PanelProp.LISTENER_CB_TAG;
+					case PanelProp.BUTTON_CALC
+						tag = PanelProp.BUTTON_CALC_TAG;
+					case PanelProp.BUTTON_DEL
+						tag = PanelProp.BUTTON_DEL_TAG;
+					case PanelProp.LISTENER_SET
+						tag = PanelProp.LISTENER_SET_TAG;
+					case PanelProp.LISTENER_MEMORIZED
+						tag = PanelProp.LISTENER_MEMORIZED_TAG;
+					case PanelProp.LISTENER_LOCKED
+						tag = PanelProp.LISTENER_LOCKED_TAG;
+					otherwise
+						tag = getPropTag@Panel(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -581,9 +569,42 @@ classdef PanelProp < Panel
 			
 			prop = PanelProp.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelprop_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7 };
-			prop_category = panelprop_category_list{prop};
+			switch prop
+				case PanelProp.X_DRAW
+					prop_category = PanelProp.X_DRAW_CATEGORY;
+				case PanelProp.UPDATE
+					prop_category = PanelProp.UPDATE_CATEGORY;
+				case PanelProp.REDRAW
+					prop_category = PanelProp.REDRAW_CATEGORY;
+				case PanelProp.EL
+					prop_category = PanelProp.EL_CATEGORY;
+				case PanelProp.PROP
+					prop_category = PanelProp.PROP_CATEGORY;
+				case PanelProp.HEIGHT
+					prop_category = PanelProp.HEIGHT_CATEGORY;
+				case PanelProp.TITLE
+					prop_category = PanelProp.TITLE_CATEGORY;
+				case PanelProp.LABEL_TITLE
+					prop_category = PanelProp.LABEL_TITLE_CATEGORY;
+				case PanelProp.BUTTON_CB
+					prop_category = PanelProp.BUTTON_CB_CATEGORY;
+				case PanelProp.GUI_CB
+					prop_category = PanelProp.GUI_CB_CATEGORY;
+				case PanelProp.LISTENER_CB
+					prop_category = PanelProp.LISTENER_CB_CATEGORY;
+				case PanelProp.BUTTON_CALC
+					prop_category = PanelProp.BUTTON_CALC_CATEGORY;
+				case PanelProp.BUTTON_DEL
+					prop_category = PanelProp.BUTTON_DEL_CATEGORY;
+				case PanelProp.LISTENER_SET
+					prop_category = PanelProp.LISTENER_SET_CATEGORY;
+				case PanelProp.LISTENER_MEMORIZED
+					prop_category = PanelProp.LISTENER_MEMORIZED_CATEGORY;
+				case PanelProp.LISTENER_LOCKED
+					prop_category = PanelProp.LISTENER_LOCKED_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Panel(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -607,9 +628,42 @@ classdef PanelProp < Panel
 			
 			prop = PanelProp.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelprop_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19 };
-			prop_format = panelprop_format_list{prop};
+			switch prop
+				case PanelProp.X_DRAW
+					prop_format = PanelProp.X_DRAW_FORMAT;
+				case PanelProp.UPDATE
+					prop_format = PanelProp.UPDATE_FORMAT;
+				case PanelProp.REDRAW
+					prop_format = PanelProp.REDRAW_FORMAT;
+				case PanelProp.EL
+					prop_format = PanelProp.EL_FORMAT;
+				case PanelProp.PROP
+					prop_format = PanelProp.PROP_FORMAT;
+				case PanelProp.HEIGHT
+					prop_format = PanelProp.HEIGHT_FORMAT;
+				case PanelProp.TITLE
+					prop_format = PanelProp.TITLE_FORMAT;
+				case PanelProp.LABEL_TITLE
+					prop_format = PanelProp.LABEL_TITLE_FORMAT;
+				case PanelProp.BUTTON_CB
+					prop_format = PanelProp.BUTTON_CB_FORMAT;
+				case PanelProp.GUI_CB
+					prop_format = PanelProp.GUI_CB_FORMAT;
+				case PanelProp.LISTENER_CB
+					prop_format = PanelProp.LISTENER_CB_FORMAT;
+				case PanelProp.BUTTON_CALC
+					prop_format = PanelProp.BUTTON_CALC_FORMAT;
+				case PanelProp.BUTTON_DEL
+					prop_format = PanelProp.BUTTON_DEL_FORMAT;
+				case PanelProp.LISTENER_SET
+					prop_format = PanelProp.LISTENER_SET_FORMAT;
+				case PanelProp.LISTENER_MEMORIZED
+					prop_format = PanelProp.LISTENER_MEMORIZED_FORMAT;
+				case PanelProp.LISTENER_LOCKED
+					prop_format = PanelProp.LISTENER_LOCKED_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Panel(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -633,9 +687,66 @@ classdef PanelProp < Panel
 			
 			prop = PanelProp.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelprop_description_list = { 'ELCLASS (constant, string) is the class of the property panel.'  'NAME (constant, string) is the name of the property panel.'  'DESCRIPTION (constant, string) is the description of the property panel.'  'TEMPLATE (parameter, item) is the template of the property panel.'  'ID (data, string) is a few-letter code for the property panel.'  'LABEL (metadata, string) is an extended label of the property panel.'  'NOTES (metadata, string) are some specific notes about the property panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the graphical objects of the prop panel [to be implemented in subelements].'  'UPDATE (query, logical) updates the content of the prop panel and its graphical objects.'  'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects [accept Width-value pair].'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.' };
-			prop_description = panelprop_description_list{prop};
+			switch prop
+				case PanelProp.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the graphical objects of the prop panel [to be implemented in subelements].';
+				case PanelProp.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content of the prop panel and its graphical objects.';
+				case PanelProp.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the prop panel and repositions its graphical objects [accept Width-value pair].';
+				case PanelProp.EL
+					prop_description = 'EL (data, item) is the element.';
+				case PanelProp.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case PanelProp.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the prop panel.';
+				case PanelProp.TITLE
+					prop_description = 'TITLE (gui, string) is the property title.';
+				case PanelProp.LABEL_TITLE
+					prop_description = 'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.';
+				case PanelProp.BUTTON_CB
+					prop_description = 'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].';
+				case PanelProp.GUI_CB
+					prop_description = 'GUI_CB (data, item) is the handle to the item figure.';
+				case PanelProp.LISTENER_CB
+					prop_description = 'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.';
+				case PanelProp.BUTTON_CALC
+					prop_description = 'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].';
+				case PanelProp.BUTTON_DEL
+					prop_description = 'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].';
+				case PanelProp.LISTENER_SET
+					prop_description = 'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.';
+				case PanelProp.LISTENER_MEMORIZED
+					prop_description = 'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.';
+				case PanelProp.LISTENER_LOCKED
+					prop_description = 'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.';
+				case PanelProp.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the property panel.';
+				case PanelProp.NAME
+					prop_description = 'NAME (constant, string) is the name of the property panel.';
+				case PanelProp.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the property panel.';
+				case PanelProp.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the property panel.';
+				case PanelProp.ID
+					prop_description = 'ID (data, string) is a few-letter code for the property panel.';
+				case PanelProp.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the property panel.';
+				case PanelProp.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the property panel.';
+				case PanelProp.DRAW
+					prop_description = 'DRAW (query, logical) draws the property panel.';
+				case PanelProp.SHOW
+					prop_description = 'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.';
+				case PanelProp.HIDE
+					prop_description = 'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.';
+				case PanelProp.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				case PanelProp.CLOSE
+					prop_description = 'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.';
+				otherwise
+					prop_description = getPropDescription@Panel(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -659,40 +770,40 @@ classdef PanelProp < Panel
 			
 			prop = PanelProp.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 20 % PanelProp.X_DRAW
-					prop_settings = Format.getFormatSettings(4);
-				case 21 % PanelProp.UPDATE
-					prop_settings = Format.getFormatSettings(4);
-				case 22 % PanelProp.REDRAW
-					prop_settings = Format.getFormatSettings(4);
-				case 23 % PanelProp.EL
-					prop_settings = Format.getFormatSettings(8);
-				case 24 % PanelProp.PROP
-					prop_settings = Format.getFormatSettings(11);
-				case 25 % PanelProp.HEIGHT
-					prop_settings = Format.getFormatSettings(22);
-				case 26 % PanelProp.TITLE
-					prop_settings = Format.getFormatSettings(2);
-				case 27 % PanelProp.LABEL_TITLE
-					prop_settings = Format.getFormatSettings(18);
-				case 28 % PanelProp.BUTTON_CB
-					prop_settings = Format.getFormatSettings(18);
-				case 29 % PanelProp.GUI_CB
+			switch prop
+				case PanelProp.X_DRAW
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelProp.UPDATE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelProp.REDRAW
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelProp.EL
+					prop_settings = Format.getFormatSettings(Format.ITEM);
+				case PanelProp.PROP
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case PanelProp.HEIGHT
+					prop_settings = Format.getFormatSettings(Format.SIZE);
+				case PanelProp.TITLE
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case PanelProp.LABEL_TITLE
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelProp.BUTTON_CB
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelProp.GUI_CB
 					prop_settings = 'GUI';
-				case 30 % PanelProp.LISTENER_CB
-					prop_settings = Format.getFormatSettings(18);
-				case 31 % PanelProp.BUTTON_CALC
-					prop_settings = Format.getFormatSettings(18);
-				case 32 % PanelProp.BUTTON_DEL
-					prop_settings = Format.getFormatSettings(18);
-				case 33 % PanelProp.LISTENER_SET
-					prop_settings = Format.getFormatSettings(19);
-				case 34 % PanelProp.LISTENER_MEMORIZED
-					prop_settings = Format.getFormatSettings(19);
-				case 35 % PanelProp.LISTENER_LOCKED
-					prop_settings = Format.getFormatSettings(19);
-				case 4 % PanelProp.TEMPLATE
+				case PanelProp.LISTENER_CB
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelProp.BUTTON_CALC
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelProp.BUTTON_DEL
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelProp.LISTENER_SET
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case PanelProp.LISTENER_MEMORIZED
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case PanelProp.LISTENER_LOCKED
+					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
+				case PanelProp.TEMPLATE
 					prop_settings = 'PanelProp';
 				otherwise
 					prop_settings = getPropSettings@Panel(prop);
@@ -720,52 +831,52 @@ classdef PanelProp < Panel
 			
 			prop = PanelProp.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 20 % PanelProp.X_DRAW
-					prop_default = Format.getFormatDefault(4, PanelProp.getPropSettings(prop));
-				case 21 % PanelProp.UPDATE
-					prop_default = Format.getFormatDefault(4, PanelProp.getPropSettings(prop));
-				case 22 % PanelProp.REDRAW
-					prop_default = Format.getFormatDefault(4, PanelProp.getPropSettings(prop));
-				case 23 % PanelProp.EL
-					prop_default = Format.getFormatDefault(8, PanelProp.getPropSettings(prop));
-				case 24 % PanelProp.PROP
+			switch prop
+				case PanelProp.X_DRAW
+					prop_default = Format.getFormatDefault(Format.LOGICAL, PanelProp.getPropSettings(prop));
+				case PanelProp.UPDATE
+					prop_default = Format.getFormatDefault(Format.LOGICAL, PanelProp.getPropSettings(prop));
+				case PanelProp.REDRAW
+					prop_default = Format.getFormatDefault(Format.LOGICAL, PanelProp.getPropSettings(prop));
+				case PanelProp.EL
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelProp.getPropSettings(prop));
+				case PanelProp.PROP
 					prop_default = 1;
-				case 25 % PanelProp.HEIGHT
-					prop_default = 24;
-				case 26 % PanelProp.TITLE
-					prop_default = Format.getFormatDefault(2, PanelProp.getPropSettings(prop));
-				case 27 % PanelProp.LABEL_TITLE
-					prop_default = Format.getFormatDefault(18, PanelProp.getPropSettings(prop));
-				case 28 % PanelProp.BUTTON_CB
-					prop_default = Format.getFormatDefault(18, PanelProp.getPropSettings(prop));
-				case 29 % PanelProp.GUI_CB
-					prop_default = Format.getFormatDefault(8, PanelProp.getPropSettings(prop));
-				case 30 % PanelProp.LISTENER_CB
-					prop_default = Format.getFormatDefault(18, PanelProp.getPropSettings(prop));
-				case 31 % PanelProp.BUTTON_CALC
-					prop_default = Format.getFormatDefault(18, PanelProp.getPropSettings(prop));
-				case 32 % PanelProp.BUTTON_DEL
-					prop_default = Format.getFormatDefault(18, PanelProp.getPropSettings(prop));
-				case 33 % PanelProp.LISTENER_SET
-					prop_default = Format.getFormatDefault(19, PanelProp.getPropSettings(prop));
-				case 34 % PanelProp.LISTENER_MEMORIZED
-					prop_default = Format.getFormatDefault(19, PanelProp.getPropSettings(prop));
-				case 35 % PanelProp.LISTENER_LOCKED
-					prop_default = Format.getFormatDefault(19, PanelProp.getPropSettings(prop));
-				case 1 % PanelProp.ELCLASS
+				case PanelProp.HEIGHT
+					prop_default = s(2);
+				case PanelProp.TITLE
+					prop_default = Format.getFormatDefault(Format.STRING, PanelProp.getPropSettings(prop));
+				case PanelProp.LABEL_TITLE
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_CB
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelProp.getPropSettings(prop));
+				case PanelProp.GUI_CB
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_CB
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_CALC
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_DEL
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_SET
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_MEMORIZED
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_LOCKED
+					prop_default = Format.getFormatDefault(Format.HANDLELIST, PanelProp.getPropSettings(prop));
+				case PanelProp.ELCLASS
 					prop_default = 'PanelProp';
-				case 2 % PanelProp.NAME
+				case PanelProp.NAME
 					prop_default = 'Prop Panel';
-				case 3 % PanelProp.DESCRIPTION
+				case PanelProp.DESCRIPTION
 					prop_default = 'A Prop Panel (PanelProp) renders a property of an element in a panel.';
-				case 4 % PanelProp.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PanelProp.getPropSettings(prop));
-				case 5 % PanelProp.ID
+				case PanelProp.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelProp.getPropSettings(prop));
+				case PanelProp.ID
 					prop_default = 'PanelProp ID';
-				case 6 % PanelProp.LABEL
+				case PanelProp.LABEL
 					prop_default = 'PanelProp label';
-				case 7 % PanelProp.NOTES
+				case PanelProp.NOTES
 					prop_default = 'PanelProp notes';
 				otherwise
 					prop_default = getPropDefault@Panel(prop);
@@ -802,8 +913,8 @@ classdef PanelProp < Panel
 			%PRESET preprocesses the value of a property before setting it.
 			%
 			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
-			%  PROP. It works only with properties with 2,
-			%  3, 4, 8 and 9. By
+			%  PROP. It works only with properties with Category.METADATA,
+			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI. By
 			%  default, this function does not do anything, so it should be implemented
 			%  in the subclasses of Element when needed.
 			%
@@ -811,7 +922,7 @@ classdef PanelProp < Panel
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case 29 % PanelProp.GUI_CB
+				case PanelProp.GUI_CB % __PanelProp.GUI_CB__
 					if isequal(value.getClass(), 'GUI') % i.e., default initialization
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -834,7 +945,7 @@ classdef PanelProp < Panel
 					end
 					
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						value = preset@Panel(pr, prop, value);
 					end
 			end
@@ -855,15 +966,15 @@ classdef PanelProp < Panel
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PanelProp:WrongInput
+			%  Error id: €BRAPH2.STR€:PanelProp:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:PanelProp:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelProp:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PanelProp, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelProp.
-			%   Error id: BRAPH2:PanelProp:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelProp:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(PanelProp, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelProp.
-			%   Error id: BRAPH2:PanelProp:WrongInput]
+			%   Error id: €BRAPH2.STR€:PanelProp:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelProp')
 			%  are less computationally efficient.
@@ -874,42 +985,42 @@ classdef PanelProp < Panel
 			prop = PanelProp.getPropProp(pointer);
 			
 			switch prop
-				case 20 % PanelProp.X_DRAW
-					check = Format.checkFormat(4, value, PanelProp.getPropSettings(prop));
-				case 21 % PanelProp.UPDATE
-					check = Format.checkFormat(4, value, PanelProp.getPropSettings(prop));
-				case 22 % PanelProp.REDRAW
-					check = Format.checkFormat(4, value, PanelProp.getPropSettings(prop));
-				case 23 % PanelProp.EL
-					check = Format.checkFormat(8, value, PanelProp.getPropSettings(prop));
-				case 24 % PanelProp.PROP
-					check = Format.checkFormat(11, value, PanelProp.getPropSettings(prop));
-				case 25 % PanelProp.HEIGHT
-					check = Format.checkFormat(22, value, PanelProp.getPropSettings(prop));
-				case 26 % PanelProp.TITLE
-					check = Format.checkFormat(2, value, PanelProp.getPropSettings(prop));
-				case 27 % PanelProp.LABEL_TITLE
-					check = Format.checkFormat(18, value, PanelProp.getPropSettings(prop));
-				case 28 % PanelProp.BUTTON_CB
-					check = Format.checkFormat(18, value, PanelProp.getPropSettings(prop));
-				case 29 % PanelProp.GUI_CB
-					check = Format.checkFormat(8, value, PanelProp.getPropSettings(prop));
-				case 30 % PanelProp.LISTENER_CB
-					check = Format.checkFormat(18, value, PanelProp.getPropSettings(prop));
-				case 31 % PanelProp.BUTTON_CALC
-					check = Format.checkFormat(18, value, PanelProp.getPropSettings(prop));
-				case 32 % PanelProp.BUTTON_DEL
-					check = Format.checkFormat(18, value, PanelProp.getPropSettings(prop));
-				case 33 % PanelProp.LISTENER_SET
-					check = Format.checkFormat(19, value, PanelProp.getPropSettings(prop));
-				case 34 % PanelProp.LISTENER_MEMORIZED
-					check = Format.checkFormat(19, value, PanelProp.getPropSettings(prop));
-				case 35 % PanelProp.LISTENER_LOCKED
-					check = Format.checkFormat(19, value, PanelProp.getPropSettings(prop));
-				case 4 % PanelProp.TEMPLATE
-					check = Format.checkFormat(8, value, PanelProp.getPropSettings(prop));
+				case PanelProp.X_DRAW % __PanelProp.X_DRAW__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelProp.getPropSettings(prop));
+				case PanelProp.UPDATE % __PanelProp.UPDATE__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelProp.getPropSettings(prop));
+				case PanelProp.REDRAW % __PanelProp.REDRAW__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelProp.getPropSettings(prop));
+				case PanelProp.EL % __PanelProp.EL__
+					check = Format.checkFormat(Format.ITEM, value, PanelProp.getPropSettings(prop));
+				case PanelProp.PROP % __PanelProp.PROP__
+					check = Format.checkFormat(Format.SCALAR, value, PanelProp.getPropSettings(prop));
+				case PanelProp.HEIGHT % __PanelProp.HEIGHT__
+					check = Format.checkFormat(Format.SIZE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.TITLE % __PanelProp.TITLE__
+					check = Format.checkFormat(Format.STRING, value, PanelProp.getPropSettings(prop));
+				case PanelProp.LABEL_TITLE % __PanelProp.LABEL_TITLE__
+					check = Format.checkFormat(Format.HANDLE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_CB % __PanelProp.BUTTON_CB__
+					check = Format.checkFormat(Format.HANDLE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.GUI_CB % __PanelProp.GUI_CB__
+					check = Format.checkFormat(Format.ITEM, value, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_CB % __PanelProp.LISTENER_CB__
+					check = Format.checkFormat(Format.HANDLE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_CALC % __PanelProp.BUTTON_CALC__
+					check = Format.checkFormat(Format.HANDLE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.BUTTON_DEL % __PanelProp.BUTTON_DEL__
+					check = Format.checkFormat(Format.HANDLE, value, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_SET % __PanelProp.LISTENER_SET__
+					check = Format.checkFormat(Format.HANDLELIST, value, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_MEMORIZED % __PanelProp.LISTENER_MEMORIZED__
+					check = Format.checkFormat(Format.HANDLELIST, value, PanelProp.getPropSettings(prop));
+				case PanelProp.LISTENER_LOCKED % __PanelProp.LISTENER_LOCKED__
+					check = Format.checkFormat(Format.HANDLELIST, value, PanelProp.getPropSettings(prop));
+				case PanelProp.TEMPLATE % __PanelProp.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PanelProp.getPropSettings(prop));
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						check = checkProp@Panel(prop, value);
 					end
 			end
@@ -918,8 +1029,8 @@ classdef PanelProp < Panel
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelProp:' 'WrongInput'], ...
-					['BRAPH2' ':PanelProp:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelProp:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelProp.getPropTag(prop) ' (' PanelProp.getFormatTag(PanelProp.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -939,7 +1050,7 @@ classdef PanelProp < Panel
 			%  checkValue.
 			
 			switch prop
-				case 23 % PanelProp.EL
+				case PanelProp.EL % __PanelProp.EL__
 					pr.lock('EL', 'Iterative', false)
 					if ~isa(pr.getr('PROP'), 'NoValue')
 					    el = pr.get('EL');
@@ -954,24 +1065,24 @@ classdef PanelProp < Panel
 					    end
 					    if isa(pr.getr('BKGCOLOR'), 'NoValue')
 					        switch el.getPropCategory(prop)
-					            case 1
-					                color = [0.5 0.5 0.5];
-					            case 2
-					                color = [0.2 0.5 0.8];
-					            case 3
-					                color = [0.4 0.5 0.6];
-					            case 4
-					                color = [0.6 0.5 0.4];
-					            case 5
-					                color = [0.8 0.5 0.2];
-					            case 6
-					                color = [0.9 0.5 0.1];
-					            case 7
-					                color = [0.6 0.6 0.6];
-					            case 8
-					                color = [0.7 0.7 0.7];
-					            case 9
-					                color = [0.8 0.8 0.8];
+					            case Category.CONSTANT
+					                color = BRAPH2.COL_C;
+					            case Category.METADATA
+					                color = BRAPH2.COL_M;
+					            case Category.PARAMETER
+					                color = BRAPH2.COL_P;
+					            case Category.DATA
+					                color = BRAPH2.COL_D;
+					            case Category.RESULT
+					                color = BRAPH2.COL_R;
+					            case Category.QUERY
+					                color = BRAPH2.COL_Q;
+					            case Category.EVANESCENT
+					                color = BRAPH2.COL_E;
+					            case Category.FIGURE
+					                color = BRAPH2.COL_F;
+					            case Category.GUI
+					                color = BRAPH2.COL_G;
 					        end
 					        settings = [settings 'BKGCOLOR' color];
 					    end
@@ -980,7 +1091,7 @@ classdef PanelProp < Panel
 					    end
 					end
 					
-				case 24 % PanelProp.PROP
+				case PanelProp.PROP % __PanelProp.PROP__
 					pr.lock('PROP', 'Iterative', false)
 					if ~isa(pr.getr('EL'), 'NoValue')
 					    el = pr.get('EL');
@@ -995,24 +1106,24 @@ classdef PanelProp < Panel
 					    end
 					    if isa(pr.getr('BKGCOLOR'), 'NoValue')
 					        switch el.getPropCategory(prop)
-					            case 1
-					                color = [0.5 0.5 0.5];
-					            case 2
-					                color = [0.2 0.5 0.8];
-					            case 3
-					                color = [0.4 0.5 0.6];
-					            case 4
-					                color = [0.6 0.5 0.4];
-					            case 5
-					                color = [0.8 0.5 0.2];
-					            case 6
-					                color = [0.9 0.5 0.1];
-					            case 7
-					                color = [0.6 0.6 0.6];
-					            case 8
-					                color = [0.7 0.7 0.7];
-					            case 9
-					                color = [0.8 0.8 0.8];
+					            case Category.CONSTANT
+					                color = BRAPH2.COL_C;
+					            case Category.METADATA
+					                color = BRAPH2.COL_M;
+					            case Category.PARAMETER
+					                color = BRAPH2.COL_P;
+					            case Category.DATA
+					                color = BRAPH2.COL_D;
+					            case Category.RESULT
+					                color = BRAPH2.COL_R;
+					            case Category.QUERY
+					                color = BRAPH2.COL_Q;
+					            case Category.EVANESCENT
+					                color = BRAPH2.COL_E;
+					            case Category.FIGURE
+					                color = BRAPH2.COL_F;
+					            case Category.GUI
+					                color = BRAPH2.COL_G;
 					        end
 					        settings = [settings 'BKGCOLOR' color];
 					    end
@@ -1021,13 +1132,13 @@ classdef PanelProp < Panel
 					    end
 					end
 					
-				case 25 % PanelProp.HEIGHT
+				case PanelProp.HEIGHT % __PanelProp.HEIGHT__
 					if pr.get('DRAWN')
 					    pr.get('REDRAW')
 					end
 					
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						postset@Panel(pr, prop);
 					end
 			end
@@ -1038,28 +1149,28 @@ classdef PanelProp < Panel
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 20 % PanelProp.X_DRAW
+				case PanelProp.X_DRAW % __PanelProp.X_DRAW__
 					value = true;
 					
-				case 21 % PanelProp.UPDATE
+				case PanelProp.UPDATE % __PanelProp.UPDATE__
 					if pr.get('DRAWN')
 					    switch pr.get('EL').getPropCategory(pr.get('PROP'))
-					        case {1 2} % {Category.CONSTANT Category.METADATA}
+					        case {Category.CONSTANT Category.METADATA} % {__Category.CONSTANT__ __Category.METADATA__}
 					            %
 					
-					        case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+					        case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
 					            prop_value = pr.get('EL').getr(pr.get('PROP'));
 					            if isa(prop_value, 'Callback')
 					                set(pr.get('BUTTON_CB'), ...
@@ -1072,7 +1183,7 @@ classdef PanelProp < Panel
 					                    )
 					            end
 					
-					        case {5 7} % {Category.RESULT Category.EVANESCENT}
+					        case {Category.RESULT Category.EVANESCENT} % {__Category.RESULT__ __Category.EVANESCENT__}
 					            prop_value = pr.get('EL').getr(pr.get('PROP'));
 					            if isa(prop_value, 'NoValue')
 					                set(pr.get('BUTTON_CALC'), 'Enable', 'on')
@@ -1082,7 +1193,7 @@ classdef PanelProp < Panel
 					                set(pr.get('BUTTON_DEL'), 'Enable', 'on')
 					            end
 					            
-					        case 6 % Category.QUERY
+					        case Category.QUERY % __Category.QUERY__
 					            prop_value = get_from_varargin(pr.get('EL').getr(pr.get('PROP')), 'Value', varargin); % see BUTTON_CALC
 					            if isa(prop_value, 'NoValue')
 					                set(pr.get('BUTTON_CALC'), 'Enable', 'on')
@@ -1101,8 +1212,8 @@ classdef PanelProp < Panel
 					    value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pr)], ...
-					        ['BRAPH2' ':' class(pr) '\n' ...
+					        [BRAPH2.STR ':' class(pr)], ...
+					        [BRAPH2.STR ':' class(pr) '\n' ...
 					        'The call pr.get(''UPDATE'') has NOT been executed.\n' ...
 					        'First, the prop panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1110,7 +1221,7 @@ classdef PanelProp < Panel
 					    value = false;
 					end
 					
-				case 22 % PanelProp.REDRAW
+				case PanelProp.REDRAW % __PanelProp.REDRAW__
 					if pr.get('DRAWN')
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    h_p = pr.get('HEIGHT'); % should be identical to h(pr.get('H'), 'pixels') 
@@ -1118,26 +1229,26 @@ classdef PanelProp < Panel
 					                            % by some external code controlling the PanelProp
 					    
 					    % places label_title to the top
-					    set(pr.get('LABEL_TITLE'), 'Position', [4 h_p-16+1 w_p 16])
+					    set(pr.get('LABEL_TITLE'), 'Position', [s(.3) h_p-s(1.3)+1 w_p s(1.3)])
 					
 					    % places the relevant buttons (depending on category)
 					    switch pr.get('EL').getPropCategory(pr.get('PROP'))
-					        case {1 2} % {Category.CONSTANT Category.METADATA}
+					        case {Category.CONSTANT Category.METADATA} % {__Category.CONSTANT__ __Category.METADATA__}
 					            %
 					
-					        case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
-					            set(pr.get('BUTTON_CB'), 'Position', [w_p-26 h_p-23 21 21])
+					        case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
+					            set(pr.get('BUTTON_CB'), 'Position', [w_p-s(2.1) h_p-s(1.9) s(1.7) s(1.7)])
 					
-					        case {5 6 7} % {Category.RESULT Category.QUERY Category.EVANESCENT}
-					            set(pr.get('BUTTON_CALC'), 'Position', [w_p-51 h_p-23 21 21])
-					            set(pr.get('BUTTON_DEL'), 'Position', [w_p-26 h_p-23 21 21])
+					        case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
+					            set(pr.get('BUTTON_CALC'), 'Position', [w_p-s(4.2) h_p-s(1.9) s(1.7) s(1.7)])
+					            set(pr.get('BUTTON_DEL'), 'Position', [w_p-s(2.1) h_p-s(1.9) s(1.7) s(1.7)])
 					    end
 					     
 					    value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pr)], ...
-					        ['BRAPH2' ':' class(pr) '\n' ...
+					        [BRAPH2.STR ':' class(pr)], ...
+					        [BRAPH2.STR ':' class(pr) '\n' ...
 					        'The call pr.get(''REDRAW'') has NOT been executed.\n' ...
 					        'First, the prop panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1145,7 +1256,7 @@ classdef PanelProp < Panel
 					    value = false;
 					end
 					
-				case 27 % PanelProp.LABEL_TITLE
+				case PanelProp.LABEL_TITLE % __PanelProp.LABEL_TITLE__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1158,7 +1269,7 @@ classdef PanelProp < Panel
 					    'Parent', pr.get('H'), ... % H = p for Panel
 					    'Tag', 'LABEL_TAG', ...
 					    'Text', pr_string_title, ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'HorizontalAlignment', 'left', ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
@@ -1166,7 +1277,7 @@ classdef PanelProp < Panel
 					
 					value = label_title;
 					
-				case 28 % PanelProp.BUTTON_CB
+				case PanelProp.BUTTON_CB % __PanelProp.BUTTON_CB__
 					button_cb = uibutton( ...
 					    'Parent', pr.get('H'), ... % H = p for Panel
 					    'Tag', 'BUTTON_CB', ...
@@ -1178,7 +1289,7 @@ classdef PanelProp < Panel
 					    );
 					value = button_cb;
 					
-				case 30 % PanelProp.LISTENER_CB
+				case PanelProp.LISTENER_CB % __PanelProp.LISTENER_CB__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					if isa(el.getr(prop), 'Callback')
@@ -1192,7 +1303,7 @@ classdef PanelProp < Panel
 						value = gobjects(1);
 					end
 					
-				case 31 % PanelProp.BUTTON_CALC
+				case PanelProp.BUTTON_CALC % __PanelProp.BUTTON_CALC__
 					button_calc = uibutton( ...
 					    'Parent', pr.get('H'), ... % H = p for Panel
 					    'Tag', 'BUTTON_CALC', ...
@@ -1205,7 +1316,7 @@ classdef PanelProp < Panel
 					    );
 					value = button_calc;
 					
-				case 32 % PanelProp.BUTTON_DEL
+				case PanelProp.BUTTON_DEL % __PanelProp.BUTTON_DEL__
 					button_del = uibutton( ...
 					    'Parent', pr.get('H'), ... % H = p for Panel
 					    'Tag', 'BUTTON_DEL', ...
@@ -1218,26 +1329,26 @@ classdef PanelProp < Panel
 					    );
 					value = button_del;
 					
-				case 33 % PanelProp.LISTENER_SET
+				case PanelProp.LISTENER_SET % __PanelProp.LISTENER_SET__
 					value = {listener(pr.get('EL'), 'PropSet', @cb_listener_set)};
 					
-				case 34 % PanelProp.LISTENER_MEMORIZED
+				case PanelProp.LISTENER_MEMORIZED % __PanelProp.LISTENER_MEMORIZED__
 					value = {listener(pr.get('EL'), 'PropMemorized', @cb_listener_memorized)};
 					
-				case 35 % PanelProp.LISTENER_LOCKED
+				case PanelProp.LISTENER_LOCKED % __PanelProp.LISTENER_LOCKED__
 					value = {listener(pr.get('EL'), 'PropLocked', @cb_listener_locked)};
 					
-				case 11 % PanelProp.DRAW
-					value = calculateValue@Panel(pr, 11, varargin{:}); % also warning
+				case PanelProp.DRAW % __PanelProp.DRAW__
+					value = calculateValue@Panel(pr, Panel.DRAW, varargin{:}); % also warning
 					if value
 					    switch pr.get('EL').getPropCategory(pr.get('PROP'))
-					        case {1 2} % {Category.CONSTANT Category.METADATA}
+					        case {Category.CONSTANT Category.METADATA} % {__Category.CONSTANT__ __Category.METADATA__}
 					            pr.memorize('LABEL_TITLE')
 					
 					            pr.memorize('LISTENER_SET')
 					            pr.memorize('LISTENER_LOCKED')
 					
-					        case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
+					        case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
 					            pr.memorize('LABEL_TITLE')
 					
 					            pr.memorize('BUTTON_CB')
@@ -1245,7 +1356,7 @@ classdef PanelProp < Panel
 					            pr.memorize('LISTENER_SET')
 					            pr.memorize('LISTENER_LOCKED')
 					
-					        case {5 6 7} % {Category.RESULT Category.QUERY Category.EVANESCENT}
+					        case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
 					            pr.memorize('LABEL_TITLE')
 					
 					            pr.memorize('BUTTON_CALC')
@@ -1261,10 +1372,10 @@ classdef PanelProp < Panel
 					    pr.get('REDRAW')
 					end
 					
-				case 16 % PanelProp.SHOW
+				case PanelProp.SHOW % __PanelProp.SHOW__
 					if pr.get('DRAWN')
 					
-					    calculateValue@Panel(pr, 16, varargin{:}); % 16 = Panel.SHOW
+					    calculateValue@Panel(pr, Panel.SHOW, varargin{:}); % Panel.SHOW = __Panel.SHOW__
 					
 					    % figure cb
 					    if isa(pr.getr('GUI_CB'), 'GUI') && pr.get('GUI_CB').get('DRAWN')
@@ -1274,8 +1385,8 @@ classdef PanelProp < Panel
 						value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pr)], ...
-					        ['BRAPH2' ':' class(pr) '\n' ...
+					        [BRAPH2.STR ':' class(pr)], ...
+					        [BRAPH2.STR ':' class(pr) '\n' ...
 					        'The call pr.get(''SHOW'') has NOT been executed.\n' ...
 					        'First, the panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1283,10 +1394,10 @@ classdef PanelProp < Panel
 					    value = false;
 					end
 					
-				case 17 % PanelProp.HIDE
+				case PanelProp.HIDE % __PanelProp.HIDE__
 					if pr.get('DRAWN')
 					
-					    calculateValue@Panel(pr, 17, varargin{:}); % 17 = Panel.HIDE
+					    calculateValue@Panel(pr, Panel.HIDE, varargin{:}); % Panel.HIDE = __Panel.HIDE__
 					    
 					    % figure cb
 					    if isa(pr.getr('GUI_CB'), 'GUI') && pr.get('GUI_CB').get('DRAWN')
@@ -1296,8 +1407,8 @@ classdef PanelProp < Panel
 					    value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pr)], ...
-					        ['BRAPH2' ':' class(pr) '\n' ...
+					        [BRAPH2.STR ':' class(pr)], ...
+					        [BRAPH2.STR ':' class(pr) '\n' ...
 					        'The call pr.get(''HIDE'') has NOT been executed.\n' ...
 					        'First, the panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1305,8 +1416,8 @@ classdef PanelProp < Panel
 					    value = false;
 					end
 					
-				case 18 % PanelProp.DELETE
-					value = calculateValue@Panel(pr, 18, varargin{:}); % 18 = Panel.DELETE % also warning
+				case PanelProp.DELETE % __PanelProp.DELETE__
+					value = calculateValue@Panel(pr, Panel.DELETE, varargin{:}); % Panel.DELETE = __Panel.DELETE__ % also warning
 					if value
 					    pr.set('LABEL_TITLE', Element.getNoValue())
 					    
@@ -1321,10 +1432,10 @@ classdef PanelProp < Panel
 					    pr.set('LISTENER_LOCKED', Element.getNoValue())   
 					end
 					
-				case 19 % PanelProp.CLOSE
+				case PanelProp.CLOSE % __PanelProp.CLOSE__
 					if pr.get('DRAWN')
 					
-					    calculateValue@Panel(pr, 19, varargin{:}); % 19 = Panel.CLOSE
+					    calculateValue@Panel(pr, Panel.CLOSE, varargin{:}); % Panel.CLOSE = __Panel.CLOSE__
 					    
 					    % figure cb
 					    if isa(pr.getr('GUI_CB'), 'GUI') && pr.get('GUI_CB').get('DRAWN')
@@ -1334,8 +1445,8 @@ classdef PanelProp < Panel
 					    value = true;
 					else
 					    warning( ...
-					        ['BRAPH2' ':' class(pr)], ...
-					        ['BRAPH2' ':' class(pr) '\n' ...
+					        [BRAPH2.STR ':' class(pr)], ...
+					        [BRAPH2.STR ':' class(pr) '\n' ...
 					        'The call pr.get(''CLOSE'') has NOT been executed.\n' ...
 					        'First, the panel ' pr.get('ID') ' should be drawn calling pr.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1344,7 +1455,7 @@ classdef PanelProp < Panel
 					end
 					
 				otherwise
-					if prop <= 19
+					if prop <= Panel.getPropNumber()
 						value = calculateValue@Panel(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1375,14 +1486,14 @@ classdef PanelProp < Panel
 			    prop = pr.get('PROP');
 			
 			    switch el.getPropCategory(prop)
-			        case {5 7}
+			        case {Category.RESULT Category.EVANESCENT}
 			
 			            el.memorize(prop);
 			            
 			            pr.get('UPDATE')
 			            pr.get('REDRAW')
 			            
-			        case 6
+			        case Category.QUERY
 			            
 			            value = el.get(prop);
 			            

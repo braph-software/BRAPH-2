@@ -6,46 +6,6 @@ classdef PanelPropAlpha < PanelProp
 	%  with a numeric edit field and a slider.
 	% It works for all categories.
 	%
-	% The list of PanelPropAlpha properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the alpha property panel.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the alpha property panel.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the alpha property panel.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the alpha property panel.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the alpha property panel.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the alpha property panel.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the alpha property panel.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-	%  <strong>37</strong> <strong>EDITFIELD</strong> 	EDITFIELD (evanescent, handle) is the alpha value edit field.
-	%  <strong>38</strong> <strong>SLIDER</strong> 	SLIDER (evanescent, handle) is the alpha value slider.
-	%
 	% PanelPropAlpha methods (constructor):
 	%  PanelPropAlpha - constructor
 	%
@@ -135,20 +95,20 @@ classdef PanelPropAlpha < PanelProp
 	% See also uieditfield, uislider, GUI, PanelElement.
 	
 	properties (Constant) % properties
-		ENABLE = 36; %CET: Computational Efficiency Trick
+		ENABLE = PanelProp.getPropNumber() + 1;
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = 9;
-		ENABLE_FORMAT = 4;
+		ENABLE_CATEGORY = Category.GUI;
+		ENABLE_FORMAT = Format.LOGICAL;
 		
-		EDITFIELD = 37; %CET: Computational Efficiency Trick
+		EDITFIELD = PanelProp.getPropNumber() + 2;
 		EDITFIELD_TAG = 'EDITFIELD';
-		EDITFIELD_CATEGORY = 7;
-		EDITFIELD_FORMAT = 18;
+		EDITFIELD_CATEGORY = Category.EVANESCENT;
+		EDITFIELD_FORMAT = Format.HANDLE;
 		
-		SLIDER = 38; %CET: Computational Efficiency Trick
+		SLIDER = PanelProp.getPropNumber() + 3;
 		SLIDER_TAG = 'SLIDER';
-		SLIDER_CATEGORY = 7;
-		SLIDER_FORMAT = 18;
+		SLIDER_CATEGORY = Category.EVANESCENT;
+		SLIDER_FORMAT = Format.HANDLE;
 	end
 	methods % constructor
 		function pr = PanelPropAlpha(varargin)
@@ -161,45 +121,6 @@ classdef PanelPropAlpha < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of PanelPropAlpha properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the alpha property panel.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the alpha property panel.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the alpha property panel.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the alpha property panel.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the alpha property panel.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the alpha property panel.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the alpha property panel.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
-			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
-			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
-			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
-			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
-			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
-			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
-			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
-			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
-			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
-			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
-			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
-			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
-			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
-			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
-			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
-			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.
-			%  <strong>37</strong> <strong>EDITFIELD</strong> 	EDITFIELD (evanescent, handle) is the alpha value edit field.
-			%  <strong>38</strong> <strong>SLIDER</strong> 	SLIDER (evanescent, handle) is the alpha value slider.
 			%
 			% See also Category, Format.
 			
@@ -237,7 +158,7 @@ classdef PanelPropAlpha < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelPropAlpha' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('PanelPropAlpha', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of alpha prop panel.
@@ -258,32 +179,56 @@ classdef PanelPropAlpha < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
+				prop_list = [ ...
+					PanelProp.getProps() ...
+						PanelPropAlpha.ENABLE ...
+						PanelPropAlpha.EDITFIELD ...
+						PanelPropAlpha.SLIDER ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 23 24 29];
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 20 21 22];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38];
-				case 8 % Category.FIGURE
-					prop_list = 14;
-				case 9 % Category.GUI
-					prop_list = [9 13 25 26 36];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelProp.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelProp.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelProp.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelProp.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelProp.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelProp.getProps(Category.EVANESCENT) ...
+						PanelPropAlpha.EDITFIELD ...
+						PanelPropAlpha.SLIDER ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelProp.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelProp.getProps(Category.GUI) ...
+						PanelPropAlpha.ENABLE ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -304,33 +249,7 @@ classdef PanelPropAlpha < PanelProp
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 38;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 4;
-				case 6 % Category.QUERY
-					prop_number = 10;
-				case 7 % Category.EVANESCENT
-					prop_number = 12;
-				case 8 % Category.FIGURE
-					prop_number = 1;
-				case 9 % Category.GUI
-					prop_number = 5;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(PanelPropAlpha.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in alpha prop panel/error.
@@ -358,14 +277,14 @@ classdef PanelPropAlpha < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 38 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == PanelPropAlpha.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropAlpha.'] ...
 					)
 			end
@@ -396,14 +315,15 @@ classdef PanelPropAlpha < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'SLIDER' })); %CET: Computational Efficiency Trick
+			panelpropalpha_tag_list = cellfun(@(x) PanelPropAlpha.getPropTag(x), num2cell(PanelPropAlpha.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, panelpropalpha_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropAlpha.'] ...
 					)
 			end
@@ -429,7 +349,8 @@ classdef PanelPropAlpha < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'SLIDER' })); % tag = pointer %CET: Computational Efficiency Trick
+				panelpropalpha_tag_list = cellfun(@(x) PanelPropAlpha.getPropTag(x), num2cell(PanelPropAlpha.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, panelpropalpha_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -457,9 +378,18 @@ classdef PanelPropAlpha < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				panelpropalpha_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'EDITFIELD'  'SLIDER' };
-				tag = panelpropalpha_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case PanelPropAlpha.ENABLE
+						tag = PanelPropAlpha.ENABLE_TAG;
+					case PanelPropAlpha.EDITFIELD
+						tag = PanelPropAlpha.EDITFIELD_TAG;
+					case PanelPropAlpha.SLIDER
+						tag = PanelPropAlpha.SLIDER_TAG;
+					otherwise
+						tag = getPropTag@PanelProp(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -484,9 +414,16 @@ classdef PanelPropAlpha < PanelProp
 			
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelpropalpha_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7 };
-			prop_category = panelpropalpha_category_list{prop};
+			switch prop
+				case PanelPropAlpha.ENABLE
+					prop_category = PanelPropAlpha.ENABLE_CATEGORY;
+				case PanelPropAlpha.EDITFIELD
+					prop_category = PanelPropAlpha.EDITFIELD_CATEGORY;
+				case PanelPropAlpha.SLIDER
+					prop_category = PanelPropAlpha.SLIDER_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelProp(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -510,9 +447,16 @@ classdef PanelPropAlpha < PanelProp
 			
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelpropalpha_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18 };
-			prop_format = panelpropalpha_format_list{prop};
+			switch prop
+				case PanelPropAlpha.ENABLE
+					prop_format = PanelPropAlpha.ENABLE_FORMAT;
+				case PanelPropAlpha.EDITFIELD
+					prop_format = PanelPropAlpha.EDITFIELD_FORMAT;
+				case PanelPropAlpha.SLIDER
+					prop_format = PanelPropAlpha.SLIDER_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelProp(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -536,9 +480,44 @@ classdef PanelPropAlpha < PanelProp
 			
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			panelpropalpha_description_list = { 'ELCLASS (constant, string) is the class of the alpha property panel.'  'NAME (constant, string) is the name of the alpha property panel.'  'DESCRIPTION (constant, string) is the description of the alpha property panel.'  'TEMPLATE (parameter, item) is the template of the alpha property panel.'  'ID (data, string) is a few-letter code for the alpha property panel.'  'LABEL (metadata, string) is an extended label of the alpha property panel.'  'NOTES (metadata, string) are some specific notes about the alpha property panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.'  'EDITFIELD (evanescent, handle) is the alpha value edit field.'  'SLIDER (evanescent, handle) is the alpha value slider.' };
-			prop_description = panelpropalpha_description_list{prop};
+			switch prop
+				case PanelPropAlpha.ENABLE
+					prop_description = 'ENABLE (gui, logical) switches the editfield between active and inactive appearance when not editable.';
+				case PanelPropAlpha.EDITFIELD
+					prop_description = 'EDITFIELD (evanescent, handle) is the alpha value edit field.';
+				case PanelPropAlpha.SLIDER
+					prop_description = 'SLIDER (evanescent, handle) is the alpha value slider.';
+				case PanelPropAlpha.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the alpha property panel.';
+				case PanelPropAlpha.NAME
+					prop_description = 'NAME (constant, string) is the name of the alpha property panel.';
+				case PanelPropAlpha.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the alpha property panel.';
+				case PanelPropAlpha.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the alpha property panel.';
+				case PanelPropAlpha.ID
+					prop_description = 'ID (data, string) is a few-letter code for the alpha property panel.';
+				case PanelPropAlpha.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the alpha property panel.';
+				case PanelPropAlpha.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the alpha property panel.';
+				case PanelPropAlpha.EL
+					prop_description = 'EL (data, item) is the element.';
+				case PanelPropAlpha.PROP
+					prop_description = 'PROP (data, scalar) is the property number.';
+				case PanelPropAlpha.HEIGHT
+					prop_description = 'HEIGHT (gui, size) is the pixel height of the property panel.';
+				case PanelPropAlpha.X_DRAW
+					prop_description = 'X_DRAW (query, logical) draws the property panel.';
+				case PanelPropAlpha.UPDATE
+					prop_description = 'UPDATE (query, logical) updates the content and permissions of the editfield.';
+				case PanelPropAlpha.REDRAW
+					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
+				case PanelPropAlpha.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
+				otherwise
+					prop_description = getPropDescription@PanelProp(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -562,14 +541,14 @@ classdef PanelPropAlpha < PanelProp
 			
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % PanelPropAlpha.ENABLE
-					prop_settings = Format.getFormatSettings(4);
-				case 37 % PanelPropAlpha.EDITFIELD
-					prop_settings = Format.getFormatSettings(18);
-				case 38 % PanelPropAlpha.SLIDER
-					prop_settings = Format.getFormatSettings(18);
-				case 4 % PanelPropAlpha.TEMPLATE
+			switch prop
+				case PanelPropAlpha.ENABLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case PanelPropAlpha.EDITFIELD
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropAlpha.SLIDER
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case PanelPropAlpha.TEMPLATE
 					prop_settings = 'PanelPropAlpha';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -597,33 +576,33 @@ classdef PanelPropAlpha < PanelProp
 			
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 36 % PanelPropAlpha.ENABLE
+			switch prop
+				case PanelPropAlpha.ENABLE
 					prop_default = true;
-				case 37 % PanelPropAlpha.EDITFIELD
-					prop_default = Format.getFormatDefault(18, PanelPropAlpha.getPropSettings(prop));
-				case 38 % PanelPropAlpha.SLIDER
-					prop_default = Format.getFormatDefault(18, PanelPropAlpha.getPropSettings(prop));
-				case 1 % PanelPropAlpha.ELCLASS
+				case PanelPropAlpha.EDITFIELD
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.SLIDER
+					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.ELCLASS
 					prop_default = 'PanelPropAlpha';
-				case 2 % PanelPropAlpha.NAME
+				case PanelPropAlpha.NAME
 					prop_default = 'Alpha Prop Panel';
-				case 3 % PanelPropAlpha.DESCRIPTION
+				case PanelPropAlpha.DESCRIPTION
 					prop_default = 'An Alpha Prop Panel (PanelPropAlpha) plots the panel for a ALPHA property with a numeric edit field and a slider. It works for all categories.';
-				case 4 % PanelPropAlpha.TEMPLATE
-					prop_default = Format.getFormatDefault(8, PanelPropAlpha.getPropSettings(prop));
-				case 5 % PanelPropAlpha.ID
+				case PanelPropAlpha.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.ID
 					prop_default = 'PanelPropAlpha ID';
-				case 6 % PanelPropAlpha.LABEL
+				case PanelPropAlpha.LABEL
 					prop_default = 'PanelPropAlpha label';
-				case 7 % PanelPropAlpha.NOTES
+				case PanelPropAlpha.NOTES
 					prop_default = 'PanelPropAlpha notes';
-				case 23 % PanelPropAlpha.EL
+				case PanelPropAlpha.EL
 					prop_default = SettingsSurface();
-				case 24 % PanelPropAlpha.PROP
-					prop_default = 18;
-				case 25 % PanelPropAlpha.HEIGHT
-					prop_default = 60;
+				case PanelPropAlpha.PROP
+					prop_default = SettingsSurface.FACEALPHA;
+				case PanelPropAlpha.HEIGHT
+					prop_default = s(5);
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -669,15 +648,15 @@ classdef PanelPropAlpha < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:PanelPropAlpha:WrongInput
+			%  Error id: €BRAPH2.STR€:PanelPropAlpha:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: BRAPH2:PanelPropAlpha:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropAlpha:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(PanelPropAlpha, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropAlpha.
-			%   Error id: BRAPH2:PanelPropAlpha:WrongInput
+			%   Error id: €BRAPH2.STR€:PanelPropAlpha:€BRAPH2.WRONG_INPUT€
 			%  PR.CHECKPROP(PanelPropAlpha, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropAlpha.
-			%   Error id: BRAPH2:PanelPropAlpha:WrongInput]
+			%   Error id: €BRAPH2.STR€:PanelPropAlpha:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropAlpha')
 			%  are less computationally efficient.
@@ -688,16 +667,16 @@ classdef PanelPropAlpha < PanelProp
 			prop = PanelPropAlpha.getPropProp(pointer);
 			
 			switch prop
-				case 36 % PanelPropAlpha.ENABLE
-					check = Format.checkFormat(4, value, PanelPropAlpha.getPropSettings(prop));
-				case 37 % PanelPropAlpha.EDITFIELD
-					check = Format.checkFormat(18, value, PanelPropAlpha.getPropSettings(prop));
-				case 38 % PanelPropAlpha.SLIDER
-					check = Format.checkFormat(18, value, PanelPropAlpha.getPropSettings(prop));
-				case 4 % PanelPropAlpha.TEMPLATE
-					check = Format.checkFormat(8, value, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.ENABLE % __PanelPropAlpha.ENABLE__
+					check = Format.checkFormat(Format.LOGICAL, value, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.EDITFIELD % __PanelPropAlpha.EDITFIELD__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.SLIDER % __PanelPropAlpha.SLIDER__
+					check = Format.checkFormat(Format.HANDLE, value, PanelPropAlpha.getPropSettings(prop));
+				case PanelPropAlpha.TEMPLATE % __PanelPropAlpha.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, PanelPropAlpha.getPropSettings(prop));
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -706,8 +685,8 @@ classdef PanelPropAlpha < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput'], ...
-					['BRAPH2' ':PanelPropAlpha:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':PanelPropAlpha:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropAlpha.getPropTag(prop) ' (' PanelPropAlpha.getFormatTag(PanelPropAlpha.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -718,19 +697,19 @@ classdef PanelPropAlpha < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 37 % PanelPropAlpha.EDITFIELD
+				case PanelPropAlpha.EDITFIELD % __PanelPropAlpha.EDITFIELD__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -738,14 +717,14 @@ classdef PanelPropAlpha < PanelProp
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'EDITFIELD', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12, ...
+					    'FontSize', BRAPH2.FONTSIZE, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_editfield} ...
 					    );
 					
 					value = editfield;
 					
-				case 38 % PanelPropAlpha.SLIDER
+				case PanelPropAlpha.SLIDER % __PanelPropAlpha.SLIDER__
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -753,7 +732,7 @@ classdef PanelPropAlpha < PanelProp
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'SLIDER', ...
 					    'Limits', [0 1], ...
-					    'FontSize', 12 / 2, ...
+					    'FontSize', BRAPH2.FONTSIZE / 2, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_slider} ...
 					    );
@@ -761,21 +740,21 @@ classdef PanelPropAlpha < PanelProp
 					% output
 					value = slider;
 					
-				case 20 % PanelPropAlpha.X_DRAW
-					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
+				case PanelPropAlpha.X_DRAW % __PanelPropAlpha.X_DRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
 					if value
 					    pr.memorize('EDITFIELD')
 					    pr.memorize('SLIDER')
 					end
 					
-				case 21 % PanelPropAlpha.UPDATE
-					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
+				case PanelPropAlpha.UPDATE % __PanelPropAlpha.UPDATE__
+					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					    
 					    switch el.getPropCategory(prop)
-					        case 1
+					        case Category.CONSTANT
 					            set(pr.get('EDITFIELD'), ...
 					                'Value', el.get(prop), ...
 					                'Editable', 'off', ...
@@ -786,7 +765,7 @@ classdef PanelPropAlpha < PanelProp
 					                'Enable', 'off' ...
 					                )
 					            
-					        case 2
+					        case Category.METADATA
 					            set(pr.get('EDITFIELD'), 'Value', el.get(prop))
 					            set(pr.get('SLIDER'), 'Value', el.get(prop))
 					
@@ -798,7 +777,7 @@ classdef PanelPropAlpha < PanelProp
 					                set(pr.get('SLIDER'), 'Enable', 'off')
 					            end
 					            
-					        case {3, 4, 8, 9}
+					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
 					            set(pr.get('EDITFIELD'), 'Value', el.get(prop))
 					            set(pr.get('SLIDER'), 'Value', el.get(prop))
 					
@@ -811,7 +790,7 @@ classdef PanelPropAlpha < PanelProp
 					                set(pr.get('SLIDER'), 'Enable', 'off')
 					            end
 					
-					        case {5 6 7}
+					        case {Category.RESULT Category.QUERY Category.EVANESCENT}
 					            prop_value = el.getr(prop);
 					
 					            if isa(prop_value, 'NoValue')
@@ -830,24 +809,24 @@ classdef PanelPropAlpha < PanelProp
 					    end
 					end
 					
-				case 22 % PanelPropAlpha.REDRAW
-					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
+				case PanelPropAlpha.REDRAW % __PanelPropAlpha.REDRAW__
+					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('EDITFIELD'), 'Position', [4 4 .15*w_p 21])
-					    set(pr.get('SLIDER'), 'Position', [4+.15*w_p+21 27 .70*w_p 3]) % the height of a slider cannot be changed
+					    set(pr.get('EDITFIELD'), 'Position', [s(.3) s(.3) .15*w_p s(1.75)])
+					    set(pr.get('SLIDER'), 'Position', [s(.3)+.15*w_p+s(1.7) s(2.25) .70*w_p 3]) % the height of a slider cannot be changed
 					end
 					
-				case 18 % PanelPropAlpha.DELETE
-					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
+				case PanelPropAlpha.DELETE % __PanelPropAlpha.DELETE__
+					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
 					if value
 					    pr.set('EDITFIELD', Element.getNoValue())
 					    pr.set('SLIDER', Element.getNoValue())
 					end
 					
 				otherwise
-					if prop <= 35
+					if prop <= PanelProp.getPropNumber()
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

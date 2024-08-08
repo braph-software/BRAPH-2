@@ -11,40 +11,6 @@ classdef BrainSurfacePF < PanelFig
 	% A collection of brain surfaces in NV format can be found in the folder 
 	%  ./braph2/brainsurfs/.
 	%
-	% The list of BrainSurfacePF properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for brain surface.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for brain surface.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for brain surface.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for brain surface.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for brain surface.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for brain surface.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for brain surface.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain surface.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure for brain surface is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain surface.
-	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-	%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-	%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-	%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-	%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-	%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-	%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-	%
 	% BrainSurfacePF methods (constructor):
 	%  BrainSurfacePF - constructor
 	%
@@ -170,75 +136,75 @@ classdef BrainSurfacePF < PanelFig
 		VIEW_CP_AZEL = [0 0] % coronal posterior view azimutal and polar angles
 		
 		VIEW_CMD = { ... % vector of view names
-		    '3D' ...
-		    'Sagittal left' ...
-		    'Sagittal right' ...
-		    'Axial dorsal' ...
-		    'Axial ventral' ...
-		    'Coronal anterior' ...
-		    'Coronal posterior' ...
+		    BrainSurfacePF.VIEW_3D_CMD ...
+		    BrainSurfacePF.VIEW_SL_CMD ...
+		    BrainSurfacePF.VIEW_SR_CMD ...
+		    BrainSurfacePF.VIEW_AD_CMD ...
+		    BrainSurfacePF.VIEW_AV_CMD ...
+		    BrainSurfacePF.VIEW_CA_CMD ...
+		    BrainSurfacePF.VIEW_CP_CMD ...
 		    }
 		
 		VIEW_AZEL = { ... % vector of view azimutal and polar angle
-		    [-37.5 30] ...
-		    [-90 0] ...
-		    [90 0] ...
-		    [0 90] ...
-		    [0 -90] ...
-		    [180 0] ...
-		    [0 0] ...
+		    BrainSurfacePF.VIEW_3D_AZEL ...
+		    BrainSurfacePF.VIEW_SL_AZEL ...
+		    BrainSurfacePF.VIEW_SR_AZEL ...
+		    BrainSurfacePF.VIEW_AD_AZEL ...
+		    BrainSurfacePF.VIEW_AV_AZEL ...
+		    BrainSurfacePF.VIEW_CA_AZEL ...
+		    BrainSurfacePF.VIEW_CP_AZEL ...
 		    }
 	end
 	properties (Constant) % properties
-		H_AXES = 23; %CET: Computational Efficiency Trick
+		H_AXES = PanelFig.getPropNumber() + 1;
 		H_AXES_TAG = 'H_AXES';
-		H_AXES_CATEGORY = 7;
-		H_AXES_FORMAT = 18;
+		H_AXES_CATEGORY = Category.EVANESCENT;
+		H_AXES_FORMAT = Format.HANDLE;
 		
-		VIEW = 24; %CET: Computational Efficiency Trick
+		VIEW = PanelFig.getPropNumber() + 2;
 		VIEW_TAG = 'VIEW';
-		VIEW_CATEGORY = 8;
-		VIEW_FORMAT = 12;
+		VIEW_CATEGORY = Category.FIGURE;
+		VIEW_FORMAT = Format.RVECTOR;
 		
-		ST_AXIS = 25; %CET: Computational Efficiency Trick
+		ST_AXIS = PanelFig.getPropNumber() + 3;
 		ST_AXIS_TAG = 'ST_AXIS';
-		ST_AXIS_CATEGORY = 8;
-		ST_AXIS_FORMAT = 8;
+		ST_AXIS_CATEGORY = Category.FIGURE;
+		ST_AXIS_FORMAT = Format.ITEM;
 		
-		LISTENER_ST_AXIS = 26; %CET: Computational Efficiency Trick
+		LISTENER_ST_AXIS = PanelFig.getPropNumber() + 4;
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
-		LISTENER_ST_AXIS_CATEGORY = 7;
-		LISTENER_ST_AXIS_FORMAT = 18;
+		LISTENER_ST_AXIS_CATEGORY = Category.EVANESCENT;
+		LISTENER_ST_AXIS_FORMAT = Format.HANDLE;
 		
-		SURFFILE = 27; %CET: Computational Efficiency Trick
+		SURFFILE = PanelFig.getPropNumber() + 5;
 		SURFFILE_TAG = 'SURFFILE';
-		SURFFILE_CATEGORY = 8;
-		SURFFILE_FORMAT = 5;
+		SURFFILE_CATEGORY = Category.FIGURE;
+		SURFFILE_FORMAT = Format.OPTION;
 		
-		SURF = 28; %CET: Computational Efficiency Trick
+		SURF = PanelFig.getPropNumber() + 6;
 		SURF_TAG = 'SURF';
-		SURF_CATEGORY = 2;
-		SURF_FORMAT = 8;
+		SURF_CATEGORY = Category.METADATA;
+		SURF_FORMAT = Format.ITEM;
 		
-		H_BRAIN = 29; %CET: Computational Efficiency Trick
+		H_BRAIN = PanelFig.getPropNumber() + 7;
 		H_BRAIN_TAG = 'H_BRAIN';
-		H_BRAIN_CATEGORY = 7;
-		H_BRAIN_FORMAT = 18;
+		H_BRAIN_CATEGORY = Category.EVANESCENT;
+		H_BRAIN_FORMAT = Format.HANDLE;
 		
-		BRAIN = 30; %CET: Computational Efficiency Trick
+		BRAIN = PanelFig.getPropNumber() + 8;
 		BRAIN_TAG = 'BRAIN';
-		BRAIN_CATEGORY = 8;
-		BRAIN_FORMAT = 4;
+		BRAIN_CATEGORY = Category.FIGURE;
+		BRAIN_FORMAT = Format.LOGICAL;
 		
-		ST_SURFACE = 31; %CET: Computational Efficiency Trick
+		ST_SURFACE = PanelFig.getPropNumber() + 9;
 		ST_SURFACE_TAG = 'ST_SURFACE';
-		ST_SURFACE_CATEGORY = 8;
-		ST_SURFACE_FORMAT = 8;
+		ST_SURFACE_CATEGORY = Category.FIGURE;
+		ST_SURFACE_FORMAT = Format.ITEM;
 		
-		ST_AMBIENT = 32; %CET: Computational Efficiency Trick
+		ST_AMBIENT = PanelFig.getPropNumber() + 10;
 		ST_AMBIENT_TAG = 'ST_AMBIENT';
-		ST_AMBIENT_CATEGORY = 8;
-		ST_AMBIENT_FORMAT = 8;
+		ST_AMBIENT_CATEGORY = Category.FIGURE;
+		ST_AMBIENT_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function pf = BrainSurfacePF(varargin)
@@ -251,39 +217,6 @@ classdef BrainSurfacePF < PanelFig
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of BrainSurfacePF properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel figure for brain surface.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for brain surface.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for brain surface.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for brain surface.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for brain surface.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for brain surface.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for brain surface.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain surface.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure for brain surface is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain surface.
-			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-			%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-			%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-			%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-			%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-			%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-			%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
 			%
 			% See also Category, Format.
 			
@@ -321,7 +254,7 @@ classdef BrainSurfacePF < PanelFig
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'BrainSurfacePF'  'ComparisonEnsembleBrainPF'  'ComparisonEnsembleBrainPF_BB'  'ComparisonEnsembleBrainPF_BS'  'ComparisonEnsembleBrainPF_BU'  'ComparisonEnsembleBrainPF_GB'  'ComparisonEnsembleBrainPF_GS'  'ComparisonEnsembleBrainPF_GU'  'ComparisonEnsembleBrainPF_NB'  'ComparisonEnsembleBrainPF_NS'  'ComparisonEnsembleBrainPF_NU'  'ComparisonGroupBrainPF'  'ComparisonGroupBrainPF_BB'  'ComparisonGroupBrainPF_BS'  'ComparisonGroupBrainPF_BU'  'ComparisonGroupBrainPF_GB'  'ComparisonGroupBrainPF_GS'  'ComparisonGroupBrainPF_GU'  'ComparisonGroupBrainPF_NB'  'ComparisonGroupBrainPF_NS'  'ComparisonGroupBrainPF_NU'  'MeasureEnsembleBrainPF'  'MeasureEnsembleBrainPF_BB'  'MeasureEnsembleBrainPF_BS'  'MeasureEnsembleBrainPF_BU'  'MeasureEnsembleBrainPF_GB'  'MeasureEnsembleBrainPF_GS'  'MeasureEnsembleBrainPF_GU'  'MeasureEnsembleBrainPF_NB'  'MeasureEnsembleBrainPF_NS'  'MeasureEnsembleBrainPF_NU'  'MeasureGroupBrainPF'  'MeasureGroupBrainPF_BB'  'MeasureGroupBrainPF_BS'  'MeasureGroupBrainPF_BU'  'MeasureGroupBrainPF_GB'  'MeasureGroupBrainPF_GS'  'MeasureGroupBrainPF_GU'  'MeasureGroupBrainPF_NB'  'MeasureGroupBrainPF_NS'  'MeasureGroupBrainPF_NU'  'BrainAtlasPF' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('BrainSurfacePF', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel figure for brain surface.
@@ -342,32 +275,70 @@ classdef BrainSurfacePF < PanelFig
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32];
+				prop_list = [ ...
+					PanelFig.getProps() ...
+						BrainSurfacePF.H_AXES ...
+						BrainSurfacePF.VIEW ...
+						BrainSurfacePF.ST_AXIS ...
+						BrainSurfacePF.LISTENER_ST_AXIS ...
+						BrainSurfacePF.SURFFILE ...
+						BrainSurfacePF.SURF ...
+						BrainSurfacePF.H_BRAIN ...
+						BrainSurfacePF.BRAIN ...
+						BrainSurfacePF.ST_SURFACE ...
+						BrainSurfacePF.ST_AMBIENT ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7 28];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 21 22 23 26 29];
-				case 8 % Category.FIGURE
-					prop_list = [14 20 24 25 27 30 31 32];
-				case 9 % Category.GUI
-					prop_list = [9 13];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						PanelFig.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						PanelFig.getProps(Category.METADATA) ...
+						BrainSurfacePF.SURF ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						PanelFig.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						PanelFig.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						PanelFig.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						PanelFig.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						PanelFig.getProps(Category.EVANESCENT) ...
+						BrainSurfacePF.H_AXES ...
+						BrainSurfacePF.LISTENER_ST_AXIS ...
+						BrainSurfacePF.H_BRAIN ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						PanelFig.getProps(Category.FIGURE) ...
+						BrainSurfacePF.VIEW ...
+						BrainSurfacePF.ST_AXIS ...
+						BrainSurfacePF.SURFFILE ...
+						BrainSurfacePF.BRAIN ...
+						BrainSurfacePF.ST_SURFACE ...
+						BrainSurfacePF.ST_AMBIENT ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						PanelFig.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -388,33 +359,7 @@ classdef BrainSurfacePF < PanelFig
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 32;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 3;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 7;
-				case 7 % Category.EVANESCENT
-					prop_number = 7;
-				case 8 % Category.FIGURE
-					prop_number = 8;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(BrainSurfacePF.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel figure for brain surface/error.
@@ -442,14 +387,14 @@ classdef BrainSurfacePF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 32 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == BrainSurfacePF.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput'], ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for BrainSurfacePF.'] ...
 					)
 			end
@@ -480,14 +425,15 @@ classdef BrainSurfacePF < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT' })); %CET: Computational Efficiency Trick
+			brainsurfacepf_tag_list = cellfun(@(x) BrainSurfacePF.getPropTag(x), num2cell(BrainSurfacePF.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, brainsurfacepf_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput'], ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for BrainSurfacePF.'] ...
 					)
 			end
@@ -513,7 +459,8 @@ classdef BrainSurfacePF < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT' })); % tag = pointer %CET: Computational Efficiency Trick
+				brainsurfacepf_tag_list = cellfun(@(x) BrainSurfacePF.getPropTag(x), num2cell(BrainSurfacePF.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, brainsurfacepf_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -541,9 +488,32 @@ classdef BrainSurfacePF < PanelFig
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				brainsurfacepf_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT' };
-				tag = brainsurfacepf_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case BrainSurfacePF.H_AXES
+						tag = BrainSurfacePF.H_AXES_TAG;
+					case BrainSurfacePF.VIEW
+						tag = BrainSurfacePF.VIEW_TAG;
+					case BrainSurfacePF.ST_AXIS
+						tag = BrainSurfacePF.ST_AXIS_TAG;
+					case BrainSurfacePF.LISTENER_ST_AXIS
+						tag = BrainSurfacePF.LISTENER_ST_AXIS_TAG;
+					case BrainSurfacePF.SURFFILE
+						tag = BrainSurfacePF.SURFFILE_TAG;
+					case BrainSurfacePF.SURF
+						tag = BrainSurfacePF.SURF_TAG;
+					case BrainSurfacePF.H_BRAIN
+						tag = BrainSurfacePF.H_BRAIN_TAG;
+					case BrainSurfacePF.BRAIN
+						tag = BrainSurfacePF.BRAIN_TAG;
+					case BrainSurfacePF.ST_SURFACE
+						tag = BrainSurfacePF.ST_SURFACE_TAG;
+					case BrainSurfacePF.ST_AMBIENT
+						tag = BrainSurfacePF.ST_AMBIENT_TAG;
+					otherwise
+						tag = getPropTag@PanelFig(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -568,9 +538,30 @@ classdef BrainSurfacePF < PanelFig
 			
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			brainsurfacepf_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8 };
-			prop_category = brainsurfacepf_category_list{prop};
+			switch prop
+				case BrainSurfacePF.H_AXES
+					prop_category = BrainSurfacePF.H_AXES_CATEGORY;
+				case BrainSurfacePF.VIEW
+					prop_category = BrainSurfacePF.VIEW_CATEGORY;
+				case BrainSurfacePF.ST_AXIS
+					prop_category = BrainSurfacePF.ST_AXIS_CATEGORY;
+				case BrainSurfacePF.LISTENER_ST_AXIS
+					prop_category = BrainSurfacePF.LISTENER_ST_AXIS_CATEGORY;
+				case BrainSurfacePF.SURFFILE
+					prop_category = BrainSurfacePF.SURFFILE_CATEGORY;
+				case BrainSurfacePF.SURF
+					prop_category = BrainSurfacePF.SURF_CATEGORY;
+				case BrainSurfacePF.H_BRAIN
+					prop_category = BrainSurfacePF.H_BRAIN_CATEGORY;
+				case BrainSurfacePF.BRAIN
+					prop_category = BrainSurfacePF.BRAIN_CATEGORY;
+				case BrainSurfacePF.ST_SURFACE
+					prop_category = BrainSurfacePF.ST_SURFACE_CATEGORY;
+				case BrainSurfacePF.ST_AMBIENT
+					prop_category = BrainSurfacePF.ST_AMBIENT_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@PanelFig(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -594,9 +585,30 @@ classdef BrainSurfacePF < PanelFig
 			
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			brainsurfacepf_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8 };
-			prop_format = brainsurfacepf_format_list{prop};
+			switch prop
+				case BrainSurfacePF.H_AXES
+					prop_format = BrainSurfacePF.H_AXES_FORMAT;
+				case BrainSurfacePF.VIEW
+					prop_format = BrainSurfacePF.VIEW_FORMAT;
+				case BrainSurfacePF.ST_AXIS
+					prop_format = BrainSurfacePF.ST_AXIS_FORMAT;
+				case BrainSurfacePF.LISTENER_ST_AXIS
+					prop_format = BrainSurfacePF.LISTENER_ST_AXIS_FORMAT;
+				case BrainSurfacePF.SURFFILE
+					prop_format = BrainSurfacePF.SURFFILE_FORMAT;
+				case BrainSurfacePF.SURF
+					prop_format = BrainSurfacePF.SURF_FORMAT;
+				case BrainSurfacePF.H_BRAIN
+					prop_format = BrainSurfacePF.H_BRAIN_FORMAT;
+				case BrainSurfacePF.BRAIN
+					prop_format = BrainSurfacePF.BRAIN_FORMAT;
+				case BrainSurfacePF.ST_SURFACE
+					prop_format = BrainSurfacePF.ST_SURFACE_FORMAT;
+				case BrainSurfacePF.ST_AMBIENT
+					prop_format = BrainSurfacePF.ST_AMBIENT_FORMAT;
+				otherwise
+					prop_format = getPropFormat@PanelFig(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -620,9 +632,50 @@ classdef BrainSurfacePF < PanelFig
 			
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			brainsurfacepf_description_list = { 'ELCLASS (constant, string) is the class of the panel figure for brain surface.'  'NAME (constant, string) is the name of the panel figure for brain surface.'  'DESCRIPTION (constant, string) is the description of the panel figure for brain surface.'  'TEMPLATE (parameter, item) is the template of the panel figure for brain surface.'  'ID (data, string) is a few-letter code for the panel figure for brain surface.'  'LABEL (metadata, string) is an extended label of the panel figure for brain surface.'  'NOTES (metadata, string) are some specific notes about the panel figure for brain surface.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain surface.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure for brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain surface.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.' };
-			prop_description = brainsurfacepf_description_list{prop};
+			switch prop
+				case BrainSurfacePF.H_AXES
+					prop_description = 'H_AXES (evanescent, handle) is the handle for the axes.';
+				case BrainSurfacePF.VIEW
+					prop_description = 'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.';
+				case BrainSurfacePF.ST_AXIS
+					prop_description = 'ST_AXIS (figure, item) determines the axis settings.';
+				case BrainSurfacePF.LISTENER_ST_AXIS
+					prop_description = 'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.';
+				case BrainSurfacePF.SURFFILE
+					prop_description = 'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.';
+				case BrainSurfacePF.SURF
+					prop_description = 'SURF (metadata, item) is the brain surface to be plotted.';
+				case BrainSurfacePF.H_BRAIN
+					prop_description = 'H_BRAIN (evanescent, handle) is the handle for brain surface.';
+				case BrainSurfacePF.BRAIN
+					prop_description = 'BRAIN (figure, logical) determines whether the brain surface is shown.';
+				case BrainSurfacePF.ST_SURFACE
+					prop_description = 'ST_SURFACE (figure, item) determines the surface settings.';
+				case BrainSurfacePF.ST_AMBIENT
+					prop_description = 'ST_AMBIENT (figure, item) determines the ambient settings.';
+				case BrainSurfacePF.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the panel figure for brain surface.';
+				case BrainSurfacePF.NAME
+					prop_description = 'NAME (constant, string) is the name of the panel figure for brain surface.';
+				case BrainSurfacePF.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure for brain surface.';
+				case BrainSurfacePF.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure for brain surface.';
+				case BrainSurfacePF.ID
+					prop_description = 'ID (data, string) is a few-letter code for the panel figure for brain surface.';
+				case BrainSurfacePF.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure for brain surface.';
+				case BrainSurfacePF.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure for brain surface.';
+				case BrainSurfacePF.DRAW
+					prop_description = 'DRAW (query, logical) draws the figure brain surface.';
+				case BrainSurfacePF.DELETE
+					prop_description = 'DELETE (query, logical) resets the handles when the panel figure for brain surface is deleted.';
+				case BrainSurfacePF.H_TOOLS
+					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain surface.';
+				otherwise
+					prop_description = getPropDescription@PanelFig(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -646,28 +699,28 @@ classdef BrainSurfacePF < PanelFig
 			
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 23 % BrainSurfacePF.H_AXES
-					prop_settings = Format.getFormatSettings(18);
-				case 24 % BrainSurfacePF.VIEW
-					prop_settings = Format.getFormatSettings(12);
-				case 25 % BrainSurfacePF.ST_AXIS
+			switch prop
+				case BrainSurfacePF.H_AXES
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case BrainSurfacePF.VIEW
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case BrainSurfacePF.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case 26 % BrainSurfacePF.LISTENER_ST_AXIS
-					prop_settings = Format.getFormatSettings(18);
-				case 27 % BrainSurfacePF.SURFFILE
+				case BrainSurfacePF.LISTENER_ST_AXIS
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case BrainSurfacePF.SURFFILE
 					prop_settings = {dir([fileparts(which('braph2')) filesep() 'brainsurfs' filesep() '*.nv']).name};
-				case 28 % BrainSurfacePF.SURF
+				case BrainSurfacePF.SURF
 					prop_settings = 'BrainSurface';
-				case 29 % BrainSurfacePF.H_BRAIN
-					prop_settings = Format.getFormatSettings(18);
-				case 30 % BrainSurfacePF.BRAIN
-					prop_settings = Format.getFormatSettings(4);
-				case 31 % BrainSurfacePF.ST_SURFACE
+				case BrainSurfacePF.H_BRAIN
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case BrainSurfacePF.BRAIN
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case BrainSurfacePF.ST_SURFACE
 					prop_settings = 'SettingsSurface';
-				case 32 % BrainSurfacePF.ST_AMBIENT
+				case BrainSurfacePF.ST_AMBIENT
 					prop_settings = 'SettingsAmbient';
-				case 4 % BrainSurfacePF.TEMPLATE
+				case BrainSurfacePF.TEMPLATE
 					prop_settings = 'BrainSurfacePF';
 				otherwise
 					prop_settings = getPropSettings@PanelFig(prop);
@@ -695,40 +748,40 @@ classdef BrainSurfacePF < PanelFig
 			
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 23 % BrainSurfacePF.H_AXES
-					prop_default = Format.getFormatDefault(18, BrainSurfacePF.getPropSettings(prop));
-				case 24 % BrainSurfacePF.VIEW
-					prop_default = [-90 0];
-				case 25 % BrainSurfacePF.ST_AXIS
+			switch prop
+				case BrainSurfacePF.H_AXES
+					prop_default = Format.getFormatDefault(Format.HANDLE, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.VIEW
+					prop_default = BrainSurfacePF.VIEW_SL_AZEL;
+				case BrainSurfacePF.ST_AXIS
 					prop_default = SettingsAxis('GRID', false, 'AXIS', false);
-				case 26 % BrainSurfacePF.LISTENER_ST_AXIS
-					prop_default = Format.getFormatDefault(18, BrainSurfacePF.getPropSettings(prop));
-				case 27 % BrainSurfacePF.SURFFILE
+				case BrainSurfacePF.LISTENER_ST_AXIS
+					prop_default = Format.getFormatDefault(Format.HANDLE, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.SURFFILE
 					prop_default = 'human_ICBM152.nv';
-				case 28 % BrainSurfacePF.SURF
+				case BrainSurfacePF.SURF
 					prop_default = ImporterBrainSurfaceNV('FILE', BrainSurfacePF.getPropDefault('SURFFILE')).get('SURF');
-				case 29 % BrainSurfacePF.H_BRAIN
-					prop_default = Format.getFormatDefault(18, BrainSurfacePF.getPropSettings(prop));
-				case 30 % BrainSurfacePF.BRAIN
+				case BrainSurfacePF.H_BRAIN
+					prop_default = Format.getFormatDefault(Format.HANDLE, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.BRAIN
 					prop_default = true;
-				case 31 % BrainSurfacePF.ST_SURFACE
-					prop_default = Format.getFormatDefault(8, BrainSurfacePF.getPropSettings(prop));
-				case 32 % BrainSurfacePF.ST_AMBIENT
+				case BrainSurfacePF.ST_SURFACE
+					prop_default = Format.getFormatDefault(Format.ITEM, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.ST_AMBIENT
 					prop_default = SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight (x2)', 'SHADING', 'none', 'COLORMAP', 'none');
-				case 1 % BrainSurfacePF.ELCLASS
+				case BrainSurfacePF.ELCLASS
 					prop_default = 'BrainSurfacePF';
-				case 2 % BrainSurfacePF.NAME
+				case BrainSurfacePF.NAME
 					prop_default = 'Panel Figure for Brain Surface';
-				case 3 % BrainSurfacePF.DESCRIPTION
+				case BrainSurfacePF.DESCRIPTION
 					prop_default = 'A Panel Figure for Brain Surface (BrainSurfacePF) manages the plot of the brain surface choosen by the user. BrainSurfacePF provides the common methods needed to manage the plot of the surface. In particular, the user can change lighting, material, camlight, shadning, colormap, facecolor, brain color, face color, edge color, and background color. A collection of brain surfaces in NV format can be found in the folder ./braph2/brainsurfs/.';
-				case 4 % BrainSurfacePF.TEMPLATE
-					prop_default = Format.getFormatDefault(8, BrainSurfacePF.getPropSettings(prop));
-				case 5 % BrainSurfacePF.ID
+				case BrainSurfacePF.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.ID
 					prop_default = 'BrainSurfacePF ID';
-				case 6 % BrainSurfacePF.LABEL
+				case BrainSurfacePF.LABEL
 					prop_default = 'BrainSurfacePF label';
-				case 7 % BrainSurfacePF.NOTES
+				case BrainSurfacePF.NOTES
 					prop_default = 'BrainSurfacePF notes';
 				otherwise
 					prop_default = getPropDefault@PanelFig(prop);
@@ -775,15 +828,15 @@ classdef BrainSurfacePF < PanelFig
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:BrainSurfacePF:WrongInput
+			%  Error id: €BRAPH2.STR€:BrainSurfacePF:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: BRAPH2:BrainSurfacePF:WrongInput
+			%   Error id: €BRAPH2.STR€:BrainSurfacePF:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(BrainSurfacePF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of BrainSurfacePF.
-			%   Error id: BRAPH2:BrainSurfacePF:WrongInput
+			%   Error id: €BRAPH2.STR€:BrainSurfacePF:€BRAPH2.WRONG_INPUT€
 			%  PF.CHECKPROP(BrainSurfacePF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of BrainSurfacePF.
-			%   Error id: BRAPH2:BrainSurfacePF:WrongInput]
+			%   Error id: €BRAPH2.STR€:BrainSurfacePF:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('BrainSurfacePF')
 			%  are less computationally efficient.
@@ -794,33 +847,33 @@ classdef BrainSurfacePF < PanelFig
 			prop = BrainSurfacePF.getPropProp(pointer);
 			
 			switch prop
-				case 23 % BrainSurfacePF.H_AXES
-					check = Format.checkFormat(18, value, BrainSurfacePF.getPropSettings(prop));
-				case 24 % BrainSurfacePF.VIEW
-					check = Format.checkFormat(12, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.H_AXES % __BrainSurfacePF.H_AXES__
+					check = Format.checkFormat(Format.HANDLE, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.VIEW % __BrainSurfacePF.VIEW__
+					check = Format.checkFormat(Format.RVECTOR, value, BrainSurfacePF.getPropSettings(prop));
 					if check
 						check = length(value) == 2;
 					end
-				case 25 % BrainSurfacePF.ST_AXIS
-					check = Format.checkFormat(8, value, BrainSurfacePF.getPropSettings(prop));
-				case 26 % BrainSurfacePF.LISTENER_ST_AXIS
-					check = Format.checkFormat(18, value, BrainSurfacePF.getPropSettings(prop));
-				case 27 % BrainSurfacePF.SURFFILE
-					check = Format.checkFormat(5, value, BrainSurfacePF.getPropSettings(prop));
-				case 28 % BrainSurfacePF.SURF
-					check = Format.checkFormat(8, value, BrainSurfacePF.getPropSettings(prop));
-				case 29 % BrainSurfacePF.H_BRAIN
-					check = Format.checkFormat(18, value, BrainSurfacePF.getPropSettings(prop));
-				case 30 % BrainSurfacePF.BRAIN
-					check = Format.checkFormat(4, value, BrainSurfacePF.getPropSettings(prop));
-				case 31 % BrainSurfacePF.ST_SURFACE
-					check = Format.checkFormat(8, value, BrainSurfacePF.getPropSettings(prop));
-				case 32 % BrainSurfacePF.ST_AMBIENT
-					check = Format.checkFormat(8, value, BrainSurfacePF.getPropSettings(prop));
-				case 4 % BrainSurfacePF.TEMPLATE
-					check = Format.checkFormat(8, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.ST_AXIS % __BrainSurfacePF.ST_AXIS__
+					check = Format.checkFormat(Format.ITEM, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.LISTENER_ST_AXIS % __BrainSurfacePF.LISTENER_ST_AXIS__
+					check = Format.checkFormat(Format.HANDLE, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.SURFFILE % __BrainSurfacePF.SURFFILE__
+					check = Format.checkFormat(Format.OPTION, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.SURF % __BrainSurfacePF.SURF__
+					check = Format.checkFormat(Format.ITEM, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.H_BRAIN % __BrainSurfacePF.H_BRAIN__
+					check = Format.checkFormat(Format.HANDLE, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.BRAIN % __BrainSurfacePF.BRAIN__
+					check = Format.checkFormat(Format.LOGICAL, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.ST_SURFACE % __BrainSurfacePF.ST_SURFACE__
+					check = Format.checkFormat(Format.ITEM, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.ST_AMBIENT % __BrainSurfacePF.ST_AMBIENT__
+					check = Format.checkFormat(Format.ITEM, value, BrainSurfacePF.getPropSettings(prop));
+				case BrainSurfacePF.TEMPLATE % __BrainSurfacePF.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, BrainSurfacePF.getPropSettings(prop));
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -829,8 +882,8 @@ classdef BrainSurfacePF < PanelFig
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput'], ...
-					['BRAPH2' ':BrainSurfacePF:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':BrainSurfacePF:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' BrainSurfacePF.getPropTag(prop) ' (' BrainSurfacePF.getFormatTag(BrainSurfacePF.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -850,7 +903,7 @@ classdef BrainSurfacePF < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case 24 % BrainSurfacePF.VIEW
+				case BrainSurfacePF.VIEW % __BrainSurfacePF.VIEW__
 					if pf.get('DRAWN')
 					    view(pf.get('H_AXES'), pf.get('VIEW'))
 					    
@@ -860,17 +913,17 @@ classdef BrainSurfacePF < PanelFig
 					    % update state of toggle tools
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
-					        set(findobj(toolbar, 'Tag', 'TOOL.View3D'), 'State', isequal(pf.get('VIEW'), [-37.5 30]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewSL'), 'State', isequal(pf.get('VIEW'), [-90 0]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewSR'), 'State', isequal(pf.get('VIEW'), [90 0]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewAD'), 'State', isequal(pf.get('VIEW'), [0 90]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewAV'), 'State', isequal(pf.get('VIEW'), [0 -90]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewCA'), 'State', isequal(pf.get('VIEW'), [180 0]))
-					        set(findobj(toolbar, 'Tag', 'TOOL.ViewCP'), 'State', isequal(pf.get('VIEW'), [0 0]))
+					        set(findobj(toolbar, 'Tag', 'TOOL.View3D'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_3D_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewSL'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SL_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewSR'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SR_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewAD'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AD_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewAV'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AV_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewCA'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CA_AZEL))
+					        set(findobj(toolbar, 'Tag', 'TOOL.ViewCP'), 'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CP_AZEL))
 					    end
 					end
 					
-				case 25 % BrainSurfacePF.ST_AXIS
+				case BrainSurfacePF.ST_AXIS % __BrainSurfacePF.ST_AXIS__
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -879,7 +932,7 @@ classdef BrainSurfacePF < PanelFig
 					    end
 					end
 					
-				case 27 % BrainSurfacePF.SURFFILE
+				case BrainSurfacePF.SURFFILE % __BrainSurfacePF.SURFFILE__
 					bs = ImporterBrainSurfaceNV('FILE', pf.get('SURFFILE')).get('SURF');
 					pf.set('SURF', bs)
 					
@@ -896,7 +949,7 @@ classdef BrainSurfacePF < PanelFig
 					    pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', pf.H_AXES).get('SETUP')
 					end
 					
-				case 30 % BrainSurfacePF.BRAIN
+				case BrainSurfacePF.BRAIN % __BrainSurfacePF.BRAIN__
 					if pf.get('DRAWN')
 					    if pf.get('BRAIN')
 					        set(pf.get('H_BRAIN'), 'Visible', 'on')
@@ -911,7 +964,7 @@ classdef BrainSurfacePF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -922,19 +975,19 @@ classdef BrainSurfacePF < PanelFig
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 23 % BrainSurfacePF.H_AXES
+				case BrainSurfacePF.H_AXES % __BrainSurfacePF.H_AXES__
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -945,10 +998,10 @@ classdef BrainSurfacePF < PanelFig
 					h_axes.Interactions = [];
 					value = h_axes;
 					
-				case 26 % BrainSurfacePF.LISTENER_ST_AXIS
+				case BrainSurfacePF.LISTENER_ST_AXIS % __BrainSurfacePF.LISTENER_ST_AXIS__
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case 29 % BrainSurfacePF.H_BRAIN
+				case BrainSurfacePF.H_BRAIN % __BrainSurfacePF.H_BRAIN__
 					triangles = pf.get('SURF').get('TRIANGLES');
 					coordinates = pf.get('SURF').get('COORDINATES');
 					h_brain = trisurf( ...
@@ -964,27 +1017,27 @@ classdef BrainSurfacePF < PanelFig
 					zlabel(pf.get('H_AXES'), 'Coronal')
 					value = h_brain;
 					
-				case 11 % BrainSurfacePF.DRAW
-					value = calculateValue@PanelFig(pf, 11, varargin{:}); % also warning
+				case BrainSurfacePF.DRAW % __BrainSurfacePF.DRAW__
+					value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					    
 					    pf.set('VIEW', pf.get('VIEW'))
 					
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', BrainSurfacePF.H_AXES).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					    
 					    pf.memorize('H_BRAIN')
 					
 					    pf.set('BRAIN', pf.get('BRAIN'))
 					
-					    pf.memorize('ST_SURFACE').set('PANEL', pf, 'PROP', 29).get('SETUP')
+					    pf.memorize('ST_SURFACE').set('PANEL', pf, 'PROP', BrainSurfacePF.H_BRAIN).get('SETUP')
 					    
-					    pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', 23).get('SETUP')
+					    pf.memorize('ST_AMBIENT').set('PANEL', pf, 'PROP', BrainSurfacePF.H_AXES).get('SETUP')
 					end
 					
-				case 18 % BrainSurfacePF.DELETE
-					value = calculateValue@PanelFig(pf, 18, varargin{:}); % also warning
+				case BrainSurfacePF.DELETE % __BrainSurfacePF.DELETE__
+					value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					    pf.set('H_BRAIN', Element.getNoValue())
@@ -992,10 +1045,10 @@ classdef BrainSurfacePF < PanelFig
 					    pf.set('LISTENER_ST_AXIS', Element.getNoValue())
 					end
 					
-				case 22 % BrainSurfacePF.H_TOOLS
+				case BrainSurfacePF.H_TOOLS % __BrainSurfacePF.H_TOOLS__
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, 22);
+					    value = calculateValue@PanelFig(pf, PanelFig.H_TOOLS);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1033,58 +1086,58 @@ classdef BrainSurfacePF < PanelFig
 					    tool_view3D = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.View3D', ...
 					        'Separator', 'on', ... 
-					        'State', isequal(pf.get('VIEW'), [-37.5 30]), ...
-					        'Tooltip', '3D', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_3D_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_3D_CMD, ...
 					        'CData', imread('icon_view_3d.png'), ...
-					        'ClickedCallback', {@cb_view, [-37.5 30]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_3D_AZEL});
 					
 					    % View SL
 					    tool_viewSL = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewSL', ...
-					        'State', isequal(pf.get('VIEW'), [-90 0]), ...
-					        'Tooltip', 'Sagittal left', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SL_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_SL_CMD, ...
 					        'CData', imread('icon_view_sl.png'), ...
-					        'ClickedCallback', {@cb_view, [-90 0]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_SL_AZEL});
 					
 					    % View SR
 					    tool_viewSR = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewSR', ...
-					        'State', isequal(pf.get('VIEW'), [90 0]), ...
-					        'Tooltip', 'Sagittal right', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_SR_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_SR_CMD, ...
 					        'CData', imread('icon_view_sr.png'), ...
-					        'ClickedCallback', {@cb_view, [90 0]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_SR_AZEL});
 					
 					    % View AD
 					    tool_viewAD = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewAD', ...
-					        'State', isequal(pf.get('VIEW'), [0 90]), ...
-					        'Tooltip', 'Axial dorsal', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AD_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_AD_CMD, ...
 					        'CData', imread('icon_view_ad.png'), ...
-					        'ClickedCallback', {@cb_view, [0 90]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_AD_AZEL});
 					
 					    % View AV
 					    tool_viewAV = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewAV', ...
-					        'State', isequal(pf.get('VIEW'), [0 -90]), ...
-					        'Tooltip', 'Axial ventral', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_AV_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_AV_CMD, ...
 					        'CData', imread('icon_view_av.png'), ...
-					        'ClickedCallback', {@cb_view, [0 -90]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_AV_AZEL});
 					
 					    % View CA
 					    tool_viewCA = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewCA', ...
-					        'State', isequal(pf.get('VIEW'), [180 0]), ...
-					        'Tooltip', 'Coronal anterior', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CA_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_CA_CMD, ...
 					        'CData', imread('icon_view_ca.png'), ...
-					        'ClickedCallback', {@cb_view, [180 0]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_CA_AZEL});
 					
 					    % View CP
 					    tool_viewCP = uitoggletool(toolbar, ...
 					        'Tag', 'TOOL.ViewCP', ...
-					        'State', isequal(pf.get('VIEW'), [0 0]), ...
-					        'Tooltip', 'Coronal posterior', ...
+					        'State', isequal(pf.get('VIEW'), BrainSurfacePF.VIEW_CP_AZEL), ...
+					        'Tooltip', BrainSurfacePF.VIEW_CP_CMD, ...
 					        'CData', imread('icon_view_cp.png'), ...
-					        'ClickedCallback', {@cb_view, [0 0]});
+					        'ClickedCallback', {@cb_view, BrainSurfacePF.VIEW_CP_AZEL});
 					    
 					    value = {value{:}, ...
 					        tool_separator_1, ...
@@ -1097,7 +1150,7 @@ classdef BrainSurfacePF < PanelFig
 					end
 					
 				otherwise
-					if prop <= 22
+					if prop <= PanelFig.getPropNumber()
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1150,17 +1203,17 @@ classdef BrainSurfacePF < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 24 % BrainSurfacePF.VIEW
-					pr = PanelPropRVectorView('EL', pf, 'PROP', 24, varargin{:});
+				case BrainSurfacePF.VIEW % __BrainSurfacePF.VIEW__
+					pr = PanelPropRVectorView('EL', pf, 'PROP', BrainSurfacePF.VIEW, varargin{:});
 					
-				case 25 % BrainSurfacePF.ST_AXIS
-					pr = SettingsAxisPP('EL', pf, 'PROP', 25, varargin{:});
+				case BrainSurfacePF.ST_AXIS % __BrainSurfacePF.ST_AXIS__
+					pr = SettingsAxisPP('EL', pf, 'PROP', BrainSurfacePF.ST_AXIS, varargin{:});
 					
-				case 31 % BrainSurfacePF.ST_SURFACE
-					pr = SettingsSurfacePP('EL', pf, 'PROP', 31, varargin{:});
+				case BrainSurfacePF.ST_SURFACE % __BrainSurfacePF.ST_SURFACE__
+					pr = SettingsSurfacePP('EL', pf, 'PROP', BrainSurfacePF.ST_SURFACE, varargin{:});
 					
-				case 32 % BrainSurfacePF.ST_AMBIENT
-					pr = SettingsAmbientPP('EL', pf, 'PROP', 32, varargin{:});
+				case BrainSurfacePF.ST_AMBIENT % __BrainSurfacePF.ST_AMBIENT__
+					pr = SettingsAmbientPP('EL', pf, 'PROP', BrainSurfacePF.ST_AMBIENT, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

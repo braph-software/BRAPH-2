@@ -13,7 +13,7 @@ classdef Settings < ConcreteElement
 	%   set yet.
 	%     
 	%  The handle can be set by setting the props PANEL and PROP (or TAG) for props 
-	%   of 18, and PANEL, PROP (or TAG) and I for props of 19.
+	%   of Format.HANDLE, and PANEL, PROP (or TAG) and I for props of Format.HANDLELIST.
 	%  
 	% The initial setup of the figure props (initial postset) can be done by calling:
 	% 
@@ -28,22 +28,6 @@ classdef Settings < ConcreteElement
 	%   The option with PROP is to be preferred, because it is faster.
 	% 
 	%  It might be necessary to add some listeners (e.g., to update toogle buttons).
-	%
-	% The list of Settings properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graphics settings.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphics settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphics settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line graphics settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphics settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphics settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphics settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
 	%
 	% Settings methods (constructor):
 	%  Settings - constructor
@@ -134,35 +118,35 @@ classdef Settings < ConcreteElement
 	% See also Panel, listener.
 	
 	properties (Constant) % properties
-		PANEL = 9; %CET: Computational Efficiency Trick
+		PANEL = ConcreteElement.getPropNumber() + 1;
 		PANEL_TAG = 'PANEL';
-		PANEL_CATEGORY = 9;
-		PANEL_FORMAT = 8;
+		PANEL_CATEGORY = Category.GUI;
+		PANEL_FORMAT = Format.ITEM;
 		
-		PROP = 10; %CET: Computational Efficiency Trick
+		PROP = ConcreteElement.getPropNumber() + 2;
 		PROP_TAG = 'PROP';
-		PROP_CATEGORY = 9;
-		PROP_FORMAT = 11;
+		PROP_CATEGORY = Category.GUI;
+		PROP_FORMAT = Format.SCALAR;
 		
-		TAG = 11; %CET: Computational Efficiency Trick
+		TAG = ConcreteElement.getPropNumber() + 3;
 		TAG_TAG = 'TAG';
-		TAG_CATEGORY = 9;
-		TAG_FORMAT = 2;
+		TAG_CATEGORY = Category.GUI;
+		TAG_FORMAT = Format.STRING;
 		
-		I = 12; %CET: Computational Efficiency Trick
+		I = ConcreteElement.getPropNumber() + 4;
 		I_TAG = 'I';
-		I_CATEGORY = 9;
-		I_FORMAT = 11;
+		I_CATEGORY = Category.GUI;
+		I_FORMAT = Format.SCALAR;
 		
-		H = 13; %CET: Computational Efficiency Trick
+		H = ConcreteElement.getPropNumber() + 5;
 		H_TAG = 'H';
-		H_CATEGORY = 6;
-		H_FORMAT = 18;
+		H_CATEGORY = Category.QUERY;
+		H_FORMAT = Format.HANDLE;
 		
-		SETUP = 14; %CET: Computational Efficiency Trick
+		SETUP = ConcreteElement.getPropNumber() + 6;
 		SETUP_TAG = 'SETUP';
-		SETUP_CATEGORY = 6;
-		SETUP_FORMAT = 11;
+		SETUP_CATEGORY = Category.QUERY;
+		SETUP_FORMAT = Format.SCALAR;
 	end
 	methods % constructor
 		function st = Settings(varargin)
@@ -175,21 +159,6 @@ classdef Settings < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of Settings properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graphics settings.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graphics settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graphics settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line graphics settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graphics settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graphics settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graphics settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
 			%
 			% See also Category, Format.
 			
@@ -227,7 +196,7 @@ classdef Settings < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'Settings'  'SettingsAmbient'  'SettingsArea'  'SettingsAxis'  'SettingsLine'  'SettingsPosition'  'SettingsSphere'  'SettingsSurface'  'SettingsSymbol'  'SettingsText' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('Settings', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graphics settings.
@@ -248,28 +217,62 @@ classdef Settings < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14];
+				prop_list = [ ...
+					ConcreteElement.getProps() ...
+						Settings.PANEL ...
+						Settings.PROP ...
+						Settings.TAG ...
+						Settings.I ...
+						Settings.H ...
+						Settings.SETUP ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 13 14];
-				case 9 % Category.GUI
-					prop_list = [9 10 11 12];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						ConcreteElement.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.QUERY) ...
+						Settings.H ...
+						Settings.SETUP ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						ConcreteElement.getProps(Category.GUI) ...
+						Settings.PANEL ...
+						Settings.PROP ...
+						Settings.TAG ...
+						Settings.I ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -290,29 +293,7 @@ classdef Settings < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 14;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 3;
-				case 9 % Category.GUI
-					prop_number = 4;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(Settings.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graphics settings/error.
@@ -340,14 +321,14 @@ classdef Settings < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 14 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == Settings.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Settings:' 'WrongInput'], ...
-					['BRAPH2' ':Settings:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Settings.'] ...
 					)
 			end
@@ -378,14 +359,15 @@ classdef Settings < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP' })); %CET: Computational Efficiency Trick
+			settings_tag_list = cellfun(@(x) Settings.getPropTag(x), num2cell(Settings.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settings_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Settings:' 'WrongInput'], ...
-					['BRAPH2' ':Settings:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for Settings.'] ...
 					)
 			end
@@ -411,7 +393,8 @@ classdef Settings < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP' })); % tag = pointer %CET: Computational Efficiency Trick
+				settings_tag_list = cellfun(@(x) Settings.getPropTag(x), num2cell(Settings.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settings_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -439,9 +422,24 @@ classdef Settings < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settings_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP' };
-				tag = settings_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case Settings.PANEL
+						tag = Settings.PANEL_TAG;
+					case Settings.PROP
+						tag = Settings.PROP_TAG;
+					case Settings.TAG
+						tag = Settings.TAG_TAG;
+					case Settings.I
+						tag = Settings.I_TAG;
+					case Settings.H
+						tag = Settings.H_TAG;
+					case Settings.SETUP
+						tag = Settings.SETUP_TAG;
+					otherwise
+						tag = getPropTag@ConcreteElement(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -466,9 +464,22 @@ classdef Settings < ConcreteElement
 			
 			prop = Settings.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settings_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6 };
-			prop_category = settings_category_list{prop};
+			switch prop
+				case Settings.PANEL
+					prop_category = Settings.PANEL_CATEGORY;
+				case Settings.PROP
+					prop_category = Settings.PROP_CATEGORY;
+				case Settings.TAG
+					prop_category = Settings.TAG_CATEGORY;
+				case Settings.I
+					prop_category = Settings.I_CATEGORY;
+				case Settings.H
+					prop_category = Settings.H_CATEGORY;
+				case Settings.SETUP
+					prop_category = Settings.SETUP_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@ConcreteElement(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -492,9 +503,22 @@ classdef Settings < ConcreteElement
 			
 			prop = Settings.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settings_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11 };
-			prop_format = settings_format_list{prop};
+			switch prop
+				case Settings.PANEL
+					prop_format = Settings.PANEL_FORMAT;
+				case Settings.PROP
+					prop_format = Settings.PROP_FORMAT;
+				case Settings.TAG
+					prop_format = Settings.TAG_FORMAT;
+				case Settings.I
+					prop_format = Settings.I_FORMAT;
+				case Settings.H
+					prop_format = Settings.H_FORMAT;
+				case Settings.SETUP
+					prop_format = Settings.SETUP_FORMAT;
+				otherwise
+					prop_format = getPropFormat@ConcreteElement(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -518,9 +542,36 @@ classdef Settings < ConcreteElement
 			
 			prop = Settings.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settings_description_list = { 'ELCLASS (constant, string) is the class of the graphics settings.'  'NAME (constant, string) is the name of the graphics settings.'  'DESCRIPTION (constant, string) is the description of the graphics settings.'  'TEMPLATE (parameter, item) is the template of the line graphics settings.'  'ID (data, string) is a few-letter code for the graphics settings.'  'LABEL (metadata, string) is an extended label of the graphics settings.'  'NOTES (metadata, string) are some specific notes about the graphics settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.' };
-			prop_description = settings_description_list{prop};
+			switch prop
+				case Settings.PANEL
+					prop_description = 'PANEL (gui, item) is the panel to which the graphics object belongs.';
+				case Settings.PROP
+					prop_description = 'PROP (gui, scalar) is the prop of the graphics handle(list).';
+				case Settings.TAG
+					prop_description = 'TAG (gui, string) is the tag of the graphics handle(s).';
+				case Settings.I
+					prop_description = 'I (gui, scalar) is the index of the handle, used only by handlelists.';
+				case Settings.H
+					prop_description = 'H (query, handle) is the graphics object handle.';
+				case Settings.SETUP
+					prop_description = 'SETUP (query, scalar) sets all figure props.';
+				case Settings.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the graphics settings.';
+				case Settings.NAME
+					prop_description = 'NAME (constant, string) is the name of the graphics settings.';
+				case Settings.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the graphics settings.';
+				case Settings.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the line graphics settings.';
+				case Settings.ID
+					prop_description = 'ID (data, string) is a few-letter code for the graphics settings.';
+				case Settings.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the graphics settings.';
+				case Settings.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the graphics settings.';
+				otherwise
+					prop_description = getPropDescription@ConcreteElement(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -544,20 +595,20 @@ classdef Settings < ConcreteElement
 			
 			prop = Settings.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Settings.PANEL
+			switch prop
+				case Settings.PANEL
 					prop_settings = 'Panel';
-				case 10 % Settings.PROP
-					prop_settings = Format.getFormatSettings(11);
-				case 11 % Settings.TAG
-					prop_settings = Format.getFormatSettings(2);
-				case 12 % Settings.I
-					prop_settings = Format.getFormatSettings(11);
-				case 13 % Settings.H
-					prop_settings = Format.getFormatSettings(18);
-				case 14 % Settings.SETUP
-					prop_settings = Format.getFormatSettings(11);
-				case 4 % Settings.TEMPLATE
+				case Settings.PROP
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case Settings.TAG
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case Settings.I
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case Settings.H
+					prop_settings = Format.getFormatSettings(Format.HANDLE);
+				case Settings.SETUP
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case Settings.TEMPLATE
 					prop_settings = 'Settings';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -585,32 +636,32 @@ classdef Settings < ConcreteElement
 			
 			prop = Settings.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 9 % Settings.PANEL
-					prop_default = Format.getFormatDefault(8, Settings.getPropSettings(prop));
-				case 10 % Settings.PROP
-					prop_default = 15;
-				case 11 % Settings.TAG
+			switch prop
+				case Settings.PANEL
+					prop_default = Format.getFormatDefault(Format.ITEM, Settings.getPropSettings(prop));
+				case Settings.PROP
+					prop_default = Panel.H;
+				case Settings.TAG
 					prop_default = 'H';
-				case 12 % Settings.I
-					prop_default = Format.getFormatDefault(11, Settings.getPropSettings(prop));
-				case 13 % Settings.H
-					prop_default = Format.getFormatDefault(18, Settings.getPropSettings(prop));
-				case 14 % Settings.SETUP
-					prop_default = Format.getFormatDefault(11, Settings.getPropSettings(prop));
-				case 1 % Settings.ELCLASS
+				case Settings.I
+					prop_default = Format.getFormatDefault(Format.SCALAR, Settings.getPropSettings(prop));
+				case Settings.H
+					prop_default = Format.getFormatDefault(Format.HANDLE, Settings.getPropSettings(prop));
+				case Settings.SETUP
+					prop_default = Format.getFormatDefault(Format.SCALAR, Settings.getPropSettings(prop));
+				case Settings.ELCLASS
 					prop_default = 'Settings';
-				case 2 % Settings.NAME
+				case Settings.NAME
 					prop_default = 'Graphics Settings';
-				case 3 % Settings.DESCRIPTION
+				case Settings.DESCRIPTION
 					prop_default = 'A Graphics Settings (Settings) provides the base element for all graphics settings. Typically, only its subclasses are employed.';
-				case 4 % Settings.TEMPLATE
-					prop_default = Format.getFormatDefault(8, Settings.getPropSettings(prop));
-				case 5 % Settings.ID
+				case Settings.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, Settings.getPropSettings(prop));
+				case Settings.ID
 					prop_default = 'Settings ID';
-				case 6 % Settings.LABEL
+				case Settings.LABEL
 					prop_default = 'Settings label';
-				case 7 % Settings.NOTES
+				case Settings.NOTES
 					prop_default = 'Settings notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -657,15 +708,15 @@ classdef Settings < ConcreteElement
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:Settings:WrongInput
+			%  Error id: €BRAPH2.STR€:Settings:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: BRAPH2:Settings:WrongInput
+			%   Error id: €BRAPH2.STR€:Settings:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(Settings, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Settings.
-			%   Error id: BRAPH2:Settings:WrongInput
+			%   Error id: €BRAPH2.STR€:Settings:€BRAPH2.WRONG_INPUT€
 			%  ST.CHECKPROP(Settings, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Settings.
-			%   Error id: BRAPH2:Settings:WrongInput]
+			%   Error id: €BRAPH2.STR€:Settings:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('Settings')
 			%  are less computationally efficient.
@@ -676,22 +727,22 @@ classdef Settings < ConcreteElement
 			prop = Settings.getPropProp(pointer);
 			
 			switch prop
-				case 9 % Settings.PANEL
-					check = Format.checkFormat(8, value, Settings.getPropSettings(prop));
-				case 10 % Settings.PROP
-					check = Format.checkFormat(11, value, Settings.getPropSettings(prop));
-				case 11 % Settings.TAG
-					check = Format.checkFormat(2, value, Settings.getPropSettings(prop));
-				case 12 % Settings.I
-					check = Format.checkFormat(11, value, Settings.getPropSettings(prop));
-				case 13 % Settings.H
-					check = Format.checkFormat(18, value, Settings.getPropSettings(prop));
-				case 14 % Settings.SETUP
-					check = Format.checkFormat(11, value, Settings.getPropSettings(prop));
-				case 4 % Settings.TEMPLATE
-					check = Format.checkFormat(8, value, Settings.getPropSettings(prop));
+				case Settings.PANEL % __Settings.PANEL__
+					check = Format.checkFormat(Format.ITEM, value, Settings.getPropSettings(prop));
+				case Settings.PROP % __Settings.PROP__
+					check = Format.checkFormat(Format.SCALAR, value, Settings.getPropSettings(prop));
+				case Settings.TAG % __Settings.TAG__
+					check = Format.checkFormat(Format.STRING, value, Settings.getPropSettings(prop));
+				case Settings.I % __Settings.I__
+					check = Format.checkFormat(Format.SCALAR, value, Settings.getPropSettings(prop));
+				case Settings.H % __Settings.H__
+					check = Format.checkFormat(Format.HANDLE, value, Settings.getPropSettings(prop));
+				case Settings.SETUP % __Settings.SETUP__
+					check = Format.checkFormat(Format.SCALAR, value, Settings.getPropSettings(prop));
+				case Settings.TEMPLATE % __Settings.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, Settings.getPropSettings(prop));
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -700,8 +751,8 @@ classdef Settings < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':Settings:' 'WrongInput'], ...
-					['BRAPH2' ':Settings:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':Settings:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Settings.getPropTag(prop) ' (' Settings.getFormatTag(Settings.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -721,14 +772,14 @@ classdef Settings < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case 10 % Settings.PROP
+				case Settings.PROP % __Settings.PROP__
 					pn = st.get('PANEL');
 					prop = st.get('PROP');
 					if ~strcmp(st.get('TAG'), pn.getPropTag(prop))
 					    st.set('TAG', pn.getPropTag(prop));
 					end
 					
-				case 11 % Settings.TAG
+				case Settings.TAG % __Settings.TAG__
 					pn = st.get('PANEL');
 					tag = st.get('TAG');
 					if st.get('PROP') ~= pn.getPropProp(tag)
@@ -736,7 +787,7 @@ classdef Settings < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						postset@ConcreteElement(st, prop);
 					end
 			end
@@ -747,30 +798,30 @@ classdef Settings < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 13 % Settings.H
+				case Settings.H % __Settings.H__
 					pn = st.get('PANEL');
 					prop = st.get('PROP');
 					switch pn.getPropFormat(prop)
-					    case 18
+					    case Format.HANDLE
 					        if ~isa(pn.getr(prop), 'NoValue')
 					            value = pn.get(prop);
 					        else
 					            value = gobjects(1);
 					        end
 					        
-					    case 19
+					    case Format.HANDLELIST
 					        if ~isa(pn.getr(prop), 'NoValue') && ~isa(st.getr('I'), 'NoValue')
 					            i = st.get('I');
 					            handlelists = pn.get(prop);
@@ -780,8 +831,8 @@ classdef Settings < ConcreteElement
 					        end
 					end
 					
-				case 14 % Settings.SETUP
-					figure_props = st.getProps(8);
+				case Settings.SETUP % __Settings.SETUP__
+					figure_props = st.getProps(Category.FIGURE);
 					settings = cell(1, 2 * length(figure_props));
 					for i = 1:1:length(figure_props)
 					    figure_prop = figure_props(i);
@@ -792,7 +843,7 @@ classdef Settings < ConcreteElement
 					value = length(figure_props);
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						value = calculateValue@ConcreteElement(st, prop, varargin{:});
 					else
 						value = calculateValue@Element(st, prop, varargin{:});
@@ -817,8 +868,8 @@ classdef Settings < ConcreteElement
 			msg = ['Error while checking ' tostring(st) ' ' st.getPropTag(prop) '.'];
 			
 			switch prop
-				case 10 % Settings.PROP
-					check = st.get('PANEL').getPropCategory(value) == 7 && any(st.get('PANEL').getPropFormat(value) == [18 19]);
+				case Settings.PROP % __Settings.PROP__
+					check = st.get('PANEL').getPropCategory(value) == Category.EVANESCENT && any(st.get('PANEL').getPropFormat(value) == [Format.HANDLE Format.HANDLELIST]);
 					if check
 					    msg = 'All ok';
 					else
@@ -827,8 +878,8 @@ classdef Settings < ConcreteElement
 					        ' ' Format.getFormatName(st.get('PANEL').getPropFormat(value)) '.'];
 					end
 					
-				case 11 % Settings.TAG
-					check = st.get('PANEL').getPropCategory(value) == 7 && any(st.get('PANEL').getPropFormat(value) == [18 19]);
+				case Settings.TAG % __Settings.TAG__
+					check = st.get('PANEL').getPropCategory(value) == Category.EVANESCENT && any(st.get('PANEL').getPropFormat(value) == [Format.HANDLE Format.HANDLELIST]);
 					if check
 					    msg = 'All ok';
 					else
@@ -838,7 +889,7 @@ classdef Settings < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= 8
+					if prop <= ConcreteElement.getPropNumber()
 						[check, msg] = checkValue@ConcreteElement(st, prop, value);
 					end
 			end

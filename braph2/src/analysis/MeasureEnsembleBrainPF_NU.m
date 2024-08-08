@@ -7,59 +7,6 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 	% MeasureEnsembleBrainPF_NU utilizes the surface created from BrainAtlasPF to integrate 
 	%  the nodal unilayer meaure into the brain regions.
 	%
-	% The list of MeasureEnsembleBrainPF_NU properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % %.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for measure group brain.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for measure group brain.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for measure group brain.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
-	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
-	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain atlas.
-	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-	%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-	%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-	%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-	%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-	%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-	%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-	%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-	%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-	%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-	%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
-	%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
-	%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
-	%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
-	%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
-	%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
-	%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
-	%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
-	%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
-	%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
-	%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
-	%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
-	%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
-	%  <strong>46</strong> <strong>ME</strong> 	ME (metadata, item) is the measure ensemble.
-	%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
-	%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
-	%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
-	%  <strong>50</strong> <strong>SIZE_SCALE</strong> 	SIZE_SCALE (figure, scalar) determines the scale of size effect.
-	%  <strong>51</strong> <strong>COLOR_DIFF</strong> 	COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.
-	%
 	% MeasureEnsembleBrainPF_NU methods (constructor):
 	%  MeasureEnsembleBrainPF_NU - constructor
 	%
@@ -149,25 +96,25 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
 	
 	properties (Constant) % properties
-		LAYER = 48; %CET: Computational Efficiency Trick
+		LAYER = MeasureEnsembleBrainPF.getPropNumber() + 1;
 		LAYER_TAG = 'LAYER';
-		LAYER_CATEGORY = 8;
-		LAYER_FORMAT = 11;
+		LAYER_CATEGORY = Category.FIGURE;
+		LAYER_FORMAT = Format.SCALAR;
 		
-		SIZE_DIFF = 49; %CET: Computational Efficiency Trick
+		SIZE_DIFF = MeasureEnsembleBrainPF.getPropNumber() + 2;
 		SIZE_DIFF_TAG = 'SIZE_DIFF';
-		SIZE_DIFF_CATEGORY = 8;
-		SIZE_DIFF_FORMAT = 5;
+		SIZE_DIFF_CATEGORY = Category.FIGURE;
+		SIZE_DIFF_FORMAT = Format.OPTION;
 		
-		SIZE_SCALE = 50; %CET: Computational Efficiency Trick
+		SIZE_SCALE = MeasureEnsembleBrainPF.getPropNumber() + 3;
 		SIZE_SCALE_TAG = 'SIZE_SCALE';
-		SIZE_SCALE_CATEGORY = 8;
-		SIZE_SCALE_FORMAT = 11;
+		SIZE_SCALE_CATEGORY = Category.FIGURE;
+		SIZE_SCALE_FORMAT = Format.SCALAR;
 		
-		COLOR_DIFF = 51; %CET: Computational Efficiency Trick
+		COLOR_DIFF = MeasureEnsembleBrainPF.getPropNumber() + 4;
 		COLOR_DIFF_TAG = 'COLOR_DIFF';
-		COLOR_DIFF_CATEGORY = 8;
-		COLOR_DIFF_FORMAT = 5;
+		COLOR_DIFF_CATEGORY = Category.FIGURE;
+		COLOR_DIFF_FORMAT = Format.OPTION;
 	end
 	methods % constructor
 		function pf = MeasureEnsembleBrainPF_NU(varargin)
@@ -180,58 +127,6 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of MeasureEnsembleBrainPF_NU properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % %.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure for measure group brain.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure for measure group brain.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure for measure group brain.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
-			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
-			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
-			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
-			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
-			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
-			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
-			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
-			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
-			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
-			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
-			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
-			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain atlas.
-			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
-			%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
-			%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
-			%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
-			%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
-			%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
-			%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
-			%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
-			%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
-			%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
-			%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
-			%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
-			%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
-			%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
-			%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
-			%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
-			%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
-			%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
-			%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
-			%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
-			%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
-			%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
-			%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
-			%  <strong>46</strong> <strong>ME</strong> 	ME (metadata, item) is the measure ensemble.
-			%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.
-			%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
-			%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
-			%  <strong>50</strong> <strong>SIZE_SCALE</strong> 	SIZE_SCALE (figure, scalar) determines the scale of size effect.
-			%  <strong>51</strong> <strong>COLOR_DIFF</strong> 	COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.
 			%
 			% See also Category, Format.
 			
@@ -269,7 +164,7 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'MeasureEnsembleBrainPF_NU' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('MeasureEnsembleBrainPF_NU', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel figure for nodal unilayer measure group brain.
@@ -290,32 +185,58 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51];
+				prop_list = [ ...
+					MeasureEnsembleBrainPF.getProps() ...
+						MeasureEnsembleBrainPF_NU.LAYER ...
+						MeasureEnsembleBrainPF_NU.SIZE_DIFF ...
+						MeasureEnsembleBrainPF_NU.SIZE_SCALE ...
+						MeasureEnsembleBrainPF_NU.COLOR_DIFF ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7 28 33 46];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 11 12 16 17 18 19 47];
-				case 7 % Category.EVANESCENT
-					prop_list = [10 15 21 22 23 26 29 34 37 40 43];
-				case 8 % Category.FIGURE
-					prop_list = [14 20 24 25 27 30 31 32 35 36 38 39 41 42 44 45 48 49 50 51];
-				case 9 % Category.GUI
-					prop_list = [9 13];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						MeasureEnsembleBrainPF.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.FIGURE) ...
+						MeasureEnsembleBrainPF_NU.LAYER ...
+						MeasureEnsembleBrainPF_NU.SIZE_DIFF ...
+						MeasureEnsembleBrainPF_NU.SIZE_SCALE ...
+						MeasureEnsembleBrainPF_NU.COLOR_DIFF ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						MeasureEnsembleBrainPF.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -336,33 +257,7 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 51;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 5;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 8;
-				case 7 % Category.EVANESCENT
-					prop_number = 11;
-				case 8 % Category.FIGURE
-					prop_number = 20;
-				case 9 % Category.GUI
-					prop_number = 2;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(MeasureEnsembleBrainPF_NU.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel figure for nodal unilayer measure group brain/error.
@@ -390,14 +285,14 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 51 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == MeasureEnsembleBrainPF_NU.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MeasureEnsembleBrainPF_NU.'] ...
 					)
 			end
@@ -428,14 +323,15 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); %CET: Computational Efficiency Trick
+			measureensemblebrainpf_nu_tag_list = cellfun(@(x) MeasureEnsembleBrainPF_NU.getPropTag(x), num2cell(MeasureEnsembleBrainPF_NU.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, measureensemblebrainpf_nu_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for MeasureEnsembleBrainPF_NU.'] ...
 					)
 			end
@@ -461,7 +357,8 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' })); % tag = pointer %CET: Computational Efficiency Trick
+				measureensemblebrainpf_nu_tag_list = cellfun(@(x) MeasureEnsembleBrainPF_NU.getPropTag(x), num2cell(MeasureEnsembleBrainPF_NU.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, measureensemblebrainpf_nu_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -489,9 +386,20 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				measureensemblebrainpf_nu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'ME'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF' };
-				tag = measureensemblebrainpf_nu_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case MeasureEnsembleBrainPF_NU.LAYER
+						tag = MeasureEnsembleBrainPF_NU.LAYER_TAG;
+					case MeasureEnsembleBrainPF_NU.SIZE_DIFF
+						tag = MeasureEnsembleBrainPF_NU.SIZE_DIFF_TAG;
+					case MeasureEnsembleBrainPF_NU.SIZE_SCALE
+						tag = MeasureEnsembleBrainPF_NU.SIZE_SCALE_TAG;
+					case MeasureEnsembleBrainPF_NU.COLOR_DIFF
+						tag = MeasureEnsembleBrainPF_NU.COLOR_DIFF_TAG;
+					otherwise
+						tag = getPropTag@MeasureEnsembleBrainPF(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -516,9 +424,18 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			measureensemblebrainpf_nu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8  2  6  8  8  8  8 };
-			prop_category = measureensemblebrainpf_nu_category_list{prop};
+			switch prop
+				case MeasureEnsembleBrainPF_NU.LAYER
+					prop_category = MeasureEnsembleBrainPF_NU.LAYER_CATEGORY;
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF
+					prop_category = MeasureEnsembleBrainPF_NU.SIZE_DIFF_CATEGORY;
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE
+					prop_category = MeasureEnsembleBrainPF_NU.SIZE_SCALE_CATEGORY;
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF
+					prop_category = MeasureEnsembleBrainPF_NU.COLOR_DIFF_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@MeasureEnsembleBrainPF(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -542,9 +459,18 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			measureensemblebrainpf_nu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10  8  1  11  5  11  5 };
-			prop_format = measureensemblebrainpf_nu_format_list{prop};
+			switch prop
+				case MeasureEnsembleBrainPF_NU.LAYER
+					prop_format = MeasureEnsembleBrainPF_NU.LAYER_FORMAT;
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF
+					prop_format = MeasureEnsembleBrainPF_NU.SIZE_DIFF_FORMAT;
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE
+					prop_format = MeasureEnsembleBrainPF_NU.SIZE_SCALE_FORMAT;
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF
+					prop_format = MeasureEnsembleBrainPF_NU.COLOR_DIFF_FORMAT;
+				otherwise
+					prop_format = getPropFormat@MeasureEnsembleBrainPF(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -568,9 +494,34 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			measureensemblebrainpf_nu_description_list = { 'ELCLASS (constant, string) is the class of the % % %.'  'NAME (constant, string) is the name of the panel figure for measure group brain.'  'DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.'  'TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.'  'ID (data, string) is a few-letter code for the panel figure for measure group brain.'  'LABEL (metadata, string) is an extended label of the panel figure for measure group brain.'  'NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the panel figure for brain atlas.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.'  'ME (metadata, item) is the measure ensemble.'  'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.'  'LAYER (figure, scalar) is the layer number of the nodal measure.'  'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.'  'SIZE_SCALE (figure, scalar) determines the scale of size effect.'  'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.' };
-			prop_description = measureensemblebrainpf_nu_description_list{prop};
+			switch prop
+				case MeasureEnsembleBrainPF_NU.LAYER
+					prop_description = 'LAYER (figure, scalar) is the layer number of the nodal measure.';
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF
+					prop_description = 'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.';
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE
+					prop_description = 'SIZE_SCALE (figure, scalar) determines the scale of size effect.';
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF
+					prop_description = 'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.';
+				case MeasureEnsembleBrainPF_NU.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the % % %.';
+				case MeasureEnsembleBrainPF_NU.NAME
+					prop_description = 'NAME (constant, string) is the name of the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.ID
+					prop_description = 'ID (data, string) is a few-letter code for the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure for measure group brain.';
+				case MeasureEnsembleBrainPF_NU.SETUP
+					prop_description = 'SETUP (query, empty) calculates the measure value and stores it to be implemented in the subelements.';
+				otherwise
+					prop_description = getPropDescription@MeasureEnsembleBrainPF(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -594,16 +545,16 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
-					prop_settings = Format.getFormatSettings(11);
-				case 49 % MeasureEnsembleBrainPF_NU.SIZE_DIFF
+			switch prop
+				case MeasureEnsembleBrainPF_NU.LAYER
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case 50 % MeasureEnsembleBrainPF_NU.SIZE_SCALE
-					prop_settings = Format.getFormatSettings(11);
-				case 51 % MeasureEnsembleBrainPF_NU.COLOR_DIFF
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case 4 % MeasureEnsembleBrainPF_NU.TEMPLATE
+				case MeasureEnsembleBrainPF_NU.TEMPLATE
 					prop_settings = 'MeasureEnsembleBrainPF_NU';
 				otherwise
 					prop_settings = getPropSettings@MeasureEnsembleBrainPF(prop);
@@ -631,28 +582,28 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
+			switch prop
+				case MeasureEnsembleBrainPF_NU.LAYER
 					prop_default = 1;
-				case 49 % MeasureEnsembleBrainPF_NU.SIZE_DIFF
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF
 					prop_default = 'on';
-				case 50 % MeasureEnsembleBrainPF_NU.SIZE_SCALE
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE
 					prop_default = 10;
-				case 51 % MeasureEnsembleBrainPF_NU.COLOR_DIFF
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF
 					prop_default = 'on';
-				case 1 % MeasureEnsembleBrainPF_NU.ELCLASS
+				case MeasureEnsembleBrainPF_NU.ELCLASS
 					prop_default = 'MeasureEnsembleBrainPF_NU';
-				case 2 % MeasureEnsembleBrainPF_NU.NAME
+				case MeasureEnsembleBrainPF_NU.NAME
 					prop_default = 'Panel Figure for Measure Group Brain';
-				case 3 % MeasureEnsembleBrainPF_NU.DESCRIPTION
+				case MeasureEnsembleBrainPF_NU.DESCRIPTION
 					prop_default = 'A Panel Figure for a Brain Measure of Analyze Group (MeasureEnsembleBrainPF_NU) manages the plot of the nodal unilayer measure ploted over the brain. MeasureEnsembleBrainPF_NU  utilizes the surface created from BrainAtlasPF to integrate the nodal unilayer meaure into the brain regions.';
-				case 4 % MeasureEnsembleBrainPF_NU.TEMPLATE
-					prop_default = Format.getFormatDefault(8, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
-				case 5 % MeasureEnsembleBrainPF_NU.ID
+				case MeasureEnsembleBrainPF_NU.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.ID
 					prop_default = 'MeasureEnsembleBrainPF_NU ID';
-				case 6 % MeasureEnsembleBrainPF_NU.LABEL
+				case MeasureEnsembleBrainPF_NU.LABEL
 					prop_default = 'MeasureEnsembleBrainPF_NU label';
-				case 7 % MeasureEnsembleBrainPF_NU.NOTES
+				case MeasureEnsembleBrainPF_NU.NOTES
 					prop_default = 'MeasureEnsembleBrainPF_NU notes';
 				otherwise
 					prop_default = getPropDefault@MeasureEnsembleBrainPF(prop);
@@ -699,15 +650,15 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:MeasureEnsembleBrainPF_NU:WrongInput
+			%  Error id: €BRAPH2.STR€:MeasureEnsembleBrainPF_NU:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NU:WrongInput
+			%   Error id: €BRAPH2.STR€:MeasureEnsembleBrainPF_NU:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(MeasureEnsembleBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsembleBrainPF_NU.
-			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NU:WrongInput
+			%   Error id: €BRAPH2.STR€:MeasureEnsembleBrainPF_NU:€BRAPH2.WRONG_INPUT€
 			%  PF.CHECKPROP(MeasureEnsembleBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsembleBrainPF_NU.
-			%   Error id: BRAPH2:MeasureEnsembleBrainPF_NU:WrongInput]
+			%   Error id: €BRAPH2.STR€:MeasureEnsembleBrainPF_NU:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('MeasureEnsembleBrainPF_NU')
 			%  are less computationally efficient.
@@ -718,18 +669,18 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			prop = MeasureEnsembleBrainPF_NU.getPropProp(pointer);
 			
 			switch prop
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
-					check = Format.checkFormat(11, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
-				case 49 % MeasureEnsembleBrainPF_NU.SIZE_DIFF
-					check = Format.checkFormat(5, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
-				case 50 % MeasureEnsembleBrainPF_NU.SIZE_SCALE
-					check = Format.checkFormat(11, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
-				case 51 % MeasureEnsembleBrainPF_NU.COLOR_DIFF
-					check = Format.checkFormat(5, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
-				case 4 % MeasureEnsembleBrainPF_NU.TEMPLATE
-					check = Format.checkFormat(8, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.LAYER % __MeasureEnsembleBrainPF_NU.LAYER__
+					check = Format.checkFormat(Format.SCALAR, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF % __MeasureEnsembleBrainPF_NU.SIZE_DIFF__
+					check = Format.checkFormat(Format.OPTION, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE % __MeasureEnsembleBrainPF_NU.SIZE_SCALE__
+					check = Format.checkFormat(Format.SCALAR, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF % __MeasureEnsembleBrainPF_NU.COLOR_DIFF__
+					check = Format.checkFormat(Format.OPTION, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
+				case MeasureEnsembleBrainPF_NU.TEMPLATE % __MeasureEnsembleBrainPF_NU.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, MeasureEnsembleBrainPF_NU.getPropSettings(prop));
 				otherwise
-					if prop <= 47
+					if prop <= MeasureEnsembleBrainPF.getPropNumber()
 						check = checkProp@MeasureEnsembleBrainPF(prop, value);
 					end
 			end
@@ -738,8 +689,8 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput'], ...
-					['BRAPH2' ':MeasureEnsembleBrainPF_NU:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':MeasureEnsembleBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasureEnsembleBrainPF_NU.getPropTag(prop) ' (' MeasureEnsembleBrainPF_NU.getFormatTag(MeasureEnsembleBrainPF_NU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -759,20 +710,20 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%  checkValue.
 			
 			switch prop
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
+				case MeasureEnsembleBrainPF_NU.LAYER % __MeasureEnsembleBrainPF_NU.LAYER__
 					pf.get('SETUP');
 					
-				case 49 % MeasureEnsembleBrainPF_NU.SIZE_DIFF
+				case MeasureEnsembleBrainPF_NU.SIZE_DIFF % __MeasureEnsembleBrainPF_NU.SIZE_DIFF__
 					pf.get('SETUP');
 					
-				case 50 % MeasureEnsembleBrainPF_NU.SIZE_SCALE
+				case MeasureEnsembleBrainPF_NU.SIZE_SCALE % __MeasureEnsembleBrainPF_NU.SIZE_SCALE__
 					pf.get('SETUP');
 					
-				case 51 % MeasureEnsembleBrainPF_NU.COLOR_DIFF
+				case MeasureEnsembleBrainPF_NU.COLOR_DIFF % __MeasureEnsembleBrainPF_NU.COLOR_DIFF__
 					pf.get('SETUP');
 					
 				otherwise
-					if prop <= 47
+					if prop <= MeasureEnsembleBrainPF.getPropNumber()
 						postset@MeasureEnsembleBrainPF(pf, prop);
 					end
 			end
@@ -783,19 +734,19 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 47 % MeasureEnsembleBrainPF_NU.SETUP
+				case MeasureEnsembleBrainPF_NU.SETUP % __MeasureEnsembleBrainPF_NU.SETUP__
 					me = pf.get('ME');
 					
 					% get brain region related list
@@ -893,7 +844,7 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 					value = {};
 					
 				otherwise
-					if prop <= 47
+					if prop <= MeasureEnsembleBrainPF.getPropNumber()
 						value = calculateValue@MeasureEnsembleBrainPF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -919,8 +870,8 @@ classdef MeasureEnsembleBrainPF_NU < MeasureEnsembleBrainPF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 48 % MeasureEnsembleBrainPF_NU.LAYER
-					pr = MeasureEnsembleBrainPF_xUPP_Layer('EL', pf, 'PROP', 48);
+				case MeasureEnsembleBrainPF_NU.LAYER % __MeasureEnsembleBrainPF_NU.LAYER__
+					pr = MeasureEnsembleBrainPF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsembleBrainPF_NU.LAYER);
 					
 				otherwise
 					pr = getPanelProp@MeasureEnsembleBrainPF(pf, prop, varargin{:});

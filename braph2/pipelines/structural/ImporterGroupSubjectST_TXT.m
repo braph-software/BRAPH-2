@@ -14,21 +14,6 @@ classdef ImporterGroupSubjectST_TXT < Importer
 	%  The 1st row contains the headers, the 2nd row a string with the categorical
 	%  variables of interest, and each subsequent row the values for each subject.
 	%
-	% The list of ImporterGroupSubjectST_TXT properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from TXT.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group importer from TXT.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file from where to load the ST subject group.
-	%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.
-	%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-	%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
-	%
 	% ImporterGroupSubjectST_TXT methods (constructor):
 	%  ImporterGroupSubjectST_TXT - constructor
 	%
@@ -118,25 +103,25 @@ classdef ImporterGroupSubjectST_TXT < Importer
 	% See also Group, SubjectST, ExporterGroupSubjectST_TXT.
 	
 	properties (Constant) % properties
-		FILE = 10; %CET: Computational Efficiency Trick
+		FILE = Importer.getPropNumber() + 1;
 		FILE_TAG = 'FILE';
-		FILE_CATEGORY = 4;
-		FILE_FORMAT = 2;
+		FILE_CATEGORY = Category.DATA;
+		FILE_FORMAT = Format.STRING;
 		
-		GET_FILE = 11; %CET: Computational Efficiency Trick
+		GET_FILE = Importer.getPropNumber() + 2;
 		GET_FILE_TAG = 'GET_FILE';
-		GET_FILE_CATEGORY = 6;
-		GET_FILE_FORMAT = 8;
+		GET_FILE_CATEGORY = Category.QUERY;
+		GET_FILE_FORMAT = Format.ITEM;
 		
-		BA = 12; %CET: Computational Efficiency Trick
+		BA = Importer.getPropNumber() + 3;
 		BA_TAG = 'BA';
-		BA_CATEGORY = 4;
-		BA_FORMAT = 8;
+		BA_CATEGORY = Category.DATA;
+		BA_FORMAT = Format.ITEM;
 		
-		GR = 13; %CET: Computational Efficiency Trick
+		GR = Importer.getPropNumber() + 4;
 		GR_TAG = 'GR';
-		GR_CATEGORY = 5;
-		GR_FORMAT = 8;
+		GR_CATEGORY = Category.RESULT;
+		GR_FORMAT = Format.ITEM;
 	end
 	methods % constructor
 		function im = ImporterGroupSubjectST_TXT(varargin)
@@ -149,20 +134,6 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of ImporterGroupSubjectST_TXT properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ST subject group importer from TXT.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ST subject group importer from TXT.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>FILE</strong> 	FILE (data, string) is the TXT file from where to load the ST subject group.
-			%  <strong>11</strong> <strong>GET_FILE</strong> 	GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.
-			%  <strong>12</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
-			%  <strong>13</strong> <strong>GR</strong> 	GR (result, item) is a group of subjects with structural data.
 			%
 			% See also Category, Format.
 			
@@ -200,7 +171,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'ImporterGroupSubjectST_TXT' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('ImporterGroupSubjectST_TXT', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of importer of ST subject group from TXT.
@@ -221,30 +192,58 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
+				prop_list = [ ...
+					Importer.getProps() ...
+						ImporterGroupSubjectST_TXT.FILE ...
+						ImporterGroupSubjectST_TXT.GET_FILE ...
+						ImporterGroupSubjectST_TXT.BA ...
+						ImporterGroupSubjectST_TXT.GR ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = [5 10 12];
-				case 5 % Category.RESULT
-					prop_list = 13;
-				case 6 % Category.QUERY
-					prop_list = [8 11];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Importer.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Importer.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Importer.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Importer.getProps(Category.DATA) ...
+						ImporterGroupSubjectST_TXT.FILE ...
+						ImporterGroupSubjectST_TXT.BA ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Importer.getProps(Category.RESULT) ...
+						ImporterGroupSubjectST_TXT.GR ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Importer.getProps(Category.QUERY) ...
+						ImporterGroupSubjectST_TXT.GET_FILE ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Importer.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Importer.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Importer.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -265,31 +264,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 13;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(ImporterGroupSubjectST_TXT.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in importer of ST subject group from TXT/error.
@@ -317,14 +292,14 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == ImporterGroupSubjectST_TXT.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ImporterGroupSubjectST_TXT.'] ...
 					)
 			end
@@ -355,14 +330,15 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); %CET: Computational Efficiency Trick
+			importergroupsubjectst_txt_tag_list = cellfun(@(x) ImporterGroupSubjectST_TXT.getPropTag(x), num2cell(ImporterGroupSubjectST_TXT.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, importergroupsubjectst_txt_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for ImporterGroupSubjectST_TXT.'] ...
 					)
 			end
@@ -388,7 +364,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' })); % tag = pointer %CET: Computational Efficiency Trick
+				importergroupsubjectst_txt_tag_list = cellfun(@(x) ImporterGroupSubjectST_TXT.getPropTag(x), num2cell(ImporterGroupSubjectST_TXT.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, importergroupsubjectst_txt_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -416,9 +393,20 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				importergroupsubjectst_txt_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'FILE'  'GET_FILE'  'BA'  'GR' };
-				tag = importergroupsubjectst_txt_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case ImporterGroupSubjectST_TXT.FILE
+						tag = ImporterGroupSubjectST_TXT.FILE_TAG;
+					case ImporterGroupSubjectST_TXT.GET_FILE
+						tag = ImporterGroupSubjectST_TXT.GET_FILE_TAG;
+					case ImporterGroupSubjectST_TXT.BA
+						tag = ImporterGroupSubjectST_TXT.BA_TAG;
+					case ImporterGroupSubjectST_TXT.GR
+						tag = ImporterGroupSubjectST_TXT.GR_TAG;
+					otherwise
+						tag = getPropTag@Importer(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -443,9 +431,18 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importergroupsubjectst_txt_category_list = { 1  1  1  3  4  2  2  6  9  4  6  4  5 };
-			prop_category = importergroupsubjectst_txt_category_list{prop};
+			switch prop
+				case ImporterGroupSubjectST_TXT.FILE
+					prop_category = ImporterGroupSubjectST_TXT.FILE_CATEGORY;
+				case ImporterGroupSubjectST_TXT.GET_FILE
+					prop_category = ImporterGroupSubjectST_TXT.GET_FILE_CATEGORY;
+				case ImporterGroupSubjectST_TXT.BA
+					prop_category = ImporterGroupSubjectST_TXT.BA_CATEGORY;
+				case ImporterGroupSubjectST_TXT.GR
+					prop_category = ImporterGroupSubjectST_TXT.GR_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Importer(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -469,9 +466,18 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importergroupsubjectst_txt_format_list = { 2  2  2  8  2  2  2  2  4  2  8  8  8 };
-			prop_format = importergroupsubjectst_txt_format_list{prop};
+			switch prop
+				case ImporterGroupSubjectST_TXT.FILE
+					prop_format = ImporterGroupSubjectST_TXT.FILE_FORMAT;
+				case ImporterGroupSubjectST_TXT.GET_FILE
+					prop_format = ImporterGroupSubjectST_TXT.GET_FILE_FORMAT;
+				case ImporterGroupSubjectST_TXT.BA
+					prop_format = ImporterGroupSubjectST_TXT.BA_FORMAT;
+				case ImporterGroupSubjectST_TXT.GR
+					prop_format = ImporterGroupSubjectST_TXT.GR_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Importer(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -495,9 +501,32 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			importergroupsubjectst_txt_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ST subject group importer from TXT.'  'DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.'  'TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.'  'ID (data, string) is a few-letter code for the ST subject group importer from TXT.'  'LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.'  'NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'FILE (data, string) is the TXT file from where to load the ST subject group.'  'GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.'  'BA (data, item) is a brain atlas.'  'GR (result, item) is a group of subjects with structural data.' };
-			prop_description = importergroupsubjectst_txt_description_list{prop};
+			switch prop
+				case ImporterGroupSubjectST_TXT.FILE
+					prop_description = 'FILE (data, string) is the TXT file from where to load the ST subject group.';
+				case ImporterGroupSubjectST_TXT.GET_FILE
+					prop_description = 'GET_FILE (query, item) opens a dialog box to set the TXT file from where to load the ST subject group.';
+				case ImporterGroupSubjectST_TXT.BA
+					prop_description = 'BA (data, item) is a brain atlas.';
+				case ImporterGroupSubjectST_TXT.GR
+					prop_description = 'GR (result, item) is a group of subjects with structural data.';
+				case ImporterGroupSubjectST_TXT.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.NAME
+					prop_description = 'NAME (constant, string) is the name of the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.ID
+					prop_description = 'ID (data, string) is a few-letter code for the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the ST subject group importer from TXT.';
+				case ImporterGroupSubjectST_TXT.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the ST subject group importer from TXT.';
+				otherwise
+					prop_description = getPropDescription@Importer(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -521,16 +550,16 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterGroupSubjectST_TXT.FILE
-					prop_settings = Format.getFormatSettings(2);
-				case 11 % ImporterGroupSubjectST_TXT.GET_FILE
+			switch prop
+				case ImporterGroupSubjectST_TXT.FILE
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case ImporterGroupSubjectST_TXT.GET_FILE
 					prop_settings = 'ImporterGroupSubjectST_TXT';
-				case 12 % ImporterGroupSubjectST_TXT.BA
+				case ImporterGroupSubjectST_TXT.BA
 					prop_settings = 'BrainAtlas';
-				case 13 % ImporterGroupSubjectST_TXT.GR
+				case ImporterGroupSubjectST_TXT.GR
 					prop_settings = 'Group';
-				case 4 % ImporterGroupSubjectST_TXT.TEMPLATE
+				case ImporterGroupSubjectST_TXT.TEMPLATE
 					prop_settings = 'ImporterGroupSubjectST_TXT';
 				otherwise
 					prop_settings = getPropSettings@Importer(prop);
@@ -558,28 +587,28 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 10 % ImporterGroupSubjectST_TXT.FILE
+			switch prop
+				case ImporterGroupSubjectST_TXT.FILE
 					prop_default = '';
-				case 11 % ImporterGroupSubjectST_TXT.GET_FILE
-					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectST_TXT.BA
-					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 13 % ImporterGroupSubjectST_TXT.GR
+				case ImporterGroupSubjectST_TXT.GET_FILE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.BA
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectST'));
-				case 1 % ImporterGroupSubjectST_TXT.ELCLASS
+				case ImporterGroupSubjectST_TXT.ELCLASS
 					prop_default = 'ImporterGroupSubjectST_TXT';
-				case 2 % ImporterGroupSubjectST_TXT.NAME
-					prop_default = 'ImporterGroupSubjectST_TXT';
-				case 3 % ImporterGroupSubjectST_TXT.DESCRIPTION
+				case ImporterGroupSubjectST_TXT.NAME
+					prop_default = 'Structural Subject Group TXT Importer';
+				case ImporterGroupSubjectST_TXT.DESCRIPTION
 					prop_default = 'ImporterGroupSubjectST_TXT imports a group of subjects with structural data from an TXT file and their covariates from another TXT file.';
-				case 4 % ImporterGroupSubjectST_TXT.TEMPLATE
-					prop_default = Format.getFormatDefault(8, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 5 % ImporterGroupSubjectST_TXT.ID
+				case ImporterGroupSubjectST_TXT.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.ID
 					prop_default = 'ImporterGroupSubjectST_TXT ID';
-				case 6 % ImporterGroupSubjectST_TXT.LABEL
+				case ImporterGroupSubjectST_TXT.LABEL
 					prop_default = 'ImporterGroupSubjectST_TXT label';
-				case 7 % ImporterGroupSubjectST_TXT.NOTES
+				case ImporterGroupSubjectST_TXT.NOTES
 					prop_default = 'ImporterGroupSubjectST_TXT notes';
 				otherwise
 					prop_default = getPropDefault@Importer(prop);
@@ -626,15 +655,15 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			% 
 			% IM.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:ImporterGroupSubjectST_TXT:WrongInput
+			%  Error id: €BRAPH2.STR€:ImporterGroupSubjectST_TXT:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  IM.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of IM.
-			%   Error id: BRAPH2:ImporterGroupSubjectST_TXT:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterGroupSubjectST_TXT:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(ImporterGroupSubjectST_TXT, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterGroupSubjectST_TXT.
-			%   Error id: BRAPH2:ImporterGroupSubjectST_TXT:WrongInput
+			%   Error id: €BRAPH2.STR€:ImporterGroupSubjectST_TXT:€BRAPH2.WRONG_INPUT€
 			%  IM.CHECKPROP(ImporterGroupSubjectST_TXT, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ImporterGroupSubjectST_TXT.
-			%   Error id: BRAPH2:ImporterGroupSubjectST_TXT:WrongInput]
+			%   Error id: €BRAPH2.STR€:ImporterGroupSubjectST_TXT:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(IM) and Element.CHECKPROP('ImporterGroupSubjectST_TXT')
 			%  are less computationally efficient.
@@ -645,18 +674,18 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			prop = ImporterGroupSubjectST_TXT.getPropProp(pointer);
 			
 			switch prop
-				case 10 % ImporterGroupSubjectST_TXT.FILE
-					check = Format.checkFormat(2, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 11 % ImporterGroupSubjectST_TXT.GET_FILE
-					check = Format.checkFormat(8, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 12 % ImporterGroupSubjectST_TXT.BA
-					check = Format.checkFormat(8, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 13 % ImporterGroupSubjectST_TXT.GR
-					check = Format.checkFormat(8, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
-				case 4 % ImporterGroupSubjectST_TXT.TEMPLATE
-					check = Format.checkFormat(8, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.FILE % __ImporterGroupSubjectST_TXT.FILE__
+					check = Format.checkFormat(Format.STRING, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.GET_FILE % __ImporterGroupSubjectST_TXT.GET_FILE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.BA % __ImporterGroupSubjectST_TXT.BA__
+					check = Format.checkFormat(Format.ITEM, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.GR % __ImporterGroupSubjectST_TXT.GR__
+					check = Format.checkFormat(Format.ITEM, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
+				case ImporterGroupSubjectST_TXT.TEMPLATE % __ImporterGroupSubjectST_TXT.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, ImporterGroupSubjectST_TXT.getPropSettings(prop));
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						check = checkProp@Importer(prop, value);
 					end
 			end
@@ -665,8 +694,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput'], ...
-					['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ImporterGroupSubjectST_TXT.getPropTag(prop) ' (' ImporterGroupSubjectST_TXT.getFormatTag(ImporterGroupSubjectST_TXT.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -677,19 +706,19 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % ImporterGroupSubjectST_TXT.GET_FILE
+				case ImporterGroupSubjectST_TXT.GET_FILE % __ImporterGroupSubjectST_TXT.GET_FILE__
 					[filename, filepath, filterindex] = uigetfile('*.txt', 'Select TXT file');
 					if filterindex
 					    file = [filepath filename];
@@ -697,8 +726,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 					end
 					value = im;
 					
-				case 13 % ImporterGroupSubjectST_TXT.GR
-					rng_settings_ = rng(); rng(im.getPropSeed(13), 'twister')
+				case ImporterGroupSubjectST_TXT.GR % __ImporterGroupSubjectST_TXT.GR__
+					rng_settings_ = rng(); rng(im.getPropSeed(ImporterGroupSubjectST_TXT.GR), 'twister')
 					
 					% creates empty Group
 					gr = Group( ...
@@ -740,8 +769,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 					        end
 					        if br_number ~= ba.get('BR_DICT').get('LENGTH')
 					            error( ...
-					                ['BRAPH2' ':' class(im) ':' 'ErrorIO'], ...
-					                ['BRAPH2' ':' class(im) ':' 'ErrorIO' '\n' ...
+					                [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
+					                [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\n' ...
 					                'The file ' name '.' ext ' should contain a matrix with ' int2str(ba.get('BR_DICT').get('LENGTH')) ' columns corresponding to the brain regions, ' ...
 					                'while it contains ' int2str(br_number) ' columns.'] ...
 					                )
@@ -803,8 +832,8 @@ classdef ImporterGroupSubjectST_TXT < Importer
 					    
 					    braph2waitbar(wb, 'close')
 					elseif ~isempty(file)
-					    error(['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'CancelIO'], ...
-					        ['BRAPH2' ':ImporterGroupSubjectST_TXT:' 'CancelIO' '\n' ...
+					    error([BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.CANCEL_IO], ...
+					        [BRAPH2.STR ':ImporterGroupSubjectST_TXT:' BRAPH2.CANCEL_IO '\n' ...
 					        'The prop FILE must be an existing file, but it is ''' file '''.'] ...
 					        );
 					end
@@ -814,7 +843,7 @@ classdef ImporterGroupSubjectST_TXT < Importer
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						value = calculateValue@Importer(im, prop, varargin{:});
 					else
 						value = calculateValue@Element(im, prop, varargin{:});
@@ -839,11 +868,11 @@ classdef ImporterGroupSubjectST_TXT < Importer
 			msg = ['Error while checking ' tostring(im) ' ' im.getPropTag(prop) '.'];
 			
 			switch prop
-				case 13 % ImporterGroupSubjectST_TXT.GR
-					check = any(strcmp(value.get('SUB_CLASS'), subclasses('SubjectST', [], [], true))); % Format.checkFormat(8, value, 'Group') already checked
+				case ImporterGroupSubjectST_TXT.GR % __ImporterGroupSubjectST_TXT.GR__
+					check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectST', [], [], true))); % Format.checkFormat(Format.ITEM, value, 'Group') already checked
 					
 				otherwise
-					if prop <= 9
+					if prop <= Importer.getPropNumber()
 						[check, msg] = checkValue@Importer(im, prop, value);
 					end
 			end

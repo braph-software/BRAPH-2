@@ -5,28 +5,6 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 	% This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUD) analyzes connectivity 
 	% and functional multiplex data using binary undirected graphs at fixed densities.
 	%
-	% The list of AnalyzeEnsemble_CON_FUN_MP_BUD properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
-	%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-	%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the multiplex (MultiplexBUD) ensemble obtained from this analysis.
-	%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-	%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-	%  <strong>15</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data.
-	%  <strong>16</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data.
-	%  <strong>17</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data.
-	%  <strong>18</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-	%  <strong>19</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
-	%  <strong>20</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
-	%
 	% AnalyzeEnsemble_CON_FUN_MP_BUD methods (constructor):
 	%  AnalyzeEnsemble_CON_FUN_MP_BUD - constructor
 	%
@@ -116,35 +94,35 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 	% See also SubjectCON_FUN_MP, MultiplexBUD.
 	
 	properties (Constant) % properties
-		REPETITION = 15; %CET: Computational Efficiency Trick
+		REPETITION = AnalyzeEnsemble.getPropNumber() + 1;
 		REPETITION_TAG = 'REPETITION';
-		REPETITION_CATEGORY = 3;
-		REPETITION_FORMAT = 11;
+		REPETITION_CATEGORY = Category.PARAMETER;
+		REPETITION_FORMAT = Format.SCALAR;
 		
-		F_MIN = 16; %CET: Computational Efficiency Trick
+		F_MIN = AnalyzeEnsemble.getPropNumber() + 2;
 		F_MIN_TAG = 'F_MIN';
-		F_MIN_CATEGORY = 3;
-		F_MIN_FORMAT = 11;
+		F_MIN_CATEGORY = Category.PARAMETER;
+		F_MIN_FORMAT = Format.SCALAR;
 		
-		F_MAX = 17; %CET: Computational Efficiency Trick
+		F_MAX = AnalyzeEnsemble.getPropNumber() + 3;
 		F_MAX_TAG = 'F_MAX';
-		F_MAX_CATEGORY = 3;
-		F_MAX_FORMAT = 11;
+		F_MAX_CATEGORY = Category.PARAMETER;
+		F_MAX_FORMAT = Format.SCALAR;
 		
-		CORRELATION_RULE = 18; %CET: Computational Efficiency Trick
+		CORRELATION_RULE = AnalyzeEnsemble.getPropNumber() + 4;
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
-		CORRELATION_RULE_CATEGORY = 3;
-		CORRELATION_RULE_FORMAT = 5;
+		CORRELATION_RULE_CATEGORY = Category.PARAMETER;
+		CORRELATION_RULE_FORMAT = Format.OPTION;
 		
-		NEGATIVE_WEIGHT_RULE = 19; %CET: Computational Efficiency Trick
+		NEGATIVE_WEIGHT_RULE = AnalyzeEnsemble.getPropNumber() + 5;
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
-		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
-		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
+		NEGATIVE_WEIGHT_RULE_CATEGORY = Category.PARAMETER;
+		NEGATIVE_WEIGHT_RULE_FORMAT = Format.OPTION;
 		
-		DENSITIES = 20; %CET: Computational Efficiency Trick
+		DENSITIES = AnalyzeEnsemble.getPropNumber() + 6;
 		DENSITIES_TAG = 'DENSITIES';
-		DENSITIES_CATEGORY = 3;
-		DENSITIES_FORMAT = 12;
+		DENSITIES_CATEGORY = Category.PARAMETER;
+		DENSITIES_FORMAT = Format.RVECTOR;
 	end
 	methods % constructor
 		function a = AnalyzeEnsemble_CON_FUN_MP_BUD(varargin)
@@ -157,27 +135,6 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of AnalyzeEnsemble_CON_FUN_MP_BUD properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
-			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.
-			%  <strong>11</strong> <strong>GRAPH_TEMPLATE</strong> 	GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.
-			%  <strong>12</strong> <strong>G_DICT</strong> 	G_DICT (result, idict) is the multiplex (MultiplexBUD) ensemble obtained from this analysis.
-			%  <strong>13</strong> <strong>ME_DICT</strong> 	ME_DICT (result, idict) contains the calculated measures of the graph ensemble.
-			%  <strong>14</strong> <strong>MEASUREENSEMBLE</strong> 	MEASUREENSEMBLE (query, item) returns an ensemble-based measure.
-			%  <strong>15</strong> <strong>REPETITION</strong> 	REPETITION (parameter, scalar) is the number of repetitions for functional data.
-			%  <strong>16</strong> <strong>F_MIN</strong> 	F_MIN (parameter, scalar) is the minimum frequency value for functional data.
-			%  <strong>17</strong> <strong>F_MAX</strong> 	F_MAX (parameter, scalar) is the maximum frequency value for functional data.
-			%  <strong>18</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type for functional data.
-			%  <strong>19</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.
-			%  <strong>20</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
 			%
 			% See also Category, Format.
 			
@@ -215,7 +172,7 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'AnalyzeEnsemble_CON_FUN_MP_BUD' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('AnalyzeEnsemble_CON_FUN_MP_BUD', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graph analysis with connectivity and functional multiplex data of fixed density.
@@ -236,30 +193,62 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20];
+				prop_list = [ ...
+					AnalyzeEnsemble.getProps() ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 11 15 16 17 18 19 20];
-				case 4 % Category.DATA
-					prop_list = [5 10];
-				case 5 % Category.RESULT
-					prop_list = [12 13];
-				case 6 % Category.QUERY
-					prop_list = [8 14];
-				case 9 % Category.GUI
-					prop_list = 9;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.PARAMETER) ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE ...
+						AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						AnalyzeEnsemble.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						AnalyzeEnsemble.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -280,31 +269,7 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 20;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 8;
-				case 4 % Category.DATA
-					prop_number = 2;
-				case 5 % Category.RESULT
-					prop_number = 2;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(AnalyzeEnsemble_CON_FUN_MP_BUD.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graph analysis with connectivity and functional multiplex data of fixed density/error.
@@ -332,14 +297,14 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 20 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == AnalyzeEnsemble_CON_FUN_MP_BUD.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeEnsemble_CON_FUN_MP_BUD.'] ...
 					)
 			end
@@ -370,14 +335,15 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); %CET: Computational Efficiency Trick
+			analyzeensemble_con_fun_mp_bud_tag_list = cellfun(@(x) AnalyzeEnsemble_CON_FUN_MP_BUD.getPropTag(x), num2cell(AnalyzeEnsemble_CON_FUN_MP_BUD.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, analyzeensemble_con_fun_mp_bud_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeEnsemble_CON_FUN_MP_BUD.'] ...
 					)
 			end
@@ -403,7 +369,8 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' })); % tag = pointer %CET: Computational Efficiency Trick
+				analyzeensemble_con_fun_mp_bud_tag_list = cellfun(@(x) AnalyzeEnsemble_CON_FUN_MP_BUD.getPropTag(x), num2cell(AnalyzeEnsemble_CON_FUN_MP_BUD.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, analyzeensemble_con_fun_mp_bud_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -431,9 +398,24 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				analyzeensemble_con_fun_mp_bud_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'GRAPH_TEMPLATE'  'G_DICT'  'ME_DICT'  'MEASUREENSEMBLE'  'REPETITION'  'F_MIN'  'F_MAX'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE'  'DENSITIES' };
-				tag = analyzeensemble_con_fun_mp_bud_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION_TAG;
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN_TAG;
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX_TAG;
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE_TAG;
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE_TAG;
+					case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+						tag = AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES_TAG;
+					otherwise
+						tag = getPropTag@AnalyzeEnsemble(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -458,9 +440,22 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_fun_mp_bud_category_list = { 1  1  1  3  4  2  2  6  9  4  3  5  5  6  3  3  3  3  3  3 };
-			prop_category = analyzeensemble_con_fun_mp_bud_category_list{prop};
+			switch prop
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION_CATEGORY;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN_CATEGORY;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX_CATEGORY;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE_CATEGORY;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE_CATEGORY;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+					prop_category = AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -484,9 +479,22 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_fun_mp_bud_format_list = { 2  2  2  8  2  2  2  2  4  8  8  10  10  8  11  11  11  5  5  12 };
-			prop_format = analyzeensemble_con_fun_mp_bud_format_list{prop};
+			switch prop
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION_FORMAT;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN_FORMAT;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX_FORMAT;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE_FORMAT;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE_FORMAT;
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+					prop_format = AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES_FORMAT;
+				otherwise
+					prop_format = getPropFormat@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -510,9 +518,44 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			analyzeensemble_con_fun_mp_bud_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the multiplex (MultiplexBUD) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'REPETITION (parameter, scalar) is the number of repetitions for functional data.'  'F_MIN (parameter, scalar) is the minimum frequency value for functional data.'  'F_MAX (parameter, scalar) is the maximum frequency value for functional data.'  'CORRELATION_RULE (parameter, option) is the correlation type for functional data.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
-			prop_description = analyzeensemble_con_fun_mp_bud_description_list{prop};
+			switch prop
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+					prop_description = 'REPETITION (parameter, scalar) is the number of repetitions for functional data.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+					prop_description = 'F_MIN (parameter, scalar) is the minimum frequency value for functional data.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+					prop_description = 'F_MAX (parameter, scalar) is the maximum frequency value for functional data.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+					prop_description = 'CORRELATION_RULE (parameter, option) is the correlation type for functional data.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+					prop_description = 'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights of functional data.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+					prop_description = 'DENSITIES (parameter, rvector) is the vector of densities.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NAME
+					prop_description = 'NAME (constant, string) is the name of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.ID
+					prop_description = 'ID (data, string) is a few-letter code for the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with connectivity and functional multiplex data of fixed density.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GR
+					prop_description = 'GR (data, item) is the subject group, which also defines the subject class SubjectCON_FUN_MP.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
+					prop_description = 'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
+					prop_description = 'G_DICT (result, idict) is the multiplex (MultiplexBUD) ensemble obtained from this analysis.';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.ME_DICT
+					prop_description = 'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.';
+				otherwise
+					prop_description = getPropDescription@AnalyzeEnsemble(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -536,24 +579,24 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
-					prop_settings = Format.getFormatSettings(11);
-				case 16 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
-					prop_settings = Format.getFormatSettings(11);
-				case 17 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
-					prop_settings = Format.getFormatSettings(11);
-				case 18 % AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+			switch prop
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST(1:3);
-				case 19 % AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
-				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
-					prop_settings = Format.getFormatSettings(12);
-				case 4 % AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
 					prop_settings = 'AnalyzeEnsemble_CON_FUN_MP_BUD';
-				case 11 % AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
 					prop_settings = 'MultiplexBUD';
-				case 12 % AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
 					prop_settings = 'MultiplexBUD';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeEnsemble(prop);
@@ -581,39 +624,39 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
+			switch prop
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
 					prop_default = 1;
-				case 16 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
 					prop_default = 0;
-				case 17 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
 					prop_default = Inf;
-				case 18 % AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
 					prop_default = Correlation.CORRELATION_RULE_LIST{1};
-				case 19 % AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.NEGATIVE_WEIGHT_RULE_LIST{1};
-				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
 					prop_default = [1:1:10];
-				case 1 % AnalyzeEnsemble_CON_FUN_MP_BUD.ELCLASS
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.ELCLASS
 					prop_default = 'AnalyzeEnsemble_CON_FUN_MP_BUD';
-				case 2 % AnalyzeEnsemble_CON_FUN_MP_BUD.NAME
-					prop_default = 'AnalyzeEnsemble_CON_FUN_MP_BUD';
-				case 3 % AnalyzeEnsemble_CON_FUN_MP_BUD.DESCRIPTION
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NAME
+					prop_default = 'Multiplex Connectivity-Functional Binary at fixed Densities Analyze Ensemble';
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DESCRIPTION
 					prop_default = 'This graph analysis (AnalyzeEnsemble_CON_FUN_MP_BUD) analyzes connectivity and functional multiplex data using binary undirected graphs at fixed densities.';
-				case 4 % AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 5 % AnalyzeEnsemble_CON_FUN_MP_BUD.ID
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.ID
 					prop_default = 'AnalyzeEnsemble_CON_FUN_MP_BUD ID';
-				case 6 % AnalyzeEnsemble_CON_FUN_MP_BUD.LABEL
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.LABEL
 					prop_default = 'AnalyzeEnsemble_CON_FUN_MP_BUD label';
-				case 7 % AnalyzeEnsemble_CON_FUN_MP_BUD.NOTES
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NOTES
 					prop_default = 'AnalyzeEnsemble_CON_FUN_MP_BUD notes';
-				case 10 % AnalyzeEnsemble_CON_FUN_MP_BUD.GR
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GR
 					prop_default = Group('SUB_CLASS', 'SubjectCON_FUN_MP');
-				case 11 % AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
-					prop_default = Format.getFormatDefault(8, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
-					prop_default = Format.getFormatDefault(10, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
+					prop_default = Format.getFormatDefault(Format.IDICT, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@AnalyzeEnsemble(prop);
 			end
@@ -659,15 +702,15 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			% 
 			% A.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:AnalyzeEnsemble_CON_FUN_MP_BUD:WrongInput
+			%  Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_FUN_MP_BUD:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  A.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of A.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_FUN_MP_BUD:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_FUN_MP_BUD:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(AnalyzeEnsemble_CON_FUN_MP_BUD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble_CON_FUN_MP_BUD.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_FUN_MP_BUD:WrongInput
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_FUN_MP_BUD:€BRAPH2.WRONG_INPUT€
 			%  A.CHECKPROP(AnalyzeEnsemble_CON_FUN_MP_BUD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeEnsemble_CON_FUN_MP_BUD.
-			%   Error id: BRAPH2:AnalyzeEnsemble_CON_FUN_MP_BUD:WrongInput]
+			%   Error id: €BRAPH2.STR€:AnalyzeEnsemble_CON_FUN_MP_BUD:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(A) and Element.CHECKPROP('AnalyzeEnsemble_CON_FUN_MP_BUD')
 			%  are less computationally efficient.
@@ -678,26 +721,26 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_CON_FUN_MP_BUD.getPropProp(pointer);
 			
 			switch prop
-				case 15 % AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION
-					check = Format.checkFormat(11, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 16 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN
-					check = Format.checkFormat(11, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 17 % AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX
-					check = Format.checkFormat(11, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 18 % AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE
-					check = Format.checkFormat(5, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 19 % AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE
-					check = Format.checkFormat(5, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
-					check = Format.checkFormat(12, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 4 % AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 11 % AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE
-					check = Format.checkFormat(8, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
-				case 12 % AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
-					check = Format.checkFormat(10, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION % __AnalyzeEnsemble_CON_FUN_MP_BUD.REPETITION__
+					check = Format.checkFormat(Format.SCALAR, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN % __AnalyzeEnsemble_CON_FUN_MP_BUD.F_MIN__
+					check = Format.checkFormat(Format.SCALAR, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX % __AnalyzeEnsemble_CON_FUN_MP_BUD.F_MAX__
+					check = Format.checkFormat(Format.SCALAR, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE % __AnalyzeEnsemble_CON_FUN_MP_BUD.CORRELATION_RULE__
+					check = Format.checkFormat(Format.OPTION, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE % __AnalyzeEnsemble_CON_FUN_MP_BUD.NEGATIVE_WEIGHT_RULE__
+					check = Format.checkFormat(Format.OPTION, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES % __AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES__
+					check = Format.checkFormat(Format.RVECTOR, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE % __AnalyzeEnsemble_CON_FUN_MP_BUD.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE % __AnalyzeEnsemble_CON_FUN_MP_BUD.GRAPH_TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT % __AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT__
+					check = Format.checkFormat(Format.IDICT, value, AnalyzeEnsemble_CON_FUN_MP_BUD.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= AnalyzeEnsemble.getPropNumber()
 						check = checkProp@AnalyzeEnsemble(prop, value);
 					end
 			end
@@ -706,8 +749,8 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput'], ...
-					['BRAPH2' ':AnalyzeEnsemble_CON_FUN_MP_BUD:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':AnalyzeEnsemble_CON_FUN_MP_BUD:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeEnsemble_CON_FUN_MP_BUD.getPropTag(prop) ' (' AnalyzeEnsemble_CON_FUN_MP_BUD.getFormatTag(AnalyzeEnsemble_CON_FUN_MP_BUD.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -727,11 +770,11 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%  checkValue.
 			
 			switch prop
-				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES % __AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES__
 					a.memorize('GRAPH_TEMPLATE').set('DENSITIES', a.getCallback('DENSITIES'));
 					
 				otherwise
-					if prop <= 14
+					if prop <= AnalyzeEnsemble.getPropNumber()
 						postset@AnalyzeEnsemble(a, prop);
 					end
 			end
@@ -742,20 +785,20 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 12 % AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT
-					rng_settings_ = rng(); rng(a.getPropSeed(12), 'twister')
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT % __AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT__
+					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeEnsemble_CON_FUN_MP_BUD.G_DICT), 'twister')
 					
 					g_dict = IndexedDictionary('IT_CLASS', 'MultiplexBUD');
 					gr = a.get('GR');
@@ -810,7 +853,7 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 14
+					if prop <= AnalyzeEnsemble.getPropNumber()
 						value = calculateValue@AnalyzeEnsemble(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});
@@ -836,8 +879,8 @@ classdef AnalyzeEnsemble_CON_FUN_MP_BUD < AnalyzeEnsemble
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 20 % AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES
-					pr = PanelPropRVectorSmart('EL', a, 'PROP', 20, ...
+				case AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES % __AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES__
+					pr = PanelPropRVectorSmart('EL', a, 'PROP', AnalyzeEnsemble_CON_FUN_MP_BUD.DENSITIES, ...
 					    'MIN', 0, 'MAX', 100, ...
 					    'DEFAULT', AnalyzeEnsemble_CON_FUN_MP_BUD.getPropDefault('DENSITIES'), ...
 					    varargin{:});

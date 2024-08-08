@@ -2,28 +2,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	%NNClassifierMLP_Evaluator evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 	% It is a subclass of <a href="matlab:help NNEvaluator">NNEvaluator</a>.
 	%
-	% A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
+	% A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 	% NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).
-	%
-	% The list of NNClassifierMLP_Evaluator properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the classification task.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network classifier.
-	%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
-	%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
-	%  <strong>12</strong> <strong>AUC</strong> 	AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.
-	%  <strong>13</strong> <strong>PFROC</strong> 	PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
-	%  <strong>14</strong> <strong>MACRO_AUC</strong> 	MACRO_AUC (result, scalar) provides the metric of the average AUC value.
-	%  <strong>15</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix.
-	%  <strong>16</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-	%  <strong>17</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-	%  <strong>18</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
 	%
 	% NNClassifierMLP_Evaluator methods (constructor):
 	%  NNClassifierMLP_Evaluator - constructor
@@ -43,33 +23,33 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNClassifierMLP_Evaluator methods (display):
-	%  tostring - string with information about the neural network evaluator for classification
-	%  disp - displays information about the neural network evaluator for classification
-	%  tree - displays the tree of the neural network evaluator for classification
+	%  tostring - string with information about the neural network evaluator for multi-layer perceptron classifier
+	%  disp - displays information about the neural network evaluator for multi-layer perceptron classifier
+	%  tree - displays the tree of the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two neural network evaluator for classification are equal (values, locked)
+	%  isequal - determines whether two neural network evaluator for multi-layer perceptron classifier are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the neural network evaluator for classification
+	%  copy - copies the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (save/load, Static):
-	%  save - saves BRAPH2 neural network evaluator for classification as b2 file
-	%  load - loads a BRAPH2 neural network evaluator for classification from a b2 file
+	%  save - saves BRAPH2 neural network evaluator for multi-layer perceptron classifier as b2 file
+	%  load - loads a BRAPH2 neural network evaluator for multi-layer perceptron classifier from a b2 file
 	%
 	% NNClassifierMLP_Evaluator method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the neural network evaluator for classification
+	%  encodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the neural network evaluator for classification
+	%   decodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (inspection, Static):
-	%  getClass - returns the class of the neural network evaluator for classification
+	%  getClass - returns the class of the neural network evaluator for multi-layer perceptron classifier
 	%  getSubclasses - returns all subclasses of NNClassifierMLP_Evaluator
-	%  getProps - returns the property list of the neural network evaluator for classification
-	%  getPropNumber - returns the property number of the neural network evaluator for classification
+	%  getProps - returns the property list of the neural network evaluator for multi-layer perceptron classifier
+	%  getPropNumber - returns the property number of the neural network evaluator for multi-layer perceptron classifier
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -114,49 +94,49 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	% See also NNDataPoint_CON_CLA, NNClassifierMLP.
 	
 	properties (Constant) % properties
-		GROUND_TRUTH = 11; %CET: Computational Efficiency Trick
+		GROUND_TRUTH = NNEvaluator.getPropNumber() + 1;
 		GROUND_TRUTH_TAG = 'GROUND_TRUTH';
-		GROUND_TRUTH_CATEGORY = 6;
-		GROUND_TRUTH_FORMAT = 3;
+		GROUND_TRUTH_CATEGORY = Category.QUERY;
+		GROUND_TRUTH_FORMAT = Format.STRINGLIST;
 		
-		AUC = 12; %CET: Computational Efficiency Trick
+		AUC = NNEvaluator.getPropNumber() + 2;
 		AUC_TAG = 'AUC';
-		AUC_CATEGORY = 5;
-		AUC_FORMAT = 12;
+		AUC_CATEGORY = Category.RESULT;
+		AUC_FORMAT = Format.RVECTOR;
 		
-		PFROC = 13; %CET: Computational Efficiency Trick
+		PFROC = NNEvaluator.getPropNumber() + 3;
 		PFROC_TAG = 'PFROC';
-		PFROC_CATEGORY = 9;
-		PFROC_FORMAT = 8;
+		PFROC_CATEGORY = Category.GUI;
+		PFROC_FORMAT = Format.ITEM;
 		
-		MACRO_AUC = 14; %CET: Computational Efficiency Trick
+		MACRO_AUC = NNEvaluator.getPropNumber() + 4;
 		MACRO_AUC_TAG = 'MACRO_AUC';
-		MACRO_AUC_CATEGORY = 5;
-		MACRO_AUC_FORMAT = 11;
+		MACRO_AUC_CATEGORY = Category.RESULT;
+		MACRO_AUC_FORMAT = Format.SCALAR;
 		
-		C_MATRIX = 15; %CET: Computational Efficiency Trick
+		C_MATRIX = NNEvaluator.getPropNumber() + 5;
 		C_MATRIX_TAG = 'C_MATRIX';
-		C_MATRIX_CATEGORY = 5;
-		C_MATRIX_FORMAT = 14;
+		C_MATRIX_CATEGORY = Category.RESULT;
+		C_MATRIX_FORMAT = Format.MATRIX;
 		
-		P = 16; %CET: Computational Efficiency Trick
+		P = NNEvaluator.getPropNumber() + 6;
 		P_TAG = 'P';
-		P_CATEGORY = 3;
-		P_FORMAT = 11;
+		P_CATEGORY = Category.PARAMETER;
+		P_FORMAT = Format.SCALAR;
 		
-		PERM_SEEDS = 17; %CET: Computational Efficiency Trick
+		PERM_SEEDS = NNEvaluator.getPropNumber() + 7;
 		PERM_SEEDS_TAG = 'PERM_SEEDS';
-		PERM_SEEDS_CATEGORY = 5;
-		PERM_SEEDS_FORMAT = 12;
+		PERM_SEEDS_CATEGORY = Category.RESULT;
+		PERM_SEEDS_FORMAT = Format.RVECTOR;
 		
-		FEATURE_IMPORTANCE = 18; %CET: Computational Efficiency Trick
+		FEATURE_IMPORTANCE = NNEvaluator.getPropNumber() + 8;
 		FEATURE_IMPORTANCE_TAG = 'FEATURE_IMPORTANCE';
-		FEATURE_IMPORTANCE_CATEGORY = 5;
-		FEATURE_IMPORTANCE_FORMAT = 16;
+		FEATURE_IMPORTANCE_CATEGORY = Category.RESULT;
+		FEATURE_IMPORTANCE_FORMAT = Format.CELL;
 	end
 	methods % constructor
 		function nne = NNClassifierMLP_Evaluator(varargin)
-			%NNClassifierMLP_Evaluator() creates a neural network evaluator for classification.
+			%NNClassifierMLP_Evaluator() creates a neural network evaluator for multi-layer perceptron classifier.
 			%
 			% NNClassifierMLP_Evaluator(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -165,25 +145,6 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of NNClassifierMLP_Evaluator properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the classification task.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network classifier.
-			%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
-			%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
-			%  <strong>12</strong> <strong>AUC</strong> 	AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.
-			%  <strong>13</strong> <strong>PFROC</strong> 	PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
-			%  <strong>14</strong> <strong>MACRO_AUC</strong> 	MACRO_AUC (result, scalar) provides the metric of the average AUC value.
-			%  <strong>15</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix.
-			%  <strong>16</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
-			%  <strong>17</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-			%  <strong>18</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
 			%
 			% See also Category, Format.
 			
@@ -192,12 +153,12 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	end
 	methods (Static) % inspection
 		function nne_class = getClass()
-			%GETCLASS returns the class of the neural network evaluator for classification.
+			%GETCLASS returns the class of the neural network evaluator for multi-layer perceptron classifier.
 			%
 			% CLASS = NNClassifierMLP_Evaluator.GETCLASS() returns the class 'NNClassifierMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for classification NNE.
+			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  CLASS = Element.GETCLASS(NNE) returns the class of 'NNE'.
 			%  CLASS = Element.GETCLASS('NNClassifierMLP_Evaluator') returns 'NNClassifierMLP_Evaluator'.
 			%
@@ -207,12 +168,12 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			nne_class = 'NNClassifierMLP_Evaluator';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the neural network evaluator for classification.
+			%GETSUBCLASSES returns all subclasses of the neural network evaluator for multi-layer perceptron classifier.
 			%
 			% LIST = NNClassifierMLP_Evaluator.GETSUBCLASSES() returns all subclasses of 'NNClassifierMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for classification NNE.
+			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  LIST = Element.GETSUBCLASSES(NNE) returns all subclasses of 'NNE'.
 			%  LIST = Element.GETSUBCLASSES('NNClassifierMLP_Evaluator') returns all subclasses of 'NNClassifierMLP_Evaluator'.
 			%
@@ -221,19 +182,19 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNClassifierMLP_Evaluator' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('NNClassifierMLP_Evaluator', [], [], true);
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of neural network evaluator for classification.
+			%GETPROPS returns the property list of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% PROPS = NNClassifierMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for classification
+			% PROPS = NNClassifierMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for multi-layer perceptron classifier
 			%  as a row vector.
 			%
 			% PROPS = NNClassifierMLP_Evaluator.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for classification NNE.
+			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  PROPS = Element.GETPROPS(NNE[, CATEGORY]) returns the property list of 'NNE'.
 			%  PROPS = Element.GETPROPS('NNClassifierMLP_Evaluator'[, CATEGORY]) returns the property list of 'NNClassifierMLP_Evaluator'.
 			%
@@ -242,42 +203,78 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18];
+				prop_list = [ ...
+					NNEvaluator.getProps() ...
+						NNClassifierMLP_Evaluator.GROUND_TRUTH ...
+						NNClassifierMLP_Evaluator.AUC ...
+						NNClassifierMLP_Evaluator.PFROC ...
+						NNClassifierMLP_Evaluator.MACRO_AUC ...
+						NNClassifierMLP_Evaluator.C_MATRIX ...
+						NNClassifierMLP_Evaluator.P ...
+						NNClassifierMLP_Evaluator.PERM_SEEDS ...
+						NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = [4 16];
-				case 4 % Category.DATA
-					prop_list = [5 9 10];
-				case 5 % Category.RESULT
-					prop_list = [12 14 15 17 18];
-				case 6 % Category.QUERY
-					prop_list = [8 11];
-				case 9 % Category.GUI
-					prop_list = 13;
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.PARAMETER) ...
+						NNClassifierMLP_Evaluator.P ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						NNEvaluator.getProps(Category.RESULT) ...
+						NNClassifierMLP_Evaluator.AUC ...
+						NNClassifierMLP_Evaluator.MACRO_AUC ...
+						NNClassifierMLP_Evaluator.C_MATRIX ...
+						NNClassifierMLP_Evaluator.PERM_SEEDS ...
+						NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.QUERY) ...
+						NNClassifierMLP_Evaluator.GROUND_TRUTH ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.FIGURE) ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						NNEvaluator.getProps(Category.GUI) ...
+						NNClassifierMLP_Evaluator.PFROC ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of neural network evaluator for classification.
+			%GETPROPNUMBER returns the property number of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for classification.
+			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for classification
+			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for multi-layer perceptron classifier
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for classification NNE.
+			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  N = Element.GETPROPNUMBER(NNE) returns the property number of 'NNE'.
 			%  N = Element.GETPROPNUMBER('NNClassifierMLP_Evaluator') returns the property number of 'NNClassifierMLP_Evaluator'.
 			%
@@ -286,34 +283,10 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 18;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 2;
-				case 4 % Category.DATA
-					prop_number = 3;
-				case 5 % Category.RESULT
-					prop_number = 5;
-				case 6 % Category.QUERY
-					prop_number = 2;
-				case 9 % Category.GUI
-					prop_number = 1;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(NNClassifierMLP_Evaluator.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in neural network evaluator for classification/error.
+			%EXISTSPROP checks whether property exists in neural network evaluator for multi-layer perceptron classifier/error.
 			%
 			% CHECK = NNClassifierMLP_Evaluator.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -338,20 +311,20 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 18 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == NNClassifierMLP_Evaluator.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput'], ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNClassifierMLP_Evaluator.'] ...
 					)
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in neural network evaluator for classification/error.
+			%EXISTSTAG checks whether tag exists in neural network evaluator for multi-layer perceptron classifier/error.
 			%
 			% CHECK = NNClassifierMLP_Evaluator.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -376,14 +349,15 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'AUC'  'PFROC'  'MACRO_AUC'  'C_MATRIX'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
+			nnclassifiermlp_evaluator_tag_list = cellfun(@(x) NNClassifierMLP_Evaluator.getPropTag(x), num2cell(NNClassifierMLP_Evaluator.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, nnclassifiermlp_evaluator_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput'], ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for NNClassifierMLP_Evaluator.'] ...
 					)
 			end
@@ -409,7 +383,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'AUC'  'PFROC'  'MACRO_AUC'  'C_MATRIX'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
+				nnclassifiermlp_evaluator_tag_list = cellfun(@(x) NNClassifierMLP_Evaluator.getPropTag(x), num2cell(NNClassifierMLP_Evaluator.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, nnclassifiermlp_evaluator_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -437,9 +412,28 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				nnclassifiermlp_evaluator_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NN'  'D'  'GROUND_TRUTH'  'AUC'  'PFROC'  'MACRO_AUC'  'C_MATRIX'  'P'  'PERM_SEEDS'  'FEATURE_IMPORTANCE' };
-				tag = nnclassifiermlp_evaluator_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case NNClassifierMLP_Evaluator.GROUND_TRUTH
+						tag = NNClassifierMLP_Evaluator.GROUND_TRUTH_TAG;
+					case NNClassifierMLP_Evaluator.AUC
+						tag = NNClassifierMLP_Evaluator.AUC_TAG;
+					case NNClassifierMLP_Evaluator.PFROC
+						tag = NNClassifierMLP_Evaluator.PFROC_TAG;
+					case NNClassifierMLP_Evaluator.MACRO_AUC
+						tag = NNClassifierMLP_Evaluator.MACRO_AUC_TAG;
+					case NNClassifierMLP_Evaluator.C_MATRIX
+						tag = NNClassifierMLP_Evaluator.C_MATRIX_TAG;
+					case NNClassifierMLP_Evaluator.P
+						tag = NNClassifierMLP_Evaluator.P_TAG;
+					case NNClassifierMLP_Evaluator.PERM_SEEDS
+						tag = NNClassifierMLP_Evaluator.PERM_SEEDS_TAG;
+					case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+						tag = NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE_TAG;
+					otherwise
+						tag = getPropTag@NNEvaluator(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -464,9 +458,26 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnclassifiermlp_evaluator_category_list = { 1  1  1  3  4  2  2  6  4  4  6  5  9  5  5  3  5  5 };
-			prop_category = nnclassifiermlp_evaluator_category_list{prop};
+			switch prop
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH
+					prop_category = NNClassifierMLP_Evaluator.GROUND_TRUTH_CATEGORY;
+				case NNClassifierMLP_Evaluator.AUC
+					prop_category = NNClassifierMLP_Evaluator.AUC_CATEGORY;
+				case NNClassifierMLP_Evaluator.PFROC
+					prop_category = NNClassifierMLP_Evaluator.PFROC_CATEGORY;
+				case NNClassifierMLP_Evaluator.MACRO_AUC
+					prop_category = NNClassifierMLP_Evaluator.MACRO_AUC_CATEGORY;
+				case NNClassifierMLP_Evaluator.C_MATRIX
+					prop_category = NNClassifierMLP_Evaluator.C_MATRIX_CATEGORY;
+				case NNClassifierMLP_Evaluator.P
+					prop_category = NNClassifierMLP_Evaluator.P_CATEGORY;
+				case NNClassifierMLP_Evaluator.PERM_SEEDS
+					prop_category = NNClassifierMLP_Evaluator.PERM_SEEDS_CATEGORY;
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+					prop_category = NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@NNEvaluator(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -490,9 +501,26 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnclassifiermlp_evaluator_format_list = { 2  2  2  8  2  2  2  2  8  8  3  12  8  11  14  11  12  16 };
-			prop_format = nnclassifiermlp_evaluator_format_list{prop};
+			switch prop
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH
+					prop_format = NNClassifierMLP_Evaluator.GROUND_TRUTH_FORMAT;
+				case NNClassifierMLP_Evaluator.AUC
+					prop_format = NNClassifierMLP_Evaluator.AUC_FORMAT;
+				case NNClassifierMLP_Evaluator.PFROC
+					prop_format = NNClassifierMLP_Evaluator.PFROC_FORMAT;
+				case NNClassifierMLP_Evaluator.MACRO_AUC
+					prop_format = NNClassifierMLP_Evaluator.MACRO_AUC_FORMAT;
+				case NNClassifierMLP_Evaluator.C_MATRIX
+					prop_format = NNClassifierMLP_Evaluator.C_MATRIX_FORMAT;
+				case NNClassifierMLP_Evaluator.P
+					prop_format = NNClassifierMLP_Evaluator.P_FORMAT;
+				case NNClassifierMLP_Evaluator.PERM_SEEDS
+					prop_format = NNClassifierMLP_Evaluator.PERM_SEEDS_FORMAT;
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+					prop_format = NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE_FORMAT;
+				otherwise
+					prop_format = getPropFormat@NNEvaluator(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -516,9 +544,42 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			nnclassifiermlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network evaluator for the classification task.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.'  'ID (data, string) is a few-letter code for the neural network evaluator for the classification task.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NN (data, item) contains a trained neural network classifier.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.'  'AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'MACRO_AUC (result, scalar) provides the metric of the average AUC value.'  'C_MATRIX (result, matrix) provides the confusion matrix.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.' };
-			prop_description = nnclassifiermlp_evaluator_description_list{prop};
+			switch prop
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH
+					prop_description = 'GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.';
+				case NNClassifierMLP_Evaluator.AUC
+					prop_description = 'AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.';
+				case NNClassifierMLP_Evaluator.PFROC
+					prop_description = 'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.';
+				case NNClassifierMLP_Evaluator.MACRO_AUC
+					prop_description = 'MACRO_AUC (result, scalar) provides the metric of the average AUC value.';
+				case NNClassifierMLP_Evaluator.C_MATRIX
+					prop_description = 'C_MATRIX (result, matrix) provides the confusion matrix.';
+				case NNClassifierMLP_Evaluator.P
+					prop_description = 'P (parameter, scalar) is the permutation number.';
+				case NNClassifierMLP_Evaluator.PERM_SEEDS
+					prop_description = 'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.';
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+					prop_description = 'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.';
+				case NNClassifierMLP_Evaluator.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.NAME
+					prop_description = 'NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.ID
+					prop_description = 'ID (data, string) is a few-letter code for the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the neural network evaluator for a multi-layer perceptron classifier.';
+				case NNClassifierMLP_Evaluator.NN
+					prop_description = 'NN (data, item) contains a trained neural network multi-layer perceptron classifier.';
+				otherwise
+					prop_description = getPropDescription@NNEvaluator(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -542,26 +603,26 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 11 % NNClassifierMLP_Evaluator.GROUND_TRUTH
-					prop_settings = Format.getFormatSettings(3);
-				case 12 % NNClassifierMLP_Evaluator.AUC
-					prop_settings = Format.getFormatSettings(12);
-				case 13 % NNClassifierMLP_Evaluator.PFROC
+			switch prop
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH
+					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
+				case NNClassifierMLP_Evaluator.AUC
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case NNClassifierMLP_Evaluator.PFROC
 					prop_settings = 'NNClassifierMLP_EvaluatorPF_ROC';
-				case 14 % NNClassifierMLP_Evaluator.MACRO_AUC
-					prop_settings = Format.getFormatSettings(11);
-				case 15 % NNClassifierMLP_Evaluator.C_MATRIX
-					prop_settings = Format.getFormatSettings(14);
-				case 16 % NNClassifierMLP_Evaluator.P
-					prop_settings = Format.getFormatSettings(11);
-				case 17 % NNClassifierMLP_Evaluator.PERM_SEEDS
-					prop_settings = Format.getFormatSettings(12);
-				case 18 % NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
-					prop_settings = Format.getFormatSettings(16);
-				case 4 % NNClassifierMLP_Evaluator.TEMPLATE
+				case NNClassifierMLP_Evaluator.MACRO_AUC
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case NNClassifierMLP_Evaluator.C_MATRIX
+					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case NNClassifierMLP_Evaluator.P
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case NNClassifierMLP_Evaluator.PERM_SEEDS
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(Format.CELL);
+				case NNClassifierMLP_Evaluator.TEMPLATE
 					prop_settings = 'NNClassifierMLP_Evaluator';
-				case 9 % NNClassifierMLP_Evaluator.NN
+				case NNClassifierMLP_Evaluator.NN
 					prop_settings = 'NNClassifierMLP';
 				otherwise
 					prop_settings = getPropSettings@NNEvaluator(prop);
@@ -589,39 +650,39 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 11 % NNClassifierMLP_Evaluator.GROUND_TRUTH
-					prop_default = Format.getFormatDefault(3, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 12 % NNClassifierMLP_Evaluator.AUC
-					prop_default = Format.getFormatDefault(12, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 13 % NNClassifierMLP_Evaluator.PFROC
-					prop_default = Format.getFormatDefault(8, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 14 % NNClassifierMLP_Evaluator.MACRO_AUC
-					prop_default = Format.getFormatDefault(11, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 15 % NNClassifierMLP_Evaluator.C_MATRIX
-					prop_default = Format.getFormatDefault(14, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 16 % NNClassifierMLP_Evaluator.P
+			switch prop
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH
+					prop_default = Format.getFormatDefault(Format.STRINGLIST, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.AUC
+					prop_default = Format.getFormatDefault(Format.RVECTOR, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.PFROC
+					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.MACRO_AUC
+					prop_default = Format.getFormatDefault(Format.SCALAR, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.C_MATRIX
+					prop_default = Format.getFormatDefault(Format.MATRIX, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.P
 					prop_default = 1e+2;
-				case 17 % NNClassifierMLP_Evaluator.PERM_SEEDS
-					prop_default = Format.getFormatDefault(12, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 18 % NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
-					prop_default = Format.getFormatDefault(16, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 1 % NNClassifierMLP_Evaluator.ELCLASS
+				case NNClassifierMLP_Evaluator.PERM_SEEDS
+					prop_default = Format.getFormatDefault(Format.RVECTOR, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(Format.CELL, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.ELCLASS
 					prop_default = 'NNClassifierMLP_Evaluator';
-				case 2 % NNClassifierMLP_Evaluator.NAME
-					prop_default = 'NNClassifierMLP_Evaluator';
-				case 3 % NNClassifierMLP_Evaluator.DESCRIPTION
-					prop_default = 'A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).';
-				case 4 % NNClassifierMLP_Evaluator.TEMPLATE
-					prop_default = Format.getFormatDefault(8, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 5 % NNClassifierMLP_Evaluator.ID
+				case NNClassifierMLP_Evaluator.NAME
+					prop_default = 'Neural Network Evaluator for a Multi-layer Perceptron Classifier';
+				case NNClassifierMLP_Evaluator.DESCRIPTION
+					prop_default = 'A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).';
+				case NNClassifierMLP_Evaluator.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.ID
 					prop_default = 'NNClassifierMLP_Evaluator ID';
-				case 6 % NNClassifierMLP_Evaluator.LABEL
+				case NNClassifierMLP_Evaluator.LABEL
 					prop_default = 'NNClassifierMLP_Evaluator label';
-				case 7 % NNClassifierMLP_Evaluator.NOTES
+				case NNClassifierMLP_Evaluator.NOTES
 					prop_default = 'NNClassifierMLP_Evaluator notes';
-				case 9 % NNClassifierMLP_Evaluator.NN
-					prop_default = Format.getFormatDefault(8, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.NN
+					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_Evaluator.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@NNEvaluator(prop);
 			end
@@ -667,15 +728,15 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			% 
 			% NNE.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:NNClassifierMLP_Evaluator:WrongInput
+			%  Error id: €BRAPH2.STR€:NNClassifierMLP_Evaluator:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NNE.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NNE.
-			%   Error id: BRAPH2:NNClassifierMLP_Evaluator:WrongInput
+			%   Error id: €BRAPH2.STR€:NNClassifierMLP_Evaluator:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(NNClassifierMLP_Evaluator, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_Evaluator.
-			%   Error id: BRAPH2:NNClassifierMLP_Evaluator:WrongInput
+			%   Error id: €BRAPH2.STR€:NNClassifierMLP_Evaluator:€BRAPH2.WRONG_INPUT€
 			%  NNE.CHECKPROP(NNClassifierMLP_Evaluator, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_Evaluator.
-			%   Error id: BRAPH2:NNClassifierMLP_Evaluator:WrongInput]
+			%   Error id: €BRAPH2.STR€:NNClassifierMLP_Evaluator:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(NNE) and Element.CHECKPROP('NNClassifierMLP_Evaluator')
 			%  are less computationally efficient.
@@ -686,31 +747,31 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
 			switch prop
-				case 11 % NNClassifierMLP_Evaluator.GROUND_TRUTH
-					check = Format.checkFormat(3, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 12 % NNClassifierMLP_Evaluator.AUC
-					check = Format.checkFormat(12, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 13 % NNClassifierMLP_Evaluator.PFROC
-					check = Format.checkFormat(8, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 14 % NNClassifierMLP_Evaluator.MACRO_AUC
-					check = Format.checkFormat(11, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 15 % NNClassifierMLP_Evaluator.C_MATRIX
-					check = Format.checkFormat(14, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 16 % NNClassifierMLP_Evaluator.P
-					check = Format.checkFormat(11, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH % __NNClassifierMLP_Evaluator.GROUND_TRUTH__
+					check = Format.checkFormat(Format.STRINGLIST, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.AUC % __NNClassifierMLP_Evaluator.AUC__
+					check = Format.checkFormat(Format.RVECTOR, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.PFROC % __NNClassifierMLP_Evaluator.PFROC__
+					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.MACRO_AUC % __NNClassifierMLP_Evaluator.MACRO_AUC__
+					check = Format.checkFormat(Format.SCALAR, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.C_MATRIX % __NNClassifierMLP_Evaluator.C_MATRIX__
+					check = Format.checkFormat(Format.MATRIX, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.P % __NNClassifierMLP_Evaluator.P__
+					check = Format.checkFormat(Format.SCALAR, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case 17 % NNClassifierMLP_Evaluator.PERM_SEEDS
-					check = Format.checkFormat(12, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 18 % NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
-					check = Format.checkFormat(16, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 4 % NNClassifierMLP_Evaluator.TEMPLATE
-					check = Format.checkFormat(8, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
-				case 9 % NNClassifierMLP_Evaluator.NN
-					check = Format.checkFormat(8, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.PERM_SEEDS % __NNClassifierMLP_Evaluator.PERM_SEEDS__
+					check = Format.checkFormat(Format.RVECTOR, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE % __NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE__
+					check = Format.checkFormat(Format.CELL, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.TEMPLATE % __NNClassifierMLP_Evaluator.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
+				case NNClassifierMLP_Evaluator.NN % __NNClassifierMLP_Evaluator.NN__
+					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_Evaluator.getPropSettings(prop));
 				otherwise
-					if prop <= 10
+					if prop <= NNEvaluator.getPropNumber()
 						check = checkProp@NNEvaluator(prop, value);
 					end
 			end
@@ -719,8 +780,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput'], ...
-					['BRAPH2' ':NNClassifierMLP_Evaluator:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':NNClassifierMLP_Evaluator:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNClassifierMLP_Evaluator.getPropTag(prop) ' (' NNClassifierMLP_Evaluator.getFormatTag(NNClassifierMLP_Evaluator.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -740,13 +801,13 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%  checkValue.
 			
 			switch prop
-				case 13 % NNClassifierMLP_Evaluator.PFROC
+				case NNClassifierMLP_Evaluator.PFROC % __NNClassifierMLP_Evaluator.PFROC__
 					if isa(nne.getr('PFROC'), 'NoValue')
 					    nne.set('PFROC', NNClassifierMLP_EvaluatorPF_ROC('NNE', nne));
 					end
 					
 				otherwise
-					if prop <= 10
+					if prop <= NNEvaluator.getPropNumber()
 						postprocessing@NNEvaluator(nne, prop);
 					end
 			end
@@ -757,19 +818,19 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with 5,
-			%  6, and 7. By default this function
+			%  PROP. It works only with properties with Category.RESULT,
+			%  Category.QUERY, and Category.EVANESCENT. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  6.
+			%  Category.QUERY.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case 11 % NNClassifierMLP_Evaluator.GROUND_TRUTH
+				case NNClassifierMLP_Evaluator.GROUND_TRUTH % __NNClassifierMLP_Evaluator.GROUND_TRUTH__
 					targets = nne.get('D').get('TARGETS');
 					if isempty(targets)
 					    value = {''};
@@ -779,8 +840,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 					    end
 					end
 					
-				case 12 % NNClassifierMLP_Evaluator.AUC
-					rng_settings_ = rng(); rng(nne.getPropSeed(12), 'twister')
+				case NNClassifierMLP_Evaluator.AUC % __NNClassifierMLP_Evaluator.AUC__
+					rng_settings_ = rng(); rng(nne.getPropSeed(NNClassifierMLP_Evaluator.AUC), 'twister')
 					
 					predictions = cell2mat(nne.get('NN').get('PREDICT', nne.get('D')));
 					if isempty(predictions)
@@ -794,8 +855,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 14 % NNClassifierMLP_Evaluator.MACRO_AUC
-					rng_settings_ = rng(); rng(nne.getPropSeed(14), 'twister')
+				case NNClassifierMLP_Evaluator.MACRO_AUC % __NNClassifierMLP_Evaluator.MACRO_AUC__
+					rng_settings_ = rng(); rng(nne.getPropSeed(NNClassifierMLP_Evaluator.MACRO_AUC), 'twister')
 					
 					auc = nne.get('AUC');
 					if isempty(auc)
@@ -806,8 +867,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 15 % NNClassifierMLP_Evaluator.C_MATRIX
-					rng_settings_ = rng(); rng(nne.getPropSeed(15), 'twister')
+				case NNClassifierMLP_Evaluator.C_MATRIX % __NNClassifierMLP_Evaluator.C_MATRIX__
+					rng_settings_ = rng(); rng(nne.getPropSeed(NNClassifierMLP_Evaluator.C_MATRIX), 'twister')
 					
 					predictions = cell2mat(nne.get('NN').get('PREDICT', nne.get('D')));
 					[~, maxIndices] = max(predictions, [], 2);
@@ -825,15 +886,15 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 					
 					rng(rng_settings_)
 					
-				case 17 % NNClassifierMLP_Evaluator.PERM_SEEDS
-					rng_settings_ = rng(); rng(nne.getPropSeed(17), 'twister')
+				case NNClassifierMLP_Evaluator.PERM_SEEDS % __NNClassifierMLP_Evaluator.PERM_SEEDS__
+					rng_settings_ = rng(); rng(nne.getPropSeed(NNClassifierMLP_Evaluator.PERM_SEEDS), 'twister')
 					
 					value = randi(intmax('uint32'), 1, nne.get('P'));
 					
 					rng(rng_settings_)
 					
-				case 18 % NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
-					rng_settings_ = rng(); rng(nne.getPropSeed(18), 'twister')
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE % __NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE__
+					rng_settings_ = rng(); rng(nne.getPropSeed(NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE), 'twister')
 					
 					all_fi = nne.get('NN').get('FEATURE_IMPORTANCE', nne.get('D'), nne.get('P'), nne.get('PERM_SEEDS'));
 					if isempty(cell2mat(all_fi))
@@ -851,7 +912,7 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= 10
+					if prop <= NNEvaluator.getPropNumber()
 						value = calculateValue@NNEvaluator(nne, prop, varargin{:});
 					else
 						value = calculateValue@Element(nne, prop, varargin{:});
@@ -877,24 +938,24 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case 13 % NNClassifierMLP_Evaluator.PFROC
-					pr = PanelPropItem('EL', nne, 'PROP', 13, ...
+				case NNClassifierMLP_Evaluator.PFROC % __NNClassifierMLP_Evaluator.PFROC__
+					pr = PanelPropItem('EL', nne, 'PROP', NNClassifierMLP_Evaluator.PFROC, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['ROC Plot'], ...
 					    varargin{:});
 					
-				case 18 % NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
+				case NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE % __NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE__
 					input_dataset = nne.get('D');
 					dp_class = input_dataset.get('DP_CLASS');
 					graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
 					measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 					
 					if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-					    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'D', input_dataset, 'PROP', 18, varargin{:});
+					    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
 					elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-					    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'D', input_dataset, 'PROP', 18, varargin{:});
+					    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
 					else % DATA input
-					    pr = NNxMLP_xPP_FI_Data('EL', nne, 'D', input_dataset, 'PROP', 18, varargin{:});
+					    pr = NNxMLP_xPP_FI_Data('EL', nne, 'D', input_dataset, 'PROP', NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
 					end
 					
 				otherwise

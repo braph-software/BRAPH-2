@@ -6,30 +6,6 @@ classdef SettingsArea < Settings
 	%  including visibility, x, y, z, face color, and face alpha.
 	% The handle must be a patch.
 	%
-	% The list of SettingsArea properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the area settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the area settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the area settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the area settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the area settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the area settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-	%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
-	%  <strong>16</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
-	%  <strong>17</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
-	%  <strong>18</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
-	%  <strong>19</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
-	%  <strong>20</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
-	%  <strong>21</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
-	%  <strong>22</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
-	%
 	% SettingsArea methods (constructor):
 	%  SettingsArea - constructor
 	%
@@ -119,45 +95,45 @@ classdef SettingsArea < Settings
 	% See also patch, PanelFig, GUIFig.
 	
 	properties (Constant) % properties
-		VISIBLE = 15; %CET: Computational Efficiency Trick
+		VISIBLE = Settings.getPropNumber() + 1;
 		VISIBLE_TAG = 'VISIBLE';
-		VISIBLE_CATEGORY = 8;
-		VISIBLE_FORMAT = 4;
+		VISIBLE_CATEGORY = Category.FIGURE;
+		VISIBLE_FORMAT = Format.LOGICAL;
 		
-		X = 16; %CET: Computational Efficiency Trick
+		X = Settings.getPropNumber() + 2;
 		X_TAG = 'X';
-		X_CATEGORY = 8;
-		X_FORMAT = 12;
+		X_CATEGORY = Category.FIGURE;
+		X_FORMAT = Format.RVECTOR;
 		
-		Y = 17; %CET: Computational Efficiency Trick
+		Y = Settings.getPropNumber() + 3;
 		Y_TAG = 'Y';
-		Y_CATEGORY = 8;
-		Y_FORMAT = 12;
+		Y_CATEGORY = Category.FIGURE;
+		Y_FORMAT = Format.RVECTOR;
 		
-		Z = 18; %CET: Computational Efficiency Trick
+		Z = Settings.getPropNumber() + 4;
 		Z_TAG = 'Z';
-		Z_CATEGORY = 8;
-		Z_FORMAT = 12;
+		Z_CATEGORY = Category.FIGURE;
+		Z_FORMAT = Format.RVECTOR;
 		
-		FACECOLOR = 19; %CET: Computational Efficiency Trick
+		FACECOLOR = Settings.getPropNumber() + 5;
 		FACECOLOR_TAG = 'FACECOLOR';
-		FACECOLOR_CATEGORY = 8;
-		FACECOLOR_FORMAT = 20;
+		FACECOLOR_CATEGORY = Category.FIGURE;
+		FACECOLOR_FORMAT = Format.COLOR;
 		
-		FACEALPHA = 20; %CET: Computational Efficiency Trick
+		FACEALPHA = Settings.getPropNumber() + 6;
 		FACEALPHA_TAG = 'FACEALPHA';
-		FACEALPHA_CATEGORY = 8;
-		FACEALPHA_FORMAT = 11;
+		FACEALPHA_CATEGORY = Category.FIGURE;
+		FACEALPHA_FORMAT = Format.SCALAR;
 		
-		EDGECOLOR = 21; %CET: Computational Efficiency Trick
+		EDGECOLOR = Settings.getPropNumber() + 7;
 		EDGECOLOR_TAG = 'EDGECOLOR';
-		EDGECOLOR_CATEGORY = 8;
-		EDGECOLOR_FORMAT = 20;
+		EDGECOLOR_CATEGORY = Category.FIGURE;
+		EDGECOLOR_FORMAT = Format.COLOR;
 		
-		EDGEALPHA = 22; %CET: Computational Efficiency Trick
+		EDGEALPHA = Settings.getPropNumber() + 8;
 		EDGEALPHA_TAG = 'EDGEALPHA';
-		EDGEALPHA_CATEGORY = 8;
-		EDGEALPHA_FORMAT = 11;
+		EDGEALPHA_CATEGORY = Category.FIGURE;
+		EDGEALPHA_FORMAT = Format.SCALAR;
 	end
 	methods % constructor
 		function st = SettingsArea(varargin)
@@ -170,29 +146,6 @@ classdef SettingsArea < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SettingsArea properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the area settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the area settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the area settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the area settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the area settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the area settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-			%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
-			%  <strong>16</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
-			%  <strong>17</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of y-coordinates.
-			%  <strong>18</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
-			%  <strong>19</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
-			%  <strong>20</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, scalar) is the symbol RGB face color.
-			%  <strong>21</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
-			%  <strong>22</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, scalar) is the symbol RGB edge color.
 			%
 			% See also Category, Format.
 			
@@ -230,7 +183,7 @@ classdef SettingsArea < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SettingsArea' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SettingsArea', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of area settings.
@@ -251,30 +204,66 @@ classdef SettingsArea < Settings
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22];
+				prop_list = [ ...
+					Settings.getProps() ...
+						SettingsArea.VISIBLE ...
+						SettingsArea.X ...
+						SettingsArea.Y ...
+						SettingsArea.Z ...
+						SettingsArea.FACECOLOR ...
+						SettingsArea.FACEALPHA ...
+						SettingsArea.EDGECOLOR ...
+						SettingsArea.EDGEALPHA ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 13 14];
-				case 8 % Category.FIGURE
-					prop_list = [15 16 17 18 19 20 21 22];
-				case 9 % Category.GUI
-					prop_list = [9 10 11 12];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Settings.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Settings.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Settings.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Settings.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Settings.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Settings.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Settings.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Settings.getProps(Category.FIGURE) ...
+						SettingsArea.VISIBLE ...
+						SettingsArea.X ...
+						SettingsArea.Y ...
+						SettingsArea.Z ...
+						SettingsArea.FACECOLOR ...
+						SettingsArea.FACEALPHA ...
+						SettingsArea.EDGECOLOR ...
+						SettingsArea.EDGEALPHA ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Settings.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -295,31 +284,7 @@ classdef SettingsArea < Settings
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 22;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 3;
-				case 8 % Category.FIGURE
-					prop_number = 8;
-				case 9 % Category.GUI
-					prop_number = 4;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SettingsArea.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in area settings/error.
@@ -347,14 +312,14 @@ classdef SettingsArea < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 22 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SettingsArea.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsArea.'] ...
 					)
 			end
@@ -385,14 +350,15 @@ classdef SettingsArea < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); %CET: Computational Efficiency Trick
+			settingsarea_tag_list = cellfun(@(x) SettingsArea.getPropTag(x), num2cell(SettingsArea.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settingsarea_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsArea.'] ...
 					)
 			end
@@ -418,7 +384,8 @@ classdef SettingsArea < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
+				settingsarea_tag_list = cellfun(@(x) SettingsArea.getPropTag(x), num2cell(SettingsArea.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settingsarea_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -446,9 +413,28 @@ classdef SettingsArea < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settingsarea_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'FACECOLOR'  'FACEALPHA'  'EDGECOLOR'  'EDGEALPHA' };
-				tag = settingsarea_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SettingsArea.VISIBLE
+						tag = SettingsArea.VISIBLE_TAG;
+					case SettingsArea.X
+						tag = SettingsArea.X_TAG;
+					case SettingsArea.Y
+						tag = SettingsArea.Y_TAG;
+					case SettingsArea.Z
+						tag = SettingsArea.Z_TAG;
+					case SettingsArea.FACECOLOR
+						tag = SettingsArea.FACECOLOR_TAG;
+					case SettingsArea.FACEALPHA
+						tag = SettingsArea.FACEALPHA_TAG;
+					case SettingsArea.EDGECOLOR
+						tag = SettingsArea.EDGECOLOR_TAG;
+					case SettingsArea.EDGEALPHA
+						tag = SettingsArea.EDGEALPHA_TAG;
+					otherwise
+						tag = getPropTag@Settings(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -473,9 +459,26 @@ classdef SettingsArea < Settings
 			
 			prop = SettingsArea.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingsarea_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8  8  8  8 };
-			prop_category = settingsarea_category_list{prop};
+			switch prop
+				case SettingsArea.VISIBLE
+					prop_category = SettingsArea.VISIBLE_CATEGORY;
+				case SettingsArea.X
+					prop_category = SettingsArea.X_CATEGORY;
+				case SettingsArea.Y
+					prop_category = SettingsArea.Y_CATEGORY;
+				case SettingsArea.Z
+					prop_category = SettingsArea.Z_CATEGORY;
+				case SettingsArea.FACECOLOR
+					prop_category = SettingsArea.FACECOLOR_CATEGORY;
+				case SettingsArea.FACEALPHA
+					prop_category = SettingsArea.FACEALPHA_CATEGORY;
+				case SettingsArea.EDGECOLOR
+					prop_category = SettingsArea.EDGECOLOR_CATEGORY;
+				case SettingsArea.EDGEALPHA
+					prop_category = SettingsArea.EDGEALPHA_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Settings(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -499,9 +502,26 @@ classdef SettingsArea < Settings
 			
 			prop = SettingsArea.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingsarea_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  4  12  12  12  20  11  20  11 };
-			prop_format = settingsarea_format_list{prop};
+			switch prop
+				case SettingsArea.VISIBLE
+					prop_format = SettingsArea.VISIBLE_FORMAT;
+				case SettingsArea.X
+					prop_format = SettingsArea.X_FORMAT;
+				case SettingsArea.Y
+					prop_format = SettingsArea.Y_FORMAT;
+				case SettingsArea.Z
+					prop_format = SettingsArea.Z_FORMAT;
+				case SettingsArea.FACECOLOR
+					prop_format = SettingsArea.FACECOLOR_FORMAT;
+				case SettingsArea.FACEALPHA
+					prop_format = SettingsArea.FACEALPHA_FORMAT;
+				case SettingsArea.EDGECOLOR
+					prop_format = SettingsArea.EDGECOLOR_FORMAT;
+				case SettingsArea.EDGEALPHA
+					prop_format = SettingsArea.EDGEALPHA_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Settings(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -525,9 +545,40 @@ classdef SettingsArea < Settings
 			
 			prop = SettingsArea.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingsarea_description_list = { 'ELCLASS (constant, string) is the class of the concrete element.'  'NAME (constant, string) is the name of the area settings.'  'DESCRIPTION (constant, string) is the description of the area settings.'  'TEMPLATE (parameter, item) is the template of the area settings.'  'ID (data, string) is a few-letter code for the area settings.'  'LABEL (metadata, string) is an extended label of the area settings.'  'NOTES (metadata, string) are some specific notes about the area settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'FACECOLOR (figure, color) is the symbol RGB face color.'  'FACEALPHA (figure, scalar) is the symbol RGB face color.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'EDGEALPHA (figure, scalar) is the symbol RGB edge color.' };
-			prop_description = settingsarea_description_list{prop};
+			switch prop
+				case SettingsArea.VISIBLE
+					prop_description = 'VISIBLE (figure, logical) determines whether the symbol is visible.';
+				case SettingsArea.X
+					prop_description = 'X (figure, rvector) is the vector of the x-coordinates.';
+				case SettingsArea.Y
+					prop_description = 'Y (figure, rvector) is the vector of y-coordinates.';
+				case SettingsArea.Z
+					prop_description = 'Z (figure, rvector) is the vector of the z-coordinates.';
+				case SettingsArea.FACECOLOR
+					prop_description = 'FACECOLOR (figure, color) is the symbol RGB face color.';
+				case SettingsArea.FACEALPHA
+					prop_description = 'FACEALPHA (figure, scalar) is the symbol RGB face color.';
+				case SettingsArea.EDGECOLOR
+					prop_description = 'EDGECOLOR (figure, color) is the symbol RGB edge color.';
+				case SettingsArea.EDGEALPHA
+					prop_description = 'EDGEALPHA (figure, scalar) is the symbol RGB edge color.';
+				case SettingsArea.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the concrete element.';
+				case SettingsArea.NAME
+					prop_description = 'NAME (constant, string) is the name of the area settings.';
+				case SettingsArea.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the area settings.';
+				case SettingsArea.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the area settings.';
+				case SettingsArea.ID
+					prop_description = 'ID (data, string) is a few-letter code for the area settings.';
+				case SettingsArea.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the area settings.';
+				case SettingsArea.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the area settings.';
+				otherwise
+					prop_description = getPropDescription@Settings(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -551,24 +602,24 @@ classdef SettingsArea < Settings
 			
 			prop = SettingsArea.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % SettingsArea.VISIBLE
-					prop_settings = Format.getFormatSettings(4);
-				case 16 % SettingsArea.X
-					prop_settings = Format.getFormatSettings(12);
-				case 17 % SettingsArea.Y
-					prop_settings = Format.getFormatSettings(12);
-				case 18 % SettingsArea.Z
-					prop_settings = Format.getFormatSettings(12);
-				case 19 % SettingsArea.FACECOLOR
-					prop_settings = Format.getFormatSettings(20);
-				case 20 % SettingsArea.FACEALPHA
-					prop_settings = Format.getFormatSettings(11);
-				case 21 % SettingsArea.EDGECOLOR
-					prop_settings = Format.getFormatSettings(20);
-				case 22 % SettingsArea.EDGEALPHA
-					prop_settings = Format.getFormatSettings(11);
-				case 4 % SettingsArea.TEMPLATE
+			switch prop
+				case SettingsArea.VISIBLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SettingsArea.X
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case SettingsArea.Y
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case SettingsArea.Z
+					prop_settings = Format.getFormatSettings(Format.RVECTOR);
+				case SettingsArea.FACECOLOR
+					prop_settings = Format.getFormatSettings(Format.COLOR);
+				case SettingsArea.FACEALPHA
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsArea.EDGECOLOR
+					prop_settings = Format.getFormatSettings(Format.COLOR);
+				case SettingsArea.EDGEALPHA
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsArea.TEMPLATE
 					prop_settings = 'SettingsArea';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -596,36 +647,36 @@ classdef SettingsArea < Settings
 			
 			prop = SettingsArea.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % SettingsArea.VISIBLE
+			switch prop
+				case SettingsArea.VISIBLE
 					prop_default = true;
-				case 16 % SettingsArea.X
-					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 17 % SettingsArea.Y
-					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 18 % SettingsArea.Z
-					prop_default = Format.getFormatDefault(12, SettingsArea.getPropSettings(prop));
-				case 19 % SettingsArea.FACECOLOR
-					prop_default = [0.9 0.4 0.1];
-				case 20 % SettingsArea.FACEALPHA
+				case SettingsArea.X
+					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsArea.getPropSettings(prop));
+				case SettingsArea.Y
+					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsArea.getPropSettings(prop));
+				case SettingsArea.Z
+					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsArea.getPropSettings(prop));
+				case SettingsArea.FACECOLOR
+					prop_default = BRAPH2.COL;
+				case SettingsArea.FACEALPHA
 					prop_default = 0.5;
-				case 21 % SettingsArea.EDGECOLOR
+				case SettingsArea.EDGECOLOR
 					prop_default = [0 0 0];
-				case 22 % SettingsArea.EDGEALPHA
+				case SettingsArea.EDGEALPHA
 					prop_default = 0;
-				case 1 % SettingsArea.ELCLASS
+				case SettingsArea.ELCLASS
 					prop_default = 'SettingsArea';
-				case 2 % SettingsArea.NAME
+				case SettingsArea.NAME
 					prop_default = 'Area Settings';
-				case 3 % SettingsArea.DESCRIPTION
+				case SettingsArea.DESCRIPTION
 					prop_default = 'An Area Settings (SettingsArea) provides the settings for a filled area plot, including visibility, x, y, z, face color, and face alpha. The handle must be a patch.';
-				case 4 % SettingsArea.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SettingsArea.getPropSettings(prop));
-				case 5 % SettingsArea.ID
+				case SettingsArea.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SettingsArea.getPropSettings(prop));
+				case SettingsArea.ID
 					prop_default = 'SettingsArea ID';
-				case 6 % SettingsArea.LABEL
+				case SettingsArea.LABEL
 					prop_default = 'SettingsArea label';
-				case 7 % SettingsArea.NOTES
+				case SettingsArea.NOTES
 					prop_default = 'SettingsArea notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -666,8 +717,8 @@ classdef SettingsArea < Settings
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of 2,
-			%  3, 4, 8 and 9.
+			% Conditioning is only used for props of Category.METADATA,
+			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -675,17 +726,17 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop
-				case 16 % SettingsArea.X
+				case SettingsArea.X % __SettingsArea.X__
 					value = value(:)';
 					
-				case 17 % SettingsArea.Y
+				case SettingsArea.Y % __SettingsArea.Y__
 					value = value(:)';
 					
-				case 18 % SettingsArea.Z
+				case SettingsArea.Z % __SettingsArea.Z__
 					value = value(:)';
 					
 				otherwise
-					if prop <= 14
+					if prop <= Settings.getPropNumber()
 						value = conditioning@Settings(pointer, value);
 					end
 			end
@@ -706,15 +757,15 @@ classdef SettingsArea < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SettingsArea:WrongInput
+			%  Error id: €BRAPH2.STR€:SettingsArea:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: BRAPH2:SettingsArea:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsArea:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SettingsArea, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsArea.
-			%   Error id: BRAPH2:SettingsArea:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsArea:€BRAPH2.WRONG_INPUT€
 			%  ST.CHECKPROP(SettingsArea, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsArea.
-			%   Error id: BRAPH2:SettingsArea:WrongInput]
+			%   Error id: €BRAPH2.STR€:SettingsArea:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsArea')
 			%  are less computationally efficient.
@@ -725,26 +776,26 @@ classdef SettingsArea < Settings
 			prop = SettingsArea.getPropProp(pointer);
 			
 			switch prop
-				case 15 % SettingsArea.VISIBLE
-					check = Format.checkFormat(4, value, SettingsArea.getPropSettings(prop));
-				case 16 % SettingsArea.X
-					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 17 % SettingsArea.Y
-					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 18 % SettingsArea.Z
-					check = Format.checkFormat(12, value, SettingsArea.getPropSettings(prop));
-				case 19 % SettingsArea.FACECOLOR
-					check = Format.checkFormat(20, value, SettingsArea.getPropSettings(prop));
-				case 20 % SettingsArea.FACEALPHA
-					check = Format.checkFormat(11, value, SettingsArea.getPropSettings(prop));
-				case 21 % SettingsArea.EDGECOLOR
-					check = Format.checkFormat(20, value, SettingsArea.getPropSettings(prop));
-				case 22 % SettingsArea.EDGEALPHA
-					check = Format.checkFormat(11, value, SettingsArea.getPropSettings(prop));
-				case 4 % SettingsArea.TEMPLATE
-					check = Format.checkFormat(8, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.VISIBLE % __SettingsArea.VISIBLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.X % __SettingsArea.X__
+					check = Format.checkFormat(Format.RVECTOR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.Y % __SettingsArea.Y__
+					check = Format.checkFormat(Format.RVECTOR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.Z % __SettingsArea.Z__
+					check = Format.checkFormat(Format.RVECTOR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.FACECOLOR % __SettingsArea.FACECOLOR__
+					check = Format.checkFormat(Format.COLOR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.FACEALPHA % __SettingsArea.FACEALPHA__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.EDGECOLOR % __SettingsArea.EDGECOLOR__
+					check = Format.checkFormat(Format.COLOR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.EDGEALPHA % __SettingsArea.EDGEALPHA__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsArea.getPropSettings(prop));
+				case SettingsArea.TEMPLATE % __SettingsArea.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SettingsArea.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= Settings.getPropNumber()
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -753,8 +804,8 @@ classdef SettingsArea < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsArea:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsArea:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsArea.getPropTag(prop) ' (' SettingsArea.getFormatTag(SettingsArea.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -774,7 +825,7 @@ classdef SettingsArea < Settings
 			%  checkValue.
 			
 			switch prop
-				case 15 % SettingsArea.VISIBLE
+				case SettingsArea.VISIBLE % __SettingsArea.VISIBLE__
 					h = st.get('H');
 					if check_graphics(h, 'patch') && ( ...
 					        get(h, 'Visible') ~= st.get('VISIBLE') || ...
@@ -803,7 +854,7 @@ classdef SettingsArea < Settings
 					end
 					
 				otherwise
-					if prop <= 14
+					if prop <= Settings.getPropNumber()
 						postprocessing@Settings(st, prop);
 					end
 			end

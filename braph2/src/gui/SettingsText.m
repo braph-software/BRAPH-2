@@ -6,35 +6,6 @@ classdef SettingsText < Settings
 	% including visibility, x, y, z, font color, font size, and interpreter.
 	% The handle can be a text.
 	%
-	% The list of SettingsText properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the text settings.
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the text settings.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the text settings.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the text settings.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the text settings.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the text settings.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the text settings.
-	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-	%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the text is visible.
-	%  <strong>16</strong> <strong>X</strong> 	X (figure, scalar) is the x-coordinate.
-	%  <strong>17</strong> <strong>Y</strong> 	Y (figure, scalar) is the y-coordinate.
-	%  <strong>18</strong> <strong>Z</strong> 	Z (figure, scalar) is the z-coordinate.
-	%  <strong>19</strong> <strong>TXT</strong> 	TXT (figure, string) is the text.
-	%  <strong>20</strong> <strong>FONTSIZE</strong> 	FONTSIZE (figure, size) is the font size.
-	%  <strong>21</strong> <strong>FONTNAME</strong> 	FONTNAME (figure, string) is the font name.
-	%  <strong>22</strong> <strong>FONTCOLOR</strong> 	FONTCOLOR (figure, color) is the text color.
-	%  <strong>23</strong> <strong>FONTWEIGHT</strong> 	FONTWEIGHT (figure, option) is the font weight.
-	%  <strong>24</strong> <strong>INTERPRETER</strong> 	INTERPRETER (figure, option) is the text interpreter.
-	%  <strong>25</strong> <strong>HALIGN</strong> 	HALIGN (figure, option) is the text horizonthal alignment.
-	%  <strong>26</strong> <strong>VALIGN</strong> 	VALIGN (figure, option) is the text vertical alignment.
-	%  <strong>27</strong> <strong>ROTATION</strong> 	ROTATION (figure, scalar) is the text rotation.
-	%
 	% SettingsText methods (constructor):
 	%  SettingsText - constructor
 	%
@@ -124,70 +95,70 @@ classdef SettingsText < Settings
 	% See also text, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		VISIBLE = 15; %CET: Computational Efficiency Trick
+		VISIBLE = Settings.getPropNumber() + 1;
 		VISIBLE_TAG = 'VISIBLE';
-		VISIBLE_CATEGORY = 8;
-		VISIBLE_FORMAT = 4;
+		VISIBLE_CATEGORY = Category.FIGURE;
+		VISIBLE_FORMAT = Format.LOGICAL;
 		
-		X = 16; %CET: Computational Efficiency Trick
+		X = Settings.getPropNumber() + 2;
 		X_TAG = 'X';
-		X_CATEGORY = 8;
-		X_FORMAT = 11;
+		X_CATEGORY = Category.FIGURE;
+		X_FORMAT = Format.SCALAR;
 		
-		Y = 17; %CET: Computational Efficiency Trick
+		Y = Settings.getPropNumber() + 3;
 		Y_TAG = 'Y';
-		Y_CATEGORY = 8;
-		Y_FORMAT = 11;
+		Y_CATEGORY = Category.FIGURE;
+		Y_FORMAT = Format.SCALAR;
 		
-		Z = 18; %CET: Computational Efficiency Trick
+		Z = Settings.getPropNumber() + 4;
 		Z_TAG = 'Z';
-		Z_CATEGORY = 8;
-		Z_FORMAT = 11;
+		Z_CATEGORY = Category.FIGURE;
+		Z_FORMAT = Format.SCALAR;
 		
-		TXT = 19; %CET: Computational Efficiency Trick
+		TXT = Settings.getPropNumber() + 5;
 		TXT_TAG = 'TXT';
-		TXT_CATEGORY = 8;
-		TXT_FORMAT = 2;
+		TXT_CATEGORY = Category.FIGURE;
+		TXT_FORMAT = Format.STRING;
 		
-		FONTSIZE = 20; %CET: Computational Efficiency Trick
+		FONTSIZE = Settings.getPropNumber() + 6;
 		FONTSIZE_TAG = 'FONTSIZE';
-		FONTSIZE_CATEGORY = 8;
-		FONTSIZE_FORMAT = 22;
+		FONTSIZE_CATEGORY = Category.FIGURE;
+		FONTSIZE_FORMAT = Format.SIZE;
 		
-		FONTNAME = 21; %CET: Computational Efficiency Trick
+		FONTNAME = Settings.getPropNumber() + 7;
 		FONTNAME_TAG = 'FONTNAME';
-		FONTNAME_CATEGORY = 8;
-		FONTNAME_FORMAT = 2;
+		FONTNAME_CATEGORY = Category.FIGURE;
+		FONTNAME_FORMAT = Format.STRING;
 		
-		FONTCOLOR = 22; %CET: Computational Efficiency Trick
+		FONTCOLOR = Settings.getPropNumber() + 8;
 		FONTCOLOR_TAG = 'FONTCOLOR';
-		FONTCOLOR_CATEGORY = 8;
-		FONTCOLOR_FORMAT = 20;
+		FONTCOLOR_CATEGORY = Category.FIGURE;
+		FONTCOLOR_FORMAT = Format.COLOR;
 		
-		FONTWEIGHT = 23; %CET: Computational Efficiency Trick
+		FONTWEIGHT = Settings.getPropNumber() + 9;
 		FONTWEIGHT_TAG = 'FONTWEIGHT';
-		FONTWEIGHT_CATEGORY = 8;
-		FONTWEIGHT_FORMAT = 5;
+		FONTWEIGHT_CATEGORY = Category.FIGURE;
+		FONTWEIGHT_FORMAT = Format.OPTION;
 		
-		INTERPRETER = 24; %CET: Computational Efficiency Trick
+		INTERPRETER = Settings.getPropNumber() + 10;
 		INTERPRETER_TAG = 'INTERPRETER';
-		INTERPRETER_CATEGORY = 8;
-		INTERPRETER_FORMAT = 5;
+		INTERPRETER_CATEGORY = Category.FIGURE;
+		INTERPRETER_FORMAT = Format.OPTION;
 		
-		HALIGN = 25; %CET: Computational Efficiency Trick
+		HALIGN = Settings.getPropNumber() + 11;
 		HALIGN_TAG = 'HALIGN';
-		HALIGN_CATEGORY = 8;
-		HALIGN_FORMAT = 5;
+		HALIGN_CATEGORY = Category.FIGURE;
+		HALIGN_FORMAT = Format.OPTION;
 		
-		VALIGN = 26; %CET: Computational Efficiency Trick
+		VALIGN = Settings.getPropNumber() + 12;
 		VALIGN_TAG = 'VALIGN';
-		VALIGN_CATEGORY = 8;
-		VALIGN_FORMAT = 5;
+		VALIGN_CATEGORY = Category.FIGURE;
+		VALIGN_FORMAT = Format.OPTION;
 		
-		ROTATION = 27; %CET: Computational Efficiency Trick
+		ROTATION = Settings.getPropNumber() + 13;
 		ROTATION_TAG = 'ROTATION';
-		ROTATION_CATEGORY = 8;
-		ROTATION_FORMAT = 11;
+		ROTATION_CATEGORY = Category.FIGURE;
+		ROTATION_FORMAT = Format.SCALAR;
 	end
 	methods % constructor
 		function st = SettingsText(varargin)
@@ -200,34 +171,6 @@ classdef SettingsText < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
-			% The list of SettingsText properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the text settings.
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the text settings.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the text settings.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the text settings.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the text settings.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the text settings.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the text settings.
-			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
-			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
-			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
-			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
-			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
-			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
-			%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the text is visible.
-			%  <strong>16</strong> <strong>X</strong> 	X (figure, scalar) is the x-coordinate.
-			%  <strong>17</strong> <strong>Y</strong> 	Y (figure, scalar) is the y-coordinate.
-			%  <strong>18</strong> <strong>Z</strong> 	Z (figure, scalar) is the z-coordinate.
-			%  <strong>19</strong> <strong>TXT</strong> 	TXT (figure, string) is the text.
-			%  <strong>20</strong> <strong>FONTSIZE</strong> 	FONTSIZE (figure, size) is the font size.
-			%  <strong>21</strong> <strong>FONTNAME</strong> 	FONTNAME (figure, string) is the font name.
-			%  <strong>22</strong> <strong>FONTCOLOR</strong> 	FONTCOLOR (figure, color) is the text color.
-			%  <strong>23</strong> <strong>FONTWEIGHT</strong> 	FONTWEIGHT (figure, option) is the font weight.
-			%  <strong>24</strong> <strong>INTERPRETER</strong> 	INTERPRETER (figure, option) is the text interpreter.
-			%  <strong>25</strong> <strong>HALIGN</strong> 	HALIGN (figure, option) is the text horizonthal alignment.
-			%  <strong>26</strong> <strong>VALIGN</strong> 	VALIGN (figure, option) is the text vertical alignment.
-			%  <strong>27</strong> <strong>ROTATION</strong> 	ROTATION (figure, scalar) is the text rotation.
 			%
 			% See also Category, Format.
 			
@@ -265,7 +208,7 @@ classdef SettingsText < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'SettingsText' }; %CET: Computational Efficiency Trick
+			subclass_list = subclasses('SettingsText', [], [], true);
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of text settings.
@@ -286,30 +229,76 @@ classdef SettingsText < Settings
 			%
 			% See also getPropNumber, Category.
 			
-			%CET: Computational Efficiency Trick
-			
 			if nargin == 0
-				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27];
+				prop_list = [ ...
+					Settings.getProps() ...
+						SettingsText.VISIBLE ...
+						SettingsText.X ...
+						SettingsText.Y ...
+						SettingsText.Z ...
+						SettingsText.TXT ...
+						SettingsText.FONTSIZE ...
+						SettingsText.FONTNAME ...
+						SettingsText.FONTCOLOR ...
+						SettingsText.FONTWEIGHT ...
+						SettingsText.INTERPRETER ...
+						SettingsText.HALIGN ...
+						SettingsText.VALIGN ...
+						SettingsText.ROTATION ...
+						];
 				return
 			end
 			
 			switch category
-				case 1 % Category.CONSTANT
-					prop_list = [1 2 3];
-				case 2 % Category.METADATA
-					prop_list = [6 7];
-				case 3 % Category.PARAMETER
-					prop_list = 4;
-				case 4 % Category.DATA
-					prop_list = 5;
-				case 6 % Category.QUERY
-					prop_list = [8 13 14];
-				case 8 % Category.FIGURE
-					prop_list = [15 16 17 18 19 20 21 22 23 24 25 26 27];
-				case 9 % Category.GUI
-					prop_list = [9 10 11 12];
-				otherwise
-					prop_list = [];
+				case Category.CONSTANT
+					prop_list = [ ...
+						Settings.getProps(Category.CONSTANT) ...
+						];
+				case Category.METADATA
+					prop_list = [ ...
+						Settings.getProps(Category.METADATA) ...
+						];
+				case Category.PARAMETER
+					prop_list = [ ...
+						Settings.getProps(Category.PARAMETER) ...
+						];
+				case Category.DATA
+					prop_list = [ ...
+						Settings.getProps(Category.DATA) ...
+						];
+				case Category.RESULT
+					prop_list = [
+						Settings.getProps(Category.RESULT) ...
+						];
+				case Category.QUERY
+					prop_list = [ ...
+						Settings.getProps(Category.QUERY) ...
+						];
+				case Category.EVANESCENT
+					prop_list = [ ...
+						Settings.getProps(Category.EVANESCENT) ...
+						];
+				case Category.FIGURE
+					prop_list = [ ...
+						Settings.getProps(Category.FIGURE) ...
+						SettingsText.VISIBLE ...
+						SettingsText.X ...
+						SettingsText.Y ...
+						SettingsText.Z ...
+						SettingsText.TXT ...
+						SettingsText.FONTSIZE ...
+						SettingsText.FONTNAME ...
+						SettingsText.FONTCOLOR ...
+						SettingsText.FONTWEIGHT ...
+						SettingsText.INTERPRETER ...
+						SettingsText.HALIGN ...
+						SettingsText.VALIGN ...
+						SettingsText.ROTATION ...
+						];
+				case Category.GUI
+					prop_list = [ ...
+						Settings.getProps(Category.GUI) ...
+						];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -330,31 +319,7 @@ classdef SettingsText < Settings
 			%
 			% See also getProps, Category.
 			
-			%CET: Computational Efficiency Trick
-			
-			if nargin == 0
-				prop_number = 27;
-				return
-			end
-			
-			switch varargin{1} % category = varargin{1}
-				case 1 % Category.CONSTANT
-					prop_number = 3;
-				case 2 % Category.METADATA
-					prop_number = 2;
-				case 3 % Category.PARAMETER
-					prop_number = 1;
-				case 4 % Category.DATA
-					prop_number = 1;
-				case 6 % Category.QUERY
-					prop_number = 3;
-				case 8 % Category.FIGURE
-					prop_number = 13;
-				case 9 % Category.GUI
-					prop_number = 4;
-				otherwise
-					prop_number = 0;
-			end
+			prop_number = numel(SettingsText.getProps(varargin{:}));
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in text settings/error.
@@ -382,14 +347,14 @@ classdef SettingsText < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = prop >= 1 && prop <= 27 && round(prop) == prop; %CET: Computational Efficiency Trick
+			check = any(prop == SettingsText.getProps());
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsText:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsText:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsText.'] ...
 					)
 			end
@@ -420,14 +385,15 @@ classdef SettingsText < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'TXT'  'FONTSIZE'  'FONTNAME'  'FONTCOLOR'  'FONTWEIGHT'  'INTERPRETER'  'HALIGN'  'VALIGN'  'ROTATION' })); %CET: Computational Efficiency Trick
+			settingstext_tag_list = cellfun(@(x) SettingsText.getPropTag(x), num2cell(SettingsText.getProps()), 'UniformOutput', false);
+			check = any(strcmp(tag, settingstext_tag_list));
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsText:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsText:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsText.'] ...
 					)
 			end
@@ -453,7 +419,8 @@ classdef SettingsText < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'TXT'  'FONTSIZE'  'FONTNAME'  'FONTCOLOR'  'FONTWEIGHT'  'INTERPRETER'  'HALIGN'  'VALIGN'  'ROTATION' })); % tag = pointer %CET: Computational Efficiency Trick
+				settingstext_tag_list = cellfun(@(x) SettingsText.getPropTag(x), num2cell(SettingsText.getProps()), 'UniformOutput', false);
+				prop = find(strcmp(pointer, settingstext_tag_list)); % tag = pointer
 			else % numeric
 				prop = pointer;
 			end
@@ -481,9 +448,38 @@ classdef SettingsText < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				%CET: Computational Efficiency Trick
-				settingstext_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'TXT'  'FONTSIZE'  'FONTNAME'  'FONTCOLOR'  'FONTWEIGHT'  'INTERPRETER'  'HALIGN'  'VALIGN'  'ROTATION' };
-				tag = settingstext_tag_list{pointer}; % prop = pointer
+				prop = pointer;
+				
+				switch prop
+					case SettingsText.VISIBLE
+						tag = SettingsText.VISIBLE_TAG;
+					case SettingsText.X
+						tag = SettingsText.X_TAG;
+					case SettingsText.Y
+						tag = SettingsText.Y_TAG;
+					case SettingsText.Z
+						tag = SettingsText.Z_TAG;
+					case SettingsText.TXT
+						tag = SettingsText.TXT_TAG;
+					case SettingsText.FONTSIZE
+						tag = SettingsText.FONTSIZE_TAG;
+					case SettingsText.FONTNAME
+						tag = SettingsText.FONTNAME_TAG;
+					case SettingsText.FONTCOLOR
+						tag = SettingsText.FONTCOLOR_TAG;
+					case SettingsText.FONTWEIGHT
+						tag = SettingsText.FONTWEIGHT_TAG;
+					case SettingsText.INTERPRETER
+						tag = SettingsText.INTERPRETER_TAG;
+					case SettingsText.HALIGN
+						tag = SettingsText.HALIGN_TAG;
+					case SettingsText.VALIGN
+						tag = SettingsText.VALIGN_TAG;
+					case SettingsText.ROTATION
+						tag = SettingsText.ROTATION_TAG;
+					otherwise
+						tag = getPropTag@Settings(prop);
+				end
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -508,9 +504,36 @@ classdef SettingsText < Settings
 			
 			prop = SettingsText.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstext_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8  8  8  8  8  8  8  8  8 };
-			prop_category = settingstext_category_list{prop};
+			switch prop
+				case SettingsText.VISIBLE
+					prop_category = SettingsText.VISIBLE_CATEGORY;
+				case SettingsText.X
+					prop_category = SettingsText.X_CATEGORY;
+				case SettingsText.Y
+					prop_category = SettingsText.Y_CATEGORY;
+				case SettingsText.Z
+					prop_category = SettingsText.Z_CATEGORY;
+				case SettingsText.TXT
+					prop_category = SettingsText.TXT_CATEGORY;
+				case SettingsText.FONTSIZE
+					prop_category = SettingsText.FONTSIZE_CATEGORY;
+				case SettingsText.FONTNAME
+					prop_category = SettingsText.FONTNAME_CATEGORY;
+				case SettingsText.FONTCOLOR
+					prop_category = SettingsText.FONTCOLOR_CATEGORY;
+				case SettingsText.FONTWEIGHT
+					prop_category = SettingsText.FONTWEIGHT_CATEGORY;
+				case SettingsText.INTERPRETER
+					prop_category = SettingsText.INTERPRETER_CATEGORY;
+				case SettingsText.HALIGN
+					prop_category = SettingsText.HALIGN_CATEGORY;
+				case SettingsText.VALIGN
+					prop_category = SettingsText.VALIGN_CATEGORY;
+				case SettingsText.ROTATION
+					prop_category = SettingsText.ROTATION_CATEGORY;
+				otherwise
+					prop_category = getPropCategory@Settings(prop);
+			end
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -534,9 +557,36 @@ classdef SettingsText < Settings
 			
 			prop = SettingsText.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstext_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  4  11  11  11  2  22  2  20  5  5  5  5  11 };
-			prop_format = settingstext_format_list{prop};
+			switch prop
+				case SettingsText.VISIBLE
+					prop_format = SettingsText.VISIBLE_FORMAT;
+				case SettingsText.X
+					prop_format = SettingsText.X_FORMAT;
+				case SettingsText.Y
+					prop_format = SettingsText.Y_FORMAT;
+				case SettingsText.Z
+					prop_format = SettingsText.Z_FORMAT;
+				case SettingsText.TXT
+					prop_format = SettingsText.TXT_FORMAT;
+				case SettingsText.FONTSIZE
+					prop_format = SettingsText.FONTSIZE_FORMAT;
+				case SettingsText.FONTNAME
+					prop_format = SettingsText.FONTNAME_FORMAT;
+				case SettingsText.FONTCOLOR
+					prop_format = SettingsText.FONTCOLOR_FORMAT;
+				case SettingsText.FONTWEIGHT
+					prop_format = SettingsText.FONTWEIGHT_FORMAT;
+				case SettingsText.INTERPRETER
+					prop_format = SettingsText.INTERPRETER_FORMAT;
+				case SettingsText.HALIGN
+					prop_format = SettingsText.HALIGN_FORMAT;
+				case SettingsText.VALIGN
+					prop_format = SettingsText.VALIGN_FORMAT;
+				case SettingsText.ROTATION
+					prop_format = SettingsText.ROTATION_FORMAT;
+				otherwise
+					prop_format = getPropFormat@Settings(prop);
+			end
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -560,9 +610,50 @@ classdef SettingsText < Settings
 			
 			prop = SettingsText.getPropProp(pointer);
 			
-			%CET: Computational Efficiency Trick
-			settingstext_description_list = { 'ELCLASS (constant, string) is the class of the text settings.'  'NAME (constant, string) is the name of the text settings.'  'DESCRIPTION (constant, string) is the description of the text settings.'  'TEMPLATE (parameter, item) is the template of the text settings.'  'ID (data, string) is a few-letter code for the text settings.'  'LABEL (metadata, string) is an extended label of the text settings.'  'NOTES (metadata, string) are some specific notes about the text settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the text is visible.'  'X (figure, scalar) is the x-coordinate.'  'Y (figure, scalar) is the y-coordinate.'  'Z (figure, scalar) is the z-coordinate.'  'TXT (figure, string) is the text.'  'FONTSIZE (figure, size) is the font size.'  'FONTNAME (figure, string) is the font name.'  'FONTCOLOR (figure, color) is the text color.'  'FONTWEIGHT (figure, option) is the font weight.'  'INTERPRETER (figure, option) is the text interpreter.'  'HALIGN (figure, option) is the text horizonthal alignment.'  'VALIGN (figure, option) is the text vertical alignment.'  'ROTATION (figure, scalar) is the text rotation.' };
-			prop_description = settingstext_description_list{prop};
+			switch prop
+				case SettingsText.VISIBLE
+					prop_description = 'VISIBLE (figure, logical) determines whether the text is visible.';
+				case SettingsText.X
+					prop_description = 'X (figure, scalar) is the x-coordinate.';
+				case SettingsText.Y
+					prop_description = 'Y (figure, scalar) is the y-coordinate.';
+				case SettingsText.Z
+					prop_description = 'Z (figure, scalar) is the z-coordinate.';
+				case SettingsText.TXT
+					prop_description = 'TXT (figure, string) is the text.';
+				case SettingsText.FONTSIZE
+					prop_description = 'FONTSIZE (figure, size) is the font size.';
+				case SettingsText.FONTNAME
+					prop_description = 'FONTNAME (figure, string) is the font name.';
+				case SettingsText.FONTCOLOR
+					prop_description = 'FONTCOLOR (figure, color) is the text color.';
+				case SettingsText.FONTWEIGHT
+					prop_description = 'FONTWEIGHT (figure, option) is the font weight.';
+				case SettingsText.INTERPRETER
+					prop_description = 'INTERPRETER (figure, option) is the text interpreter.';
+				case SettingsText.HALIGN
+					prop_description = 'HALIGN (figure, option) is the text horizonthal alignment.';
+				case SettingsText.VALIGN
+					prop_description = 'VALIGN (figure, option) is the text vertical alignment.';
+				case SettingsText.ROTATION
+					prop_description = 'ROTATION (figure, scalar) is the text rotation.';
+				case SettingsText.ELCLASS
+					prop_description = 'ELCLASS (constant, string) is the class of the text settings.';
+				case SettingsText.NAME
+					prop_description = 'NAME (constant, string) is the name of the text settings.';
+				case SettingsText.DESCRIPTION
+					prop_description = 'DESCRIPTION (constant, string) is the description of the text settings.';
+				case SettingsText.TEMPLATE
+					prop_description = 'TEMPLATE (parameter, item) is the template of the text settings.';
+				case SettingsText.ID
+					prop_description = 'ID (data, string) is a few-letter code for the text settings.';
+				case SettingsText.LABEL
+					prop_description = 'LABEL (metadata, string) is an extended label of the text settings.';
+				case SettingsText.NOTES
+					prop_description = 'NOTES (metadata, string) are some specific notes about the text settings.';
+				otherwise
+					prop_description = getPropDescription@Settings(prop);
+			end
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -586,34 +677,34 @@ classdef SettingsText < Settings
 			
 			prop = SettingsText.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % SettingsText.VISIBLE
-					prop_settings = Format.getFormatSettings(4);
-				case 16 % SettingsText.X
-					prop_settings = Format.getFormatSettings(11);
-				case 17 % SettingsText.Y
-					prop_settings = Format.getFormatSettings(11);
-				case 18 % SettingsText.Z
-					prop_settings = Format.getFormatSettings(11);
-				case 19 % SettingsText.TXT
-					prop_settings = Format.getFormatSettings(2);
-				case 20 % SettingsText.FONTSIZE
-					prop_settings = Format.getFormatSettings(22);
-				case 21 % SettingsText.FONTNAME
-					prop_settings = Format.getFormatSettings(2);
-				case 22 % SettingsText.FONTCOLOR
-					prop_settings = Format.getFormatSettings(20);
-				case 23 % SettingsText.FONTWEIGHT
+			switch prop
+				case SettingsText.VISIBLE
+					prop_settings = Format.getFormatSettings(Format.LOGICAL);
+				case SettingsText.X
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsText.Y
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsText.Z
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsText.TXT
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case SettingsText.FONTSIZE
+					prop_settings = Format.getFormatSettings(Format.SIZE);
+				case SettingsText.FONTNAME
+					prop_settings = Format.getFormatSettings(Format.STRING);
+				case SettingsText.FONTCOLOR
+					prop_settings = Format.getFormatSettings(Format.COLOR);
+				case SettingsText.FONTWEIGHT
 					prop_settings = {'normal' 'bold'};
-				case 24 % SettingsText.INTERPRETER
+				case SettingsText.INTERPRETER
 					prop_settings = {'none', 'TeX', 'LaTeX'};
-				case 25 % SettingsText.HALIGN
+				case SettingsText.HALIGN
 					prop_settings = {'left', 'center', 'right'};
-				case 26 % SettingsText.VALIGN
+				case SettingsText.VALIGN
 					prop_settings = {'middle', 'top', 'bottom', 'baseline', 'cap'};
-				case 27 % SettingsText.ROTATION
-					prop_settings = Format.getFormatSettings(11);
-				case 4 % SettingsText.TEMPLATE
+				case SettingsText.ROTATION
+					prop_settings = Format.getFormatSettings(Format.SCALAR);
+				case SettingsText.TEMPLATE
 					prop_settings = 'SettingsText';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -641,46 +732,46 @@ classdef SettingsText < Settings
 			
 			prop = SettingsText.getPropProp(pointer);
 			
-			switch prop %CET: Computational Efficiency Trick
-				case 15 % SettingsText.VISIBLE
-					prop_default = Format.getFormatDefault(4, SettingsText.getPropSettings(prop));
-				case 16 % SettingsText.X
-					prop_default = Format.getFormatDefault(11, SettingsText.getPropSettings(prop));
-				case 17 % SettingsText.Y
-					prop_default = Format.getFormatDefault(11, SettingsText.getPropSettings(prop));
-				case 18 % SettingsText.Z
-					prop_default = Format.getFormatDefault(11, SettingsText.getPropSettings(prop));
-				case 19 % SettingsText.TXT
-					prop_default = Format.getFormatDefault(2, SettingsText.getPropSettings(prop));
-				case 20 % SettingsText.FONTSIZE
-					prop_default = 12;
-				case 21 % SettingsText.FONTNAME
+			switch prop
+				case SettingsText.VISIBLE
+					prop_default = Format.getFormatDefault(Format.LOGICAL, SettingsText.getPropSettings(prop));
+				case SettingsText.X
+					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsText.getPropSettings(prop));
+				case SettingsText.Y
+					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsText.getPropSettings(prop));
+				case SettingsText.Z
+					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsText.getPropSettings(prop));
+				case SettingsText.TXT
+					prop_default = Format.getFormatDefault(Format.STRING, SettingsText.getPropSettings(prop));
+				case SettingsText.FONTSIZE
+					prop_default = BRAPH2.FONTSIZE;
+				case SettingsText.FONTNAME
 					prop_default = 'Helvetica';
-				case 22 % SettingsText.FONTCOLOR
+				case SettingsText.FONTCOLOR
 					prop_default = [0 0 0];
-				case 23 % SettingsText.FONTWEIGHT
+				case SettingsText.FONTWEIGHT
 					prop_default = 'normal';
-				case 24 % SettingsText.INTERPRETER
+				case SettingsText.INTERPRETER
 					prop_default = 'none';
-				case 25 % SettingsText.HALIGN
-					prop_default = Format.getFormatDefault(5, SettingsText.getPropSettings(prop));
-				case 26 % SettingsText.VALIGN
-					prop_default = Format.getFormatDefault(5, SettingsText.getPropSettings(prop));
-				case 27 % SettingsText.ROTATION
-					prop_default = Format.getFormatDefault(11, SettingsText.getPropSettings(prop));
-				case 1 % SettingsText.ELCLASS
+				case SettingsText.HALIGN
+					prop_default = Format.getFormatDefault(Format.OPTION, SettingsText.getPropSettings(prop));
+				case SettingsText.VALIGN
+					prop_default = Format.getFormatDefault(Format.OPTION, SettingsText.getPropSettings(prop));
+				case SettingsText.ROTATION
+					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsText.getPropSettings(prop));
+				case SettingsText.ELCLASS
 					prop_default = 'SettingsText';
-				case 2 % SettingsText.NAME
+				case SettingsText.NAME
 					prop_default = 'Text Settings';
-				case 3 % SettingsText.DESCRIPTION
+				case SettingsText.DESCRIPTION
 					prop_default = 'A Text Settings (SettingsText) provides the settings for a text, including visibility, x, y, z, font color, font size, and interpreter.';
-				case 4 % SettingsText.TEMPLATE
-					prop_default = Format.getFormatDefault(8, SettingsText.getPropSettings(prop));
-				case 5 % SettingsText.ID
+				case SettingsText.TEMPLATE
+					prop_default = Format.getFormatDefault(Format.ITEM, SettingsText.getPropSettings(prop));
+				case SettingsText.ID
 					prop_default = 'SettingsText ID';
-				case 6 % SettingsText.LABEL
+				case SettingsText.LABEL
 					prop_default = 'SettingsText label';
-				case 7 % SettingsText.NOTES
+				case SettingsText.NOTES
 					prop_default = 'SettingsText notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -727,15 +818,15 @@ classdef SettingsText < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: BRAPH2:SettingsText:WrongInput
+			%  Error id: €BRAPH2.STR€:SettingsText:€BRAPH2.WRONG_INPUT€
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: BRAPH2:SettingsText:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsText:€BRAPH2.WRONG_INPUT€
 			%  Element.CHECKPROP(SettingsText, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsText.
-			%   Error id: BRAPH2:SettingsText:WrongInput
+			%   Error id: €BRAPH2.STR€:SettingsText:€BRAPH2.WRONG_INPUT€
 			%  ST.CHECKPROP(SettingsText, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsText.
-			%   Error id: BRAPH2:SettingsText:WrongInput]
+			%   Error id: €BRAPH2.STR€:SettingsText:€BRAPH2.WRONG_INPUT€]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsText')
 			%  are less computationally efficient.
@@ -746,36 +837,36 @@ classdef SettingsText < Settings
 			prop = SettingsText.getPropProp(pointer);
 			
 			switch prop
-				case 15 % SettingsText.VISIBLE
-					check = Format.checkFormat(4, value, SettingsText.getPropSettings(prop));
-				case 16 % SettingsText.X
-					check = Format.checkFormat(11, value, SettingsText.getPropSettings(prop));
-				case 17 % SettingsText.Y
-					check = Format.checkFormat(11, value, SettingsText.getPropSettings(prop));
-				case 18 % SettingsText.Z
-					check = Format.checkFormat(11, value, SettingsText.getPropSettings(prop));
-				case 19 % SettingsText.TXT
-					check = Format.checkFormat(2, value, SettingsText.getPropSettings(prop));
-				case 20 % SettingsText.FONTSIZE
-					check = Format.checkFormat(22, value, SettingsText.getPropSettings(prop));
-				case 21 % SettingsText.FONTNAME
-					check = Format.checkFormat(2, value, SettingsText.getPropSettings(prop));
-				case 22 % SettingsText.FONTCOLOR
-					check = Format.checkFormat(20, value, SettingsText.getPropSettings(prop));
-				case 23 % SettingsText.FONTWEIGHT
-					check = Format.checkFormat(5, value, SettingsText.getPropSettings(prop));
-				case 24 % SettingsText.INTERPRETER
-					check = Format.checkFormat(5, value, SettingsText.getPropSettings(prop));
-				case 25 % SettingsText.HALIGN
-					check = Format.checkFormat(5, value, SettingsText.getPropSettings(prop));
-				case 26 % SettingsText.VALIGN
-					check = Format.checkFormat(5, value, SettingsText.getPropSettings(prop));
-				case 27 % SettingsText.ROTATION
-					check = Format.checkFormat(11, value, SettingsText.getPropSettings(prop));
-				case 4 % SettingsText.TEMPLATE
-					check = Format.checkFormat(8, value, SettingsText.getPropSettings(prop));
+				case SettingsText.VISIBLE % __SettingsText.VISIBLE__
+					check = Format.checkFormat(Format.LOGICAL, value, SettingsText.getPropSettings(prop));
+				case SettingsText.X % __SettingsText.X__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsText.getPropSettings(prop));
+				case SettingsText.Y % __SettingsText.Y__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsText.getPropSettings(prop));
+				case SettingsText.Z % __SettingsText.Z__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsText.getPropSettings(prop));
+				case SettingsText.TXT % __SettingsText.TXT__
+					check = Format.checkFormat(Format.STRING, value, SettingsText.getPropSettings(prop));
+				case SettingsText.FONTSIZE % __SettingsText.FONTSIZE__
+					check = Format.checkFormat(Format.SIZE, value, SettingsText.getPropSettings(prop));
+				case SettingsText.FONTNAME % __SettingsText.FONTNAME__
+					check = Format.checkFormat(Format.STRING, value, SettingsText.getPropSettings(prop));
+				case SettingsText.FONTCOLOR % __SettingsText.FONTCOLOR__
+					check = Format.checkFormat(Format.COLOR, value, SettingsText.getPropSettings(prop));
+				case SettingsText.FONTWEIGHT % __SettingsText.FONTWEIGHT__
+					check = Format.checkFormat(Format.OPTION, value, SettingsText.getPropSettings(prop));
+				case SettingsText.INTERPRETER % __SettingsText.INTERPRETER__
+					check = Format.checkFormat(Format.OPTION, value, SettingsText.getPropSettings(prop));
+				case SettingsText.HALIGN % __SettingsText.HALIGN__
+					check = Format.checkFormat(Format.OPTION, value, SettingsText.getPropSettings(prop));
+				case SettingsText.VALIGN % __SettingsText.VALIGN__
+					check = Format.checkFormat(Format.OPTION, value, SettingsText.getPropSettings(prop));
+				case SettingsText.ROTATION % __SettingsText.ROTATION__
+					check = Format.checkFormat(Format.SCALAR, value, SettingsText.getPropSettings(prop));
+				case SettingsText.TEMPLATE % __SettingsText.TEMPLATE__
+					check = Format.checkFormat(Format.ITEM, value, SettingsText.getPropSettings(prop));
 				otherwise
-					if prop <= 14
+					if prop <= Settings.getPropNumber()
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -784,8 +875,8 @@ classdef SettingsText < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					['BRAPH2' ':SettingsText:' 'WrongInput'], ...
-					['BRAPH2' ':SettingsText:' 'WrongInput' '\n' ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT], ...
+					[BRAPH2.STR ':SettingsText:' BRAPH2.WRONG_INPUT '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsText.getPropTag(prop) ' (' SettingsText.getFormatTag(SettingsText.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -805,7 +896,7 @@ classdef SettingsText < Settings
 			%  checkValue.
 			
 			switch prop
-				case 15 % SettingsText.VISIBLE
+				case SettingsText.VISIBLE % __SettingsText.VISIBLE__
 					h = st.get('H');
 					if check_graphics(h, 'text') && ( ...
 					        get(h, 'Visible') ~= st.get('VISIBLE') || ...
@@ -840,7 +931,7 @@ classdef SettingsText < Settings
 					end
 					
 				otherwise
-					if prop <= 14
+					if prop <= Settings.getPropNumber()
 						postprocessing@Settings(st, prop);
 					end
 			end
