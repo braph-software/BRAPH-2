@@ -86,6 +86,7 @@ for i = length(figures):-1:1
 
     figure_ref = strtrim(figure{2});
     document = regexprep(document, ['\\Figref{' figure_ref '}'], ['Figure ' int2str(i)]);
+    document = regexprep(document, ['\\Figsref{' figure_ref '}'], ['Figures ' int2str(i)]);
 end
 
 %% Generate README file

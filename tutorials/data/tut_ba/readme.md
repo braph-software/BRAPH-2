@@ -148,7 +148,7 @@ This will open an image with a brain surface and nodes corresponding to the brai
 > **Figure 7. Brain atlas visualization**
 > Plotting the nodes of a brain atlas on a 3D brain surface.
 	
-This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in Figure 8a), which opens the settings window shown in \Figsref{fig:08}b-c.
+This new window has a large toolbar that allows you to change the visualization of the atlas. We suggest you try the different options to understand how they change the figure. Importantly, within this menu, there is one option called ``Settings Brain Surface'' (highlighted in Figure 8a), which opens the settings window shown in Figures 8b-c.
 
 
 
