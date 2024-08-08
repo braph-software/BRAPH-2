@@ -32,6 +32,7 @@ document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % bold
 document = regexprep(document, '\\fn{([^{}]*)}', '"$1"');  % \fn
 document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
 document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
+document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
 
 % table of contents
 sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');
