@@ -814,7 +814,7 @@ for i = 1:numel(el_list)
     build_log{1 + i, 2} = Element.getBuild(el);
 end
 
-save([target_dir filesep() 'build_log.mat'], 'build_log')
+save([target_dir filesep() 'build_log.mat'], 'build_log', 'run_number', 'rollcall')
 writecell(build_log, [target_dir filesep() 'build_log.txt'])
 
 end
