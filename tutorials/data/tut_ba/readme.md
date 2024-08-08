@@ -10,7 +10,7 @@ In this tutorial, you will learn how to upload a brain atlas, how to visualize i
 <img src="fig01.jpg" alt="Brain atlas figure created with BRAPH 2" height="200px">
 
 > **Figure 1. Brain atlas figure created with BRAPH 2**
-> Example of a brain surface image with some nodes representing brain regions. 200px
+> Example of a brain surface image with some nodes representing brain regions.
 
 ## Table of Contents
 > [Open the GUI](#Open-the-GUI)

@@ -69,7 +69,7 @@ document = regexprep(document, '\\end{itemize}', '');
 figures = regexp(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', 'tokens', 'all');
 document = regexprep(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', '');
 
-figs = regexp(document, '(%!FIG\d*) ?(\w*)', 'tokens', 'all');
+figs = regexp(document, '(%! ?FIG\d*) ?(\w*) ?!%', 'tokens', 'all');
 assert(length(figures) == length(figs), 'The number of figures and %!FIG should be equal!')
 
 for i = length(figures):-1:1
@@ -83,7 +83,7 @@ for i = length(figures):-1:1
     else
         fig_img = ['<img src="' figure_file '" alt="' figure_title '">'];
     end
-    document = regexprep(document, figs{i}{1}, [fig_img newline() strrep([newline() '**Figure ' int2str(i) '. ' figure_title '**' newline() figure_caption], newline(), [newline() '> '])]);
+    document = regexprep(document, [figs{i}{1} '[ \w]*!%'], [fig_img newline() strrep([newline() '**Figure ' int2str(i) '. ' figure_title '**' newline() figure_caption], newline(), [newline() '> '])]);
 
     figure_ref = strtrim(figure{2});
     document = regexprep(document, ['\\Figref{' figure_ref '}'], ['Figure ' int2str(i)]);
