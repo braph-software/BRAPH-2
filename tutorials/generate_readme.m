@@ -98,11 +98,18 @@ for i = length(codes_start):-1:1
     code_labels{i} = strtrim(code{1}{1});
     code_caption = strtrim(code{1}{2});
     code_code = strtrim(code{1}{3});
-    
+
+    code_notes = regexp(code_code, '¥\\circled{\d*}\\circlednote{(\d*)}{([^¥]*)}¥', 'tokens', 'all');
+    code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' % [$1]');
+
     document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
         '**Code ' int2str(i) '.** ' code_caption newline() ...
         '````matlab' newline() code_code newline() '````' newline() ...
         document(codes_end(i) + length('\end{lstlisting}'):end)];
+
+    for j = 1:1:length(code_notes)
+        document = [document '[' code_notes{j}{1} '] ' code_notes{j}{2} newline()]; %#ok<AGROW> 
+    end
 end
 for i = 1:1:length(code_labels)
     document = regexprep(document, ['\\Coderef{' code_labels{i} '}'], ['Code ' int2str(i)]);

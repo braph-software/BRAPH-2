@@ -35,8 +35,8 @@ If you do not have the "Example data CON XLS" folder inside "connectivity", then
 **Code 1.** **Code to generate the example data folder.**
 		This code can be used in the MatLab command line to generate the "Example data CON XLS" folder to the "connectivity" pipeline folder.
 ````matlab
-create_data_CON_XLS() ¥\circled{1}\circlednote{1}{generates the example connectivity XLS data folder.}¥
-create_data_CON_TXT()¥\circled{2}\circlednote{2}{generates the example connectivity TXT data folder.}¥
+create_data_CON_XLS()  % [1]
+create_data_CON_TXT() % [2]
 ````
 
 
@@ -127,3 +127,6 @@ In each column, row 1 should contain the name of the variable of interest, row 2
 > Information that can be changed in the Covariates file: 
 > 	**a** The names of the variables of interest (vois).
 > 	**b** In case the vois are categorical, you can state which categories they have.
+
+[1] generates the example connectivity XLS data folder.
+[2] generates the example connectivity TXT data folder.
