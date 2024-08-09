@@ -167,6 +167,11 @@ INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interrup
 .001
 
 %%% ¡prop!
+BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+%%%% ¡calculate!
+value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
+
+%%% ¡prop!
 COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
 %%%% ¡calculate!
 inputs = cell2mat(nnfi.memorize('BASELINE_INPUTS'));
@@ -174,19 +179,12 @@ num_feature = size(inputs, 2);
 value = num2cell(1:num_feature);
 
 %%% ¡prop!
-BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
-%%%% ¡default!
-{}
-%%%% ¡calculate!
-value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
-
-%%% ¡prop!
 D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.
 %%%% ¡settings!
 'NNDataset'
 %%%% ¡calculate!
 if isempty(varargin)
-    value = {};
+    value = NNDataset();
     return
 end
 comp_feature_combination = varargin{1}; % the composite indexes to be shuffled
@@ -227,21 +225,37 @@ nn = nnfi.get('NN');
 net = nn.get('MODEL');
 inputs = cell2mat(nnfi.memorize('BASELINE_INPUTS'));
 targets = nn.get('TARGETS', d);
-value = crossentropy(net.predict(inputs), targets);
+if isempty(inputs)
+    baseline_loss = 0;
+else
+    baseline_loss = crossentropy(net.predict(inputs), targets);
+end
+value = baseline_loss;
 
 %%% ¡prop!
-SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.
+SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.
 %%%% ¡calculate!
+if isempty(varargin)
+    value = [];
+    return
+end
 seed = varargin{1};
 rng(seed, 'twister')
 
+shuffled_loss = [];
 d = nnfi.get('D');
+if isa(d.getr('DP_DICT'), 'NoValue')
+    value = shuffled_loss;
+    return
+end
+
 nn = nnfi.get('NN');
 targets = nn.get('TARGETS', d);
 
 comp_feature_indices = nnfi.get('COMP_FEATURE_INDICES');
 num_comp_feature_combinations = length(comp_feature_indices);
 leap_parallel = 2^10;
+shuffled_loss = [];
 
 start = tic;
 for j = 1:leap_parallel:num_comp_feature_combinations
@@ -294,6 +308,10 @@ value = perm_shuflled_loss;
 %%% ¡prop!
 CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.
 %%%% ¡calculate!
+if isempty(varargin)
+    value = [];
+    return
+end
 data = varargin{1};
 sig_level = varargin{2};
 sampleMean = mean(data); % Mean of the data
@@ -304,7 +322,7 @@ marginError = z * sampleStd / sqrt(n);  % Margin of error
 value = [sampleMean - marginError, sampleMean + marginError];
 
 %%% ¡prop!
-STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
+STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
 %%%% ¡calculate!
 perm_shuffled_loss = nnfi.memorize('PERM_SHUFFLED_LOSS');
 perm_shuffled_loss = cell2mat(perm_shuffled_loss.');
@@ -318,6 +336,7 @@ if nnfi.get('APPLY_BONFERRONI')
     sig_level = sig_level / num_comp_feature_combinations;
 end
 
+significant_flags = [];
 for i = 1:num_comp_feature_combinations
     perm_values = squeeze(perm_shuffled_loss(:, i));
     confidenceInterval = nnfi.get('CONFIDENCE_INTERVALS', perm_values, sig_level);
@@ -355,7 +374,12 @@ value = {fi_value};
 RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
 %%%% ¡calculate!
 cell1 = nnfi.get('FEATURE_IMPORTANCE');
-cell2 = nnfi.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+d = nnfi.get('D');
+if isa(d.getr('DP_DICT'), 'NoValue')
+    value = {};
+    return
+end
+cell2 = d.get('IT', 1).get('INPUT');
 if ~isequal(numel(cell1), numel(cell2)) 
     cell1 = nnfi.get('MAP_TO_CELL', cell2mat(cell1), cell2);
 end

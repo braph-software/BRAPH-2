@@ -27,14 +27,14 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 	%  <strong>16</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
 	%  <strong>17</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
 	%  <strong>18</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
-	%  <strong>19</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
-	%  <strong>20</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+	%  <strong>19</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+	%  <strong>20</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
 	%  <strong>21</strong> <strong>D_SHUFFLED</strong> 	D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.
 	%  <strong>22</strong> <strong>BASELINE_LOSS</strong> 	BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.
-	%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.
+	%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.
 	%  <strong>24</strong> <strong>PERM_SHUFFLED_LOSS</strong> 	PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.
 	%  <strong>25</strong> <strong>CONFIDENCE_INTERVALS</strong> 	CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.
-	%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
+	%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
 	%  <strong>27</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
 	%  <strong>28</strong> <strong>RESHAPED_FEATURE_IMPORTANCE</strong> 	RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
 	%  <strong>29</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
@@ -180,15 +180,15 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 		INTERRUPTIBLE_CATEGORY = 9;
 		INTERRUPTIBLE_FORMAT = 11;
 		
-		COMP_FEATURE_INDICES = 19; %CET: Computational Efficiency Trick
-		COMP_FEATURE_INDICES_TAG = 'COMP_FEATURE_INDICES';
-		COMP_FEATURE_INDICES_CATEGORY = 5;
-		COMP_FEATURE_INDICES_FORMAT = 16;
-		
-		BASELINE_INPUTS = 20; %CET: Computational Efficiency Trick
+		BASELINE_INPUTS = 19; %CET: Computational Efficiency Trick
 		BASELINE_INPUTS_TAG = 'BASELINE_INPUTS';
 		BASELINE_INPUTS_CATEGORY = 5;
 		BASELINE_INPUTS_FORMAT = 16;
+		
+		COMP_FEATURE_INDICES = 20; %CET: Computational Efficiency Trick
+		COMP_FEATURE_INDICES_TAG = 'COMP_FEATURE_INDICES';
+		COMP_FEATURE_INDICES_CATEGORY = 5;
+		COMP_FEATURE_INDICES_FORMAT = 16;
 		
 		D_SHUFFLED = 21; %CET: Computational Efficiency Trick
 		D_SHUFFLED_TAG = 'D_SHUFFLED';
@@ -203,7 +203,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 		SHUFFLED_LOSS = 23; %CET: Computational Efficiency Trick
 		SHUFFLED_LOSS_TAG = 'SHUFFLED_LOSS';
 		SHUFFLED_LOSS_CATEGORY = 6;
-		SHUFFLED_LOSS_FORMAT = 16;
+		SHUFFLED_LOSS_FORMAT = 12;
 		
 		PERM_SHUFFLED_LOSS = 24; %CET: Computational Efficiency Trick
 		PERM_SHUFFLED_LOSS_TAG = 'PERM_SHUFFLED_LOSS';
@@ -218,7 +218,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 		STAT_SIG_MASK = 26; %CET: Computational Efficiency Trick
 		STAT_SIG_MASK_TAG = 'STAT_SIG_MASK';
 		STAT_SIG_MASK_CATEGORY = 5;
-		STAT_SIG_MASK_FORMAT = 16;
+		STAT_SIG_MASK_FORMAT = 12;
 		
 		FEATURE_IMPORTANCE = 27; %CET: Computational Efficiency Trick
 		FEATURE_IMPORTANCE_TAG = 'FEATURE_IMPORTANCE';
@@ -275,14 +275,14 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			%  <strong>16</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
 			%  <strong>17</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
 			%  <strong>18</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
-			%  <strong>19</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
-			%  <strong>20</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+			%  <strong>19</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+			%  <strong>20</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
 			%  <strong>21</strong> <strong>D_SHUFFLED</strong> 	D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.
 			%  <strong>22</strong> <strong>BASELINE_LOSS</strong> 	BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.
-			%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.
+			%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.
 			%  <strong>24</strong> <strong>PERM_SHUFFLED_LOSS</strong> 	PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.
 			%  <strong>25</strong> <strong>CONFIDENCE_INTERVALS</strong> 	CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.
-			%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
+			%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
 			%  <strong>27</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
 			%  <strong>28</strong> <strong>RESHAPED_FEATURE_IMPORTANCE</strong> 	RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
 			%  <strong>29</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
@@ -480,7 +480,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'BASELINE_INPUTS'  'COMP_FEATURE_INDICES'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -513,7 +513,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'BASELINE_INPUTS'  'COMP_FEATURE_INDICES'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -542,7 +542,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nnxmlp_featureimportance_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' };
+				nnxmlp_featureimportance_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'BASELINE_INPUTS'  'COMP_FEATURE_INDICES'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' };
 				tag = nnxmlp_featureimportance_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -595,7 +595,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			prop = NNxMLP_FeatureImportance.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnxmlp_featureimportance_format_list = { 2  2  2  8  2  2  2  2  8  8  11  12  4  4  4  11  4  11  16  16  8  11  16  16  12  16  16  1  1  1  1 };
+			nnxmlp_featureimportance_format_list = { 2  2  2  8  2  2  2  2  8  8  11  12  4  4  4  11  4  11  16  16  8  11  12  16  12  12  16  1  1  1  1 };
 			prop_format = nnxmlp_featureimportance_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
@@ -621,7 +621,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			prop = NNxMLP_FeatureImportance.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnxmlp_featureimportance_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis.'  'NAME (constant, string) is the name of the feature importance analysis.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis.'  'ID (data, string) is a few-letter code of the feature importance analysis.'  'LABEL (metadata, string) is an extended label of the feature importance analysis.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the NN dataset to be tested on feature importance.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.'  'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.'  'BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.'  'D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.'  'BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.'  'SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.'  'PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.'  'CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.'  'STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.'  'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.' };
+			nnxmlp_featureimportance_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis.'  'NAME (constant, string) is the name of the feature importance analysis.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis.'  'ID (data, string) is a few-letter code of the feature importance analysis.'  'LABEL (metadata, string) is an extended label of the feature importance analysis.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the NN dataset to be tested on feature importance.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.'  'BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.'  'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.'  'D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.'  'BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.'  'SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.'  'PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.'  'CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.'  'STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.'  'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.' };
 			prop_description = nnxmlp_featureimportance_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -667,22 +667,22 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					prop_settings = Format.getFormatSettings(4);
 				case 18 % NNxMLP_FeatureImportance.INTERRUPTIBLE
 					prop_settings = Format.getFormatSettings(11);
-				case 19 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
+				case 19 % NNxMLP_FeatureImportance.BASELINE_INPUTS
 					prop_settings = Format.getFormatSettings(16);
-				case 20 % NNxMLP_FeatureImportance.BASELINE_INPUTS
+				case 20 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
 					prop_settings = Format.getFormatSettings(16);
 				case 21 % NNxMLP_FeatureImportance.D_SHUFFLED
 					prop_settings = 'NNDataset';
 				case 22 % NNxMLP_FeatureImportance.BASELINE_LOSS
 					prop_settings = Format.getFormatSettings(11);
 				case 23 % NNxMLP_FeatureImportance.SHUFFLED_LOSS
-					prop_settings = Format.getFormatSettings(16);
+					prop_settings = Format.getFormatSettings(12);
 				case 24 % NNxMLP_FeatureImportance.PERM_SHUFFLED_LOSS
 					prop_settings = Format.getFormatSettings(16);
 				case 25 % NNxMLP_FeatureImportance.CONFIDENCE_INTERVALS
 					prop_settings = Format.getFormatSettings(12);
 				case 26 % NNxMLP_FeatureImportance.STAT_SIG_MASK
-					prop_settings = Format.getFormatSettings(16);
+					prop_settings = Format.getFormatSettings(12);
 				case 27 % NNxMLP_FeatureImportance.FEATURE_IMPORTANCE
 					prop_settings = Format.getFormatSettings(16);
 				case 28 % NNxMLP_FeatureImportance.RESHAPED_FEATURE_IMPORTANCE
@@ -742,22 +742,22 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					prop_default = true;
 				case 18 % NNxMLP_FeatureImportance.INTERRUPTIBLE
 					prop_default = .001;
-				case 19 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
+				case 19 % NNxMLP_FeatureImportance.BASELINE_INPUTS
 					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
-				case 20 % NNxMLP_FeatureImportance.BASELINE_INPUTS
+				case 20 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
 					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 21 % NNxMLP_FeatureImportance.D_SHUFFLED
 					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 22 % NNxMLP_FeatureImportance.BASELINE_LOSS
 					prop_default = Format.getFormatDefault(11, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 23 % NNxMLP_FeatureImportance.SHUFFLED_LOSS
-					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
+					prop_default = Format.getFormatDefault(12, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 24 % NNxMLP_FeatureImportance.PERM_SHUFFLED_LOSS
 					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 25 % NNxMLP_FeatureImportance.CONFIDENCE_INTERVALS
 					prop_default = Format.getFormatDefault(12, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 26 % NNxMLP_FeatureImportance.STAT_SIG_MASK
-					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
+					prop_default = Format.getFormatDefault(12, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 27 % NNxMLP_FeatureImportance.FEATURE_IMPORTANCE
 					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 28 % NNxMLP_FeatureImportance.RESHAPED_FEATURE_IMPORTANCE
@@ -872,22 +872,22 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					check = Format.checkFormat(4, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 18 % NNxMLP_FeatureImportance.INTERRUPTIBLE
 					check = Format.checkFormat(11, value, NNxMLP_FeatureImportance.getPropSettings(prop));
-				case 19 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
+				case 19 % NNxMLP_FeatureImportance.BASELINE_INPUTS
 					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
-				case 20 % NNxMLP_FeatureImportance.BASELINE_INPUTS
+				case 20 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
 					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 21 % NNxMLP_FeatureImportance.D_SHUFFLED
 					check = Format.checkFormat(8, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 22 % NNxMLP_FeatureImportance.BASELINE_LOSS
 					check = Format.checkFormat(11, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 23 % NNxMLP_FeatureImportance.SHUFFLED_LOSS
-					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
+					check = Format.checkFormat(12, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 24 % NNxMLP_FeatureImportance.PERM_SHUFFLED_LOSS
 					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 25 % NNxMLP_FeatureImportance.CONFIDENCE_INTERVALS
 					check = Format.checkFormat(12, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 26 % NNxMLP_FeatureImportance.STAT_SIG_MASK
-					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
+					check = Format.checkFormat(12, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 27 % NNxMLP_FeatureImportance.FEATURE_IMPORTANCE
 					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance.getPropSettings(prop));
 				case 28 % NNxMLP_FeatureImportance.RESHAPED_FEATURE_IMPORTANCE
@@ -941,8 +941,15 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 19 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
+				case 19 % NNxMLP_FeatureImportance.BASELINE_INPUTS
 					rng_settings_ = rng(); rng(nnfi.getPropSeed(19), 'twister')
+					
+					value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
+					
+					rng(rng_settings_)
+					
+				case 20 % NNxMLP_FeatureImportance.COMP_FEATURE_INDICES
+					rng_settings_ = rng(); rng(nnfi.getPropSeed(20), 'twister')
 					
 					inputs = cell2mat(nnfi.memorize('BASELINE_INPUTS'));
 					num_feature = size(inputs, 2);
@@ -950,16 +957,9 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case 20 % NNxMLP_FeatureImportance.BASELINE_INPUTS
-					rng_settings_ = rng(); rng(nnfi.getPropSeed(20), 'twister')
-					
-					value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
-					
-					rng(rng_settings_)
-					
 				case 21 % NNxMLP_FeatureImportance.D_SHUFFLED
 					if isempty(varargin)
-					    value = {};
+					    value = NNDataset();
 					    return
 					end
 					comp_feature_combination = varargin{1}; % the composite indexes to be shuffled
@@ -1000,21 +1000,37 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					net = nn.get('MODEL');
 					inputs = cell2mat(nnfi.memorize('BASELINE_INPUTS'));
 					targets = nn.get('TARGETS', d);
-					value = crossentropy(net.predict(inputs), targets);
+					if isempty(inputs)
+					    baseline_loss = 0;
+					else
+					    baseline_loss = crossentropy(net.predict(inputs), targets);
+					end
+					value = baseline_loss;
 					
 					rng(rng_settings_)
 					
 				case 23 % NNxMLP_FeatureImportance.SHUFFLED_LOSS
+					if isempty(varargin)
+					    value = [];
+					    return
+					end
 					seed = varargin{1};
 					rng(seed, 'twister')
 					
+					shuffled_loss = [];
 					d = nnfi.get('D');
+					if isa(d.getr('DP_DICT'), 'NoValue')
+					    value = shuffled_loss;
+					    return
+					end
+					
 					nn = nnfi.get('NN');
 					targets = nn.get('TARGETS', d);
 					
 					comp_feature_indices = nnfi.get('COMP_FEATURE_INDICES');
 					num_comp_feature_combinations = length(comp_feature_indices);
 					leap_parallel = 2^10;
+					shuffled_loss = [];
 					
 					start = tic;
 					for j = 1:leap_parallel:num_comp_feature_combinations
@@ -1067,6 +1083,10 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					rng(rng_settings_)
 					
 				case 25 % NNxMLP_FeatureImportance.CONFIDENCE_INTERVALS
+					if isempty(varargin)
+					    value = [];
+					    return
+					end
 					data = varargin{1};
 					sig_level = varargin{2};
 					sampleMean = mean(data); % Mean of the data
@@ -1091,6 +1111,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					    sig_level = sig_level / num_comp_feature_combinations;
 					end
 					
+					significant_flags = [];
 					for i = 1:num_comp_feature_combinations
 					    perm_values = squeeze(perm_shuffled_loss(:, i));
 					    confidenceInterval = nnfi.get('CONFIDENCE_INTERVALS', perm_values, sig_level);
@@ -1130,7 +1151,12 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 					
 				case 28 % NNxMLP_FeatureImportance.RESHAPED_FEATURE_IMPORTANCE
 					cell1 = nnfi.get('FEATURE_IMPORTANCE');
-					cell2 = nnfi.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+					d = nnfi.get('D');
+					if isa(d.getr('DP_DICT'), 'NoValue')
+					    value = {};
+					    return
+					end
+					cell2 = d.get('IT', 1).get('INPUT');
 					if ~isequal(numel(cell1), numel(cell2)) 
 					    cell1 = nnfi.get('MAP_TO_CELL', cell2mat(cell1), cell2);
 					end

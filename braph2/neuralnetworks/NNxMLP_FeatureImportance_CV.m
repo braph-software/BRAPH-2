@@ -888,6 +888,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					d_list = nnficv.get('NNCV').get('D_LIST');
 					nn_list = nnficv.get('NNCV').get('NN_LIST');
+					fi_list = {};
 					for i = 1:length(d_list)
 					    fi = fi_template.copy();
 					    d = d_list{i};
@@ -902,7 +903,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 				case 13 % NNxMLP_FeatureImportance_CV.PERM_SEEDS
 					rng_settings_ = rng(); rng(nnficv.getPropSeed(13), 'twister')
 					
-					value = randi(intmax('uint32'), 1, nnfi.get('P'));
+					value = randi(intmax('uint32'), 1, nnficv.get('P'));
 					
 					rng(rng_settings_)
 					
@@ -921,6 +922,10 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					cell1 = nnficv.get('AV_FEATURE_IMPORTANCE');
 					datasets = nnficv.get('NNCV').get('D_LIST');
+					if isempty(datasets)
+					    value = cell1;
+					    return
+					end
 					cell2 = datasets{1}.get('DP_DICT').get('IT', 1).get('INPUT');
 					if ~isequal(numel(cell1), numel(cell2)) 
 					    cell1 = nnficv.get('MAP_TO_CELL', cell2mat(cell1), cell2);

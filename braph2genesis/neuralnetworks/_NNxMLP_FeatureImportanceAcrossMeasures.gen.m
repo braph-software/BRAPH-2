@@ -123,6 +123,10 @@ pr = PanelPropCell('EL', nnfiam, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures.
 COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.
 %%%% ¡calculate!
 input_dataset = nnfiam.get('D');
+if isa(input_dataset.getr('DP_DICT'), 'NoValue')
+    value = {};
+    return
+end
 m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
 example_input_cell = input_dataset.get('DP_DICT').get('IT', 1).get('INPUT');
 for i = 1:length(m_list)
