@@ -21,12 +21,13 @@ For *connectivity-functional multiplex data*, you will upload two folders, one c
 >
 > [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
-> [Adding Covariates](#adding-covariates)
+> [Adding Covariates](#Adding-Covariates)
 >
 
 
 
 
+<a id="Generation of Example Data"></a>
 ## Generation of Example Data  [⬆](#Table-of-Contents)
 
 If you do not have the "Example data CON\_FUN\_MP XLS" folder inside "connectivity-functional multiplex", then you can generate it by running the commands in Code 1.
@@ -43,6 +44,7 @@ create_data_CON_FUN_MP_TXT()  % [2]
 [2] generates the example connectivity-functional multiplex XLS data folder.
 
 
+<a id="Upload the Group Data"></a>
 ## Upload the Group Data  [⬆](#Table-of-Contents)
 
 The second step after you have selected a brain atlas is to upload the group data. You can open an analysis or comparison by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data. First, you need to upload the connectivity data for a group by clicking "Load Group CON from XLS" (Figure 2a). After that, you can upload the functional data for the same group by clicking "Load Group FUN from XLS" (Figure 2b). Finally, press "Combine Groups" in order to create a group of subjects with connectivity-functional multiplex data (Figure 2c).
@@ -61,6 +63,7 @@ The second step after you have selected a brain atlas is to upload the group dat
 
 
 
+<a id="Visualize the Group Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)
 
 After completing the steps described in Figure 2, you can see the data (Figure 3a), and change the Group ID, name, and notes (Figure 3b). 
@@ -73,6 +76,7 @@ After completing the steps described in Figure 2, you can see the data (Figure 3
 > **a** The GUI of the group's connectivity multiplex data. 
 > 	**b** The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 
+<a id="Visualize Each Subject's Data"></a>
 ## Visualize Each Subject's Data  [⬆](#Table-of-Contents)
 
 Finally, you can open each subject's connectivity-functional multiplex data by selecting the subject, right click, and select ''Open selection'' (Figure 4a), which shows the matrix values from the connectivity layer and the functional layer (Figure 4b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the values of its connectivity and functional data.
@@ -86,6 +90,7 @@ Finally, you can open each subject's connectivity-functional multiplex data by s
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the connectivity and functional data.
 
 
+<a id="Preparation of the Data to Be Imported"></a>
 ## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
 To be able to import connectivity-functional multiplex data into BRAPH 2, you create a folder with the name of your group, and within this group folder, you need to include a folder for the connectivity data and a folder for the functional data. The organization of the connectivity folder can be checked at the tutorial [Group of Subjects with Connectivity Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con), and the organization of the functional folder can be check at the tutorial [Group of Subjects with Functional Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_fun). Below in Figure 5 you can see the directory structure:
@@ -99,7 +104,7 @@ To be able to import connectivity-functional multiplex data into BRAPH 2, you cr
 > 	**a** The connectivity matrices from each subject and each layer should be included in one folder (for example, "CON_MP_group_1_XLS"). 
 > 	**b** Each matrix should contain the connectivity values between each pair of brain regions denoted by the rows and columns. In this example, the (simulated) values in the matrix correspond to the fractional anisotropy (white matter integrity) of anatomical connections derived from diffusion-weighted imaging.
 
-<a id="Adding-Covariates"></a>
+<a id="Adding Covariates"></a>
 ## Adding Covariates  [⬆](#Table-of-Contents)
 	
 It is very common to have *variables of interest* (i.e., *covariates* and *correlates*) in an analysis. In BRAPH 2, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by ".vois". It is only necessary to add information to the connectivity folder and not the functional folder if you want to include covariates; however, if you already have the information in the functional folder, there won’t be any issues.
