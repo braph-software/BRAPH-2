@@ -8,6 +8,9 @@ and analyzes them using weighted undirected graphs.
 %%% ¡seealso!
 SubjectCON, GraphWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

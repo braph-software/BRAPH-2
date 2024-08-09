@@ -7,6 +7,9 @@ ETA_IL tests the prop itemlist.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

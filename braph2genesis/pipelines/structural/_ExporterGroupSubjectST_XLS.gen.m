@@ -17,6 +17,9 @@ The variables of interest (if existing) are saved in another XLSX file
 %%% ¡seealso!
 Group, SubjectST, ImporterGroupSubjectST_XLS
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

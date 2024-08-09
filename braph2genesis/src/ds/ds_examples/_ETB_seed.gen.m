@@ -4,6 +4,9 @@ ETB_seed < ConcreteElement (et, test B seeded randomness) tests seeded randomnes
 %%% ¡description!
 ETB_seed tests the use of seeded randomness.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

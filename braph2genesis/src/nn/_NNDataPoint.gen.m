@@ -9,6 +9,9 @@ Its subclasses shall be specifically designed to cater to different use cases su
 %%% ¡seealso!
 NNData
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

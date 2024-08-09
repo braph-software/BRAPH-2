@@ -4,6 +4,9 @@ ETC_calc_2 < ETC_calc_1 (et, test C calculate) tests calculate.
 %%% ¡description!
 ETC_calc_2 tests that calculate still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

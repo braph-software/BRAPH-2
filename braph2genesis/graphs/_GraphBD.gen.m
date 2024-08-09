@@ -5,6 +5,9 @@ GraphBD < Graph (g, binary directed graph) is a binary directed graph.
 In a binary directed graph (GraphBD), the edges are directed and they can be 
  either 0 (absence of connection) or 1 (existence of connection).
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

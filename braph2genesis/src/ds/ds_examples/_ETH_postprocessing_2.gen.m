@@ -4,6 +4,9 @@ ETH_postprocessing_2 < ETH_postprocessing_1 (et, test H postprocessing) tests po
 %%% ¡description!
 ETH_postprocessing_2 tests that postprocessing still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

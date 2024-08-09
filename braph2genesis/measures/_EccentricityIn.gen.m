@@ -5,6 +5,9 @@ EccentricityIn < Measure (m, in-eccentricity) is the graph In-Eccentricity.
 The In-Eccentricity (EccentricityIn) of a node is the maximal shortest in-path length 
 between a node and any other node within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

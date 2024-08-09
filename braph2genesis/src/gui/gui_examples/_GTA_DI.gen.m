@@ -7,6 +7,9 @@ GTA_DI tests PanelPropIDict.
 %%% ¡seealso!
 PanelPropIDict
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

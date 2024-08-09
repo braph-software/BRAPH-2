@@ -9,6 +9,9 @@ SeparateGroups_CON_FUN_MP separates a group of subjects with connectivity
 %%% ¡seealso!
 SubjectCON_FUN_MP, SubjectCON, SubjectFUN, CombineGroups_CON_FUN
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

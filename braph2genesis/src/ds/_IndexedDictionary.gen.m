@@ -9,6 +9,9 @@ An Indexed Dictionary (IndexedDictionary) provides the methods necessary
  category PARAMETER or DATA, and IT is an element of a class defined in the 
  constructor using the property IT_CLASS.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

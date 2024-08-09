@@ -8,6 +8,9 @@ The Multiplex Core-Periphery (MultiplexCP) of a node is the value of the rank co
  multirichness coefficients that are between 0 and 1, and add up to one; 
  the default coefficients are (1/layernumber).
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

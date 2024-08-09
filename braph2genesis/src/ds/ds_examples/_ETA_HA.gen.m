@@ -7,6 +7,9 @@ ETA_HA tests the prop handle.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

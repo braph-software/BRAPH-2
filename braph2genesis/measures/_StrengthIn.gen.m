@@ -6,6 +6,9 @@ The In-Strength (StrengthIn) of a graph is the sum of all weights of the inward 
  connected to a node within a layer, i.e., it is the sum of the columns of 
  the adjacency matrix. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

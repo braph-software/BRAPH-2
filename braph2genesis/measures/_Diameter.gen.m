@@ -4,6 +4,9 @@ Diameter < Measure (m, diameter) is the graph Diameter.
 %%% ¡description!
 The Diameter (Diameter) is the maximum eccentricity among the vertices within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

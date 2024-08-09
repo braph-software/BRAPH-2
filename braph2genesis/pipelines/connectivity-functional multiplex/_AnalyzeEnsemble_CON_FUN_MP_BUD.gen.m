@@ -8,6 +8,9 @@ and functional multiplex data using binary undirected graphs at fixed densities.
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

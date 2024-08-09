@@ -6,6 +6,9 @@ The Average In-Strength (StrengthInAv) of a graph is the mean of the sum of all 
 connected to a node within a layer, i.e., it is the sum of the columns of 
 the adjacency matrix. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

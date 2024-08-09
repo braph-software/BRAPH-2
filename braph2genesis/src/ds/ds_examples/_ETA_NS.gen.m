@@ -7,6 +7,9 @@ ETA_NS tests the prop smatrix.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

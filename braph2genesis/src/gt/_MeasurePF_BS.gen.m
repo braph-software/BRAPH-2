@@ -7,6 +7,9 @@ A Panel Figure for Binodal Superglobal Measure (MeasurePF_BS) manages the basic 
 %%% ¡seealso!
 Measure
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

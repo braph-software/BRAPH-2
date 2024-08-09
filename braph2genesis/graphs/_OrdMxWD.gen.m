@@ -8,6 +8,9 @@ In an ordinal multiplex weighted directed graph (OrdMxWD), all layers have the s
 There are connections between layers connecting the corresponding nodes.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

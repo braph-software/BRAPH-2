@@ -9,6 +9,9 @@ The receiver operating characteristic panel for cross-validation MLP classifier
 %%% ¡seealso!
 NNClassifierMLP_CrossValidation
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

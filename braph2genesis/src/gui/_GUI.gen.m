@@ -28,6 +28,9 @@ CALLBACK - These are the public callbacks:
 %%% ¡seealso!
 uifigure, GUIElement, GUIFig
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

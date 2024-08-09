@@ -7,6 +7,9 @@ GTA_EM tests the PanelProp.
 %%% ¡seealso!
 PanelPropEmpty
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

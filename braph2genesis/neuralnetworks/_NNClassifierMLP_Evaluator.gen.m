@@ -8,6 +8,9 @@ NNClassifierMLP_Evaluator evaluates the performance of the trained classifier wi
 %%% ¡seealso!
 NNDataPoint_CON_CLA, NNClassifierMLP
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ GTA_CO tests PanelPropColor.
 %%% ¡seealso!
 PanelPropColor
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

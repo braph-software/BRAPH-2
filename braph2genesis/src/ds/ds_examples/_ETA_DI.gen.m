@@ -7,6 +7,9 @@ ETA_DI tests the prop idict.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

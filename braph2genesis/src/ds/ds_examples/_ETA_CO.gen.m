@@ -7,6 +7,9 @@ ETA_CO tests the prop color.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

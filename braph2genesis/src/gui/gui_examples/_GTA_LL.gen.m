@@ -7,6 +7,9 @@ GTA_LL tests PanelPropCell.
 %%% ¡seealso!
 PanelPropCell
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

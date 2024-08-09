@@ -5,6 +5,9 @@ GlobalEfficiencyIn < Distance (m, in-global efficiency) is the graph In-Global E
 The In-Global Efficiency (GlobalEfficiencyIn) is the average inverse shortest in-path length within each layer. 
 It is inversely related to the characteristic in-path length.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

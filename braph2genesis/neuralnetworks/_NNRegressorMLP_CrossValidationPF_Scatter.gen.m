@@ -9,6 +9,9 @@ The scatter plot panel for a cross-validation with MLP regressors
 %%% ¡seealso!
 NNRegressorMLP_CrossValidation
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -6,6 +6,9 @@ In a weighted undirected graph (GraphWU), the edges are are undirected and assoc
  with a real number between 0 and 1 indicating the strength of the connection.
 The connectivity matrix is symmetric.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

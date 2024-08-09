@@ -8,6 +8,9 @@ fixed density and analyzes them using binary undirected graphs.
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

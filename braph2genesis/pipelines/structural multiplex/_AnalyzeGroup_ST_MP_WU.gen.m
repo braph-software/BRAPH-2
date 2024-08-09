@@ -9,6 +9,9 @@ or binary undirected multiplexes with fixed densities.
 %%% ¡seealso!
 SubjectST_MP, MultiplexWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -5,6 +5,9 @@ PathLength < Measure (m, pathlength) is the graph Path Length.
 The Path Length (PathLength) is the average shortest path length of one node to all 
  other nodes within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

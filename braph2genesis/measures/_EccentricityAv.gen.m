@@ -4,6 +4,9 @@ EccentricityAv < Eccentricity (m, average eccentricity) is the graph Average Ecc
 %%% ¡description!
 The Average Eccentricity (EccentricityAv) of a graph is the sum of the nodal eccentricities divided by their number within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

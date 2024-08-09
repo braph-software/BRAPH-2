@@ -5,6 +5,9 @@ MultilayerM < MultilayerCommunity  (m, multilayer modularity) is the graph Multi
 The Multilayer Modularity (MultilayerM) of a multilayer graph is the multilayer 
 quality function Q of the resulting partition of the multilayer network.  
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

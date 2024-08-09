@@ -7,6 +7,9 @@ AnalyzeGroup_ST_BUT uses structural data at fixed threshold and analyzes them us
 %%% ¡seealso!
 SubjectST, MultigraphBUT
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

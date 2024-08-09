@@ -7,6 +7,9 @@ GTA_CL tests PanelPropClassList.
 %%% ¡seealso!
 PanelPropClassList
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

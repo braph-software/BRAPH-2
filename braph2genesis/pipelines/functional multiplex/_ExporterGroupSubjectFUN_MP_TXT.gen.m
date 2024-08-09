@@ -17,6 +17,9 @@ The variables of interest (if existing) are saved in another tab-separated
 %%% ¡seealso!
 Group, SubjectFUN_MP, ImporterGroupSubjectFUN_MP_TXT
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

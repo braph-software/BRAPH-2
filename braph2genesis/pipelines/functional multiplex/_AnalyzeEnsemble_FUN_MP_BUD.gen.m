@@ -8,6 +8,9 @@ using binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectFUN_MP, MultiplexBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ GTA_IL tests PanelPropItemList.
 %%% ¡seealso!
 PanelPropItemList
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

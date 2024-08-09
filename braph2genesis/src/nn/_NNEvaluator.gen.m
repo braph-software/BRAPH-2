@@ -9,6 +9,9 @@ Its subclasses shall be specifically designed to cater to different evaluation c
 %%% ¡seealso!
 NNDataPoint, NNDataset, NNBase
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

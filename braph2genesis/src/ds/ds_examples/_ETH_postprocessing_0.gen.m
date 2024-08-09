@@ -4,6 +4,9 @@ ETH_postprocessing_0 < ConcreteElement (et, test H postprocessing) tests postpro
 %%% ¡description!
 ETH_postprocessing_0 tests the use of postprocessing.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

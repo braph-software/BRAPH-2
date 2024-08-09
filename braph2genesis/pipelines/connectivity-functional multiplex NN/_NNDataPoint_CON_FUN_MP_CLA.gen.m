@@ -11,6 +11,9 @@ The target is obtained from the variables of interest of the subject.
 %%% ¡seealso!
 SubjectCON_FUN_MP
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

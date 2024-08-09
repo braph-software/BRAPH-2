@@ -8,6 +8,9 @@ connectivity and functional multiplex data using weighted undirected graphs.
 %%% ¡seealso!
 SubjectCON_FUN_MP, MultiplexWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

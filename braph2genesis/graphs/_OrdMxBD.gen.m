@@ -7,6 +7,9 @@ In an ordinal multiplex binary directed graph (OrdMxBD), all layers have the sam
  or 1 (existence of connection).
 There are connections between layers connecting the corresponding nodes.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

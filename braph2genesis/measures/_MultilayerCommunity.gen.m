@@ -6,6 +6,9 @@ The Multilayer Community Structure (MultilayerCommunity) of a multilayer graph i
  the network into non-overlapping groups of nodes which maximizes the number 
  of within group edges, and minimizes the number of between group edges.
 
+%%% ¡build!
+1
+
 %% ¡layout!
     
 %%% ¡prop!

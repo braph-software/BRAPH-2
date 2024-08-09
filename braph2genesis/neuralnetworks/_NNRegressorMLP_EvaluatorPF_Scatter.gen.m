@@ -9,6 +9,9 @@ The scatter plot panel for an evaluator with a MLP regressor
 %%% ¡seealso!
 NNRegressorMLP_Evaluator
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

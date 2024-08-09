@@ -8,6 +8,9 @@ analyzes them using weighted undirected graphs.
 %%% ¡seealso!
 SubjectCON_MP, OrdMxWU
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -16,6 +16,9 @@ The variables of interest (if existing) are saved in another tab-separated
 %%% ¡seealso!
 Group, SunbjectFUN, ImporterGroupSubjectFUN_TXT
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

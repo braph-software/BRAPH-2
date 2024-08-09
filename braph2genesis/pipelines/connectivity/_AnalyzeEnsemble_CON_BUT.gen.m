@@ -8,6 +8,9 @@ connectivity data using binary undirected multigraphs with fixed thresholds.
 %%% ¡seealso!
 SubjectCON, MultigraphBUT
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

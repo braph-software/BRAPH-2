@@ -4,6 +4,9 @@ ETI_recursive < ConcreteElement (et, test I recursive elements) tests recursive 
 %%% ¡description!
 ETI_recursive tests the use of recursive elements.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

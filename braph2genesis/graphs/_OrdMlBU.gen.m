@@ -11,6 +11,9 @@ The layers are connected in an ordinal fashion, i.e., only consecutive layers ar
 On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized.
 On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

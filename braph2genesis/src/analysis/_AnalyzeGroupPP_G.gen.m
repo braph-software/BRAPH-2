@@ -8,6 +8,9 @@ It is intended to be used only with the property G of AnalyzeGroup.
 %%% ¡seealso!
 uitable, AnalyzeGroup, Graph, Measure
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

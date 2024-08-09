@@ -58,7 +58,7 @@ disp(' ')
 %% ROLLCALL FUNCTIONS
     function bool = compile_dir(dir)
         bool = any(ismember({['+' dir], ['+' dir '*']}, rollcall)) ...
-            || ~any(ismember(['-' dir], rollcall));
+            || ~any(ismember({['-' dir], ['-' dir '*']}, rollcall));
     end
     function bool = compile_el(dir, el)
         if any(ismember(['-' dir], rollcall))
@@ -803,5 +803,18 @@ if compile_dir('sandbox')
         end
     end
 end
+
+%% LOG ELEMENT BUILD
+build_log{1, 1} = 'BRAPH2';
+build_log{1, 2} = BRAPH2.BUILD;
+el_list = Element.getSubclasses();
+for i = 1:numel(el_list)
+    el = el_list{i};
+    build_log{1 + i, 1} = el;
+    build_log{1 + i, 2} = Element.getBuild(el);
+end
+
+save([target_dir filesep() 'build_log.mat'], 'build_log', 'run_number', 'rollcall')
+writecell(build_log, [target_dir filesep() 'build_log.txt'])
 
 end

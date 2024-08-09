@@ -7,6 +7,9 @@ A Panel Figure for Global Superglobal Measure (MeasurePF_GS) manages the basic f
 %%% ¡seealso!
 Measure
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

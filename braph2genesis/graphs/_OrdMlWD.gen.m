@@ -10,6 +10,9 @@ The layers are connected in an ordinal fashion, i.e., only consecutive layers ar
 On the diagonal of the supra adjacency matrix, matrices are dediagonalized, semipositivized, and standardized.
 On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and standardized.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

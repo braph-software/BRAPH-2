@@ -4,6 +4,9 @@ ETD_checkprop_3 < ETD_checkprop_2 (et, test D check_prop) tests check_prop.
 %%% ¡description!
 ETD_checkprop_3 tests the update of check_prop skipping one generation.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

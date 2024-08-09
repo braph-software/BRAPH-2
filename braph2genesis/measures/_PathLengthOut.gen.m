@@ -4,6 +4,9 @@ PathLengthOut < Measure (m, out-path length) is the graph Out-Path Length.
 %%% ¡description!
 The Out-Path Length (PathLengthOut) is the average shortest out-path lengths of one node to all other nodes without a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

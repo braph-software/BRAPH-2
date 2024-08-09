@@ -8,6 +8,9 @@ connectivity data using binary undirected multigraphs with fixed densities.
 %%% ¡seealso!
 SubjectCON, MultigraphBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

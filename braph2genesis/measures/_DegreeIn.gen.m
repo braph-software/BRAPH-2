@@ -5,6 +5,9 @@ DegreeIn < Measure (m, in-degree) is the graph In-Degree.
 The In-Degree (DegreeIn) of a node is the number of inward edges connected to a node within a layer. 
 Connection weights are ignored in calculations.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

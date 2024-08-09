@@ -5,6 +5,9 @@ Degree < Measure (m, degree) is the graph Degree.
 The Degree (Degree) of a node is the number of edges connected to the node within a layer. 
  Connection weights are ignored in calculations.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

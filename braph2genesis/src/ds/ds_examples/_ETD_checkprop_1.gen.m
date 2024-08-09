@@ -4,6 +4,9 @@ ETD_checkprop_1 < ETD_checkprop_0 (et, test D check_prop) tests check_prop.
 %%% ¡description!
 ETD_checkprop_1 tests the update of check_prop.
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ GTA_LN tests PanelPropLine.
 %%% ¡seealso!
 PanelPropLine
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

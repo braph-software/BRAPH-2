@@ -6,6 +6,9 @@ The Average Out-Strength (StrengthOutAv) of a graph is the mean of the sum of al
 connected to a node within a layer, i.e., it is the sum of the rows of 
 the adjacency matrix. 
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

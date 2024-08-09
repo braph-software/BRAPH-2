@@ -5,6 +5,9 @@ StrengthAv < Strength (m, average strength) is the graph Average Strength.
 The Average Strength (StrengthAv) of a graph is the average of the sum of all weights of 
  the edges connected to a node within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

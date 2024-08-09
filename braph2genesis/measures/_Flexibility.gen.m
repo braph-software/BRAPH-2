@@ -9,6 +9,9 @@ multilayer networks (e.g. temporal, changes are possible only between
 adjacent layers, whereas in categorical multilayer networks, 
 community assignment changes are possible between any pairs of layers.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

@@ -7,6 +7,9 @@ ETA_CA tests the prop class.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

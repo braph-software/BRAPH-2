@@ -8,6 +8,9 @@ In a multiplex binary undirected graph (MultiplexBU), all layers have the same n
 The connectivity matrices are symmetric.
 There are connections between layers connecting the corresponding nodes.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

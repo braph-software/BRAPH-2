@@ -7,6 +7,9 @@ AnalyzeGroup_ST_BUD uses structural data at fixed density and analyzes them usin
 %%% ¡seealso!
 SubjectST, MultigraphBUD
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

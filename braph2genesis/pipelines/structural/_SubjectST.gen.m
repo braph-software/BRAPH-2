@@ -7,6 +7,9 @@ Subject with structural data (e.g. cortical thickness obtaibed from strcutural M
 %%% ¡seealso!
 ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS
 
+%%% ¡build!
+1
+
 %% ¡gui!
 
 %%% ¡menu_import!

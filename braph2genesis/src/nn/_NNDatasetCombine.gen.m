@@ -9,6 +9,9 @@ and any overlapping datapoints are excluded to ensure data consistency.
 %%% ¡seealso!
 NNDataset, NNDatasetSplit
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

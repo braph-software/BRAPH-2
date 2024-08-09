@@ -4,6 +4,9 @@ ETE_checkvalue_2 < ETE_checkvalue_1 (et, test E check_value) tests check_value.
 %%% ¡description!
 ETE_checkvalue_2 tests that check_value still uses the previous generation.
 
+%%% ¡build!
+1
+
 %% ¡tests!
 
 %%% ¡test!

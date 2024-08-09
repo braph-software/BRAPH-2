@@ -7,6 +7,9 @@ This graph analysis (AnalyzeEnsemble_CON_MP_WU) analyzes connectivity multiplex 
 %%% ¡seealso!
 SubjectCON_MP, MultiplexWU.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

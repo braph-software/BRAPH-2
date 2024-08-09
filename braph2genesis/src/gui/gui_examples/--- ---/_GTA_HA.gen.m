@@ -7,6 +7,9 @@ GTA_HA tests PanelPropHandle.
 %%% ¡seealso!
 PanelPropHandle
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

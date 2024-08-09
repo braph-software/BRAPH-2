@@ -9,6 +9,9 @@ binarized at different thresholds.
 The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

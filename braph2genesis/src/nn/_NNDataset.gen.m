@@ -8,6 +8,9 @@ NNDataset can contain all the necessary inputs and targets.
 %%% ¡seealso!
 NNDataPoint, NNDatasetCombine, NNDatasetSplit
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

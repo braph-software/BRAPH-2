@@ -7,6 +7,9 @@ GTA_ST_TA tests PanelPropStringTextArea.
 %%% ¡seealso!
 PanelPropStringTextArea
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

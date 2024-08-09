@@ -4,6 +4,9 @@ ETC_calc_0 < ConcreteElement (et, test C calculate) tests calculate.
 %%% ¡description!
 ETC_calc_0 tests the use of calculate and the fact that it ignores the default.
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

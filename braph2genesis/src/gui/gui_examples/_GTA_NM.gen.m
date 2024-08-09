@@ -7,6 +7,9 @@ GTA_NM tests PanelPropMatrix.
 %%% ¡seealso!
 PanelPropMatrix
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

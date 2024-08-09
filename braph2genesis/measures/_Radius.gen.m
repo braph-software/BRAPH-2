@@ -4,6 +4,9 @@ Radius < Measure (m, radius) is the graph Radius.
 %%% ¡description!
 The Radius (Radius) is the minimum eccentricity among the vertices within a layer.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

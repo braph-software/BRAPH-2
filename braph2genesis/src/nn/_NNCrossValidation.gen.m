@@ -11,6 +11,9 @@ To train all the neural networks for all folds, use: nncv.get('TRAIN')
 %%% ¡seealso!
 NNDataset, NNEvaluator, NNBase
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

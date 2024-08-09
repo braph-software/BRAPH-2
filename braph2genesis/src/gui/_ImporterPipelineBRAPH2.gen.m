@@ -8,6 +8,9 @@ The format of the BRAPH2 file should include the label, description and at least
 %%% ¡seealso!
 Importer, Pipeline, ExporterPipelineBRAPH2
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

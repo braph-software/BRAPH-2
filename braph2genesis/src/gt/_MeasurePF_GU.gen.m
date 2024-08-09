@@ -7,6 +7,9 @@ A Panel Figure for Global Unilayer Measure (MeasurePF_GU) manages the basic func
 %%% ¡seealso!
 Measure
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

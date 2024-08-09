@@ -8,6 +8,9 @@ NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with
 %%% ¡seealso!
 NNDataPoint_CON_REG, NNRegressorMLP
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

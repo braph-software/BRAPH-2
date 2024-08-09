@@ -7,6 +7,9 @@ ComparisonEnsemblePF_GS manages the basic functionalities to plot of a global su
 %%% ¡seealso!
 ComparisonEnsemble
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

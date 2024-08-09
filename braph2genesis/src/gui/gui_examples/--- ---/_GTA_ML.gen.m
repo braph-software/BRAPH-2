@@ -7,6 +7,9 @@ GTA_ML tests PanelPropNet.
 %%% ¡seealso!
 PanelPropNet
 
+%%% ¡build!
+1
+
 %% ¡props!
 
 %%% ¡prop!

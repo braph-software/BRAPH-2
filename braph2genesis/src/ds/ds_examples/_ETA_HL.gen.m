@@ -7,6 +7,9 @@ ETA_HL tests the prop handlelist.
 %%% ¡seealso!
 Element
 
+%%% ¡build!
+1
+
 %% ¡props_update!
 
 %%% ¡prop!

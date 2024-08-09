@@ -5,6 +5,9 @@ GraphWD < Graph (g, weighted directed graph) is a weighted directed graph.
 In a weighted directed graph (GraphWD), the edges are directed and associated 
  with a real number between 0 and 1 indicating the strength of the connection.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!

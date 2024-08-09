@@ -8,6 +8,9 @@ In a multiplex weighted undirected graph (MultiplexWU), all layers have the same
 The connectivity matrices are symmetric.
 There are connections between layers connecting the corresponding nodes.
 
+%%% ¡build!
+1
+
 %% ¡layout!
 
 %%% ¡prop!
