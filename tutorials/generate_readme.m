@@ -101,13 +101,15 @@ for i = length(codes_start):-1:1
 
     code_notes = regexp(code_code, '¥\\circled{\d*}\\circlednote{(\d*)}{([^¥]*)}¥', 'tokens', 'all');
     code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' % [$1]');
+    code_notes_txt = '';
     for j = 1:1:length(code_notes)
-        code_code = [code_code newline() '[' code_notes{j}{1} '] ' code_notes{j}{2} newline()]; %#ok<AGROW> 
+        code_notes_txt = [code_notes_txt newline() '[' code_notes{j}{1} '] ' code_notes{j}{2} newline()]; %#ok<AGROW> 
     end
 
     document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
         '**Code ' int2str(i) '.** ' code_caption newline() ...
         '````matlab' newline() code_code newline() '````' newline() ...
+        code_notes_txt ...
         document(codes_end(i) + length('\end{lstlisting}'):end)];
 end
 for i = 1:1:length(code_labels)

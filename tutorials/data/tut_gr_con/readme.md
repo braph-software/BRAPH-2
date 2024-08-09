@@ -37,11 +37,11 @@ If you do not have the "Example data CON XLS" folder inside "connectivity", then
 ````matlab
 create_data_CON_XLS()  % [1]
 create_data_CON_TXT() % [2]
+````
+
 [1] generates the example connectivity XLS data folder.
 
 [2] generates the example connectivity TXT data folder.
-
-````
 
 
 ## Open the GUI  [⬆](#Table-of-Contents)
