@@ -31,6 +31,7 @@ document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
 document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
 document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
 document = regexprep(document, '\\emph{([^{}]*)}', '*$1*');  % \emph{...}
+document = regexprep(document, '\$\\_\$', '_');  % $\_$
 
 % table of contents
 sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');

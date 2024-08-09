@@ -20,7 +20,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 >
 > [Visualize Each Subject's Data](#Visualize-Each-Subject's-Data)
 >
-> [Preparation of the Data to be Imported](#Preparation-of-the-Data-to-be-Imported)
+> [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
 > [Adding Covariates](#Adding-Covariates)
 >
@@ -33,7 +33,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 If you do not have the "Example data CON\_MP XLS" folder inside "connectivity multiplex", then you can generate it by running the commands in Code 1.
 
 **Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data CON$\_$MP XLS" folder to the "connectivity multiplex" pipeline folder.
+		This code can be used in the MatLab command line to generate the "Example data CON_MP XLS" folder to the "connectivity multiplex" pipeline folder.
 ````matlab
 create_data_CON_MP_XLS()  % [1]
 create_data_CON_MP_TXT()  % [2]
@@ -98,7 +98,7 @@ Finally, you can open each subject's connectivity multiplex data by selecting th
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the connectivity multiplex data.
 
 
-## Preparation of the Data to be Imported  [⬆](#Table-of-Contents)
+## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
 To be able to import connectivity multiplex data into BRAPH 2, you create a folder with the name of your group, and within this group folder, you need to include the connectivity matrices for each subject and for each layer in a single file in excel or text format. Below you can see how your group directory should look like as well as an example of a brain connectivity matrix.
 
