@@ -55,9 +55,15 @@ document = regexprep(document, '\\tableofcontents', toc);
 
 % (sub)section
 arrow_up_icon = char(11014);
-document = regexprep(document, '\\section{([^{}]*)}', ['## $1  [' arrow_up_icon '](#Table-of-Contents)']);
-document = regexprep(document, '\\subsection{([^{}]*)}',  ['### $1  [' arrow_up_icon '](#Table-of-Contents)']);
-document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['#### $1  [' arrow_up_icon '](#Table-of-Contents)']);
+document = regexprep(document, '\\section{([^{}]*)}', ['<a id="$1"></a>' newline() '## $1  [' arrow_up_icon '](#Table-of-Contents)']);
+document = regexprep(document, '\\subsection{([^{}]*)}',  ['<a id="$1"></a>' newline() '### $1  [' arrow_up_icon '](#Table-of-Contents)']);
+document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['<a id="$1"></a>' newline() '#### $1  [' arrow_up_icon '](#Table-of-Contents)']);
+
+a_start = regexp(document, '<a id="', 'end', 'all');
+a_end = regexp(document, '"></a>', 'start', 'all');
+for i = length(a_start):-1:1
+    document = [document(1:a_start(i) - 1) strrep(document(a_start(i):a_end(i)), ' ', '-') document(a_end(i) + 1:end)];
+end
 
 % itemize
 document = regexprep(document, '\\begin{itemize}', '');
