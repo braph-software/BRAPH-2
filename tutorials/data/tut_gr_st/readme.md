@@ -27,6 +27,7 @@ For *structural data*, you will upload a file containing the structural values f
 
 
 
+<a id="Generation-of-Example-Data"></a>
 ## Generation of Example Data  [⬆](#Table-of-Contents)
 
 If you do not have the "Example data ST XLS" folder inside "structural", then you can generate it by running the commands in Code 1.
@@ -43,6 +44,7 @@ create_data_ST_TXT()  % [2]
 [2] generates the example structural TXT data folder.
 
 
+<a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
@@ -72,6 +74,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > gui.get('SHOW')
 > ````
 
+<a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)
 
 After completing the steps described in Figure 2, you can see the data (Figure 3a), and change the Group ID, name, and notes (Figure 3b). 
@@ -84,6 +87,7 @@ After completing the steps described in Figure 2, you can see the data (Figure 3
 > **a** The GUI of the group's structural data. 
 > 	**b** The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 
+<a id="Visualize-Each-Subject's-Data"></a>
 ## Visualize Each Subject's Data  [⬆](#Table-of-Contents)
 
 Finally, you can open each subject's structural values by selecting the subject, right click, and select "Open selection" (Figure 4a), which shows the structural values (Figure 4b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the structural values.
@@ -97,6 +101,7 @@ Finally, you can open each subject's structural values by selecting the subject,
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the structural values.
 
 
+<a id="Preparation-of-the-Data-to-be-Imported"></a>
 ## Preparation of the Data to be Imported  [⬆](#Table-of-Contents)
 
 To be able to import structural data into BRAPH 2, you need to include the structural values for all subjects in a single file in excel or text format. Below you can see how this file should look like.
@@ -110,6 +115,7 @@ To be able to import structural data into BRAPH 2, you need to include the struc
 > 	**a** The structural values from each subject belonging to the same group should be included in a single file (for example, "ST_Group_1_xlsx"). 
 > 	**b** This file should contain the subject's IDs, label and any relevant notes, followed by the structural values for each brain region belonging to a brain atlas. In this example, the (simulated) values correspond to the cortical thickness of 148 brain regions derived from T1-weighted MRI.
 
+<a id="Adding-Covariates"></a>
 ## Adding Covariates  [⬆](#Table-of-Contents)
 
 

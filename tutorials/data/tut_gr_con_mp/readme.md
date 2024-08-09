@@ -28,6 +28,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 
 
 
+<a id="Generation-of-Example-Data"></a>
 ## Generation of Example Data  [⬆](#Table-of-Contents)
 
 If you do not have the "Example data CON\_MP XLS" folder inside "connectivity multiplex", then you can generate it by running the commands in Code 1.
@@ -44,6 +45,7 @@ create_data_CON_MP_TXT()  % [2]
 [2] generates the example connectivity multiplex TXT data folder.
 
 
+<a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
 
 In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group".
@@ -73,6 +75,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > gui.get('SHOW')
 > ````
 
+<a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)
 
 After completing the steps described in Figure 2, you can see the data (Figure 3a), and change the Group ID, name, and notes (Figure 3b). 
@@ -85,6 +88,7 @@ After completing the steps described in Figure 2, you can see the data (Figure 3
 > **a** The GUI of the group's connectivity multiplex data. 
 > 	**b** The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 
+<a id="Visualize-Each-Subject's-Data"></a>
 ## Visualize Each Subject's Data  [⬆](#Table-of-Contents)
 
 Finally, you can open each subject's connectivity multiplex data by selecting the subject, right click, and select "Open selection" (Figure 4a), which shows the matrix values from layer 1 (Figure 4b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the values of its connectivity multiplex data.
@@ -98,6 +102,7 @@ Finally, you can open each subject's connectivity multiplex data by selecting th
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the connectivity multiplex data.
 
 
+<a id="Preparation-of-the-Data-to-Be-Imported"></a>
 ## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
 To be able to import connectivity multiplex data into BRAPH 2, you create a folder with the name of your group, and within this group folder, you need to include the connectivity matrices for each subject and for each layer in a single file in excel or text format. Below you can see how your group directory should look like as well as an example of a brain connectivity matrix.
@@ -111,6 +116,7 @@ To be able to import connectivity multiplex data into BRAPH 2, you create a fold
 > 	**a** The connectivity matrices from each subject and each layer should be included in one folder (for example, "CON_MP_group_1_XLS"). 
 > 	**b** Each matrix should contain the connectivity values between each pair of brain regions denoted by the rows and columns. In this example, the (simulated) values in the matrix correspond to the fractional anisotropy (white matter integrity) of anatomical connections derived from diffusion weighted imaging.
 
+<a id="Adding-Covariates"></a>
 ## Adding Covariates  [⬆](#Table-of-Contents)
 
 

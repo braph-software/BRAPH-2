@@ -34,6 +34,7 @@ In this tutorial, you will learn how to upload a brain atlas, how to visualize i
 
 
 
+<a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
 
 The brain atlas GUI is the first step in most BRAPH 2 pipelines. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis. The initial step is typically to upload the brain atlas directly (Figure 3c-d) after clicking "Load Atlas". 
@@ -64,6 +65,7 @@ The brain atlas GUI is the first step in most BRAPH 2 pipelines. You can open it
 > ````
 
 
+<a id="Upload-the-Brain-Atlas"></a>
 ## Upload the Brain Atlas  [⬆](#Table-of-Contents)
 
 In the GUI launched in the previous step, you have a menu that can be used to import a brain atlas (Figure 3b) either by loading one of the already-available atlases in the BRAPH 2 folder "atlases" (Figure 3c) or by loading a file you have created. In this example, you upload the Desikan atlas (Figure 3d).
@@ -79,6 +81,7 @@ You can change the ID, name, and notes of the brain atlas (as shown in Figure 4a
 
 
 
+<a id="Ready-Brain-Atlases"></a>
 ## Ready Brain Atlases  [⬆](#Table-of-Contents)
 
 
@@ -100,6 +103,7 @@ They are available in the BRAPH 2 folder "atlases" in XLS and TXT formats, and t
 > 	**Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 
 
+<a id="Create-a-New-Brain-Atlas"></a>
 ## Create a New Brain Atlas  [⬆](#Table-of-Contents)
 
 To create a new brain Atlas in BRAPH 2 format, you should create a new XLS file ("*.xls" or "*.xlsx"), as shown in Figure 6. 
@@ -131,6 +135,7 @@ For example: BrainMeshICBM152.nv
 Then, from row 5, you should include the IDs of the regions of your atlas ($1^{\rm st}$ column), the labels of the regions of your atlas ($2^{\rm nd}$ column), the X, Y and Z coordinates ($3^{\rm rd}$, $4^{\rm th}$, and $5^{\rm th}$ columns), and any relevant notes (in this case, the brain hemisphere, $6^{\rm th}$ column).	
 
 
+<a id="Plot-the-Brain-Atlas"></a>
 ## Plot the Brain Atlas  [⬆](#Table-of-Contents)
 
 Once you are satisfied with the brain atlas, you can plot it by pushing the button "Plot Brain Atlas" (Figure 7a). 
@@ -182,6 +187,7 @@ It is also possible to add additional brain surfaces by adding the required NV f
 
 
 
+<a id="Export-the-Figure"></a>
 ## Export the Figure  [⬆](#Table-of-Contents)
 
 To export and save a (publication-ready) figure, you can select "Print" from the brain atlas GUI and select one of the various provided options Figure 11.
