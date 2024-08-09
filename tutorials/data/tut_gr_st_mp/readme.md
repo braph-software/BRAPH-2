@@ -32,7 +32,7 @@ For *structural multiplex data*, we will upload a folder containing the structur
 If you do not have the "Example data ST\_MP XLS" folder inside "structural multiplex", then you can generate it by running the commands in Code 1.
 
 **Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data ST_MP XLS" folder to the "structural multiplex" pipeline folder.
+		This code can be used in the MatLab command line to generate the "Example data ST\_MP XLS" folder to the "structural multiplex" pipeline folder.
 ````matlab
 create_data_ST_MP_XLS()  % [1]
 create_data_ST_MP_TXT()  % [2]
