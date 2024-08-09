@@ -21,7 +21,7 @@ For *connectivity-functional multiplex data*, you will upload two folders, one c
 >
 > [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
-> [Adding Covariates](#Adding-Covariates)
+> [Adding Covariates](#adding-covariates)
 >
 
 
@@ -99,6 +99,7 @@ To be able to import connectivity-functional multiplex data into BRAPH 2, you cr
 > 	**a** The connectivity matrices from each subject and each layer should be included in one folder (for example, "CON_MP_group_1_XLS"). 
 > 	**b** Each matrix should contain the connectivity values between each pair of brain regions denoted by the rows and columns. In this example, the (simulated) values in the matrix correspond to the fractional anisotropy (white matter integrity) of anatomical connections derived from diffusion-weighted imaging.
 
+<a id="Adding-Covariates"></a>
 ## Adding Covariates  [⬆](#Table-of-Contents)
 	
 It is very common to have *variables of interest* (i.e., *covariates* and *correlates*) in an analysis. In BRAPH 2, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by ".vois". It is only necessary to add information to the connectivity folder and not the functional folder if you want to include covariates; however, if you already have the information in the functional folder, there won’t be any issues.
