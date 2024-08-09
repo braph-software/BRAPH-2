@@ -29,6 +29,7 @@ document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % bold
 document = regexprep(document, '\\fn{([^{}]*)}', '"$1"');  % \fn
 document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
 document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
+document = regexprep(document, '\\href{([^{}]*)}{([^{}]*)}', '[$1]($2)');  % \href{link}{text}
 document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
 document = regexprep(document, '\\emph{([^{}]*)}', '*$1*');  % \emph{...}
 

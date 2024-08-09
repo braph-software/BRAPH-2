@@ -88,7 +88,7 @@ Finally, you can open each subject's connectivity-functional multiplex data by s
 
 ## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
-To be able to import connectivity-functional multiplex data into BRAPH 2, you create a folder with the name of your group, and within this group folder, you need to include a folder for the connectivity data and a folder for the functional data. The organization of the connectivity folder can be checked at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}, and the organization of the functional folder can be check at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_fun}{Group of Subjects with Functional Data}. Below in Figure 5 you can see the directory structure:
+To be able to import connectivity-functional multiplex data into BRAPH 2, you create a folder with the name of your group, and within this group folder, you need to include a folder for the connectivity data and a folder for the functional data. The organization of the connectivity folder can be checked at the tutorial [https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con](Group of Subjects with Connectivity Data), and the organization of the functional folder can be check at the tutorial [https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_fun](Group of Subjects with Functional Data). Below in Figure 5 you can see the directory structure:
 
  
 
