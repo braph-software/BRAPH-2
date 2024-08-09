@@ -1,4 +1,4 @@
-v\documentclass[justified]{tufte-handout}
+\documentclass[justified]{tufte-handout}
 \usepackage{../braph2_tut}
 \usepackage{tcolorbox}
 %\geometry{showframe} % display margins for debugging page layout
@@ -12,7 +12,7 @@ v\documentclass[justified]{tufte-handout}
 \begin{abstract}
 \noindent
 For \emph{connectivity NN data}, a connectivity matrix per subject is already available and can be directly imported into the relative analysis pipeline. For example, the connectivity matrix could correspond to white matter tracts obtained from dMRI or pre-calculated coactivations maps obtained from fMRI data.
-This Tutorial explains how to prepare and work with this kind of data.
+This tutorial explains how to prepare and work with this kind of data.
 \end{abstract}
 
 %! FIG1 !%
@@ -31,7 +31,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 \section{Generation of Example Data}
 
 If you do not have the \fn{Example data NN CLA CON XLS} folder inside \fn{connectivity NN}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
-%
+
 \begin{lstlisting}[
 	label=cd:exampledata,
 	caption={
@@ -39,7 +39,7 @@ If you do not have the \fn{Example data NN CLA CON XLS} folder inside \fn{connec
 		This code can be used in the MatLab command line to generate the \fn{Example data NN CLA CON XLS} folder to the \fn{connectivity NN} pipeline folder.
 	}
 ]
-test_NNDataPoint_CON_CLA¥\circled{1}\circlednote{1}{generates the example connectivity NN XLS data folder.}¥
+test_NNDataPoint_CON_CLA ¥\circled{1}\circlednote{1}{generates the example connectivity NN XLS data folder.}¥
 \end{lstlisting}
 
 \section{Open the GUI}
@@ -120,7 +120,7 @@ Finally, you can open each subject's connectivity matrix by selecting the subjec
 \clearpage
 \section{Preparation of the Data to Be Imported}
 
-To be able to import connectivity NN data into BRAPH~2, you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. The structure of the connectivity matrices in XLS can be checked at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}. Below in \Figref{fig:05} you can see the directory structure:
+To be able to import connectivity NN data into BRAPH~2, you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. The structure of the connectivity matrices in XLS can be checked at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con}{Group of Subjects with Connectivity Data}. Below in \Figref{fig:05} you can see the directory structure:
 
 \fig{figure*}
 	{fig:05}
@@ -131,7 +131,7 @@ To be able to import connectivity NN data into BRAPH~2, you need to include the 
 	{Data preparation}
 	{
 	The data should be organised in the following format:
-	{\bf a} You should include more than one group to perfom a classification. The directory follows the same structure as the connectivity data (\href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}). 
+	{\bf a} You should include more than one group to perfom a classification. The directory follows the same structure as the connectivity data (\href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con}{Group of Subjects with Connectivity Data}). 
 	{\bf b} The connectivity matrices from each subject should be included in one folder (for example, \fn{CON\_group\_3\_XLS}). 
 	} 
 
