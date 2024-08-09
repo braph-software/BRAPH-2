@@ -15,6 +15,8 @@ For \emph{connectivity NN data}, a connectivity matrix per subject is already av
 This Tutorial explains how to prepare and work with this kind of data.
 \end{abstract}
 
+%! FIG1 !%
+
 \tableofcontents
 
 \fig{figure*}
@@ -22,14 +24,13 @@ This Tutorial explains how to prepare and work with this kind of data.
 	{\includegraphics{fig01.jpg}}
 	{GUI for a group of subjects with connectivity NN data}
 	{
-	Full graphical user interface to upload a group of subjects with connectivity NN data in BRAPH~2.0. 
+	Full graphical user interface to upload a group of subjects with connectivity NN data in BRAPH~2. 
 	}
-#!FIG01
 
 \clearpage
 \section{Generation of Example Data}
 
-If you don't have the \fn{Example data NN CLA CON XLS} folder inside \fn{connectivity NN}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
+If you do not have the \fn{Example data NN CLA CON XLS} folder inside \fn{connectivity NN}, then you can generate it by running the commands in \Coderef{cd:exampledata}.
 %
 \begin{lstlisting}[
 	label=cd:exampledata,
@@ -54,19 +55,20 @@ In most analyses, the group GUI is the second step after you have selected a bra
 	{
 	Steps to upload a group of subjects with connectivity data using the GUI and an example dataset: 
 	{\bf a} Click on ``Load Group CON 1 from XLS''.
-	{\bf b} Navigate to the BRAPH~2.0 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group one \fn{CON\_Group\_1\_XLS}.
+	{\bf b} Navigate to the BRAPH~2 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group one \fn{CON\_Group\_1\_XLS}.
         {\bf c} Click on ``Load Group CON 2 from XLS''.
-	{\bf d} Navigate to the BRAPH~2.0 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group two \fn{CON\_Group\_2\_XLS}.
+	{\bf d} Navigate to the BRAPH~2 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group two \fn{CON\_Group\_2\_XLS}.
         {\bf e} Click on ``Load Group CON 3 from XLS''.
-        {\bf f} Navigate to the BRAPH~2.0 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group three \fn{CON\_Group\_3\_XLS}.
+        {\bf f} Navigate to the BRAPH~2 folder \fn{pipelines}, \fn{connectivity NN}, \fn{Example data NN CLA CON XLS}, and select the folder containing the connectivity matrices of group three \fn{CON\_Group\_3\_XLS}.
 	}
-#!FIG02
+
+%! FIG2 !%
 
 \begin{tcolorbox}[
 	title=GUI launch from command line
 ]
 You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands in \Coderef{cd:launch}. In this case, you can upload the data as shown in \Figref{fig:02}a-f.
-%
+
 \begin{lstlisting}[
 	label=cd:launch,
 	caption={
@@ -96,7 +98,8 @@ After completing the steps described in \Figref{fig:02}, you can see the data (\
 	{\bf a} The GUI of the group's connectivity data. 
 	{\bf b} The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 	}
-#!FIG03
+
+%! FIG3 !%
 
 \section{Visualize Each Subject's Data}
 
@@ -111,12 +114,13 @@ Finally, you can open each subject's connectivity matrix by selecting the subjec
 	{\bf a}  Each subject's connectivity matrix can be opened by selecting the subject, right click, and select ``Open selection''
 	{\bf b} In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the values of the connectivity matrix. 
 	}
-#!FIG04
+
+%! FIG4 !%
 
 \clearpage
 \section{Preparation of the Data to be Imported}
 
-To be able to import connectivity NN data into BRAPH~2.0, you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. The structure of the connectivity matrices in XLS can be checked at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}. Below in \Figref{fig:05} you can see the directory structure:
+To be able to import connectivity NN data into BRAPH~2, you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. The structure of the connectivity matrices in XLS can be checked at the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}. Below in \Figref{fig:05} you can see the directory structure:
 
 \fig{figure*}
 	{fig:05}
@@ -130,18 +134,19 @@ To be able to import connectivity NN data into BRAPH~2.0, you need to include th
 	{\bf a} You should include more than one group to perfom a classification. The directory follows the same structure as the connectivity data (\href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}). 
 	{\bf b} The connectivity matrices from each subject should be included in one folder (for example, \fn{CON\_group\_3\_XLS}). 
 	} 
-#!FIG05
+
+%! FIG5 !%
 
 \section{Adding Covariates}
 
-It is very common to have \emph{variables of interest} (i.e., \emph{covariates} and \emph{correlates}) in an analysis. In BRAPH~2.0, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by \fn{.vois} (\href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}).
+It is very common to have \emph{variables of interest} (i.e., \emph{covariates} and \emph{correlates}) in an analysis. In BRAPH~2, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by \fn{.vois} (\href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}).
 This file should have a specific format:
 \begin{itemize}
 
-\item[Subject IDs (column A).]
+\item {\bf Subject IDs (column A).}
 Column A should contain the subject IDs starting from row 3.
 
-\item[Variables of interest (column B and subsequent columns).]
+\item {\bf Variables of interest (column B and subsequent columns).}
 Column B (and subsequent columns) should contain the variables of interest (one per column). 
 In this example we have ``Age'' and ``Sex'', as in the example file, as well as the additional ``Education''.
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like ``Sex'' and ``Education''), and the subsequent rows the values of the variable of interest for each subject.
