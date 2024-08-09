@@ -35,7 +35,7 @@ If you do not have the "Example data FUN\_MP XLS" folder inside "functional mult
 		This code can be used in the MatLab command line to generate the "Example data FUN$\_$MP XLS" folder to the "functional multiplex" pipeline folder.
 ````matlab
 create_data_FUN_MP_XLS()  % [1]
-create_data_FUN_MP_TXT()   % [2]
+create_data_FUN_MP_TXT()  % [2]
 ````
 
 [1] generates the example functional multiplex XLS data folder.
