@@ -115,10 +115,10 @@ To be able to import connectivity data into BRAPH 2, you need to include the con
 It is very common to have *variables of interest* (i.e., *covariates* and *correlates*) in an analysis. In BRAPH 2, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by ".vois" (Figure 6a). This file should have a specific format (Figure 6b):
 
 
-\item[Subject IDs (column A).]
+- **Subject IDs (column A).**
 Column A should contain the subject IDs starting from row 3.
 
-\item[Variables of interest (column B and subsequent columns).]
+- **Variables of interest (column B and subsequent columns).**
 Column B (and subsequent columns) should contain the variables of interest (one per column). 
 In this example we have "Age" and "Sex", as in the example file, as well as the additional "Education".
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like "Sex" and "Education"), and the subsequent rows the values of the variable of interest for each subject.
