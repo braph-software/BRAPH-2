@@ -113,7 +113,7 @@ cb_start = regexp(document, '\\begin{tcolorbox}', 'end', 'all');
 cb_end = regexp(document, '\\end{tcolorbox}', 'start', 'all');
 assert(length(cb_start) == length(cb_end), 'The number of start and end colorboxes should be equal!')
 
-for i = length(codes_start):-1:1
+for i = length(cb_start):-1:1
     cb = regexp(document(cb_start(i) + 1:cb_end(i) - 1), '\[\s*title=([^\[\]]*)\s*\]\s*(.*)', 'tokens', 'all');
     cb_title = strtrim(cb{1}{1});
     cb_content = strtrim(cb{1}{2});
