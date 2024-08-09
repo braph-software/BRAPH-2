@@ -15,7 +15,7 @@ This Tutorial explains how to prepare and work with this kind of data.
 >
 > [Visualize Each Subject's Data](#Visualize-Each-Subject's-Data)
 >
-> [Preparation of the Data to be Imported](#Preparation-of-the-Data-to-be-Imported)
+> [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
 > [Adding Covariates](#Adding-Covariates)
 >
@@ -95,7 +95,7 @@ Finally, you can open each subject's connectivity matrix by selecting the subjec
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the values of the connectivity matrix.
 
 
-## Preparation of the Data to be Imported  [⬆](#Table-of-Contents)
+## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
 To be able to import connectivity data into BRAPH 2, you need to include the connectivity matrices for each subject in excel or text format inside a folder with the name of the group. Below you can see how your group directory should look like as well as an example of a brain connectivity matrix.
 

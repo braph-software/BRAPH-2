@@ -2,7 +2,7 @@
 
 [![Tutorial Group of Subjects with Functional Data](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_gr_fun.pdf)
 
-For *functional data*, we will upload a folder containing the functional files for different subjects that belong to the same group. For example, the functional values could correspond to brain activation signals derived from functional MRI data. Then a connectivity matrix is computed using correlations in functional values between each pair of brain regions. This Tutorial explains how to prepare and work with this kind of data.
+For *functional data*, you will upload a folder containing the functional files for different subjects that belong to the same group. For example, the functional values could correspond to brain activation signals derived from functional MRI data, from which a connectivity matrix is later computed using correlations in functional values between each pair of brain regions. This tutorial explains how to prepare and work with this kind of data.
 
 
 ## Table of Contents
@@ -14,7 +14,7 @@ For *functional data*, we will upload a folder containing the functional files f
 >
 > [Visualize Each Subject's Data](#Visualize-Each-Subject's-Data)
 >
-> [Preparation of the Data to be Imported](#Preparation-of-the-Data-to-be-Imported)
+> [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
 > [Adding Covariates](#Adding-Covariates)
 >
@@ -24,12 +24,12 @@ For *functional data*, we will upload a folder containing the functional files f
 <img src="fig01.jpg" alt="GUI for a group of subjects with functional files">
 
 > **Figure 1. GUI for a group of subjects with functional files**
-> Full graphical user interface to upload a group with functional data in BRAPH 2.0.
+> Full graphical user interface to upload a group with functional data in BRAPH 2.
 
 
 ## Generation of Example Data  [⬆](#Table-of-Contents)
 
-If you don't have the "Example data FUN XLS" folder inside "functional", then you can generate it by running the commands in Code 1.
+If you do not have the "Example data FUN XLS" folder inside "functional", then you can generate it by running the commands in Code 1.
 
 **Code 1.** **Code to generate the example data folder.**
 		This code can be used in the MatLab command line to generate the "Example data FUN XLS" folder to the "functional" pipeline folder.
@@ -45,7 +45,7 @@ create_data_FUN_TXT()  % [2]
 
 ## Open the GUI  [⬆](#Table-of-Contents)
 
-In most analyses, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
+In most analysis pipelines, the group GUI is the second step after you have selected a brain atlas. You can open it by typing `braph2` in MatLab's terminal, which allows you to select a pipeline containing the steps required to perform your analysis and upload a brain atlas. After these steps have been completed you can upload your group's data directly (Figure 2c-f) after clicking "Load Group". 
 
 
 	
@@ -56,7 +56,7 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > 	**a** Open the group GUI.
 > 	**b** Import the folder with the functional files in XLS or TXT format (see below for details on their format).
 > 	To upload the test functional data:
-> 	**c**-**f** navigate to the BRAPH 2.0 folder "pipelines", **d** "functional",  **e** "Example data FUN XLS", and **f** select the folder with functional values of one group "FUN_Group_1_XLSX".
+> 	**c**-**f** navigate to the BRAPH 2 folder "pipelines", **d** "functional",  **e** "Example data FUN XLS", and **f** select the folder with functional values of one group "FUN_Group_1_XLSX".
 	
 
 > **GUI launch from command line**
@@ -97,9 +97,9 @@ Finally, you can open each subject's functional values by selecting the subject,
 > 	**b** In this subject GUI, it is possible to view and edit the metadata of the subject (ID, label, notes), its variables of interest (in this case, age and sex), and the functional values.
 
 
-## Preparation of the Data to be Imported  [⬆](#Table-of-Contents)
+## Preparation of the Data to Be Imported  [⬆](#Table-of-Contents)
 
-To be able to import functional data into BRAPH 2.0, you need to include the functional values in a separate file for each subject in excel or text format. Below you can see how this file should look like.
+To be able to import functional data into BRAPH 2, you need to include the functional values in a separate file for each subject in excel or text format. Below you can see how this file should look like.
 
 
 
@@ -114,13 +114,13 @@ To be able to import functional data into BRAPH 2.0, you need to include the fun
 
 
 	
-It is very common to have *variables of interest* (i.e., *covariates* and *correlates*) in an analysis. In BRAPH 2.0, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by ".vois" (Figure 6a). This file should have a specific format (Figure 6b):
+It is very common to have *variables of interest* (i.e., *covariates* and *correlates*) in an analysis. In BRAPH 2, these variables of interest should be included in a separate excel file placed just outside the group's folder and with the same name as the folder followed by ".vois" (Figure 6a). This file should have a specific format (Figure 6b):
 
 
-\item[Subject IDs (column A).]
+- **Subject IDs (column A).**
 Column A should contain the subject IDs starting from row 3.
 
-\item[Variables of interest (column B and subsequent columns).]
+- **Variables of interest (column B and subsequent columns).**
 Column B (and subsequent columns) should contain the variables of interest (one per column). 
 In this example we have "Age" and "Sex", as in the example file, as well as the additional "Education".
 In each column, row 1 should contain the name of the variable of interest, row 2 should contain the categories separated by a return (only for categorical variables of interest, like "Sex" and "Education"), and the subsequent rows the values of the variable of interest for each subject.
