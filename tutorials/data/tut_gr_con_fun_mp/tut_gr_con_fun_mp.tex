@@ -11,7 +11,7 @@
 
 \begin{abstract}
 \noindent
-For \emph{connectivity-functional multiplex data}, we will upload two folders, one containing the connectivity data and the other functional data for different subjects, that belong to the same group. For example, the connectivity matrix could correspond to white matter tracts obtained from dMRI or pre-calculated coactivations maps obtained from fMRI data, and the functional values could correspond to brain activation signals derived from functional MRI data at different frequencies or time windows. This Tutorial explains how to prepare and work with this kind of data.
+For \emph{connectivity-functional multiplex data}, you will upload two folders, one containing the connectivity data and the other functional data, for the subject belonging to the same group. For example, the connectivity matrix could correspond to white matter tracts obtained from dMRI or pre-calculated coactivations maps obtained from fMRI data, and the functional values could correspond to brain activation signals derived from functional MRI data at different frequencies or time windows. This tutorial explains how to prepare and work with this kind of data.
 \end{abstract}
 
 %! FIG1 !%
@@ -35,10 +35,11 @@ If you do not have the \fn{Example data CON\_FUN\_MP XLS} folder inside \fn{conn
 	label=cd:exampledata,
 	caption={
 		{\bf Code to generate the example data folder.}
-		This code can be used in the MatLab command line to generate the \fn{Example data CON$\_$FUN$\_$MP XLS} folder to the \fn{connectivity-functional multiplex} pipeline folder.
+		This code can be used in the MatLab command line to generate the \fn{Example data CON\_FUN\_MP XLS} folder to the \fn{connectivity-functional multiplex} pipeline folder.
 	}
 ]
-test_CombineGroups_CON_FUN_MP ¥\circled{1}\circlednote{1}{generates the example connectivity-functional multiplex XLS data folder.}¥
+create_data_CON_FUN_MP_XLS() ¥\circled{1}\circlednote{1}{generates the example connectivity-functional multiplex XLS data folder.}¥
+create_data_CON_FUN_MP_TXT() ¥\circled{2}\circlednote{2}{generates the example connectivity-functional multiplex XLS data folder.}¥
 \end{lstlisting}
 
 \section{Upload the Group Data}
@@ -61,6 +62,8 @@ The second step after you have selected a brain atlas is to upload the group dat
 	}
 
 %! FIG2 !%
+
+\clearpage
 
 \section{Visualize the Group Data}
 
