@@ -6,6 +6,40 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 	%  assesses the importance of graph measures by measuring the increase in model error 
 	%  when specific graph measure values are randomly shuffled.
 	%
+	% The list of NNxMLP_FeatureImportanceAcrossMeasures properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the NN dataset to be tested on feature importance.
+	%  <strong>10</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.
+	%  <strong>11</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+	%  <strong>12</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+	%  <strong>13</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.
+	%  <strong>14</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+	%  <strong>15</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+	%  <strong>16</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+	%  <strong>17</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+	%  <strong>18</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+	%  <strong>19</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.
+	%  <strong>20</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+	%  <strong>21</strong> <strong>D_SHUFFLED</strong> 	D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.
+	%  <strong>22</strong> <strong>BASELINE_LOSS</strong> 	BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.
+	%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.
+	%  <strong>24</strong> <strong>PERM_SHUFFLED_LOSS</strong> 	PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.
+	%  <strong>25</strong> <strong>CONFIDENCE_INTERVALS</strong> 	CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.
+	%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
+	%  <strong>27</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+	%  <strong>28</strong> <strong>RESHAPED_FEATURE_IMPORTANCE</strong> 	RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
+	%  <strong>29</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+	%  <strong>30</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+	%  <strong>31</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
+	%  <strong>32</strong> <strong>INPUT_MASK</strong> 	INPUT_MASK (query, empty) creates a mask that covers the top-level index of interest in the input cell array, maintaining the same structure.
+	%
 	% NNxMLP_FeatureImportanceAcrossMeasures methods (constructor):
 	%  NNxMLP_FeatureImportanceAcrossMeasures - constructor
 	%
@@ -95,10 +129,10 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 	% See also NNxMLP_FeatureImportance, NNDataPoint_Measure_CLA, NNDataPoint_Measure_REG.
 	
 	properties (Constant) % properties
-		INPUT_MASK = NNxMLP_FeatureImportance.getPropNumber() + 1;
+		INPUT_MASK = 32; %CET: Computational Efficiency Trick
 		INPUT_MASK_TAG = 'INPUT_MASK';
-		INPUT_MASK_CATEGORY = Category.QUERY;
-		INPUT_MASK_FORMAT = Format.EMPTY;
+		INPUT_MASK_CATEGORY = 6;
+		INPUT_MASK_FORMAT = 1;
 	end
 	methods % constructor
 		function nnfiam = NNxMLP_FeatureImportanceAcrossMeasures(varargin)
@@ -111,6 +145,39 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNxMLP_FeatureImportanceAcrossMeasures properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>D</strong> 	D (data, item) is the NN dataset to be tested on feature importance.
+			%  <strong>10</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.
+			%  <strong>11</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+			%  <strong>12</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+			%  <strong>13</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.
+			%  <strong>14</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+			%  <strong>15</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+			%  <strong>16</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+			%  <strong>17</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+			%  <strong>18</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+			%  <strong>19</strong> <strong>COMP_FEATURE_INDICES</strong> 	COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.
+			%  <strong>20</strong> <strong>BASELINE_INPUTS</strong> 	BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+			%  <strong>21</strong> <strong>D_SHUFFLED</strong> 	D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.
+			%  <strong>22</strong> <strong>BASELINE_LOSS</strong> 	BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.
+			%  <strong>23</strong> <strong>SHUFFLED_LOSS</strong> 	SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.
+			%  <strong>24</strong> <strong>PERM_SHUFFLED_LOSS</strong> 	PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.
+			%  <strong>25</strong> <strong>CONFIDENCE_INTERVALS</strong> 	CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.
+			%  <strong>26</strong> <strong>STAT_SIG_MASK</strong> 	STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.
+			%  <strong>27</strong> <strong>FEATURE_IMPORTANCE</strong> 	FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+			%  <strong>28</strong> <strong>RESHAPED_FEATURE_IMPORTANCE</strong> 	RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
+			%  <strong>29</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+			%  <strong>30</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+			%  <strong>31</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
+			%  <strong>32</strong> <strong>INPUT_MASK</strong> 	INPUT_MASK (query, empty) creates a mask that covers the top-level index of interest in the input cell array, maintaining the same structure.
 			%
 			% See also Category, Format.
 			
@@ -148,7 +215,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNxMLP_FeatureImportanceAcrossMeasures', [], [], true);
+			subclass_list = { 'NNxMLP_FeatureImportanceAcrossMeasures' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of neural network feature importace for multi-layer perceptron.
@@ -169,52 +236,30 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					NNxMLP_FeatureImportance.getProps() ...
-						NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						NNxMLP_FeatureImportance.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.QUERY) ...
-						NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						NNxMLP_FeatureImportance.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 15];
+				case 3 % Category.PARAMETER
+					prop_list = [4 11 13 14 16];
+				case 4 % Category.DATA
+					prop_list = [5 9 10];
+				case 5 % Category.RESULT
+					prop_list = [12 19 20 22 24 26 27];
+				case 6 % Category.QUERY
+					prop_list = [8 21 23 25 28 29 30 31 32];
+				case 9 % Category.GUI
+					prop_list = [17 18];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -235,7 +280,31 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNxMLP_FeatureImportanceAcrossMeasures.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 32;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 5;
+				case 4 % Category.DATA
+					prop_number = 3;
+				case 5 % Category.RESULT
+					prop_number = 7;
+				case 6 % Category.QUERY
+					prop_number = 9;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in neural network feature importace for multi-layer perceptron/error.
@@ -263,14 +332,14 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNxMLP_FeatureImportanceAcrossMeasures.getProps());
+			check = prop >= 1 && prop <= 32 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNxMLP_FeatureImportanceAcrossMeasures.'] ...
 					)
 			end
@@ -301,15 +370,14 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%
 			% See also getProps, existsTag.
 			
-			nnxmlp_featureimportanceacrossmeasures_tag_list = cellfun(@(x) NNxMLP_FeatureImportanceAcrossMeasures.getPropTag(x), num2cell(NNxMLP_FeatureImportanceAcrossMeasures.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nnxmlp_featureimportanceacrossmeasures_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL'  'INPUT_MASK' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNxMLP_FeatureImportanceAcrossMeasures.'] ...
 					)
 			end
@@ -335,8 +403,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nnxmlp_featureimportanceacrossmeasures_tag_list = cellfun(@(x) NNxMLP_FeatureImportanceAcrossMeasures.getPropTag(x), num2cell(NNxMLP_FeatureImportanceAcrossMeasures.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nnxmlp_featureimportanceacrossmeasures_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL'  'INPUT_MASK' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -364,14 +431,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-						tag = NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK_TAG;
-					otherwise
-						tag = getPropTag@NNxMLP_FeatureImportance(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nnxmlp_featureimportanceacrossmeasures_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D'  'NN'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'COMP_FEATURE_INDICES'  'BASELINE_INPUTS'  'D_SHUFFLED'  'BASELINE_LOSS'  'SHUFFLED_LOSS'  'PERM_SHUFFLED_LOSS'  'CONFIDENCE_INTERVALS'  'STAT_SIG_MASK'  'FEATURE_IMPORTANCE'  'RESHAPED_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL'  'INPUT_MASK' };
+				tag = nnxmlp_featureimportanceacrossmeasures_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -396,12 +458,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-					prop_category = NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@NNxMLP_FeatureImportance(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_category_list = { 1  1  1  3  4  2  2  6  4  4  3  5  3  3  2  3  9  9  5  5  6  5  6  5  6  5  5  6  6  6  6  6 };
+			prop_category = nnxmlp_featureimportanceacrossmeasures_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -425,12 +484,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-					prop_format = NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK_FORMAT;
-				otherwise
-					prop_format = getPropFormat@NNxMLP_FeatureImportance(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_format_list = { 2  2  2  8  2  2  2  2  8  8  11  12  4  4  4  11  4  11  16  16  8  11  16  16  12  16  16  1  1  1  1  1 };
+			prop_format = nnxmlp_featureimportanceacrossmeasures_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -454,30 +510,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-					prop_description = 'INPUT_MASK (query, empty) creates a mask that covers the top-level index of interest in the input cell array, maintaining the same structure.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.NAME
-					prop_description = 'NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.ID
-					prop_description = 'ID (data, string) is a few-letter code of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE
-					prop_description = 'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.COMP_FEATURE_INDICES
-					prop_description = 'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.';
-				otherwise
-					prop_description = getPropDescription@NNxMLP_FeatureImportance(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'ID (data, string) is a few-letter code of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'LABEL (metadata, string) is an extended label of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the NN dataset to be tested on feature importance.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.'  'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.'  'BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.'  'D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.'  'BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.'  'SHUFFLED_LOSS (query, cell) is the loss value obtained from shuffled datasets.'  'PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.'  'CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.'  'STAT_SIG_MASK (result, cell) provides the statistical significance mask for composite features indicating which composite features has significant contribution.'  'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.'  'INPUT_MASK (query, empty) creates a mask that covers the top-level index of interest in the input cell array, maintaining the same structure.' };
+			prop_description = nnxmlp_featureimportanceacrossmeasures_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -501,10 +536,10 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 32 % NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
+					prop_settings = Format.getFormatSettings(1);
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
 					prop_settings = 'NNxMLP_FeatureImportanceAcrossMeasures';
 				otherwise
 					prop_settings = getPropSettings@NNxMLP_FeatureImportance(prop);
@@ -532,22 +567,22 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
-					prop_default = Format.getFormatDefault(Format.EMPTY, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
-				case NNxMLP_FeatureImportanceAcrossMeasures.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 32 % NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
+					prop_default = Format.getFormatDefault(1, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
+				case 1 % NNxMLP_FeatureImportanceAcrossMeasures.ELCLASS
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures';
-				case NNxMLP_FeatureImportanceAcrossMeasures.NAME
+				case 2 % NNxMLP_FeatureImportanceAcrossMeasures.NAME
 					prop_default = 'Feature Importace for Multi-layer Perceptron Across Graph Measures';
-				case NNxMLP_FeatureImportanceAcrossMeasures.DESCRIPTION
+				case 3 % NNxMLP_FeatureImportanceAcrossMeasures.DESCRIPTION
 					prop_default = 'Neural Network Feature Importance Across Graph Measures (NNxMLP_FeatureImportanceAcrossMeasures) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled.';
-				case NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
-				case NNxMLP_FeatureImportanceAcrossMeasures.ID
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
+				case 5 % NNxMLP_FeatureImportanceAcrossMeasures.ID
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures ID';
-				case NNxMLP_FeatureImportanceAcrossMeasures.LABEL
+				case 6 % NNxMLP_FeatureImportanceAcrossMeasures.LABEL
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures label';
-				case NNxMLP_FeatureImportanceAcrossMeasures.NOTES
+				case 7 % NNxMLP_FeatureImportanceAcrossMeasures.NOTES
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures notes';
 				otherwise
 					prop_default = getPropDefault@NNxMLP_FeatureImportance(prop);
@@ -594,15 +629,15 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			% 
 			% NNFIAM.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NNFIAM.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NNFIAM.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures:WrongInput
 			%  Element.CHECKPROP(NNxMLP_FeatureImportanceAcrossMeasures, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportanceAcrossMeasures.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures:WrongInput
 			%  NNFIAM.CHECKPROP(NNxMLP_FeatureImportanceAcrossMeasures, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportanceAcrossMeasures.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(NNFIAM) and Element.CHECKPROP('NNxMLP_FeatureImportanceAcrossMeasures')
 			%  are less computationally efficient.
@@ -613,12 +648,12 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			prop = NNxMLP_FeatureImportanceAcrossMeasures.getPropProp(pointer);
 			
 			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK % __NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK__
-					check = Format.checkFormat(Format.EMPTY, value, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
-				case NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE % __NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
+				case 32 % NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
+					check = Format.checkFormat(1, value, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures.TEMPLATE
+					check = Format.checkFormat(8, value, NNxMLP_FeatureImportanceAcrossMeasures.getPropSettings(prop));
 				otherwise
-					if prop <= NNxMLP_FeatureImportance.getPropNumber()
+					if prop <= 31
 						check = checkProp@NNxMLP_FeatureImportance(prop, value);
 					end
 			end
@@ -627,8 +662,8 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNxMLP_FeatureImportanceAcrossMeasures.getPropTag(prop) ' (' NNxMLP_FeatureImportanceAcrossMeasures.getFormatTag(NNxMLP_FeatureImportanceAcrossMeasures.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -639,19 +674,19 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK % __NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK__
+				case 32 % NNxMLP_FeatureImportanceAcrossMeasures.INPUT_MASK
 					if isempty(varargin)
 					    value = {};
 					    return
@@ -679,8 +714,8 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 					end
 					value = mask;
 					
-				case NNxMLP_FeatureImportanceAcrossMeasures.COMP_FEATURE_INDICES % __NNxMLP_FeatureImportanceAcrossMeasures.COMP_FEATURE_INDICES__
-					rng_settings_ = rng(); rng(nnfiam.getPropSeed(NNxMLP_FeatureImportanceAcrossMeasures.COMP_FEATURE_INDICES), 'twister')
+				case 19 % NNxMLP_FeatureImportanceAcrossMeasures.COMP_FEATURE_INDICES
+					rng_settings_ = rng(); rng(nnfiam.getPropSeed(19), 'twister')
 					
 					input_dataset = nnfiam.get('D');
 					m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
@@ -696,7 +731,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= NNxMLP_FeatureImportance.getPropNumber()
+					if prop <= 31
 						value = calculateValue@NNxMLP_FeatureImportance(nnfiam, prop, varargin{:});
 					else
 						value = calculateValue@Element(nnfiam, prop, varargin{:});
@@ -722,11 +757,11 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE % __NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE__
+				case 27 % NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE
 					input_dataset = nnfiam.get('D');
 					m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-					pr = PanelPropCell('EL', nnfiam, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE, ...
-					    'TABLE_HEIGHT', s(40), ...
+					pr = PanelPropCell('EL', nnfiam, 'PROP', 27, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'ROWNAME', {}, ...
 					    'COLUMNNAME', m_list, ...
 					    varargin{:});

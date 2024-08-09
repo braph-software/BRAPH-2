@@ -5,6 +5,24 @@ classdef ClusteringAv < Clustering
 	% The Average Clustering (ClusteringAv) of a graph is the average of the clustering 
 	% coefficients of all nodes. Connection weights are ignored in calculations.
 	%
+	% The list of ClusteringAv properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Clustering.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Clustering.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Clustering.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Clustering.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Clustering.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Clustering.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Clustering.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Clustering.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
+	%
 	% ClusteringAv methods (constructor):
 	%  ClusteringAv - constructor
 	%
@@ -102,6 +120,23 @@ classdef ClusteringAv < Clustering
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of ClusteringAv properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Clustering.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Clustering.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Clustering.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Clustering.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Clustering.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Clustering.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Clustering.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average Clustering.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
 			% See also Category, Format.
 			
@@ -139,7 +174,7 @@ classdef ClusteringAv < Clustering
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('ClusteringAv', [], [], true);
+			subclass_list = { 'ClusteringAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average clustering.
@@ -160,50 +195,30 @@ classdef ClusteringAv < Clustering
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Clustering.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Clustering.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Clustering.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Clustering.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Clustering.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Clustering.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Clustering.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Clustering.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Clustering.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Clustering.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -224,7 +239,31 @@ classdef ClusteringAv < Clustering
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(ClusteringAv.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average clustering/error.
@@ -252,14 +291,14 @@ classdef ClusteringAv < Clustering
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == ClusteringAv.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput'], ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ClusteringAv.'] ...
 					)
 			end
@@ -290,15 +329,14 @@ classdef ClusteringAv < Clustering
 			%
 			% See also getProps, existsTag.
 			
-			clusteringav_tag_list = cellfun(@(x) ClusteringAv.getPropTag(x), num2cell(ClusteringAv.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, clusteringav_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput'], ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for ClusteringAv.'] ...
 					)
 			end
@@ -324,8 +362,7 @@ classdef ClusteringAv < Clustering
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				clusteringav_tag_list = cellfun(@(x) ClusteringAv.getPropTag(x), num2cell(ClusteringAv.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, clusteringav_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -353,12 +390,9 @@ classdef ClusteringAv < Clustering
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@Clustering(prop);
-				end
+				%CET: Computational Efficiency Trick
+				clusteringav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				tag = clusteringav_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -383,10 +417,9 @@ classdef ClusteringAv < Clustering
 			
 			prop = ClusteringAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@Clustering(prop);
-			end
+			%CET: Computational Efficiency Trick
+			clusteringav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = clusteringav_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -410,10 +443,9 @@ classdef ClusteringAv < Clustering
 			
 			prop = ClusteringAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@Clustering(prop);
-			end
+			%CET: Computational Efficiency Trick
+			clusteringav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
+			prop_format = clusteringav_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -437,34 +469,9 @@ classdef ClusteringAv < Clustering
 			
 			prop = ClusteringAv.getPropProp(pointer);
 			
-			switch prop
-				case ClusteringAv.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Average Clustering.';
-				case ClusteringAv.NAME
-					prop_description = 'NAME (constant, string) is the name of the Average Clustering.';
-				case ClusteringAv.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Average Clustering.';
-				case ClusteringAv.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Average Clustering.';
-				case ClusteringAv.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Average Clustering.';
-				case ClusteringAv.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Average Clustering.';
-				case ClusteringAv.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Average Clustering.';
-				case ClusteringAv.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
-				case ClusteringAv.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case ClusteringAv.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case ClusteringAv.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case ClusteringAv.M
-					prop_description = 'M (result, cell) is the cell containing the Average Clustering.';
-				otherwise
-					prop_description = getPropDescription@Clustering(prop);
-			end
+			%CET: Computational Efficiency Trick
+			clusteringav_description_list = { 'ELCLASS (constant, string) is the class of the Average Clustering.'  'NAME (constant, string) is the name of the Average Clustering.'  'DESCRIPTION (constant, string) is the description of the Average Clustering.'  'TEMPLATE (parameter, item) is the template of the Average Clustering.'  'ID (data, string) is a few-letter code of the Average Clustering.'  'LABEL (metadata, string) is an extended label of the Average Clustering.'  'NOTES (metadata, string) are some specific notes about the Average Clustering.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average Clustering.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
+			prop_description = clusteringav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -488,8 +495,8 @@ classdef ClusteringAv < Clustering
 			
 			prop = ClusteringAv.getPropProp(pointer);
 			
-			switch prop
-				case ClusteringAv.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % ClusteringAv.TEMPLATE
 					prop_settings = 'ClusteringAv';
 				otherwise
 					prop_settings = getPropSettings@Clustering(prop);
@@ -517,28 +524,28 @@ classdef ClusteringAv < Clustering
 			
 			prop = ClusteringAv.getPropProp(pointer);
 			
-			switch prop
-				case ClusteringAv.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % ClusteringAv.ELCLASS
 					prop_default = 'ClusteringAv';
-				case ClusteringAv.NAME
+				case 2 % ClusteringAv.NAME
 					prop_default = 'Average Clustering';
-				case ClusteringAv.DESCRIPTION
+				case 3 % ClusteringAv.DESCRIPTION
 					prop_default = 'The Average Clustering (ClusteringAv) of a graph is the average of the clustering coefficients of all nodes. Connection weights are ignored in calculations.';
-				case ClusteringAv.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, ClusteringAv.getPropSettings(prop));
-				case ClusteringAv.ID
+				case 4 % ClusteringAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, ClusteringAv.getPropSettings(prop));
+				case 5 % ClusteringAv.ID
 					prop_default = 'ClusteringAv ID';
-				case ClusteringAv.LABEL
+				case 6 % ClusteringAv.LABEL
 					prop_default = 'Average Clustering label';
-				case ClusteringAv.NOTES
+				case 7 % ClusteringAv.NOTES
 					prop_default = 'Average Clustering notes';
-				case ClusteringAv.SHAPE
-					prop_default = Measure.GLOBAL;
-				case ClusteringAv.SCOPE
-					prop_default = Measure.UNILAYER;
-				case ClusteringAv.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case ClusteringAv.COMPATIBLE_GRAPHS
+				case 9 % ClusteringAv.SHAPE
+					prop_default = 1;
+				case 10 % ClusteringAv.SCOPE
+					prop_default = 2;
+				case 11 % ClusteringAv.PARAMETRICITY
+					prop_default = 2;
+				case 12 % ClusteringAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultiplexBD'};;
 				otherwise
 					prop_default = getPropDefault@Clustering(prop);
@@ -585,15 +592,15 @@ classdef ClusteringAv < Clustering
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:ClusteringAv:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:ClusteringAv:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:ClusteringAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ClusteringAv:WrongInput
 			%  Element.CHECKPROP(ClusteringAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ClusteringAv.
-			%   Error id: €BRAPH2.STR€:ClusteringAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ClusteringAv:WrongInput
 			%  M.CHECKPROP(ClusteringAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ClusteringAv.
-			%   Error id: €BRAPH2.STR€:ClusteringAv:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:ClusteringAv:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('ClusteringAv')
 			%  are less computationally efficient.
@@ -604,10 +611,10 @@ classdef ClusteringAv < Clustering
 			prop = ClusteringAv.getPropProp(pointer);
 			
 			switch prop
-				case ClusteringAv.TEMPLATE % __ClusteringAv.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, ClusteringAv.getPropSettings(prop));
+				case 4 % ClusteringAv.TEMPLATE
+					check = Format.checkFormat(8, value, ClusteringAv.getPropSettings(prop));
 				otherwise
-					if prop <= Clustering.getPropNumber()
+					if prop <= 16
 						check = checkProp@Clustering(prop, value);
 					end
 			end
@@ -616,8 +623,8 @@ classdef ClusteringAv < Clustering
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ClusteringAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput'], ...
+					['BRAPH2' ':ClusteringAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ClusteringAv.getPropTag(prop) ' (' ClusteringAv.getFormatTag(ClusteringAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -628,20 +635,20 @@ classdef ClusteringAv < Clustering
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ClusteringAv.M % __ClusteringAv.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(ClusteringAv.M), 'twister')
+				case 14 % ClusteringAv.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					clustering  = calculateValue@Clustering(m, prop);
@@ -656,7 +663,7 @@ classdef ClusteringAv < Clustering
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Clustering.getPropNumber()
+					if prop <= 16
 						value = calculateValue@Clustering(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

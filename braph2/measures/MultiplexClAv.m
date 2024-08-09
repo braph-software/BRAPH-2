@@ -5,6 +5,23 @@ classdef MultiplexClAv < MultiplexCl
 	% The Average Multiplex Clustering coefficient (MultiplexClAv) of a multilayer graph is 
 	%   the average of the two-multiplex clustering coefficients of all nodes.
 	%
+	% The list of MultiplexClAv properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Multiplex Clustering.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Multiplex Clustering.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Multiplex Clustering.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Multiplex Clustering.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Multiplex Clustering.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Multiplex Clustering.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Multiplex Clustering.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Multiplex Clustering.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%
 	% MultiplexClAv methods (constructor):
 	%  MultiplexClAv - constructor
 	%
@@ -102,6 +119,22 @@ classdef MultiplexClAv < MultiplexCl
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of MultiplexClAv properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average Multiplex Clustering.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average Multiplex Clustering.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average Multiplex Clustering.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average Multiplex Clustering.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average Multiplex Clustering.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average Multiplex Clustering.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average Multiplex Clustering.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Average Multiplex Clustering.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -139,7 +172,7 @@ classdef MultiplexClAv < MultiplexCl
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('MultiplexClAv', [], [], true);
+			subclass_list = { 'MultiplexClAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average multiplex clustering.
@@ -160,50 +193,30 @@ classdef MultiplexClAv < MultiplexCl
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					MultiplexCl.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						MultiplexCl.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						MultiplexCl.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -224,7 +237,31 @@ classdef MultiplexClAv < MultiplexCl
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(MultiplexClAv.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 15;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average multiplex clustering/error.
@@ -252,14 +289,14 @@ classdef MultiplexClAv < MultiplexCl
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == MultiplexClAv.getProps());
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiplexClAv.'] ...
 					)
 			end
@@ -290,15 +327,14 @@ classdef MultiplexClAv < MultiplexCl
 			%
 			% See also getProps, existsTag.
 			
-			multiplexclav_tag_list = cellfun(@(x) MultiplexClAv.getPropTag(x), num2cell(MultiplexClAv.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, multiplexclav_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for MultiplexClAv.'] ...
 					)
 			end
@@ -324,8 +360,7 @@ classdef MultiplexClAv < MultiplexCl
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				multiplexclav_tag_list = cellfun(@(x) MultiplexClAv.getPropTag(x), num2cell(MultiplexClAv.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, multiplexclav_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -353,12 +388,9 @@ classdef MultiplexClAv < MultiplexCl
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@MultiplexCl(prop);
-				end
+				%CET: Computational Efficiency Trick
+				multiplexclav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				tag = multiplexclav_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -383,10 +415,9 @@ classdef MultiplexClAv < MultiplexCl
 			
 			prop = MultiplexClAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@MultiplexCl(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexclav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			prop_category = multiplexclav_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -410,10 +441,9 @@ classdef MultiplexClAv < MultiplexCl
 			
 			prop = MultiplexClAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@MultiplexCl(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexclav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			prop_format = multiplexclav_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -437,34 +467,9 @@ classdef MultiplexClAv < MultiplexCl
 			
 			prop = MultiplexClAv.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexClAv.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Average Multiplex Clustering.';
-				case MultiplexClAv.NAME
-					prop_description = 'NAME (constant, string) is the name of the Average Multiplex Clustering.';
-				case MultiplexClAv.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Average Multiplex Clustering.';
-				case MultiplexClAv.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Average Multiplex Clustering.';
-				case MultiplexClAv.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Average Multiplex Clustering.';
-				case MultiplexClAv.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Average Multiplex Clustering.';
-				case MultiplexClAv.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Average Multiplex Clustering.';
-				case MultiplexClAv.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case MultiplexClAv.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case MultiplexClAv.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case MultiplexClAv.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case MultiplexClAv.M
-					prop_description = 'M (result, cell) is the Average Multiplex Clustering.';
-				otherwise
-					prop_description = getPropDescription@MultiplexCl(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexclav_description_list = { 'ELCLASS (constant, string) is the class of the Average Multiplex Clustering.'  'NAME (constant, string) is the name of the Average Multiplex Clustering.'  'DESCRIPTION (constant, string) is the description of the Average Multiplex Clustering.'  'TEMPLATE (parameter, item) is the template of the Average Multiplex Clustering.'  'ID (data, string) is a few-letter code of the Average Multiplex Clustering.'  'LABEL (metadata, string) is an extended label of the Average Multiplex Clustering.'  'NOTES (metadata, string) are some specific notes about the Average Multiplex Clustering.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Average Multiplex Clustering.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			prop_description = multiplexclav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -488,8 +493,8 @@ classdef MultiplexClAv < MultiplexCl
 			
 			prop = MultiplexClAv.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexClAv.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % MultiplexClAv.TEMPLATE
 					prop_settings = 'MultiplexClAv';
 				otherwise
 					prop_settings = getPropSettings@MultiplexCl(prop);
@@ -517,28 +522,28 @@ classdef MultiplexClAv < MultiplexCl
 			
 			prop = MultiplexClAv.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexClAv.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % MultiplexClAv.ELCLASS
 					prop_default = 'MultiplexClAv';
-				case MultiplexClAv.NAME
+				case 2 % MultiplexClAv.NAME
 					prop_default = 'Average Multiplex Clustering';
-				case MultiplexClAv.DESCRIPTION
+				case 3 % MultiplexClAv.DESCRIPTION
 					prop_default = 'The Average Multiplex Clustering coefficient (MultiplexClAv) of a multilayer graph is the average of the two-multiplex clustering coefficients of all nodes.';
-				case MultiplexClAv.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, MultiplexClAv.getPropSettings(prop));
-				case MultiplexClAv.ID
+				case 4 % MultiplexClAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MultiplexClAv.getPropSettings(prop));
+				case 5 % MultiplexClAv.ID
 					prop_default = 'MultiplexClAv ID';
-				case MultiplexClAv.LABEL
+				case 6 % MultiplexClAv.LABEL
 					prop_default = 'Average Multiplex Clustering label';
-				case MultiplexClAv.NOTES
+				case 7 % MultiplexClAv.NOTES
 					prop_default = 'Average Multiplex Clustering notes';
-				case MultiplexClAv.SHAPE
-					prop_default = Measure.GLOBAL;
-				case MultiplexClAv.SCOPE
-					prop_default = Measure.SUPERGLOBAL;
-				case MultiplexClAv.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case MultiplexClAv.COMPATIBLE_GRAPHS
+				case 9 % MultiplexClAv.SHAPE
+					prop_default = 1;
+				case 10 % MultiplexClAv.SCOPE
+					prop_default = 1;
+				case 11 % MultiplexClAv.PARAMETRICITY
+					prop_default = 2;
+				case 12 % MultiplexClAv.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@MultiplexCl(prop);
@@ -585,15 +590,15 @@ classdef MultiplexClAv < MultiplexCl
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:MultiplexClAv:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:MultiplexClAv:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:MultiplexClAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexClAv:WrongInput
 			%  Element.CHECKPROP(MultiplexClAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexClAv.
-			%   Error id: €BRAPH2.STR€:MultiplexClAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexClAv:WrongInput
 			%  M.CHECKPROP(MultiplexClAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexClAv.
-			%   Error id: €BRAPH2.STR€:MultiplexClAv:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:MultiplexClAv:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('MultiplexClAv')
 			%  are less computationally efficient.
@@ -604,10 +609,10 @@ classdef MultiplexClAv < MultiplexCl
 			prop = MultiplexClAv.getPropProp(pointer);
 			
 			switch prop
-				case MultiplexClAv.TEMPLATE % __MultiplexClAv.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, MultiplexClAv.getPropSettings(prop));
+				case 4 % MultiplexClAv.TEMPLATE
+					check = Format.checkFormat(8, value, MultiplexClAv.getPropSettings(prop));
 				otherwise
-					if prop <= MultiplexCl.getPropNumber()
+					if prop <= 15
 						check = checkProp@MultiplexCl(prop, value);
 					end
 			end
@@ -616,8 +621,8 @@ classdef MultiplexClAv < MultiplexCl
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexClAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexClAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiplexClAv.getPropTag(prop) ' (' MultiplexClAv.getFormatTag(MultiplexClAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -628,20 +633,20 @@ classdef MultiplexClAv < MultiplexCl
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case MultiplexClAv.M % __MultiplexClAv.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(MultiplexClAv.M), 'twister')
+				case 14 % MultiplexClAv.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -663,7 +668,7 @@ classdef MultiplexClAv < MultiplexCl
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= MultiplexCl.getPropNumber()
+					if prop <= 15
 						value = calculateValue@MultiplexCl(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

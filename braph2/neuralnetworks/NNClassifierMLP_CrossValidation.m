@@ -8,6 +8,43 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	% 
 	% To train all the neural networks for all folds, use: nncv.get('TRAIN')
 	%
+	% The list of NNClassifierMLP_CrossValidation properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cross-validation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+	%  <strong>11</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+	%  <strong>12</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+	%  <strong>13</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+	%  <strong>14</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+	%  <strong>15</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+	%  <strong>16</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+	%  <strong>17</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+	%  <strong>18</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>19</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+	%  <strong>20</strong> <strong>NN_LIST_IT</strong> 	NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>21</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+	%  <strong>22</strong> <strong>EVALUATOR_LIST_IT</strong> 	EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+	%  <strong>23</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+	%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+	%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+	%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+	%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+	%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+	%  <strong>30</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+	%  <strong>31</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
+	%  <strong>32</strong> <strong>PFROC</strong> 	PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
+	%  <strong>33</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
+	%  <strong>34</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
+	%  <strong>35</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
+	%
 	% NNClassifierMLP_CrossValidation methods (constructor):
 	%  NNClassifierMLP_CrossValidation - constructor
 	%
@@ -97,35 +134,35 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	% See also NNDataPoint, NNDataset, NNEvaluator.
 	
 	properties (Constant) % properties
-		P = NNCrossValidation.getPropNumber() + 1;
+		P = 30; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
-		P_CATEGORY = Category.PARAMETER;
-		P_FORMAT = Format.SCALAR;
+		P_CATEGORY = 3;
+		P_FORMAT = 11;
 		
-		AV_AUC = NNCrossValidation.getPropNumber() + 2;
+		AV_AUC = 31; %CET: Computational Efficiency Trick
 		AV_AUC_TAG = 'AV_AUC';
-		AV_AUC_CATEGORY = Category.RESULT;
-		AV_AUC_FORMAT = Format.RVECTOR;
+		AV_AUC_CATEGORY = 5;
+		AV_AUC_FORMAT = 12;
 		
-		PFROC = NNCrossValidation.getPropNumber() + 3;
+		PFROC = 32; %CET: Computational Efficiency Trick
 		PFROC_TAG = 'PFROC';
-		PFROC_CATEGORY = Category.GUI;
-		PFROC_FORMAT = Format.ITEM;
+		PFROC_CATEGORY = 9;
+		PFROC_FORMAT = 8;
 		
-		AV_MACRO_AUC = NNCrossValidation.getPropNumber() + 4;
+		AV_MACRO_AUC = 33; %CET: Computational Efficiency Trick
 		AV_MACRO_AUC_TAG = 'AV_MACRO_AUC';
-		AV_MACRO_AUC_CATEGORY = Category.RESULT;
-		AV_MACRO_AUC_FORMAT = Format.SCALAR;
+		AV_MACRO_AUC_CATEGORY = 5;
+		AV_MACRO_AUC_FORMAT = 11;
 		
-		C_MATRIX = NNCrossValidation.getPropNumber() + 5;
+		C_MATRIX = 34; %CET: Computational Efficiency Trick
 		C_MATRIX_TAG = 'C_MATRIX';
-		C_MATRIX_CATEGORY = Category.RESULT;
-		C_MATRIX_FORMAT = Format.MATRIX;
+		C_MATRIX_CATEGORY = 5;
+		C_MATRIX_FORMAT = 14;
 		
-		AV_FEATURE_IMPORTANCE = NNCrossValidation.getPropNumber() + 6;
+		AV_FEATURE_IMPORTANCE = 35; %CET: Computational Efficiency Trick
 		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
-		AV_FEATURE_IMPORTANCE_CATEGORY = Category.RESULT;
-		AV_FEATURE_IMPORTANCE_FORMAT = Format.CELL;
+		AV_FEATURE_IMPORTANCE_CATEGORY = 5;
+		AV_FEATURE_IMPORTANCE_FORMAT = 16;
 	end
 	methods % constructor
 		function nncv = NNClassifierMLP_CrossValidation(varargin)
@@ -138,6 +175,42 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNClassifierMLP_CrossValidation properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cross-validation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cross-validation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cross-validation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cross-validation.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>KFOLDS</strong> 	KFOLDS (data, scalar) is the number of folds.
+			%  <strong>11</strong> <strong>SPLIT</strong> 	SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
+			%  <strong>12</strong> <strong>D</strong> 	D (data, itemlist) is the datasets from groups to be cross-validated.
+			%  <strong>13</strong> <strong>NN_TEMPLATE</strong> 	NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
+			%  <strong>14</strong> <strong>NNEVALUATOR_TEMPLATE</strong> 	NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
+			%  <strong>15</strong> <strong>DSP</strong> 	DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.
+			%  <strong>16</strong> <strong>DCO</strong> 	DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
+			%  <strong>17</strong> <strong>D_LIST</strong> 	D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.
+			%  <strong>18</strong> <strong>D_LIST_IT</strong> 	D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>19</strong> <strong>NN_LIST</strong> 	NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
+			%  <strong>20</strong> <strong>NN_LIST_IT</strong> 	NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>21</strong> <strong>EVALUATOR_LIST</strong> 	EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.
+			%  <strong>22</strong> <strong>EVALUATOR_LIST_IT</strong> 	EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.
+			%  <strong>23</strong> <strong>EPOCHS</strong> 	EPOCHS (parameter, scalar) is the maximum number of epochs.
+			%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
+			%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
+			%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
+			%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
+			%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
+			%  <strong>30</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number.
+			%  <strong>31</strong> <strong>AV_AUC</strong> 	AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
+			%  <strong>32</strong> <strong>PFROC</strong> 	PFROC (gui, item) contains the panel figure of the ROC plot for classification model.
+			%  <strong>33</strong> <strong>AV_MACRO_AUC</strong> 	AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.
+			%  <strong>34</strong> <strong>C_MATRIX</strong> 	C_MATRIX (result, matrix) provides the confusion matrix across k folds.
+			%  <strong>35</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
 			%
 			% See also Category, Format.
 			
@@ -175,7 +248,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNClassifierMLP_CrossValidation', [], [], true);
+			subclass_list = { 'NNClassifierMLP_CrossValidation' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of neural network cross-validation for MLP classifiers.
@@ -196,62 +269,30 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					NNCrossValidation.getProps() ...
-						NNClassifierMLP_CrossValidation.P ...
-						NNClassifierMLP_CrossValidation.AV_AUC ...
-						NNClassifierMLP_CrossValidation.PFROC ...
-						NNClassifierMLP_CrossValidation.AV_MACRO_AUC ...
-						NNClassifierMLP_CrossValidation.C_MATRIX ...
-						NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.PARAMETER) ...
-						NNClassifierMLP_CrossValidation.P ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						NNCrossValidation.getProps(Category.RESULT) ...
-						NNClassifierMLP_CrossValidation.AV_AUC ...
-						NNClassifierMLP_CrossValidation.AV_MACRO_AUC ...
-						NNClassifierMLP_CrossValidation.C_MATRIX ...
-						NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						NNCrossValidation.getProps(Category.GUI) ...
-						NNClassifierMLP_CrossValidation.PFROC ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 27 28];
+				case 3 % Category.PARAMETER
+					prop_list = [4 13 14 23 24 25 26 30];
+				case 4 % Category.DATA
+					prop_list = [5 10 11 12];
+				case 5 % Category.RESULT
+					prop_list = [15 16 17 19 21 31 33 34 35];
+				case 6 % Category.QUERY
+					prop_list = [8 18 20 22 29];
+				case 9 % Category.GUI
+					prop_list = [9 32];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -272,7 +313,31 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNClassifierMLP_CrossValidation.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 35;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 4;
+				case 3 % Category.PARAMETER
+					prop_number = 8;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 5 % Category.RESULT
+					prop_number = 9;
+				case 6 % Category.QUERY
+					prop_number = 5;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in neural network cross-validation for MLP classifiers/error.
@@ -300,14 +365,14 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNClassifierMLP_CrossValidation.getProps());
+			check = prop >= 1 && prop <= 35 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNClassifierMLP_CrossValidation.'] ...
 					)
 			end
@@ -338,15 +403,14 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%
 			% See also getProps, existsTag.
 			
-			nnclassifiermlp_crossvalidation_tag_list = cellfun(@(x) NNClassifierMLP_CrossValidation.getPropTag(x), num2cell(NNClassifierMLP_CrossValidation.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nnclassifiermlp_crossvalidation_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'PFROC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNClassifierMLP_CrossValidation.'] ...
 					)
 			end
@@ -372,8 +436,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nnclassifiermlp_crossvalidation_tag_list = cellfun(@(x) NNClassifierMLP_CrossValidation.getPropTag(x), num2cell(NNClassifierMLP_CrossValidation.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nnclassifiermlp_crossvalidation_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'PFROC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -401,24 +464,9 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNClassifierMLP_CrossValidation.P
-						tag = NNClassifierMLP_CrossValidation.P_TAG;
-					case NNClassifierMLP_CrossValidation.AV_AUC
-						tag = NNClassifierMLP_CrossValidation.AV_AUC_TAG;
-					case NNClassifierMLP_CrossValidation.PFROC
-						tag = NNClassifierMLP_CrossValidation.PFROC_TAG;
-					case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-						tag = NNClassifierMLP_CrossValidation.AV_MACRO_AUC_TAG;
-					case NNClassifierMLP_CrossValidation.C_MATRIX
-						tag = NNClassifierMLP_CrossValidation.C_MATRIX_TAG;
-					case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-						tag = NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE_TAG;
-					otherwise
-						tag = getPropTag@NNCrossValidation(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nnclassifiermlp_crossvalidation_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'KFOLDS'  'SPLIT'  'D'  'NN_TEMPLATE'  'NNEVALUATOR_TEMPLATE'  'DSP'  'DCO'  'D_LIST'  'D_LIST_IT'  'NN_LIST'  'NN_LIST_IT'  'EVALUATOR_LIST'  'EVALUATOR_LIST_IT'  'EPOCHS'  'BATCH'  'SHUFFLE'  'SOLVER'  'VERBOSE'  'PLOT_TRAINING'  'TRAIN'  'P'  'AV_AUC'  'PFROC'  'AV_MACRO_AUC'  'C_MATRIX'  'AV_FEATURE_IMPORTANCE' };
+				tag = nnclassifiermlp_crossvalidation_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -443,22 +491,9 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_CrossValidation.P
-					prop_category = NNClassifierMLP_CrossValidation.P_CATEGORY;
-				case NNClassifierMLP_CrossValidation.AV_AUC
-					prop_category = NNClassifierMLP_CrossValidation.AV_AUC_CATEGORY;
-				case NNClassifierMLP_CrossValidation.PFROC
-					prop_category = NNClassifierMLP_CrossValidation.PFROC_CATEGORY;
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					prop_category = NNClassifierMLP_CrossValidation.AV_MACRO_AUC_CATEGORY;
-				case NNClassifierMLP_CrossValidation.C_MATRIX
-					prop_category = NNClassifierMLP_CrossValidation.C_MATRIX_CATEGORY;
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					prop_category = NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@NNCrossValidation(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  9  4  4  4  3  3  5  5  5  6  5  6  5  6  3  3  3  3  2  2  6  3  5  9  5  5  5 };
+			prop_category = nnclassifiermlp_crossvalidation_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -482,22 +517,9 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_CrossValidation.P
-					prop_format = NNClassifierMLP_CrossValidation.P_FORMAT;
-				case NNClassifierMLP_CrossValidation.AV_AUC
-					prop_format = NNClassifierMLP_CrossValidation.AV_AUC_FORMAT;
-				case NNClassifierMLP_CrossValidation.PFROC
-					prop_format = NNClassifierMLP_CrossValidation.PFROC_FORMAT;
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					prop_format = NNClassifierMLP_CrossValidation.AV_MACRO_AUC_FORMAT;
-				case NNClassifierMLP_CrossValidation.C_MATRIX
-					prop_format = NNClassifierMLP_CrossValidation.C_MATRIX_FORMAT;
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					prop_format = NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@NNCrossValidation(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_crossvalidation_format_list = { 2  2  2  8  2  2  2  2  4  11  16  9  8  8  9  9  9  8  9  8  9  8  11  11  5  5  4  5  1  11  12  8  11  14  16 };
+			prop_format = nnclassifiermlp_crossvalidation_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -521,44 +543,9 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_CrossValidation.P
-					prop_description = 'P (parameter, scalar) is the permutation number.';
-				case NNClassifierMLP_CrossValidation.AV_AUC
-					prop_description = 'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.';
-				case NNClassifierMLP_CrossValidation.PFROC
-					prop_description = 'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.';
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					prop_description = 'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.';
-				case NNClassifierMLP_CrossValidation.C_MATRIX
-					prop_description = 'C_MATRIX (result, matrix) provides the confusion matrix across k folds.';
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					prop_description = 'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.';
-				case NNClassifierMLP_CrossValidation.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the cross-validation.';
-				case NNClassifierMLP_CrossValidation.NAME
-					prop_description = 'NAME (constant, string) is the name of the cross-validation.';
-				case NNClassifierMLP_CrossValidation.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the cross-validation.';
-				case NNClassifierMLP_CrossValidation.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the cross-validation.';
-				case NNClassifierMLP_CrossValidation.ID
-					prop_description = 'ID (data, string) is a few-letter code for the cross-validation.';
-				case NNClassifierMLP_CrossValidation.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the cross-validation.';
-				case NNClassifierMLP_CrossValidation.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the cross-validation.';
-				case NNClassifierMLP_CrossValidation.NN_TEMPLATE
-					prop_description = 'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.';
-				case NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
-					prop_description = 'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.';
-				case NNClassifierMLP_CrossValidation.NN_LIST
-					prop_description = 'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.';
-				case NNClassifierMLP_CrossValidation.EVALUATOR_LIST
-					prop_description = 'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.';
-				otherwise
-					prop_description = getPropDescription@NNCrossValidation(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the cross-validation.'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.'  'C_MATRIX (result, matrix) provides the confusion matrix across k folds.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
+			prop_description = nnclassifiermlp_crossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -582,24 +569,24 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_CrossValidation.P
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case NNClassifierMLP_CrossValidation.AV_AUC
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case NNClassifierMLP_CrossValidation.PFROC
+			switch prop %CET: Computational Efficiency Trick
+				case 30 % NNClassifierMLP_CrossValidation.P
+					prop_settings = Format.getFormatSettings(11);
+				case 31 % NNClassifierMLP_CrossValidation.AV_AUC
+					prop_settings = Format.getFormatSettings(12);
+				case 32 % NNClassifierMLP_CrossValidation.PFROC
 					prop_settings = 'NNClassifierMLP_CrossValidationPF_ROC';
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case NNClassifierMLP_CrossValidation.C_MATRIX
-					prop_settings = Format.getFormatSettings(Format.MATRIX);
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case NNClassifierMLP_CrossValidation.TEMPLATE
+				case 33 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+					prop_settings = Format.getFormatSettings(11);
+				case 34 % NNClassifierMLP_CrossValidation.C_MATRIX
+					prop_settings = Format.getFormatSettings(14);
+				case 35 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
 					prop_settings = 'NNClassifierMLP_CrossValidation';
-				case NNClassifierMLP_CrossValidation.NN_TEMPLATE
+				case 13 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
 					prop_settings = 'NNClassifierMLP';
-				case NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+				case 14 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
 					prop_settings = 'NNClassifierMLP_Evaluator';
 				otherwise
 					prop_settings = getPropSettings@NNCrossValidation(prop);
@@ -627,37 +614,37 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_CrossValidation.P
+			switch prop %CET: Computational Efficiency Trick
+				case 30 % NNClassifierMLP_CrossValidation.P
 					prop_default = 1e+2;
-				case NNClassifierMLP_CrossValidation.AV_AUC
-					prop_default = Format.getFormatDefault(Format.RVECTOR, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.PFROC
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC
-					prop_default = Format.getFormatDefault(Format.SCALAR, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.C_MATRIX
-					prop_default = Format.getFormatDefault(Format.MATRIX, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-					prop_default = Format.getFormatDefault(Format.CELL, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.ELCLASS
+				case 31 % NNClassifierMLP_CrossValidation.AV_AUC
+					prop_default = Format.getFormatDefault(12, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 32 % NNClassifierMLP_CrossValidation.PFROC
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 33 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+					prop_default = Format.getFormatDefault(11, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 34 % NNClassifierMLP_CrossValidation.C_MATRIX
+					prop_default = Format.getFormatDefault(14, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 35 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(16, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 1 % NNClassifierMLP_CrossValidation.ELCLASS
 					prop_default = 'NNClassifierMLP_CrossValidation';
-				case NNClassifierMLP_CrossValidation.NAME
+				case 2 % NNClassifierMLP_CrossValidation.NAME
 					prop_default = 'Neural Network Cross-Validation for Multi-layer Perceptron Classifiers';
-				case NNClassifierMLP_CrossValidation.DESCRIPTION
+				case 3 % NNClassifierMLP_CrossValidation.DESCRIPTION
 					prop_default = 'A cross validation for multi-layer perceptron classifiers (NNClassifierMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron classifiers using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
-				case NNClassifierMLP_CrossValidation.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.ID
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 5 % NNClassifierMLP_CrossValidation.ID
 					prop_default = 'NNClassifierMLP_CrossValidation ID';
-				case NNClassifierMLP_CrossValidation.LABEL
+				case 6 % NNClassifierMLP_CrossValidation.LABEL
 					prop_default = 'NNClassifierMLP_CrossValidation label';
-				case NNClassifierMLP_CrossValidation.NOTES
+				case 7 % NNClassifierMLP_CrossValidation.NOTES
 					prop_default = 'NNClassifierMLP_CrossValidation notes';
-				case NNClassifierMLP_CrossValidation.NN_TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 13 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 14 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 				otherwise
 					prop_default = getPropDefault@NNCrossValidation(prop);
 			end
@@ -703,15 +690,15 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			% 
 			% NNCV.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNClassifierMLP_CrossValidation:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNClassifierMLP_CrossValidation:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NNCV.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NNCV.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_CrossValidation:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNClassifierMLP_CrossValidation:WrongInput
 			%  Element.CHECKPROP(NNClassifierMLP_CrossValidation, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_CrossValidation.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_CrossValidation:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNClassifierMLP_CrossValidation:WrongInput
 			%  NNCV.CHECKPROP(NNClassifierMLP_CrossValidation, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_CrossValidation.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_CrossValidation:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNClassifierMLP_CrossValidation:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(NNCV) and Element.CHECKPROP('NNClassifierMLP_CrossValidation')
 			%  are less computationally efficient.
@@ -722,29 +709,29 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			switch prop
-				case NNClassifierMLP_CrossValidation.P % __NNClassifierMLP_CrossValidation.P__
-					check = Format.checkFormat(Format.SCALAR, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 30 % NNClassifierMLP_CrossValidation.P
+					check = Format.checkFormat(11, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case NNClassifierMLP_CrossValidation.AV_AUC % __NNClassifierMLP_CrossValidation.AV_AUC__
-					check = Format.checkFormat(Format.RVECTOR, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.PFROC % __NNClassifierMLP_CrossValidation.PFROC__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC % __NNClassifierMLP_CrossValidation.AV_MACRO_AUC__
-					check = Format.checkFormat(Format.SCALAR, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.C_MATRIX % __NNClassifierMLP_CrossValidation.C_MATRIX__
-					check = Format.checkFormat(Format.MATRIX, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE % __NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE__
-					check = Format.checkFormat(Format.CELL, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.TEMPLATE % __NNClassifierMLP_CrossValidation.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.NN_TEMPLATE % __NNClassifierMLP_CrossValidation.NN_TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
-				case NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE % __NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 31 % NNClassifierMLP_CrossValidation.AV_AUC
+					check = Format.checkFormat(12, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 32 % NNClassifierMLP_CrossValidation.PFROC
+					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 33 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+					check = Format.checkFormat(11, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 34 % NNClassifierMLP_CrossValidation.C_MATRIX
+					check = Format.checkFormat(14, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 35 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					check = Format.checkFormat(16, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE
+					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 13 % NNClassifierMLP_CrossValidation.NN_TEMPLATE
+					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
+				case 14 % NNClassifierMLP_CrossValidation.NNEVALUATOR_TEMPLATE
+					check = Format.checkFormat(8, value, NNClassifierMLP_CrossValidation.getPropSettings(prop));
 				otherwise
-					if prop <= NNCrossValidation.getPropNumber()
+					if prop <= 29
 						check = checkProp@NNCrossValidation(prop, value);
 					end
 			end
@@ -753,8 +740,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_CrossValidation:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNClassifierMLP_CrossValidation.getPropTag(prop) ' (' NNClassifierMLP_CrossValidation.getFormatTag(NNClassifierMLP_CrossValidation.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -774,13 +761,13 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  checkValue.
 			
 			switch prop
-				case NNClassifierMLP_CrossValidation.PFROC % __NNClassifierMLP_CrossValidation.PFROC__
+				case 32 % NNClassifierMLP_CrossValidation.PFROC
 					if isa(nncv.getr('PFROC'), 'NoValue')
 					    nncv.set('PFROC', NNClassifierMLP_CrossValidationPF_ROC('NNCV', nncv));
 					end
 					
 				otherwise
-					if prop <= NNCrossValidation.getPropNumber()
+					if prop <= 29
 						postprocessing@NNCrossValidation(nncv, prop);
 					end
 			end
@@ -791,20 +778,20 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNClassifierMLP_CrossValidation.AV_AUC % __NNClassifierMLP_CrossValidation.AV_AUC__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.AV_AUC), 'twister')
+				case 31 % NNClassifierMLP_CrossValidation.AV_AUC
+					rng_settings_ = rng(); rng(nncv.getPropSeed(31), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -819,8 +806,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case NNClassifierMLP_CrossValidation.AV_MACRO_AUC % __NNClassifierMLP_CrossValidation.AV_MACRO_AUC__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.AV_MACRO_AUC), 'twister')
+				case 33 % NNClassifierMLP_CrossValidation.AV_MACRO_AUC
+					rng_settings_ = rng(); rng(nncv.getPropSeed(33), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -835,8 +822,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case NNClassifierMLP_CrossValidation.C_MATRIX % __NNClassifierMLP_CrossValidation.C_MATRIX__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.C_MATRIX), 'twister')
+				case 34 % NNClassifierMLP_CrossValidation.C_MATRIX
+					rng_settings_ = rng(); rng(nncv.getPropSeed(34), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					
@@ -848,8 +835,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE % __NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE), 'twister')
+				case 35 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nncv.getPropSeed(35), 'twister')
 					
 					e_list = nncv.get('EVALUATOR_LIST');
 					wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Initialize feature importance permutation ...']);
@@ -870,8 +857,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case NNClassifierMLP_CrossValidation.NN_LIST % __NNClassifierMLP_CrossValidation.NN_LIST__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.NN_LIST), 'twister')
+				case 19 % NNClassifierMLP_CrossValidation.NN_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(19), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					
@@ -905,8 +892,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 					rng(rng_settings_)
 					
-				case NNClassifierMLP_CrossValidation.EVALUATOR_LIST % __NNClassifierMLP_CrossValidation.EVALUATOR_LIST__
-					rng_settings_ = rng(); rng(nncv.getPropSeed(NNClassifierMLP_CrossValidation.EVALUATOR_LIST), 'twister')
+				case 21 % NNClassifierMLP_CrossValidation.EVALUATOR_LIST
+					rng_settings_ = rng(); rng(nncv.getPropSeed(21), 'twister')
 					
 					d_list = nncv.get('D_LIST');
 					nn_list = nncv.get('NN_LIST');
@@ -924,7 +911,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= NNCrossValidation.getPropNumber()
+					if prop <= 29
 						value = calculateValue@NNCrossValidation(nncv, prop, varargin{:});
 					else
 						value = calculateValue@Element(nncv, prop, varargin{:});
@@ -950,23 +937,23 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNClassifierMLP_CrossValidation.PFROC % __NNClassifierMLP_CrossValidation.PFROC__
-					pr = PanelPropItem('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.PFROC, ...
+				case 32 % NNClassifierMLP_CrossValidation.PFROC
+					pr = PanelPropItem('EL', nncv, 'PROP', 32, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['ROC Plot'], ...
 					    varargin{:});
 					
-				case NNClassifierMLP_CrossValidation.C_MATRIX % __NNClassifierMLP_CrossValidation.C_MATRIX__
+				case 34 % NNClassifierMLP_CrossValidation.C_MATRIX
 					d = NNDatasetCombine('D_LIST', nncv.get('D')).get('D');
 					targets = NNClassifierMLP().get('TARGET_IDS', d);
 					class_names = unique(targets);
-					pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRIX, ...
-					    'TABLE_HEIGHT', s(40), ...
+					pr = PanelPropMatrix('EL', nncv, 'PROP', 34, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'ROWNAME', class_names, ...
 					    'COLUMNNAME', class_names, ...
 					    varargin{:});
 					
-				case NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE % __NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE__
+				case 35 % NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
 					input_datasets = nncv.get('D');
 					input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
 					dp_class = input_dataset.get('DP_CLASS');
@@ -974,11 +961,11 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
 					
 					if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-					    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', 35, varargin{:});
 					elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-					    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', 35, varargin{:});
 					else % DATA input
-					    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
+					    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', 35, varargin{:});
 					end
 					
 				otherwise

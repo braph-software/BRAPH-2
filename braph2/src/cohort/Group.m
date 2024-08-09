@@ -7,6 +7,20 @@ classdef Group < ConcreteElement
 	%  It manages the subjects as an indexed dictionary of subjects SUB_DICT, 
 	%  whose methods can be used to inspect, add or remove subjects.
 	%
+	% The list of Group properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the group of subjects.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group of subjects.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group of subjects.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group of subjects.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group of subjects.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group of subjects.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group of subjects.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
+	%  <strong>10</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
+	%  <strong>11</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
+	%  <strong>12</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
+	%
 	% Group methods (constructor):
 	%  Group - constructor
 	%
@@ -96,25 +110,25 @@ classdef Group < ConcreteElement
 	% See also Subject, IndexedDictionary.
 	
 	properties (Constant) % properties
-		SUB_CLASS = ConcreteElement.getPropNumber() + 1;
+		SUB_CLASS = 9; %CET: Computational Efficiency Trick
 		SUB_CLASS_TAG = 'SUB_CLASS';
-		SUB_CLASS_CATEGORY = Category.PARAMETER;
-		SUB_CLASS_FORMAT = Format.CLASS;
+		SUB_CLASS_CATEGORY = 3;
+		SUB_CLASS_FORMAT = 6;
 		
-		SUB_DICT = ConcreteElement.getPropNumber() + 2;
+		SUB_DICT = 10; %CET: Computational Efficiency Trick
 		SUB_DICT_TAG = 'SUB_DICT';
-		SUB_DICT_CATEGORY = Category.DATA;
-		SUB_DICT_FORMAT = Format.IDICT;
+		SUB_DICT_CATEGORY = 4;
+		SUB_DICT_FORMAT = 10;
 		
-		VOIS = ConcreteElement.getPropNumber() + 3;
+		VOIS = 11; %CET: Computational Efficiency Trick
 		VOIS_TAG = 'VOIS';
-		VOIS_CATEGORY = Category.RESULT;
-		VOIS_FORMAT = Format.CELL;
+		VOIS_CATEGORY = 5;
+		VOIS_FORMAT = 16;
 		
-		COVARIATES = ConcreteElement.getPropNumber() + 4;
+		COVARIATES = 12; %CET: Computational Efficiency Trick
 		COVARIATES_TAG = 'COVARIATES';
-		COVARIATES_CATEGORY = Category.RESULT;
-		COVARIATES_FORMAT = Format.MATRIX;
+		COVARIATES_CATEGORY = 5;
+		COVARIATES_FORMAT = 14;
 	end
 	methods % constructor
 		function gr = Group(varargin)
@@ -127,6 +141,19 @@ classdef Group < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of Group properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the group of subjects.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group of subjects.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group of subjects.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group of subjects.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group of subjects.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group of subjects.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group of subjects.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SUB_CLASS</strong> 	SUB_CLASS (parameter, class) is the class of the subjects of the group.
+			%  <strong>10</strong> <strong>SUB_DICT</strong> 	SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.
+			%  <strong>11</strong> <strong>VOIS</strong> 	VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.
+			%  <strong>12</strong> <strong>COVARIATES</strong> 	COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.
 			%
 			% See also Category, Format.
 			
@@ -164,7 +191,7 @@ classdef Group < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('Group', [], [], true);
+			subclass_list = { 'Group' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of group of subjects.
@@ -185,58 +212,28 @@ classdef Group < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						Group.SUB_CLASS ...
-						Group.SUB_DICT ...
-						Group.VOIS ...
-						Group.COVARIATES ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						Group.SUB_CLASS ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						Group.SUB_DICT ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						Group.VOIS ...
-						Group.COVARIATES ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 9];
+				case 4 % Category.DATA
+					prop_list = [5 10];
+				case 5 % Category.RESULT
+					prop_list = [11 12];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -257,7 +254,29 @@ classdef Group < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(Group.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 12;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in group of subjects/error.
@@ -285,14 +304,14 @@ classdef Group < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == Group.getProps());
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Group:' 'WrongInput'], ...
+					['BRAPH2' ':Group:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Group.'] ...
 					)
 			end
@@ -323,15 +342,14 @@ classdef Group < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			group_tag_list = cellfun(@(x) Group.getPropTag(x), num2cell(Group.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, group_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Group:' 'WrongInput'], ...
+					['BRAPH2' ':Group:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for Group.'] ...
 					)
 			end
@@ -357,8 +375,7 @@ classdef Group < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				group_tag_list = cellfun(@(x) Group.getPropTag(x), num2cell(Group.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, group_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -386,20 +403,9 @@ classdef Group < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case Group.SUB_CLASS
-						tag = Group.SUB_CLASS_TAG;
-					case Group.SUB_DICT
-						tag = Group.SUB_DICT_TAG;
-					case Group.VOIS
-						tag = Group.VOIS_TAG;
-					case Group.COVARIATES
-						tag = Group.COVARIATES_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				group_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SUB_CLASS'  'SUB_DICT'  'VOIS'  'COVARIATES' };
+				tag = group_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -424,18 +430,9 @@ classdef Group < ConcreteElement
 			
 			prop = Group.getPropProp(pointer);
 			
-			switch prop
-				case Group.SUB_CLASS
-					prop_category = Group.SUB_CLASS_CATEGORY;
-				case Group.SUB_DICT
-					prop_category = Group.SUB_DICT_CATEGORY;
-				case Group.VOIS
-					prop_category = Group.VOIS_CATEGORY;
-				case Group.COVARIATES
-					prop_category = Group.COVARIATES_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			group_category_list = { 1  1  1  3  4  2  2  6  3  4  5  5 };
+			prop_category = group_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -459,18 +456,9 @@ classdef Group < ConcreteElement
 			
 			prop = Group.getPropProp(pointer);
 			
-			switch prop
-				case Group.SUB_CLASS
-					prop_format = Group.SUB_CLASS_FORMAT;
-				case Group.SUB_DICT
-					prop_format = Group.SUB_DICT_FORMAT;
-				case Group.VOIS
-					prop_format = Group.VOIS_FORMAT;
-				case Group.COVARIATES
-					prop_format = Group.COVARIATES_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			group_format_list = { 2  2  2  8  2  2  2  2  6  10  16  14 };
+			prop_format = group_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -494,32 +482,9 @@ classdef Group < ConcreteElement
 			
 			prop = Group.getPropProp(pointer);
 			
-			switch prop
-				case Group.SUB_CLASS
-					prop_description = 'SUB_CLASS (parameter, class) is the class of the subjects of the group.';
-				case Group.SUB_DICT
-					prop_description = 'SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.';
-				case Group.VOIS
-					prop_description = 'VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.';
-				case Group.COVARIATES
-					prop_description = 'COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.';
-				case Group.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the group of subjects.';
-				case Group.NAME
-					prop_description = 'NAME (constant, string) is the name of the group of subjects.';
-				case Group.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the group of subjects.';
-				case Group.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the group of subjects.';
-				case Group.ID
-					prop_description = 'ID (data, string) is a few-letter code for the group of subjects.';
-				case Group.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the group of subjects.';
-				case Group.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the group of subjects.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			group_description_list = { 'ELCLASS (constant, string) is the class of the group of subjects.'  'NAME (constant, string) is the name of the group of subjects.'  'DESCRIPTION (constant, string) is the description of the group of subjects.'  'TEMPLATE (parameter, item) is the template of the group of subjects.'  'ID (data, string) is a few-letter code for the group of subjects.'  'LABEL (metadata, string) is an extended label of the group of subjects.'  'NOTES (metadata, string) are some specific notes about the group of subjects.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SUB_CLASS (parameter, class) is the class of the subjects of the group.'  'SUB_DICT (data, idict) is an indexed dictionary containing the subjects of the group.'  'VOIS (result, cell) contains the variables of interest, including {kind, categories, values}.'  'COVARIATES (result, matrix) contains the values of the covariates with the categorical ones one-hot encoded.' };
+			prop_description = group_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -543,15 +508,15 @@ classdef Group < ConcreteElement
 			
 			prop = Group.getPropProp(pointer);
 			
-			switch prop
-				case Group.SUB_CLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % Group.SUB_CLASS
 					prop_settings = 'Subject';
-				case Group.SUB_DICT
+				case 10 % Group.SUB_DICT
 					prop_settings = 'Subject';
-				case Group.VOIS
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case Group.COVARIATES
-					prop_settings = Format.getFormatSettings(Format.MATRIX);
+				case 11 % Group.VOIS
+					prop_settings = Format.getFormatSettings(16);
+				case 12 % Group.COVARIATES
+					prop_settings = Format.getFormatSettings(14);
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
 			end
@@ -578,26 +543,26 @@ classdef Group < ConcreteElement
 			
 			prop = Group.getPropProp(pointer);
 			
-			switch prop
-				case Group.SUB_CLASS
-					prop_default = Format.getFormatDefault(Format.CLASS, Group.getPropSettings(prop));
-				case Group.SUB_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, Group.getPropSettings(prop));
-				case Group.VOIS
-					prop_default = Format.getFormatDefault(Format.CELL, Group.getPropSettings(prop));
-				case Group.COVARIATES
-					prop_default = Format.getFormatDefault(Format.MATRIX, Group.getPropSettings(prop));
-				case Group.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % Group.SUB_CLASS
+					prop_default = Format.getFormatDefault(6, Group.getPropSettings(prop));
+				case 10 % Group.SUB_DICT
+					prop_default = Format.getFormatDefault(10, Group.getPropSettings(prop));
+				case 11 % Group.VOIS
+					prop_default = Format.getFormatDefault(16, Group.getPropSettings(prop));
+				case 12 % Group.COVARIATES
+					prop_default = Format.getFormatDefault(14, Group.getPropSettings(prop));
+				case 1 % Group.ELCLASS
 					prop_default = 'Group';
-				case Group.NAME
+				case 2 % Group.NAME
 					prop_default = 'Group';
-				case Group.DESCRIPTION
+				case 3 % Group.DESCRIPTION
 					prop_default = 'A Group represents a group of subjects whose class is defined in the property SUB_CLASS. Group provides the methods necessary to handle groups of subjects. It manages the subjects as an indexed dictionary of subjects SUB_DICT, whose methods can be used to inspect, add or remove subjects.';
-				case Group.ID
+				case 5 % Group.ID
 					prop_default = 'Group ID';
-				case Group.LABEL
+				case 6 % Group.LABEL
 					prop_default = 'Group label';
-				case Group.NOTES
+				case 7 % Group.NOTES
 					prop_default = 'Group notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -644,15 +609,15 @@ classdef Group < ConcreteElement
 			% 
 			% GR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:Group:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:Group:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  GR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of GR.
-			%   Error id: €BRAPH2.STR€:Group:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Group:WrongInput
 			%  Element.CHECKPROP(Group, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Group.
-			%   Error id: €BRAPH2.STR€:Group:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Group:WrongInput
 			%  GR.CHECKPROP(Group, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Group.
-			%   Error id: €BRAPH2.STR€:Group:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:Group:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(GR) and Element.CHECKPROP('Group')
 			%  are less computationally efficient.
@@ -663,16 +628,16 @@ classdef Group < ConcreteElement
 			prop = Group.getPropProp(pointer);
 			
 			switch prop
-				case Group.SUB_CLASS % __Group.SUB_CLASS__
-					check = Format.checkFormat(Format.CLASS, value, Group.getPropSettings(prop));
-				case Group.SUB_DICT % __Group.SUB_DICT__
-					check = Format.checkFormat(Format.IDICT, value, Group.getPropSettings(prop));
-				case Group.VOIS % __Group.VOIS__
-					check = Format.checkFormat(Format.CELL, value, Group.getPropSettings(prop));
-				case Group.COVARIATES % __Group.COVARIATES__
-					check = Format.checkFormat(Format.MATRIX, value, Group.getPropSettings(prop));
+				case 9 % Group.SUB_CLASS
+					check = Format.checkFormat(6, value, Group.getPropSettings(prop));
+				case 10 % Group.SUB_DICT
+					check = Format.checkFormat(10, value, Group.getPropSettings(prop));
+				case 11 % Group.VOIS
+					check = Format.checkFormat(16, value, Group.getPropSettings(prop));
+				case 12 % Group.COVARIATES
+					check = Format.checkFormat(14, value, Group.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -681,8 +646,8 @@ classdef Group < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Group:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Group:' 'WrongInput'], ...
+					['BRAPH2' ':Group:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Group.getPropTag(prop) ' (' Group.getFormatTag(Group.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -693,20 +658,20 @@ classdef Group < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case Group.VOIS % __Group.VOIS__
-					rng_settings_ = rng(); rng(gr.getPropSeed(Group.VOIS), 'twister')
+				case 11 % Group.VOIS
+					rng_settings_ = rng(); rng(gr.getPropSeed(11), 'twister')
 					
 					sub_dict = gr.get('SUB_DICT');
 					
@@ -745,8 +710,8 @@ classdef Group < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case Group.COVARIATES % __Group.COVARIATES__
-					rng_settings_ = rng(); rng(gr.getPropSeed(Group.COVARIATES), 'twister')
+				case 12 % Group.COVARIATES
+					rng_settings_ = rng(); rng(gr.getPropSeed(12), 'twister')
 					
 					vois = gr.get('VOIS');
 					
@@ -763,7 +728,7 @@ classdef Group < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						value = calculateValue@ConcreteElement(gr, prop, varargin{:});
 					else
 						value = calculateValue@Element(gr, prop, varargin{:});
@@ -789,9 +754,9 @@ classdef Group < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case Group.SUB_DICT % __Group.SUB_DICT__
-					[order, title] = load_layout(gr.get(Group.SUB_DICT).get(IndexedDictionary.IT_CLASS));
-					cols(1) = PanelPropIDictTable.SELECTOR;
+				case 10 % Group.SUB_DICT
+					[order, title] = load_layout(gr.get(10).get(9));
+					cols(1) = -1;
 					columnname = {''};
 					for i = 1:1:length(order)
 					    if isfinite(order(i))
@@ -799,7 +764,7 @@ classdef Group < ConcreteElement
 					        columnname{order(i) + 1} = title{i};
 					    end
 					end
-					pr = PanelPropIDictTable('EL', gr, 'PROP', Group.SUB_DICT, ... 
+					pr = PanelPropIDictTable('EL', gr, 'PROP', 10, ... 
 					    'ROWNAME', 'numbered', ...
 					    'COLS', cols, ...
 					    'COLUMNNAME', columnname, ...

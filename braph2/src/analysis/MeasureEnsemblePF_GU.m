@@ -4,6 +4,48 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 	%
 	% MeasureEnsemblePF_GU manages the basic functionalities to plot of a global unilayer group comparison figure.
 	%
+	% The list of MeasureEnsemblePF_GU properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GU.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure global unilayer group comparison figure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure global unilayer group comparison figure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure global unilayer group comparison figure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure global unilayer group comparison figure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure global unilayer group comparison figure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>ME</strong> 	ME (metadata, item) is the ensemble-based comparison.
+	%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+	%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.
+	%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+	%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+	%  <strong>31</strong> <strong>H_LINE_M</strong> 	H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.
+	%  <strong>32</strong> <strong>ST_LINE_M</strong> 	ST_LINE_M (figure, item) determines the line settings.
+	%  <strong>33</strong> <strong>LISTENER_ST_LINE_M</strong> 	LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+	%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+	%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+	%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+	%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+	%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%  <strong>40</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the global measure.
+	%
 	% MeasureEnsemblePF_GU methods (constructor):
 	%  MeasureEnsemblePF_GU - constructor
 	%
@@ -93,10 +135,10 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 	% See also MeasureEnsemble.
 	
 	properties (Constant) % properties
-		LAYER = MeasureEnsemblePF.getPropNumber() + 1;
+		LAYER = 40; %CET: Computational Efficiency Trick
 		LAYER_TAG = 'LAYER';
-		LAYER_CATEGORY = Category.FIGURE;
-		LAYER_FORMAT = Format.SCALAR;
+		LAYER_CATEGORY = 8;
+		LAYER_FORMAT = 11;
 	end
 	methods % constructor
 		function pf = MeasureEnsemblePF_GU(varargin)
@@ -109,6 +151,47 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of MeasureEnsemblePF_GU properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GU.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure global unilayer group comparison figure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure global unilayer group comparison figure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure global unilayer group comparison figure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure global unilayer group comparison figure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure global unilayer group comparison figure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>ME</strong> 	ME (metadata, item) is the ensemble-based comparison.
+			%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+			%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.
+			%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+			%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+			%  <strong>31</strong> <strong>H_LINE_M</strong> 	H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.
+			%  <strong>32</strong> <strong>ST_LINE_M</strong> 	ST_LINE_M (figure, item) determines the line settings.
+			%  <strong>33</strong> <strong>LISTENER_ST_LINE_M</strong> 	LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+			%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+			%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+			%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+			%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+			%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+			%  <strong>40</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the global measure.
 			%
 			% See also Category, Format.
 			
@@ -146,7 +229,7 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('MeasureEnsemblePF_GU', [], [], true);
+			subclass_list = { 'MeasureEnsemblePF_GU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel global unilayer group comparison figure.
@@ -167,52 +250,32 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					MeasureEnsemblePF.getProps() ...
-						MeasureEnsemblePF_GU.LAYER ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						MeasureEnsemblePF.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.FIGURE) ...
-						MeasureEnsemblePF_GU.LAYER ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						MeasureEnsemblePF.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 26];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 27];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 25 28 30 31 33 34 36 38];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 29 32 35 37 39 40];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -233,7 +296,33 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(MeasureEnsemblePF_GU.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 40;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 13;
+				case 8 % Category.FIGURE
+					prop_number = 9;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel global unilayer group comparison figure/error.
@@ -261,14 +350,14 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == MeasureEnsemblePF_GU.getProps());
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MeasureEnsemblePF_GU.'] ...
 					)
 			end
@@ -299,15 +388,14 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%
 			% See also getProps, existsTag.
 			
-			measureensemblepf_gu_tag_list = cellfun(@(x) MeasureEnsemblePF_GU.getPropTag(x), num2cell(MeasureEnsemblePF_GU.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, measureensemblepf_gu_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for MeasureEnsemblePF_GU.'] ...
 					)
 			end
@@ -333,8 +421,7 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				measureensemblepf_gu_tag_list = cellfun(@(x) MeasureEnsemblePF_GU.getPropTag(x), num2cell(MeasureEnsemblePF_GU.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, measureensemblepf_gu_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -362,14 +449,9 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case MeasureEnsemblePF_GU.LAYER
-						tag = MeasureEnsemblePF_GU.LAYER_TAG;
-					otherwise
-						tag = getPropTag@MeasureEnsemblePF(prop);
-				end
+				%CET: Computational Efficiency Trick
+				measureensemblepf_gu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'ME'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_M'  'ST_LINE_M'  'LISTENER_ST_LINE_M'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'LAYER' };
+				tag = measureensemblepf_gu_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -394,12 +476,9 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
-			switch prop
-				case MeasureEnsemblePF_GU.LAYER
-					prop_category = MeasureEnsemblePF_GU.LAYER_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@MeasureEnsemblePF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			measureensemblepf_gu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  8  7  8  8 };
+			prop_category = measureensemblepf_gu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -423,12 +502,9 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
-			switch prop
-				case MeasureEnsemblePF_GU.LAYER
-					prop_format = MeasureEnsemblePF_GU.LAYER_FORMAT;
-				otherwise
-					prop_format = getPropFormat@MeasureEnsemblePF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			measureensemblepf_gu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  8  18  8  11 };
+			prop_format = measureensemblepf_gu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -452,28 +528,9 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
-			switch prop
-				case MeasureEnsemblePF_GU.LAYER
-					prop_description = 'LAYER (figure, scalar) is the layer number of the global measure.';
-				case MeasureEnsemblePF_GU.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GU.';
-				case MeasureEnsemblePF_GU.NAME
-					prop_description = 'NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.ID
-					prop_description = 'ID (data, string) is a few-letter code for the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.SETUP
-					prop_description = 'SETUP (query, empty) calculates the group comparison figure value and stores it.';
-				otherwise
-					prop_description = getPropDescription@MeasureEnsemblePF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			measureensemblepf_gu_description_list = { 'ELCLASS (constant, string) is the class of the MeasureEnsemblePF_GU.'  'NAME (constant, string) is the name of the panel figure global unilayer group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure global unilayer group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure global unilayer group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure global unilayer group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure global unilayer group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure global unilayer group comparison figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'ME (metadata, item) is the ensemble-based comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the ensemble-based comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_M (evanescent, handle) is the handle for the ensemble-based comparison line.'  'ST_LINE_M (figure, item) determines the line settings.'  'LISTENER_ST_LINE_M (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'LAYER (figure, scalar) is the layer number of the global measure.' };
+			prop_description = measureensemblepf_gu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -497,10 +554,10 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
-			switch prop
-				case MeasureEnsemblePF_GU.LAYER
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case MeasureEnsemblePF_GU.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 40 % MeasureEnsemblePF_GU.LAYER
+					prop_settings = Format.getFormatSettings(11);
+				case 4 % MeasureEnsemblePF_GU.TEMPLATE
 					prop_settings = 'MeasureEnsemblePF_GU';
 				otherwise
 					prop_settings = getPropSettings@MeasureEnsemblePF(prop);
@@ -528,22 +585,22 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
-			switch prop
-				case MeasureEnsemblePF_GU.LAYER
+			switch prop %CET: Computational Efficiency Trick
+				case 40 % MeasureEnsemblePF_GU.LAYER
 					prop_default = 1;
-				case MeasureEnsemblePF_GU.ELCLASS
+				case 1 % MeasureEnsemblePF_GU.ELCLASS
 					prop_default = 'MeasureEnsemblePF_GU';
-				case MeasureEnsemblePF_GU.NAME
+				case 2 % MeasureEnsemblePF_GU.NAME
 					prop_default = 'MeasureEnsemblePF_GU';
-				case MeasureEnsemblePF_GU.DESCRIPTION
+				case 3 % MeasureEnsemblePF_GU.DESCRIPTION
 					prop_default = 'MeasureEnsemblePF_GU manages the basic functionalities to plot of a global unilayer group comparison figure.';
-				case MeasureEnsemblePF_GU.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, MeasureEnsemblePF_GU.getPropSettings(prop));
-				case MeasureEnsemblePF_GU.ID
+				case 4 % MeasureEnsemblePF_GU.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MeasureEnsemblePF_GU.getPropSettings(prop));
+				case 5 % MeasureEnsemblePF_GU.ID
 					prop_default = 'MeasureEnsemblePF_GU ID';
-				case MeasureEnsemblePF_GU.LABEL
+				case 6 % MeasureEnsemblePF_GU.LABEL
 					prop_default = 'MeasureEnsemblePF_GU label';
-				case MeasureEnsemblePF_GU.NOTES
+				case 7 % MeasureEnsemblePF_GU.NOTES
 					prop_default = 'MeasureEnsemblePF_GU notes';
 				otherwise
 					prop_default = getPropDefault@MeasureEnsemblePF(prop);
@@ -590,15 +647,15 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:MeasureEnsemblePF_GU:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:MeasureEnsemblePF_GU:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:MeasureEnsemblePF_GU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MeasureEnsemblePF_GU:WrongInput
 			%  Element.CHECKPROP(MeasureEnsemblePF_GU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsemblePF_GU.
-			%   Error id: €BRAPH2.STR€:MeasureEnsemblePF_GU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MeasureEnsemblePF_GU:WrongInput
 			%  PF.CHECKPROP(MeasureEnsemblePF_GU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MeasureEnsemblePF_GU.
-			%   Error id: €BRAPH2.STR€:MeasureEnsemblePF_GU:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:MeasureEnsemblePF_GU:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('MeasureEnsemblePF_GU')
 			%  are less computationally efficient.
@@ -609,12 +666,12 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			prop = MeasureEnsemblePF_GU.getPropProp(pointer);
 			
 			switch prop
-				case MeasureEnsemblePF_GU.LAYER % __MeasureEnsemblePF_GU.LAYER__
-					check = Format.checkFormat(Format.SCALAR, value, MeasureEnsemblePF_GU.getPropSettings(prop));
-				case MeasureEnsemblePF_GU.TEMPLATE % __MeasureEnsemblePF_GU.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, MeasureEnsemblePF_GU.getPropSettings(prop));
+				case 40 % MeasureEnsemblePF_GU.LAYER
+					check = Format.checkFormat(11, value, MeasureEnsemblePF_GU.getPropSettings(prop));
+				case 4 % MeasureEnsemblePF_GU.TEMPLATE
+					check = Format.checkFormat(8, value, MeasureEnsemblePF_GU.getPropSettings(prop));
 				otherwise
-					if prop <= MeasureEnsemblePF.getPropNumber()
+					if prop <= 39
 						check = checkProp@MeasureEnsemblePF(prop, value);
 					end
 			end
@@ -623,8 +680,8 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MeasureEnsemblePF_GU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput'], ...
+					['BRAPH2' ':MeasureEnsemblePF_GU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasureEnsemblePF_GU.getPropTag(prop) ' (' MeasureEnsemblePF_GU.getFormatTag(MeasureEnsemblePF_GU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -644,11 +701,11 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%  checkValue.
 			
 			switch prop
-				case MeasureEnsemblePF_GU.LAYER % __MeasureEnsemblePF_GU.LAYER__
+				case 40 % MeasureEnsemblePF_GU.LAYER
 					pf.get('SETUP');
 					
 				otherwise
-					if prop <= MeasureEnsemblePF.getPropNumber()
+					if prop <= 39
 						postset@MeasureEnsemblePF(pf, prop);
 					end
 			end
@@ -659,19 +716,19 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case MeasureEnsemblePF_GU.SETUP % __MeasureEnsemblePF_GU.SETUP__
+				case 27 % MeasureEnsemblePF_GU.SETUP
 					me = pf.get('ME');
 					if me.get('A').get('G_DICT').get('LENGTH')
 					    g = me.get('A').get('G_DICT').get('IT', 1);
@@ -716,7 +773,7 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 					value = [];
 					
 				otherwise
-					if prop <= MeasureEnsemblePF.getPropNumber()
+					if prop <= 39
 						value = calculateValue@MeasureEnsemblePF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -742,8 +799,8 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case MeasureEnsemblePF_GU.LAYER % __MeasureEnsemblePF_GU.LAYER__
-					pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', MeasureEnsemblePF_GU.LAYER);
+				case 40 % MeasureEnsemblePF_GU.LAYER
+					pr = MeasureEnsemblePF_xUPP_Layer('EL', pf, 'PROP', 40);
 					
 				otherwise
 					pr = getPanelProp@MeasureEnsemblePF(pf, prop, varargin{:});

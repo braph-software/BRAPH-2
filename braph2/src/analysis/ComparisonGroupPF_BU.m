@@ -4,6 +4,55 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 	%
 	% ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer group comparison figure.
 	%
+	% The list of ComparisonGroupPF_BU properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ComparisonGroupPF_BU.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison.
+	%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+	%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the group comparison confidence area.
+	%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+	%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+	%  <strong>31</strong> <strong>H_LINE_DIFF</strong> 	H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.
+	%  <strong>32</strong> <strong>ST_LINE_DIFF</strong> 	ST_LINE_DIFF (figure, item) determines the line settings.
+	%  <strong>33</strong> <strong>LISTENER_ST_LINE_DIFF</strong> 	LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>34</strong> <strong>H_LINE_CIL</strong> 	H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.
+	%  <strong>35</strong> <strong>ST_LINE_CIL</strong> 	ST_LINE_CIL (figure, item) determines the line settings.
+	%  <strong>36</strong> <strong>LISTENER_ST_LINE_CIL</strong> 	LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>37</strong> <strong>H_LINE_CIU</strong> 	H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.
+	%  <strong>38</strong> <strong>ST_LINE_CIU</strong> 	ST_LINE_CIU (figure, item) determines the line settings.
+	%  <strong>39</strong> <strong>LISTENER_ST_LINE_CIU</strong> 	LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+	%  <strong>40</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+	%  <strong>41</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+	%  <strong>42</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+	%  <strong>43</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+	%  <strong>44</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+	%  <strong>45</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%  <strong>46</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
+	%  <strong>47</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
+	%
 	% ComparisonGroupPF_BU methods (constructor):
 	%  ComparisonGroupPF_BU - constructor
 	%
@@ -93,15 +142,15 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 	% See also ComparisonGroup.
 	
 	properties (Constant) % properties
-		NODES = ComparisonGroupPF.getPropNumber() + 1;
+		NODES = 46; %CET: Computational Efficiency Trick
 		NODES_TAG = 'NODES';
-		NODES_CATEGORY = Category.FIGURE;
-		NODES_FORMAT = Format.RVECTOR;
+		NODES_CATEGORY = 8;
+		NODES_FORMAT = 12;
 		
-		LAYER = ComparisonGroupPF.getPropNumber() + 2;
+		LAYER = 47; %CET: Computational Efficiency Trick
 		LAYER_TAG = 'LAYER';
-		LAYER_CATEGORY = Category.FIGURE;
-		LAYER_FORMAT = Format.SCALAR;
+		LAYER_CATEGORY = 8;
+		LAYER_FORMAT = 11;
 	end
 	methods % constructor
 		function pf = ComparisonGroupPF_BU(varargin)
@@ -114,6 +163,54 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of ComparisonGroupPF_BU properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ComparisonGroupPF_BU.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison.
+			%  <strong>27</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+			%  <strong>28</strong> <strong>H_AREA</strong> 	H_AREA (evanescent, handle) is the handle for the group comparison confidence area.
+			%  <strong>29</strong> <strong>ST_AREA</strong> 	ST_AREA (figure, item) determines the area settings.
+			%  <strong>30</strong> <strong>LISTENER_ST_AREA</strong> 	LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.
+			%  <strong>31</strong> <strong>H_LINE_DIFF</strong> 	H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.
+			%  <strong>32</strong> <strong>ST_LINE_DIFF</strong> 	ST_LINE_DIFF (figure, item) determines the line settings.
+			%  <strong>33</strong> <strong>LISTENER_ST_LINE_DIFF</strong> 	LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>34</strong> <strong>H_LINE_CIL</strong> 	H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.
+			%  <strong>35</strong> <strong>ST_LINE_CIL</strong> 	ST_LINE_CIL (figure, item) determines the line settings.
+			%  <strong>36</strong> <strong>LISTENER_ST_LINE_CIL</strong> 	LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>37</strong> <strong>H_LINE_CIU</strong> 	H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.
+			%  <strong>38</strong> <strong>ST_LINE_CIU</strong> 	ST_LINE_CIU (figure, item) determines the line settings.
+			%  <strong>39</strong> <strong>LISTENER_ST_LINE_CIU</strong> 	LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.
+			%  <strong>40</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+			%  <strong>41</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+			%  <strong>42</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+			%  <strong>43</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+			%  <strong>44</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+			%  <strong>45</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+			%  <strong>46</strong> <strong>NODES</strong> 	NODES (figure, rvector) are the node numbers of the binodal group comparison figure.
+			%  <strong>47</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the binodal group comparison figure.
 			%
 			% See also Category, Format.
 			
@@ -151,7 +248,7 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('ComparisonGroupPF_BU', [], [], true);
+			subclass_list = { 'ComparisonGroupPF_BU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel binodal unilayer group comparison figure.
@@ -172,54 +269,32 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ComparisonGroupPF.getProps() ...
-						ComparisonGroupPF_BU.NODES ...
-						ComparisonGroupPF_BU.LAYER ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ComparisonGroupPF.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.FIGURE) ...
-						ComparisonGroupPF_BU.NODES ...
-						ComparisonGroupPF_BU.LAYER ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ComparisonGroupPF.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 26];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 27];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 25 28 30 31 33 34 36 37 39 40 42 44];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 29 32 35 38 41 43 45 46 47];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -240,7 +315,33 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(ComparisonGroupPF_BU.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 47;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 17;
+				case 8 % Category.FIGURE
+					prop_number = 12;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel binodal unilayer group comparison figure/error.
@@ -268,14 +369,14 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == ComparisonGroupPF_BU.getProps());
+			check = prop >= 1 && prop <= 47 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonGroupPF_BU.'] ...
 					)
 			end
@@ -306,15 +407,14 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%
 			% See also getProps, existsTag.
 			
-			comparisongrouppf_bu_tag_list = cellfun(@(x) ComparisonGroupPF_BU.getPropTag(x), num2cell(ComparisonGroupPF_BU.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, comparisongrouppf_bu_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'CP'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_DIFF'  'ST_LINE_DIFF'  'LISTENER_ST_LINE_DIFF'  'H_LINE_CIL'  'ST_LINE_CIL'  'LISTENER_ST_LINE_CIL'  'H_LINE_CIU'  'ST_LINE_CIU'  'LISTENER_ST_LINE_CIU'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for ComparisonGroupPF_BU.'] ...
 					)
 			end
@@ -340,8 +440,7 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				comparisongrouppf_bu_tag_list = cellfun(@(x) ComparisonGroupPF_BU.getPropTag(x), num2cell(ComparisonGroupPF_BU.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, comparisongrouppf_bu_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'CP'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_DIFF'  'ST_LINE_DIFF'  'LISTENER_ST_LINE_DIFF'  'H_LINE_CIL'  'ST_LINE_CIL'  'LISTENER_ST_LINE_CIL'  'H_LINE_CIU'  'ST_LINE_CIU'  'LISTENER_ST_LINE_CIU'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -369,16 +468,9 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case ComparisonGroupPF_BU.NODES
-						tag = ComparisonGroupPF_BU.NODES_TAG;
-					case ComparisonGroupPF_BU.LAYER
-						tag = ComparisonGroupPF_BU.LAYER_TAG;
-					otherwise
-						tag = getPropTag@ComparisonGroupPF(prop);
-				end
+				%CET: Computational Efficiency Trick
+				comparisongrouppf_bu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'CP'  'SETUP'  'H_AREA'  'ST_AREA'  'LISTENER_ST_AREA'  'H_LINE_DIFF'  'ST_LINE_DIFF'  'LISTENER_ST_LINE_DIFF'  'H_LINE_CIL'  'ST_LINE_CIL'  'LISTENER_ST_LINE_CIL'  'H_LINE_CIU'  'ST_LINE_CIU'  'LISTENER_ST_LINE_CIU'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL'  'NODES'  'LAYER' };
+				tag = comparisongrouppf_bu_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -403,14 +495,9 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupPF_BU.NODES
-					prop_category = ComparisonGroupPF_BU.NODES_CATEGORY;
-				case ComparisonGroupPF_BU.LAYER
-					prop_category = ComparisonGroupPF_BU.LAYER_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ComparisonGroupPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongrouppf_bu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  6  7  8  7  7  8  7  7  8  7  7  8  7  7  8  7  8  7  8  8  8 };
+			prop_category = comparisongrouppf_bu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -434,14 +521,9 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupPF_BU.NODES
-					prop_format = ComparisonGroupPF_BU.NODES_FORMAT;
-				case ComparisonGroupPF_BU.LAYER
-					prop_format = ComparisonGroupPF_BU.LAYER_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ComparisonGroupPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongrouppf_bu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  1  18  8  18  18  8  18  18  8  18  18  8  18  18  8  18  8  18  8  12  11 };
+			prop_format = comparisongrouppf_bu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -465,30 +547,9 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupPF_BU.NODES
-					prop_description = 'NODES (figure, rvector) are the node numbers of the binodal group comparison figure.';
-				case ComparisonGroupPF_BU.LAYER
-					prop_description = 'LAYER (figure, scalar) is the layer number of the binodal group comparison figure.';
-				case ComparisonGroupPF_BU.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the ComparisonGroupPF_BU.';
-				case ComparisonGroupPF_BU.NAME
-					prop_description = 'NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.ID
-					prop_description = 'ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.SETUP
-					prop_description = 'SETUP (query, empty) calculates the group comparison figure value and stores it.';
-				otherwise
-					prop_description = getPropDescription@ComparisonGroupPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongrouppf_bu_description_list = { 'ELCLASS (constant, string) is the class of the ComparisonGroupPF_BU.'  'NAME (constant, string) is the name of the panel figure binodal unilayer group comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel figure binodal unilayer group comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel figure binodal unilayer group comparison figure.'  'ID (data, string) is a few-letter code for the panel figure binodal unilayer group comparison figure.'  'LABEL (metadata, string) is an extended label of the panel figure binodal unilayer group comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel figure binodal unilayer group comparison figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'CP (metadata, item) is the group comparison.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'H_AREA (evanescent, handle) is the handle for the group comparison confidence area.'  'ST_AREA (figure, item) determines the area settings.'  'LISTENER_ST_AREA (evanescent, handle) contains the listener to the measure area settings to update the pushbutton.'  'H_LINE_DIFF (evanescent, handle) is the handle for the group comparison line.'  'ST_LINE_DIFF (figure, item) determines the line settings.'  'LISTENER_ST_LINE_DIFF (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIL (evanescent, handle) is the handle for the lower confidence interval of the group comparison line.'  'ST_LINE_CIL (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIL (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_LINE_CIU (evanescent, handle) is the handle for the upper confidence interval of the group comparison line.'  'ST_LINE_CIU (figure, item) determines the line settings.'  'LISTENER_ST_LINE_CIU (evanescent, handle) contains the listener to the measure line settings to update the pushbutton.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.'  'NODES (figure, rvector) are the node numbers of the binodal group comparison figure.'  'LAYER (figure, scalar) is the layer number of the binodal group comparison figure.' };
+			prop_description = comparisongrouppf_bu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -512,12 +573,12 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupPF_BU.NODES
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case ComparisonGroupPF_BU.LAYER
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case ComparisonGroupPF_BU.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 46 % ComparisonGroupPF_BU.NODES
+					prop_settings = Format.getFormatSettings(12);
+				case 47 % ComparisonGroupPF_BU.LAYER
+					prop_settings = Format.getFormatSettings(11);
+				case 4 % ComparisonGroupPF_BU.TEMPLATE
 					prop_settings = 'ComparisonGroupPF_BU';
 				otherwise
 					prop_settings = getPropSettings@ComparisonGroupPF(prop);
@@ -545,24 +606,24 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupPF_BU.NODES
+			switch prop %CET: Computational Efficiency Trick
+				case 46 % ComparisonGroupPF_BU.NODES
 					prop_default = [1 1];
-				case ComparisonGroupPF_BU.LAYER
+				case 47 % ComparisonGroupPF_BU.LAYER
 					prop_default = 1;
-				case ComparisonGroupPF_BU.ELCLASS
+				case 1 % ComparisonGroupPF_BU.ELCLASS
 					prop_default = 'ComparisonGroupPF_BU';
-				case ComparisonGroupPF_BU.NAME
+				case 2 % ComparisonGroupPF_BU.NAME
 					prop_default = 'ComparisonGroupPF_BU';
-				case ComparisonGroupPF_BU.DESCRIPTION
+				case 3 % ComparisonGroupPF_BU.DESCRIPTION
 					prop_default = 'ComparisonGroupPF_BU manages the basic functionalities to plot of a binodal unilayer group comparison figure.';
-				case ComparisonGroupPF_BU.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroupPF_BU.getPropSettings(prop));
-				case ComparisonGroupPF_BU.ID
+				case 4 % ComparisonGroupPF_BU.TEMPLATE
+					prop_default = Format.getFormatDefault(8, ComparisonGroupPF_BU.getPropSettings(prop));
+				case 5 % ComparisonGroupPF_BU.ID
 					prop_default = 'ComparisonGroupPF_BU ID';
-				case ComparisonGroupPF_BU.LABEL
+				case 6 % ComparisonGroupPF_BU.LABEL
 					prop_default = 'ComparisonGroupPF_BU label';
-				case ComparisonGroupPF_BU.NOTES
+				case 7 % ComparisonGroupPF_BU.NOTES
 					prop_default = 'ComparisonGroupPF_BU notes';
 				otherwise
 					prop_default = getPropDefault@ComparisonGroupPF(prop);
@@ -609,15 +670,15 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:ComparisonGroupPF_BU:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:ComparisonGroupPF_BU:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupPF_BU:WrongInput
 			%  Element.CHECKPROP(ComparisonGroupPF_BU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupPF_BU.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupPF_BU:WrongInput
 			%  PF.CHECKPROP(ComparisonGroupPF_BU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupPF_BU.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupPF_BU:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:ComparisonGroupPF_BU:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('ComparisonGroupPF_BU')
 			%  are less computationally efficient.
@@ -628,14 +689,14 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			prop = ComparisonGroupPF_BU.getPropProp(pointer);
 			
 			switch prop
-				case ComparisonGroupPF_BU.NODES % __ComparisonGroupPF_BU.NODES__
-					check = Format.checkFormat(Format.RVECTOR, value, ComparisonGroupPF_BU.getPropSettings(prop));
-				case ComparisonGroupPF_BU.LAYER % __ComparisonGroupPF_BU.LAYER__
-					check = Format.checkFormat(Format.SCALAR, value, ComparisonGroupPF_BU.getPropSettings(prop));
-				case ComparisonGroupPF_BU.TEMPLATE % __ComparisonGroupPF_BU.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroupPF_BU.getPropSettings(prop));
+				case 46 % ComparisonGroupPF_BU.NODES
+					check = Format.checkFormat(12, value, ComparisonGroupPF_BU.getPropSettings(prop));
+				case 47 % ComparisonGroupPF_BU.LAYER
+					check = Format.checkFormat(11, value, ComparisonGroupPF_BU.getPropSettings(prop));
+				case 4 % ComparisonGroupPF_BU.TEMPLATE
+					check = Format.checkFormat(8, value, ComparisonGroupPF_BU.getPropSettings(prop));
 				otherwise
-					if prop <= ComparisonGroupPF.getPropNumber()
+					if prop <= 45
 						check = checkProp@ComparisonGroupPF(prop, value);
 					end
 			end
@@ -644,8 +705,8 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupPF_BU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupPF_BU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroupPF_BU.getPropTag(prop) ' (' ComparisonGroupPF_BU.getFormatTag(ComparisonGroupPF_BU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -665,14 +726,14 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%  checkValue.
 			
 			switch prop
-				case ComparisonGroupPF_BU.NODES % __ComparisonGroupPF_BU.NODES__
+				case 46 % ComparisonGroupPF_BU.NODES
 					pf.get('SETUP')
 					
-				case ComparisonGroupPF_BU.LAYER % __ComparisonGroupPF_BU.LAYER__
+				case 47 % ComparisonGroupPF_BU.LAYER
 					pf.get('SETUP');
 					
 				otherwise
-					if prop <= ComparisonGroupPF.getPropNumber()
+					if prop <= 45
 						postset@ComparisonGroupPF(pf, prop);
 					end
 			end
@@ -683,19 +744,19 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ComparisonGroupPF_BU.SETUP % __ComparisonGroupPF_BU.SETUP__
+				case 27 % ComparisonGroupPF_BU.SETUP
 					cp = pf.get('CP');
 					g = cp.get('C').get('A1').get('G');
 					
@@ -759,7 +820,7 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 					value = [];
 					
 				otherwise
-					if prop <= ComparisonGroupPF.getPropNumber()
+					if prop <= 45
 						value = calculateValue@ComparisonGroupPF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -785,11 +846,11 @@ classdef ComparisonGroupPF_BU < ComparisonGroupPF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case ComparisonGroupPF_BU.NODES % __ComparisonGroupPF_BU.NODES__
-					pr = ComparisonGroupPF_BxPP_Nodes('EL', pf, 'PROP', ComparisonGroupPF_BU.NODES);
+				case 46 % ComparisonGroupPF_BU.NODES
+					pr = ComparisonGroupPF_BxPP_Nodes('EL', pf, 'PROP', 46);
 					
-				case ComparisonGroupPF_BU.LAYER % __ComparisonGroupPF_BU.LAYER__
-					pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupPF_BU.LAYER);
+				case 47 % ComparisonGroupPF_BU.LAYER
+					pr = ComparisonGroupPF_xUPP_Layer('EL', pf, 'PROP', 47);
 					
 				otherwise
 					pr = getPanelProp@ComparisonGroupPF(pf, prop, varargin{:});

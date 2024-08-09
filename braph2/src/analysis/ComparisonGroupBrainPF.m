@@ -4,6 +4,55 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 	%
 	% ComparisonGroupBrainPF manages the basic functionalities to plot of a group comparison on brain surface.
 	%
+	% The list of ComparisonGroupBrainPF properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the  % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain panel group comparison on brain surface figure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain panel group comparison on brain surface figure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain panel group comparison on brain surface figure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain panel group comparison on brain surface figure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain panel group comparison on brain surface figure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain panel group comparison on brain surface figure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the brain panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+	%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+	%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+	%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+	%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+	%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+	%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+	%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+	%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+	%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+	%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+	%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+	%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+	%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+	%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+	%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+	%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+	%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+	%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+	%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+	%  <strong>46</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison on brain surface.
+	%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison on brain surface value and stores it to be implemented in the subelements.
+	%
 	% ComparisonGroupBrainPF methods (constructor):
 	%  ComparisonGroupBrainPF - constructor
 	%
@@ -93,15 +142,15 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 	% See also ComparisonGroup, BrainAtlasPF.
 	
 	properties (Constant) % properties
-		CP = BrainAtlasPF.getPropNumber() + 1;
+		CP = 46; %CET: Computational Efficiency Trick
 		CP_TAG = 'CP';
-		CP_CATEGORY = Category.METADATA;
-		CP_FORMAT = Format.ITEM;
+		CP_CATEGORY = 2;
+		CP_FORMAT = 8;
 		
-		SETUP = BrainAtlasPF.getPropNumber() + 2;
+		SETUP = 47; %CET: Computational Efficiency Trick
 		SETUP_TAG = 'SETUP';
-		SETUP_CATEGORY = Category.QUERY;
-		SETUP_FORMAT = Format.EMPTY;
+		SETUP_CATEGORY = 6;
+		SETUP_FORMAT = 1;
 	end
 	methods % constructor
 		function pf = ComparisonGroupBrainPF(varargin)
@@ -114,6 +163,54 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of ComparisonGroupBrainPF properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the  % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the brain panel group comparison on brain surface figure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the brain panel group comparison on brain surface figure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the brain panel group comparison on brain surface figure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the brain panel group comparison on brain surface figure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the brain panel group comparison on brain surface figure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the brain panel group comparison on brain surface figure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure comparison figure.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the brain panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+			%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+			%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+			%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+			%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+			%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+			%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+			%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+			%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+			%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+			%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+			%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+			%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+			%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+			%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+			%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+			%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+			%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+			%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+			%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+			%  <strong>46</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison on brain surface.
+			%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison on brain surface value and stores it to be implemented in the subelements.
 			%
 			% See also Category, Format.
 			
@@ -151,7 +248,7 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('ComparisonGroupBrainPF', [], [], true);
+			subclass_list = { 'ComparisonGroupBrainPF'  'ComparisonGroupBrainPF_BB'  'ComparisonGroupBrainPF_BS'  'ComparisonGroupBrainPF_BU'  'ComparisonGroupBrainPF_GB'  'ComparisonGroupBrainPF_GS'  'ComparisonGroupBrainPF_GU'  'ComparisonGroupBrainPF_NB'  'ComparisonGroupBrainPF_NS'  'ComparisonGroupBrainPF_NU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of brain panel group comparison on brain surface figure.
@@ -172,54 +269,32 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					BrainAtlasPF.getProps() ...
-						ComparisonGroupBrainPF.CP ...
-						ComparisonGroupBrainPF.SETUP ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.METADATA) ...
-						ComparisonGroupBrainPF.CP ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						BrainAtlasPF.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.QUERY) ...
-						ComparisonGroupBrainPF.SETUP ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						BrainAtlasPF.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 28 33 46];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 47];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 26 29 34 37 40 43];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 25 27 30 31 32 35 36 38 39 41 42 44 45];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -240,7 +315,33 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(ComparisonGroupBrainPF.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 47;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 5;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 11;
+				case 8 % Category.FIGURE
+					prop_number = 16;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in brain panel group comparison on brain surface figure/error.
@@ -268,14 +369,14 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == ComparisonGroupBrainPF.getProps());
+			check = prop >= 1 && prop <= 47 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonGroupBrainPF.'] ...
 					)
 			end
@@ -306,15 +407,14 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%
 			% See also getProps, existsTag.
 			
-			comparisongroupbrainpf_tag_list = cellfun(@(x) ComparisonGroupBrainPF.getPropTag(x), num2cell(ComparisonGroupBrainPF.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, comparisongroupbrainpf_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for ComparisonGroupBrainPF.'] ...
 					)
 			end
@@ -340,8 +440,7 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				comparisongroupbrainpf_tag_list = cellfun(@(x) ComparisonGroupBrainPF.getPropTag(x), num2cell(ComparisonGroupBrainPF.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, comparisongroupbrainpf_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -369,16 +468,9 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case ComparisonGroupBrainPF.CP
-						tag = ComparisonGroupBrainPF.CP_TAG;
-					case ComparisonGroupBrainPF.SETUP
-						tag = ComparisonGroupBrainPF.SETUP_TAG;
-					otherwise
-						tag = getPropTag@BrainAtlasPF(prop);
-				end
+				%CET: Computational Efficiency Trick
+				comparisongroupbrainpf_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP' };
+				tag = comparisongroupbrainpf_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -403,14 +495,9 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF.CP
-					prop_category = ComparisonGroupBrainPF.CP_CATEGORY;
-				case ComparisonGroupBrainPF.SETUP
-					prop_category = ComparisonGroupBrainPF.SETUP_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@BrainAtlasPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8  2  6 };
+			prop_category = comparisongroupbrainpf_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -434,14 +521,9 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF.CP
-					prop_format = ComparisonGroupBrainPF.CP_FORMAT;
-				case ComparisonGroupBrainPF.SETUP
-					prop_format = ComparisonGroupBrainPF.SETUP_FORMAT;
-				otherwise
-					prop_format = getPropFormat@BrainAtlasPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10  8  1 };
+			prop_format = comparisongroupbrainpf_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -465,34 +547,9 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF.CP
-					prop_description = 'CP (metadata, item) is the group comparison on brain surface.';
-				case ComparisonGroupBrainPF.SETUP
-					prop_description = 'SETUP (query, empty) calculates the group comparison on brain surface value and stores it to be implemented in the subelements.';
-				case ComparisonGroupBrainPF.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the  % % % .';
-				case ComparisonGroupBrainPF.NAME
-					prop_description = 'NAME (constant, string) is the name of the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.ID
-					prop_description = 'ID (data, string) is a few-letter code for the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the brain panel group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF.DRAW
-					prop_description = 'DRAW (query, logical) draws the figure comparison figure.';
-				case ComparisonGroupBrainPF.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the brain panel figure graph is deleted.';
-				case ComparisonGroupBrainPF.H_TOOLS
-					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.';
-				otherwise
-					prop_description = getPropDescription@BrainAtlasPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_description_list = { 'ELCLASS (constant, string) is the class of the  % % % .'  'NAME (constant, string) is the name of the brain panel group comparison on brain surface figure.'  'DESCRIPTION (constant, string) is the description of the brain panel group comparison on brain surface figure.'  'TEMPLATE (parameter, item) is the template of the brain panel group comparison on brain surface figure.'  'ID (data, string) is a few-letter code for the brain panel group comparison on brain surface figure.'  'LABEL (metadata, string) is an extended label of the brain panel group comparison on brain surface figure.'  'NOTES (metadata, string) are some specific notes about the brain panel group comparison on brain surface figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure comparison figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the brain panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.'  'CP (metadata, item) is the group comparison on brain surface.'  'SETUP (query, empty) calculates the group comparison on brain surface value and stores it to be implemented in the subelements.' };
+			prop_description = comparisongroupbrainpf_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -516,12 +573,12 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF.CP
+			switch prop %CET: Computational Efficiency Trick
+				case 46 % ComparisonGroupBrainPF.CP
 					prop_settings = 'ComparisonGroup';
-				case ComparisonGroupBrainPF.SETUP
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case ComparisonGroupBrainPF.TEMPLATE
+				case 47 % ComparisonGroupBrainPF.SETUP
+					prop_settings = Format.getFormatSettings(1);
+				case 4 % ComparisonGroupBrainPF.TEMPLATE
 					prop_settings = 'ComparisonGroupBrainPF';
 				otherwise
 					prop_settings = getPropSettings@BrainAtlasPF(prop);
@@ -549,24 +606,24 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF.CP
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroupBrainPF.getPropSettings(prop));
-				case ComparisonGroupBrainPF.SETUP
-					prop_default = Format.getFormatDefault(Format.EMPTY, ComparisonGroupBrainPF.getPropSettings(prop));
-				case ComparisonGroupBrainPF.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 46 % ComparisonGroupBrainPF.CP
+					prop_default = Format.getFormatDefault(8, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 47 % ComparisonGroupBrainPF.SETUP
+					prop_default = Format.getFormatDefault(1, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 1 % ComparisonGroupBrainPF.ELCLASS
 					prop_default = 'ComparisonGroupBrainPF';
-				case ComparisonGroupBrainPF.NAME
+				case 2 % ComparisonGroupBrainPF.NAME
 					prop_default = 'ComparisonGroupBrainPF';
-				case ComparisonGroupBrainPF.DESCRIPTION
+				case 3 % ComparisonGroupBrainPF.DESCRIPTION
 					prop_default = 'ComparisonGroupBrainPF manages the basic functionalities to plot of a group comparison on brain surface.';
-				case ComparisonGroupBrainPF.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroupBrainPF.getPropSettings(prop));
-				case ComparisonGroupBrainPF.ID
+				case 4 % ComparisonGroupBrainPF.TEMPLATE
+					prop_default = Format.getFormatDefault(8, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 5 % ComparisonGroupBrainPF.ID
 					prop_default = 'ComparisonGroupBrainPF ID';
-				case ComparisonGroupBrainPF.LABEL
+				case 6 % ComparisonGroupBrainPF.LABEL
 					prop_default = 'ComparisonGroupBrainPF label';
-				case ComparisonGroupBrainPF.NOTES
+				case 7 % ComparisonGroupBrainPF.NOTES
 					prop_default = 'ComparisonGroupBrainPF notes';
 				otherwise
 					prop_default = getPropDefault@BrainAtlasPF(prop);
@@ -613,15 +670,15 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:ComparisonGroupBrainPF:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:ComparisonGroupBrainPF:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupBrainPF:WrongInput
 			%  Element.CHECKPROP(ComparisonGroupBrainPF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupBrainPF.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupBrainPF:WrongInput
 			%  PF.CHECKPROP(ComparisonGroupBrainPF, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupBrainPF.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:ComparisonGroupBrainPF:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('ComparisonGroupBrainPF')
 			%  are less computationally efficient.
@@ -632,14 +689,14 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			prop = ComparisonGroupBrainPF.getPropProp(pointer);
 			
 			switch prop
-				case ComparisonGroupBrainPF.CP % __ComparisonGroupBrainPF.CP__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroupBrainPF.getPropSettings(prop));
-				case ComparisonGroupBrainPF.SETUP % __ComparisonGroupBrainPF.SETUP__
-					check = Format.checkFormat(Format.EMPTY, value, ComparisonGroupBrainPF.getPropSettings(prop));
-				case ComparisonGroupBrainPF.TEMPLATE % __ComparisonGroupBrainPF.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 46 % ComparisonGroupBrainPF.CP
+					check = Format.checkFormat(8, value, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 47 % ComparisonGroupBrainPF.SETUP
+					check = Format.checkFormat(1, value, ComparisonGroupBrainPF.getPropSettings(prop));
+				case 4 % ComparisonGroupBrainPF.TEMPLATE
+					check = Format.checkFormat(8, value, ComparisonGroupBrainPF.getPropSettings(prop));
 				otherwise
-					if prop <= BrainAtlasPF.getPropNumber()
+					if prop <= 45
 						check = checkProp@BrainAtlasPF(prop, value);
 					end
 			end
@@ -648,8 +705,8 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroupBrainPF.getPropTag(prop) ' (' ComparisonGroupBrainPF.getFormatTag(ComparisonGroupBrainPF.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -660,38 +717,38 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ComparisonGroupBrainPF.SETUP % __ComparisonGroupBrainPF.SETUP__
+				case 47 % ComparisonGroupBrainPF.SETUP
 					value = [];
 					
-				case ComparisonGroupBrainPF.DRAW % __ComparisonGroupBrainPF.DRAW__
-					value = calculateValue@BrainAtlasPF(pf, BrainAtlasPF.DRAW, varargin{:}); % also warning
+				case 11 % ComparisonGroupBrainPF.DRAW
+					value = calculateValue@BrainAtlasPF(pf, 11, varargin{:}); % also warning
 					if value
 					    pf.get('SETUP')
 					end
 					
-				case ComparisonGroupBrainPF.DELETE % __ComparisonGroupBrainPF.DELETE__
-					value = calculateValue@BrainAtlasPF(pf, BrainAtlasPF.DELETE, varargin{:}); % also warning
+				case 18 % ComparisonGroupBrainPF.DELETE
+					value = calculateValue@BrainAtlasPF(pf, 18, varargin{:}); % also warning
 					if value
 					    % do nothing
 					
 					end
 					
-				case ComparisonGroupBrainPF.H_TOOLS % __ComparisonGroupBrainPF.H_TOOLS__
+				case 22 % ComparisonGroupBrainPF.H_TOOLS
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@BrainAtlasPF(pf, BrainAtlasPF.H_TOOLS, varargin{:});
+					    value = calculateValue@BrainAtlasPF(pf, 22, varargin{:});
 					    
 					    % tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					    % 
@@ -703,7 +760,7 @@ classdef ComparisonGroupBrainPF < BrainAtlasPF
 					end
 					
 				otherwise
-					if prop <= BrainAtlasPF.getPropNumber()
+					if prop <= 45
 						value = calculateValue@BrainAtlasPF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});

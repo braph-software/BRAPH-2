@@ -8,6 +8,48 @@ classdef OrdMxBU < Graph
 	% The connectivity matrices are symmetric.
 	% There are connections between layers connecting the corresponding nodes.
 	%
+	% The list of OrdMxBU properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ordinal multiplex binary undirected graph.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected graph.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multiplex binary undirected graph.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multiplex binary undirected graph.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multiplex binary undirected graph.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTIPLEX.
+	%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+	%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
+	%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+	%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+	%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+	%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+	%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+	%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
+	%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
+	%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+	%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+	%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+	%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+	%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+	%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+	%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
+	%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+	%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+	%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+	%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+	%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+	%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+	%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+	%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+	%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+	%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
+	%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
+	%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+	%  <strong>39</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+	%  <strong>40</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
+	%
 	% OrdMxBU methods (constructor):
 	%  OrdMxBU - constructor
 	%
@@ -95,30 +137,30 @@ classdef OrdMxBU < Graph
 	%
 	
 	properties (Constant) % properties
-		B = Graph.getPropNumber() + 1;
+		B = 36; %CET: Computational Efficiency Trick
 		B_TAG = 'B';
-		B_CATEGORY = Category.DATA;
-		B_FORMAT = Format.CELL;
+		B_CATEGORY = 4;
+		B_FORMAT = 16;
 		
-		SYMMETRIZE_RULE = Graph.getPropNumber() + 2;
+		SYMMETRIZE_RULE = 37; %CET: Computational Efficiency Trick
 		SYMMETRIZE_RULE_TAG = 'SYMMETRIZE_RULE';
-		SYMMETRIZE_RULE_CATEGORY = Category.PARAMETER;
-		SYMMETRIZE_RULE_FORMAT = Format.OPTION;
+		SYMMETRIZE_RULE_CATEGORY = 3;
+		SYMMETRIZE_RULE_FORMAT = 5;
 		
-		SEMIPOSITIVIZE_RULE = Graph.getPropNumber() + 3;
+		SEMIPOSITIVIZE_RULE = 38; %CET: Computational Efficiency Trick
 		SEMIPOSITIVIZE_RULE_TAG = 'SEMIPOSITIVIZE_RULE';
-		SEMIPOSITIVIZE_RULE_CATEGORY = Category.PARAMETER;
-		SEMIPOSITIVIZE_RULE_FORMAT = Format.OPTION;
+		SEMIPOSITIVIZE_RULE_CATEGORY = 3;
+		SEMIPOSITIVIZE_RULE_FORMAT = 5;
 		
-		ATTEMPTSPEREDGE = Graph.getPropNumber() + 4;
+		ATTEMPTSPEREDGE = 39; %CET: Computational Efficiency Trick
 		ATTEMPTSPEREDGE_TAG = 'ATTEMPTSPEREDGE';
-		ATTEMPTSPEREDGE_CATEGORY = Category.PARAMETER;
-		ATTEMPTSPEREDGE_FORMAT = Format.SCALAR;
+		ATTEMPTSPEREDGE_CATEGORY = 3;
+		ATTEMPTSPEREDGE_FORMAT = 11;
 		
-		RANDOMIZATION = Graph.getPropNumber() + 5;
+		RANDOMIZATION = 40; %CET: Computational Efficiency Trick
 		RANDOMIZATION_TAG = 'RANDOMIZATION';
-		RANDOMIZATION_CATEGORY = Category.QUERY;
-		RANDOMIZATION_FORMAT = Format.CELL;
+		RANDOMIZATION_CATEGORY = 6;
+		RANDOMIZATION_FORMAT = 16;
 	end
 	methods % constructor
 		function g = OrdMxBU(varargin)
@@ -131,6 +173,47 @@ classdef OrdMxBU < Graph
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of OrdMxBU properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ordinal multiplex binary undirected graph.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected graph.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the ordinal multiplex binary undirected graph.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the ordinal multiplex binary undirected graph.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the ordinal multiplex binary undirected graph.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTIPLEX.
+			%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+			%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
+			%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+			%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+			%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+			%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+			%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.
+			%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
+			%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition tick values.
+			%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+			%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition labels for A.
+			%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+			%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+			%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+			%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+			%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.
+			%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+			%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+			%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+			%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.
+			%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+			%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+			%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+			%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+			%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+			%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
+			%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
+			%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+			%  <strong>39</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+			%  <strong>40</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
 			%
 			% See also Category, Format.
 			
@@ -168,7 +251,7 @@ classdef OrdMxBU < Graph
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('OrdMxBU', [], [], true);
+			subclass_list = { 'OrdMxBU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ordinal multiplex binary undirected graph.
@@ -189,60 +272,30 @@ classdef OrdMxBU < Graph
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Graph.getProps() ...
-						OrdMxBU.B ...
-						OrdMxBU.SYMMETRIZE_RULE ...
-						OrdMxBU.SEMIPOSITIVIZE_RULE ...
-						OrdMxBU.ATTEMPTSPEREDGE ...
-						OrdMxBU.RANDOMIZATION ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Graph.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Graph.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Graph.getProps(Category.PARAMETER) ...
-						OrdMxBU.SYMMETRIZE_RULE ...
-						OrdMxBU.SEMIPOSITIVIZE_RULE ...
-						OrdMxBU.ATTEMPTSPEREDGE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Graph.getProps(Category.DATA) ...
-						OrdMxBU.B ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Graph.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Graph.getProps(Category.QUERY) ...
-						OrdMxBU.RANDOMIZATION ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Graph.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Graph.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Graph.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 32];
+				case 2 % Category.METADATA
+					prop_list = [6 7 14 16 18 20 22];
+				case 3 % Category.PARAMETER
+					prop_list = [4 24 25 37 38 39];
+				case 4 % Category.DATA
+					prop_list = [5 36];
+				case 5 % Category.RESULT
+					prop_list = [26 28 29 30 31];
+				case 6 % Category.QUERY
+					prop_list = [8 10 11 12 13 15 17 19 21 23 27 33 40];
+				case 9 % Category.GUI
+					prop_list = [34 35];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -263,7 +316,31 @@ classdef OrdMxBU < Graph
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(OrdMxBU.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 40;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 5;
+				case 2 % Category.METADATA
+					prop_number = 7;
+				case 3 % Category.PARAMETER
+					prop_number = 6;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 13;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in ordinal multiplex binary undirected graph/error.
@@ -291,14 +368,14 @@ classdef OrdMxBU < Graph
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == OrdMxBU.getProps());
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for OrdMxBU.'] ...
 					)
 			end
@@ -329,15 +406,14 @@ classdef OrdMxBU < Graph
 			%
 			% See also getProps, existsTag.
 			
-			ordmxbu_tag_list = cellfun(@(x) OrdMxBU.getPropTag(x), num2cell(OrdMxBU.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, ordmxbu_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for OrdMxBU.'] ...
 					)
 			end
@@ -363,8 +439,7 @@ classdef OrdMxBU < Graph
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				ordmxbu_tag_list = cellfun(@(x) OrdMxBU.getPropTag(x), num2cell(OrdMxBU.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, ordmxbu_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -392,22 +467,9 @@ classdef OrdMxBU < Graph
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case OrdMxBU.B
-						tag = OrdMxBU.B_TAG;
-					case OrdMxBU.SYMMETRIZE_RULE
-						tag = OrdMxBU.SYMMETRIZE_RULE_TAG;
-					case OrdMxBU.SEMIPOSITIVIZE_RULE
-						tag = OrdMxBU.SEMIPOSITIVIZE_RULE_TAG;
-					case OrdMxBU.ATTEMPTSPEREDGE
-						tag = OrdMxBU.ATTEMPTSPEREDGE_TAG;
-					case OrdMxBU.RANDOMIZATION
-						tag = OrdMxBU.RANDOMIZATION_TAG;
-					otherwise
-						tag = getPropTag@Graph(prop);
-				end
+				%CET: Computational Efficiency Trick
+				ordmxbu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'ATTEMPTSPEREDGE'  'RANDOMIZATION' };
+				tag = ordmxbu_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -432,20 +494,9 @@ classdef OrdMxBU < Graph
 			
 			prop = OrdMxBU.getPropProp(pointer);
 			
-			switch prop
-				case OrdMxBU.B
-					prop_category = OrdMxBU.B_CATEGORY;
-				case OrdMxBU.SYMMETRIZE_RULE
-					prop_category = OrdMxBU.SYMMETRIZE_RULE_CATEGORY;
-				case OrdMxBU.SEMIPOSITIVIZE_RULE
-					prop_category = OrdMxBU.SEMIPOSITIVIZE_RULE_CATEGORY;
-				case OrdMxBU.ATTEMPTSPEREDGE
-					prop_category = OrdMxBU.ATTEMPTSPEREDGE_CATEGORY;
-				case OrdMxBU.RANDOMIZATION
-					prop_category = OrdMxBU.RANDOMIZATION_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmxbu_category_list = { 1  1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9  4  3  3  3  6 };
+			prop_category = ordmxbu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -469,20 +520,9 @@ classdef OrdMxBU < Graph
 			
 			prop = OrdMxBU.getPropProp(pointer);
 			
-			switch prop
-				case OrdMxBU.B
-					prop_format = OrdMxBU.B_FORMAT;
-				case OrdMxBU.SYMMETRIZE_RULE
-					prop_format = OrdMxBU.SYMMETRIZE_RULE_FORMAT;
-				case OrdMxBU.SEMIPOSITIVIZE_RULE
-					prop_format = OrdMxBU.SEMIPOSITIVIZE_RULE_FORMAT;
-				case OrdMxBU.ATTEMPTSPEREDGE
-					prop_format = OrdMxBU.ATTEMPTSPEREDGE_FORMAT;
-				case OrdMxBU.RANDOMIZATION
-					prop_format = OrdMxBU.RANDOMIZATION_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmxbu_format_list = { 2  2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8  16  5  5  11  16 };
+			prop_format = ordmxbu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -506,50 +546,9 @@ classdef OrdMxBU < Graph
 			
 			prop = OrdMxBU.getPropProp(pointer);
 			
-			switch prop
-				case OrdMxBU.B
-					prop_description = 'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.';
-				case OrdMxBU.SYMMETRIZE_RULE
-					prop_description = 'SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.';
-				case OrdMxBU.SEMIPOSITIVIZE_RULE
-					prop_description = 'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.';
-				case OrdMxBU.ATTEMPTSPEREDGE
-					prop_description = 'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.';
-				case OrdMxBU.RANDOMIZATION
-					prop_description = 'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.';
-				case OrdMxBU.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.NAME
-					prop_description = 'NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.ID
-					prop_description = 'ID (data, string) is a few-letter code for the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the ordinal multiplex binary undirected graph.';
-				case OrdMxBU.GRAPH_TYPE
-					prop_description = 'GRAPH_TYPE (constant, scalar) returns the graph type __Graph.ORDERED_MULTIPLEX__.';
-				case OrdMxBU.CONNECTIVITY_TYPE
-					prop_description = 'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.BINARY__ * ones(layernumber).';
-				case OrdMxBU.DIRECTIONALITY_TYPE
-					prop_description = 'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.UNDIRECTED__ * ones(layernumber).';
-				case OrdMxBU.SELFCONNECTIVITY_TYPE
-					prop_description = 'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__ on the diagonal and __Graph.SELFCONNECTED__ off diagonal.';
-				case OrdMxBU.NEGATIVITY_TYPE
-					prop_description = 'NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).';
-				case OrdMxBU.A
-					prop_description = 'A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.';
-				case OrdMxBU.ALAYERLABELS
-					prop_description = 'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.';
-				case OrdMxBU.COMPATIBLE_MEASURES
-					prop_description = 'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.';
-				otherwise
-					prop_description = getPropDescription@Graph(prop);
-			end
+			%CET: Computational Efficiency Trick
+			ordmxbu_description_list = { 'ELCLASS (constant, string) is the class of the ordinal multiplex binary undirected graph.'  'NAME (constant, string) is the name of the ordinal multiplex binary undirected graph.'  'DESCRIPTION (constant, string) is the description of the ordinal multiplex binary undirected graph.'  'TEMPLATE (parameter, item) is the template of the ordinal multiplex binary undirected graph.'  'ID (data, string) is a few-letter code for the ordinal multiplex binary undirected graph.'  'LABEL (metadata, string) is an extended label of the ordinal multiplex binary undirected graph.'  'NOTES (metadata, string) are some specific notes about the ordinal multiplex binary undirected graph.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.ORDERED_MULTIPLEX.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels to be used by the slider.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition tick values.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the multiplex binary adjacency matrices of the multiplex binary undirected graph.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.'  'SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
+			prop_description = ordmxbu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -573,18 +572,18 @@ classdef OrdMxBU < Graph
 			
 			prop = OrdMxBU.getPropProp(pointer);
 			
-			switch prop
-				case OrdMxBU.B
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case OrdMxBU.SYMMETRIZE_RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % OrdMxBU.B
+					prop_settings = Format.getFormatSettings(16);
+				case 37 % OrdMxBU.SYMMETRIZE_RULE
 					prop_settings = {'max', 'sum', 'average', 'min'};
-				case OrdMxBU.SEMIPOSITIVIZE_RULE
+				case 38 % OrdMxBU.SEMIPOSITIVIZE_RULE
 					prop_settings = {'zero', 'absolute'};
-				case OrdMxBU.ATTEMPTSPEREDGE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case OrdMxBU.RANDOMIZATION
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case OrdMxBU.TEMPLATE
+				case 39 % OrdMxBU.ATTEMPTSPEREDGE
+					prop_settings = Format.getFormatSettings(11);
+				case 40 % OrdMxBU.RANDOMIZATION
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % OrdMxBU.TEMPLATE
 					prop_settings = 'OrdMxBU';
 				otherwise
 					prop_settings = getPropSettings@Graph(prop);
@@ -612,35 +611,35 @@ classdef OrdMxBU < Graph
 			
 			prop = OrdMxBU.getPropProp(pointer);
 			
-			switch prop
-				case OrdMxBU.B
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % OrdMxBU.B
 					prop_default = {[] []};
-				case OrdMxBU.SYMMETRIZE_RULE
-					prop_default = Format.getFormatDefault(Format.OPTION, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.SEMIPOSITIVIZE_RULE
-					prop_default = Format.getFormatDefault(Format.OPTION, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.ATTEMPTSPEREDGE
+				case 37 % OrdMxBU.SYMMETRIZE_RULE
+					prop_default = Format.getFormatDefault(5, OrdMxBU.getPropSettings(prop));
+				case 38 % OrdMxBU.SEMIPOSITIVIZE_RULE
+					prop_default = Format.getFormatDefault(5, OrdMxBU.getPropSettings(prop));
+				case 39 % OrdMxBU.ATTEMPTSPEREDGE
 					prop_default = 5;
-				case OrdMxBU.RANDOMIZATION
-					prop_default = Format.getFormatDefault(Format.CELL, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.ELCLASS
+				case 40 % OrdMxBU.RANDOMIZATION
+					prop_default = Format.getFormatDefault(16, OrdMxBU.getPropSettings(prop));
+				case 1 % OrdMxBU.ELCLASS
 					prop_default = 'OrdMxBU';
-				case OrdMxBU.NAME
+				case 2 % OrdMxBU.NAME
 					prop_default = 'Ordinal Multiplex Binary Undirected Graph';
-				case OrdMxBU.DESCRIPTION
+				case 3 % OrdMxBU.DESCRIPTION
 					prop_default = 'In an ordinal multiplex binary undirected graph (OrdMxBU), all layers have the same number of nodes with within-layer undirected edges either 0 (absence of connection) or 1 (existence of connection). The connectivity matrices are symmetric. There are connections between layers connecting the corresponding nodes.';
-				case OrdMxBU.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.ID
+				case 4 % OrdMxBU.TEMPLATE
+					prop_default = Format.getFormatDefault(8, OrdMxBU.getPropSettings(prop));
+				case 5 % OrdMxBU.ID
 					prop_default = 'OrdMxBU ID';
-				case OrdMxBU.LABEL
+				case 6 % OrdMxBU.LABEL
 					prop_default = 'OrdMxBU label';
-				case OrdMxBU.NOTES
+				case 7 % OrdMxBU.NOTES
 					prop_default = 'OrdMxBU notes';
-				case OrdMxBU.GRAPH_TYPE
-					prop_default = Graph.ORDERED_MULTIPLEX;
-				case OrdMxBU.COMPATIBLE_MEASURES
-					prop_default = getCompatibleMeasures('OrdMxBU');
+				case 9 % OrdMxBU.GRAPH_TYPE
+					prop_default = 3;
+				case 32 % OrdMxBU.COMPATIBLE_MEASURES
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Distance'  'EdgeOverlap'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultiplexCP'  'MultiplexKCor'  'MultiplexRCDeg'  'MultiplexT'  'Triangles' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end
@@ -686,15 +685,15 @@ classdef OrdMxBU < Graph
 			% 
 			% G.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:OrdMxBU:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:OrdMxBU:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  G.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of G.
-			%   Error id: €BRAPH2.STR€:OrdMxBU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OrdMxBU:WrongInput
 			%  Element.CHECKPROP(OrdMxBU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMxBU.
-			%   Error id: €BRAPH2.STR€:OrdMxBU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OrdMxBU:WrongInput
 			%  G.CHECKPROP(OrdMxBU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OrdMxBU.
-			%   Error id: €BRAPH2.STR€:OrdMxBU:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:OrdMxBU:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(G) and Element.CHECKPROP('OrdMxBU')
 			%  are less computationally efficient.
@@ -705,20 +704,20 @@ classdef OrdMxBU < Graph
 			prop = OrdMxBU.getPropProp(pointer);
 			
 			switch prop
-				case OrdMxBU.B % __OrdMxBU.B__
-					check = Format.checkFormat(Format.CELL, value, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.SYMMETRIZE_RULE % __OrdMxBU.SYMMETRIZE_RULE__
-					check = Format.checkFormat(Format.OPTION, value, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.SEMIPOSITIVIZE_RULE % __OrdMxBU.SEMIPOSITIVIZE_RULE__
-					check = Format.checkFormat(Format.OPTION, value, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.ATTEMPTSPEREDGE % __OrdMxBU.ATTEMPTSPEREDGE__
-					check = Format.checkFormat(Format.SCALAR, value, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.RANDOMIZATION % __OrdMxBU.RANDOMIZATION__
-					check = Format.checkFormat(Format.CELL, value, OrdMxBU.getPropSettings(prop));
-				case OrdMxBU.TEMPLATE % __OrdMxBU.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, OrdMxBU.getPropSettings(prop));
+				case 36 % OrdMxBU.B
+					check = Format.checkFormat(16, value, OrdMxBU.getPropSettings(prop));
+				case 37 % OrdMxBU.SYMMETRIZE_RULE
+					check = Format.checkFormat(5, value, OrdMxBU.getPropSettings(prop));
+				case 38 % OrdMxBU.SEMIPOSITIVIZE_RULE
+					check = Format.checkFormat(5, value, OrdMxBU.getPropSettings(prop));
+				case 39 % OrdMxBU.ATTEMPTSPEREDGE
+					check = Format.checkFormat(11, value, OrdMxBU.getPropSettings(prop));
+				case 40 % OrdMxBU.RANDOMIZATION
+					check = Format.checkFormat(16, value, OrdMxBU.getPropSettings(prop));
+				case 4 % OrdMxBU.TEMPLATE
+					check = Format.checkFormat(8, value, OrdMxBU.getPropSettings(prop));
 				otherwise
-					if prop <= Graph.getPropNumber()
+					if prop <= 35
 						check = checkProp@Graph(prop, value);
 					end
 			end
@@ -727,8 +726,8 @@ classdef OrdMxBU < Graph
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OrdMxBU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput'], ...
+					['BRAPH2' ':OrdMxBU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' OrdMxBU.getPropTag(prop) ' (' OrdMxBU.getFormatTag(OrdMxBU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -739,19 +738,19 @@ classdef OrdMxBU < Graph
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case OrdMxBU.RANDOMIZATION % __OrdMxBU.RANDOMIZATION__
+				case 40 % OrdMxBU.RANDOMIZATION
 					rng(g.get('RANDOM_SEED'), 'twister')
 					
 					if isempty(varargin)
@@ -772,41 +771,41 @@ classdef OrdMxBU < Graph
 					end
 					value = A;
 					
-				case OrdMxBU.CONNECTIVITY_TYPE % __OrdMxBU.CONNECTIVITY_TYPE__
+				case 10 % OrdMxBU.CONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.BINARY * ones(layernumber);
+					value = 2 * ones(layernumber);
 					
-				case OrdMxBU.DIRECTIONALITY_TYPE % __OrdMxBU.DIRECTIONALITY_TYPE__
+				case 11 % OrdMxBU.DIRECTIONALITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.UNDIRECTED * ones(layernumber);
+					value = 2 * ones(layernumber);
 					
-				case OrdMxBU.SELFCONNECTIVITY_TYPE % __OrdMxBU.SELFCONNECTIVITY_TYPE__
+				case 12 % OrdMxBU.SELFCONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.SELFCONNECTED * ones(layernumber);
-					value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
+					value = 2 * ones(layernumber);
+					value(1:layernumber+1:end) = 1;
 					
-				case OrdMxBU.NEGATIVITY_TYPE % __OrdMxBU.NEGATIVITY_TYPE__
+				case 13 % OrdMxBU.NEGATIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.NONNEGATIVE * ones(layernumber);
+					value =  ones(layernumber);
 					
-				case OrdMxBU.A % __OrdMxBU.A__
-					rng_settings_ = rng(); rng(g.getPropSeed(OrdMxBU.A), 'twister')
+				case 26 % OrdMxBU.A
+					rng_settings_ = rng(); rng(g.getPropSeed(26), 'twister')
 					
 					B = g.get('B'); %#ok<PROPLC>
 					L = length(B); %#ok<PROPLC> % number of layers
@@ -837,7 +836,7 @@ classdef OrdMxBU < Graph
 					
 					rng(rng_settings_)
 					
-				case OrdMxBU.ALAYERLABELS % __OrdMxBU.ALAYERLABELS__
+				case 17 % OrdMxBU.ALAYERLABELS
 					alayerlabels = g.get('LAYERLABELS');
 					if isempty(alayerlabels) && ~isa(g.getr('A'), 'NoValue') % ensures that it's not unecessarily calculated
 					    alayerlabels = cellfun(@num2str, num2cell([1:1:g.get('LAYERNUMBER')]), 'uniformoutput', false);
@@ -845,7 +844,7 @@ classdef OrdMxBU < Graph
 					value = alayerlabels;
 					
 				otherwise
-					if prop <= Graph.getPropNumber()
+					if prop <= 35
 						value = calculateValue@Graph(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -871,25 +870,25 @@ classdef OrdMxBU < Graph
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case OrdMxBU.B % __OrdMxBU.B__
-					pr = PanelPropCell('EL', g, 'PROP', OrdMxBU.B, ...
-					    'TABLE_HEIGHT', s(40), ...
+				case 36 % OrdMxBU.B
+					pr = PanelPropCell('EL', g, 'PROP', 36, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'XSLIDERSHOW', true, ...
 					    'XSLIDERLABELS', g.get('LAYERLABELS'), ...
-					    'XSLIDERHEIGHT', s(3.5), ...
+					    'XSLIDERHEIGHT', 42, ...
 					    'YSLIDERSHOW', false, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});
 					
-				case OrdMxBU.A % __OrdMxBU.A__
-					pr = PanelPropCell('EL', g, 'PROP', OrdMxBU.A, ...
-					    'TABLE_HEIGHT', s(40), ...
+				case 26 % OrdMxBU.A
+					pr = PanelPropCell('EL', g, 'PROP', 26, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'XYSLIDERLOCK', true, ... 
 					    'XSLIDERSHOW', false, ...
 					    'YSLIDERSHOW', true, ...
 					    'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					    'YSLIDERWIDTH', s(5), ...
+					    'YSLIDERWIDTH', 60, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});

@@ -5,6 +5,27 @@ classdef ComparisonGroup < ConcreteElement
 	% ComparisonGroup contains the results of a group-based comparison for a given measure.
 	% Specifically, it contains the one-tailed and two-tailed p-values and the 95%% confidence interval.
 	%
+	% The list of ComparisonGroup properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group-based comparison result.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group-based comparison result.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group-based comparison result.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based comparison result.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based comparison result.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based comparison result.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>MEASURE</strong> 	MEASURE (parameter, class) is the measure class.
+	%  <strong>10</strong> <strong>C</strong> 	C (data, item) is the group-based comparison.
+	%  <strong>11</strong> <strong>DIFF</strong> 	DIFF (result, cell) is the group comparison value.
+	%  <strong>12</strong> <strong>P1</strong> 	P1 (result, cell) is the one-tailed p-value.
+	%  <strong>13</strong> <strong>P2</strong> 	P2 (result, cell) is the two-tailed p-value.
+	%  <strong>14</strong> <strong>CIL</strong> 	CIL (result, cell) is the lower value of the 95%% confidence interval.
+	%  <strong>15</strong> <strong>CIU</strong> 	CIU (result, cell) is the upper value of the 95%% confidence interval.
+	%  <strong>16</strong> <strong>QVALUE</strong> 	QVALUE (metadata, scalar) is the selected qvalue threshold.
+	%  <strong>17</strong> <strong>PFC</strong> 	PFC (gui, item) contains the panel figure of the comparison.
+	%  <strong>18</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+	%  <strong>19</strong> <strong>CALCULATE_RESULTS</strong> 	CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
+	%
 	% ComparisonGroup methods (constructor):
 	%  ComparisonGroup - constructor
 	%
@@ -94,60 +115,60 @@ classdef ComparisonGroup < ConcreteElement
 	% See also AnalyzeGroup, CompareGroup.
 	
 	properties (Constant) % properties
-		MEASURE = ConcreteElement.getPropNumber() + 1;
+		MEASURE = 9; %CET: Computational Efficiency Trick
 		MEASURE_TAG = 'MEASURE';
-		MEASURE_CATEGORY = Category.PARAMETER;
-		MEASURE_FORMAT = Format.CLASS;
+		MEASURE_CATEGORY = 3;
+		MEASURE_FORMAT = 6;
 		
-		C = ConcreteElement.getPropNumber() + 2;
+		C = 10; %CET: Computational Efficiency Trick
 		C_TAG = 'C';
-		C_CATEGORY = Category.DATA;
-		C_FORMAT = Format.ITEM;
+		C_CATEGORY = 4;
+		C_FORMAT = 8;
 		
-		DIFF = ConcreteElement.getPropNumber() + 3;
+		DIFF = 11; %CET: Computational Efficiency Trick
 		DIFF_TAG = 'DIFF';
-		DIFF_CATEGORY = Category.RESULT;
-		DIFF_FORMAT = Format.CELL;
+		DIFF_CATEGORY = 5;
+		DIFF_FORMAT = 16;
 		
-		P1 = ConcreteElement.getPropNumber() + 4;
+		P1 = 12; %CET: Computational Efficiency Trick
 		P1_TAG = 'P1';
-		P1_CATEGORY = Category.RESULT;
-		P1_FORMAT = Format.CELL;
+		P1_CATEGORY = 5;
+		P1_FORMAT = 16;
 		
-		P2 = ConcreteElement.getPropNumber() + 5;
+		P2 = 13; %CET: Computational Efficiency Trick
 		P2_TAG = 'P2';
-		P2_CATEGORY = Category.RESULT;
-		P2_FORMAT = Format.CELL;
+		P2_CATEGORY = 5;
+		P2_FORMAT = 16;
 		
-		CIL = ConcreteElement.getPropNumber() + 6;
+		CIL = 14; %CET: Computational Efficiency Trick
 		CIL_TAG = 'CIL';
-		CIL_CATEGORY = Category.RESULT;
-		CIL_FORMAT = Format.CELL;
+		CIL_CATEGORY = 5;
+		CIL_FORMAT = 16;
 		
-		CIU = ConcreteElement.getPropNumber() + 7;
+		CIU = 15; %CET: Computational Efficiency Trick
 		CIU_TAG = 'CIU';
-		CIU_CATEGORY = Category.RESULT;
-		CIU_FORMAT = Format.CELL;
+		CIU_CATEGORY = 5;
+		CIU_FORMAT = 16;
 		
-		QVALUE = ConcreteElement.getPropNumber() + 8;
+		QVALUE = 16; %CET: Computational Efficiency Trick
 		QVALUE_TAG = 'QVALUE';
-		QVALUE_CATEGORY = Category.METADATA;
-		QVALUE_FORMAT = Format.SCALAR;
+		QVALUE_CATEGORY = 2;
+		QVALUE_FORMAT = 11;
 		
-		PFC = ConcreteElement.getPropNumber() + 9;
+		PFC = 17; %CET: Computational Efficiency Trick
 		PFC_TAG = 'PFC';
-		PFC_CATEGORY = Category.GUI;
-		PFC_FORMAT = Format.ITEM;
+		PFC_CATEGORY = 9;
+		PFC_FORMAT = 8;
 		
-		PFBG = ConcreteElement.getPropNumber() + 10;
+		PFBG = 18; %CET: Computational Efficiency Trick
 		PFBG_TAG = 'PFBG';
-		PFBG_CATEGORY = Category.GUI;
-		PFBG_FORMAT = Format.ITEM;
+		PFBG_CATEGORY = 9;
+		PFBG_FORMAT = 8;
 		
-		CALCULATE_RESULTS = ConcreteElement.getPropNumber() + 11;
+		CALCULATE_RESULTS = 19; %CET: Computational Efficiency Trick
 		CALCULATE_RESULTS_TAG = 'CALCULATE_RESULTS';
-		CALCULATE_RESULTS_CATEGORY = Category.EVANESCENT;
-		CALCULATE_RESULTS_FORMAT = Format.CELL;
+		CALCULATE_RESULTS_CATEGORY = 7;
+		CALCULATE_RESULTS_FORMAT = 16;
 	end
 	methods % constructor
 		function cp = ComparisonGroup(varargin)
@@ -160,6 +181,26 @@ classdef ComparisonGroup < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of ComparisonGroup properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the group-based comparison result.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the group-based comparison result.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the group-based comparison result.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the group-based comparison result.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the group-based comparison result.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the group-based comparison result.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>MEASURE</strong> 	MEASURE (parameter, class) is the measure class.
+			%  <strong>10</strong> <strong>C</strong> 	C (data, item) is the group-based comparison.
+			%  <strong>11</strong> <strong>DIFF</strong> 	DIFF (result, cell) is the group comparison value.
+			%  <strong>12</strong> <strong>P1</strong> 	P1 (result, cell) is the one-tailed p-value.
+			%  <strong>13</strong> <strong>P2</strong> 	P2 (result, cell) is the two-tailed p-value.
+			%  <strong>14</strong> <strong>CIL</strong> 	CIL (result, cell) is the lower value of the 95%% confidence interval.
+			%  <strong>15</strong> <strong>CIU</strong> 	CIU (result, cell) is the upper value of the 95%% confidence interval.
+			%  <strong>16</strong> <strong>QVALUE</strong> 	QVALUE (metadata, scalar) is the selected qvalue threshold.
+			%  <strong>17</strong> <strong>PFC</strong> 	PFC (gui, item) contains the panel figure of the comparison.
+			%  <strong>18</strong> <strong>PFBG</strong> 	PFBG (gui, item) contains the panel figure of the brain graph.
+			%  <strong>19</strong> <strong>CALCULATE_RESULTS</strong> 	CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.
 			%
 			% See also Category, Format.
 			
@@ -197,7 +238,7 @@ classdef ComparisonGroup < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('ComparisonGroup', [], [], true);
+			subclass_list = { 'ComparisonGroup' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of group-based comparison result.
@@ -218,72 +259,32 @@ classdef ComparisonGroup < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						ComparisonGroup.MEASURE ...
-						ComparisonGroup.C ...
-						ComparisonGroup.DIFF ...
-						ComparisonGroup.P1 ...
-						ComparisonGroup.P2 ...
-						ComparisonGroup.CIL ...
-						ComparisonGroup.CIU ...
-						ComparisonGroup.QVALUE ...
-						ComparisonGroup.PFC ...
-						ComparisonGroup.PFBG ...
-						ComparisonGroup.CALCULATE_RESULTS ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						ComparisonGroup.QVALUE ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						ComparisonGroup.MEASURE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						ComparisonGroup.C ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						ComparisonGroup.DIFF ...
-						ComparisonGroup.P1 ...
-						ComparisonGroup.P2 ...
-						ComparisonGroup.CIL ...
-						ComparisonGroup.CIU ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						ComparisonGroup.CALCULATE_RESULTS ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						ComparisonGroup.PFC ...
-						ComparisonGroup.PFBG ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 16];
+				case 3 % Category.PARAMETER
+					prop_list = [4 9];
+				case 4 % Category.DATA
+					prop_list = [5 10];
+				case 5 % Category.RESULT
+					prop_list = [11 12 13 14 15];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 7 % Category.EVANESCENT
+					prop_list = 19;
+				case 9 % Category.GUI
+					prop_list = [17 18];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -304,7 +305,33 @@ classdef ComparisonGroup < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(ComparisonGroup.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 19;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 7 % Category.EVANESCENT
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in group-based comparison result/error.
@@ -332,14 +359,14 @@ classdef ComparisonGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == ComparisonGroup.getProps());
+			check = prop >= 1 && prop <= 19 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonGroup.'] ...
 					)
 			end
@@ -370,15 +397,14 @@ classdef ComparisonGroup < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			comparisongroup_tag_list = cellfun(@(x) ComparisonGroup.getPropTag(x), num2cell(ComparisonGroup.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, comparisongroup_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for ComparisonGroup.'] ...
 					)
 			end
@@ -404,8 +430,7 @@ classdef ComparisonGroup < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				comparisongroup_tag_list = cellfun(@(x) ComparisonGroup.getPropTag(x), num2cell(ComparisonGroup.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, comparisongroup_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -433,34 +458,9 @@ classdef ComparisonGroup < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case ComparisonGroup.MEASURE
-						tag = ComparisonGroup.MEASURE_TAG;
-					case ComparisonGroup.C
-						tag = ComparisonGroup.C_TAG;
-					case ComparisonGroup.DIFF
-						tag = ComparisonGroup.DIFF_TAG;
-					case ComparisonGroup.P1
-						tag = ComparisonGroup.P1_TAG;
-					case ComparisonGroup.P2
-						tag = ComparisonGroup.P2_TAG;
-					case ComparisonGroup.CIL
-						tag = ComparisonGroup.CIL_TAG;
-					case ComparisonGroup.CIU
-						tag = ComparisonGroup.CIU_TAG;
-					case ComparisonGroup.QVALUE
-						tag = ComparisonGroup.QVALUE_TAG;
-					case ComparisonGroup.PFC
-						tag = ComparisonGroup.PFC_TAG;
-					case ComparisonGroup.PFBG
-						tag = ComparisonGroup.PFBG_TAG;
-					case ComparisonGroup.CALCULATE_RESULTS
-						tag = ComparisonGroup.CALCULATE_RESULTS_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				comparisongroup_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'MEASURE'  'C'  'DIFF'  'P1'  'P2'  'CIL'  'CIU'  'QVALUE'  'PFC'  'PFBG'  'CALCULATE_RESULTS' };
+				tag = comparisongroup_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -485,32 +485,9 @@ classdef ComparisonGroup < ConcreteElement
 			
 			prop = ComparisonGroup.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroup.MEASURE
-					prop_category = ComparisonGroup.MEASURE_CATEGORY;
-				case ComparisonGroup.C
-					prop_category = ComparisonGroup.C_CATEGORY;
-				case ComparisonGroup.DIFF
-					prop_category = ComparisonGroup.DIFF_CATEGORY;
-				case ComparisonGroup.P1
-					prop_category = ComparisonGroup.P1_CATEGORY;
-				case ComparisonGroup.P2
-					prop_category = ComparisonGroup.P2_CATEGORY;
-				case ComparisonGroup.CIL
-					prop_category = ComparisonGroup.CIL_CATEGORY;
-				case ComparisonGroup.CIU
-					prop_category = ComparisonGroup.CIU_CATEGORY;
-				case ComparisonGroup.QVALUE
-					prop_category = ComparisonGroup.QVALUE_CATEGORY;
-				case ComparisonGroup.PFC
-					prop_category = ComparisonGroup.PFC_CATEGORY;
-				case ComparisonGroup.PFBG
-					prop_category = ComparisonGroup.PFBG_CATEGORY;
-				case ComparisonGroup.CALCULATE_RESULTS
-					prop_category = ComparisonGroup.CALCULATE_RESULTS_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroup_category_list = { 1  1  1  3  4  2  2  6  3  4  5  5  5  5  5  2  9  9  7 };
+			prop_category = comparisongroup_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -534,32 +511,9 @@ classdef ComparisonGroup < ConcreteElement
 			
 			prop = ComparisonGroup.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroup.MEASURE
-					prop_format = ComparisonGroup.MEASURE_FORMAT;
-				case ComparisonGroup.C
-					prop_format = ComparisonGroup.C_FORMAT;
-				case ComparisonGroup.DIFF
-					prop_format = ComparisonGroup.DIFF_FORMAT;
-				case ComparisonGroup.P1
-					prop_format = ComparisonGroup.P1_FORMAT;
-				case ComparisonGroup.P2
-					prop_format = ComparisonGroup.P2_FORMAT;
-				case ComparisonGroup.CIL
-					prop_format = ComparisonGroup.CIL_FORMAT;
-				case ComparisonGroup.CIU
-					prop_format = ComparisonGroup.CIU_FORMAT;
-				case ComparisonGroup.QVALUE
-					prop_format = ComparisonGroup.QVALUE_FORMAT;
-				case ComparisonGroup.PFC
-					prop_format = ComparisonGroup.PFC_FORMAT;
-				case ComparisonGroup.PFBG
-					prop_format = ComparisonGroup.PFBG_FORMAT;
-				case ComparisonGroup.CALCULATE_RESULTS
-					prop_format = ComparisonGroup.CALCULATE_RESULTS_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroup_format_list = { 2  2  2  8  2  2  2  2  6  8  16  16  16  16  16  11  8  8  16 };
+			prop_format = comparisongroup_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -583,46 +537,9 @@ classdef ComparisonGroup < ConcreteElement
 			
 			prop = ComparisonGroup.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroup.MEASURE
-					prop_description = 'MEASURE (parameter, class) is the measure class.';
-				case ComparisonGroup.C
-					prop_description = 'C (data, item) is the group-based comparison.';
-				case ComparisonGroup.DIFF
-					prop_description = 'DIFF (result, cell) is the group comparison value.';
-				case ComparisonGroup.P1
-					prop_description = 'P1 (result, cell) is the one-tailed p-value.';
-				case ComparisonGroup.P2
-					prop_description = 'P2 (result, cell) is the two-tailed p-value.';
-				case ComparisonGroup.CIL
-					prop_description = 'CIL (result, cell) is the lower value of the 95%% confidence interval.';
-				case ComparisonGroup.CIU
-					prop_description = 'CIU (result, cell) is the upper value of the 95%% confidence interval.';
-				case ComparisonGroup.QVALUE
-					prop_description = 'QVALUE (metadata, scalar) is the selected qvalue threshold.';
-				case ComparisonGroup.PFC
-					prop_description = 'PFC (gui, item) contains the panel figure of the comparison.';
-				case ComparisonGroup.PFBG
-					prop_description = 'PFBG (gui, item) contains the panel figure of the brain graph.';
-				case ComparisonGroup.CALCULATE_RESULTS
-					prop_description = 'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.';
-				case ComparisonGroup.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
-				case ComparisonGroup.NAME
-					prop_description = 'NAME (constant, string) is the name of the group-based comparison result.';
-				case ComparisonGroup.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the group-based comparison result.';
-				case ComparisonGroup.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the group-based comparison result.';
-				case ComparisonGroup.ID
-					prop_description = 'ID (data, string) is a few-letter code for the group-based comparison result.';
-				case ComparisonGroup.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the group-based comparison result.';
-				case ComparisonGroup.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the group-based comparison result.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroup_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the group-based comparison result.'  'DESCRIPTION (constant, string) is the description of the group-based comparison result.'  'TEMPLATE (parameter, item) is the template of the group-based comparison result.'  'ID (data, string) is a few-letter code for the group-based comparison result.'  'LABEL (metadata, string) is an extended label of the group-based comparison result.'  'NOTES (metadata, string) are some specific notes about the group-based comparison result.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'MEASURE (parameter, class) is the measure class.'  'C (data, item) is the group-based comparison.'  'DIFF (result, cell) is the group comparison value.'  'P1 (result, cell) is the one-tailed p-value.'  'P2 (result, cell) is the two-tailed p-value.'  'CIL (result, cell) is the lower value of the 95%% confidence interval.'  'CIU (result, cell) is the upper value of the 95%% confidence interval.'  'QVALUE (metadata, scalar) is the selected qvalue threshold.'  'PFC (gui, item) contains the panel figure of the comparison.'  'PFBG (gui, item) contains the panel figure of the brain graph.'  'CALCULATE_RESULTS (evanescent, cell) calculates the comparison results {diff, p1, p2, ci_lower, ci_upper}.' };
+			prop_description = comparisongroup_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -646,30 +563,30 @@ classdef ComparisonGroup < ConcreteElement
 			
 			prop = ComparisonGroup.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroup.MEASURE
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % ComparisonGroup.MEASURE
 					prop_settings = 'Measure';
-				case ComparisonGroup.C
+				case 10 % ComparisonGroup.C
 					prop_settings = 'CompareGroup';
-				case ComparisonGroup.DIFF
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.P1
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.P2
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.CIL
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.CIU
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.QVALUE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case ComparisonGroup.PFC
+				case 11 % ComparisonGroup.DIFF
+					prop_settings = Format.getFormatSettings(16);
+				case 12 % ComparisonGroup.P1
+					prop_settings = Format.getFormatSettings(16);
+				case 13 % ComparisonGroup.P2
+					prop_settings = Format.getFormatSettings(16);
+				case 14 % ComparisonGroup.CIL
+					prop_settings = Format.getFormatSettings(16);
+				case 15 % ComparisonGroup.CIU
+					prop_settings = Format.getFormatSettings(16);
+				case 16 % ComparisonGroup.QVALUE
+					prop_settings = Format.getFormatSettings(11);
+				case 17 % ComparisonGroup.PFC
 					prop_settings = 'ComparisonGroupPF';
-				case ComparisonGroup.PFBG
+				case 18 % ComparisonGroup.PFBG
 					prop_settings = 'ComparisonGroupBrainPF';
-				case ComparisonGroup.CALCULATE_RESULTS
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case ComparisonGroup.TEMPLATE
+				case 19 % ComparisonGroup.CALCULATE_RESULTS
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % Comparison4
 					prop_settings = 'ComparisonGroup';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -697,42 +614,42 @@ classdef ComparisonGroup < ConcreteElement
 			
 			prop = ComparisonGroup.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroup.MEASURE
-					prop_default = Format.getFormatDefault(Format.CLASS, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.C
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.DIFF
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.P1
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.P2
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CIL
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CIU
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.QVALUE
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % ComparisonGroup.MEASURE
+					prop_default = Format.getFormatDefault(6, ComparisonGroup.getPropSettings(prop));
+				case 10 % ComparisonGroup.C
+					prop_default = Format.getFormatDefault(8, ComparisonGroup.getPropSettings(prop));
+				case 11 % ComparisonGroup.DIFF
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 12 % ComparisonGroup.P1
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 13 % ComparisonGroup.P2
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 14 % ComparisonGroup.CIL
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 15 % ComparisonGroup.CIU
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 16 % ComparisonGroup.QVALUE
 					prop_default = 0.05;
-				case ComparisonGroup.PFC
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.PFBG
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CALCULATE_RESULTS
-					prop_default = Format.getFormatDefault(Format.CELL, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.ELCLASS
+				case 17 % ComparisonGroup.PFC
+					prop_default = Format.getFormatDefault(8, ComparisonGroup.getPropSettings(prop));
+				case 18 % ComparisonGroup.PFBG
+					prop_default = Format.getFormatDefault(8, ComparisonGroup.getPropSettings(prop));
+				case 19 % ComparisonGroup.CALCULATE_RESULTS
+					prop_default = Format.getFormatDefault(16, ComparisonGroup.getPropSettings(prop));
+				case 1 % Comparison1
 					prop_default = 'ComparisonGroup';
-				case ComparisonGroup.NAME
+				case 2 % Comparison2
 					prop_default = 'ComparisonGroup';
-				case ComparisonGroup.DESCRIPTION
+				case 3 % Comparison3
 					prop_default = 'ComparisonGroup contains the results of a group-based comparison for a given measure. Specifically, it contains the one-tailed and two-tailed p-values and the 95%% confidence interval.';
-				case ComparisonGroup.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.ID
+				case 4 % Comparison4
+					prop_default = Format.getFormatDefault(8, ComparisonGroup.getPropSettings(prop));
+				case 5 % Comparison5
 					prop_default = 'ComparisonGroup ID';
-				case ComparisonGroup.LABEL
+				case 6 % Comparison6
 					prop_default = 'ComparisonGroup label';
-				case ComparisonGroup.NOTES
+				case 7 % Comparison7
 					prop_default = 'ComparisonGroup notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -779,15 +696,15 @@ classdef ComparisonGroup < ConcreteElement
 			% 
 			% CP.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:ComparisonGroup:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:ComparisonGroup:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CP.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of CP.
-			%   Error id: €BRAPH2.STR€:ComparisonGroup:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroup:WrongInput
 			%  Element.CHECKPROP(ComparisonGroup, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroup.
-			%   Error id: €BRAPH2.STR€:ComparisonGroup:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroup:WrongInput
 			%  CP.CHECKPROP(ComparisonGroup, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroup.
-			%   Error id: €BRAPH2.STR€:ComparisonGroup:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:ComparisonGroup:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(CP) and Element.CHECKPROP('ComparisonGroup')
 			%  are less computationally efficient.
@@ -798,32 +715,32 @@ classdef ComparisonGroup < ConcreteElement
 			prop = ComparisonGroup.getPropProp(pointer);
 			
 			switch prop
-				case ComparisonGroup.MEASURE % __ComparisonGroup.MEASURE__
-					check = Format.checkFormat(Format.CLASS, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.C % __ComparisonGroup.C__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.DIFF % __ComparisonGroup.DIFF__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.P1 % __ComparisonGroup.P1__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.P2 % __ComparisonGroup.P2__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CIL % __ComparisonGroup.CIL__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CIU % __ComparisonGroup.CIU__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.QVALUE % __ComparisonGroup.QVALUE__
-					check = Format.checkFormat(Format.SCALAR, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.PFC % __ComparisonGroup.PFC__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.PFBG % __ComparisonGroup.PFBG__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.CALCULATE_RESULTS % __ComparisonGroup.CALCULATE_RESULTS__
-					check = Format.checkFormat(Format.CELL, value, ComparisonGroup.getPropSettings(prop));
-				case ComparisonGroup.TEMPLATE % __ComparisonGroup.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroup.getPropSettings(prop));
+				case 9 % ComparisonGroup.MEASURE
+					check = Format.checkFormat(6, value, ComparisonGroup.getPropSettings(prop));
+				case 10 % ComparisonGroup.C
+					check = Format.checkFormat(8, value, ComparisonGroup.getPropSettings(prop));
+				case 11 % ComparisonGroup.DIFF
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 12 % ComparisonGroup.P1
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 13 % ComparisonGroup.P2
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 14 % ComparisonGroup.CIL
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 15 % ComparisonGroup.CIU
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 16 % ComparisonGroup.QVALUE
+					check = Format.checkFormat(11, value, ComparisonGroup.getPropSettings(prop));
+				case 17 % ComparisonGroup.PFC
+					check = Format.checkFormat(8, value, ComparisonGroup.getPropSettings(prop));
+				case 18 % ComparisonGroup.PFBG
+					check = Format.checkFormat(8, value, ComparisonGroup.getPropSettings(prop));
+				case 19 % ComparisonGroup.CALCULATE_RESULTS
+					check = Format.checkFormat(16, value, ComparisonGroup.getPropSettings(prop));
+				case 4 % Comparison4
+					check = Format.checkFormat(8, value, ComparisonGroup.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -832,8 +749,8 @@ classdef ComparisonGroup < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroup:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroup:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroup.getPropTag(prop) ' (' ComparisonGroup.getFormatTag(ComparisonGroup.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -853,43 +770,43 @@ classdef ComparisonGroup < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case ComparisonGroup.PFC % __ComparisonGroup.PFC__
+				case 17 % ComparisonGroup.PFC
 					if isa(cp.getr('PFC'), 'NoValue')
 					    
 					    measure = cp.get('MEASURE');
 					
 					    switch Element.getPropDefault(measure, 'SHAPE')
-					        case Measure.GLOBAL % __Measure.GLOBAL__
+					        case 1 % Measure.GLOBAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFC', ComparisonGroupPF_GS('CP', cp))
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFC', ComparisonGroupPF_GU('CP', cp))
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFC', ComparisonGroupPF_GB('CP', cp))
 					            end
-					        case Measure.NODAL % __Measure.NODAL__
+					        case 2 % Measure.NODAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFC', ComparisonGroupPF_NS('CP', cp))
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFC', ComparisonGroupPF_NU('CP', cp))
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFC', ComparisonGroupPF_NB('CP', cp))
 					            end
-					        case Measure.BINODAL % __Measure.BINODAL__
+					        case 3 % Measure.BINODAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFC', ComparisonGroupPF_BS('CP', cp))
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFC', ComparisonGroupPF_BU('CP', cp))
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFC', ComparisonGroupPF_BB('CP', cp))
 					            end
 					    end
 					end
 					
-				case ComparisonGroup.PFBG % __ComparisonGroup.PFBG__
+				case 18 % ComparisonGroup.PFBG
 					if isa(cp.getr('PFBG'), 'NoValue')
 					    measure = cp.get('MEASURE');
 					    if cp.get('C').get('A1').get('GR').get('SUB_DICT').get('LENGTH')
@@ -898,38 +815,38 @@ classdef ComparisonGroup < ConcreteElement
 					        brain_atlas = BrainAtlas();
 					    end
 					    switch Element.getPropDefault(measure, 'SHAPE')
-					        case Measure.GLOBAL % __Measure.GLOBAL__
+					        case 1 % Measure.GLOBAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFBG', ComparisonGroupBrainPF_GS('CP', cp, 'BA', brain_atlas));
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_GU('CP', cp, 'BA', brain_atlas));
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_GB('CP', cp, 'BA', brain_atlas));
 					            end
-					        case Measure.NODAL % __Measure.NODAL__
+					        case 2 % Measure.NODAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFBG', ComparisonGroupBrainPF_NS('CP', cp, 'BA', brain_atlas));
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_NU('CP', cp, 'BA', brain_atlas));
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_NB('CP', cp, 'BA', brain_atlas));
 					            end
-					        case Measure.BINODAL % __Measure.BINODAL__
+					        case 3 % Measure.BINODAL
 					            switch Element.getPropDefault(measure, 'SCOPE')
-					                case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					                case 1 % Measure.SUPERGLOBAL
 					                    cp.set('PFBG', ComparisonGroupBrainPF_BS('CP', cp, 'BA', brain_atlas));
-					                case Measure.UNILAYER % __Measure.UNILAYER__
+					                case 2 % Measure.UNILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_BU('CP', cp, 'BA', brain_atlas));
-					                case Measure.BILAYER % __Measure.BILAYER__
+					                case 3 % Measure.BILAYER
 					                    cp.set('PFBG', ComparisonGroupBrainPF_BB('CP', cp, 'BA', brain_atlas));
 					            end
 					    end
 					end
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						postprocessing@ConcreteElement(cp, prop);
 					end
 			end
@@ -940,59 +857,59 @@ classdef ComparisonGroup < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ComparisonGroup.DIFF % __ComparisonGroup.DIFF__
-					rng_settings_ = rng(); rng(cp.getPropSeed(ComparisonGroup.DIFF), 'twister')
+				case 11 % ComparisonGroup.DIFF
+					rng_settings_ = rng(); rng(cp.getPropSeed(11), 'twister')
 					
 					results = cp.memorize('CALCULATE_RESULTS');
 					value = results{1}; % diff
 					
 					rng(rng_settings_)
 					
-				case ComparisonGroup.P1 % __ComparisonGroup.P1__
-					rng_settings_ = rng(); rng(cp.getPropSeed(ComparisonGroup.P1), 'twister')
+				case 12 % ComparisonGroup.P1
+					rng_settings_ = rng(); rng(cp.getPropSeed(12), 'twister')
 					
 					results = cp.memorize('CALCULATE_RESULTS');
 					value = results{2}; % p1
 					
 					rng(rng_settings_)
 					
-				case ComparisonGroup.P2 % __ComparisonGroup.P2__
-					rng_settings_ = rng(); rng(cp.getPropSeed(ComparisonGroup.P2), 'twister')
+				case 13 % ComparisonGroup.P2
+					rng_settings_ = rng(); rng(cp.getPropSeed(13), 'twister')
 					
 					results = cp.memorize('CALCULATE_RESULTS');
 					value = results{3}; % p2
 					
 					rng(rng_settings_)
 					
-				case ComparisonGroup.CIL % __ComparisonGroup.CIL__
-					rng_settings_ = rng(); rng(cp.getPropSeed(ComparisonGroup.CIL), 'twister')
+				case 14 % ComparisonGroup.CIL
+					rng_settings_ = rng(); rng(cp.getPropSeed(14), 'twister')
 					
 					results = cp.memorize('CALCULATE_RESULTS');
 					value = results{4}; % ci_lower
 					
 					rng(rng_settings_)
 					
-				case ComparisonGroup.CIU % __ComparisonGroup.CIU__
-					rng_settings_ = rng(); rng(cp.getPropSeed(ComparisonGroup.CIU), 'twister')
+				case 15 % ComparisonGroup.CIU
+					rng_settings_ = rng(); rng(cp.getPropSeed(15), 'twister')
 					
 					results = cp.memorize('CALCULATE_RESULTS');
 					value = results{5}; % ci_upper
 					
 					rng(rng_settings_)
 					
-				case ComparisonGroup.CALCULATE_RESULTS % __ComparisonGroup.CALCULATE_RESULTS__
+				case 19 % ComparisonGroup.CALCULATE_RESULTS
 					% {DIFF, P1, P2, CIL, CIU} = cp.get('CALCULATE_RESULTS') calcultes the
 					%  difference, the one-tailed p-value P1, the two-tailed p-value P2,
 					%  the lower bound of the confidence interval CIL, and the the upper
@@ -1067,7 +984,7 @@ classdef ComparisonGroup < ConcreteElement
 					value = {diff, p1, p2, ci_lower, ci_upper};
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						value = calculateValue@ConcreteElement(cp, prop, varargin{:});
 					else
 						value = calculateValue@Element(cp, prop, varargin{:});
@@ -1093,29 +1010,29 @@ classdef ComparisonGroup < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case ComparisonGroup.DIFF % __ComparisonGroup.DIFF__
+				case 11 % ComparisonGroup.DIFF
 					g = cp.get('C').get('A1').get('G');
 					measure = cp.get('MEASURE');
 					
-					% PanelPropCell('EL', cp, 'PROP', ComparisonGroup.DIFF, varargin{:});
-					pr = PanelPropCellFDR('EL', cp, 'PROP', ComparisonGroup.DIFF,  ...
+					% PanelPropCell('EL', cp, 'PROP', 11, varargin{:});
+					pr = PanelPropCellFDR('EL', cp, 'PROP', 11,  ...
 					    'TABLEQVALUE', cp.get('QVALUE'), 'TABLEFDR', true, varargin{:}); 
 					
-					if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(4), ...
+					        'TABLE_HEIGHT', 48, ...
 					        'ROWNAME', {}, ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
 					        )
@@ -1127,7 +1044,7 @@ classdef ComparisonGroup < ConcreteElement
 					        'YSLIDERSHOW', false ...
 					        )
 					else % multigraph, multiplex, multilayer
-					    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
 					        if isempty(g.get('APARTITIONLABELS'))
 					            pr.set( ...
 					                'XSLIDERSHOW', false, ...
@@ -1135,55 +1052,55 @@ classdef ComparisonGroup < ConcreteElement
 					                )
 					        else
 					            pr.set( ...
-					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * length(g.get('APARTITIONLABELS'))), ...
+					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * length(g.get('APARTITIONLABELS'))), ...
 					                'XSLIDERSHOW', false, ...
 					                'YSLIDERSHOW', true, ...
 					                'YSLIDERLABELS', g.getCallback('APARTITIONLABELS'), ...
-					                'YSLIDERWIDTH', s(5) ...
+					                'YSLIDERWIDTH', 60 ...
 					                )
 					        end
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', false, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', true, ...
 					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'XSLIDERHEIGHT', s(3), ...
+					            'XSLIDERHEIGHT', 36, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
 					    end
 					end
 					
-				case ComparisonGroup.P1 % __ComparisonGroup.P1__
+				case 12 % ComparisonGroup.P1
 					g = cp.get('C').get('A1').get('G');
 					measure = cp.get('MEASURE');
 					
-					pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.P1, varargin{:});
+					pr = PanelPropCell('EL', cp, 'PROP', 12, varargin{:});
 					
-					if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(4), ...
+					        'TABLE_HEIGHT', 48, ...
 					        'ROWNAME', {}, ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
 					        )
@@ -1195,7 +1112,7 @@ classdef ComparisonGroup < ConcreteElement
 					        'YSLIDERSHOW', false ...
 					        )
 					else % multigraph, multiplex, multilayer
-					    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
 					        if isempty(g.get('APARTITIONLABELS'))
 					            pr.set( ...
 					                'XSLIDERSHOW', false, ...
@@ -1203,55 +1120,55 @@ classdef ComparisonGroup < ConcreteElement
 					                )
 					        else
 					            pr.set( ...
-					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * length(g.get('APARTITIONLABELS'))), ...
+					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * length(g.get('APARTITIONLABELS'))), ...
 					                'XSLIDERSHOW', false, ...
 					                'YSLIDERSHOW', true, ...
 					                'YSLIDERLABELS', g.getCallback('APARTITIONLABELS'), ...
-					                'YSLIDERWIDTH', s(5) ...
+					                'YSLIDERWIDTH', 60 ...
 					                )
 					        end
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', false, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', true, ...
 					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'XSLIDERHEIGHT', s(3), ...
+					            'XSLIDERHEIGHT', 36, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
 					    end
 					end
 					
-				case ComparisonGroup.P2 % __ComparisonGroup.P2__
+				case 13 % ComparisonGroup.P2
 					g = cp.get('C').get('A1').get('G');
 					measure = cp.get('MEASURE');
 					
-					pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.P2, varargin{:});
+					pr = PanelPropCell('EL', cp, 'PROP', 13, varargin{:});
 					
-					if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(4), ...
+					        'TABLE_HEIGHT', 48, ...
 					        'ROWNAME', {}, ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
 					        )
@@ -1263,7 +1180,7 @@ classdef ComparisonGroup < ConcreteElement
 					        'YSLIDERSHOW', false ...
 					        )
 					else % multigraph, multiplex, multilayer
-					    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
 					        if isempty(g.get('APARTITIONLABELS'))
 					            pr.set( ...
 					                'XSLIDERSHOW', false, ...
@@ -1271,55 +1188,55 @@ classdef ComparisonGroup < ConcreteElement
 					                )
 					        else
 					            pr.set( ...
-					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * length(g.get('APARTITIONLABELS'))), ...
+					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * length(g.get('APARTITIONLABELS'))), ...
 					                'XSLIDERSHOW', false, ...
 					                'YSLIDERSHOW', true, ...
 					                'YSLIDERLABELS', g.getCallback('APARTITIONLABELS'), ...
-					                'YSLIDERWIDTH', s(5) ...
+					                'YSLIDERWIDTH', 60 ...
 					                )
 					        end
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', false, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', true, ...
 					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'XSLIDERHEIGHT', s(3), ...
+					            'XSLIDERHEIGHT', 36, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
 					    end
 					end
 					
-				case ComparisonGroup.CIL % __ComparisonGroup.CIL__
+				case 14 % ComparisonGroup.CIL
 					g = cp.get('C').get('A1').get('G');
 					measure = cp.get('MEASURE');
 					
-					pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.CIL, varargin{:});
+					pr = PanelPropCell('EL', cp, 'PROP', 14, varargin{:});
 					
-					if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(4), ...
+					        'TABLE_HEIGHT', 48, ...
 					        'ROWNAME', {}, ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
 					        )
@@ -1331,7 +1248,7 @@ classdef ComparisonGroup < ConcreteElement
 					        'YSLIDERSHOW', false ...
 					        )
 					else % multigraph, multiplex, multilayer
-					    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
 					        if isempty(g.get('APARTITIONLABELS'))
 					            pr.set( ...
 					                'XSLIDERSHOW', false, ...
@@ -1339,55 +1256,55 @@ classdef ComparisonGroup < ConcreteElement
 					                )
 					        else
 					            pr.set( ...
-					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * length(g.get('APARTITIONLABELS'))), ...
+					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * length(g.get('APARTITIONLABELS'))), ...
 					                'XSLIDERSHOW', false, ...
 					                'YSLIDERSHOW', true, ...
 					                'YSLIDERLABELS', g.getCallback('APARTITIONLABELS'), ...
-					                'YSLIDERWIDTH', s(5) ...
+					                'YSLIDERWIDTH', 60 ...
 					                )
 					        end
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', false, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', true, ...
 					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'XSLIDERHEIGHT', s(3), ...
+					            'XSLIDERHEIGHT', 36, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
 					    end
 					end
 					
-				case ComparisonGroup.CIU % __ComparisonGroup.CIU__
+				case 15 % ComparisonGroup.CIU
 					g = cp.get('C').get('A1').get('G');
 					measure = cp.get('MEASURE');
 					
-					pr = PanelPropCell('EL', cp, 'PROP', ComparisonGroup.CIU, varargin{:});
+					pr = PanelPropCell('EL', cp, 'PROP', 15, varargin{:});
 					
-					if Element.getPropDefault(measure, 'SHAPE') == Measure.GLOBAL % __Measure.GLOBAL__
+					if Element.getPropDefault(measure, 'SHAPE') == 1 % Measure.GLOBAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(4), ...
+					        'TABLE_HEIGHT', 48, ...
 					        'ROWNAME', {}, ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.NODAL % __Measure.NODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 2 % Measure.NODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', {} ...
 					        )
-					elseif Element.getPropDefault(measure, 'SHAPE') == Measure.BINODAL % __Measure.BINODAL__
+					elseif Element.getPropDefault(measure, 'SHAPE') == 3 % Measure.BINODAL
 					    pr.set( ...
-					        'TABLE_HEIGHT', s(40), ...
+					        'TABLE_HEIGHT', 480, ...
 					        'ROWNAME', g.getCallback('ANODELABELS'), ...
 					        'COLUMNNAME', g.getCallback('ANODELABELS') ...
 					        )
@@ -1399,7 +1316,7 @@ classdef ComparisonGroup < ConcreteElement
 					        'YSLIDERSHOW', false ...
 					        )
 					else % multigraph, multiplex, multilayer
-					    if  Element.getPropDefault(measure, 'SCOPE') == Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
+					    if  Element.getPropDefault(measure, 'SCOPE') == 1 % Measure.SUPERGLOBAL
 					        if isempty(g.get('APARTITIONLABELS'))
 					            pr.set( ...
 					                'XSLIDERSHOW', false, ...
@@ -1407,42 +1324,42 @@ classdef ComparisonGroup < ConcreteElement
 					                )
 					        else
 					            pr.set( ...
-					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * length(g.get('APARTITIONLABELS'))), ...
+					                'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * length(g.get('APARTITIONLABELS'))), ...
 					                'XSLIDERSHOW', false, ...
 					                'YSLIDERSHOW', true, ...
 					                'YSLIDERLABELS', g.getCallback('APARTITIONLABELS'), ...
-					                'YSLIDERWIDTH', s(5) ...
+					                'YSLIDERWIDTH', 60 ...
 					                )
 					        end
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.UNILAYER % __Measure.UNILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 2 % Measure.UNILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(pr.get('TABLE_HEIGHT'), 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', false, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
-					    elseif Element.getPropDefault(measure, 'SCOPE') == Measure.BILAYER % __Measure.BILAYER__
+					    elseif Element.getPropDefault(measure, 'SCOPE') == 3 % Measure.BILAYER
 					        pr.set( ...
-					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), s(3) + s(1) * g.get('LAYERNUMBER')), ...
+					            'TABLE_HEIGHT', max(3 + pr.get('TABLE_HEIGHT'), 36 + 12 * g.get('LAYERNUMBER')), ...
 					            'XSLIDERSHOW', true, ...
 					            'XSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'XSLIDERHEIGHT', s(3), ...
+					            'XSLIDERHEIGHT', 36, ...
 					            'YSLIDERSHOW', true, ...
 					            'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					            'YSLIDERWIDTH', s(5) ...
+					            'YSLIDERWIDTH', 60 ...
 					            )
 					    end
 					end
 					
-				case ComparisonGroup.PFC % __ComparisonGroup.PFC__
-					pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFC, ...
+				case 17 % ComparisonGroup.PFC
+					pr = PanelPropItem('EL', cp, 'PROP', 17, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['Plot ' cp.get('MEASURE') ' Comparison'], ...
 					    varargin{:});
 					
-				case ComparisonGroup.PFBG % __ComparisonGroup.PFBG__
-					pr = PanelPropItem('EL', cp, 'PROP', ComparisonGroup.PFBG, ...
+				case 18 % ComparisonGroup.PFBG
+					pr = PanelPropItem('EL', cp, 'PROP', 18, ...
 					    'GUICLASS', 'GUIFig', ...
 						'BUTTON_TEXT', ['Brain Graph ' cp.get('MEASURE') ' Comparison'], ...
 					    varargin{:});

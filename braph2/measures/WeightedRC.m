@@ -8,6 +8,24 @@ classdef WeightedRC < Strength
 	%  Parameter s is set by the user and it can be a vector containing all the 
 	%  strength thresholds; the default value is equal to 1.
 	%
+	% The list of WeightedRC properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Rich-Club.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Rich-Club.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Rich-Club.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Rich-Club.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Rich-Club.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) is the threshold (s).
+	%
 	% WeightedRC methods (constructor):
 	%  WeightedRC - constructor
 	%
@@ -95,10 +113,10 @@ classdef WeightedRC < Strength
 	%
 	
 	properties (Constant) % properties
-		PARAMETRIC_VALUE = Strength.getPropNumber() + 1;
+		PARAMETRIC_VALUE = 16; %CET: Computational Efficiency Trick
 		PARAMETRIC_VALUE_TAG = 'PARAMETRIC_VALUE';
-		PARAMETRIC_VALUE_CATEGORY = Category.PARAMETER;
-		PARAMETRIC_VALUE_FORMAT = Format.RVECTOR;
+		PARAMETRIC_VALUE_CATEGORY = 3;
+		PARAMETRIC_VALUE_FORMAT = 12;
 	end
 	methods % constructor
 		function m = WeightedRC(varargin)
@@ -111,6 +129,23 @@ classdef WeightedRC < Strength
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of WeightedRC properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Weighted Rich-Club.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Weighted Rich-Club.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Weighted Rich-Club.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Weighted Rich-Club.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Weighted Rich-Club.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>PARAMETRIC_VALUE</strong> 	PARAMETRIC_VALUE (parameter, RVECTOR) is the threshold (s).
 			%
 			% See also Category, Format.
 			
@@ -148,7 +183,7 @@ classdef WeightedRC < Strength
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('WeightedRC', [], [], true);
+			subclass_list = { 'WeightedRC' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of weighted rich-club.
@@ -169,52 +204,30 @@ classdef WeightedRC < Strength
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Strength.getProps() ...
-						WeightedRC.PARAMETRIC_VALUE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Strength.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Strength.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Strength.getProps(Category.PARAMETER) ...
-						WeightedRC.PARAMETRIC_VALUE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Strength.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Strength.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Strength.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Strength.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Strength.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Strength.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -235,7 +248,31 @@ classdef WeightedRC < Strength
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(WeightedRC.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in weighted rich-club/error.
@@ -263,14 +300,14 @@ classdef WeightedRC < Strength
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == WeightedRC.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput'], ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for WeightedRC.'] ...
 					)
 			end
@@ -301,15 +338,14 @@ classdef WeightedRC < Strength
 			%
 			% See also getProps, existsTag.
 			
-			weightedrc_tag_list = cellfun(@(x) WeightedRC.getPropTag(x), num2cell(WeightedRC.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, weightedrc_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput'], ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for WeightedRC.'] ...
 					)
 			end
@@ -335,8 +371,7 @@ classdef WeightedRC < Strength
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				weightedrc_tag_list = cellfun(@(x) WeightedRC.getPropTag(x), num2cell(WeightedRC.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, weightedrc_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -364,14 +399,9 @@ classdef WeightedRC < Strength
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case WeightedRC.PARAMETRIC_VALUE
-						tag = WeightedRC.PARAMETRIC_VALUE_TAG;
-					otherwise
-						tag = getPropTag@Strength(prop);
-				end
+				%CET: Computational Efficiency Trick
+				weightedrc_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'PARAMETRIC_VALUE' };
+				tag = weightedrc_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -396,12 +426,9 @@ classdef WeightedRC < Strength
 			
 			prop = WeightedRC.getPropProp(pointer);
 			
-			switch prop
-				case WeightedRC.PARAMETRIC_VALUE
-					prop_category = WeightedRC.PARAMETRIC_VALUE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Strength(prop);
-			end
+			%CET: Computational Efficiency Trick
+			weightedrc_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = weightedrc_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -425,12 +452,9 @@ classdef WeightedRC < Strength
 			
 			prop = WeightedRC.getPropProp(pointer);
 			
-			switch prop
-				case WeightedRC.PARAMETRIC_VALUE
-					prop_format = WeightedRC.PARAMETRIC_VALUE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Strength(prop);
-			end
+			%CET: Computational Efficiency Trick
+			weightedrc_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  12 };
+			prop_format = weightedrc_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -454,36 +478,9 @@ classdef WeightedRC < Strength
 			
 			prop = WeightedRC.getPropProp(pointer);
 			
-			switch prop
-				case WeightedRC.PARAMETRIC_VALUE
-					prop_description = 'PARAMETRIC_VALUE (parameter, RVECTOR) is the threshold (s).';
-				case WeightedRC.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Weighted Rich-Club.';
-				case WeightedRC.NAME
-					prop_description = 'NAME (constant, string) is the name of the Weighted Rich-Club.';
-				case WeightedRC.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.';
-				case WeightedRC.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.';
-				case WeightedRC.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Weighted Rich-Club.';
-				case WeightedRC.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Weighted Rich-Club.';
-				case WeightedRC.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.';
-				case WeightedRC.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case WeightedRC.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case WeightedRC.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.PARAMETRIC__.';
-				case WeightedRC.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case WeightedRC.M
-					prop_description = 'M (result, cell) is the Weighted Rich-Club.';
-				otherwise
-					prop_description = getPropDescription@Strength(prop);
-			end
+			%CET: Computational Efficiency Trick
+			weightedrc_description_list = { 'ELCLASS (constant, string) is the class of the Weighted Rich-Club.'  'NAME (constant, string) is the name of the Weighted Rich-Club.'  'DESCRIPTION (constant, string) is the description of the Weighted Rich-Club.'  'TEMPLATE (parameter, item) is the template of the Weighted Rich-Club.'  'ID (data, string) is a few-letter code of the Weighted Rich-Club.'  'LABEL (metadata, string) is an extended label of the Weighted Rich-Club.'  'NOTES (metadata, string) are some specific notes about the Weighted Rich-Club.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.PARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Weighted Rich-Club.'  'PFM (gui, item) contains the panel figure of the measure.'  'PARAMETRIC_VALUE (parameter, RVECTOR) is the threshold (s).' };
+			prop_description = weightedrc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -507,10 +504,10 @@ classdef WeightedRC < Strength
 			
 			prop = WeightedRC.getPropProp(pointer);
 			
-			switch prop
-				case WeightedRC.PARAMETRIC_VALUE
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case WeightedRC.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % WeightedRC.PARAMETRIC_VALUE
+					prop_settings = Format.getFormatSettings(12);
+				case 4 % WeightedRC.TEMPLATE
 					prop_settings = 'WeightedRC';
 				otherwise
 					prop_settings = getPropSettings@Strength(prop);
@@ -538,30 +535,30 @@ classdef WeightedRC < Strength
 			
 			prop = WeightedRC.getPropProp(pointer);
 			
-			switch prop
-				case WeightedRC.PARAMETRIC_VALUE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % WeightedRC.PARAMETRIC_VALUE
 					prop_default = 1;
-				case WeightedRC.ELCLASS
+				case 1 % WeightedRC.ELCLASS
 					prop_default = 'WeightedRC';
-				case WeightedRC.NAME
+				case 2 % WeightedRC.NAME
 					prop_default = 'Weighted Rich-Club';
-				case WeightedRC.DESCRIPTION
+				case 3 % WeightedRC.DESCRIPTION
 					prop_default = 'The Weighted Rich-Club (WeightedRC) coefficient of a node at level s is the fraction of the edges weights that connect nodes of strength s or higher out of the maximum number of edges weights that such nodes might share within a layer. Parameter s is set by the user and it can be a vector containing all the strength thresholds; the default value is equal to 1.';
-				case WeightedRC.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, WeightedRC.getPropSettings(prop));
-				case WeightedRC.ID
+				case 4 % WeightedRC.TEMPLATE
+					prop_default = Format.getFormatDefault(8, WeightedRC.getPropSettings(prop));
+				case 5 % WeightedRC.ID
 					prop_default = 'WeightedRC ID';
-				case WeightedRC.LABEL
+				case 6 % WeightedRC.LABEL
 					prop_default = 'Weighted Rich-Club label';
-				case WeightedRC.NOTES
+				case 7 % WeightedRC.NOTES
 					prop_default = 'Weighted Rich-Club notes';
-				case WeightedRC.SHAPE
-					prop_default = Measure.NODAL;
-				case WeightedRC.SCOPE
-					prop_default = Measure.SUPERGLOBAL;
-				case WeightedRC.PARAMETRICITY
-					prop_default = Measure.PARAMETRIC;
-				case WeightedRC.COMPATIBLE_GRAPHS
+				case 9 % WeightedRC.SHAPE
+					prop_default = 2;
+				case 10 % WeightedRC.SCOPE
+					prop_default = 1;
+				case 11 % WeightedRC.PARAMETRICITY
+					prop_default = 1;
+				case 12 % WeightedRC.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'MultiplexWU'};;
 				otherwise
 					prop_default = getPropDefault@Strength(prop);
@@ -608,15 +605,15 @@ classdef WeightedRC < Strength
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:WeightedRC:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:WeightedRC:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:WeightedRC:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:WeightedRC:WrongInput
 			%  Element.CHECKPROP(WeightedRC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of WeightedRC.
-			%   Error id: €BRAPH2.STR€:WeightedRC:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:WeightedRC:WrongInput
 			%  M.CHECKPROP(WeightedRC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of WeightedRC.
-			%   Error id: €BRAPH2.STR€:WeightedRC:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:WeightedRC:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('WeightedRC')
 			%  are less computationally efficient.
@@ -627,12 +624,12 @@ classdef WeightedRC < Strength
 			prop = WeightedRC.getPropProp(pointer);
 			
 			switch prop
-				case WeightedRC.PARAMETRIC_VALUE % __WeightedRC.PARAMETRIC_VALUE__
-					check = Format.checkFormat(Format.RVECTOR, value, WeightedRC.getPropSettings(prop));
-				case WeightedRC.TEMPLATE % __WeightedRC.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, WeightedRC.getPropSettings(prop));
+				case 16 % WeightedRC.PARAMETRIC_VALUE
+					check = Format.checkFormat(12, value, WeightedRC.getPropSettings(prop));
+				case 4 % WeightedRC.TEMPLATE
+					check = Format.checkFormat(8, value, WeightedRC.getPropSettings(prop));
 				otherwise
-					if prop <= Strength.getPropNumber()
+					if prop <= 15
 						check = checkProp@Strength(prop, value);
 					end
 			end
@@ -641,8 +638,8 @@ classdef WeightedRC < Strength
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':WeightedRC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput'], ...
+					['BRAPH2' ':WeightedRC:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' WeightedRC.getPropTag(prop) ' (' WeightedRC.getFormatTag(WeightedRC.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -653,20 +650,20 @@ classdef WeightedRC < Strength
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case WeightedRC.M % __WeightedRC.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(WeightedRC.M), 'twister')
+				case 14 % WeightedRC.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -676,7 +673,7 @@ classdef WeightedRC < Strength
 					directionality_layer = g.get('DIRECTIONALITY_TYPE', l);
 					weighted_rich_club_threshold = m.get('PARAMETRIC_VALUE');
 					assert(isnumeric(weighted_rich_club_threshold) == 1, ...
-					    [BRAPH2.STR ':WeightedRichClub:' BRAPH2.WRONG_INPUT], ...
+					    ['BRAPH2' ':WeightedRichClub:' 'WrongInput'], ...
 					    ['WeightedRichClub threshold must be a positive number ' ...
 					    'while it is ' tostring(weighted_rich_club_threshold)])
 					
@@ -688,7 +685,7 @@ classdef WeightedRC < Strength
 					    Aii = A{li, li};
 					    directionality_layer = directionality_type(li, li);
 					   
-					    if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+					    if directionality_layer == 2  % undirected graphs
 					
 					        strength = calculateValue@Strength(m, prop);
 					        st = strength{li};
@@ -726,7 +723,7 @@ classdef WeightedRC < Strength
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Strength.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Strength(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

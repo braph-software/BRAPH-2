@@ -6,6 +6,21 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 	% weighted undirected multiplexes, binary undirected multiplexes with fixed thresholds,
 	% or binary undirected multiplexes with fixed densities.
 	%
+	% The list of AnalyzeGroup_ST_MP_WU properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph analysis with structural multiplex data.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
+	%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+	%  <strong>12</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+	%  <strong>13</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
+	%
 	% AnalyzeGroup_ST_MP_WU methods (constructor):
 	%  AnalyzeGroup_ST_MP_WU - constructor
 	%
@@ -95,15 +110,15 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 	% See also SubjectST_MP, MultiplexWU.
 	
 	properties (Constant) % properties
-		CORRELATION_RULE = AnalyzeGroup.getPropNumber() + 1;
+		CORRELATION_RULE = 12; %CET: Computational Efficiency Trick
 		CORRELATION_RULE_TAG = 'CORRELATION_RULE';
-		CORRELATION_RULE_CATEGORY = Category.PARAMETER;
-		CORRELATION_RULE_FORMAT = Format.OPTION;
+		CORRELATION_RULE_CATEGORY = 3;
+		CORRELATION_RULE_FORMAT = 5;
 		
-		NEGATIVE_WEIGHT_RULE = AnalyzeGroup.getPropNumber() + 2;
+		NEGATIVE_WEIGHT_RULE = 13; %CET: Computational Efficiency Trick
 		NEGATIVE_WEIGHT_RULE_TAG = 'NEGATIVE_WEIGHT_RULE';
-		NEGATIVE_WEIGHT_RULE_CATEGORY = Category.PARAMETER;
-		NEGATIVE_WEIGHT_RULE_FORMAT = Format.OPTION;
+		NEGATIVE_WEIGHT_RULE_CATEGORY = 3;
+		NEGATIVE_WEIGHT_RULE_FORMAT = 5;
 	end
 	methods % constructor
 		function a = AnalyzeGroup_ST_MP_WU(varargin)
@@ -116,6 +131,20 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of AnalyzeGroup_ST_MP_WU properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the graph analysis with structural multiplex data.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the graph analysis with structural multiplex data.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>GR</strong> 	GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.
+			%  <strong>11</strong> <strong>G</strong> 	G (result, item) is the graph obtained from this analysis.
+			%  <strong>12</strong> <strong>CORRELATION_RULE</strong> 	CORRELATION_RULE (parameter, option) is the correlation type.
+			%  <strong>13</strong> <strong>NEGATIVE_WEIGHT_RULE</strong> 	NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.
 			%
 			% See also Category, Format.
 			
@@ -153,7 +182,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('AnalyzeGroup_ST_MP_WU', [], [], true);
+			subclass_list = { 'AnalyzeGroup_ST_MP_WU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of graph analysis with structural multiplex data.
@@ -174,54 +203,30 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					AnalyzeGroup.getProps() ...
-						AnalyzeGroup_ST_MP_WU.CORRELATION_RULE ...
-						AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.PARAMETER) ...
-						AnalyzeGroup_ST_MP_WU.CORRELATION_RULE ...
-						AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						AnalyzeGroup.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						AnalyzeGroup.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 12 13];
+				case 4 % Category.DATA
+					prop_list = [5 10];
+				case 5 % Category.RESULT
+					prop_list = 11;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 9;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -242,7 +247,31 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(AnalyzeGroup_ST_MP_WU.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 13;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 3;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in graph analysis with structural multiplex data/error.
@@ -270,14 +299,14 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == AnalyzeGroup_ST_MP_WU.getProps());
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AnalyzeGroup_ST_MP_WU.'] ...
 					)
 			end
@@ -308,15 +337,14 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%
 			% See also getProps, existsTag.
 			
-			analyzegroup_st_mp_wu_tag_list = cellfun(@(x) AnalyzeGroup_ST_MP_WU.getPropTag(x), num2cell(AnalyzeGroup_ST_MP_WU.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, analyzegroup_st_mp_wu_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for AnalyzeGroup_ST_MP_WU.'] ...
 					)
 			end
@@ -342,8 +370,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				analyzegroup_st_mp_wu_tag_list = cellfun(@(x) AnalyzeGroup_ST_MP_WU.getPropTag(x), num2cell(AnalyzeGroup_ST_MP_WU.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, analyzegroup_st_mp_wu_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -371,16 +398,9 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
-						tag = AnalyzeGroup_ST_MP_WU.CORRELATION_RULE_TAG;
-					case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
-						tag = AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE_TAG;
-					otherwise
-						tag = getPropTag@AnalyzeGroup(prop);
-				end
+				%CET: Computational Efficiency Trick
+				analyzegroup_st_mp_wu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR'  'G'  'CORRELATION_RULE'  'NEGATIVE_WEIGHT_RULE' };
+				tag = analyzegroup_st_mp_wu_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -405,14 +425,9 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
-			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
-					prop_category = AnalyzeGroup_ST_MP_WU.CORRELATION_RULE_CATEGORY;
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
-					prop_category = AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@AnalyzeGroup(prop);
-			end
+			%CET: Computational Efficiency Trick
+			analyzegroup_st_mp_wu_category_list = { 1  1  1  3  4  2  2  6  9  4  5  3  3 };
+			prop_category = analyzegroup_st_mp_wu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -436,14 +451,9 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
-			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
-					prop_format = AnalyzeGroup_ST_MP_WU.CORRELATION_RULE_FORMAT;
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
-					prop_format = AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@AnalyzeGroup(prop);
-			end
+			%CET: Computational Efficiency Trick
+			analyzegroup_st_mp_wu_format_list = { 2  2  2  8  2  2  2  2  4  8  8  5  5 };
+			prop_format = analyzegroup_st_mp_wu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -467,32 +477,9 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
-			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
-					prop_description = 'CORRELATION_RULE (parameter, option) is the correlation type.';
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
-					prop_description = 'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.';
-				case AnalyzeGroup_ST_MP_WU.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.NAME
-					prop_description = 'NAME (constant, string) is the name of the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.ID
-					prop_description = 'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.';
-				case AnalyzeGroup_ST_MP_WU.GR
-					prop_description = 'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.';
-				case AnalyzeGroup_ST_MP_WU.G
-					prop_description = 'G (result, item) is the graph obtained from this analysis.';
-				otherwise
-					prop_description = getPropDescription@AnalyzeGroup(prop);
-			end
+			%CET: Computational Efficiency Trick
+			analyzegroup_st_mp_wu_description_list = { 'ELCLASS (constant, string) is the class of the graph analysis with structural multiplex data.'  'NAME (constant, string) is the name of the graph analysis with structural multiplex data.'  'DESCRIPTION (constant, string) is the description of the graph analysis with structural multiplex data.'  'TEMPLATE (parameter, item) is the template of the graph analysis with structural multiplex data.'  'ID (data, string) is a few-letter code for the graph analysis with structural multiplex data.'  'LABEL (metadata, string) is an extended label of the graph analysis with structural multiplex data.'  'NOTES (metadata, string) are some specific notes about the graph analysis with structural multiplex data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectST_MP.'  'G (result, item) is the graph obtained from this analysis.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.' };
+			prop_description = analyzegroup_st_mp_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -516,14 +503,14 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
-			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 12 % AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
 					prop_settings = Correlation.CORRELATION_RULE_LIST;
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
+				case 13 % AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
 					prop_settings = Correlation.NEGATIVE_WEIGHT_RULE_LIST;
-				case AnalyzeGroup_ST_MP_WU.TEMPLATE
+				case 4 % AnalyzeGroup_ST_MP_WU.TEMPLATE
 					prop_settings = 'AnalyzeGroup_ST_MP_WU';
-				case AnalyzeGroup_ST_MP_WU.G
+				case 11 % AnalyzeGroup_ST_MP_WU.G
 					prop_settings = 'MultiplexWU';
 				otherwise
 					prop_settings = getPropSettings@AnalyzeGroup(prop);
@@ -551,28 +538,28 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
-			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 12 % AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
 					prop_default = Correlation.PEARSON;
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
+				case 13 % AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
 					prop_default = Correlation.ZERO;
-				case AnalyzeGroup_ST_MP_WU.ELCLASS
+				case 1 % AnalyzeGroup_ST_MP_WU.ELCLASS
 					prop_default = 'AnalyzeGroup_ST_MP_WU';
-				case AnalyzeGroup_ST_MP_WU.NAME
+				case 2 % AnalyzeGroup_ST_MP_WU.NAME
 					prop_default = 'Multiplex Structural Weighted Undirected Analyze Group';
-				case AnalyzeGroup_ST_MP_WU.DESCRIPTION
+				case 3 % AnalyzeGroup_ST_MP_WU.DESCRIPTION
 					prop_default = 'This graph analysis uses structural multiplex data and analyzes them using weighted undirected multiplexes, binary undirected multiplexes with fixed thresholds, or binary undirected multiplexes with fixed densities.';
-				case AnalyzeGroup_ST_MP_WU.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
-				case AnalyzeGroup_ST_MP_WU.ID
+				case 4 % AnalyzeGroup_ST_MP_WU.TEMPLATE
+					prop_default = Format.getFormatDefault(8, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
+				case 5 % AnalyzeGroup_ST_MP_WU.ID
 					prop_default = 'AnalyzeGroup_ST_MP_WU ID';
-				case AnalyzeGroup_ST_MP_WU.LABEL
+				case 6 % AnalyzeGroup_ST_MP_WU.LABEL
 					prop_default = 'AnalyzeGroup_ST_MP_WU label';
-				case AnalyzeGroup_ST_MP_WU.NOTES
+				case 7 % AnalyzeGroup_ST_MP_WU.NOTES
 					prop_default = 'AnalyzeGroup_ST_MP_WU notes';
-				case AnalyzeGroup_ST_MP_WU.GR
+				case 10 % AnalyzeGroup_ST_MP_WU.GR
 					prop_default = Group('SUB_CLASS', 'SubjectST_MP');
-				case AnalyzeGroup_ST_MP_WU.G
+				case 11 % AnalyzeGroup_ST_MP_WU.G
 					prop_default = MultiplexWU();
 				otherwise
 					prop_default = getPropDefault@AnalyzeGroup(prop);
@@ -619,15 +606,15 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			% 
 			% A.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:AnalyzeGroup_ST_MP_WU:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:AnalyzeGroup_ST_MP_WU:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  A.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of A.
-			%   Error id: €BRAPH2.STR€:AnalyzeGroup_ST_MP_WU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:AnalyzeGroup_ST_MP_WU:WrongInput
 			%  Element.CHECKPROP(AnalyzeGroup_ST_MP_WU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroup_ST_MP_WU.
-			%   Error id: €BRAPH2.STR€:AnalyzeGroup_ST_MP_WU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:AnalyzeGroup_ST_MP_WU:WrongInput
 			%  A.CHECKPROP(AnalyzeGroup_ST_MP_WU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AnalyzeGroup_ST_MP_WU.
-			%   Error id: €BRAPH2.STR€:AnalyzeGroup_ST_MP_WU:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:AnalyzeGroup_ST_MP_WU:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(A) and Element.CHECKPROP('AnalyzeGroup_ST_MP_WU')
 			%  are less computationally efficient.
@@ -638,16 +625,16 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			prop = AnalyzeGroup_ST_MP_WU.getPropProp(pointer);
 			
 			switch prop
-				case AnalyzeGroup_ST_MP_WU.CORRELATION_RULE % __AnalyzeGroup_ST_MP_WU.CORRELATION_RULE__
-					check = Format.checkFormat(Format.OPTION, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
-				case AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE % __AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE__
-					check = Format.checkFormat(Format.OPTION, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
-				case AnalyzeGroup_ST_MP_WU.TEMPLATE % __AnalyzeGroup_ST_MP_WU.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
-				case AnalyzeGroup_ST_MP_WU.G % __AnalyzeGroup_ST_MP_WU.G__
-					check = Format.checkFormat(Format.ITEM, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
+				case 12 % AnalyzeGroup_ST_MP_WU.CORRELATION_RULE
+					check = Format.checkFormat(5, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
+				case 13 % AnalyzeGroup_ST_MP_WU.NEGATIVE_WEIGHT_RULE
+					check = Format.checkFormat(5, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
+				case 4 % AnalyzeGroup_ST_MP_WU.TEMPLATE
+					check = Format.checkFormat(8, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
+				case 11 % AnalyzeGroup_ST_MP_WU.G
+					check = Format.checkFormat(8, value, AnalyzeGroup_ST_MP_WU.getPropSettings(prop));
 				otherwise
-					if prop <= AnalyzeGroup.getPropNumber()
+					if prop <= 11
 						check = checkProp@AnalyzeGroup(prop, value);
 					end
 			end
@@ -656,8 +643,8 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AnalyzeGroup_ST_MP_WU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput'], ...
+					['BRAPH2' ':AnalyzeGroup_ST_MP_WU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AnalyzeGroup_ST_MP_WU.getPropTag(prop) ' (' AnalyzeGroup_ST_MP_WU.getFormatTag(AnalyzeGroup_ST_MP_WU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -668,20 +655,20 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case AnalyzeGroup_ST_MP_WU.G % __AnalyzeGroup_ST_MP_WU.G__
-					rng_settings_ = rng(); rng(a.getPropSeed(AnalyzeGroup_ST_MP_WU.G), 'twister')
+				case 11 % AnalyzeGroup_ST_MP_WU.G
+					rng_settings_ = rng(); rng(a.getPropSeed(11), 'twister')
 					
 					gr = a.get('GR');
 					data_list = cellfun(@(x) x.get('ST_MP'), gr.get('SUB_DICT').get('IT_LIST'), 'UniformOutput', false);
@@ -731,7 +718,7 @@ classdef AnalyzeGroup_ST_MP_WU < AnalyzeGroup
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= AnalyzeGroup.getPropNumber()
+					if prop <= 11
 						value = calculateValue@AnalyzeGroup(a, prop, varargin{:});
 					else
 						value = calculateValue@Element(a, prop, varargin{:});

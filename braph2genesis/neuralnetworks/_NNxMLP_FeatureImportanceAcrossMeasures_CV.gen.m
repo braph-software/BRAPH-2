@@ -121,20 +121,6 @@ pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_
     'COLUMNNAME', m_list, ...
     varargin{:});
 
-%%% ¡prop!
-FEATURE_IMPORTANCE_FOLDS (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
-%%%% ¡calculate!
-
-
-%%%% ¡gui!
-fi_list = nnficv.get('FI_LIST');
-m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
-pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
-    'TABLE_HEIGHT', s(40), ...
-    'ROWNAME', {}, ...
-    'COLUMNNAME', m_list, ...
-    varargin{:});
-
 %% ¡tests!
 
 %%% ¡excluded_props!

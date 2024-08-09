@@ -6,6 +6,47 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 	%  (NNClassifierMLP_EvaluatorPF_ROC) manages the functionalities to plot 
 	%  a panel of the receiver operating characteristic curves.
 	%
+	% The list of NNClassifierMLP_EvaluatorPF_ROC properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel of the ensemble-based comparison.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel ensemble-based comparison figure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the receiver operating characteristic figure.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>26</strong> <strong>NNE</strong> 	NNE (metadata, item) is the neural network evaluator.
+	%  <strong>27</strong> <strong>CLASSNAMES</strong> 	CLASSNAMES (metadata, stringlist) is the class names.
+	%  <strong>28</strong> <strong>X_VALUES</strong> 	X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.
+	%  <strong>29</strong> <strong>Y_VALUES</strong> 	Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.
+	%  <strong>30</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the the receiver operating characteristic values and initializes the receiver operating characteristic figure.
+	%  <strong>31</strong> <strong>H_ROC</strong> 	H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.
+	%  <strong>32</strong> <strong>ROC</strong> 	ROC (figure, logical) determines whether the ROC plots are shown.
+	%  <strong>33</strong> <strong>ROC_DICT</strong> 	ROC_DICT (figure, idict) contains the ROC plot for each class.
+	%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+	%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+	%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+	%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+	%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+	%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
+	%
 	% NNClassifierMLP_EvaluatorPF_ROC methods (constructor):
 	%  NNClassifierMLP_EvaluatorPF_ROC - constructor
 	%
@@ -95,90 +136,90 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 	% See also NNClassifierMLP_Evaluator.
 	
 	properties (Constant) % properties
-		H_AXES = PanelFig.getPropNumber() + 1;
+		H_AXES = 23; %CET: Computational Efficiency Trick
 		H_AXES_TAG = 'H_AXES';
-		H_AXES_CATEGORY = Category.EVANESCENT;
-		H_AXES_FORMAT = Format.HANDLE;
+		H_AXES_CATEGORY = 7;
+		H_AXES_FORMAT = 18;
 		
-		ST_AXIS = PanelFig.getPropNumber() + 2;
+		ST_AXIS = 24; %CET: Computational Efficiency Trick
 		ST_AXIS_TAG = 'ST_AXIS';
-		ST_AXIS_CATEGORY = Category.FIGURE;
-		ST_AXIS_FORMAT = Format.ITEM;
+		ST_AXIS_CATEGORY = 8;
+		ST_AXIS_FORMAT = 8;
 		
-		LISTENER_ST_AXIS = PanelFig.getPropNumber() + 3;
+		LISTENER_ST_AXIS = 25; %CET: Computational Efficiency Trick
 		LISTENER_ST_AXIS_TAG = 'LISTENER_ST_AXIS';
-		LISTENER_ST_AXIS_CATEGORY = Category.EVANESCENT;
-		LISTENER_ST_AXIS_FORMAT = Format.HANDLE;
+		LISTENER_ST_AXIS_CATEGORY = 7;
+		LISTENER_ST_AXIS_FORMAT = 18;
 		
-		NNE = PanelFig.getPropNumber() + 4;
+		NNE = 26; %CET: Computational Efficiency Trick
 		NNE_TAG = 'NNE';
-		NNE_CATEGORY = Category.METADATA;
-		NNE_FORMAT = Format.ITEM;
+		NNE_CATEGORY = 2;
+		NNE_FORMAT = 8;
 		
-		CLASSNAMES = PanelFig.getPropNumber() + 5;
+		CLASSNAMES = 27; %CET: Computational Efficiency Trick
 		CLASSNAMES_TAG = 'CLASSNAMES';
-		CLASSNAMES_CATEGORY = Category.METADATA;
-		CLASSNAMES_FORMAT = Format.STRINGLIST;
+		CLASSNAMES_CATEGORY = 2;
+		CLASSNAMES_FORMAT = 3;
 		
-		X_VALUES = PanelFig.getPropNumber() + 6;
+		X_VALUES = 28; %CET: Computational Efficiency Trick
 		X_VALUES_TAG = 'X_VALUES';
-		X_VALUES_CATEGORY = Category.METADATA;
-		X_VALUES_FORMAT = Format.MATRIX;
+		X_VALUES_CATEGORY = 2;
+		X_VALUES_FORMAT = 14;
 		
-		Y_VALUES = PanelFig.getPropNumber() + 7;
+		Y_VALUES = 29; %CET: Computational Efficiency Trick
 		Y_VALUES_TAG = 'Y_VALUES';
-		Y_VALUES_CATEGORY = Category.METADATA;
-		Y_VALUES_FORMAT = Format.MATRIX;
+		Y_VALUES_CATEGORY = 2;
+		Y_VALUES_FORMAT = 14;
 		
-		SETUP = PanelFig.getPropNumber() + 8;
+		SETUP = 30; %CET: Computational Efficiency Trick
 		SETUP_TAG = 'SETUP';
-		SETUP_CATEGORY = Category.QUERY;
-		SETUP_FORMAT = Format.EMPTY;
+		SETUP_CATEGORY = 6;
+		SETUP_FORMAT = 1;
 		
-		H_ROC = PanelFig.getPropNumber() + 9;
+		H_ROC = 31; %CET: Computational Efficiency Trick
 		H_ROC_TAG = 'H_ROC';
-		H_ROC_CATEGORY = Category.EVANESCENT;
-		H_ROC_FORMAT = Format.HANDLELIST;
+		H_ROC_CATEGORY = 7;
+		H_ROC_FORMAT = 19;
 		
-		ROC = PanelFig.getPropNumber() + 10;
+		ROC = 32; %CET: Computational Efficiency Trick
 		ROC_TAG = 'ROC';
-		ROC_CATEGORY = Category.FIGURE;
-		ROC_FORMAT = Format.LOGICAL;
+		ROC_CATEGORY = 8;
+		ROC_FORMAT = 4;
 		
-		ROC_DICT = PanelFig.getPropNumber() + 11;
+		ROC_DICT = 33; %CET: Computational Efficiency Trick
 		ROC_DICT_TAG = 'ROC_DICT';
-		ROC_DICT_CATEGORY = Category.FIGURE;
-		ROC_DICT_FORMAT = Format.IDICT;
+		ROC_DICT_CATEGORY = 8;
+		ROC_DICT_FORMAT = 10;
 		
-		H_TITLE = PanelFig.getPropNumber() + 12;
+		H_TITLE = 34; %CET: Computational Efficiency Trick
 		H_TITLE_TAG = 'H_TITLE';
-		H_TITLE_CATEGORY = Category.EVANESCENT;
-		H_TITLE_FORMAT = Format.HANDLE;
+		H_TITLE_CATEGORY = 7;
+		H_TITLE_FORMAT = 18;
 		
-		ST_TITLE = PanelFig.getPropNumber() + 13;
+		ST_TITLE = 35; %CET: Computational Efficiency Trick
 		ST_TITLE_TAG = 'ST_TITLE';
-		ST_TITLE_CATEGORY = Category.FIGURE;
-		ST_TITLE_FORMAT = Format.ITEM;
+		ST_TITLE_CATEGORY = 8;
+		ST_TITLE_FORMAT = 8;
 		
-		H_XLABEL = PanelFig.getPropNumber() + 14;
+		H_XLABEL = 36; %CET: Computational Efficiency Trick
 		H_XLABEL_TAG = 'H_XLABEL';
-		H_XLABEL_CATEGORY = Category.EVANESCENT;
-		H_XLABEL_FORMAT = Format.HANDLE;
+		H_XLABEL_CATEGORY = 7;
+		H_XLABEL_FORMAT = 18;
 		
-		ST_XLABEL = PanelFig.getPropNumber() + 15;
+		ST_XLABEL = 37; %CET: Computational Efficiency Trick
 		ST_XLABEL_TAG = 'ST_XLABEL';
-		ST_XLABEL_CATEGORY = Category.FIGURE;
-		ST_XLABEL_FORMAT = Format.ITEM;
+		ST_XLABEL_CATEGORY = 8;
+		ST_XLABEL_FORMAT = 8;
 		
-		H_YLABEL = PanelFig.getPropNumber() + 16;
+		H_YLABEL = 38; %CET: Computational Efficiency Trick
 		H_YLABEL_TAG = 'H_YLABEL';
-		H_YLABEL_CATEGORY = Category.EVANESCENT;
-		H_YLABEL_FORMAT = Format.HANDLE;
+		H_YLABEL_CATEGORY = 7;
+		H_YLABEL_FORMAT = 18;
 		
-		ST_YLABEL = PanelFig.getPropNumber() + 17;
+		ST_YLABEL = 39; %CET: Computational Efficiency Trick
 		ST_YLABEL_TAG = 'ST_YLABEL';
-		ST_YLABEL_CATEGORY = Category.FIGURE;
-		ST_YLABEL_FORMAT = Format.ITEM;
+		ST_YLABEL_CATEGORY = 8;
+		ST_YLABEL_FORMAT = 8;
 	end
 	methods % constructor
 		function pf = NNClassifierMLP_EvaluatorPF_ROC(varargin)
@@ -191,6 +232,46 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNClassifierMLP_EvaluatorPF_ROC properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the panel of the ensemble-based comparison.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel ensemble-based comparison figure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the receiver operating characteristic figure.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure graph is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>25</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>26</strong> <strong>NNE</strong> 	NNE (metadata, item) is the neural network evaluator.
+			%  <strong>27</strong> <strong>CLASSNAMES</strong> 	CLASSNAMES (metadata, stringlist) is the class names.
+			%  <strong>28</strong> <strong>X_VALUES</strong> 	X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.
+			%  <strong>29</strong> <strong>Y_VALUES</strong> 	Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.
+			%  <strong>30</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the the receiver operating characteristic values and initializes the receiver operating characteristic figure.
+			%  <strong>31</strong> <strong>H_ROC</strong> 	H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.
+			%  <strong>32</strong> <strong>ROC</strong> 	ROC (figure, logical) determines whether the ROC plots are shown.
+			%  <strong>33</strong> <strong>ROC_DICT</strong> 	ROC_DICT (figure, idict) contains the ROC plot for each class.
+			%  <strong>34</strong> <strong>H_TITLE</strong> 	H_TITLE (evanescent, handle) is the axis title.
+			%  <strong>35</strong> <strong>ST_TITLE</strong> 	ST_TITLE (figure, item) determines the title settings.
+			%  <strong>36</strong> <strong>H_XLABEL</strong> 	H_XLABEL (evanescent, handle) is the axis x-label.
+			%  <strong>37</strong> <strong>ST_XLABEL</strong> 	ST_XLABEL (figure, item) determines the x-label settings.
+			%  <strong>38</strong> <strong>H_YLABEL</strong> 	H_YLABEL (evanescent, handle) is the axis y-label.
+			%  <strong>39</strong> <strong>ST_YLABEL</strong> 	ST_YLABEL (figure, item) determines the y-label settings.
 			%
 			% See also Category, Format.
 			
@@ -228,7 +309,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNClassifierMLP_EvaluatorPF_ROC', [], [], true);
+			subclass_list = { 'NNClassifierMLP_EvaluatorPF_ROC' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel receiver operating characteristic figure.
@@ -249,84 +330,32 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelFig.getProps() ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_AXES ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS ...
-						NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS ...
-						NNClassifierMLP_EvaluatorPF_ROC.NNE ...
-						NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES ...
-						NNClassifierMLP_EvaluatorPF_ROC.X_VALUES ...
-						NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES ...
-						NNClassifierMLP_EvaluatorPF_ROC.SETUP ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_ROC ...
-						NNClassifierMLP_EvaluatorPF_ROC.ROC ...
-						NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_TITLE ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelFig.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelFig.getProps(Category.METADATA) ...
-						NNClassifierMLP_EvaluatorPF_ROC.NNE ...
-						NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES ...
-						NNClassifierMLP_EvaluatorPF_ROC.X_VALUES ...
-						NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelFig.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelFig.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelFig.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelFig.getProps(Category.QUERY) ...
-						NNClassifierMLP_EvaluatorPF_ROC.SETUP ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelFig.getProps(Category.EVANESCENT) ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_AXES ...
-						NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_ROC ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_TITLE ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL ...
-						NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelFig.getProps(Category.FIGURE) ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS ...
-						NNClassifierMLP_EvaluatorPF_ROC.ROC ...
-						NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL ...
-						NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelFig.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 26 27 28 29];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 30];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 25 31 34 36 38];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 32 33 35 37 39];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -347,7 +376,33 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNClassifierMLP_EvaluatorPF_ROC.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 39;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 6;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 10;
+				case 8 % Category.FIGURE
+					prop_number = 8;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel receiver operating characteristic figure/error.
@@ -375,14 +430,14 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNClassifierMLP_EvaluatorPF_ROC.getProps());
+			check = prop >= 1 && prop <= 39 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNClassifierMLP_EvaluatorPF_ROC.'] ...
 					)
 			end
@@ -413,15 +468,14 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%
 			% See also getProps, existsTag.
 			
-			nnclassifiermlp_evaluatorpf_roc_tag_list = cellfun(@(x) NNClassifierMLP_EvaluatorPF_ROC.getPropTag(x), num2cell(NNClassifierMLP_EvaluatorPF_ROC.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nnclassifiermlp_evaluatorpf_roc_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'CLASSNAMES'  'X_VALUES'  'Y_VALUES'  'SETUP'  'H_ROC'  'ROC'  'ROC_DICT'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNClassifierMLP_EvaluatorPF_ROC.'] ...
 					)
 			end
@@ -447,8 +501,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nnclassifiermlp_evaluatorpf_roc_tag_list = cellfun(@(x) NNClassifierMLP_EvaluatorPF_ROC.getPropTag(x), num2cell(NNClassifierMLP_EvaluatorPF_ROC.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nnclassifiermlp_evaluatorpf_roc_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'CLASSNAMES'  'X_VALUES'  'Y_VALUES'  'SETUP'  'H_ROC'  'ROC'  'ROC_DICT'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -476,46 +529,9 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-						tag = NNClassifierMLP_EvaluatorPF_ROC.H_AXES_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-						tag = NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.NNE
-						tag = NNClassifierMLP_EvaluatorPF_ROC.NNE_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-						tag = NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-						tag = NNClassifierMLP_EvaluatorPF_ROC.X_VALUES_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-						tag = NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-						tag = NNClassifierMLP_EvaluatorPF_ROC.SETUP_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-						tag = NNClassifierMLP_EvaluatorPF_ROC.H_ROC_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ROC
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ROC_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-						tag = NNClassifierMLP_EvaluatorPF_ROC.H_TITLE_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-						tag = NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-						tag = NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL_TAG;
-					case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
-						tag = NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL_TAG;
-					otherwise
-						tag = getPropTag@PanelFig(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nnclassifiermlp_evaluatorpf_roc_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'ST_AXIS'  'LISTENER_ST_AXIS'  'NNE'  'CLASSNAMES'  'X_VALUES'  'Y_VALUES'  'SETUP'  'H_ROC'  'ROC'  'ROC_DICT'  'H_TITLE'  'ST_TITLE'  'H_XLABEL'  'ST_XLABEL'  'H_YLABEL'  'ST_YLABEL' };
+				tag = nnclassifiermlp_evaluatorpf_roc_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -540,44 +556,9 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.H_AXES_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.NNE_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.X_VALUES_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.SETUP_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.H_ROC_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ROC_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.H_TITLE_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL_CATEGORY;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
-					prop_category = NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_evaluatorpf_roc_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  7  2  2  2  2  6  7  8  8  7  8  7  8  7  8 };
+			prop_category = nnclassifiermlp_evaluatorpf_roc_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -601,44 +582,9 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.H_AXES_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.NNE_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.X_VALUES_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.SETUP_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.H_ROC_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ROC_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.H_TITLE_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL_FORMAT;
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
-					prop_format = NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_evaluatorpf_roc_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  8  18  8  3  14  14  1  19  4  10  18  8  18  8  18  8 };
+			prop_format = nnclassifiermlp_evaluatorpf_roc_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -662,64 +608,9 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-					prop_description = 'H_AXES (evanescent, handle) is the handle for the axes.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
-					prop_description = 'ST_AXIS (figure, item) determines the axis settings.';
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-					prop_description = 'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.';
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE
-					prop_description = 'NNE (metadata, item) is the neural network evaluator.';
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-					prop_description = 'CLASSNAMES (metadata, stringlist) is the class names.';
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					prop_description = 'X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.';
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-					prop_description = 'Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.';
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-					prop_description = 'SETUP (query, empty) calculates the the receiver operating characteristic values and initializes the receiver operating characteristic figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-					prop_description = 'H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC
-					prop_description = 'ROC (figure, logical) determines whether the ROC plots are shown.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
-					prop_description = 'ROC_DICT (figure, idict) contains the ROC plot for each class.';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-					prop_description = 'H_TITLE (evanescent, handle) is the axis title.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
-					prop_description = 'ST_TITLE (figure, item) determines the title settings.';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-					prop_description = 'H_XLABEL (evanescent, handle) is the axis x-label.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
-					prop_description = 'ST_XLABEL (figure, item) determines the x-label settings.';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-					prop_description = 'H_YLABEL (evanescent, handle) is the axis y-label.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
-					prop_description = 'ST_YLABEL (figure, item) determines the y-label settings.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the panel of the ensemble-based comparison.';
-				case NNClassifierMLP_EvaluatorPF_ROC.NAME
-					prop_description = 'NAME (constant, string) is the name of the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.ID
-					prop_description = 'ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.DRAW
-					prop_description = 'DRAW (query, logical) draws the receiver operating characteristic figure.';
-				case NNClassifierMLP_EvaluatorPF_ROC.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel figure graph is deleted.';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TOOLS
-					prop_description = 'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.';
-				otherwise
-					prop_description = getPropDescription@PanelFig(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnclassifiermlp_evaluatorpf_roc_description_list = { 'ELCLASS (constant, string) is the class of the panel of the ensemble-based comparison.'  'NAME (constant, string) is the name of the panel ensemble-based comparison figure.'  'DESCRIPTION (constant, string) is the description of the panel ensemble-based comparison figure.'  'TEMPLATE (parameter, item) is the template of the panel ensemble-based comparison figure.'  'ID (data, string) is a few-letter code for the panel ensemble-based comparison figure.'  'LABEL (metadata, string) is an extended label of the panel ensemble-based comparison figure.'  'NOTES (metadata, string) are some specific notes about the panel ensemble-based comparison figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the receiver operating characteristic figure.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure graph is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'NNE (metadata, item) is the neural network evaluator.'  'CLASSNAMES (metadata, stringlist) is the class names.'  'X_VALUES (metadata, matrix) gets the x values for receiver operating characteristic curves.'  'Y_VALUES (metadata, matrix) gets the y values for receiver operating characteristic curves.'  'SETUP (query, empty) calculates the the receiver operating characteristic values and initializes the receiver operating characteristic figure.'  'H_ROC (evanescent, handlelist) is the set of handles for the ROC plots.'  'ROC (figure, logical) determines whether the ROC plots are shown.'  'ROC_DICT (figure, idict) contains the ROC plot for each class.'  'H_TITLE (evanescent, handle) is the axis title.'  'ST_TITLE (figure, item) determines the title settings.'  'H_XLABEL (evanescent, handle) is the axis x-label.'  'ST_XLABEL (figure, item) determines the x-label settings.'  'H_YLABEL (evanescent, handle) is the axis y-label.'  'ST_YLABEL (figure, item) determines the y-label settings.' };
+			prop_description = nnclassifiermlp_evaluatorpf_roc_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -743,42 +634,42 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
+			switch prop %CET: Computational Efficiency Trick
+				case 23 % NNClassifierMLP_EvaluatorPF_ROC.H_AXES
+					prop_settings = Format.getFormatSettings(18);
+				case 24 % NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
 					prop_settings = 'SettingsAxis';
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE
+				case 25 % NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
+					prop_settings = Format.getFormatSettings(18);
+				case 26 % NNClassifierMLP_EvaluatorPF_ROC.NNE
 					prop_settings = 'NNClassifierMLP_Evaluator';
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					prop_settings = Format.getFormatSettings(Format.MATRIX);
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-					prop_settings = Format.getFormatSettings(Format.MATRIX);
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
+				case 27 % NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
+					prop_settings = Format.getFormatSettings(3);
+				case 28 % NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
+					prop_settings = Format.getFormatSettings(14);
+				case 29 % NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
+					prop_settings = Format.getFormatSettings(14);
+				case 30 % NNClassifierMLP_EvaluatorPF_ROC.SETUP
+					prop_settings = Format.getFormatSettings(1);
+				case 31 % NNClassifierMLP_EvaluatorPF_ROC.H_ROC
+					prop_settings = Format.getFormatSettings(19);
+				case 32 % NNClassifierMLP_EvaluatorPF_ROC.ROC
+					prop_settings = Format.getFormatSettings(4);
+				case 33 % NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
 					prop_settings = 'SettingsLine';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
+				case 34 % NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
+					prop_settings = Format.getFormatSettings(18);
+				case 35 % NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
 					prop_settings = 'SettingsText';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
+				case 36 % NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
+					prop_settings = Format.getFormatSettings(18);
+				case 37 % NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
 					prop_settings = 'SettingsText';
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
+				case 38 % NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
+					prop_settings = Format.getFormatSettings(18);
+				case 39 % NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
 					prop_settings = 'SettingsText';
-				case NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
+				case 4 % NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
 					prop_settings = 'NNClassifierMLP_EvaluatorPF_ROC';
 				otherwise
 					prop_settings = getPropSettings@PanelFig(prop);
@@ -806,54 +697,54 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
-			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES
-					prop_default = Format.getFormatDefault(Format.HANDLE, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
+			switch prop %CET: Computational Efficiency Trick
+				case 23 % NNClassifierMLP_EvaluatorPF_ROC.H_AXES
+					prop_default = Format.getFormatDefault(18, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 24 % NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
 					prop_default = SettingsAxis('AXIS', true, 'GRID', false, 'EQUAL', false);
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
-					prop_default = Format.getFormatDefault(Format.HANDLE, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					prop_default = Format.getFormatDefault(Format.MATRIX, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
-					prop_default = Format.getFormatDefault(Format.MATRIX, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP
-					prop_default = Format.getFormatDefault(Format.EMPTY, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC
-					prop_default = Format.getFormatDefault(Format.HANDLELIST, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC
+				case 25 % NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
+					prop_default = Format.getFormatDefault(18, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 26 % NNClassifierMLP_EvaluatorPF_ROC.NNE
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 27 % NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
+					prop_default = Format.getFormatDefault(3, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 28 % NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
+					prop_default = Format.getFormatDefault(14, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 29 % NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
+					prop_default = Format.getFormatDefault(14, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 30 % NNClassifierMLP_EvaluatorPF_ROC.SETUP
+					prop_default = Format.getFormatDefault(1, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 31 % NNClassifierMLP_EvaluatorPF_ROC.H_ROC
+					prop_default = Format.getFormatDefault(19, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 32 % NNClassifierMLP_EvaluatorPF_ROC.ROC
 					prop_default = true;
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
-					prop_default = Format.getFormatDefault(Format.HANDLE, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle');
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
-					prop_default = Format.getFormatDefault(Format.HANDLE, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle');
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
-					prop_default = Format.getFormatDefault(Format.HANDLE, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
-					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', s(2), 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90);
-				case NNClassifierMLP_EvaluatorPF_ROC.ELCLASS
+				case 33 % NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
+					prop_default = Format.getFormatDefault(10, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 34 % NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
+					prop_default = Format.getFormatDefault(18, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 35 % NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
+				case 36 % NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
+					prop_default = Format.getFormatDefault(18, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 37 % NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle');
+				case 38 % NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
+					prop_default = Format.getFormatDefault(18, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 39 % NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
+					prop_default = SettingsText('VISIBLE', true, 'FONTSIZE', 24, 'HALIGN', 'center', 'VALIGN', 'middle', 'ROTATION', 90);
+				case 1 % NNClassifierMLP_EvaluatorPF_ROC.ELCLASS
 					prop_default = 'NNClassifierMLP_EvaluatorPF_ROC';
-				case NNClassifierMLP_EvaluatorPF_ROC.NAME
+				case 2 % NNClassifierMLP_EvaluatorPF_ROC.NAME
 					prop_default = 'ROC Panel for an Evaluator of MLP Classifier';
-				case NNClassifierMLP_EvaluatorPF_ROC.DESCRIPTION
+				case 3 % NNClassifierMLP_EvaluatorPF_ROC.DESCRIPTION
 					prop_default = 'The receiver operating characteristic panel for an evaluator of MLP classifier (NNClassifierMLP_EvaluatorPF_ROC) manages the functionalities to plot a panel of the receiver operating characteristic curves.';
-				case NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ID
+				case 4 % NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 5 % NNClassifierMLP_EvaluatorPF_ROC.ID
 					prop_default = 'NNClassifierMLP_EvaluatorPF_ROC ID';
-				case NNClassifierMLP_EvaluatorPF_ROC.LABEL
+				case 6 % NNClassifierMLP_EvaluatorPF_ROC.LABEL
 					prop_default = 'NNClassifierMLP_EvaluatorPF_ROC label';
-				case NNClassifierMLP_EvaluatorPF_ROC.NOTES
+				case 7 % NNClassifierMLP_EvaluatorPF_ROC.NOTES
 					prop_default = 'NNClassifierMLP_EvaluatorPF_ROC notes';
 				otherwise
 					prop_default = getPropDefault@PanelFig(prop);
@@ -900,15 +791,15 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNClassifierMLP_EvaluatorPF_ROC:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNClassifierMLP_EvaluatorPF_ROC:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_EvaluatorPF_ROC:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNClassifierMLP_EvaluatorPF_ROC:WrongInput
 			%  Element.CHECKPROP(NNClassifierMLP_EvaluatorPF_ROC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_EvaluatorPF_ROC.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_EvaluatorPF_ROC:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNClassifierMLP_EvaluatorPF_ROC:WrongInput
 			%  PF.CHECKPROP(NNClassifierMLP_EvaluatorPF_ROC, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNClassifierMLP_EvaluatorPF_ROC.
-			%   Error id: €BRAPH2.STR€:NNClassifierMLP_EvaluatorPF_ROC:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNClassifierMLP_EvaluatorPF_ROC:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('NNClassifierMLP_EvaluatorPF_ROC')
 			%  are less computationally efficient.
@@ -919,44 +810,44 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			prop = NNClassifierMLP_EvaluatorPF_ROC.getPropProp(pointer);
 			
 			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES % __NNClassifierMLP_EvaluatorPF_ROC.H_AXES__
-					check = Format.checkFormat(Format.HANDLE, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS % __NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS % __NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS__
-					check = Format.checkFormat(Format.HANDLE, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.NNE % __NNClassifierMLP_EvaluatorPF_ROC.NNE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES % __NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES__
-					check = Format.checkFormat(Format.STRINGLIST, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES % __NNClassifierMLP_EvaluatorPF_ROC.X_VALUES__
-					check = Format.checkFormat(Format.MATRIX, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES % __NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES__
-					check = Format.checkFormat(Format.MATRIX, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP % __NNClassifierMLP_EvaluatorPF_ROC.SETUP__
-					check = Format.checkFormat(Format.EMPTY, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC % __NNClassifierMLP_EvaluatorPF_ROC.H_ROC__
-					check = Format.checkFormat(Format.HANDLELIST, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC % __NNClassifierMLP_EvaluatorPF_ROC.ROC__
-					check = Format.checkFormat(Format.LOGICAL, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT % __NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT__
-					check = Format.checkFormat(Format.IDICT, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE % __NNClassifierMLP_EvaluatorPF_ROC.H_TITLE__
-					check = Format.checkFormat(Format.HANDLE, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE % __NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL % __NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL__
-					check = Format.checkFormat(Format.HANDLE, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL % __NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL % __NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL__
-					check = Format.checkFormat(Format.HANDLE, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL % __NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
-				case NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE % __NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 23 % NNClassifierMLP_EvaluatorPF_ROC.H_AXES
+					check = Format.checkFormat(18, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 24 % NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 25 % NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
+					check = Format.checkFormat(18, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 26 % NNClassifierMLP_EvaluatorPF_ROC.NNE
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 27 % NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
+					check = Format.checkFormat(3, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 28 % NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
+					check = Format.checkFormat(14, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 29 % NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
+					check = Format.checkFormat(14, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 30 % NNClassifierMLP_EvaluatorPF_ROC.SETUP
+					check = Format.checkFormat(1, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 31 % NNClassifierMLP_EvaluatorPF_ROC.H_ROC
+					check = Format.checkFormat(19, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 32 % NNClassifierMLP_EvaluatorPF_ROC.ROC
+					check = Format.checkFormat(4, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 33 % NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
+					check = Format.checkFormat(10, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 34 % NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
+					check = Format.checkFormat(18, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 35 % NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 36 % NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
+					check = Format.checkFormat(18, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 37 % NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 38 % NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
+					check = Format.checkFormat(18, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 39 % NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
+				case 4 % NNClassifierMLP_EvaluatorPF_ROC.TEMPLATE
+					check = Format.checkFormat(8, value, NNClassifierMLP_EvaluatorPF_ROC.getPropSettings(prop));
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						check = checkProp@PanelFig(prop, value);
 					end
 			end
@@ -965,8 +856,8 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput'], ...
+					['BRAPH2' ':NNClassifierMLP_EvaluatorPF_ROC:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNClassifierMLP_EvaluatorPF_ROC.getPropTag(prop) ' (' NNClassifierMLP_EvaluatorPF_ROC.getFormatTag(NNClassifierMLP_EvaluatorPF_ROC.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -986,7 +877,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS % __NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS__
+				case 24 % NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
 					if pf.get('DRAWN')
 					    toolbar = pf.get('H_TOOLBAR');
 					    if check_graphics(toolbar, 'uitoolbar')
@@ -995,7 +886,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					    end
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC % __NNClassifierMLP_EvaluatorPF_ROC.ROC__
+				case 32 % NNClassifierMLP_EvaluatorPF_ROC.ROC
 					if ~pf.get('ROC') % false
 					    h_roc = pf.get('H_ROC');
 					    for i = 1:1:length(H_ROC)
@@ -1014,7 +905,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					
 					pf.get('SETUP');
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT % __NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT__
+				case 33 % NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
 					if pf.get('ROC') && ~isa(pf.getr('NNE'), 'NoValue')
 					    x_values = pf.memorize('X_VALUES');
 					    y_values = pf.memorize('Y_VALUES');
@@ -1029,7 +920,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					                'Y', y_values(i, :), ...
 					                'I', i, ...
 					                'PANEL', pf, ...
-					                'PROP', NNClassifierMLP_EvaluatorPF_ROC.H_ROC, ...
+					                'PROP', 31, ...
 					                'LINESTYLE', '--', ...
 					                'VISIBLE', false ...
 					                );
@@ -1043,7 +934,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					end
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						postset@PanelFig(pf, prop);
 					end
 			end
@@ -1063,12 +954,12 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%  checkValue.
 			
 			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES % __NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES__
+				case 27 % NNClassifierMLP_EvaluatorPF_ROC.CLASSNAMES
 					if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
 					    pf.set('CLASSNAMES', cellstr(pf.memorize('NNE').get('NN').get('MODEL').Layers(end).Classes));
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.X_VALUES % __NNClassifierMLP_EvaluatorPF_ROC.X_VALUES__
+				case 28 % NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
 					if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
 					    class_names = pf.get('CLASSNAMES');
 					    predictions = cell2mat(pf.get('NNE').get('NN').get('PREDICT', pf.get('NNE').get('D')));
@@ -1081,7 +972,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					    pf.set('X_VALUES', values);
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES % __NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES__
+				case 29 % NNClassifierMLP_EvaluatorPF_ROC.Y_VALUES
 					if isa(pf.getr('Y_VALUES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
 					    class_names = pf.get('CLASSNAMES');
 					    predictions = cell2mat(pf.get('NNE').get('NN').get('PREDICT', pf.get('NNE').get('D')));
@@ -1095,7 +986,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					end
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						postprocessing@PanelFig(pf, prop);
 					end
 			end
@@ -1106,19 +997,19 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.H_AXES % __NNClassifierMLP_EvaluatorPF_ROC.H_AXES__
+				case 23 % NNClassifierMLP_EvaluatorPF_ROC.H_AXES
 					h_axes = uiaxes( ...
 					    'Parent', pf.memorize('H'), ...
 					    'Tag', 'H_AXES', ...
@@ -1131,10 +1022,10 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					hold(h_axes, 'on')
 					value = h_axes;
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS % __NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS__
+				case 25 % NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_AXIS
 					value = listener(pf.get('ST_AXIS'), 'PropSet', @cb_listener_st_axis);
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.SETUP % __NNClassifierMLP_EvaluatorPF_ROC.SETUP__
+				case 30 % NNClassifierMLP_EvaluatorPF_ROC.SETUP
 					pf.memorize('H_ROC');
 					
 					nne = pf.get('NNE');
@@ -1168,7 +1059,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					
 					value = [];
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.H_ROC % __NNClassifierMLP_EvaluatorPF_ROC.H_ROC__
+				case 31 % NNClassifierMLP_EvaluatorPF_ROC.H_ROC
 					classNames = pf.get('CLASSNAMES');
 					L = length(classNames);
 					H_ROC = cell(1, L);
@@ -1177,7 +1068,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					end
 					value = H_ROC;
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TITLE % __NNClassifierMLP_EvaluatorPF_ROC.H_TITLE__
+				case 34 % NNClassifierMLP_EvaluatorPF_ROC.H_TITLE
 					value = title(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_TITLE'), 'NoValue')
@@ -1192,7 +1083,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					        )
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL % __NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL__
+				case 36 % NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL
 					value = xlabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_XLABEL'), 'NoValue')
@@ -1207,7 +1098,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					        )
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL % __NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL__
+				case 38 % NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL
 					value = ylabel(pf.get('H_AXES'), '');
 					
 					if isa(pf.getr('ST_YLABEL'), 'NoValue')
@@ -1222,30 +1113,30 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					        )
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.DRAW % __NNClassifierMLP_EvaluatorPF_ROC.DRAW__
-					value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
+				case 11 % NNClassifierMLP_EvaluatorPF_ROC.DRAW
+					value = calculateValue@PanelFig(pf, 11, varargin{:}); % also warning
 					if value
 					    pf.memorize('H_AXES')
 					    
-					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.H_AXES).get('SETUP')
+					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');
 					    
 					    pf.memorize('H_ROC')
 					    
 					    pf.memorize('H_TITLE')
-					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.H_TITLE).get('SETUP')
+					    pf.memorize('ST_TITLE').set('PANEL', pf, 'PROP', 34).get('SETUP')
 					
 					    pf.memorize('H_XLABEL')
-					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.H_XLABEL).get('SETUP')
+					    pf.memorize('ST_XLABEL').set('PANEL', pf, 'PROP', 36).get('SETUP')
 					    
 					    pf.memorize('H_YLABEL')
-					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.H_YLABEL).get('SETUP')
+					    pf.memorize('ST_YLABEL').set('PANEL', pf, 'PROP', 38).get('SETUP')
 					
 					    pf.get('SETUP')
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.DELETE % __NNClassifierMLP_EvaluatorPF_ROC.DELETE__
-					value = calculateValue@PanelFig(pf, PanelFig.DELETE, varargin{:}); % also warning
+				case 18 % NNClassifierMLP_EvaluatorPF_ROC.DELETE
+					value = calculateValue@PanelFig(pf, 18, varargin{:}); % also warning
 					if value
 					    pf.set('H_AXES', Element.getNoValue())
 					
@@ -1260,10 +1151,10 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					    pf.set('H_YLABEL', Element.getNoValue())
 					end
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.H_TOOLS % __NNClassifierMLP_EvaluatorPF_ROC.H_TOOLS__
+				case 22 % NNClassifierMLP_EvaluatorPF_ROC.H_TOOLS
 					toolbar = pf.memorize('H_TOOLBAR');
 					if check_graphics(toolbar, 'uitoolbar')
-					    value = calculateValue@PanelFig(pf, PanelFig.H_TOOLS);
+					    value = calculateValue@PanelFig(pf, 22);
 					    
 					    tool_separator_1 = uipushtool(toolbar, 'Separator', 'on', 'Visible', 'off');
 					
@@ -1308,7 +1199,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					end
 					
 				otherwise
-					if prop <= PanelFig.getPropNumber()
+					if prop <= 22
 						value = calculateValue@PanelFig(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -1358,25 +1249,25 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS % __NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS__
-					pr = SettingsAxisPP('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS, varargin{:});
+				case 24 % NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS
+					pr = SettingsAxisPP('EL', pf, 'PROP', 24, varargin{:});
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT % __NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT__
+				case 33 % NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT
 					SETUP = pf.getPropProp('SETUP');
 					EL = PanelPropIDictTable.getPropProp('EL');
-					pr = PanelPropIDictTable('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT, ...
+					pr = PanelPropIDictTable('EL', pf, 'PROP', 33, ...
 					    'CB_TAB_EDIT', ['cb_table_edit_default(); pr.get(' num2str(EL) ').get(' num2str(SETUP) ')'], ...
-					    'COLS', [PanelPropIDictTable.SELECTOR SettingsLine.VISIBLE SettingsLine.LINESTYLE SettingsLine.LINECOLOR SettingsLine.LINEWIDTH SettingsLine.SYMBOL SettingsLine.SYMBOLSIZE SettingsLine.EDGECOLOR SettingsLine.FACECOLOR], ...
+					    'COLS', [-1 15 19 21 20 22 23 24 25], ...
 					    varargin{:});
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE % __NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE__
-					pr = SettingsTextPP('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE, varargin{:});
+				case 35 % NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE
+					pr = SettingsTextPP('EL', pf, 'PROP', 35, varargin{:});
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL % __NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL__
-					pr = SettingsTextPP('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL, varargin{:});
+				case 37 % NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL
+					pr = SettingsTextPP('EL', pf, 'PROP', 37, varargin{:});
 					
-				case NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL % __NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL__
-					pr = SettingsTextPP('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL, varargin{:});
+				case 39 % NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL
+					pr = SettingsTextPP('EL', pf, 'PROP', 39, varargin{:});
 					
 				otherwise
 					pr = getPanelProp@PanelFig(pf, prop, varargin{:});

@@ -5,6 +5,49 @@ classdef GraphPP_MDict < PanelProp
 	% A Measure Dictionary Plot (GraphPP_MDict) plots the panel of the M_DICT property of Graph.
 	% It is intended to be used only with the property M_DICT of Graph.
 	%
+	% The list of GraphPP_MDict properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the measure dictionary plot (GraphPP_MDict).
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the measure dictionary plot.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the measure dictionary plot.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the measure dictionary plot.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the measure dictionary plot.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the measure dictionary plot.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the measure dictionary plot.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%  <strong>40</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+	%  <strong>41</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
+	%
 	% GraphPP_MDict methods (constructor):
 	%  GraphPP_MDict - constructor
 	%
@@ -94,35 +137,35 @@ classdef GraphPP_MDict < PanelProp
 	% See also uitable, Graph.
 	
 	properties (Constant) % properties
-		TABLE_HEIGHT = PanelProp.getPropNumber() + 1;
+		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
-		TABLE_HEIGHT_CATEGORY = Category.GUI;
-		TABLE_HEIGHT_FORMAT = Format.SIZE;
+		TABLE_HEIGHT_CATEGORY = 9;
+		TABLE_HEIGHT_FORMAT = 22;
 		
-		SELECTED = PanelProp.getPropNumber() + 2;
+		SELECTED = 37; %CET: Computational Efficiency Trick
 		SELECTED_TAG = 'SELECTED';
-		SELECTED_CATEGORY = Category.GUI;
-		SELECTED_FORMAT = Format.CVECTOR;
+		SELECTED_CATEGORY = 9;
+		SELECTED_FORMAT = 13;
 		
-		TABLE = PanelProp.getPropNumber() + 3;
+		TABLE = 38; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
-		TABLE_CATEGORY = Category.EVANESCENT;
-		TABLE_FORMAT = Format.HANDLE;
+		TABLE_CATEGORY = 7;
+		TABLE_FORMAT = 18;
 		
-		CONTEXTMENU = PanelProp.getPropNumber() + 4;
+		CONTEXTMENU = 39; %CET: Computational Efficiency Trick
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
-		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
-		CONTEXTMENU_FORMAT = Format.HANDLE;
+		CONTEXTMENU_CATEGORY = 7;
+		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_F_DICT = PanelProp.getPropNumber() + 5;
+		GUI_F_DICT = 40; %CET: Computational Efficiency Trick
 		GUI_F_DICT_TAG = 'GUI_F_DICT';
-		GUI_F_DICT_CATEGORY = Category.GUI;
-		GUI_F_DICT_FORMAT = Format.IDICT;
+		GUI_F_DICT_CATEGORY = 9;
+		GUI_F_DICT_FORMAT = 10;
 		
-		GUI_M_DICT = PanelProp.getPropNumber() + 6;
+		GUI_M_DICT = 41; %CET: Computational Efficiency Trick
 		GUI_M_DICT_TAG = 'GUI_M_DICT';
-		GUI_M_DICT_CATEGORY = Category.GUI;
-		GUI_M_DICT_FORMAT = Format.IDICT;
+		GUI_M_DICT_CATEGORY = 9;
+		GUI_M_DICT_FORMAT = 10;
 	end
 	methods % constructor
 		function pr = GraphPP_MDict(varargin)
@@ -135,6 +178,48 @@ classdef GraphPP_MDict < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of GraphPP_MDict properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the measure dictionary plot (GraphPP_MDict).
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the measure dictionary plot.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the measure dictionary plot.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the measure dictionary plot.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the measure dictionary plot.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the measure dictionary plot.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the measure dictionary plot.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+			%  <strong>40</strong> <strong>GUI_F_DICT</strong> 	GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.
+			%  <strong>41</strong> <strong>GUI_M_DICT</strong> 	GUI_M_DICT (gui, idict) contains the GUIs for the measures.
 			%
 			% See also Category, Format.
 			
@@ -172,7 +257,7 @@ classdef GraphPP_MDict < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('GraphPP_MDict', [], [], true);
+			subclass_list = { 'GraphPP_MDict' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of measure dictionary plot.
@@ -193,62 +278,32 @@ classdef GraphPP_MDict < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelProp.getProps() ...
-						GraphPP_MDict.TABLE_HEIGHT ...
-						GraphPP_MDict.SELECTED ...
-						GraphPP_MDict.TABLE ...
-						GraphPP_MDict.CONTEXTMENU ...
-						GraphPP_MDict.GUI_F_DICT ...
-						GraphPP_MDict.GUI_M_DICT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelProp.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelProp.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelProp.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelProp.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelProp.getProps(Category.EVANESCENT) ...
-						GraphPP_MDict.TABLE ...
-						GraphPP_MDict.CONTEXTMENU ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelProp.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelProp.getProps(Category.GUI) ...
-						GraphPP_MDict.TABLE_HEIGHT ...
-						GraphPP_MDict.SELECTED ...
-						GraphPP_MDict.GUI_F_DICT ...
-						GraphPP_MDict.GUI_M_DICT ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 38 39];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26 36 37 40 41];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -269,7 +324,33 @@ classdef GraphPP_MDict < PanelProp
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(GraphPP_MDict.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 41;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 12;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 8;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in measure dictionary plot/error.
@@ -297,14 +378,14 @@ classdef GraphPP_MDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == GraphPP_MDict.getProps());
+			check = prop >= 1 && prop <= 41 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput'], ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for GraphPP_MDict.'] ...
 					)
 			end
@@ -335,15 +416,14 @@ classdef GraphPP_MDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			graphpp_mdict_tag_list = cellfun(@(x) GraphPP_MDict.getPropTag(x), num2cell(GraphPP_MDict.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, graphpp_mdict_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_M_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput'], ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for GraphPP_MDict.'] ...
 					)
 			end
@@ -369,8 +449,7 @@ classdef GraphPP_MDict < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				graphpp_mdict_tag_list = cellfun(@(x) GraphPP_MDict.getPropTag(x), num2cell(GraphPP_MDict.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, graphpp_mdict_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_M_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -398,24 +477,9 @@ classdef GraphPP_MDict < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case GraphPP_MDict.TABLE_HEIGHT
-						tag = GraphPP_MDict.TABLE_HEIGHT_TAG;
-					case GraphPP_MDict.SELECTED
-						tag = GraphPP_MDict.SELECTED_TAG;
-					case GraphPP_MDict.TABLE
-						tag = GraphPP_MDict.TABLE_TAG;
-					case GraphPP_MDict.CONTEXTMENU
-						tag = GraphPP_MDict.CONTEXTMENU_TAG;
-					case GraphPP_MDict.GUI_F_DICT
-						tag = GraphPP_MDict.GUI_F_DICT_TAG;
-					case GraphPP_MDict.GUI_M_DICT
-						tag = GraphPP_MDict.GUI_M_DICT_TAG;
-					otherwise
-						tag = getPropTag@PanelProp(prop);
-				end
+				%CET: Computational Efficiency Trick
+				graphpp_mdict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_F_DICT'  'GUI_M_DICT' };
+				tag = graphpp_mdict_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -440,22 +504,9 @@ classdef GraphPP_MDict < PanelProp
 			
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
-			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT
-					prop_category = GraphPP_MDict.TABLE_HEIGHT_CATEGORY;
-				case GraphPP_MDict.SELECTED
-					prop_category = GraphPP_MDict.SELECTED_CATEGORY;
-				case GraphPP_MDict.TABLE
-					prop_category = GraphPP_MDict.TABLE_CATEGORY;
-				case GraphPP_MDict.CONTEXTMENU
-					prop_category = GraphPP_MDict.CONTEXTMENU_CATEGORY;
-				case GraphPP_MDict.GUI_F_DICT
-					prop_category = GraphPP_MDict.GUI_F_DICT_CATEGORY;
-				case GraphPP_MDict.GUI_M_DICT
-					prop_category = GraphPP_MDict.GUI_M_DICT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphpp_mdict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9  9 };
+			prop_category = graphpp_mdict_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -479,22 +530,9 @@ classdef GraphPP_MDict < PanelProp
 			
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
-			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT
-					prop_format = GraphPP_MDict.TABLE_HEIGHT_FORMAT;
-				case GraphPP_MDict.SELECTED
-					prop_format = GraphPP_MDict.SELECTED_FORMAT;
-				case GraphPP_MDict.TABLE
-					prop_format = GraphPP_MDict.TABLE_FORMAT;
-				case GraphPP_MDict.CONTEXTMENU
-					prop_format = GraphPP_MDict.CONTEXTMENU_FORMAT;
-				case GraphPP_MDict.GUI_F_DICT
-					prop_format = GraphPP_MDict.GUI_F_DICT_FORMAT;
-				case GraphPP_MDict.GUI_M_DICT
-					prop_format = GraphPP_MDict.GUI_M_DICT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphpp_mdict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  10  10 };
+			prop_format = graphpp_mdict_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -518,54 +556,9 @@ classdef GraphPP_MDict < PanelProp
 			
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
-			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT
-					prop_description = 'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.';
-				case GraphPP_MDict.SELECTED
-					prop_description = 'SELECTED (gui, cvector) is the list of selected items.';
-				case GraphPP_MDict.TABLE
-					prop_description = 'TABLE (evanescent, handle) is the table.';
-				case GraphPP_MDict.CONTEXTMENU
-					prop_description = 'CONTEXTMENU (evanescent, handle) is the context menu.';
-				case GraphPP_MDict.GUI_F_DICT
-					prop_description = 'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.';
-				case GraphPP_MDict.GUI_M_DICT
-					prop_description = 'GUI_M_DICT (gui, idict) contains the GUIs for the measures.';
-				case GraphPP_MDict.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the measure dictionary plot (GraphPP_MDict).';
-				case GraphPP_MDict.NAME
-					prop_description = 'NAME (constant, string) is the name of the measure dictionary plot.';
-				case GraphPP_MDict.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the measure dictionary plot.';
-				case GraphPP_MDict.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the measure dictionary plot.';
-				case GraphPP_MDict.ID
-					prop_description = 'ID (data, string) is a few-letter code for the measure dictionary plot.';
-				case GraphPP_MDict.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the measure dictionary plot.';
-				case GraphPP_MDict.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the measure dictionary plot.';
-				case GraphPP_MDict.EL
-					prop_description = 'EL (data, item) is the element.';
-				case GraphPP_MDict.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case GraphPP_MDict.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case GraphPP_MDict.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
-				case GraphPP_MDict.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case GraphPP_MDict.SHOW
-					prop_description = 'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.';
-				case GraphPP_MDict.HIDE
-					prop_description = 'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.';
-				case GraphPP_MDict.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				case GraphPP_MDict.CLOSE
-					prop_description = 'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.';
-				otherwise
-					prop_description = getPropDescription@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			graphpp_mdict_description_list = { 'ELCLASS (constant, string) is the class of the measure dictionary plot (GraphPP_MDict).'  'NAME (constant, string) is the name of the measure dictionary plot.'  'DESCRIPTION (constant, string) is the description of the measure dictionary plot.'  'TEMPLATE (parameter, item) is the template of the measure dictionary plot.'  'ID (data, string) is a few-letter code for the measure dictionary plot.'  'LABEL (metadata, string) is an extended label of the measure dictionary plot.'  'NOTES (metadata, string) are some specific notes about the measure dictionary plot.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_F_DICT (gui, idict) contains the GUIs for the measure figures.'  'GUI_M_DICT (gui, idict) contains the GUIs for the measures.' };
+			prop_description = graphpp_mdict_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -589,20 +582,20 @@ classdef GraphPP_MDict < PanelProp
 			
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
-			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case GraphPP_MDict.SELECTED
-					prop_settings = Format.getFormatSettings(Format.CVECTOR);
-				case GraphPP_MDict.TABLE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphPP_MDict.CONTEXTMENU
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case GraphPP_MDict.GUI_F_DICT
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % GraphPP_MDict.TABLE_HEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 37 % GraphPP_MDict.SELECTED
+					prop_settings = Format.getFormatSettings(13);
+				case 38 % GraphPP_MDict.TABLE
+					prop_settings = Format.getFormatSettings(18);
+				case 39 % GraphPP_MDict.CONTEXTMENU
+					prop_settings = Format.getFormatSettings(18);
+				case 40 % GraphPP_MDict.GUI_F_DICT
 					prop_settings = 'GUIFig';
-				case GraphPP_MDict.GUI_M_DICT
+				case 41 % GraphPP_MDict.GUI_M_DICT
 					prop_settings = 'GUIElement';
-				case GraphPP_MDict.TEMPLATE
+				case 4 % GraphPP_MDict.TEMPLATE
 					prop_settings = 'GraphPP_MDict';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -630,37 +623,37 @@ classdef GraphPP_MDict < PanelProp
 			
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
-			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT
-					prop_default = s(30);
-				case GraphPP_MDict.SELECTED
-					prop_default = Format.getFormatDefault(Format.CVECTOR, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.TABLE
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.CONTEXTMENU
-					prop_default = Format.getFormatDefault(Format.HANDLE, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.GUI_F_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.GUI_M_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % GraphPP_MDict.TABLE_HEIGHT
+					prop_default = 360;
+				case 37 % GraphPP_MDict.SELECTED
+					prop_default = Format.getFormatDefault(13, GraphPP_MDict.getPropSettings(prop));
+				case 38 % GraphPP_MDict.TABLE
+					prop_default = Format.getFormatDefault(18, GraphPP_MDict.getPropSettings(prop));
+				case 39 % GraphPP_MDict.CONTEXTMENU
+					prop_default = Format.getFormatDefault(18, GraphPP_MDict.getPropSettings(prop));
+				case 40 % GraphPP_MDict.GUI_F_DICT
+					prop_default = Format.getFormatDefault(10, GraphPP_MDict.getPropSettings(prop));
+				case 41 % GraphPP_MDict.GUI_M_DICT
+					prop_default = Format.getFormatDefault(10, GraphPP_MDict.getPropSettings(prop));
+				case 1 % GraphPP_MDict.ELCLASS
 					prop_default = 'GraphPP_MDict';
-				case GraphPP_MDict.NAME
+				case 2 % GraphPP_MDict.NAME
 					prop_default = 'Measure Dictionary Plot';
-				case GraphPP_MDict.DESCRIPTION
+				case 3 % GraphPP_MDict.DESCRIPTION
 					prop_default = 'A Measure Dictionary Plot (GraphPP_MDict) plots the panel of the M_DICT property of Graph. It is intended to be used only with the property M_DICT of Graph.';
-				case GraphPP_MDict.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.ID
+				case 4 % GraphPP_MDict.TEMPLATE
+					prop_default = Format.getFormatDefault(8, GraphPP_MDict.getPropSettings(prop));
+				case 5 % GraphPP_MDict.ID
 					prop_default = 'GraphPP_MDict';
-				case GraphPP_MDict.LABEL
+				case 6 % GraphPP_MDict.LABEL
 					prop_default = 'GraphPP_MDict label';
-				case GraphPP_MDict.NOTES
+				case 7 % GraphPP_MDict.NOTES
 					prop_default = 'GraphPP_MDict';
-				case GraphPP_MDict.EL
+				case 23 % GraphPP_MDict.EL
 					prop_default = Graph();
-				case GraphPP_MDict.PROP
-					prop_default = Graph.M_DICT;
+				case 24 % GraphPP_MDict.PROP
+					prop_default = 31;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -700,8 +693,8 @@ classdef GraphPP_MDict < PanelProp
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
+			% Conditioning is only used for props of 2,
+			%  3, 4, 8 and 9.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -709,13 +702,13 @@ classdef GraphPP_MDict < PanelProp
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
 			switch prop
-				case GraphPP_MDict.SELECTED % __GraphPP_MDict.SELECTED__
+				case 37 % GraphPP_MDict.SELECTED
 					if isrow(value)
 					    value = value';
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = conditioning@PanelProp(pointer, value);
 					end
 			end
@@ -736,15 +729,15 @@ classdef GraphPP_MDict < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:GraphPP_MDict:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:GraphPP_MDict:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:GraphPP_MDict:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:GraphPP_MDict:WrongInput
 			%  Element.CHECKPROP(GraphPP_MDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GraphPP_MDict.
-			%   Error id: €BRAPH2.STR€:GraphPP_MDict:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:GraphPP_MDict:WrongInput
 			%  PR.CHECKPROP(GraphPP_MDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of GraphPP_MDict.
-			%   Error id: €BRAPH2.STR€:GraphPP_MDict:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:GraphPP_MDict:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('GraphPP_MDict')
 			%  are less computationally efficient.
@@ -755,22 +748,22 @@ classdef GraphPP_MDict < PanelProp
 			prop = GraphPP_MDict.getPropProp(pointer);
 			
 			switch prop
-				case GraphPP_MDict.TABLE_HEIGHT % __GraphPP_MDict.TABLE_HEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.SELECTED % __GraphPP_MDict.SELECTED__
-					check = Format.checkFormat(Format.CVECTOR, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.TABLE % __GraphPP_MDict.TABLE__
-					check = Format.checkFormat(Format.HANDLE, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.CONTEXTMENU % __GraphPP_MDict.CONTEXTMENU__
-					check = Format.checkFormat(Format.HANDLE, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.GUI_F_DICT % __GraphPP_MDict.GUI_F_DICT__
-					check = Format.checkFormat(Format.IDICT, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.GUI_M_DICT % __GraphPP_MDict.GUI_M_DICT__
-					check = Format.checkFormat(Format.IDICT, value, GraphPP_MDict.getPropSettings(prop));
-				case GraphPP_MDict.TEMPLATE % __GraphPP_MDict.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, GraphPP_MDict.getPropSettings(prop));
+				case 36 % GraphPP_MDict.TABLE_HEIGHT
+					check = Format.checkFormat(22, value, GraphPP_MDict.getPropSettings(prop));
+				case 37 % GraphPP_MDict.SELECTED
+					check = Format.checkFormat(13, value, GraphPP_MDict.getPropSettings(prop));
+				case 38 % GraphPP_MDict.TABLE
+					check = Format.checkFormat(18, value, GraphPP_MDict.getPropSettings(prop));
+				case 39 % GraphPP_MDict.CONTEXTMENU
+					check = Format.checkFormat(18, value, GraphPP_MDict.getPropSettings(prop));
+				case 40 % GraphPP_MDict.GUI_F_DICT
+					check = Format.checkFormat(10, value, GraphPP_MDict.getPropSettings(prop));
+				case 41 % GraphPP_MDict.GUI_M_DICT
+					check = Format.checkFormat(10, value, GraphPP_MDict.getPropSettings(prop));
+				case 4 % GraphPP_MDict.TEMPLATE
+					check = Format.checkFormat(8, value, GraphPP_MDict.getPropSettings(prop));
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -779,8 +772,8 @@ classdef GraphPP_MDict < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':GraphPP_MDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput'], ...
+					['BRAPH2' ':GraphPP_MDict:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' GraphPP_MDict.getPropTag(prop) ' (' GraphPP_MDict.getFormatTag(GraphPP_MDict.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -791,23 +784,23 @@ classdef GraphPP_MDict < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case GraphPP_MDict.TABLE % __GraphPP_MDict.TABLE__
+				case 38 % GraphPP_MDict.TABLE
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'ColumnSortable', true, ...
 					    'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
 					    'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
@@ -817,7 +810,7 @@ classdef GraphPP_MDict < PanelProp
 					    );
 					value = table;
 					
-				case GraphPP_MDict.CONTEXTMENU % __GraphPP_MDict.CONTEXTMENU__
+				case 39 % GraphPP_MDict.CONTEXTMENU
 					contextmenu = uicontextmenu( ...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -878,15 +871,15 @@ classdef GraphPP_MDict < PanelProp
 					
 					value = contextmenu;
 					
-				case GraphPP_MDict.X_DRAW % __GraphPP_MDict.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % GraphPP_MDict.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case GraphPP_MDict.UPDATE % __GraphPP_MDict.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % GraphPP_MDict.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 						el = pr.get('EL');
 						prop = pr.get('PROP');
@@ -902,16 +895,16 @@ classdef GraphPP_MDict < PanelProp
 					    end
 					end
 					
-				case GraphPP_MDict.REDRAW % __GraphPP_MDict.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % GraphPP_MDict.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('TABLE'), 'Position', [s(.3) s(.3) w_p-s(.6) max(1, pr.get('HEIGHT')-s(2.2))])
+					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
 					end
 					
-				case GraphPP_MDict.SHOW % __GraphPP_MDict.SHOW__
-					value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
+				case 16 % GraphPP_MDict.SHOW
+					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value
 					    % figures for measure figures
 					    gui_f_dict = pr.get('GUI_F_DICT');
@@ -932,8 +925,8 @@ classdef GraphPP_MDict < PanelProp
 					    end
 					end
 					
-				case GraphPP_MDict.HIDE % __GraphPP_MDict.HIDE__
-					value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
+				case 17 % GraphPP_MDict.HIDE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    % figures for measure figures
 					    gui_f_dict = pr.get('GUI_F_DICT');
@@ -954,15 +947,15 @@ classdef GraphPP_MDict < PanelProp
 					    end
 					end
 					
-				case GraphPP_MDict.DELETE % __GraphPP_MDict.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % GraphPP_MDict.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case GraphPP_MDict.CLOSE % __GraphPP_MDict.CLOSE__
-					value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
+				case 19 % GraphPP_MDict.CLOSE
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    % figures for measure figures
 					    gui_f_dict = pr.get('GUI_F_DICT');
@@ -984,7 +977,7 @@ classdef GraphPP_MDict < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1194,19 +1187,19 @@ classdef GraphPP_MDict < PanelProp
 			
 			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
 			
-			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.NODAL
+			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
 			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.GLOBAL
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
 			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.BINODAL
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
 			            data{mi, 3} = 'BINODAL';
 			        end
 			
-			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.SUPERGLOBAL
+			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
 			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.UNILAYER
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
 			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.BILAYER
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
 			            data{mi, 4} = 'BILAYER';
 			        end
 			        

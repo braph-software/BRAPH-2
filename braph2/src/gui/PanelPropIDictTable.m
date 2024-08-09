@@ -7,7 +7,7 @@ classdef PanelPropIDictTable < PanelProp
 	% 
 	% It can be personalized with the following props:
 	%   COLS - Numerical array with the columns to be visualized. It can include 
-	%          __PanelPropIDictTable.SELECTOR__ (PanelPropIDictTable.SELECTOR) and/or prop numbers of the item class.
+	%          PanelPropIDictTable.SELECTOR (-1) and/or prop numbers of the item class.
 	%   ROWNAME - String list with the row names as per uitable format.
 	%          It can be a string list or 'numbered' or {} (to reset it).
 	%   COLUMNNAME - String list with the column names as per uitable format.
@@ -23,6 +23,58 @@ classdef PanelPropIDictTable < PanelProp
 	%           el, prop, dict, it_class, pr, i, col, newdata
 	%          and use the standard callback function:
 	%           cb_table_edit_default()
+	%
+	% The list of PanelPropIDictTable properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the idict property panel with table.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the idict property panel with table.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the idict property panel with table.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the idict property panel with table.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the idict property panel with table.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the idict property panel with table.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the idict property panel with table.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+	%  <strong>38</strong> <strong>COLS</strong> 	COLS (gui, rvector) is the ordered list of columns.
+	%  <strong>39</strong> <strong>ROWNAME</strong> 	ROWNAME (gui, stringlist) determines the table row names.
+	%  <strong>40</strong> <strong>COLUMNNAME</strong> 	COLUMNNAME (gui, stringlist) determines the table column names.
+	%  <strong>41</strong> <strong>COLUMNWIDTH</strong> 	COLUMNWIDTH (gui, stringlist) determines the column widths.
+	%  <strong>42</strong> <strong>COLUMNEDITABLE</strong> 	COLUMNEDITABLE (gui, rvector) determines whether the columns are editable.
+	%  <strong>43</strong> <strong>COLUMNFORMAT</strong> 	COLUMNFORMAT (gui, stringlist) determines the columns formats.
+	%  <strong>44</strong> <strong>CB_TAB_EDIT</strong> 	CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).
+	%  <strong>45</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+	%  <strong>46</strong> <strong>MENU_OPEN_ITEMS</strong> 	MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to open the items.
+	%  <strong>47</strong> <strong>APPLY_TO_SELECTION</strong> 	APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.
+	%  <strong>48</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+	%  <strong>49</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%  <strong>50</strong> <strong>GUI_ITS_DICT</strong> 	GUI_ITS_DICT (gui, idict) contains the GUIs for the items.
 	%
 	% PanelPropIDictTable methods (constructor):
 	%  PanelPropIDictTable - constructor
@@ -116,80 +168,80 @@ classdef PanelPropIDictTable < PanelProp
 		SELECTOR = -1 % code for the selector column.
 	end
 	properties (Constant) % properties
-		TABLE_HEIGHT = PanelProp.getPropNumber() + 1;
+		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
-		TABLE_HEIGHT_CATEGORY = Category.GUI;
-		TABLE_HEIGHT_FORMAT = Format.SIZE;
+		TABLE_HEIGHT_CATEGORY = 9;
+		TABLE_HEIGHT_FORMAT = 22;
 		
-		SELECTED = PanelProp.getPropNumber() + 2;
+		SELECTED = 37; %CET: Computational Efficiency Trick
 		SELECTED_TAG = 'SELECTED';
-		SELECTED_CATEGORY = Category.GUI;
-		SELECTED_FORMAT = Format.CVECTOR;
+		SELECTED_CATEGORY = 9;
+		SELECTED_FORMAT = 13;
 		
-		COLS = PanelProp.getPropNumber() + 3;
+		COLS = 38; %CET: Computational Efficiency Trick
 		COLS_TAG = 'COLS';
-		COLS_CATEGORY = Category.GUI;
-		COLS_FORMAT = Format.RVECTOR;
+		COLS_CATEGORY = 9;
+		COLS_FORMAT = 12;
 		
-		ROWNAME = PanelProp.getPropNumber() + 4;
+		ROWNAME = 39; %CET: Computational Efficiency Trick
 		ROWNAME_TAG = 'ROWNAME';
-		ROWNAME_CATEGORY = Category.GUI;
-		ROWNAME_FORMAT = Format.STRINGLIST;
+		ROWNAME_CATEGORY = 9;
+		ROWNAME_FORMAT = 3;
 		
-		COLUMNNAME = PanelProp.getPropNumber() + 5;
+		COLUMNNAME = 40; %CET: Computational Efficiency Trick
 		COLUMNNAME_TAG = 'COLUMNNAME';
-		COLUMNNAME_CATEGORY = Category.GUI;
-		COLUMNNAME_FORMAT = Format.STRINGLIST;
+		COLUMNNAME_CATEGORY = 9;
+		COLUMNNAME_FORMAT = 3;
 		
-		COLUMNWIDTH = PanelProp.getPropNumber() + 6;
+		COLUMNWIDTH = 41; %CET: Computational Efficiency Trick
 		COLUMNWIDTH_TAG = 'COLUMNWIDTH';
-		COLUMNWIDTH_CATEGORY = Category.GUI;
-		COLUMNWIDTH_FORMAT = Format.STRINGLIST;
+		COLUMNWIDTH_CATEGORY = 9;
+		COLUMNWIDTH_FORMAT = 3;
 		
-		COLUMNEDITABLE = PanelProp.getPropNumber() + 7;
+		COLUMNEDITABLE = 42; %CET: Computational Efficiency Trick
 		COLUMNEDITABLE_TAG = 'COLUMNEDITABLE';
-		COLUMNEDITABLE_CATEGORY = Category.GUI;
-		COLUMNEDITABLE_FORMAT = Format.RVECTOR;
+		COLUMNEDITABLE_CATEGORY = 9;
+		COLUMNEDITABLE_FORMAT = 12;
 		
-		COLUMNFORMAT = PanelProp.getPropNumber() + 8;
+		COLUMNFORMAT = 43; %CET: Computational Efficiency Trick
 		COLUMNFORMAT_TAG = 'COLUMNFORMAT';
-		COLUMNFORMAT_CATEGORY = Category.GUI;
-		COLUMNFORMAT_FORMAT = Format.STRINGLIST;
+		COLUMNFORMAT_CATEGORY = 9;
+		COLUMNFORMAT_FORMAT = 3;
 		
-		CB_TAB_EDIT = PanelProp.getPropNumber() + 9;
+		CB_TAB_EDIT = 44; %CET: Computational Efficiency Trick
 		CB_TAB_EDIT_TAG = 'CB_TAB_EDIT';
-		CB_TAB_EDIT_CATEGORY = Category.GUI;
-		CB_TAB_EDIT_FORMAT = Format.STRING;
+		CB_TAB_EDIT_CATEGORY = 9;
+		CB_TAB_EDIT_FORMAT = 2;
 		
-		TABLE = PanelProp.getPropNumber() + 10;
+		TABLE = 45; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
-		TABLE_CATEGORY = Category.EVANESCENT;
-		TABLE_FORMAT = Format.HANDLE;
+		TABLE_CATEGORY = 7;
+		TABLE_FORMAT = 18;
 		
-		MENU_OPEN_ITEMS = PanelProp.getPropNumber() + 11;
+		MENU_OPEN_ITEMS = 46; %CET: Computational Efficiency Trick
 		MENU_OPEN_ITEMS_TAG = 'MENU_OPEN_ITEMS';
-		MENU_OPEN_ITEMS_CATEGORY = Category.GUI;
-		MENU_OPEN_ITEMS_FORMAT = Format.LOGICAL;
+		MENU_OPEN_ITEMS_CATEGORY = 9;
+		MENU_OPEN_ITEMS_FORMAT = 4;
 		
-		APPLY_TO_SELECTION = PanelProp.getPropNumber() + 12;
+		APPLY_TO_SELECTION = 47; %CET: Computational Efficiency Trick
 		APPLY_TO_SELECTION_TAG = 'APPLY_TO_SELECTION';
-		APPLY_TO_SELECTION_CATEGORY = Category.GUI;
-		APPLY_TO_SELECTION_FORMAT = Format.LOGICAL;
+		APPLY_TO_SELECTION_CATEGORY = 9;
+		APPLY_TO_SELECTION_FORMAT = 4;
 		
-		MENU_EXPORT = PanelProp.getPropNumber() + 13;
+		MENU_EXPORT = 48; %CET: Computational Efficiency Trick
 		MENU_EXPORT_TAG = 'MENU_EXPORT';
-		MENU_EXPORT_CATEGORY = Category.GUI;
-		MENU_EXPORT_FORMAT = Format.LOGICAL;
+		MENU_EXPORT_CATEGORY = 9;
+		MENU_EXPORT_FORMAT = 4;
 		
-		CONTEXTMENU = PanelProp.getPropNumber() + 14;
+		CONTEXTMENU = 49; %CET: Computational Efficiency Trick
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
-		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
-		CONTEXTMENU_FORMAT = Format.HANDLE;
+		CONTEXTMENU_CATEGORY = 7;
+		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_ITS_DICT = PanelProp.getPropNumber() + 15;
+		GUI_ITS_DICT = 50; %CET: Computational Efficiency Trick
 		GUI_ITS_DICT_TAG = 'GUI_ITS_DICT';
-		GUI_ITS_DICT_CATEGORY = Category.GUI;
-		GUI_ITS_DICT_FORMAT = Format.IDICT;
+		GUI_ITS_DICT_CATEGORY = 9;
+		GUI_ITS_DICT_FORMAT = 10;
 	end
 	methods % constructor
 		function pr = PanelPropIDictTable(varargin)
@@ -202,6 +254,57 @@ classdef PanelPropIDictTable < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of PanelPropIDictTable properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the idict property panel with table.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the idict property panel with table.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the idict property panel with table.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the idict property panel with table.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the idict property panel with table.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the idict property panel with table.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the idict property panel with table.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+			%  <strong>38</strong> <strong>COLS</strong> 	COLS (gui, rvector) is the ordered list of columns.
+			%  <strong>39</strong> <strong>ROWNAME</strong> 	ROWNAME (gui, stringlist) determines the table row names.
+			%  <strong>40</strong> <strong>COLUMNNAME</strong> 	COLUMNNAME (gui, stringlist) determines the table column names.
+			%  <strong>41</strong> <strong>COLUMNWIDTH</strong> 	COLUMNWIDTH (gui, stringlist) determines the column widths.
+			%  <strong>42</strong> <strong>COLUMNEDITABLE</strong> 	COLUMNEDITABLE (gui, rvector) determines whether the columns are editable.
+			%  <strong>43</strong> <strong>COLUMNFORMAT</strong> 	COLUMNFORMAT (gui, stringlist) determines the columns formats.
+			%  <strong>44</strong> <strong>CB_TAB_EDIT</strong> 	CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).
+			%  <strong>45</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+			%  <strong>46</strong> <strong>MENU_OPEN_ITEMS</strong> 	MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to open the items.
+			%  <strong>47</strong> <strong>APPLY_TO_SELECTION</strong> 	APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.
+			%  <strong>48</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+			%  <strong>49</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+			%  <strong>50</strong> <strong>GUI_ITS_DICT</strong> 	GUI_ITS_DICT (gui, idict) contains the GUIs for the items.
 			%
 			% See also Category, Format.
 			
@@ -239,7 +342,7 @@ classdef PanelPropIDictTable < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('PanelPropIDictTable', [], [], true);
+			subclass_list = { 'PanelPropIDictTable' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of idict prop panel with table.
@@ -260,80 +363,32 @@ classdef PanelPropIDictTable < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelProp.getProps() ...
-						PanelPropIDictTable.TABLE_HEIGHT ...
-						PanelPropIDictTable.SELECTED ...
-						PanelPropIDictTable.COLS ...
-						PanelPropIDictTable.ROWNAME ...
-						PanelPropIDictTable.COLUMNNAME ...
-						PanelPropIDictTable.COLUMNWIDTH ...
-						PanelPropIDictTable.COLUMNEDITABLE ...
-						PanelPropIDictTable.COLUMNFORMAT ...
-						PanelPropIDictTable.CB_TAB_EDIT ...
-						PanelPropIDictTable.TABLE ...
-						PanelPropIDictTable.MENU_OPEN_ITEMS ...
-						PanelPropIDictTable.APPLY_TO_SELECTION ...
-						PanelPropIDictTable.MENU_EXPORT ...
-						PanelPropIDictTable.CONTEXTMENU ...
-						PanelPropIDictTable.GUI_ITS_DICT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelProp.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelProp.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelProp.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelProp.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelProp.getProps(Category.EVANESCENT) ...
-						PanelPropIDictTable.TABLE ...
-						PanelPropIDictTable.CONTEXTMENU ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelProp.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelProp.getProps(Category.GUI) ...
-						PanelPropIDictTable.TABLE_HEIGHT ...
-						PanelPropIDictTable.SELECTED ...
-						PanelPropIDictTable.COLS ...
-						PanelPropIDictTable.ROWNAME ...
-						PanelPropIDictTable.COLUMNNAME ...
-						PanelPropIDictTable.COLUMNWIDTH ...
-						PanelPropIDictTable.COLUMNEDITABLE ...
-						PanelPropIDictTable.COLUMNFORMAT ...
-						PanelPropIDictTable.CB_TAB_EDIT ...
-						PanelPropIDictTable.MENU_OPEN_ITEMS ...
-						PanelPropIDictTable.APPLY_TO_SELECTION ...
-						PanelPropIDictTable.MENU_EXPORT ...
-						PanelPropIDictTable.GUI_ITS_DICT ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 45 49];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26 36 37 38 39 40 41 42 43 44 46 47 48 50];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -354,7 +409,33 @@ classdef PanelPropIDictTable < PanelProp
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(PanelPropIDictTable.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 50;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 12;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 17;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in idict prop panel with table/error.
@@ -382,14 +463,14 @@ classdef PanelPropIDictTable < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == PanelPropIDictTable.getProps());
+			check = prop >= 1 && prop <= 50 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropIDictTable.'] ...
 					)
 			end
@@ -420,15 +501,14 @@ classdef PanelPropIDictTable < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			panelpropidicttable_tag_list = cellfun(@(x) PanelPropIDictTable.getPropTag(x), num2cell(PanelPropIDictTable.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, panelpropidicttable_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'COLS'  'ROWNAME'  'COLUMNNAME'  'COLUMNWIDTH'  'COLUMNEDITABLE'  'COLUMNFORMAT'  'CB_TAB_EDIT'  'TABLE'  'MENU_OPEN_ITEMS'  'APPLY_TO_SELECTION'  'MENU_EXPORT'  'CONTEXTMENU'  'GUI_ITS_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropIDictTable.'] ...
 					)
 			end
@@ -454,8 +534,7 @@ classdef PanelPropIDictTable < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				panelpropidicttable_tag_list = cellfun(@(x) PanelPropIDictTable.getPropTag(x), num2cell(PanelPropIDictTable.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, panelpropidicttable_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'COLS'  'ROWNAME'  'COLUMNNAME'  'COLUMNWIDTH'  'COLUMNEDITABLE'  'COLUMNFORMAT'  'CB_TAB_EDIT'  'TABLE'  'MENU_OPEN_ITEMS'  'APPLY_TO_SELECTION'  'MENU_EXPORT'  'CONTEXTMENU'  'GUI_ITS_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -483,42 +562,9 @@ classdef PanelPropIDictTable < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case PanelPropIDictTable.TABLE_HEIGHT
-						tag = PanelPropIDictTable.TABLE_HEIGHT_TAG;
-					case PanelPropIDictTable.SELECTED
-						tag = PanelPropIDictTable.SELECTED_TAG;
-					case PanelPropIDictTable.COLS
-						tag = PanelPropIDictTable.COLS_TAG;
-					case PanelPropIDictTable.ROWNAME
-						tag = PanelPropIDictTable.ROWNAME_TAG;
-					case PanelPropIDictTable.COLUMNNAME
-						tag = PanelPropIDictTable.COLUMNNAME_TAG;
-					case PanelPropIDictTable.COLUMNWIDTH
-						tag = PanelPropIDictTable.COLUMNWIDTH_TAG;
-					case PanelPropIDictTable.COLUMNEDITABLE
-						tag = PanelPropIDictTable.COLUMNEDITABLE_TAG;
-					case PanelPropIDictTable.COLUMNFORMAT
-						tag = PanelPropIDictTable.COLUMNFORMAT_TAG;
-					case PanelPropIDictTable.CB_TAB_EDIT
-						tag = PanelPropIDictTable.CB_TAB_EDIT_TAG;
-					case PanelPropIDictTable.TABLE
-						tag = PanelPropIDictTable.TABLE_TAG;
-					case PanelPropIDictTable.MENU_OPEN_ITEMS
-						tag = PanelPropIDictTable.MENU_OPEN_ITEMS_TAG;
-					case PanelPropIDictTable.APPLY_TO_SELECTION
-						tag = PanelPropIDictTable.APPLY_TO_SELECTION_TAG;
-					case PanelPropIDictTable.MENU_EXPORT
-						tag = PanelPropIDictTable.MENU_EXPORT_TAG;
-					case PanelPropIDictTable.CONTEXTMENU
-						tag = PanelPropIDictTable.CONTEXTMENU_TAG;
-					case PanelPropIDictTable.GUI_ITS_DICT
-						tag = PanelPropIDictTable.GUI_ITS_DICT_TAG;
-					otherwise
-						tag = getPropTag@PanelProp(prop);
-				end
+				%CET: Computational Efficiency Trick
+				panelpropidicttable_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'COLS'  'ROWNAME'  'COLUMNNAME'  'COLUMNWIDTH'  'COLUMNEDITABLE'  'COLUMNFORMAT'  'CB_TAB_EDIT'  'TABLE'  'MENU_OPEN_ITEMS'  'APPLY_TO_SELECTION'  'MENU_EXPORT'  'CONTEXTMENU'  'GUI_ITS_DICT' };
+				tag = panelpropidicttable_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -543,40 +589,9 @@ classdef PanelPropIDictTable < PanelProp
 			
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT
-					prop_category = PanelPropIDictTable.TABLE_HEIGHT_CATEGORY;
-				case PanelPropIDictTable.SELECTED
-					prop_category = PanelPropIDictTable.SELECTED_CATEGORY;
-				case PanelPropIDictTable.COLS
-					prop_category = PanelPropIDictTable.COLS_CATEGORY;
-				case PanelPropIDictTable.ROWNAME
-					prop_category = PanelPropIDictTable.ROWNAME_CATEGORY;
-				case PanelPropIDictTable.COLUMNNAME
-					prop_category = PanelPropIDictTable.COLUMNNAME_CATEGORY;
-				case PanelPropIDictTable.COLUMNWIDTH
-					prop_category = PanelPropIDictTable.COLUMNWIDTH_CATEGORY;
-				case PanelPropIDictTable.COLUMNEDITABLE
-					prop_category = PanelPropIDictTable.COLUMNEDITABLE_CATEGORY;
-				case PanelPropIDictTable.COLUMNFORMAT
-					prop_category = PanelPropIDictTable.COLUMNFORMAT_CATEGORY;
-				case PanelPropIDictTable.CB_TAB_EDIT
-					prop_category = PanelPropIDictTable.CB_TAB_EDIT_CATEGORY;
-				case PanelPropIDictTable.TABLE
-					prop_category = PanelPropIDictTable.TABLE_CATEGORY;
-				case PanelPropIDictTable.MENU_OPEN_ITEMS
-					prop_category = PanelPropIDictTable.MENU_OPEN_ITEMS_CATEGORY;
-				case PanelPropIDictTable.APPLY_TO_SELECTION
-					prop_category = PanelPropIDictTable.APPLY_TO_SELECTION_CATEGORY;
-				case PanelPropIDictTable.MENU_EXPORT
-					prop_category = PanelPropIDictTable.MENU_EXPORT_CATEGORY;
-				case PanelPropIDictTable.CONTEXTMENU
-					prop_category = PanelPropIDictTable.CONTEXTMENU_CATEGORY;
-				case PanelPropIDictTable.GUI_ITS_DICT
-					prop_category = PanelPropIDictTable.GUI_ITS_DICT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropidicttable_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  9  9  9  9  9  9  9  7  9  9  9  7  9 };
+			prop_category = panelpropidicttable_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -600,40 +615,9 @@ classdef PanelPropIDictTable < PanelProp
 			
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT
-					prop_format = PanelPropIDictTable.TABLE_HEIGHT_FORMAT;
-				case PanelPropIDictTable.SELECTED
-					prop_format = PanelPropIDictTable.SELECTED_FORMAT;
-				case PanelPropIDictTable.COLS
-					prop_format = PanelPropIDictTable.COLS_FORMAT;
-				case PanelPropIDictTable.ROWNAME
-					prop_format = PanelPropIDictTable.ROWNAME_FORMAT;
-				case PanelPropIDictTable.COLUMNNAME
-					prop_format = PanelPropIDictTable.COLUMNNAME_FORMAT;
-				case PanelPropIDictTable.COLUMNWIDTH
-					prop_format = PanelPropIDictTable.COLUMNWIDTH_FORMAT;
-				case PanelPropIDictTable.COLUMNEDITABLE
-					prop_format = PanelPropIDictTable.COLUMNEDITABLE_FORMAT;
-				case PanelPropIDictTable.COLUMNFORMAT
-					prop_format = PanelPropIDictTable.COLUMNFORMAT_FORMAT;
-				case PanelPropIDictTable.CB_TAB_EDIT
-					prop_format = PanelPropIDictTable.CB_TAB_EDIT_FORMAT;
-				case PanelPropIDictTable.TABLE
-					prop_format = PanelPropIDictTable.TABLE_FORMAT;
-				case PanelPropIDictTable.MENU_OPEN_ITEMS
-					prop_format = PanelPropIDictTable.MENU_OPEN_ITEMS_FORMAT;
-				case PanelPropIDictTable.APPLY_TO_SELECTION
-					prop_format = PanelPropIDictTable.APPLY_TO_SELECTION_FORMAT;
-				case PanelPropIDictTable.MENU_EXPORT
-					prop_format = PanelPropIDictTable.MENU_EXPORT_FORMAT;
-				case PanelPropIDictTable.CONTEXTMENU
-					prop_format = PanelPropIDictTable.CONTEXTMENU_FORMAT;
-				case PanelPropIDictTable.GUI_ITS_DICT
-					prop_format = PanelPropIDictTable.GUI_ITS_DICT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropidicttable_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  12  3  3  3  12  3  2  18  4  4  4  18  10 };
+			prop_format = panelpropidicttable_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -657,72 +641,9 @@ classdef PanelPropIDictTable < PanelProp
 			
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT
-					prop_description = 'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.';
-				case PanelPropIDictTable.SELECTED
-					prop_description = 'SELECTED (gui, cvector) is the list of selected items.';
-				case PanelPropIDictTable.COLS
-					prop_description = 'COLS (gui, rvector) is the ordered list of columns.';
-				case PanelPropIDictTable.ROWNAME
-					prop_description = 'ROWNAME (gui, stringlist) determines the table row names.';
-				case PanelPropIDictTable.COLUMNNAME
-					prop_description = 'COLUMNNAME (gui, stringlist) determines the table column names.';
-				case PanelPropIDictTable.COLUMNWIDTH
-					prop_description = 'COLUMNWIDTH (gui, stringlist) determines the column widths.';
-				case PanelPropIDictTable.COLUMNEDITABLE
-					prop_description = 'COLUMNEDITABLE (gui, rvector) determines whether the columns are editable.';
-				case PanelPropIDictTable.COLUMNFORMAT
-					prop_description = 'COLUMNFORMAT (gui, stringlist) determines the columns formats.';
-				case PanelPropIDictTable.CB_TAB_EDIT
-					prop_description = 'CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).';
-				case PanelPropIDictTable.TABLE
-					prop_description = 'TABLE (evanescent, handle) is the table.';
-				case PanelPropIDictTable.MENU_OPEN_ITEMS
-					prop_description = 'MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to open the items.';
-				case PanelPropIDictTable.APPLY_TO_SELECTION
-					prop_description = 'APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.';
-				case PanelPropIDictTable.MENU_EXPORT
-					prop_description = 'MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.';
-				case PanelPropIDictTable.CONTEXTMENU
-					prop_description = 'CONTEXTMENU (evanescent, handle) is the context menu.';
-				case PanelPropIDictTable.GUI_ITS_DICT
-					prop_description = 'GUI_ITS_DICT (gui, idict) contains the GUIs for the items.';
-				case PanelPropIDictTable.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the idict property panel with table.';
-				case PanelPropIDictTable.NAME
-					prop_description = 'NAME (constant, string) is the name of the idict property panel with table.';
-				case PanelPropIDictTable.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the idict property panel with table.';
-				case PanelPropIDictTable.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the idict property panel with table.';
-				case PanelPropIDictTable.ID
-					prop_description = 'ID (data, string) is a few-letter code for the idict property panel with table.';
-				case PanelPropIDictTable.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the idict property panel with table.';
-				case PanelPropIDictTable.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the idict property panel with table.';
-				case PanelPropIDictTable.EL
-					prop_description = 'EL (data, item) is the element.';
-				case PanelPropIDictTable.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case PanelPropIDictTable.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case PanelPropIDictTable.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
-				case PanelPropIDictTable.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case PanelPropIDictTable.SHOW
-					prop_description = 'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.';
-				case PanelPropIDictTable.HIDE
-					prop_description = 'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.';
-				case PanelPropIDictTable.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				case PanelPropIDictTable.CLOSE
-					prop_description = 'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.';
-				otherwise
-					prop_description = getPropDescription@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropidicttable_description_list = { 'ELCLASS (constant, string) is the class of the idict property panel with table.'  'NAME (constant, string) is the name of the idict property panel with table.'  'DESCRIPTION (constant, string) is the description of the idict property panel with table.'  'TEMPLATE (parameter, item) is the template of the idict property panel with table.'  'ID (data, string) is a few-letter code for the idict property panel with table.'  'LABEL (metadata, string) is an extended label of the idict property panel with table.'  'NOTES (metadata, string) are some specific notes about the idict property panel with table.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'COLS (gui, rvector) is the ordered list of columns.'  'ROWNAME (gui, stringlist) determines the table row names.'  'COLUMNNAME (gui, stringlist) determines the table column names.'  'COLUMNWIDTH (gui, stringlist) determines the column widths.'  'COLUMNEDITABLE (gui, rvector) determines whether the columns are editable.'  'COLUMNFORMAT (gui, stringlist) determines the columns formats.'  'CB_TAB_EDIT (gui, string) is executed when a cell is updated (to be evaluated).'  'TABLE (evanescent, handle) is the table.'  'MENU_OPEN_ITEMS (gui, logical) determines whether to show the context menu to open the items.'  'APPLY_TO_SELECTION (gui, logical) determines whether to show the apply to selection button.'  'MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_ITS_DICT (gui, idict) contains the GUIs for the items.' };
+			prop_description = panelpropidicttable_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -746,38 +667,38 @@ classdef PanelPropIDictTable < PanelProp
 			
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case PanelPropIDictTable.SELECTED
-					prop_settings = Format.getFormatSettings(Format.CVECTOR);
-				case PanelPropIDictTable.COLS
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case PanelPropIDictTable.ROWNAME
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropIDictTable.COLUMNNAME
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropIDictTable.COLUMNWIDTH
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropIDictTable.COLUMNEDITABLE
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case PanelPropIDictTable.COLUMNFORMAT
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropIDictTable.CB_TAB_EDIT
-					prop_settings = Format.getFormatSettings(Format.STRING);
-				case PanelPropIDictTable.TABLE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropIDictTable.MENU_OPEN_ITEMS
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropIDictTable.APPLY_TO_SELECTION
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropIDictTable.MENU_EXPORT
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropIDictTable.CONTEXTMENU
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropIDictTable.GUI_ITS_DICT
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropIDictTable.TABLE_HEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 37 % PanelPropIDictTable.SELECTED
+					prop_settings = Format.getFormatSettings(13);
+				case 38 % PanelPropIDictTable.COLS
+					prop_settings = Format.getFormatSettings(12);
+				case 39 % PanelPropIDictTable.ROWNAME
+					prop_settings = Format.getFormatSettings(3);
+				case 40 % PanelPropIDictTable.COLUMNNAME
+					prop_settings = Format.getFormatSettings(3);
+				case 41 % PanelPropIDictTable.COLUMNWIDTH
+					prop_settings = Format.getFormatSettings(3);
+				case 42 % PanelPropIDictTable.COLUMNEDITABLE
+					prop_settings = Format.getFormatSettings(12);
+				case 43 % PanelPropIDictTable.COLUMNFORMAT
+					prop_settings = Format.getFormatSettings(3);
+				case 44 % PanelPropIDictTable.CB_TAB_EDIT
+					prop_settings = Format.getFormatSettings(2);
+				case 45 % PanelPropIDictTable.TABLE
+					prop_settings = Format.getFormatSettings(18);
+				case 46 % PanelPropIDictTable.MENU_OPEN_ITEMS
+					prop_settings = Format.getFormatSettings(4);
+				case 47 % PanelPropIDictTable.APPLY_TO_SELECTION
+					prop_settings = Format.getFormatSettings(4);
+				case 48 % PanelPropIDictTable.MENU_EXPORT
+					prop_settings = Format.getFormatSettings(4);
+				case 49 % PanelPropIDictTable.CONTEXTMENU
+					prop_settings = Format.getFormatSettings(18);
+				case 50 % PanelPropIDictTable.GUI_ITS_DICT
 					prop_settings = 'GUI';
-				case PanelPropIDictTable.TEMPLATE
+				case 4 % PanelPropIDictTable.TEMPLATE
 					prop_settings = 'PanelPropIDictTable';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -805,55 +726,55 @@ classdef PanelPropIDictTable < PanelProp
 			
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT
-					prop_default = s(20);
-				case PanelPropIDictTable.SELECTED
-					prop_default = Format.getFormatDefault(Format.CVECTOR, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLS
-					prop_default = Format.getFormatDefault(Format.RVECTOR, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.ROWNAME
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNNAME
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNWIDTH
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNEDITABLE
-					prop_default = Format.getFormatDefault(Format.RVECTOR, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNFORMAT
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.CB_TAB_EDIT
-					prop_default = Format.getFormatDefault(Format.STRING, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.TABLE
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.MENU_OPEN_ITEMS
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropIDictTable.TABLE_HEIGHT
+					prop_default = 240;
+				case 37 % PanelPropIDictTable.SELECTED
+					prop_default = Format.getFormatDefault(13, PanelPropIDictTable.getPropSettings(prop));
+				case 38 % PanelPropIDictTable.COLS
+					prop_default = Format.getFormatDefault(12, PanelPropIDictTable.getPropSettings(prop));
+				case 39 % PanelPropIDictTable.ROWNAME
+					prop_default = Format.getFormatDefault(3, PanelPropIDictTable.getPropSettings(prop));
+				case 40 % PanelPropIDictTable.COLUMNNAME
+					prop_default = Format.getFormatDefault(3, PanelPropIDictTable.getPropSettings(prop));
+				case 41 % PanelPropIDictTable.COLUMNWIDTH
+					prop_default = Format.getFormatDefault(3, PanelPropIDictTable.getPropSettings(prop));
+				case 42 % PanelPropIDictTable.COLUMNEDITABLE
+					prop_default = Format.getFormatDefault(12, PanelPropIDictTable.getPropSettings(prop));
+				case 43 % PanelPropIDictTable.COLUMNFORMAT
+					prop_default = Format.getFormatDefault(3, PanelPropIDictTable.getPropSettings(prop));
+				case 44 % PanelPropIDictTable.CB_TAB_EDIT
+					prop_default = Format.getFormatDefault(2, PanelPropIDictTable.getPropSettings(prop));
+				case 45 % PanelPropIDictTable.TABLE
+					prop_default = Format.getFormatDefault(18, PanelPropIDictTable.getPropSettings(prop));
+				case 46 % PanelPropIDictTable.MENU_OPEN_ITEMS
 					prop_default = false;
-				case PanelPropIDictTable.APPLY_TO_SELECTION
+				case 47 % PanelPropIDictTable.APPLY_TO_SELECTION
 					prop_default = true;
-				case PanelPropIDictTable.MENU_EXPORT
+				case 48 % PanelPropIDictTable.MENU_EXPORT
 					prop_default = true;
-				case PanelPropIDictTable.CONTEXTMENU
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.GUI_ITS_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.ELCLASS
+				case 49 % PanelPropIDictTable.CONTEXTMENU
+					prop_default = Format.getFormatDefault(18, PanelPropIDictTable.getPropSettings(prop));
+				case 50 % PanelPropIDictTable.GUI_ITS_DICT
+					prop_default = Format.getFormatDefault(10, PanelPropIDictTable.getPropSettings(prop));
+				case 1 % PanelPropIDictTable.ELCLASS
 					prop_default = 'PanelPropIDictTable';
-				case PanelPropIDictTable.NAME
+				case 2 % PanelPropIDictTable.NAME
 					prop_default = 'Indexed-Dictionary Prop Panel with Table';
-				case PanelPropIDictTable.DESCRIPTION
+				case 3 % PanelPropIDictTable.DESCRIPTION
 					prop_default = 'An Indexed-Dictionary Prop Panel with Table (PanelPropIDictTable) plots the panel of an IDICT property with a table. It works for all categories. It can be personalized with the following props: COLS, ROWNAME, COLUMNNAME, COLUMNWIDTH, COLUMNEDITABLE, COLUMNFORMAT, CB_TAB_EDIT.';
-				case PanelPropIDictTable.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.ID
+				case 4 % PanelPropIDictTable.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PanelPropIDictTable.getPropSettings(prop));
+				case 5 % PanelPropIDictTable.ID
 					prop_default = 'PanelPropIDictTable ID';
-				case PanelPropIDictTable.LABEL
+				case 6 % PanelPropIDictTable.LABEL
 					prop_default = 'PanelPropIDictTable label';
-				case PanelPropIDictTable.NOTES
+				case 7 % PanelPropIDictTable.NOTES
 					prop_default = 'PanelPropIDictTable notes';
-				case PanelPropIDictTable.EL
+				case 23 % PanelPropIDictTable.EL
 					prop_default = BrainAtlas();
-				case PanelPropIDictTable.PROP
-					prop_default = BrainAtlas.BR_DICT;
+				case 24 % PanelPropIDictTable.PROP
+					prop_default = 9;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -893,8 +814,8 @@ classdef PanelPropIDictTable < PanelProp
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
+			% Conditioning is only used for props of 2,
+			%  3, 4, 8 and 9.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -902,18 +823,18 @@ classdef PanelPropIDictTable < PanelProp
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
 			switch prop
-				case PanelPropIDictTable.SELECTED % __PanelPropIDictTable.SELECTED__
+				case 37 % PanelPropIDictTable.SELECTED
 					if isrow(value)
 					    value = value';
 					end
 					
-				case PanelPropIDictTable.CB_TAB_EDIT % __PanelPropIDictTable.CB_TAB_EDIT__
+				case 44 % PanelPropIDictTable.CB_TAB_EDIT
 					if iscell(value)
 					    value = sprintf('%s;', value{:});
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = conditioning@PanelProp(pointer, value);
 					end
 			end
@@ -924,8 +845,8 @@ classdef PanelPropIDictTable < PanelProp
 			%PRESET preprocesses the value of a property before setting it.
 			%
 			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
-			%  PROP. It works only with properties with Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI. By
+			%  PROP. It works only with properties with 2,
+			%  3, 4, 8 and 9. By
 			%  default, this function does not do anything, so it should be implemented
 			%  in the subclasses of Element when needed.
 			%
@@ -933,7 +854,7 @@ classdef PanelPropIDictTable < PanelProp
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case PanelPropIDictTable.COLS % __PanelPropIDictTable.COLS__
+				case 38 % PanelPropIDictTable.COLS
 					if isempty(value)
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -949,7 +870,7 @@ classdef PanelPropIDictTable < PanelProp
 					    value = cols;
 					end
 					
-				case PanelPropIDictTable.ROWNAME % __PanelPropIDictTable.ROWNAME__
+				case 39 % PanelPropIDictTable.ROWNAME
 					if isempty(value)
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -964,7 +885,7 @@ classdef PanelPropIDictTable < PanelProp
 					    value = {'numbered'};
 					end
 					
-				case PanelPropIDictTable.COLUMNNAME % __PanelPropIDictTable.COLUMNNAME__
+				case 40 % PanelPropIDictTable.COLUMNNAME
 					if isempty(value)
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -990,14 +911,14 @@ classdef PanelPropIDictTable < PanelProp
 					    value = {'numbered'};
 					end
 					
-				case PanelPropIDictTable.COLUMNWIDTH % __PanelPropIDictTable.COLUMNWIDTH__
+				case 41 % PanelPropIDictTable.COLUMNWIDTH
 					if isempty(value) || isequal(value, 'auto')
 					    columnwidth = {'auto'};
 					    
 					    value = columnwidth;
 					end
 					
-				case PanelPropIDictTable.COLUMNEDITABLE % __PanelPropIDictTable.COLUMNEDITABLE__
+				case 42 % PanelPropIDictTable.COLUMNEDITABLE
 					if isempty(value)
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -1015,67 +936,67 @@ classdef PanelPropIDictTable < PanelProp
 					        else
 					            if ~el.isLocked(prop)
 					                switch Element.getPropFormat(it_class, col)
-					                    case Format.EMPTY % __Format.EMPTY__
-					                        %%%__WARN_TBI__
+					                    case 1 % Format.EMPTY
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					                    
-					                    case Format.STRING % __Format.STRING__
+					                    case 2 % Format.STRING
 					                        columneditable(c) = true;
 					                    
-					                    case Format.STRINGLIST % __Format.STRINGLIST__
+					                    case 3 % Format.STRINGLIST
 					                        columneditable(c) = false;
 					                        
-					                    case Format.LOGICAL % __Format.LOGICAL__
+					                    case 4 % Format.LOGICAL
 					                        columneditable(c) = true;
 					                        
-					                    case Format.OPTION % __Format.OPTION__
+					                    case 5 % Format.OPTION
 					                        columneditable(c) = true;
 					                        
-					                    case Format.CLASS % __Format.CLASS__
-					                        %%%__WARN_TBI__
+					                    case 6 % Format.CLASS
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                    case Format.CLASSLIST % __Format.CLASSLIST__
+					                    case 7 % Format.CLASSLIST
 					                        columneditable(c) = false;                        
 					                        
-					                    case Format.ITEM % __Format.ITEM__
+					                    case 8 % Format.ITEM
 					                        columneditable(c) = false;
 					                        
-					                    case Format.ITEMLIST % __Format.ITEMLIST__
-					                        %%%__WARN_TBI__
+					                    case 9 % Format.ITEMLIST
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                    case Format.IDICT % __Format.IDICT__
+					                    case 10 % Format.IDICT
 					                        columneditable(c) = false;
 					                        
-					                    case Format.SCALAR % __Format.SCALAR__
+					                    case 11 % Format.SCALAR
 					                        columneditable(c) = true;
 					                        
-					                    case {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX} % {__Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__}
+					                    case {12 13 14 15} % {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX}
 					                        columneditable(c) = false;
 					                        
-					                    case Format.CELL % __Format.CELL__
+					                    case 16 % Format.CELL
 					                        columneditable(c) = false;                        
 					
-					                    case Format.NET % __Format.NET__
-					                        %%%__WARN_TBI__
+					                    case 17 % Format.NET
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					                        
-					                    case Format.HANDLE % __Format.HANDLE__
-					                        %%%__WARN_TBI__
+					                    case 18 % Format.HANDLE
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                    case Format.HANDLELIST % __Format.HANDLELIST__
-					                        %%%__WARN_TBI__
+					                    case 19 % Format.HANDLELIST
+					                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                    case Format.COLOR % __Format.COLOR__
+					                    case 20 % Format.COLOR
 					                        columneditable(c) = true;
 					                        
-					                    case Format.ALPHA % __Format.ALPHA__
+					                    case 21 % Format.ALPHA
 					                        columneditable(c) = true;
 					                        
-					                    case Format.SIZE % __Format.SIZE__
+					                    case 22 % Format.SIZE
 					                        columneditable(c) = true;
 					                        
-					                    case Format.MARKER % __Format.MARKER__
+					                    case 23 % Format.MARKER
 					                        columneditable(c) = true;
 					                        
-					                    case Format.LINE % __Format.LINE__
+					                    case 24 % Format.LINE
 					                        columneditable(c) = true;
 					                end
 					            end
@@ -1088,7 +1009,7 @@ classdef PanelPropIDictTable < PanelProp
 					% ensures that the value is numeric (not logical)
 					value = int8(columneditable);
 					
-				case PanelPropIDictTable.COLUMNFORMAT % __PanelPropIDictTable.COLUMNFORMAT__
+				case 43 % PanelPropIDictTable.COLUMNFORMAT
 					if isempty(value)
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
@@ -1105,67 +1026,67 @@ classdef PanelPropIDictTable < PanelProp
 					            columnformat{c} = 'logical';
 					        elseif Element.existsProp(it_class, col) % prop = col;
 					            switch Element.getPropFormat(it_class, col)
-					                case Format.EMPTY % __Format.EMPTY__
-					                    %%%__WARN_TBI__
+					                case 1 % Format.EMPTY
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                case Format.STRING % __Format.STRING__
+					                case 2 % Format.STRING
 					                    columnformat{c} = 'char';
 					
-					                case Format.STRINGLIST % __Format.STRINGLIST__
+					                case 3 % Format.STRINGLIST
 					                    columnformat{c} = 'char';
 					                    
-					                case Format.LOGICAL % __Format.LOGICAL__
+					                case 4 % Format.LOGICAL
 					                    columnformat{c} = 'logical';
 					
-					                case Format.OPTION % __Format.OPTION__
+					                case 5 % Format.OPTION
 					                    columnformat{c} = Element.getPropSettings(it_class, col);
 					
-					                case Format.CLASS % __Format.CLASS__
-					                    %%%__WARN_TBI__
+					                case 6 % Format.CLASS
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                case Format.CLASSLIST % __Format.CLASSLIST__
+					                case 7 % Format.CLASSLIST
 					                    columnformat{c} = 'char';
 					
-					                case Format.ITEM % __Format.ITEM__
+					                case 8 % Format.ITEM
 					                    columnformat{c} = 'char';
 					
-					                case Format.ITEMLIST % __Format.ITEMLIST__
-					                    %%%__WARN_TBI__
+					                case 9 % Format.ITEMLIST
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                case Format.IDICT % __Format.IDICT__
+					                case 10 % Format.IDICT
 					                    columnformat{c} = 'char';
 					
-					                case Format.SCALAR % __Format.SCALAR__
+					                case 11 % Format.SCALAR
 					                    columnformat{c} = 'numeric';
 					
-					                case {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX} % {__Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__}
+					                case {12 13 14 15} % {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX}
 					                    columnformat{c} = 'char';
 					
-					                case Format.CELL % __Format.CELL__
+					                case 16 % Format.CELL
 					                    columnformat{c} = 'char';
 					
-					                case Format.NET % __Format.NET__
-					                    %%%__WARN_TBI__
+					                case 17 % Format.NET
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					                
-					                case Format.HANDLE % __Format.HANDLE__
-					                    %%%__WARN_TBI__
+					                case 18 % Format.HANDLE
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					
-					                case Format.HANDLELIST % __Format.HANDLELIST__
-					                    %%%__WARN_TBI__
+					                case 19 % Format.HANDLELIST
+					                    warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 					                
-					                case Format.COLOR % __Format.COLOR__
+					                case 20 % Format.COLOR
 					                    columnformat{c} = 'char';
 					
-					                case Format.ALPHA % __Format.ALPHA__
+					                case 21 % Format.ALPHA
 					                    columnformat{c} = 'numeric';
 					
-					                case Format.SIZE % __Format.SIZE__
+					                case 22 % Format.SIZE
 					                    columnformat{c} = 'numeric';
 					
-					                case Format.MARKER % __Format.MARKER__
+					                case 23 % Format.MARKER
 					                    columnformat{c} = Element.getPropSettings(it_class, col);
 					
-					                case Format.LINE % __Format.LINE__
+					                case 24 % Format.LINE
 					                    columnformat{c} = Element.getPropSettings(it_class, col);
 					            end            
 					        end
@@ -1181,7 +1102,7 @@ classdef PanelPropIDictTable < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = preset@PanelProp(pr, prop, value);
 					end
 			end
@@ -1202,15 +1123,15 @@ classdef PanelPropIDictTable < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:PanelPropIDictTable:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:PanelPropIDictTable:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:PanelPropIDictTable:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropIDictTable:WrongInput
 			%  Element.CHECKPROP(PanelPropIDictTable, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropIDictTable.
-			%   Error id: €BRAPH2.STR€:PanelPropIDictTable:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropIDictTable:WrongInput
 			%  PR.CHECKPROP(PanelPropIDictTable, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropIDictTable.
-			%   Error id: €BRAPH2.STR€:PanelPropIDictTable:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:PanelPropIDictTable:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropIDictTable')
 			%  are less computationally efficient.
@@ -1221,40 +1142,40 @@ classdef PanelPropIDictTable < PanelProp
 			prop = PanelPropIDictTable.getPropProp(pointer);
 			
 			switch prop
-				case PanelPropIDictTable.TABLE_HEIGHT % __PanelPropIDictTable.TABLE_HEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.SELECTED % __PanelPropIDictTable.SELECTED__
-					check = Format.checkFormat(Format.CVECTOR, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLS % __PanelPropIDictTable.COLS__
-					check = Format.checkFormat(Format.RVECTOR, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.ROWNAME % __PanelPropIDictTable.ROWNAME__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNNAME % __PanelPropIDictTable.COLUMNNAME__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNWIDTH % __PanelPropIDictTable.COLUMNWIDTH__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNEDITABLE % __PanelPropIDictTable.COLUMNEDITABLE__
-					check = Format.checkFormat(Format.RVECTOR, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.COLUMNFORMAT % __PanelPropIDictTable.COLUMNFORMAT__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.CB_TAB_EDIT % __PanelPropIDictTable.CB_TAB_EDIT__
-					check = Format.checkFormat(Format.STRING, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.TABLE % __PanelPropIDictTable.TABLE__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.MENU_OPEN_ITEMS % __PanelPropIDictTable.MENU_OPEN_ITEMS__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.APPLY_TO_SELECTION % __PanelPropIDictTable.APPLY_TO_SELECTION__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.MENU_EXPORT % __PanelPropIDictTable.MENU_EXPORT__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.CONTEXTMENU % __PanelPropIDictTable.CONTEXTMENU__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.GUI_ITS_DICT % __PanelPropIDictTable.GUI_ITS_DICT__
-					check = Format.checkFormat(Format.IDICT, value, PanelPropIDictTable.getPropSettings(prop));
-				case PanelPropIDictTable.TEMPLATE % __PanelPropIDictTable.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, PanelPropIDictTable.getPropSettings(prop));
+				case 36 % PanelPropIDictTable.TABLE_HEIGHT
+					check = Format.checkFormat(22, value, PanelPropIDictTable.getPropSettings(prop));
+				case 37 % PanelPropIDictTable.SELECTED
+					check = Format.checkFormat(13, value, PanelPropIDictTable.getPropSettings(prop));
+				case 38 % PanelPropIDictTable.COLS
+					check = Format.checkFormat(12, value, PanelPropIDictTable.getPropSettings(prop));
+				case 39 % PanelPropIDictTable.ROWNAME
+					check = Format.checkFormat(3, value, PanelPropIDictTable.getPropSettings(prop));
+				case 40 % PanelPropIDictTable.COLUMNNAME
+					check = Format.checkFormat(3, value, PanelPropIDictTable.getPropSettings(prop));
+				case 41 % PanelPropIDictTable.COLUMNWIDTH
+					check = Format.checkFormat(3, value, PanelPropIDictTable.getPropSettings(prop));
+				case 42 % PanelPropIDictTable.COLUMNEDITABLE
+					check = Format.checkFormat(12, value, PanelPropIDictTable.getPropSettings(prop));
+				case 43 % PanelPropIDictTable.COLUMNFORMAT
+					check = Format.checkFormat(3, value, PanelPropIDictTable.getPropSettings(prop));
+				case 44 % PanelPropIDictTable.CB_TAB_EDIT
+					check = Format.checkFormat(2, value, PanelPropIDictTable.getPropSettings(prop));
+				case 45 % PanelPropIDictTable.TABLE
+					check = Format.checkFormat(18, value, PanelPropIDictTable.getPropSettings(prop));
+				case 46 % PanelPropIDictTable.MENU_OPEN_ITEMS
+					check = Format.checkFormat(4, value, PanelPropIDictTable.getPropSettings(prop));
+				case 47 % PanelPropIDictTable.APPLY_TO_SELECTION
+					check = Format.checkFormat(4, value, PanelPropIDictTable.getPropSettings(prop));
+				case 48 % PanelPropIDictTable.MENU_EXPORT
+					check = Format.checkFormat(4, value, PanelPropIDictTable.getPropSettings(prop));
+				case 49 % PanelPropIDictTable.CONTEXTMENU
+					check = Format.checkFormat(18, value, PanelPropIDictTable.getPropSettings(prop));
+				case 50 % PanelPropIDictTable.GUI_ITS_DICT
+					check = Format.checkFormat(10, value, PanelPropIDictTable.getPropSettings(prop));
+				case 4 % PanelPropIDictTable.TEMPLATE
+					check = Format.checkFormat(8, value, PanelPropIDictTable.getPropSettings(prop));
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -1263,8 +1184,8 @@ classdef PanelPropIDictTable < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropIDictTable:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropIDictTable:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropIDictTable.getPropTag(prop) ' (' PanelPropIDictTable.getFormatTag(PanelPropIDictTable.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -1275,29 +1196,29 @@ classdef PanelPropIDictTable < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case PanelPropIDictTable.TABLE % __PanelPropIDictTable.TABLE__
+				case 45 % PanelPropIDictTable.TABLE
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'ColumnSortable', true, ...
 					    'CellEditCallback', {@cb_table} ...
 					    );
 					value = table;
 					
-				case PanelPropIDictTable.CONTEXTMENU % __PanelPropIDictTable.CONTEXTMENU__
+				case 49 % PanelPropIDictTable.CONTEXTMENU
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1360,8 +1281,8 @@ classdef PanelPropIDictTable < PanelProp
 					        'MenuSelectedFcn', {@cb_hide_all} ...
 					        );
 					end
-					if (isempty(pr.get('COLS')) && any(cellfun(@(prop) isequal(Element.getPropFormat(it_class, prop), Format.COLOR), num2cell(Element.getProps(it_class))))) ... % __Format.COLOR__
-					        || any(cellfun(@(prop) prop > 0 && isequal(Element.getPropFormat(it_class, prop), Format.COLOR), num2cell(pr.get('COLS')))) % __Format.COLOR__
+					if (isempty(pr.get('COLS')) && any(cellfun(@(prop) isequal(Element.getPropFormat(it_class, prop), 20), num2cell(Element.getProps(it_class))))) ... % Format.COLOR
+					        || any(cellfun(@(prop) prop > 0 && isequal(Element.getPropFormat(it_class, prop), 20), num2cell(pr.get('COLS')))) % Format.COLOR
 					    menu_colorize_table = uimenu( ...
 					        'Separator', 'on', ...
 					        'Parent', contextmenu, ...
@@ -1387,42 +1308,42 @@ classdef PanelPropIDictTable < PanelProp
 					
 					value = contextmenu;
 					
-				case PanelPropIDictTable.X_DRAW % __PanelPropIDictTable.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % PanelPropIDictTable.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case PanelPropIDictTable.UPDATE % __PanelPropIDictTable.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % PanelPropIDictTable.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value    
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					    
-					    if any(el.getPropCategory(prop) == [Category.RESULT Category.QUERY Category.EVANESCENT]) && isa(el.getr(prop), 'NoValue')
-					        pr.set('HEIGHT', s(2))
+					    if any(el.getPropCategory(prop) == [5 6 7]) && isa(el.getr(prop), 'NoValue')
+					        pr.set('HEIGHT', 24)
 					    else
 					        dict = el.get(prop);
 					        if ispc()
-					            pr.set('HEIGHT', min(s(6.5) + s(2) * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
+					            pr.set('HEIGHT', min(78 + 24 * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
 					        else
-					            pr.set('HEIGHT', min(s(4.5) + s(2) * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
+					            pr.set('HEIGHT', min(54 + 24 * dict.get('LENGTH'), pr.get('TABLE_HEIGHT')))
 					        end
 					    end
 					
 					    switch el.getPropCategory(prop)
-					        case Category.CONSTANT % __Category.CONSTANT__
+					        case 1 % Category.CONSTANT
 					            set_table()
 					            set(pr.get('TABLE'), 'ColumnEditable', false)
 					            
-					        case Category.METADATA % __Category.METADATA__
+					        case 2 % Category.METADATA
 					            set_table()
 					
 					            if el.isLocked(prop)
 					                set(pr.get('TABLE'), 'ColumnEditable', false)
 					            end
-					        case {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI} % {__Category.PARAMETER__ __Category.DATA__ __Category.FIGURE__ __Category.GUI__}
+					        case {3 4 8 9} % {Category.PARAMETER Category.DATA Category.FIGURE Category.GUI}
 					            set_table()
 					            
 					            if el.isLocked(prop)
@@ -1434,7 +1355,7 @@ classdef PanelPropIDictTable < PanelProp
 					                set(pr.get('TABLE'), 'ColumnEditable', false)
 					            end
 					
-					        case {Category.RESULT Category.QUERY Category.EVANESCENT} % {__Category.RESULT__ __Category.QUERY__ __Category.EVANESCENT__}
+					        case {5 6 7} % {Category.RESULT Category.QUERY Category.EVANESCENT}
 					            prop_value = el.getr(prop);
 					
 					            if isa(prop_value, 'NoValue')
@@ -1447,16 +1368,16 @@ classdef PanelPropIDictTable < PanelProp
 					    end
 					end
 					
-				case PanelPropIDictTable.REDRAW % __PanelPropIDictTable.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % PanelPropIDictTable.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('TABLE'), 'Position', [s(.3) s(.3) w_p-s(.6) max(1, pr.get('HEIGHT')-s(2.2))])
+					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
 					end
 					
-				case PanelPropIDictTable.SHOW % __PanelPropIDictTable.SHOW__
-					value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
+				case 16 % PanelPropIDictTable.SHOW
+					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value
 					    % figures for items
 					    gui_its_dict = pr.get('GUI_ITS_DICT');
@@ -1468,8 +1389,8 @@ classdef PanelPropIDictTable < PanelProp
 					    end
 					end
 					
-				case PanelPropIDictTable.HIDE % __PanelPropIDictTable.HIDE__
-					value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
+				case 17 % PanelPropIDictTable.HIDE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    % figures for items
 					    gui_its_dict = pr.get('GUI_ITS_DICT');
@@ -1481,15 +1402,15 @@ classdef PanelPropIDictTable < PanelProp
 					    end
 					end
 					
-				case PanelPropIDictTable.DELETE % __PanelPropIDictTable.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % PanelPropIDictTable.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case PanelPropIDictTable.CLOSE % __PanelPropIDictTable.CLOSE__
-					value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
+				case 19 % PanelPropIDictTable.CLOSE
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    % figures for items
 					    gui_its_dict = pr.get('GUI_ITS_DICT');
@@ -1502,7 +1423,7 @@ classdef PanelPropIDictTable < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1561,10 +1482,10 @@ classdef PanelPropIDictTable < PanelProp
 			                end
 			            elseif Element.existsProp(it_class, col) % prop = col;
 			                switch Element.getPropFormat(it_class, col)
-			                    case Format.EMPTY % __Format.EMPTY__
-			                        %%%__WARN_TBI__
+			                    case 1 % Format.EMPTY
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			    
-			                    case Format.STRING % __Format.STRING__
+			                    case 2 % Format.STRING
 			                        if col == dict.get('IT_KEY')
 			                            if ~dict.get('CONTAINS_KEY', newdata)
 			                                % change brain region id
@@ -1577,49 +1498,49 @@ classdef PanelPropIDictTable < PanelProp
 			                            dict.get('IT', i).set(col, newdata)
 			                        end
 			                        
-			                    case Format.STRINGLIST % __Format.STRINGLIST__
+			                    case 3 % Format.STRINGLIST
 			                        %
 			                    
-			                    case Format.LOGICAL % __Format.LOGICAL__
+			                    case 4 % Format.LOGICAL
 			                        dict.get('IT', i).set(col, newdata)
 			    
-			                    case Format.OPTION % __Format.OPTION__
+			                    case 5 % Format.OPTION
 			                        dict.get('IT', i).set(col, newdata)
 			    
-			                    case Format.CLASS % __Format.CLASS__
-			                        %%%__WARN_TBI__
+			                    case 6 % Format.CLASS
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			    
-			                    case Format.CLASSLIST % __Format.CLASSLIST__
+			                    case 7 % Format.CLASSLIST
 			                        %
 			    
-			                    case Format.ITEM % __Format.ITEM__
+			                    case 8 % Format.ITEM
 			                        %
 			    
-			                    case Format.ITEMLIST % __Format.ITEMLIST__
-			                        %%%__WARN_TBI__
+			                    case 9 % Format.ITEMLIST
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			    
-			                    case Format.IDICT % __Format.IDICT__
+			                    case 10 % Format.IDICT
 			                        %
 			    
-			                    case Format.SCALAR % __Format.SCALAR__
+			                    case 11 % Format.SCALAR
 			                        dict.get('IT', i).set(col, newdata)
 			    
-			                    case {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX} % {__Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__}
+			                    case {12 13 14 15} % {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX}
 			                        %
 			    
-			                    case Format.CELL % __Format.CELL__
+			                    case 16 % Format.CELL
 			                        %
 			    
-			                    case Format.NET % __Format.NET__
-			                        %%%__WARN_TBI__
+			                    case 17 % Format.NET
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			    
-			                    case Format.HANDLE % __Format.HANDLE__
-			                        %%%__WARN_TBI__
+			                    case 18 % Format.HANDLE
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			
-			                    case Format.HANDLELIST % __Format.HANDLELIST__
-			                        %%%__WARN_TBI__
+			                    case 19 % Format.HANDLELIST
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			                
-			                    case Format.COLOR % __Format.COLOR__
+			                    case 20 % Format.COLOR
 			                        try
 			                            rgb = [hex2dec(newdata(1:2))/255 hex2dec(newdata(3:4))/255 hex2dec(newdata(5:6))/255];
 			                            dict.get('IT', i).set(col, rgb)
@@ -1627,18 +1548,18 @@ classdef PanelPropIDictTable < PanelProp
 			                            %
 			                        end
 			    
-			                    case Format.ALPHA % __Format.ALPHA__
+			                    case 21 % Format.ALPHA
 			                        dict.get('IT', i).set(col, min(abs(newdata), 1))
 			    
-			                    case Format.SIZE % __Format.SIZE__
+			                    case 22 % Format.SIZE
 			                        if newdata ~= 0
 			                            dict.get('IT', i).set(col, abs(newdata))
 			                        end
 			    
-			                    case Format.MARKER % __Format.MARKER__
+			                    case 23 % Format.MARKER
 			                        dict.get('IT', i).set(col, newdata)
 			    
-			                    case Format.LINE % __Format.LINE__
+			                    case 24 % Format.LINE
 			                        dict.get('IT', i).set(col, newdata)
 			                end
 			            end        
@@ -1831,70 +1752,70 @@ classdef PanelPropIDictTable < PanelProp
 			                end
 			            elseif Element.existsProp(it_class, col) % prop = col;
 			                switch Element.getPropFormat(it_class, col)
-			                    case Format.EMPTY % __Format.EMPTY__
-			                        %%%__WARN_TBI__
+			                    case 1 % Format.EMPTY
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			                    
-			                    case Format.STRING % __Format.STRING__
+			                    case 2 % Format.STRING
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.STRINGLIST % __Format.STRINGLIST__
+			                    case 3 % Format.STRINGLIST
 			                        data{i, c} = cell2str(dict.get('IT', i).get(col));
 			                        
-			                    case Format.LOGICAL % __Format.LOGICAL__
+			                    case 4 % Format.LOGICAL
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.OPTION % __Format.OPTION__
+			                    case 5 % Format.OPTION
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.CLASS % __Format.CLASS__
-			                        %%%__WARN_TBI__
+			                    case 6 % Format.CLASS
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			
-			                    case Format.CLASSLIST % __Format.CLASSLIST__
+			                    case 7 % Format.CLASSLIST
 			                        data{i, c} = cell2str(dict.get('IT', i).get(col));
 			                        
-			                    case Format.ITEM % __Format.ITEM__
+			                    case 8 % Format.ITEM
 			                        data{i, c} = dict.get('IT', i).get(col).get('TOSTRING');
 			                        
-			                    case Format.ITEMLIST % __Format.ITEMLIST__
-			                        %%%__WARN_TBI__
+			                    case 9 % Format.ITEMLIST
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			
-			                    case Format.IDICT % __Format.IDICT__
+			                    case 10 % Format.IDICT
 			                        data{i, c} = dict.get('IT', i).get(col).get('TOSTRING');
 			                        
-			                    case Format.SCALAR % __Format.SCALAR__
+			                    case 11 % Format.SCALAR
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX} % {__Format.RVECTOR__ __Format.CVECTOR__ __Format.MATRIX__ __Format.SMATRIX__}
+			                    case {12 13 14 15} % {Format.RVECTOR Format.CVECTOR Format.MATRIX Format.SMATRIX}
 			                        prop_value = dict.get('IT', i).get(col);
 			                        data{i, c} = ['[' int2str(size(prop_value, 1)) ' x ' int2str(size(prop_value, 2)) ']'];
 			                        
-			                    case Format.CELL % __Format.CELL__
+			                    case 16 % Format.CELL
 			                        prop_value = dict.get('IT', i).get(col);
 			                        data{i, c} = ['{' int2str(size(prop_value, 1)) ' x ' int2str(size(prop_value, 2)) '}'];
 			
-			                    case Format.NET % __Format.NET__
-			                        %%%__WARN_TBI__
+			                    case 17 % Format.NET
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			                        
-			                    case Format.HANDLE % __Format.HANDLE__
-			                        %%%__WARN_TBI__
+			                    case 18 % Format.HANDLE
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			
-			                    case Format.HANDLELIST % __Format.HANDLELIST__
-			                        %%%__WARN_TBI__
+			                    case 19 % Format.HANDLELIST
+			                        warning([BRAPH2.STR ':PanelPropIDictTable'], [BRAPH2.STR ':PanelPropIDictTable \nThis functionality is not implemented yet.\nYou can contact the BRAPH2 developers and ask for it, \nor, even better, implement it yourself and share it with the community!'])
 			
-			                    case Format.COLOR % __Format.COLOR__
+			                    case 20 % Format.COLOR
 			                        rgb = dict.get('IT', i).get(col);
 			                        data{i, c} = [dec2hex(round(rgb(1) * 255), 2) dec2hex(round(rgb(2) * 255), 2) dec2hex(round(rgb(3) * 255), 2)];
 			                        
-			                    case Format.ALPHA % __Format.ALPHA__
+			                    case 21 % Format.ALPHA
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.SIZE % __Format.SIZE__
+			                    case 22 % Format.SIZE
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.MARKER % __Format.MARKER__
+			                    case 23 % Format.MARKER
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                        
-			                    case Format.LINE % __Format.LINE__
+			                    case 24 % Format.LINE
 			                        data{i, c} = dict.get('IT', i).get(col);
 			                end
 			            end
@@ -1960,7 +1881,7 @@ classdef PanelPropIDictTable < PanelProp
 			        if isempty(styles_cell)
 			            for c = 1:1:length(cols)
 			                col = cols(c);
-			                if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)                            
+			                if col > 0 && isequal(Element.getPropFormat(it_class, col), 20)                            
 			                    for i = 1:1:dict.get('LENGTH')
 			                        addStyle(pr.get('TABLE'), ...
 			                            uistyle('FontColor', dict.get('IT', i).get(col)), ...
@@ -1972,7 +1893,7 @@ classdef PanelPropIDictTable < PanelProp
 			        else
 			            for c = 1:1:length(cols)
 			                col = cols(c);
-			                if col > 0 && isequal(Element.getPropFormat(it_class, col), Format.COLOR)
+			                if col > 0 && isequal(Element.getPropFormat(it_class, col), 20)
 			                    for i = 1:1:dict.get('LENGTH')
 			                        cell_to_be_removed = find(cellfun(@(x) isequal(x, [i, c]), pr.get('TABLE').StyleConfigurations.TargetIndex));
 			                        if ~isempty(cell_to_be_removed)

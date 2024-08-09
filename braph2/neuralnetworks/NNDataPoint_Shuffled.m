@@ -5,6 +5,19 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 	% A shuffled neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its shuffled inputs and original targets for multi-layer perceptron neural network analysis.
 	% The shuffled inputs are used to evaluate the impact of specific feature (or composite features) on the performance of the multi-layer perceptron neural network.
 	%
+	% The list of NNDataPoint_Shuffled properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the shuffled data point for neural network analysis .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the shuffled data point for neural network analysis.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the shuffled data point for neural network analysis.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the shuffled data point for neural network analysis.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the shuffled data point for neural network analysis.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the shuffled data point for neural network analysis.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the shuffled data point for neural network analysis.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point for neural network analysis.
+	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+	%  <strong>11</strong> <strong>SHUFFLED_INPUT</strong> 	SHUFFLED_INPUT (data, cell) is the shuffled input value for this data point.
+	%
 	% NNDataPoint_Shuffled methods (constructor):
 	%  NNDataPoint_Shuffled - constructor
 	%
@@ -94,10 +107,10 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 	% See also NNDataPoint, NNDataset.
 	
 	properties (Constant) % properties
-		SHUFFLED_INPUT = NNDataPoint.getPropNumber() + 1;
+		SHUFFLED_INPUT = 11; %CET: Computational Efficiency Trick
 		SHUFFLED_INPUT_TAG = 'SHUFFLED_INPUT';
-		SHUFFLED_INPUT_CATEGORY = Category.DATA;
-		SHUFFLED_INPUT_FORMAT = Format.CELL;
+		SHUFFLED_INPUT_CATEGORY = 4;
+		SHUFFLED_INPUT_FORMAT = 16;
 	end
 	methods % constructor
 		function dp = NNDataPoint_Shuffled(varargin)
@@ -110,6 +123,18 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNDataPoint_Shuffled properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the shuffled data point for neural network analysis .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the shuffled data point for neural network analysis.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the shuffled data point for neural network analysis.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the shuffled data point for neural network analysis.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the shuffled data point for neural network analysis.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the shuffled data point for neural network analysis.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the shuffled data point for neural network analysis.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point for neural network analysis.
+			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target value for this data point.
+			%  <strong>11</strong> <strong>SHUFFLED_INPUT</strong> 	SHUFFLED_INPUT (data, cell) is the shuffled input value for this data point.
 			%
 			% See also Category, Format.
 			
@@ -147,7 +172,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNDataPoint_Shuffled', [], [], true);
+			subclass_list = { 'NNDataPoint_Shuffled' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of shuffled neural network data point for multi-layer perceptron.
@@ -168,52 +193,28 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					NNDataPoint.getProps() ...
-						NNDataPoint_Shuffled.SHUFFLED_INPUT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.DATA) ...
-						NNDataPoint_Shuffled.SHUFFLED_INPUT ...
-						];
-				case Category.RESULT
-					prop_list = [
-						NNDataPoint.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						NNDataPoint.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 11];
+				case 5 % Category.RESULT
+					prop_list = [9 10];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -234,7 +235,29 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNDataPoint_Shuffled.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 11;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 2;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in shuffled neural network data point for multi-layer perceptron/error.
@@ -262,14 +285,14 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNDataPoint_Shuffled.getProps());
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput'], ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNDataPoint_Shuffled.'] ...
 					)
 			end
@@ -300,15 +323,14 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			nndatapoint_shuffled_tag_list = cellfun(@(x) NNDataPoint_Shuffled.getPropTag(x), num2cell(NNDataPoint_Shuffled.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nndatapoint_shuffled_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SHUFFLED_INPUT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput'], ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNDataPoint_Shuffled.'] ...
 					)
 			end
@@ -334,8 +356,7 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nndatapoint_shuffled_tag_list = cellfun(@(x) NNDataPoint_Shuffled.getPropTag(x), num2cell(NNDataPoint_Shuffled.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nndatapoint_shuffled_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SHUFFLED_INPUT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -363,14 +384,9 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNDataPoint_Shuffled.SHUFFLED_INPUT
-						tag = NNDataPoint_Shuffled.SHUFFLED_INPUT_TAG;
-					otherwise
-						tag = getPropTag@NNDataPoint(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nndatapoint_shuffled_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SHUFFLED_INPUT' };
+				tag = nndatapoint_shuffled_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -395,12 +411,9 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
-			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT
-					prop_category = NNDataPoint_Shuffled.SHUFFLED_INPUT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@NNDataPoint(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatapoint_shuffled_category_list = { 1  1  1  3  4  2  2  6  5  5  4 };
+			prop_category = nndatapoint_shuffled_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -424,12 +437,9 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
-			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT
-					prop_format = NNDataPoint_Shuffled.SHUFFLED_INPUT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@NNDataPoint(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatapoint_shuffled_format_list = { 2  2  2  8  2  2  2  2  16  16  16 };
+			prop_format = nndatapoint_shuffled_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -453,28 +463,9 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
-			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT
-					prop_description = 'SHUFFLED_INPUT (data, cell) is the shuffled input value for this data point.';
-				case NNDataPoint_Shuffled.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the shuffled data point for neural network analysis .';
-				case NNDataPoint_Shuffled.NAME
-					prop_description = 'NAME (constant, string) is the name of the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.ID
-					prop_description = 'ID (data, string) is a few-letter code for the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the shuffled data point for neural network analysis.';
-				case NNDataPoint_Shuffled.INPUT
-					prop_description = 'INPUT (result, cell) is the input value for this data point for neural network analysis.';
-				otherwise
-					prop_description = getPropDescription@NNDataPoint(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatapoint_shuffled_description_list = { 'ELCLASS (constant, string) is the class of the shuffled data point for neural network analysis .'  'NAME (constant, string) is the name of the shuffled data point for neural network analysis.'  'DESCRIPTION (constant, string) is the description of the shuffled data point for neural network analysis.'  'TEMPLATE (parameter, item) is the template of the shuffled data point for neural network analysis.'  'ID (data, string) is a few-letter code for the shuffled data point for neural network analysis.'  'LABEL (metadata, string) is an extended label of the shuffled data point for neural network analysis.'  'NOTES (metadata, string) are some specific notes about the shuffled data point for neural network analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point for neural network analysis.'  'TARGET (result, cell) is the target value for this data point.'  'SHUFFLED_INPUT (data, cell) is the shuffled input value for this data point.' };
+			prop_description = nndatapoint_shuffled_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -498,10 +489,10 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
-			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case NNDataPoint_Shuffled.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 11 % NNDataPoint_Shuffled.SHUFFLED_INPUT
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % NNDataPoint_Shuffled.TEMPLATE
 					prop_settings = 'NNDataPoint_Shuffled';
 				otherwise
 					prop_settings = getPropSettings@NNDataPoint(prop);
@@ -529,22 +520,22 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
-			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT
-					prop_default = Format.getFormatDefault(Format.CELL, NNDataPoint_Shuffled.getPropSettings(prop));
-				case NNDataPoint_Shuffled.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 11 % NNDataPoint_Shuffled.SHUFFLED_INPUT
+					prop_default = Format.getFormatDefault(16, NNDataPoint_Shuffled.getPropSettings(prop));
+				case 1 % NNDataPoint_Shuffled.ELCLASS
 					prop_default = 'NNDataPoint_Shuffled';
-				case NNDataPoint_Shuffled.NAME
+				case 2 % NNDataPoint_Shuffled.NAME
 					prop_default = 'Shuffled Neural Network Data Point';
-				case NNDataPoint_Shuffled.DESCRIPTION
+				case 3 % NNDataPoint_Shuffled.DESCRIPTION
 					prop_default = 'A shuffled neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its shuffled inputs and original targets for multi-layer perceptron neural network analysis. The shuffled inputs are used to evaluate the impact of specific feature (or composite features) on the performance of the multi-layer perceptron neural network.';
-				case NNDataPoint_Shuffled.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNDataPoint_Shuffled.getPropSettings(prop));
-				case NNDataPoint_Shuffled.ID
+				case 4 % NNDataPoint_Shuffled.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNDataPoint_Shuffled.getPropSettings(prop));
+				case 5 % NNDataPoint_Shuffled.ID
 					prop_default = 'NNDataPoint_Shuffled ID';
-				case NNDataPoint_Shuffled.LABEL
+				case 6 % NNDataPoint_Shuffled.LABEL
 					prop_default = 'NNDataPoint_Shuffled label';
-				case NNDataPoint_Shuffled.NOTES
+				case 7 % NNDataPoint_Shuffled.NOTES
 					prop_default = 'NNDataPoint_Permuted notes';
 				otherwise
 					prop_default = getPropDefault@NNDataPoint(prop);
@@ -591,15 +582,15 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			% 
 			% DP.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNDataPoint_Shuffled:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNDataPoint_Shuffled:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DP.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of DP.
-			%   Error id: €BRAPH2.STR€:NNDataPoint_Shuffled:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNDataPoint_Shuffled:WrongInput
 			%  Element.CHECKPROP(NNDataPoint_Shuffled, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDataPoint_Shuffled.
-			%   Error id: €BRAPH2.STR€:NNDataPoint_Shuffled:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNDataPoint_Shuffled:WrongInput
 			%  DP.CHECKPROP(NNDataPoint_Shuffled, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDataPoint_Shuffled.
-			%   Error id: €BRAPH2.STR€:NNDataPoint_Shuffled:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNDataPoint_Shuffled:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(DP) and Element.CHECKPROP('NNDataPoint_Shuffled')
 			%  are less computationally efficient.
@@ -610,12 +601,12 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			prop = NNDataPoint_Shuffled.getPropProp(pointer);
 			
 			switch prop
-				case NNDataPoint_Shuffled.SHUFFLED_INPUT % __NNDataPoint_Shuffled.SHUFFLED_INPUT__
-					check = Format.checkFormat(Format.CELL, value, NNDataPoint_Shuffled.getPropSettings(prop));
-				case NNDataPoint_Shuffled.TEMPLATE % __NNDataPoint_Shuffled.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNDataPoint_Shuffled.getPropSettings(prop));
+				case 11 % NNDataPoint_Shuffled.SHUFFLED_INPUT
+					check = Format.checkFormat(16, value, NNDataPoint_Shuffled.getPropSettings(prop));
+				case 4 % NNDataPoint_Shuffled.TEMPLATE
+					check = Format.checkFormat(8, value, NNDataPoint_Shuffled.getPropSettings(prop));
 				otherwise
-					if prop <= NNDataPoint.getPropNumber()
+					if prop <= 10
 						check = checkProp@NNDataPoint(prop, value);
 					end
 			end
@@ -624,8 +615,8 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDataPoint_Shuffled:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput'], ...
+					['BRAPH2' ':NNDataPoint_Shuffled:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNDataPoint_Shuffled.getPropTag(prop) ' (' NNDataPoint_Shuffled.getFormatTag(NNDataPoint_Shuffled.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -636,27 +627,27 @@ classdef NNDataPoint_Shuffled < NNDataPoint
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNDataPoint_Shuffled.INPUT % __NNDataPoint_Shuffled.INPUT__
-					rng_settings_ = rng(); rng(dp.getPropSeed(NNDataPoint_Shuffled.INPUT), 'twister')
+				case 9 % NNDataPoint_Shuffled.INPUT
+					rng_settings_ = rng(); rng(dp.getPropSeed(9), 'twister')
 					
 					value = dp.get('SHUFFLED_INPUT');
 					
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= NNDataPoint.getPropNumber()
+					if prop <= 10
 						value = calculateValue@NNDataPoint(dp, prop, varargin{:});
 					else
 						value = calculateValue@Element(dp, prop, varargin{:});

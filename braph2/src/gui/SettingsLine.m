@@ -7,6 +7,33 @@ classdef SettingsLine < Settings
 	%  symbol marker, symbol size, symbol face color, and symbol edge color.
 	% The handle must be a line.
 	%
+	% The list of SettingsLine properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the line settings.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the line settings.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the line settings.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line settings.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line settings.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line settings.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line settings.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+	%  <strong>16</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
+	%  <strong>17</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of the y-coordinates.
+	%  <strong>18</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
+	%  <strong>19</strong> <strong>LINESTYLE</strong> 	LINESTYLE (figure, line) is the line style.
+	%  <strong>20</strong> <strong>LINEWIDTH</strong> 	LINEWIDTH (figure, size) is the line width.
+	%  <strong>21</strong> <strong>LINECOLOR</strong> 	LINECOLOR (figure, color) is the line RGB color.
+	%  <strong>22</strong> <strong>SYMBOL</strong> 	SYMBOL (figure, marker) is the symbol style.
+	%  <strong>23</strong> <strong>SYMBOLSIZE</strong> 	SYMBOLSIZE (figure, size) is the symbol size.
+	%  <strong>24</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+	%  <strong>25</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
+	%
 	% SettingsLine methods (constructor):
 	%  SettingsLine - constructor
 	%
@@ -96,60 +123,60 @@ classdef SettingsLine < Settings
 	% See also line, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		VISIBLE = Settings.getPropNumber() + 1;
+		VISIBLE = 15; %CET: Computational Efficiency Trick
 		VISIBLE_TAG = 'VISIBLE';
-		VISIBLE_CATEGORY = Category.FIGURE;
-		VISIBLE_FORMAT = Format.LOGICAL;
+		VISIBLE_CATEGORY = 8;
+		VISIBLE_FORMAT = 4;
 		
-		X = Settings.getPropNumber() + 2;
+		X = 16; %CET: Computational Efficiency Trick
 		X_TAG = 'X';
-		X_CATEGORY = Category.FIGURE;
-		X_FORMAT = Format.RVECTOR;
+		X_CATEGORY = 8;
+		X_FORMAT = 12;
 		
-		Y = Settings.getPropNumber() + 3;
+		Y = 17; %CET: Computational Efficiency Trick
 		Y_TAG = 'Y';
-		Y_CATEGORY = Category.FIGURE;
-		Y_FORMAT = Format.RVECTOR;
+		Y_CATEGORY = 8;
+		Y_FORMAT = 12;
 		
-		Z = Settings.getPropNumber() + 4;
+		Z = 18; %CET: Computational Efficiency Trick
 		Z_TAG = 'Z';
-		Z_CATEGORY = Category.FIGURE;
-		Z_FORMAT = Format.RVECTOR;
+		Z_CATEGORY = 8;
+		Z_FORMAT = 12;
 		
-		LINESTYLE = Settings.getPropNumber() + 5;
+		LINESTYLE = 19; %CET: Computational Efficiency Trick
 		LINESTYLE_TAG = 'LINESTYLE';
-		LINESTYLE_CATEGORY = Category.FIGURE;
-		LINESTYLE_FORMAT = Format.LINE;
+		LINESTYLE_CATEGORY = 8;
+		LINESTYLE_FORMAT = 24;
 		
-		LINEWIDTH = Settings.getPropNumber() + 6;
+		LINEWIDTH = 20; %CET: Computational Efficiency Trick
 		LINEWIDTH_TAG = 'LINEWIDTH';
-		LINEWIDTH_CATEGORY = Category.FIGURE;
-		LINEWIDTH_FORMAT = Format.SIZE;
+		LINEWIDTH_CATEGORY = 8;
+		LINEWIDTH_FORMAT = 22;
 		
-		LINECOLOR = Settings.getPropNumber() + 7;
+		LINECOLOR = 21; %CET: Computational Efficiency Trick
 		LINECOLOR_TAG = 'LINECOLOR';
-		LINECOLOR_CATEGORY = Category.FIGURE;
-		LINECOLOR_FORMAT = Format.COLOR;
+		LINECOLOR_CATEGORY = 8;
+		LINECOLOR_FORMAT = 20;
 		
-		SYMBOL = Settings.getPropNumber() + 8;
+		SYMBOL = 22; %CET: Computational Efficiency Trick
 		SYMBOL_TAG = 'SYMBOL';
-		SYMBOL_CATEGORY = Category.FIGURE;
-		SYMBOL_FORMAT = Format.MARKER;
+		SYMBOL_CATEGORY = 8;
+		SYMBOL_FORMAT = 23;
 		
-		SYMBOLSIZE = Settings.getPropNumber() + 9;
+		SYMBOLSIZE = 23; %CET: Computational Efficiency Trick
 		SYMBOLSIZE_TAG = 'SYMBOLSIZE';
-		SYMBOLSIZE_CATEGORY = Category.FIGURE;
-		SYMBOLSIZE_FORMAT = Format.SIZE;
+		SYMBOLSIZE_CATEGORY = 8;
+		SYMBOLSIZE_FORMAT = 22;
 		
-		EDGECOLOR = Settings.getPropNumber() + 10;
+		EDGECOLOR = 24; %CET: Computational Efficiency Trick
 		EDGECOLOR_TAG = 'EDGECOLOR';
-		EDGECOLOR_CATEGORY = Category.FIGURE;
-		EDGECOLOR_FORMAT = Format.COLOR;
+		EDGECOLOR_CATEGORY = 8;
+		EDGECOLOR_FORMAT = 20;
 		
-		FACECOLOR = Settings.getPropNumber() + 11;
+		FACECOLOR = 25; %CET: Computational Efficiency Trick
 		FACECOLOR_TAG = 'FACECOLOR';
-		FACECOLOR_CATEGORY = Category.FIGURE;
-		FACECOLOR_FORMAT = Format.COLOR;
+		FACECOLOR_CATEGORY = 8;
+		FACECOLOR_FORMAT = 20;
 	end
 	methods % constructor
 		function st = SettingsLine(varargin)
@@ -162,6 +189,32 @@ classdef SettingsLine < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SettingsLine properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the line settings.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the line settings.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the line settings.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line settings.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line settings.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line settings.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line settings.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+			%  <strong>16</strong> <strong>X</strong> 	X (figure, rvector) is the vector of the x-coordinates.
+			%  <strong>17</strong> <strong>Y</strong> 	Y (figure, rvector) is the vector of the y-coordinates.
+			%  <strong>18</strong> <strong>Z</strong> 	Z (figure, rvector) is the vector of the z-coordinates.
+			%  <strong>19</strong> <strong>LINESTYLE</strong> 	LINESTYLE (figure, line) is the line style.
+			%  <strong>20</strong> <strong>LINEWIDTH</strong> 	LINEWIDTH (figure, size) is the line width.
+			%  <strong>21</strong> <strong>LINECOLOR</strong> 	LINECOLOR (figure, color) is the line RGB color.
+			%  <strong>22</strong> <strong>SYMBOL</strong> 	SYMBOL (figure, marker) is the symbol style.
+			%  <strong>23</strong> <strong>SYMBOLSIZE</strong> 	SYMBOLSIZE (figure, size) is the symbol size.
+			%  <strong>24</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+			%  <strong>25</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
 			%
 			% See also Category, Format.
 			
@@ -199,7 +252,7 @@ classdef SettingsLine < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SettingsLine', [], [], true);
+			subclass_list = { 'SettingsLine' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of line settings.
@@ -220,72 +273,30 @@ classdef SettingsLine < Settings
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Settings.getProps() ...
-						SettingsLine.VISIBLE ...
-						SettingsLine.X ...
-						SettingsLine.Y ...
-						SettingsLine.Z ...
-						SettingsLine.LINESTYLE ...
-						SettingsLine.LINEWIDTH ...
-						SettingsLine.LINECOLOR ...
-						SettingsLine.SYMBOL ...
-						SettingsLine.SYMBOLSIZE ...
-						SettingsLine.EDGECOLOR ...
-						SettingsLine.FACECOLOR ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Settings.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Settings.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Settings.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Settings.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Settings.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Settings.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Settings.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Settings.getProps(Category.FIGURE) ...
-						SettingsLine.VISIBLE ...
-						SettingsLine.X ...
-						SettingsLine.Y ...
-						SettingsLine.Z ...
-						SettingsLine.LINESTYLE ...
-						SettingsLine.LINEWIDTH ...
-						SettingsLine.LINECOLOR ...
-						SettingsLine.SYMBOL ...
-						SettingsLine.SYMBOLSIZE ...
-						SettingsLine.EDGECOLOR ...
-						SettingsLine.FACECOLOR ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Settings.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 13 14];
+				case 8 % Category.FIGURE
+					prop_list = [15 16 17 18 19 20 21 22 23 24 25];
+				case 9 % Category.GUI
+					prop_list = [9 10 11 12];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -306,7 +317,31 @@ classdef SettingsLine < Settings
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SettingsLine.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 25;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 3;
+				case 8 % Category.FIGURE
+					prop_number = 11;
+				case 9 % Category.GUI
+					prop_number = 4;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in line settings/error.
@@ -334,14 +369,14 @@ classdef SettingsLine < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SettingsLine.getProps());
+			check = prop >= 1 && prop <= 25 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsLine.'] ...
 					)
 			end
@@ -372,15 +407,14 @@ classdef SettingsLine < Settings
 			%
 			% See also getProps, existsTag.
 			
-			settingsline_tag_list = cellfun(@(x) SettingsLine.getPropTag(x), num2cell(SettingsLine.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, settingsline_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'LINESTYLE'  'LINEWIDTH'  'LINECOLOR'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsLine.'] ...
 					)
 			end
@@ -406,8 +440,7 @@ classdef SettingsLine < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				settingsline_tag_list = cellfun(@(x) SettingsLine.getPropTag(x), num2cell(SettingsLine.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, settingsline_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'LINESTYLE'  'LINEWIDTH'  'LINECOLOR'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -435,34 +468,9 @@ classdef SettingsLine < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SettingsLine.VISIBLE
-						tag = SettingsLine.VISIBLE_TAG;
-					case SettingsLine.X
-						tag = SettingsLine.X_TAG;
-					case SettingsLine.Y
-						tag = SettingsLine.Y_TAG;
-					case SettingsLine.Z
-						tag = SettingsLine.Z_TAG;
-					case SettingsLine.LINESTYLE
-						tag = SettingsLine.LINESTYLE_TAG;
-					case SettingsLine.LINEWIDTH
-						tag = SettingsLine.LINEWIDTH_TAG;
-					case SettingsLine.LINECOLOR
-						tag = SettingsLine.LINECOLOR_TAG;
-					case SettingsLine.SYMBOL
-						tag = SettingsLine.SYMBOL_TAG;
-					case SettingsLine.SYMBOLSIZE
-						tag = SettingsLine.SYMBOLSIZE_TAG;
-					case SettingsLine.EDGECOLOR
-						tag = SettingsLine.EDGECOLOR_TAG;
-					case SettingsLine.FACECOLOR
-						tag = SettingsLine.FACECOLOR_TAG;
-					otherwise
-						tag = getPropTag@Settings(prop);
-				end
+				%CET: Computational Efficiency Trick
+				settingsline_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'LINESTYLE'  'LINEWIDTH'  'LINECOLOR'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' };
+				tag = settingsline_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -487,32 +495,9 @@ classdef SettingsLine < Settings
 			
 			prop = SettingsLine.getPropProp(pointer);
 			
-			switch prop
-				case SettingsLine.VISIBLE
-					prop_category = SettingsLine.VISIBLE_CATEGORY;
-				case SettingsLine.X
-					prop_category = SettingsLine.X_CATEGORY;
-				case SettingsLine.Y
-					prop_category = SettingsLine.Y_CATEGORY;
-				case SettingsLine.Z
-					prop_category = SettingsLine.Z_CATEGORY;
-				case SettingsLine.LINESTYLE
-					prop_category = SettingsLine.LINESTYLE_CATEGORY;
-				case SettingsLine.LINEWIDTH
-					prop_category = SettingsLine.LINEWIDTH_CATEGORY;
-				case SettingsLine.LINECOLOR
-					prop_category = SettingsLine.LINECOLOR_CATEGORY;
-				case SettingsLine.SYMBOL
-					prop_category = SettingsLine.SYMBOL_CATEGORY;
-				case SettingsLine.SYMBOLSIZE
-					prop_category = SettingsLine.SYMBOLSIZE_CATEGORY;
-				case SettingsLine.EDGECOLOR
-					prop_category = SettingsLine.EDGECOLOR_CATEGORY;
-				case SettingsLine.FACECOLOR
-					prop_category = SettingsLine.FACECOLOR_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsline_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8  8  8  8  8  8  8 };
+			prop_category = settingsline_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -536,32 +521,9 @@ classdef SettingsLine < Settings
 			
 			prop = SettingsLine.getPropProp(pointer);
 			
-			switch prop
-				case SettingsLine.VISIBLE
-					prop_format = SettingsLine.VISIBLE_FORMAT;
-				case SettingsLine.X
-					prop_format = SettingsLine.X_FORMAT;
-				case SettingsLine.Y
-					prop_format = SettingsLine.Y_FORMAT;
-				case SettingsLine.Z
-					prop_format = SettingsLine.Z_FORMAT;
-				case SettingsLine.LINESTYLE
-					prop_format = SettingsLine.LINESTYLE_FORMAT;
-				case SettingsLine.LINEWIDTH
-					prop_format = SettingsLine.LINEWIDTH_FORMAT;
-				case SettingsLine.LINECOLOR
-					prop_format = SettingsLine.LINECOLOR_FORMAT;
-				case SettingsLine.SYMBOL
-					prop_format = SettingsLine.SYMBOL_FORMAT;
-				case SettingsLine.SYMBOLSIZE
-					prop_format = SettingsLine.SYMBOLSIZE_FORMAT;
-				case SettingsLine.EDGECOLOR
-					prop_format = SettingsLine.EDGECOLOR_FORMAT;
-				case SettingsLine.FACECOLOR
-					prop_format = SettingsLine.FACECOLOR_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsline_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  4  12  12  12  24  22  20  23  22  20  20 };
+			prop_format = settingsline_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -585,46 +547,9 @@ classdef SettingsLine < Settings
 			
 			prop = SettingsLine.getPropProp(pointer);
 			
-			switch prop
-				case SettingsLine.VISIBLE
-					prop_description = 'VISIBLE (figure, logical) determines whether the symbol is visible.';
-				case SettingsLine.X
-					prop_description = 'X (figure, rvector) is the vector of the x-coordinates.';
-				case SettingsLine.Y
-					prop_description = 'Y (figure, rvector) is the vector of the y-coordinates.';
-				case SettingsLine.Z
-					prop_description = 'Z (figure, rvector) is the vector of the z-coordinates.';
-				case SettingsLine.LINESTYLE
-					prop_description = 'LINESTYLE (figure, line) is the line style.';
-				case SettingsLine.LINEWIDTH
-					prop_description = 'LINEWIDTH (figure, size) is the line width.';
-				case SettingsLine.LINECOLOR
-					prop_description = 'LINECOLOR (figure, color) is the line RGB color.';
-				case SettingsLine.SYMBOL
-					prop_description = 'SYMBOL (figure, marker) is the symbol style.';
-				case SettingsLine.SYMBOLSIZE
-					prop_description = 'SYMBOLSIZE (figure, size) is the symbol size.';
-				case SettingsLine.EDGECOLOR
-					prop_description = 'EDGECOLOR (figure, color) is the symbol RGB edge color.';
-				case SettingsLine.FACECOLOR
-					prop_description = 'FACECOLOR (figure, color) is the symbol RGB face color.';
-				case SettingsLine.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the line settings.';
-				case SettingsLine.NAME
-					prop_description = 'NAME (constant, string) is the name of the line settings.';
-				case SettingsLine.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the line settings.';
-				case SettingsLine.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the line settings.';
-				case SettingsLine.ID
-					prop_description = 'ID (data, string) is a few-letter code for the line settings.';
-				case SettingsLine.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the line settings.';
-				case SettingsLine.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the line settings.';
-				otherwise
-					prop_description = getPropDescription@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsline_description_list = { 'ELCLASS (constant, string) is the class of the line settings.'  'NAME (constant, string) is the name of the line settings.'  'DESCRIPTION (constant, string) is the description of the line settings.'  'TEMPLATE (parameter, item) is the template of the line settings.'  'ID (data, string) is a few-letter code for the line settings.'  'LABEL (metadata, string) is an extended label of the line settings.'  'NOTES (metadata, string) are some specific notes about the line settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, rvector) is the vector of the x-coordinates.'  'Y (figure, rvector) is the vector of the y-coordinates.'  'Z (figure, rvector) is the vector of the z-coordinates.'  'LINESTYLE (figure, line) is the line style.'  'LINEWIDTH (figure, size) is the line width.'  'LINECOLOR (figure, color) is the line RGB color.'  'SYMBOL (figure, marker) is the symbol style.'  'SYMBOLSIZE (figure, size) is the symbol size.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'FACECOLOR (figure, color) is the symbol RGB face color.' };
+			prop_description = settingsline_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -648,30 +573,30 @@ classdef SettingsLine < Settings
 			
 			prop = SettingsLine.getPropProp(pointer);
 			
-			switch prop
-				case SettingsLine.VISIBLE
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case SettingsLine.X
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case SettingsLine.Y
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case SettingsLine.Z
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case SettingsLine.LINESTYLE
-					prop_settings = Format.getFormatSettings(Format.LINE);
-				case SettingsLine.LINEWIDTH
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case SettingsLine.LINECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsLine.SYMBOL
-					prop_settings = Format.getFormatSettings(Format.MARKER);
-				case SettingsLine.SYMBOLSIZE
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case SettingsLine.EDGECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsLine.FACECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsLine.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsLine.VISIBLE
+					prop_settings = Format.getFormatSettings(4);
+				case 16 % SettingsLine.X
+					prop_settings = Format.getFormatSettings(12);
+				case 17 % SettingsLine.Y
+					prop_settings = Format.getFormatSettings(12);
+				case 18 % SettingsLine.Z
+					prop_settings = Format.getFormatSettings(12);
+				case 19 % SettingsLine.LINESTYLE
+					prop_settings = Format.getFormatSettings(24);
+				case 20 % SettingsLine.LINEWIDTH
+					prop_settings = Format.getFormatSettings(22);
+				case 21 % SettingsLine.LINECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 22 % SettingsLine.SYMBOL
+					prop_settings = Format.getFormatSettings(23);
+				case 23 % SettingsLine.SYMBOLSIZE
+					prop_settings = Format.getFormatSettings(22);
+				case 24 % SettingsLine.EDGECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 25 % SettingsLine.FACECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 4 % SettingsLine.TEMPLATE
 					prop_settings = 'SettingsLine';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -699,42 +624,42 @@ classdef SettingsLine < Settings
 			
 			prop = SettingsLine.getPropProp(pointer);
 			
-			switch prop
-				case SettingsLine.VISIBLE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsLine.VISIBLE
 					prop_default = true;
-				case SettingsLine.X
-					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsLine.getPropSettings(prop));
-				case SettingsLine.Y
-					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsLine.getPropSettings(prop));
-				case SettingsLine.Z
-					prop_default = Format.getFormatDefault(Format.RVECTOR, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINESTYLE
-					prop_default = Format.getFormatDefault(Format.LINE, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINEWIDTH
-					prop_default = Format.getFormatDefault(Format.SIZE, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINECOLOR
+				case 16 % SettingsLine.X
+					prop_default = Format.getFormatDefault(12, SettingsLine.getPropSettings(prop));
+				case 17 % SettingsLine.Y
+					prop_default = Format.getFormatDefault(12, SettingsLine.getPropSettings(prop));
+				case 18 % SettingsLine.Z
+					prop_default = Format.getFormatDefault(12, SettingsLine.getPropSettings(prop));
+				case 19 % SettingsLine.LINESTYLE
+					prop_default = Format.getFormatDefault(24, SettingsLine.getPropSettings(prop));
+				case 20 % SettingsLine.LINEWIDTH
+					prop_default = Format.getFormatDefault(22, SettingsLine.getPropSettings(prop));
+				case 21 % SettingsLine.LINECOLOR
 					prop_default = [0 0 0];
-				case SettingsLine.SYMBOL
-					prop_default = Format.getFormatDefault(Format.MARKER, SettingsLine.getPropSettings(prop));
-				case SettingsLine.SYMBOLSIZE
+				case 22 % SettingsLine.SYMBOL
+					prop_default = Format.getFormatDefault(23, SettingsLine.getPropSettings(prop));
+				case 23 % SettingsLine.SYMBOLSIZE
 					prop_default = 10;
-				case SettingsLine.EDGECOLOR
+				case 24 % SettingsLine.EDGECOLOR
 					prop_default = [0 0 0];
-				case SettingsLine.FACECOLOR
-					prop_default = BRAPH2.COL;
-				case SettingsLine.ELCLASS
+				case 25 % SettingsLine.FACECOLOR
+					prop_default = [0.9 0.4 0.1];
+				case 1 % SettingsLine.ELCLASS
 					prop_default = 'SettingsLine';
-				case SettingsLine.NAME
+				case 2 % SettingsLine.NAME
 					prop_default = 'Line Settings';
-				case SettingsLine.DESCRIPTION
+				case 3 % SettingsLine.DESCRIPTION
 					prop_default = 'A Line Settings (SettingsSymbol) provides the settings for a line, including visibility, x, y, z, line color, line width, line style, symbol marker, symbol size, symbol face color, and symbol edge color. The handle must be a line.';
-				case SettingsLine.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, SettingsLine.getPropSettings(prop));
-				case SettingsLine.ID
+				case 4 % SettingsLine.TEMPLATE
+					prop_default = Format.getFormatDefault(8, SettingsLine.getPropSettings(prop));
+				case 5 % SettingsLine.ID
 					prop_default = 'SettingsLine ID';
-				case SettingsLine.LABEL
+				case 6 % SettingsLine.LABEL
 					prop_default = 'SettingsLine label';
-				case SettingsLine.NOTES
+				case 7 % SettingsLine.NOTES
 					prop_default = 'SettingsLine notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -775,8 +700,8 @@ classdef SettingsLine < Settings
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
+			% Conditioning is only used for props of 2,
+			%  3, 4, 8 and 9.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -784,17 +709,17 @@ classdef SettingsLine < Settings
 			prop = SettingsLine.getPropProp(pointer);
 			
 			switch prop
-				case SettingsLine.X % __SettingsLine.X__
+				case 16 % SettingsLine.X
 					value = value(:)';
 					
-				case SettingsLine.Y % __SettingsLine.Y__
+				case 17 % SettingsLine.Y
 					value = value(:)';
 					
-				case SettingsLine.Z % __SettingsLine.Z__
+				case 18 % SettingsLine.Z
 					value = value(:)';
 					
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						value = conditioning@Settings(pointer, value);
 					end
 			end
@@ -815,15 +740,15 @@ classdef SettingsLine < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SettingsLine:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SettingsLine:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: €BRAPH2.STR€:SettingsLine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsLine:WrongInput
 			%  Element.CHECKPROP(SettingsLine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsLine.
-			%   Error id: €BRAPH2.STR€:SettingsLine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsLine:WrongInput
 			%  ST.CHECKPROP(SettingsLine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsLine.
-			%   Error id: €BRAPH2.STR€:SettingsLine:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SettingsLine:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsLine')
 			%  are less computationally efficient.
@@ -834,32 +759,32 @@ classdef SettingsLine < Settings
 			prop = SettingsLine.getPropProp(pointer);
 			
 			switch prop
-				case SettingsLine.VISIBLE % __SettingsLine.VISIBLE__
-					check = Format.checkFormat(Format.LOGICAL, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.X % __SettingsLine.X__
-					check = Format.checkFormat(Format.RVECTOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.Y % __SettingsLine.Y__
-					check = Format.checkFormat(Format.RVECTOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.Z % __SettingsLine.Z__
-					check = Format.checkFormat(Format.RVECTOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINESTYLE % __SettingsLine.LINESTYLE__
-					check = Format.checkFormat(Format.LINE, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINEWIDTH % __SettingsLine.LINEWIDTH__
-					check = Format.checkFormat(Format.SIZE, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.LINECOLOR % __SettingsLine.LINECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.SYMBOL % __SettingsLine.SYMBOL__
-					check = Format.checkFormat(Format.MARKER, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.SYMBOLSIZE % __SettingsLine.SYMBOLSIZE__
-					check = Format.checkFormat(Format.SIZE, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.EDGECOLOR % __SettingsLine.EDGECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.FACECOLOR % __SettingsLine.FACECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsLine.getPropSettings(prop));
-				case SettingsLine.TEMPLATE % __SettingsLine.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, SettingsLine.getPropSettings(prop));
+				case 15 % SettingsLine.VISIBLE
+					check = Format.checkFormat(4, value, SettingsLine.getPropSettings(prop));
+				case 16 % SettingsLine.X
+					check = Format.checkFormat(12, value, SettingsLine.getPropSettings(prop));
+				case 17 % SettingsLine.Y
+					check = Format.checkFormat(12, value, SettingsLine.getPropSettings(prop));
+				case 18 % SettingsLine.Z
+					check = Format.checkFormat(12, value, SettingsLine.getPropSettings(prop));
+				case 19 % SettingsLine.LINESTYLE
+					check = Format.checkFormat(24, value, SettingsLine.getPropSettings(prop));
+				case 20 % SettingsLine.LINEWIDTH
+					check = Format.checkFormat(22, value, SettingsLine.getPropSettings(prop));
+				case 21 % SettingsLine.LINECOLOR
+					check = Format.checkFormat(20, value, SettingsLine.getPropSettings(prop));
+				case 22 % SettingsLine.SYMBOL
+					check = Format.checkFormat(23, value, SettingsLine.getPropSettings(prop));
+				case 23 % SettingsLine.SYMBOLSIZE
+					check = Format.checkFormat(22, value, SettingsLine.getPropSettings(prop));
+				case 24 % SettingsLine.EDGECOLOR
+					check = Format.checkFormat(20, value, SettingsLine.getPropSettings(prop));
+				case 25 % SettingsLine.FACECOLOR
+					check = Format.checkFormat(20, value, SettingsLine.getPropSettings(prop));
+				case 4 % SettingsLine.TEMPLATE
+					check = Format.checkFormat(8, value, SettingsLine.getPropSettings(prop));
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -868,8 +793,8 @@ classdef SettingsLine < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsLine:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsLine.getPropTag(prop) ' (' SettingsLine.getFormatTag(SettingsLine.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -889,7 +814,7 @@ classdef SettingsLine < Settings
 			%  checkValue.
 			
 			switch prop
-				case SettingsLine.VISIBLE % __SettingsLine.VISIBLE__
+				case 15 % SettingsLine.VISIBLE
 					h = st.get('H');
 					if check_graphics(h, 'line') && ( ...
 					        get(h, 'Visible') ~= st.get('VISIBLE') || ...
@@ -924,7 +849,7 @@ classdef SettingsLine < Settings
 					end
 					
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						postprocessing@Settings(st, prop);
 					end
 			end

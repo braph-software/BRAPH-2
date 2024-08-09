@@ -18,6 +18,59 @@ classdef PanelPropCell < PanelProp
 	%  COLUMNAME - String list with column names (no names if empty; numbered if {'numbered'}). Dynamically updatable.
 	%  MENU_EXPORT - Whether to show the export menu. To be defined before drawing.
 	%
+	% The list of PanelPropCell properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cell property panel.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cell property panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cell property panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cell property panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cell property panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cell property panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cell property panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>XSLIDERSHOW</strong> 	XSLIDERSHOW (gui, logical) determines whether to show the xslider.
+	%  <strong>37</strong> <strong>XSLIDERLABELS</strong> 	XSLIDERLABELS (gui, stringlist) determines the xslider labels.
+	%  <strong>38</strong> <strong>XSLIDERHEIGHT</strong> 	XSLIDERHEIGHT (gui, size) is the height below the xslider in font size units.
+	%  <strong>39</strong> <strong>XSLIDER</strong> 	XSLIDER (evanescent, handle) is the x-slider.
+	%  <strong>40</strong> <strong>YSLIDERSHOW</strong> 	YSLIDERSHOW (gui, logical) determines whether to show the yslider.
+	%  <strong>41</strong> <strong>YSLIDERLABELS</strong> 	YSLIDERLABELS (gui, stringlist) determines the yslider labels.
+	%  <strong>42</strong> <strong>YSLIDERWIDTH</strong> 	YSLIDERWIDTH (gui, size) is the width to the right of the yslider in font size units.
+	%  <strong>43</strong> <strong>YSLIDER</strong> 	YSLIDER (evanescent, handle) is the y-slider.
+	%  <strong>44</strong> <strong>XYSLIDERLOCK</strong> 	XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.
+	%  <strong>45</strong> <strong>ENABLE</strong> 	ENABLE (gui, option) switches table between on and off.
+	%  <strong>46</strong> <strong>ROWNAME</strong> 	ROWNAME (gui, stringlist) determines the table row names.
+	%  <strong>47</strong> <strong>COLUMNNAME</strong> 	COLUMNNAME (gui, stringlist) determines the table column names.
+	%  <strong>48</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+	%  <strong>49</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
+	%  <strong>50</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the alpha value edit field.
+	%  <strong>51</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%
 	% PanelPropCell methods (constructor):
 	%  PanelPropCell - constructor
 	%
@@ -107,85 +160,85 @@ classdef PanelPropCell < PanelProp
 	% See also uitable, uislider, GUI, PanelElement.
 	
 	properties (Constant) % properties
-		XSLIDERSHOW = PanelProp.getPropNumber() + 1;
+		XSLIDERSHOW = 36; %CET: Computational Efficiency Trick
 		XSLIDERSHOW_TAG = 'XSLIDERSHOW';
-		XSLIDERSHOW_CATEGORY = Category.GUI;
-		XSLIDERSHOW_FORMAT = Format.LOGICAL;
+		XSLIDERSHOW_CATEGORY = 9;
+		XSLIDERSHOW_FORMAT = 4;
 		
-		XSLIDERLABELS = PanelProp.getPropNumber() + 2;
+		XSLIDERLABELS = 37; %CET: Computational Efficiency Trick
 		XSLIDERLABELS_TAG = 'XSLIDERLABELS';
-		XSLIDERLABELS_CATEGORY = Category.GUI;
-		XSLIDERLABELS_FORMAT = Format.STRINGLIST;
+		XSLIDERLABELS_CATEGORY = 9;
+		XSLIDERLABELS_FORMAT = 3;
 		
-		XSLIDERHEIGHT = PanelProp.getPropNumber() + 3;
+		XSLIDERHEIGHT = 38; %CET: Computational Efficiency Trick
 		XSLIDERHEIGHT_TAG = 'XSLIDERHEIGHT';
-		XSLIDERHEIGHT_CATEGORY = Category.GUI;
-		XSLIDERHEIGHT_FORMAT = Format.SIZE;
+		XSLIDERHEIGHT_CATEGORY = 9;
+		XSLIDERHEIGHT_FORMAT = 22;
 		
-		XSLIDER = PanelProp.getPropNumber() + 4;
+		XSLIDER = 39; %CET: Computational Efficiency Trick
 		XSLIDER_TAG = 'XSLIDER';
-		XSLIDER_CATEGORY = Category.EVANESCENT;
-		XSLIDER_FORMAT = Format.HANDLE;
+		XSLIDER_CATEGORY = 7;
+		XSLIDER_FORMAT = 18;
 		
-		YSLIDERSHOW = PanelProp.getPropNumber() + 5;
+		YSLIDERSHOW = 40; %CET: Computational Efficiency Trick
 		YSLIDERSHOW_TAG = 'YSLIDERSHOW';
-		YSLIDERSHOW_CATEGORY = Category.GUI;
-		YSLIDERSHOW_FORMAT = Format.LOGICAL;
+		YSLIDERSHOW_CATEGORY = 9;
+		YSLIDERSHOW_FORMAT = 4;
 		
-		YSLIDERLABELS = PanelProp.getPropNumber() + 6;
+		YSLIDERLABELS = 41; %CET: Computational Efficiency Trick
 		YSLIDERLABELS_TAG = 'YSLIDERLABELS';
-		YSLIDERLABELS_CATEGORY = Category.GUI;
-		YSLIDERLABELS_FORMAT = Format.STRINGLIST;
+		YSLIDERLABELS_CATEGORY = 9;
+		YSLIDERLABELS_FORMAT = 3;
 		
-		YSLIDERWIDTH = PanelProp.getPropNumber() + 7;
+		YSLIDERWIDTH = 42; %CET: Computational Efficiency Trick
 		YSLIDERWIDTH_TAG = 'YSLIDERWIDTH';
-		YSLIDERWIDTH_CATEGORY = Category.GUI;
-		YSLIDERWIDTH_FORMAT = Format.SIZE;
+		YSLIDERWIDTH_CATEGORY = 9;
+		YSLIDERWIDTH_FORMAT = 22;
 		
-		YSLIDER = PanelProp.getPropNumber() + 8;
+		YSLIDER = 43; %CET: Computational Efficiency Trick
 		YSLIDER_TAG = 'YSLIDER';
-		YSLIDER_CATEGORY = Category.EVANESCENT;
-		YSLIDER_FORMAT = Format.HANDLE;
+		YSLIDER_CATEGORY = 7;
+		YSLIDER_FORMAT = 18;
 		
-		XYSLIDERLOCK = PanelProp.getPropNumber() + 9;
+		XYSLIDERLOCK = 44; %CET: Computational Efficiency Trick
 		XYSLIDERLOCK_TAG = 'XYSLIDERLOCK';
-		XYSLIDERLOCK_CATEGORY = Category.GUI;
-		XYSLIDERLOCK_FORMAT = Format.LOGICAL;
+		XYSLIDERLOCK_CATEGORY = 9;
+		XYSLIDERLOCK_FORMAT = 4;
 		
-		ENABLE = PanelProp.getPropNumber() + 10;
+		ENABLE = 45; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = Category.GUI;
-		ENABLE_FORMAT = Format.OPTION;
+		ENABLE_CATEGORY = 9;
+		ENABLE_FORMAT = 5;
 		
-		ROWNAME = PanelProp.getPropNumber() + 11;
+		ROWNAME = 46; %CET: Computational Efficiency Trick
 		ROWNAME_TAG = 'ROWNAME';
-		ROWNAME_CATEGORY = Category.GUI;
-		ROWNAME_FORMAT = Format.STRINGLIST;
+		ROWNAME_CATEGORY = 9;
+		ROWNAME_FORMAT = 3;
 		
-		COLUMNNAME = PanelProp.getPropNumber() + 12;
+		COLUMNNAME = 47; %CET: Computational Efficiency Trick
 		COLUMNNAME_TAG = 'COLUMNNAME';
-		COLUMNNAME_CATEGORY = Category.GUI;
-		COLUMNNAME_FORMAT = Format.STRINGLIST;
+		COLUMNNAME_CATEGORY = 9;
+		COLUMNNAME_FORMAT = 3;
 		
-		MENU_EXPORT = PanelProp.getPropNumber() + 13;
+		MENU_EXPORT = 48; %CET: Computational Efficiency Trick
 		MENU_EXPORT_TAG = 'MENU_EXPORT';
-		MENU_EXPORT_CATEGORY = Category.GUI;
-		MENU_EXPORT_FORMAT = Format.LOGICAL;
+		MENU_EXPORT_CATEGORY = 9;
+		MENU_EXPORT_FORMAT = 4;
 		
-		TABLE_HEIGHT = PanelProp.getPropNumber() + 14;
+		TABLE_HEIGHT = 49; %CET: Computational Efficiency Trick
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
-		TABLE_HEIGHT_CATEGORY = Category.GUI;
-		TABLE_HEIGHT_FORMAT = Format.SIZE;
+		TABLE_HEIGHT_CATEGORY = 9;
+		TABLE_HEIGHT_FORMAT = 22;
 		
-		TABLE = PanelProp.getPropNumber() + 15;
+		TABLE = 50; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
-		TABLE_CATEGORY = Category.EVANESCENT;
-		TABLE_FORMAT = Format.HANDLE;
+		TABLE_CATEGORY = 7;
+		TABLE_FORMAT = 18;
 		
-		CONTEXTMENU = PanelProp.getPropNumber() + 16;
+		CONTEXTMENU = 51; %CET: Computational Efficiency Trick
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
-		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
-		CONTEXTMENU_FORMAT = Format.HANDLE;
+		CONTEXTMENU_CATEGORY = 7;
+		CONTEXTMENU_FORMAT = 18;
 	end
 	methods % constructor
 		function pr = PanelPropCell(varargin)
@@ -198,6 +251,58 @@ classdef PanelPropCell < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of PanelPropCell properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cell property panel.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cell property panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cell property panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cell property panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the cell property panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the cell property panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the cell property panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>XSLIDERSHOW</strong> 	XSLIDERSHOW (gui, logical) determines whether to show the xslider.
+			%  <strong>37</strong> <strong>XSLIDERLABELS</strong> 	XSLIDERLABELS (gui, stringlist) determines the xslider labels.
+			%  <strong>38</strong> <strong>XSLIDERHEIGHT</strong> 	XSLIDERHEIGHT (gui, size) is the height below the xslider in font size units.
+			%  <strong>39</strong> <strong>XSLIDER</strong> 	XSLIDER (evanescent, handle) is the x-slider.
+			%  <strong>40</strong> <strong>YSLIDERSHOW</strong> 	YSLIDERSHOW (gui, logical) determines whether to show the yslider.
+			%  <strong>41</strong> <strong>YSLIDERLABELS</strong> 	YSLIDERLABELS (gui, stringlist) determines the yslider labels.
+			%  <strong>42</strong> <strong>YSLIDERWIDTH</strong> 	YSLIDERWIDTH (gui, size) is the width to the right of the yslider in font size units.
+			%  <strong>43</strong> <strong>YSLIDER</strong> 	YSLIDER (evanescent, handle) is the y-slider.
+			%  <strong>44</strong> <strong>XYSLIDERLOCK</strong> 	XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.
+			%  <strong>45</strong> <strong>ENABLE</strong> 	ENABLE (gui, option) switches table between on and off.
+			%  <strong>46</strong> <strong>ROWNAME</strong> 	ROWNAME (gui, stringlist) determines the table row names.
+			%  <strong>47</strong> <strong>COLUMNNAME</strong> 	COLUMNNAME (gui, stringlist) determines the table column names.
+			%  <strong>48</strong> <strong>MENU_EXPORT</strong> 	MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.
+			%  <strong>49</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.
+			%  <strong>50</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the alpha value edit field.
+			%  <strong>51</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
 			%
 			% See also Category, Format.
 			
@@ -235,7 +340,7 @@ classdef PanelPropCell < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('PanelPropCell', [], [], true);
+			subclass_list = { 'PanelPropCell' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of cell prop panel.
@@ -256,82 +361,32 @@ classdef PanelPropCell < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelProp.getProps() ...
-						PanelPropCell.XSLIDERSHOW ...
-						PanelPropCell.XSLIDERLABELS ...
-						PanelPropCell.XSLIDERHEIGHT ...
-						PanelPropCell.XSLIDER ...
-						PanelPropCell.YSLIDERSHOW ...
-						PanelPropCell.YSLIDERLABELS ...
-						PanelPropCell.YSLIDERWIDTH ...
-						PanelPropCell.YSLIDER ...
-						PanelPropCell.XYSLIDERLOCK ...
-						PanelPropCell.ENABLE ...
-						PanelPropCell.ROWNAME ...
-						PanelPropCell.COLUMNNAME ...
-						PanelPropCell.MENU_EXPORT ...
-						PanelPropCell.TABLE_HEIGHT ...
-						PanelPropCell.TABLE ...
-						PanelPropCell.CONTEXTMENU ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelProp.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelProp.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelProp.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelProp.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelProp.getProps(Category.EVANESCENT) ...
-						PanelPropCell.XSLIDER ...
-						PanelPropCell.YSLIDER ...
-						PanelPropCell.TABLE ...
-						PanelPropCell.CONTEXTMENU ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelProp.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelProp.getProps(Category.GUI) ...
-						PanelPropCell.XSLIDERSHOW ...
-						PanelPropCell.XSLIDERLABELS ...
-						PanelPropCell.XSLIDERHEIGHT ...
-						PanelPropCell.YSLIDERSHOW ...
-						PanelPropCell.YSLIDERLABELS ...
-						PanelPropCell.YSLIDERWIDTH ...
-						PanelPropCell.XYSLIDERLOCK ...
-						PanelPropCell.ENABLE ...
-						PanelPropCell.ROWNAME ...
-						PanelPropCell.COLUMNNAME ...
-						PanelPropCell.MENU_EXPORT ...
-						PanelPropCell.TABLE_HEIGHT ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 39 43 50 51];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26 36 37 38 40 41 42 44 45 46 47 48 49];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -352,7 +407,33 @@ classdef PanelPropCell < PanelProp
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(PanelPropCell.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 51;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 14;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 16;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in cell prop panel/error.
@@ -380,14 +461,14 @@ classdef PanelPropCell < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == PanelPropCell.getProps());
+			check = prop >= 1 && prop <= 51 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropCell.'] ...
 					)
 			end
@@ -418,15 +499,14 @@ classdef PanelPropCell < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			panelpropcell_tag_list = cellfun(@(x) PanelPropCell.getPropTag(x), num2cell(PanelPropCell.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, panelpropcell_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'XSLIDERSHOW'  'XSLIDERLABELS'  'XSLIDERHEIGHT'  'XSLIDER'  'YSLIDERSHOW'  'YSLIDERLABELS'  'YSLIDERWIDTH'  'YSLIDER'  'XYSLIDERLOCK'  'ENABLE'  'ROWNAME'  'COLUMNNAME'  'MENU_EXPORT'  'TABLE_HEIGHT'  'TABLE'  'CONTEXTMENU' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropCell.'] ...
 					)
 			end
@@ -452,8 +532,7 @@ classdef PanelPropCell < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				panelpropcell_tag_list = cellfun(@(x) PanelPropCell.getPropTag(x), num2cell(PanelPropCell.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, panelpropcell_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'XSLIDERSHOW'  'XSLIDERLABELS'  'XSLIDERHEIGHT'  'XSLIDER'  'YSLIDERSHOW'  'YSLIDERLABELS'  'YSLIDERWIDTH'  'YSLIDER'  'XYSLIDERLOCK'  'ENABLE'  'ROWNAME'  'COLUMNNAME'  'MENU_EXPORT'  'TABLE_HEIGHT'  'TABLE'  'CONTEXTMENU' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -481,44 +560,9 @@ classdef PanelPropCell < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case PanelPropCell.XSLIDERSHOW
-						tag = PanelPropCell.XSLIDERSHOW_TAG;
-					case PanelPropCell.XSLIDERLABELS
-						tag = PanelPropCell.XSLIDERLABELS_TAG;
-					case PanelPropCell.XSLIDERHEIGHT
-						tag = PanelPropCell.XSLIDERHEIGHT_TAG;
-					case PanelPropCell.XSLIDER
-						tag = PanelPropCell.XSLIDER_TAG;
-					case PanelPropCell.YSLIDERSHOW
-						tag = PanelPropCell.YSLIDERSHOW_TAG;
-					case PanelPropCell.YSLIDERLABELS
-						tag = PanelPropCell.YSLIDERLABELS_TAG;
-					case PanelPropCell.YSLIDERWIDTH
-						tag = PanelPropCell.YSLIDERWIDTH_TAG;
-					case PanelPropCell.YSLIDER
-						tag = PanelPropCell.YSLIDER_TAG;
-					case PanelPropCell.XYSLIDERLOCK
-						tag = PanelPropCell.XYSLIDERLOCK_TAG;
-					case PanelPropCell.ENABLE
-						tag = PanelPropCell.ENABLE_TAG;
-					case PanelPropCell.ROWNAME
-						tag = PanelPropCell.ROWNAME_TAG;
-					case PanelPropCell.COLUMNNAME
-						tag = PanelPropCell.COLUMNNAME_TAG;
-					case PanelPropCell.MENU_EXPORT
-						tag = PanelPropCell.MENU_EXPORT_TAG;
-					case PanelPropCell.TABLE_HEIGHT
-						tag = PanelPropCell.TABLE_HEIGHT_TAG;
-					case PanelPropCell.TABLE
-						tag = PanelPropCell.TABLE_TAG;
-					case PanelPropCell.CONTEXTMENU
-						tag = PanelPropCell.CONTEXTMENU_TAG;
-					otherwise
-						tag = getPropTag@PanelProp(prop);
-				end
+				%CET: Computational Efficiency Trick
+				panelpropcell_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'XSLIDERSHOW'  'XSLIDERLABELS'  'XSLIDERHEIGHT'  'XSLIDER'  'YSLIDERSHOW'  'YSLIDERLABELS'  'YSLIDERWIDTH'  'YSLIDER'  'XYSLIDERLOCK'  'ENABLE'  'ROWNAME'  'COLUMNNAME'  'MENU_EXPORT'  'TABLE_HEIGHT'  'TABLE'  'CONTEXTMENU' };
+				tag = panelpropcell_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -543,42 +587,9 @@ classdef PanelPropCell < PanelProp
 			
 			prop = PanelPropCell.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropCell.XSLIDERSHOW
-					prop_category = PanelPropCell.XSLIDERSHOW_CATEGORY;
-				case PanelPropCell.XSLIDERLABELS
-					prop_category = PanelPropCell.XSLIDERLABELS_CATEGORY;
-				case PanelPropCell.XSLIDERHEIGHT
-					prop_category = PanelPropCell.XSLIDERHEIGHT_CATEGORY;
-				case PanelPropCell.XSLIDER
-					prop_category = PanelPropCell.XSLIDER_CATEGORY;
-				case PanelPropCell.YSLIDERSHOW
-					prop_category = PanelPropCell.YSLIDERSHOW_CATEGORY;
-				case PanelPropCell.YSLIDERLABELS
-					prop_category = PanelPropCell.YSLIDERLABELS_CATEGORY;
-				case PanelPropCell.YSLIDERWIDTH
-					prop_category = PanelPropCell.YSLIDERWIDTH_CATEGORY;
-				case PanelPropCell.YSLIDER
-					prop_category = PanelPropCell.YSLIDER_CATEGORY;
-				case PanelPropCell.XYSLIDERLOCK
-					prop_category = PanelPropCell.XYSLIDERLOCK_CATEGORY;
-				case PanelPropCell.ENABLE
-					prop_category = PanelPropCell.ENABLE_CATEGORY;
-				case PanelPropCell.ROWNAME
-					prop_category = PanelPropCell.ROWNAME_CATEGORY;
-				case PanelPropCell.COLUMNNAME
-					prop_category = PanelPropCell.COLUMNNAME_CATEGORY;
-				case PanelPropCell.MENU_EXPORT
-					prop_category = PanelPropCell.MENU_EXPORT_CATEGORY;
-				case PanelPropCell.TABLE_HEIGHT
-					prop_category = PanelPropCell.TABLE_HEIGHT_CATEGORY;
-				case PanelPropCell.TABLE
-					prop_category = PanelPropCell.TABLE_CATEGORY;
-				case PanelPropCell.CONTEXTMENU
-					prop_category = PanelPropCell.CONTEXTMENU_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropcell_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  9  7  9  9  9  7  9  9  9  9  9  9  7  7 };
+			prop_category = panelpropcell_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -602,42 +613,9 @@ classdef PanelPropCell < PanelProp
 			
 			prop = PanelPropCell.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropCell.XSLIDERSHOW
-					prop_format = PanelPropCell.XSLIDERSHOW_FORMAT;
-				case PanelPropCell.XSLIDERLABELS
-					prop_format = PanelPropCell.XSLIDERLABELS_FORMAT;
-				case PanelPropCell.XSLIDERHEIGHT
-					prop_format = PanelPropCell.XSLIDERHEIGHT_FORMAT;
-				case PanelPropCell.XSLIDER
-					prop_format = PanelPropCell.XSLIDER_FORMAT;
-				case PanelPropCell.YSLIDERSHOW
-					prop_format = PanelPropCell.YSLIDERSHOW_FORMAT;
-				case PanelPropCell.YSLIDERLABELS
-					prop_format = PanelPropCell.YSLIDERLABELS_FORMAT;
-				case PanelPropCell.YSLIDERWIDTH
-					prop_format = PanelPropCell.YSLIDERWIDTH_FORMAT;
-				case PanelPropCell.YSLIDER
-					prop_format = PanelPropCell.YSLIDER_FORMAT;
-				case PanelPropCell.XYSLIDERLOCK
-					prop_format = PanelPropCell.XYSLIDERLOCK_FORMAT;
-				case PanelPropCell.ENABLE
-					prop_format = PanelPropCell.ENABLE_FORMAT;
-				case PanelPropCell.ROWNAME
-					prop_format = PanelPropCell.ROWNAME_FORMAT;
-				case PanelPropCell.COLUMNNAME
-					prop_format = PanelPropCell.COLUMNNAME_FORMAT;
-				case PanelPropCell.MENU_EXPORT
-					prop_format = PanelPropCell.MENU_EXPORT_FORMAT;
-				case PanelPropCell.TABLE_HEIGHT
-					prop_format = PanelPropCell.TABLE_HEIGHT_FORMAT;
-				case PanelPropCell.TABLE
-					prop_format = PanelPropCell.TABLE_FORMAT;
-				case PanelPropCell.CONTEXTMENU
-					prop_format = PanelPropCell.CONTEXTMENU_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropcell_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  3  22  18  4  3  22  18  4  5  3  3  4  22  18  18 };
+			prop_format = panelpropcell_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -661,68 +639,9 @@ classdef PanelPropCell < PanelProp
 			
 			prop = PanelPropCell.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropCell.XSLIDERSHOW
-					prop_description = 'XSLIDERSHOW (gui, logical) determines whether to show the xslider.';
-				case PanelPropCell.XSLIDERLABELS
-					prop_description = 'XSLIDERLABELS (gui, stringlist) determines the xslider labels.';
-				case PanelPropCell.XSLIDERHEIGHT
-					prop_description = 'XSLIDERHEIGHT (gui, size) is the height below the xslider in font size units.';
-				case PanelPropCell.XSLIDER
-					prop_description = 'XSLIDER (evanescent, handle) is the x-slider.';
-				case PanelPropCell.YSLIDERSHOW
-					prop_description = 'YSLIDERSHOW (gui, logical) determines whether to show the yslider.';
-				case PanelPropCell.YSLIDERLABELS
-					prop_description = 'YSLIDERLABELS (gui, stringlist) determines the yslider labels.';
-				case PanelPropCell.YSLIDERWIDTH
-					prop_description = 'YSLIDERWIDTH (gui, size) is the width to the right of the yslider in font size units.';
-				case PanelPropCell.YSLIDER
-					prop_description = 'YSLIDER (evanescent, handle) is the y-slider.';
-				case PanelPropCell.XYSLIDERLOCK
-					prop_description = 'XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.';
-				case PanelPropCell.ENABLE
-					prop_description = 'ENABLE (gui, option) switches table between on and off.';
-				case PanelPropCell.ROWNAME
-					prop_description = 'ROWNAME (gui, stringlist) determines the table row names.';
-				case PanelPropCell.COLUMNNAME
-					prop_description = 'COLUMNNAME (gui, stringlist) determines the table column names.';
-				case PanelPropCell.MENU_EXPORT
-					prop_description = 'MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.';
-				case PanelPropCell.TABLE_HEIGHT
-					prop_description = 'TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.';
-				case PanelPropCell.TABLE
-					prop_description = 'TABLE (evanescent, handle) is the alpha value edit field.';
-				case PanelPropCell.CONTEXTMENU
-					prop_description = 'CONTEXTMENU (evanescent, handle) is the context menu.';
-				case PanelPropCell.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the cell property panel.';
-				case PanelPropCell.NAME
-					prop_description = 'NAME (constant, string) is the name of the cell property panel.';
-				case PanelPropCell.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the cell property panel.';
-				case PanelPropCell.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the cell property panel.';
-				case PanelPropCell.ID
-					prop_description = 'ID (data, string) is a few-letter code for the cell property panel.';
-				case PanelPropCell.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the cell property panel.';
-				case PanelPropCell.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the cell property panel.';
-				case PanelPropCell.EL
-					prop_description = 'EL (data, item) is the element.';
-				case PanelPropCell.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case PanelPropCell.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case PanelPropCell.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
-				case PanelPropCell.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case PanelPropCell.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				otherwise
-					prop_description = getPropDescription@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropcell_description_list = { 'ELCLASS (constant, string) is the class of the cell property panel.'  'NAME (constant, string) is the name of the cell property panel.'  'DESCRIPTION (constant, string) is the description of the cell property panel.'  'TEMPLATE (parameter, item) is the template of the cell property panel.'  'ID (data, string) is a few-letter code for the cell property panel.'  'LABEL (metadata, string) is an extended label of the cell property panel.'  'NOTES (metadata, string) are some specific notes about the cell property panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'XSLIDERSHOW (gui, logical) determines whether to show the xslider.'  'XSLIDERLABELS (gui, stringlist) determines the xslider labels.'  'XSLIDERHEIGHT (gui, size) is the height below the xslider in font size units.'  'XSLIDER (evanescent, handle) is the x-slider.'  'YSLIDERSHOW (gui, logical) determines whether to show the yslider.'  'YSLIDERLABELS (gui, stringlist) determines the yslider labels.'  'YSLIDERWIDTH (gui, size) is the width to the right of the yslider in font size units.'  'YSLIDER (evanescent, handle) is the y-slider.'  'XYSLIDERLOCK (gui, logical) determines whether the sliders are locked so that only the diagonal is shown.'  'ENABLE (gui, option) switches table between on and off.'  'ROWNAME (gui, stringlist) determines the table row names.'  'COLUMNNAME (gui, stringlist) determines the table column names.'  'MENU_EXPORT (gui, logical) determines whether to show the context menu to export data.'  'TABLE_HEIGHT (gui, size) is the pixel height of the prop panel when the table is shown.'  'TABLE (evanescent, handle) is the alpha value edit field.'  'CONTEXTMENU (evanescent, handle) is the context menu.' };
+			prop_description = panelpropcell_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -746,40 +665,40 @@ classdef PanelPropCell < PanelProp
 			
 			prop = PanelPropCell.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropCell.XSLIDERSHOW
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropCell.XSLIDERLABELS
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropCell.XSLIDERHEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case PanelPropCell.XSLIDER
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropCell.YSLIDERSHOW
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropCell.YSLIDERLABELS
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropCell.YSLIDERWIDTH
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case PanelPropCell.YSLIDER
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropCell.XYSLIDERLOCK
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropCell.ENABLE
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropCell.XSLIDERSHOW
+					prop_settings = Format.getFormatSettings(4);
+				case 37 % PanelPropCell.XSLIDERLABELS
+					prop_settings = Format.getFormatSettings(3);
+				case 38 % PanelPropCell.XSLIDERHEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 39 % PanelPropCell.XSLIDER
+					prop_settings = Format.getFormatSettings(18);
+				case 40 % PanelPropCell.YSLIDERSHOW
+					prop_settings = Format.getFormatSettings(4);
+				case 41 % PanelPropCell.YSLIDERLABELS
+					prop_settings = Format.getFormatSettings(3);
+				case 42 % PanelPropCell.YSLIDERWIDTH
+					prop_settings = Format.getFormatSettings(22);
+				case 43 % PanelPropCell.YSLIDER
+					prop_settings = Format.getFormatSettings(18);
+				case 44 % PanelPropCell.XYSLIDERLOCK
+					prop_settings = Format.getFormatSettings(4);
+				case 45 % PanelPropCell.ENABLE
 					prop_settings = {'on', 'off'};
-				case PanelPropCell.ROWNAME
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropCell.COLUMNNAME
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelPropCell.MENU_EXPORT
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelPropCell.TABLE_HEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case PanelPropCell.TABLE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropCell.CONTEXTMENU
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropCell.TEMPLATE
+				case 46 % PanelPropCell.ROWNAME
+					prop_settings = Format.getFormatSettings(3);
+				case 47 % PanelPropCell.COLUMNNAME
+					prop_settings = Format.getFormatSettings(3);
+				case 48 % PanelPropCell.MENU_EXPORT
+					prop_settings = Format.getFormatSettings(4);
+				case 49 % PanelPropCell.TABLE_HEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 50 % PanelPropCell.TABLE
+					prop_settings = Format.getFormatSettings(18);
+				case 51 % PanelPropCell.CONTEXTMENU
+					prop_settings = Format.getFormatSettings(18);
+				case 4 % PanelPropCell.TEMPLATE
 					prop_settings = 'PanelPropCell';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -807,57 +726,57 @@ classdef PanelPropCell < PanelProp
 			
 			prop = PanelPropCell.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropCell.XSLIDERSHOW
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropCell.XSLIDERSHOW
 					prop_default = true;
-				case PanelPropCell.XSLIDERLABELS
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XSLIDERHEIGHT
-					prop_default = s(3);
-				case PanelPropCell.XSLIDER
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDERSHOW
+				case 37 % PanelPropCell.XSLIDERLABELS
+					prop_default = Format.getFormatDefault(3, PanelPropCell.getPropSettings(prop));
+				case 38 % PanelPropCell.XSLIDERHEIGHT
+					prop_default = 36;
+				case 39 % PanelPropCell.XSLIDER
+					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
+				case 40 % PanelPropCell.YSLIDERSHOW
 					prop_default = true;
-				case PanelPropCell.YSLIDERLABELS
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDERWIDTH
-					prop_default = s(3);
-				case PanelPropCell.YSLIDER
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XYSLIDERLOCK
+				case 41 % PanelPropCell.YSLIDERLABELS
+					prop_default = Format.getFormatDefault(3, PanelPropCell.getPropSettings(prop));
+				case 42 % PanelPropCell.YSLIDERWIDTH
+					prop_default = 36;
+				case 43 % PanelPropCell.YSLIDER
+					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
+				case 44 % PanelPropCell.XYSLIDERLOCK
 					prop_default = false;
-				case PanelPropCell.ENABLE
+				case 45 % PanelPropCell.ENABLE
 					prop_default = 'on';
-				case PanelPropCell.ROWNAME
+				case 46 % PanelPropCell.ROWNAME
 					prop_default = {'numbered'};
-				case PanelPropCell.COLUMNNAME
+				case 47 % PanelPropCell.COLUMNNAME
 					prop_default = {'numbered'};
-				case PanelPropCell.MENU_EXPORT
+				case 48 % PanelPropCell.MENU_EXPORT
 					prop_default = true;
-				case PanelPropCell.TABLE_HEIGHT
-					prop_default = s(20);
-				case PanelPropCell.TABLE
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.CONTEXTMENU
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.ELCLASS
+				case 49 % PanelPropCell.TABLE_HEIGHT
+					prop_default = 240;
+				case 50 % PanelPropCell.TABLE
+					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
+				case 51 % PanelPropCell.CONTEXTMENU
+					prop_default = Format.getFormatDefault(18, PanelPropCell.getPropSettings(prop));
+				case 1 % PanelPropCell.ELCLASS
 					prop_default = 'PanelPropCell';
-				case PanelPropCell.NAME
+				case 2 % PanelPropCell.NAME
 					prop_default = 'Cell Prop Panel';
-				case PanelPropCell.DESCRIPTION
+				case 3 % PanelPropCell.DESCRIPTION
 					prop_default = 'A Cell Prop Panel (PanelPropCell) plots the panel for a CELL property with a table and two sliders. It works for all categories. It can be personalized with the following props: TABLE_HEIGHT, XSLIDERSHOW, XSLIDERLABELS, XSLIDERHEIGHT, YSLIDERSHOW, YSLIDERLABELS, YSLIDERHEIGHT, XYSLIDERLOCK, ROWNAME, COLUMNAME, MENU_EXPORT.';
-				case PanelPropCell.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.ID
+				case 4 % PanelPropCell.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PanelPropCell.getPropSettings(prop));
+				case 5 % PanelPropCell.ID
 					prop_default = 'PanelPropCell ID';
-				case PanelPropCell.LABEL
+				case 6 % PanelPropCell.LABEL
 					prop_default = 'PanelPropCell label';
-				case PanelPropCell.NOTES
+				case 7 % PanelPropCell.NOTES
 					prop_default = 'PanelPropCell notes';
-				case PanelPropCell.EL
+				case 23 % PanelPropCell.EL
 					prop_default = Graph();
-				case PanelPropCell.PROP
-					prop_default = Graph.A;
+				case 24 % PanelPropCell.PROP
+					prop_default = 26;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -903,15 +822,15 @@ classdef PanelPropCell < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:PanelPropCell:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:PanelPropCell:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:PanelPropCell:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropCell:WrongInput
 			%  Element.CHECKPROP(PanelPropCell, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropCell.
-			%   Error id: €BRAPH2.STR€:PanelPropCell:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropCell:WrongInput
 			%  PR.CHECKPROP(PanelPropCell, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropCell.
-			%   Error id: €BRAPH2.STR€:PanelPropCell:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:PanelPropCell:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropCell')
 			%  are less computationally efficient.
@@ -922,42 +841,42 @@ classdef PanelPropCell < PanelProp
 			prop = PanelPropCell.getPropProp(pointer);
 			
 			switch prop
-				case PanelPropCell.XSLIDERSHOW % __PanelPropCell.XSLIDERSHOW__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XSLIDERLABELS % __PanelPropCell.XSLIDERLABELS__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XSLIDERHEIGHT % __PanelPropCell.XSLIDERHEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XSLIDER % __PanelPropCell.XSLIDER__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDERSHOW % __PanelPropCell.YSLIDERSHOW__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDERLABELS % __PanelPropCell.YSLIDERLABELS__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDERWIDTH % __PanelPropCell.YSLIDERWIDTH__
-					check = Format.checkFormat(Format.SIZE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.YSLIDER % __PanelPropCell.YSLIDER__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.XYSLIDERLOCK % __PanelPropCell.XYSLIDERLOCK__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.ENABLE % __PanelPropCell.ENABLE__
-					check = Format.checkFormat(Format.OPTION, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.ROWNAME % __PanelPropCell.ROWNAME__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.COLUMNNAME % __PanelPropCell.COLUMNNAME__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.MENU_EXPORT % __PanelPropCell.MENU_EXPORT__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.TABLE_HEIGHT % __PanelPropCell.TABLE_HEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.TABLE % __PanelPropCell.TABLE__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.CONTEXTMENU % __PanelPropCell.CONTEXTMENU__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropCell.getPropSettings(prop));
-				case PanelPropCell.TEMPLATE % __PanelPropCell.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, PanelPropCell.getPropSettings(prop));
+				case 36 % PanelPropCell.XSLIDERSHOW
+					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
+				case 37 % PanelPropCell.XSLIDERLABELS
+					check = Format.checkFormat(3, value, PanelPropCell.getPropSettings(prop));
+				case 38 % PanelPropCell.XSLIDERHEIGHT
+					check = Format.checkFormat(22, value, PanelPropCell.getPropSettings(prop));
+				case 39 % PanelPropCell.XSLIDER
+					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
+				case 40 % PanelPropCell.YSLIDERSHOW
+					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
+				case 41 % PanelPropCell.YSLIDERLABELS
+					check = Format.checkFormat(3, value, PanelPropCell.getPropSettings(prop));
+				case 42 % PanelPropCell.YSLIDERWIDTH
+					check = Format.checkFormat(22, value, PanelPropCell.getPropSettings(prop));
+				case 43 % PanelPropCell.YSLIDER
+					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
+				case 44 % PanelPropCell.XYSLIDERLOCK
+					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
+				case 45 % PanelPropCell.ENABLE
+					check = Format.checkFormat(5, value, PanelPropCell.getPropSettings(prop));
+				case 46 % PanelPropCell.ROWNAME
+					check = Format.checkFormat(3, value, PanelPropCell.getPropSettings(prop));
+				case 47 % PanelPropCell.COLUMNNAME
+					check = Format.checkFormat(3, value, PanelPropCell.getPropSettings(prop));
+				case 48 % PanelPropCell.MENU_EXPORT
+					check = Format.checkFormat(4, value, PanelPropCell.getPropSettings(prop));
+				case 49 % PanelPropCell.TABLE_HEIGHT
+					check = Format.checkFormat(22, value, PanelPropCell.getPropSettings(prop));
+				case 50 % PanelPropCell.TABLE
+					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
+				case 51 % PanelPropCell.CONTEXTMENU
+					check = Format.checkFormat(18, value, PanelPropCell.getPropSettings(prop));
+				case 4 % PanelPropCell.TEMPLATE
+					check = Format.checkFormat(8, value, PanelPropCell.getPropSettings(prop));
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -966,8 +885,8 @@ classdef PanelPropCell < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropCell:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropCell:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropCell.getPropTag(prop) ' (' PanelPropCell.getFormatTag(PanelPropCell.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -987,18 +906,18 @@ classdef PanelPropCell < PanelProp
 			%  checkValue.
 			
 			switch prop
-				case PanelPropCell.ROWNAME % __PanelPropCell.ROWNAME__
+				case 46 % PanelPropCell.ROWNAME
 					if pr.get('DRAWN')
 					    pr.get('UPDATE')
 					end
 					
-				case PanelPropCell.COLUMNNAME % __PanelPropCell.COLUMNNAME__
+				case 47 % PanelPropCell.COLUMNNAME
 					if pr.get('DRAWN')
 					    pr.get('UPDATE')
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						postset@PanelProp(pr, prop);
 					end
 			end
@@ -1009,19 +928,19 @@ classdef PanelPropCell < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case PanelPropCell.XSLIDER % __PanelPropCell.XSLIDER__
+				case 39 % PanelPropCell.XSLIDER
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1032,14 +951,14 @@ classdef PanelPropCell < PanelProp
 					    'MajorTickLabelsMode', 'manual', ...
 					    'MinorTicksMode', 'manual', ...
 					    'MinorTicks', [], ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_xslider} ...
 					    );
 					
 					value = xslider;
 					
-				case PanelPropCell.YSLIDER % __PanelPropCell.YSLIDER__
+				case 43 % PanelPropCell.YSLIDER
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -1051,28 +970,28 @@ classdef PanelPropCell < PanelProp
 					    'MajorTickLabelsMode', 'manual', ...
 					    'MinorTicksMode', 'manual', ...
 					    'MinorTicks', [], ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_yslider} ...
 					    );
 					
 					value = yslider;
 					
-				case PanelPropCell.TABLE % __PanelPropCell.TABLE__
+				case 50 % PanelPropCell.TABLE
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'TABLE', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'CellEditCallback', {@cb_table} ...
 					    );
 					
 					value = table;
 					
-				case PanelPropCell.CONTEXTMENU % __PanelPropCell.CONTEXTMENU__
+				case 51 % PanelPropCell.CONTEXTMENU
 					contextmenu = uicontextmenu(...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -1088,8 +1007,8 @@ classdef PanelPropCell < PanelProp
 					end
 					value = contextmenu;
 					
-				case PanelPropCell.X_DRAW % __PanelPropCell.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % PanelPropCell.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
@@ -1097,14 +1016,14 @@ classdef PanelPropCell < PanelProp
 					    pr.memorize('YSLIDER')
 					end
 					
-				case PanelPropCell.UPDATE % __PanelPropCell.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % PanelPropCell.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					
-					    if any(el.getPropCategory(prop) == [Category.RESULT Category.QUERY Category.EVANESCENT]) && isa(el.getr(prop), 'NoValue')
-					        pr.set('HEIGHT', s(2))
+					    if any(el.getPropCategory(prop) == [5 6 7]) && isa(el.getr(prop), 'NoValue')
+					        pr.set('HEIGHT', 24)
 					    else
 					        pr.set('HEIGHT', pr.get('TABLE_HEIGHT'))
 					    end
@@ -1131,19 +1050,19 @@ classdef PanelPropCell < PanelProp
 					    end
 					    
 					    switch el.getPropCategory(prop)
-					        case Category.CONSTANT
+					        case 1
 					            set(pr.get('TABLE'), ...
 					                'Data', set_sliders_and_get_value(), ...
 					                'ColumnEditable', false ...
 					                )
 					            
-					        case Category.METADATA
+					        case 2
 					            set(pr.get('TABLE'), ...
 					                'Data', set_sliders_and_get_value(), ...
 					                'ColumnEditable', ~el.isLocked(prop) ...
 					                )
 					            
-					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+					        case {3, 4, 8, 9}
 					            set(pr.get('TABLE'), ...
 					                'Data', set_sliders_and_get_value(), ...
 					                'ColumnEditable', ~el.isLocked(prop) ...
@@ -1157,7 +1076,7 @@ classdef PanelPropCell < PanelProp
 					                    )
 					            end
 					
-					        case {Category.RESULT Category.QUERY Category.EVANESCENT}
+					        case {5 6 7}
 					            prop_value = el.getr(prop);
 					
 					            if isa(prop_value, 'NoValue')
@@ -1199,28 +1118,28 @@ classdef PanelPropCell < PanelProp
 					    end
 					end
 					
-				case PanelPropCell.REDRAW % __PanelPropCell.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % PanelPropCell.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
 					    if ~pr.get('XSLIDERSHOW') && ~pr.get('YSLIDERSHOW')
-					        set(pr.get('TABLE'), 'Position', [s(.3) s(.3) max(1, w_p-s(.6)) max(1, pr.get('HEIGHT')-s(2.2))])
+					        set(pr.get('TABLE'), 'Position', [4 4 max(1, w_p-8) max(1, pr.get('HEIGHT')-27)])
 					    elseif pr.get('XSLIDERSHOW') && ~pr.get('YSLIDERSHOW')
-					        set(pr.get('TABLE'), 'Position', [s(.3) s(.3) max(1, w_p-s(.6)) max(1, pr.get('HEIGHT')-s(2.2)-pr.get('XSLIDERHEIGHT'))])
-					        set(pr.get('XSLIDER'), 'Position', [s(.3) max(1, pr.get('HEIGHT')-s(2.0)-s(.3)) max(1, w_p-s(.6)) 3])
+					        set(pr.get('TABLE'), 'Position', [4 4 max(1, w_p-8) max(1, pr.get('HEIGHT')-27-pr.get('XSLIDERHEIGHT'))])
+					        set(pr.get('XSLIDER'), 'Position', [4 max(1, pr.get('HEIGHT')-24-4) max(1, w_p-8) 3])
 					    elseif ~pr.get('XSLIDERSHOW') && pr.get('YSLIDERSHOW')
-					        set(pr.get('TABLE'), 'Position', [s(.3)+pr.get('YSLIDERWIDTH') s(.3) max(1, w_p-s(.6)-pr.get('YSLIDERWIDTH')) max(1, pr.get('HEIGHT')-s(2.2))])
-					        set(pr.get('YSLIDER'), 'Position', [s(.3) s(.3) 3 max(1, pr.get('HEIGHT')-s(2.2))])
+					        set(pr.get('TABLE'), 'Position', [4+pr.get('YSLIDERWIDTH') 4 max(1, w_p-8-pr.get('YSLIDERWIDTH')) max(1, pr.get('HEIGHT')-27)])
+					        set(pr.get('YSLIDER'), 'Position', [4 4 3 max(1, pr.get('HEIGHT')-27)])
 					    else % pr.get('XSLIDERSHOW') && pr.get('YSLIDERSHOW')
-					        set(pr.get('TABLE'), 'Position', [s(.3)+pr.get('YSLIDERWIDTH') s(.3) max(1, w_p-s(.6)-pr.get('YSLIDERWIDTH')) max(1, pr.get('HEIGHT')-s(2.2)-pr.get('XSLIDERHEIGHT'))])
-					        set(pr.get('XSLIDER'), 'Position', [s(.3)+pr.get('YSLIDERWIDTH') max(1, pr.get('HEIGHT')-s(2.0)-s(.3)) max(1, w_p-s(.6)-pr.get('YSLIDERWIDTH')) 3])
-					        set(pr.get('YSLIDER'), 'Position', [s(.3) s(.3) 3 max(1, pr.get('HEIGHT')-s(2.2)-s(.6)-pr.get('XSLIDERHEIGHT'))])
+					        set(pr.get('TABLE'), 'Position', [4+pr.get('YSLIDERWIDTH') 4 max(1, w_p-8-pr.get('YSLIDERWIDTH')) max(1, pr.get('HEIGHT')-27-pr.get('XSLIDERHEIGHT'))])
+					        set(pr.get('XSLIDER'), 'Position', [4+pr.get('YSLIDERWIDTH') max(1, pr.get('HEIGHT')-24-4) max(1, w_p-8-pr.get('YSLIDERWIDTH')) 3])
+					        set(pr.get('YSLIDER'), 'Position', [4 4 3 max(1, pr.get('HEIGHT')-27-8-pr.get('XSLIDERHEIGHT'))])
 					    end
 					end
 					
-				case PanelPropCell.DELETE % __PanelPropCell.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % PanelPropCell.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
@@ -1229,7 +1148,7 @@ classdef PanelPropCell < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

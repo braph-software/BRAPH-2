@@ -4,6 +4,21 @@ classdef PipelineCode < ConcreteElement
 	%
 	% A Pipeline Code Line (PipelineCode) represents a line of executable code in a pipeline.
 	%
+	% The list of PipelineCode properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the pipeline code line.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the pipeline code line.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the pipeline code line.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the pipeline code line.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline code line.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline code line.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline code line.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
+	%  <strong>10</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
+	%  <strong>11</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
+	%  <strong>12</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
+	%  <strong>13</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
+	%
 	% PipelineCode methods (constructor):
 	%  PipelineCode - constructor
 	%
@@ -93,30 +108,30 @@ classdef PipelineCode < ConcreteElement
 	% See also PipelinePP_PSDict, Pipeline, PipelineSection.
 	
 	properties (Constant) % properties
-		TEXT_BEFORE_EXEC = ConcreteElement.getPropNumber() + 1;
+		TEXT_BEFORE_EXEC = 9; %CET: Computational Efficiency Trick
 		TEXT_BEFORE_EXEC_TAG = 'TEXT_BEFORE_EXEC';
-		TEXT_BEFORE_EXEC_CATEGORY = Category.METADATA;
-		TEXT_BEFORE_EXEC_FORMAT = Format.STRING;
+		TEXT_BEFORE_EXEC_CATEGORY = 2;
+		TEXT_BEFORE_EXEC_FORMAT = 2;
 		
-		TEXT_AFTER_EXEC = ConcreteElement.getPropNumber() + 2;
+		TEXT_AFTER_EXEC = 10; %CET: Computational Efficiency Trick
 		TEXT_AFTER_EXEC_TAG = 'TEXT_AFTER_EXEC';
-		TEXT_AFTER_EXEC_CATEGORY = Category.METADATA;
-		TEXT_AFTER_EXEC_FORMAT = Format.STRING;
+		TEXT_AFTER_EXEC_CATEGORY = 2;
+		TEXT_AFTER_EXEC_FORMAT = 2;
 		
-		MONIKER = ConcreteElement.getPropNumber() + 3;
+		MONIKER = 11; %CET: Computational Efficiency Trick
 		MONIKER_TAG = 'MONIKER';
-		MONIKER_CATEGORY = Category.DATA;
-		MONIKER_FORMAT = Format.STRING;
+		MONIKER_CATEGORY = 4;
+		MONIKER_FORMAT = 2;
 		
-		CODE = ConcreteElement.getPropNumber() + 4;
+		CODE = 12; %CET: Computational Efficiency Trick
 		CODE_TAG = 'CODE';
-		CODE_CATEGORY = Category.DATA;
-		CODE_FORMAT = Format.STRING;
+		CODE_CATEGORY = 4;
+		CODE_FORMAT = 2;
 		
-		EL = ConcreteElement.getPropNumber() + 5;
+		EL = 13; %CET: Computational Efficiency Trick
 		EL_TAG = 'EL';
-		EL_CATEGORY = Category.DATA;
-		EL_FORMAT = Format.ITEM;
+		EL_CATEGORY = 4;
+		EL_FORMAT = 8;
 	end
 	methods % constructor
 		function pc = PipelineCode(varargin)
@@ -129,6 +144,20 @@ classdef PipelineCode < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of PipelineCode properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the pipeline code line.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the pipeline code line.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the pipeline code line.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the pipeline code line.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the pipeline code line.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the pipeline code line.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the pipeline code line.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>TEXT_BEFORE_EXEC</strong> 	TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.
+			%  <strong>10</strong> <strong>TEXT_AFTER_EXEC</strong> 	TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.
+			%  <strong>11</strong> <strong>MONIKER</strong> 	MONIKER (data, string) is the moniker of the calculated element.
+			%  <strong>12</strong> <strong>CODE</strong> 	CODE (data, string) is the code line to calculate the element.
+			%  <strong>13</strong> <strong>EL</strong> 	EL (data, item) is the calculated element.
 			%
 			% See also Category, Format.
 			
@@ -166,7 +195,7 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('PipelineCode', [], [], true);
+			subclass_list = { 'PipelineCode' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of pipeline code line.
@@ -187,60 +216,26 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						PipelineCode.TEXT_BEFORE_EXEC ...
-						PipelineCode.TEXT_AFTER_EXEC ...
-						PipelineCode.MONIKER ...
-						PipelineCode.CODE ...
-						PipelineCode.EL ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						PipelineCode.TEXT_BEFORE_EXEC ...
-						PipelineCode.TEXT_AFTER_EXEC ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						PipelineCode.MONIKER ...
-						PipelineCode.CODE ...
-						PipelineCode.EL ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 9 10];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 11 12 13];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -261,7 +256,27 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(PipelineCode.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 13;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 4;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in pipeline code line/error.
@@ -289,14 +304,14 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == PipelineCode.getProps());
+			check = prop >= 1 && prop <= 13 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput'], ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PipelineCode.'] ...
 					)
 			end
@@ -327,15 +342,14 @@ classdef PipelineCode < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			pipelinecode_tag_list = cellfun(@(x) PipelineCode.getPropTag(x), num2cell(PipelineCode.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, pipelinecode_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput'], ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for PipelineCode.'] ...
 					)
 			end
@@ -361,8 +375,7 @@ classdef PipelineCode < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				pipelinecode_tag_list = cellfun(@(x) PipelineCode.getPropTag(x), num2cell(PipelineCode.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, pipelinecode_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -390,22 +403,9 @@ classdef PipelineCode < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case PipelineCode.TEXT_BEFORE_EXEC
-						tag = PipelineCode.TEXT_BEFORE_EXEC_TAG;
-					case PipelineCode.TEXT_AFTER_EXEC
-						tag = PipelineCode.TEXT_AFTER_EXEC_TAG;
-					case PipelineCode.MONIKER
-						tag = PipelineCode.MONIKER_TAG;
-					case PipelineCode.CODE
-						tag = PipelineCode.CODE_TAG;
-					case PipelineCode.EL
-						tag = PipelineCode.EL_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				pipelinecode_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'TEXT_BEFORE_EXEC'  'TEXT_AFTER_EXEC'  'MONIKER'  'CODE'  'EL' };
+				tag = pipelinecode_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -430,20 +430,9 @@ classdef PipelineCode < ConcreteElement
 			
 			prop = PipelineCode.getPropProp(pointer);
 			
-			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC
-					prop_category = PipelineCode.TEXT_BEFORE_EXEC_CATEGORY;
-				case PipelineCode.TEXT_AFTER_EXEC
-					prop_category = PipelineCode.TEXT_AFTER_EXEC_CATEGORY;
-				case PipelineCode.MONIKER
-					prop_category = PipelineCode.MONIKER_CATEGORY;
-				case PipelineCode.CODE
-					prop_category = PipelineCode.CODE_CATEGORY;
-				case PipelineCode.EL
-					prop_category = PipelineCode.EL_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			pipelinecode_category_list = { 1  1  1  3  4  2  2  6  2  2  4  4  4 };
+			prop_category = pipelinecode_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -467,20 +456,9 @@ classdef PipelineCode < ConcreteElement
 			
 			prop = PipelineCode.getPropProp(pointer);
 			
-			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC
-					prop_format = PipelineCode.TEXT_BEFORE_EXEC_FORMAT;
-				case PipelineCode.TEXT_AFTER_EXEC
-					prop_format = PipelineCode.TEXT_AFTER_EXEC_FORMAT;
-				case PipelineCode.MONIKER
-					prop_format = PipelineCode.MONIKER_FORMAT;
-				case PipelineCode.CODE
-					prop_format = PipelineCode.CODE_FORMAT;
-				case PipelineCode.EL
-					prop_format = PipelineCode.EL_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			pipelinecode_format_list = { 2  2  2  8  2  2  2  2  2  2  2  2  8 };
+			prop_format = pipelinecode_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -504,34 +482,9 @@ classdef PipelineCode < ConcreteElement
 			
 			prop = PipelineCode.getPropProp(pointer);
 			
-			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC
-					prop_description = 'TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.';
-				case PipelineCode.TEXT_AFTER_EXEC
-					prop_description = 'TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.';
-				case PipelineCode.MONIKER
-					prop_description = 'MONIKER (data, string) is the moniker of the calculated element.';
-				case PipelineCode.CODE
-					prop_description = 'CODE (data, string) is the code line to calculate the element.';
-				case PipelineCode.EL
-					prop_description = 'EL (data, item) is the calculated element.';
-				case PipelineCode.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the pipeline code line.';
-				case PipelineCode.NAME
-					prop_description = 'NAME (constant, string) is the name of the pipeline code line.';
-				case PipelineCode.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the pipeline code line.';
-				case PipelineCode.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the pipeline code line.';
-				case PipelineCode.ID
-					prop_description = 'ID (data, string) is a few-letter code for the pipeline code line.';
-				case PipelineCode.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the pipeline code line.';
-				case PipelineCode.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the pipeline code line.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			pipelinecode_description_list = { 'ELCLASS (constant, string) is the class of the pipeline code line.'  'NAME (constant, string) is the name of the pipeline code line.'  'DESCRIPTION (constant, string) is the description of the pipeline code line.'  'TEMPLATE (parameter, item) is the template of the pipeline code line.'  'ID (data, string) is a few-letter code for the pipeline code line.'  'LABEL (metadata, string) is an extended label of the pipeline code line.'  'NOTES (metadata, string) are some specific notes about the pipeline code line.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'TEXT_BEFORE_EXEC (metadata, string) is the text before the code line execution.'  'TEXT_AFTER_EXEC (metadata, string) is the text after the code line execution.'  'MONIKER (data, string) is the moniker of the calculated element.'  'CODE (data, string) is the code line to calculate the element.'  'EL (data, item) is the calculated element.' };
+			prop_description = pipelinecode_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -555,18 +508,18 @@ classdef PipelineCode < ConcreteElement
 			
 			prop = PipelineCode.getPropProp(pointer);
 			
-			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC
-					prop_settings = Format.getFormatSettings(Format.STRING);
-				case PipelineCode.TEXT_AFTER_EXEC
-					prop_settings = Format.getFormatSettings(Format.STRING);
-				case PipelineCode.MONIKER
-					prop_settings = Format.getFormatSettings(Format.STRING);
-				case PipelineCode.CODE
-					prop_settings = Format.getFormatSettings(Format.STRING);
-				case PipelineCode.EL
-					prop_settings = Format.getFormatSettings(Format.ITEM);
-				case PipelineCode.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % PipelineCode.TEXT_BEFORE_EXEC
+					prop_settings = Format.getFormatSettings(2);
+				case 10 % PipelineCode.TEXT_AFTER_EXEC
+					prop_settings = Format.getFormatSettings(2);
+				case 11 % PipelineCode.MONIKER
+					prop_settings = Format.getFormatSettings(2);
+				case 12 % PipelineCode.CODE
+					prop_settings = Format.getFormatSettings(2);
+				case 13 % PipelineCode.EL
+					prop_settings = Format.getFormatSettings(8);
+				case 4 % PipelineCode.TEMPLATE
 					prop_settings = 'PipelineCode';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -594,30 +547,30 @@ classdef PipelineCode < ConcreteElement
 			
 			prop = PipelineCode.getPropProp(pointer);
 			
-			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC
-					prop_default = Format.getFormatDefault(Format.STRING, PipelineCode.getPropSettings(prop));
-				case PipelineCode.TEXT_AFTER_EXEC
-					prop_default = Format.getFormatDefault(Format.STRING, PipelineCode.getPropSettings(prop));
-				case PipelineCode.MONIKER
-					prop_default = Format.getFormatDefault(Format.STRING, PipelineCode.getPropSettings(prop));
-				case PipelineCode.CODE
-					prop_default = Format.getFormatDefault(Format.STRING, PipelineCode.getPropSettings(prop));
-				case PipelineCode.EL
-					prop_default = Format.getFormatDefault(Format.ITEM, PipelineCode.getPropSettings(prop));
-				case PipelineCode.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % PipelineCode.TEXT_BEFORE_EXEC
+					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
+				case 10 % PipelineCode.TEXT_AFTER_EXEC
+					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
+				case 11 % PipelineCode.MONIKER
+					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
+				case 12 % PipelineCode.CODE
+					prop_default = Format.getFormatDefault(2, PipelineCode.getPropSettings(prop));
+				case 13 % PipelineCode.EL
+					prop_default = Format.getFormatDefault(8, PipelineCode.getPropSettings(prop));
+				case 1 % PipelineCode.ELCLASS
 					prop_default = 'PipelineCode';
-				case PipelineCode.NAME
+				case 2 % PipelineCode.NAME
 					prop_default = 'Pipeline Code Line';
-				case PipelineCode.DESCRIPTION
+				case 3 % PipelineCode.DESCRIPTION
 					prop_default = 'A Pipeline Code Line (PipelineCode) represents a line of executable code in a pipeline.';
-				case PipelineCode.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, PipelineCode.getPropSettings(prop));
-				case PipelineCode.ID
+				case 4 % PipelineCode.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PipelineCode.getPropSettings(prop));
+				case 5 % PipelineCode.ID
 					prop_default = 'PipelineCode ID';
-				case PipelineCode.LABEL
+				case 6 % PipelineCode.LABEL
 					prop_default = 'PipelineCode label';
-				case PipelineCode.NOTES
+				case 7 % PipelineCode.NOTES
 					prop_default = 'PipelineCode notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -664,15 +617,15 @@ classdef PipelineCode < ConcreteElement
 			% 
 			% PC.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:PipelineCode:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:PipelineCode:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PC.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PC.
-			%   Error id: €BRAPH2.STR€:PipelineCode:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PipelineCode:WrongInput
 			%  Element.CHECKPROP(PipelineCode, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PipelineCode.
-			%   Error id: €BRAPH2.STR€:PipelineCode:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PipelineCode:WrongInput
 			%  PC.CHECKPROP(PipelineCode, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PipelineCode.
-			%   Error id: €BRAPH2.STR€:PipelineCode:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:PipelineCode:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PC) and Element.CHECKPROP('PipelineCode')
 			%  are less computationally efficient.
@@ -683,20 +636,20 @@ classdef PipelineCode < ConcreteElement
 			prop = PipelineCode.getPropProp(pointer);
 			
 			switch prop
-				case PipelineCode.TEXT_BEFORE_EXEC % __PipelineCode.TEXT_BEFORE_EXEC__
-					check = Format.checkFormat(Format.STRING, value, PipelineCode.getPropSettings(prop));
-				case PipelineCode.TEXT_AFTER_EXEC % __PipelineCode.TEXT_AFTER_EXEC__
-					check = Format.checkFormat(Format.STRING, value, PipelineCode.getPropSettings(prop));
-				case PipelineCode.MONIKER % __PipelineCode.MONIKER__
-					check = Format.checkFormat(Format.STRING, value, PipelineCode.getPropSettings(prop));
-				case PipelineCode.CODE % __PipelineCode.CODE__
-					check = Format.checkFormat(Format.STRING, value, PipelineCode.getPropSettings(prop));
-				case PipelineCode.EL % __PipelineCode.EL__
-					check = Format.checkFormat(Format.ITEM, value, PipelineCode.getPropSettings(prop));
-				case PipelineCode.TEMPLATE % __PipelineCode.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, PipelineCode.getPropSettings(prop));
+				case 9 % PipelineCode.TEXT_BEFORE_EXEC
+					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
+				case 10 % PipelineCode.TEXT_AFTER_EXEC
+					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
+				case 11 % PipelineCode.MONIKER
+					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
+				case 12 % PipelineCode.CODE
+					check = Format.checkFormat(2, value, PipelineCode.getPropSettings(prop));
+				case 13 % PipelineCode.EL
+					check = Format.checkFormat(8, value, PipelineCode.getPropSettings(prop));
+				case 4 % PipelineCode.TEMPLATE
+					check = Format.checkFormat(8, value, PipelineCode.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -705,8 +658,8 @@ classdef PipelineCode < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PipelineCode:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput'], ...
+					['BRAPH2' ':PipelineCode:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PipelineCode.getPropTag(prop) ' (' PipelineCode.getFormatTag(PipelineCode.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -728,7 +681,7 @@ classdef PipelineCode < ConcreteElement
 			msg = ['Error while checking ' tostring(pc) ' ' pc.getPropTag(prop) '.'];
 			
 			switch prop
-				case PipelineCode.MONIKER % __PipelineCode.MONIKER__
+				case 11 % PipelineCode.MONIKER
 					check = ~iskeyword(value) && ~strcmp(value, 'varargin');
 					if check 
 					    msg = 'All ok!';
@@ -739,7 +692,7 @@ classdef PipelineCode < ConcreteElement
 					end
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						[check, msg] = checkValue@ConcreteElement(pc, prop, value);
 					end
 			end

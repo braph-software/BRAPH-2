@@ -5,6 +5,24 @@ classdef MultiplexKCor < Measure
 	% The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. 
 	% k is set by the user; the default value is equal to 1.
 	%
+	% The list of MultiplexKCor properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex K-Core.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex K-Core.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex K-Core.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex K-Core.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex K-Core.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex K-Core.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex K-Core.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex K-Core.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.
+	%
 	% MultiplexKCor methods (constructor):
 	%  MultiplexKCor - constructor
 	%
@@ -92,10 +110,10 @@ classdef MultiplexKCor < Measure
 	%
 	
 	properties (Constant) % properties
-		MULTIPLEXKCORETHRESHOLD = Measure.getPropNumber() + 1;
+		MULTIPLEXKCORETHRESHOLD = 16; %CET: Computational Efficiency Trick
 		MULTIPLEXKCORETHRESHOLD_TAG = 'MULTIPLEXKCORETHRESHOLD';
-		MULTIPLEXKCORETHRESHOLD_CATEGORY = Category.PARAMETER;
-		MULTIPLEXKCORETHRESHOLD_FORMAT = Format.SCALAR;
+		MULTIPLEXKCORETHRESHOLD_CATEGORY = 3;
+		MULTIPLEXKCORETHRESHOLD_FORMAT = 11;
 	end
 	methods % constructor
 		function m = MultiplexKCor(varargin)
@@ -108,6 +126,23 @@ classdef MultiplexKCor < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of MultiplexKCor properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Multiplex K-Core.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Multiplex K-Core.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Multiplex K-Core.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Multiplex K-Core.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Multiplex K-Core.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Multiplex K-Core.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Multiplex K-Core.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Multiplex K-Core.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>MULTIPLEXKCORETHRESHOLD</strong> 	MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.
 			%
 			% See also Category, Format.
 			
@@ -145,7 +180,7 @@ classdef MultiplexKCor < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('MultiplexKCor', [], [], true);
+			subclass_list = { 'MultiplexKCor' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of multiplex k-core.
@@ -166,52 +201,30 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						MultiplexKCor.MULTIPLEXKCORETHRESHOLD ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						MultiplexKCor.MULTIPLEXKCORETHRESHOLD ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -232,7 +245,31 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(MultiplexKCor.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in multiplex k-core/error.
@@ -260,14 +297,14 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == MultiplexKCor.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiplexKCor.'] ...
 					)
 			end
@@ -298,15 +335,14 @@ classdef MultiplexKCor < Measure
 			%
 			% See also getProps, existsTag.
 			
-			multiplexkcor_tag_list = cellfun(@(x) MultiplexKCor.getPropTag(x), num2cell(MultiplexKCor.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, multiplexkcor_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for MultiplexKCor.'] ...
 					)
 			end
@@ -332,8 +368,7 @@ classdef MultiplexKCor < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				multiplexkcor_tag_list = cellfun(@(x) MultiplexKCor.getPropTag(x), num2cell(MultiplexKCor.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, multiplexkcor_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -361,14 +396,9 @@ classdef MultiplexKCor < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
-						tag = MultiplexKCor.MULTIPLEXKCORETHRESHOLD_TAG;
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				multiplexkcor_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'MULTIPLEXKCORETHRESHOLD' };
+				tag = multiplexkcor_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -393,12 +423,9 @@ classdef MultiplexKCor < Measure
 			
 			prop = MultiplexKCor.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
-					prop_category = MultiplexKCor.MULTIPLEXKCORETHRESHOLD_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexkcor_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = multiplexkcor_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -422,12 +449,9 @@ classdef MultiplexKCor < Measure
 			
 			prop = MultiplexKCor.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
-					prop_format = MultiplexKCor.MULTIPLEXKCORETHRESHOLD_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexkcor_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11 };
+			prop_format = multiplexkcor_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -451,36 +475,9 @@ classdef MultiplexKCor < Measure
 			
 			prop = MultiplexKCor.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
-					prop_description = 'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.';
-				case MultiplexKCor.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Multiplex K-Core.';
-				case MultiplexKCor.NAME
-					prop_description = 'NAME (constant, string) is the name of the Multiplex K-Core.';
-				case MultiplexKCor.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Multiplex K-Core.';
-				case MultiplexKCor.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Multiplex K-Core.';
-				case MultiplexKCor.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Multiplex K-Core.';
-				case MultiplexKCor.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Multiplex K-Core.';
-				case MultiplexKCor.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Multiplex K-Core.';
-				case MultiplexKCor.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case MultiplexKCor.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case MultiplexKCor.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case MultiplexKCor.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case MultiplexKCor.M
-					prop_description = 'M (result, cell) is the Multiplex K-Core.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexkcor_description_list = { 'ELCLASS (constant, string) is the class of the Multiplex K-Core.'  'NAME (constant, string) is the name of the Multiplex K-Core.'  'DESCRIPTION (constant, string) is the description of the Multiplex K-Core.'  'TEMPLATE (parameter, item) is the template of the Multiplex K-Core.'  'ID (data, string) is a few-letter code of the Multiplex K-Core.'  'LABEL (metadata, string) is an extended label of the Multiplex K-Core.'  'NOTES (metadata, string) are some specific notes about the Multiplex K-Core.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Multiplex K-Core.'  'PFM (gui, item) contains the panel figure of the measure.'  'MULTIPLEXKCORETHRESHOLD (parameter, scalar) is the multiplex k-core threshold.' };
+			prop_description = multiplexkcor_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -504,10 +501,10 @@ classdef MultiplexKCor < Measure
 			
 			prop = MultiplexKCor.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case MultiplexKCor.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+					prop_settings = Format.getFormatSettings(11);
+				case 4 % MultiplexKCor.TEMPLATE
 					prop_settings = 'MultiplexKCor';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -535,30 +532,30 @@ classdef MultiplexKCor < Measure
 			
 			prop = MultiplexKCor.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
 					prop_default = 1;
-				case MultiplexKCor.ELCLASS
+				case 1 % MultiplexKCor.ELCLASS
 					prop_default = 'MultiplexKCor';
-				case MultiplexKCor.NAME
+				case 2 % MultiplexKCor.NAME
 					prop_default = 'Multiplex K-Core';
-				case MultiplexKCor.DESCRIPTION
+				case 3 % MultiplexKCor.DESCRIPTION
 					prop_default = 'The Multiplex K-Core (MultiplexKCor) of a graph is the largest subnetwork comprising nodes of overlapping degree k or higher. k is set by the user; the default value is equal to 1.';
-				case MultiplexKCor.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, MultiplexKCor.getPropSettings(prop));
-				case MultiplexKCor.ID
+				case 4 % MultiplexKCor.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MultiplexKCor.getPropSettings(prop));
+				case 5 % MultiplexKCor.ID
 					prop_default = 'MultiplexKCor ID';
-				case MultiplexKCor.LABEL
+				case 6 % MultiplexKCor.LABEL
 					prop_default = 'Multiplex K-Core label';
-				case MultiplexKCor.NOTES
+				case 7 % MultiplexKCor.NOTES
 					prop_default = 'Multiplex K-Core notes';
-				case MultiplexKCor.SHAPE
-					prop_default = Measure.BINODAL;
-				case MultiplexKCor.SCOPE
-					prop_default = Measure.SUPERGLOBAL;
-				case MultiplexKCor.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case MultiplexKCor.COMPATIBLE_GRAPHS
+				case 9 % MultiplexKCor.SHAPE
+					prop_default = 3;
+				case 10 % MultiplexKCor.SCOPE
+					prop_default = 1;
+				case 11 % MultiplexKCor.PARAMETRICITY
+					prop_default = 2;
+				case 12 % MultiplexKCor.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'OrdMxWU' 'OrdMxBU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -605,15 +602,15 @@ classdef MultiplexKCor < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:MultiplexKCor:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:MultiplexKCor:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:MultiplexKCor:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexKCor:WrongInput
 			%  Element.CHECKPROP(MultiplexKCor, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexKCor.
-			%   Error id: €BRAPH2.STR€:MultiplexKCor:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexKCor:WrongInput
 			%  M.CHECKPROP(MultiplexKCor, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexKCor.
-			%   Error id: €BRAPH2.STR€:MultiplexKCor:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:MultiplexKCor:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('MultiplexKCor')
 			%  are less computationally efficient.
@@ -624,12 +621,12 @@ classdef MultiplexKCor < Measure
 			prop = MultiplexKCor.getPropProp(pointer);
 			
 			switch prop
-				case MultiplexKCor.MULTIPLEXKCORETHRESHOLD % __MultiplexKCor.MULTIPLEXKCORETHRESHOLD__
-					check = Format.checkFormat(Format.SCALAR, value, MultiplexKCor.getPropSettings(prop));
-				case MultiplexKCor.TEMPLATE % __MultiplexKCor.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, MultiplexKCor.getPropSettings(prop));
+				case 16 % MultiplexKCor.MULTIPLEXKCORETHRESHOLD
+					check = Format.checkFormat(11, value, MultiplexKCor.getPropSettings(prop));
+				case 4 % MultiplexKCor.TEMPLATE
+					check = Format.checkFormat(8, value, MultiplexKCor.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -638,8 +635,8 @@ classdef MultiplexKCor < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexKCor:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexKCor:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiplexKCor.getPropTag(prop) ' (' MultiplexKCor.getFormatTag(MultiplexKCor.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -650,20 +647,20 @@ classdef MultiplexKCor < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case MultiplexKCor.M % __MultiplexKCor.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(MultiplexKCor.M), 'twister')
+				case 14 % MultiplexKCor.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -676,7 +673,7 @@ classdef MultiplexKCor < Measure
 					    N = g.get('NODENUMBER');
 					    multiplex_kcore_threshold = m.get('MULTIPLEXKCORETHRESHOLD');
 					    assert(mod(multiplex_kcore_threshold, 1) == 0, ...
-					        [BRAPH2.STR ':MultiplexKCore:' BRAPH2.WRONG_INPUT], ...
+					        ['BRAPH2' ':MultiplexKCore:' 'WrongInput'], ...
 					        ['MultiplexKCore threshold must be an integer value ' ...
 					        'while it is ' tostring(multiplex_kcore_threshold)])
 					    
@@ -690,7 +687,7 @@ classdef MultiplexKCor < Measure
 					        iter = 0;
 					        subAii = binarize(A_sum);
 					        while 1
-					            if directionality_layer == Graph.UNDIRECTED  % undirected graphs
+					            if directionality_layer == 2  % undirected graphs
 					                ovdeg = sum(subAii, 1)';   % ov. degree undirected 
 					            else
 					                ovdeg = (sum(subAii, 1)' + sum(subAii, 2));  % ov. degree directed
@@ -715,7 +712,7 @@ classdef MultiplexKCor < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

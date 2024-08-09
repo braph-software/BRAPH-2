@@ -4,6 +4,23 @@ classdef DegreeInAv < DegreeIn
 	%
 	% The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.
 	%
+	% The list of DegreeInAv properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Degree.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Degree value.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%
 	% DegreeInAv methods (constructor):
 	%  DegreeInAv - constructor
 	%
@@ -101,6 +118,22 @@ classdef DegreeInAv < DegreeIn
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of DegreeInAv properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Average In-Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Average In-Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Average In-Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Average In-Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Average In-Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Average In-Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Average In-Degree.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the cell containing the Average In-Degree value.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -138,7 +171,7 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('DegreeInAv', [], [], true);
+			subclass_list = { 'DegreeInAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of average in-degree.
@@ -159,50 +192,30 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					DegreeIn.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						DegreeIn.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						DegreeIn.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						DegreeIn.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						DegreeIn.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						DegreeIn.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						DegreeIn.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						DegreeIn.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						DegreeIn.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						DegreeIn.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -223,7 +236,31 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(DegreeInAv.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 15;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in average in-degree/error.
@@ -251,14 +288,14 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == DegreeInAv.getProps());
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput'], ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for DegreeInAv.'] ...
 					)
 			end
@@ -289,15 +326,14 @@ classdef DegreeInAv < DegreeIn
 			%
 			% See also getProps, existsTag.
 			
-			degreeinav_tag_list = cellfun(@(x) DegreeInAv.getPropTag(x), num2cell(DegreeInAv.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, degreeinav_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput'], ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for DegreeInAv.'] ...
 					)
 			end
@@ -323,8 +359,7 @@ classdef DegreeInAv < DegreeIn
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				degreeinav_tag_list = cellfun(@(x) DegreeInAv.getPropTag(x), num2cell(DegreeInAv.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, degreeinav_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -352,12 +387,9 @@ classdef DegreeInAv < DegreeIn
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@DegreeIn(prop);
-				end
+				%CET: Computational Efficiency Trick
+				degreeinav_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				tag = degreeinav_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -382,10 +414,9 @@ classdef DegreeInAv < DegreeIn
 			
 			prop = DegreeInAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@DegreeIn(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degreeinav_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			prop_category = degreeinav_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -409,10 +440,9 @@ classdef DegreeInAv < DegreeIn
 			
 			prop = DegreeInAv.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@DegreeIn(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degreeinav_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			prop_format = degreeinav_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -436,34 +466,9 @@ classdef DegreeInAv < DegreeIn
 			
 			prop = DegreeInAv.getPropProp(pointer);
 			
-			switch prop
-				case DegreeInAv.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Average In-Degree.';
-				case DegreeInAv.NAME
-					prop_description = 'NAME (constant, string) is the name of the Average In-Degree.';
-				case DegreeInAv.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Average In-Degree.';
-				case DegreeInAv.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Average In-Degree.';
-				case DegreeInAv.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Average In-Degree.';
-				case DegreeInAv.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Average In-Degree.';
-				case DegreeInAv.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Average In-Degree.';
-				case DegreeInAv.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
-				case DegreeInAv.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case DegreeInAv.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case DegreeInAv.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case DegreeInAv.M
-					prop_description = 'M (result, cell) is the cell containing the Average In-Degree value.';
-				otherwise
-					prop_description = getPropDescription@DegreeIn(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degreeinav_description_list = { 'ELCLASS (constant, string) is the class of the Average In-Degree.'  'NAME (constant, string) is the name of the Average In-Degree.'  'DESCRIPTION (constant, string) is the description of the Average In-Degree.'  'TEMPLATE (parameter, item) is the template of the Average In-Degree.'  'ID (data, string) is a few-letter code of the Average In-Degree.'  'LABEL (metadata, string) is an extended label of the Average In-Degree.'  'NOTES (metadata, string) are some specific notes about the Average In-Degree.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the cell containing the Average In-Degree value.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			prop_description = degreeinav_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -487,8 +492,8 @@ classdef DegreeInAv < DegreeIn
 			
 			prop = DegreeInAv.getPropProp(pointer);
 			
-			switch prop
-				case DegreeInAv.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % DegreeInAv.TEMPLATE
 					prop_settings = 'DegreeInAv';
 				otherwise
 					prop_settings = getPropSettings@DegreeIn(prop);
@@ -516,28 +521,28 @@ classdef DegreeInAv < DegreeIn
 			
 			prop = DegreeInAv.getPropProp(pointer);
 			
-			switch prop
-				case DegreeInAv.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % DegreeInAv.ELCLASS
 					prop_default = 'DegreeInAv';
-				case DegreeInAv.NAME
+				case 2 % DegreeInAv.NAME
 					prop_default = 'Average In-Degree';
-				case DegreeInAv.DESCRIPTION
+				case 3 % DegreeInAv.DESCRIPTION
 					prop_default = 'The Average In-Degree (DegreeInAv) of a graph is the average of all number of inward edges connected to a node within a layer.';
-				case DegreeInAv.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, DegreeInAv.getPropSettings(prop));
-				case DegreeInAv.ID
+				case 4 % DegreeInAv.TEMPLATE
+					prop_default = Format.getFormatDefault(8, DegreeInAv.getPropSettings(prop));
+				case 5 % DegreeInAv.ID
 					prop_default = 'DegreeInAv ID';
-				case DegreeInAv.LABEL
+				case 6 % DegreeInAv.LABEL
 					prop_default = 'Average In-Degree label';
-				case DegreeInAv.NOTES
+				case 7 % DegreeInAv.NOTES
 					prop_default = 'Average In-Degree notes';
-				case DegreeInAv.SHAPE
-					prop_default = Measure.GLOBAL;
-				case DegreeInAv.SCOPE
-					prop_default = Measure.UNILAYER;
-				case DegreeInAv.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case DegreeInAv.COMPATIBLE_GRAPHS
+				case 9 % DegreeInAv.SHAPE
+					prop_default = 1;
+				case 10 % DegreeInAv.SCOPE
+					prop_default = 2;
+				case 11 % DegreeInAv.PARAMETRICITY
+					prop_default = 2;
+				case 12 % DegreeInAv.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD' 'OrdMxBD' 'OrdMlWD'};;
 				otherwise
 					prop_default = getPropDefault@DegreeIn(prop);
@@ -584,15 +589,15 @@ classdef DegreeInAv < DegreeIn
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:DegreeInAv:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:DegreeInAv:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:DegreeInAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:DegreeInAv:WrongInput
 			%  Element.CHECKPROP(DegreeInAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of DegreeInAv.
-			%   Error id: €BRAPH2.STR€:DegreeInAv:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:DegreeInAv:WrongInput
 			%  M.CHECKPROP(DegreeInAv, PROP, VALUE) throws error if VALUE has not a valid format for PROP of DegreeInAv.
-			%   Error id: €BRAPH2.STR€:DegreeInAv:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:DegreeInAv:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('DegreeInAv')
 			%  are less computationally efficient.
@@ -603,10 +608,10 @@ classdef DegreeInAv < DegreeIn
 			prop = DegreeInAv.getPropProp(pointer);
 			
 			switch prop
-				case DegreeInAv.TEMPLATE % __DegreeInAv.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, DegreeInAv.getPropSettings(prop));
+				case 4 % DegreeInAv.TEMPLATE
+					check = Format.checkFormat(8, value, DegreeInAv.getPropSettings(prop));
 				otherwise
-					if prop <= DegreeIn.getPropNumber()
+					if prop <= 15
 						check = checkProp@DegreeIn(prop, value);
 					end
 			end
@@ -615,8 +620,8 @@ classdef DegreeInAv < DegreeIn
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':DegreeInAv:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput'], ...
+					['BRAPH2' ':DegreeInAv:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' DegreeInAv.getPropTag(prop) ' (' DegreeInAv.getFormatTag(DegreeInAv.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -627,20 +632,20 @@ classdef DegreeInAv < DegreeIn
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case DegreeInAv.M % __DegreeInAv.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(DegreeInAv.M), 'twister')
+				case 14 % DegreeInAv.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					in_degree = calculateValue@DegreeIn(m, prop);	
 					g = m.get('G'); % graph from measure class
@@ -656,7 +661,7 @@ classdef DegreeInAv < DegreeIn
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= DegreeIn.getPropNumber()
+					if prop <= 15
 						value = calculateValue@DegreeIn(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

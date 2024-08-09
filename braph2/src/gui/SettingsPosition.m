@@ -7,6 +7,27 @@ classdef SettingsPosition < Settings
 	%  and width.
 	% The handle can be an uipanel.
 	%
+	% The list of SettingsPosition properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the position settings.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the position settings.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the position settings.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the position settings.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the position settings.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the position settings.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the position settings.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>15</strong> <strong>AUTOPOS</strong> 	AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
+	%  <strong>16</strong> <strong>X0</strong> 	X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.
+	%  <strong>17</strong> <strong>Y0</strong> 	Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.
+	%  <strong>18</strong> <strong>WIDTH</strong> 	WIDTH (figure, size) is the width of the panel in pixels.
+	%  <strong>19</strong> <strong>HEIGHT</strong> 	HEIGHT (figure, size) is the height of the panel in pixels.
+	%
 	% SettingsPosition methods (constructor):
 	%  SettingsPosition - constructor
 	%
@@ -96,30 +117,30 @@ classdef SettingsPosition < Settings
 	% See also uipanel, SettingsPositionPP, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		AUTOPOS = Settings.getPropNumber() + 1;
+		AUTOPOS = 15; %CET: Computational Efficiency Trick
 		AUTOPOS_TAG = 'AUTOPOS';
-		AUTOPOS_CATEGORY = Category.FIGURE;
-		AUTOPOS_FORMAT = Format.LOGICAL;
+		AUTOPOS_CATEGORY = 8;
+		AUTOPOS_FORMAT = 4;
 		
-		X0 = Settings.getPropNumber() + 2;
+		X0 = 16; %CET: Computational Efficiency Trick
 		X0_TAG = 'X0';
-		X0_CATEGORY = Category.FIGURE;
-		X0_FORMAT = Format.SCALAR;
+		X0_CATEGORY = 8;
+		X0_FORMAT = 11;
 		
-		Y0 = Settings.getPropNumber() + 3;
+		Y0 = 17; %CET: Computational Efficiency Trick
 		Y0_TAG = 'Y0';
-		Y0_CATEGORY = Category.FIGURE;
-		Y0_FORMAT = Format.SCALAR;
+		Y0_CATEGORY = 8;
+		Y0_FORMAT = 11;
 		
-		WIDTH = Settings.getPropNumber() + 4;
+		WIDTH = 18; %CET: Computational Efficiency Trick
 		WIDTH_TAG = 'WIDTH';
-		WIDTH_CATEGORY = Category.FIGURE;
-		WIDTH_FORMAT = Format.SIZE;
+		WIDTH_CATEGORY = 8;
+		WIDTH_FORMAT = 22;
 		
-		HEIGHT = Settings.getPropNumber() + 5;
+		HEIGHT = 19; %CET: Computational Efficiency Trick
 		HEIGHT_TAG = 'HEIGHT';
-		HEIGHT_CATEGORY = Category.FIGURE;
-		HEIGHT_FORMAT = Format.SIZE;
+		HEIGHT_CATEGORY = 8;
+		HEIGHT_FORMAT = 22;
 	end
 	methods % constructor
 		function st = SettingsPosition(varargin)
@@ -132,6 +153,26 @@ classdef SettingsPosition < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SettingsPosition properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the position settings.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the position settings.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the position settings.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the position settings.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the position settings.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the position settings.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the position settings.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>15</strong> <strong>AUTOPOS</strong> 	AUTOPOS (figure, logical) determines whether the position is adjusted automatically.
+			%  <strong>16</strong> <strong>X0</strong> 	X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.
+			%  <strong>17</strong> <strong>Y0</strong> 	Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.
+			%  <strong>18</strong> <strong>WIDTH</strong> 	WIDTH (figure, size) is the width of the panel in pixels.
+			%  <strong>19</strong> <strong>HEIGHT</strong> 	HEIGHT (figure, size) is the height of the panel in pixels.
 			%
 			% See also Category, Format.
 			
@@ -169,7 +210,7 @@ classdef SettingsPosition < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SettingsPosition', [], [], true);
+			subclass_list = { 'SettingsPosition' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of position settings.
@@ -190,60 +231,30 @@ classdef SettingsPosition < Settings
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Settings.getProps() ...
-						SettingsPosition.AUTOPOS ...
-						SettingsPosition.X0 ...
-						SettingsPosition.Y0 ...
-						SettingsPosition.WIDTH ...
-						SettingsPosition.HEIGHT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Settings.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Settings.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Settings.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Settings.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Settings.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Settings.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Settings.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Settings.getProps(Category.FIGURE) ...
-						SettingsPosition.AUTOPOS ...
-						SettingsPosition.X0 ...
-						SettingsPosition.Y0 ...
-						SettingsPosition.WIDTH ...
-						SettingsPosition.HEIGHT ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Settings.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 13 14];
+				case 8 % Category.FIGURE
+					prop_list = [15 16 17 18 19];
+				case 9 % Category.GUI
+					prop_list = [9 10 11 12];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -264,7 +275,31 @@ classdef SettingsPosition < Settings
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SettingsPosition.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 19;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 3;
+				case 8 % Category.FIGURE
+					prop_number = 5;
+				case 9 % Category.GUI
+					prop_number = 4;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in position settings/error.
@@ -292,14 +327,14 @@ classdef SettingsPosition < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SettingsPosition.getProps());
+			check = prop >= 1 && prop <= 19 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsPosition.'] ...
 					)
 			end
@@ -330,15 +365,14 @@ classdef SettingsPosition < Settings
 			%
 			% See also getProps, existsTag.
 			
-			settingsposition_tag_list = cellfun(@(x) SettingsPosition.getPropTag(x), num2cell(SettingsPosition.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, settingsposition_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'AUTOPOS'  'X0'  'Y0'  'WIDTH'  'HEIGHT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsPosition.'] ...
 					)
 			end
@@ -364,8 +398,7 @@ classdef SettingsPosition < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				settingsposition_tag_list = cellfun(@(x) SettingsPosition.getPropTag(x), num2cell(SettingsPosition.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, settingsposition_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'AUTOPOS'  'X0'  'Y0'  'WIDTH'  'HEIGHT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -393,22 +426,9 @@ classdef SettingsPosition < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SettingsPosition.AUTOPOS
-						tag = SettingsPosition.AUTOPOS_TAG;
-					case SettingsPosition.X0
-						tag = SettingsPosition.X0_TAG;
-					case SettingsPosition.Y0
-						tag = SettingsPosition.Y0_TAG;
-					case SettingsPosition.WIDTH
-						tag = SettingsPosition.WIDTH_TAG;
-					case SettingsPosition.HEIGHT
-						tag = SettingsPosition.HEIGHT_TAG;
-					otherwise
-						tag = getPropTag@Settings(prop);
-				end
+				%CET: Computational Efficiency Trick
+				settingsposition_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'AUTOPOS'  'X0'  'Y0'  'WIDTH'  'HEIGHT' };
+				tag = settingsposition_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -433,20 +453,9 @@ classdef SettingsPosition < Settings
 			
 			prop = SettingsPosition.getPropProp(pointer);
 			
-			switch prop
-				case SettingsPosition.AUTOPOS
-					prop_category = SettingsPosition.AUTOPOS_CATEGORY;
-				case SettingsPosition.X0
-					prop_category = SettingsPosition.X0_CATEGORY;
-				case SettingsPosition.Y0
-					prop_category = SettingsPosition.Y0_CATEGORY;
-				case SettingsPosition.WIDTH
-					prop_category = SettingsPosition.WIDTH_CATEGORY;
-				case SettingsPosition.HEIGHT
-					prop_category = SettingsPosition.HEIGHT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsposition_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8 };
+			prop_category = settingsposition_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -470,20 +479,9 @@ classdef SettingsPosition < Settings
 			
 			prop = SettingsPosition.getPropProp(pointer);
 			
-			switch prop
-				case SettingsPosition.AUTOPOS
-					prop_format = SettingsPosition.AUTOPOS_FORMAT;
-				case SettingsPosition.X0
-					prop_format = SettingsPosition.X0_FORMAT;
-				case SettingsPosition.Y0
-					prop_format = SettingsPosition.Y0_FORMAT;
-				case SettingsPosition.WIDTH
-					prop_format = SettingsPosition.WIDTH_FORMAT;
-				case SettingsPosition.HEIGHT
-					prop_format = SettingsPosition.HEIGHT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsposition_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  4  11  11  22  22 };
+			prop_format = settingsposition_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -507,34 +505,9 @@ classdef SettingsPosition < Settings
 			
 			prop = SettingsPosition.getPropProp(pointer);
 			
-			switch prop
-				case SettingsPosition.AUTOPOS
-					prop_description = 'AUTOPOS (figure, logical) determines whether the position is adjusted automatically.';
-				case SettingsPosition.X0
-					prop_description = 'X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.';
-				case SettingsPosition.Y0
-					prop_description = 'Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.';
-				case SettingsPosition.WIDTH
-					prop_description = 'WIDTH (figure, size) is the width of the panel in pixels.';
-				case SettingsPosition.HEIGHT
-					prop_description = 'HEIGHT (figure, size) is the height of the panel in pixels.';
-				case SettingsPosition.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the position settings.';
-				case SettingsPosition.NAME
-					prop_description = 'NAME (constant, string) is the name of the position settings.';
-				case SettingsPosition.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the position settings.';
-				case SettingsPosition.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the position settings.';
-				case SettingsPosition.ID
-					prop_description = 'ID (data, string) is a few-letter code for the position settings.';
-				case SettingsPosition.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the position settings.';
-				case SettingsPosition.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the position settings.';
-				otherwise
-					prop_description = getPropDescription@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsposition_description_list = { 'ELCLASS (constant, string) is the class of the position settings.'  'NAME (constant, string) is the name of the position settings.'  'DESCRIPTION (constant, string) is the description of the position settings.'  'TEMPLATE (parameter, item) is the template of the position settings.'  'ID (data, string) is a few-letter code for the position settings.'  'LABEL (metadata, string) is an extended label of the position settings.'  'NOTES (metadata, string) are some specific notes about the position settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'AUTOPOS (figure, logical) determines whether the position is adjusted automatically.'  'X0 (figure, scalar) is the lower left x-coordinate of the panel in pixels.'  'Y0 (figure, scalar) is the lower-left y-coordinate of the panel in pixels.'  'WIDTH (figure, size) is the width of the panel in pixels.'  'HEIGHT (figure, size) is the height of the panel in pixels.' };
+			prop_description = settingsposition_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -558,18 +531,18 @@ classdef SettingsPosition < Settings
 			
 			prop = SettingsPosition.getPropProp(pointer);
 			
-			switch prop
-				case SettingsPosition.AUTOPOS
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case SettingsPosition.X0
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case SettingsPosition.Y0
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case SettingsPosition.WIDTH
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case SettingsPosition.HEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case SettingsPosition.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsPosition.AUTOPOS
+					prop_settings = Format.getFormatSettings(4);
+				case 16 % SettingsPosition.X0
+					prop_settings = Format.getFormatSettings(11);
+				case 17 % SettingsPosition.Y0
+					prop_settings = Format.getFormatSettings(11);
+				case 18 % SettingsPosition.WIDTH
+					prop_settings = Format.getFormatSettings(22);
+				case 19 % SettingsPosition.HEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 4 % SettingsPosition.TEMPLATE
 					prop_settings = 'SettingsPosition';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -597,30 +570,30 @@ classdef SettingsPosition < Settings
 			
 			prop = SettingsPosition.getPropProp(pointer);
 			
-			switch prop
-				case SettingsPosition.AUTOPOS
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsPosition.AUTOPOS
 					prop_default = true;
-				case SettingsPosition.X0
+				case 16 % SettingsPosition.X0
 					prop_default = 1;
-				case SettingsPosition.Y0
+				case 17 % SettingsPosition.Y0
 					prop_default = 1;
-				case SettingsPosition.WIDTH
+				case 18 % SettingsPosition.WIDTH
 					prop_default = 800;
-				case SettingsPosition.HEIGHT
+				case 19 % SettingsPosition.HEIGHT
 					prop_default = 600;
-				case SettingsPosition.ELCLASS
+				case 1 % SettingsPosition.ELCLASS
 					prop_default = 'SettingsPosition';
-				case SettingsPosition.NAME
+				case 2 % SettingsPosition.NAME
 					prop_default = 'Posiiton Settings';
-				case SettingsPosition.DESCRIPTION
+				case 3 % SettingsPosition.DESCRIPTION
 					prop_default = 'A Position Settings (SettingsPosition) provides the settings for a posistion settings panel, including autopositioning, x0, y0, height and width. The handle can be an uipanel.';
-				case SettingsPosition.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.ID
+				case 4 % SettingsPosition.TEMPLATE
+					prop_default = Format.getFormatDefault(8, SettingsPosition.getPropSettings(prop));
+				case 5 % SettingsPosition.ID
 					prop_default = 'SettingsPosition ID';
-				case SettingsPosition.LABEL
+				case 6 % SettingsPosition.LABEL
 					prop_default = 'SettingsPosition label';
-				case SettingsPosition.NOTES
+				case 7 % SettingsPosition.NOTES
 					prop_default = 'SettingsPosition notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -667,15 +640,15 @@ classdef SettingsPosition < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SettingsPosition:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SettingsPosition:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: €BRAPH2.STR€:SettingsPosition:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsPosition:WrongInput
 			%  Element.CHECKPROP(SettingsPosition, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsPosition.
-			%   Error id: €BRAPH2.STR€:SettingsPosition:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsPosition:WrongInput
 			%  ST.CHECKPROP(SettingsPosition, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsPosition.
-			%   Error id: €BRAPH2.STR€:SettingsPosition:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SettingsPosition:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsPosition')
 			%  are less computationally efficient.
@@ -686,20 +659,20 @@ classdef SettingsPosition < Settings
 			prop = SettingsPosition.getPropProp(pointer);
 			
 			switch prop
-				case SettingsPosition.AUTOPOS % __SettingsPosition.AUTOPOS__
-					check = Format.checkFormat(Format.LOGICAL, value, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.X0 % __SettingsPosition.X0__
-					check = Format.checkFormat(Format.SCALAR, value, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.Y0 % __SettingsPosition.Y0__
-					check = Format.checkFormat(Format.SCALAR, value, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.WIDTH % __SettingsPosition.WIDTH__
-					check = Format.checkFormat(Format.SIZE, value, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.HEIGHT % __SettingsPosition.HEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, SettingsPosition.getPropSettings(prop));
-				case SettingsPosition.TEMPLATE % __SettingsPosition.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, SettingsPosition.getPropSettings(prop));
+				case 15 % SettingsPosition.AUTOPOS
+					check = Format.checkFormat(4, value, SettingsPosition.getPropSettings(prop));
+				case 16 % SettingsPosition.X0
+					check = Format.checkFormat(11, value, SettingsPosition.getPropSettings(prop));
+				case 17 % SettingsPosition.Y0
+					check = Format.checkFormat(11, value, SettingsPosition.getPropSettings(prop));
+				case 18 % SettingsPosition.WIDTH
+					check = Format.checkFormat(22, value, SettingsPosition.getPropSettings(prop));
+				case 19 % SettingsPosition.HEIGHT
+					check = Format.checkFormat(22, value, SettingsPosition.getPropSettings(prop));
+				case 4 % SettingsPosition.TEMPLATE
+					check = Format.checkFormat(8, value, SettingsPosition.getPropSettings(prop));
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -708,8 +681,8 @@ classdef SettingsPosition < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsPosition:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsPosition:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsPosition.getPropTag(prop) ' (' SettingsPosition.getFormatTag(SettingsPosition.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -729,7 +702,7 @@ classdef SettingsPosition < Settings
 			%  checkValue.
 			
 			switch prop
-				case SettingsPosition.AUTOPOS % __SettingsPosition.AUTOPOS__
+				case 15 % SettingsPosition.AUTOPOS
 					p = st.get('H');
 					if check_graphics(p, 'uipanel')
 					    if st.get('AUTOPOS')
@@ -747,7 +720,7 @@ classdef SettingsPosition < Settings
 					    end
 					end
 					
-				case SettingsPosition.X0 % __SettingsPosition.X0__
+				case 16 % SettingsPosition.X0
 					p = st.get('H');
 					if check_graphics(p, 'uipanel')
 					    if ~st.get('AUTOPOS')
@@ -755,7 +728,7 @@ classdef SettingsPosition < Settings
 					    end
 					end
 					
-				case SettingsPosition.Y0 % __SettingsPosition.Y0__
+				case 17 % SettingsPosition.Y0
 					p = st.get('H');
 					if check_graphics(p, 'uipanel')
 					    if ~st.get('AUTOPOS')
@@ -763,7 +736,7 @@ classdef SettingsPosition < Settings
 					    end
 					end
 					
-				case SettingsPosition.WIDTH % __SettingsPosition.WIDTH__
+				case 18 % SettingsPosition.WIDTH
 					p = st.get('H');
 					if check_graphics(p, 'uipanel')
 					    if ~st.get('AUTOPOS')
@@ -771,7 +744,7 @@ classdef SettingsPosition < Settings
 					    end
 					end
 					
-				case SettingsPosition.HEIGHT % __SettingsPosition.HEIGHT__
+				case 19 % SettingsPosition.HEIGHT
 					p = st.get('H');
 					if check_graphics(p, 'uipanel')
 					    if ~st.get('AUTOPOS')
@@ -780,7 +753,7 @@ classdef SettingsPosition < Settings
 					end
 					
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						postset@Settings(st, prop);
 					end
 			end

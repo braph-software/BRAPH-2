@@ -4,6 +4,19 @@ classdef SubjectST < Subject
 	%
 	% Subject with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.
 	%
+	% The list of SubjectST properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+	%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+	%  <strong>11</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
+	%
 	% SubjectST methods (constructor):
 	%  SubjectST - constructor
 	%
@@ -93,15 +106,15 @@ classdef SubjectST < Subject
 	% See also ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS.
 	
 	properties (Constant) % properties
-		BA = Subject.getPropNumber() + 1;
+		BA = 10; %CET: Computational Efficiency Trick
 		BA_TAG = 'BA';
-		BA_CATEGORY = Category.DATA;
-		BA_FORMAT = Format.ITEM;
+		BA_CATEGORY = 4;
+		BA_FORMAT = 8;
 		
-		ST = Subject.getPropNumber() + 2;
+		ST = 11; %CET: Computational Efficiency Trick
 		ST_TAG = 'ST';
-		ST_CATEGORY = Category.DATA;
-		ST_FORMAT = Format.CVECTOR;
+		ST_CATEGORY = 4;
+		ST_FORMAT = 13;
 	end
 	methods % constructor
 		function sub = SubjectST(varargin)
@@ -114,6 +127,18 @@ classdef SubjectST < Subject
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SubjectST properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the subject.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the subject.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the subject.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>VOI_DICT</strong> 	VOI_DICT (data, idict) contains the variables of interest of the subject.
+			%  <strong>10</strong> <strong>BA</strong> 	BA (data, item) is a brain atlas.
+			%  <strong>11</strong> <strong>ST</strong> 	ST (data, cvector) is a column vector with data for each brain region.
 			%
 			% See also Category, Format.
 			
@@ -151,7 +176,7 @@ classdef SubjectST < Subject
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SubjectST', [], [], true);
+			subclass_list = { 'SubjectST' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of subject with structural data.
@@ -172,54 +197,26 @@ classdef SubjectST < Subject
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Subject.getProps() ...
-						SubjectST.BA ...
-						SubjectST.ST ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Subject.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Subject.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Subject.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Subject.getProps(Category.DATA) ...
-						SubjectST.BA ...
-						SubjectST.ST ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Subject.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Subject.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Subject.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Subject.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Subject.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 9 10 11];
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -240,7 +237,27 @@ classdef SubjectST < Subject
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SubjectST.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 11;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in subject with structural data/error.
@@ -268,14 +285,14 @@ classdef SubjectST < Subject
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SubjectST.getProps());
+			check = prop >= 1 && prop <= 11 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SubjectST:' 'WrongInput'], ...
+					['BRAPH2' ':SubjectST:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SubjectST.'] ...
 					)
 			end
@@ -306,15 +323,14 @@ classdef SubjectST < Subject
 			%
 			% See also getProps, existsTag.
 			
-			subjectst_tag_list = cellfun(@(x) SubjectST.getPropTag(x), num2cell(SubjectST.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, subjectst_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SubjectST:' 'WrongInput'], ...
+					['BRAPH2' ':SubjectST:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SubjectST.'] ...
 					)
 			end
@@ -340,8 +356,7 @@ classdef SubjectST < Subject
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				subjectst_tag_list = cellfun(@(x) SubjectST.getPropTag(x), num2cell(SubjectST.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, subjectst_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -369,16 +384,9 @@ classdef SubjectST < Subject
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SubjectST.BA
-						tag = SubjectST.BA_TAG;
-					case SubjectST.ST
-						tag = SubjectST.ST_TAG;
-					otherwise
-						tag = getPropTag@Subject(prop);
-				end
+				%CET: Computational Efficiency Trick
+				subjectst_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'VOI_DICT'  'BA'  'ST' };
+				tag = subjectst_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -403,14 +411,9 @@ classdef SubjectST < Subject
 			
 			prop = SubjectST.getPropProp(pointer);
 			
-			switch prop
-				case SubjectST.BA
-					prop_category = SubjectST.BA_CATEGORY;
-				case SubjectST.ST
-					prop_category = SubjectST.ST_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Subject(prop);
-			end
+			%CET: Computational Efficiency Trick
+			subjectst_category_list = { 1  1  1  3  4  2  2  6  4  4  4 };
+			prop_category = subjectst_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -434,14 +437,9 @@ classdef SubjectST < Subject
 			
 			prop = SubjectST.getPropProp(pointer);
 			
-			switch prop
-				case SubjectST.BA
-					prop_format = SubjectST.BA_FORMAT;
-				case SubjectST.ST
-					prop_format = SubjectST.ST_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Subject(prop);
-			end
+			%CET: Computational Efficiency Trick
+			subjectst_format_list = { 2  2  2  8  2  2  2  2  10  8  13 };
+			prop_format = subjectst_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -465,28 +463,9 @@ classdef SubjectST < Subject
 			
 			prop = SubjectST.getPropProp(pointer);
 			
-			switch prop
-				case SubjectST.BA
-					prop_description = 'BA (data, item) is a brain atlas.';
-				case SubjectST.ST
-					prop_description = 'ST (data, cvector) is a column vector with data for each brain region.';
-				case SubjectST.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the subject.';
-				case SubjectST.NAME
-					prop_description = 'NAME (constant, string) is the name of the subject.';
-				case SubjectST.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the subject.';
-				case SubjectST.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the subject.';
-				case SubjectST.ID
-					prop_description = 'ID (data, string) is a few-letter code for the subject.';
-				case SubjectST.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the subject.';
-				case SubjectST.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the subject.';
-				otherwise
-					prop_description = getPropDescription@Subject(prop);
-			end
+			%CET: Computational Efficiency Trick
+			subjectst_description_list = { 'ELCLASS (constant, string) is the class of the subject.'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'ST (data, cvector) is a column vector with data for each brain region.' };
+			prop_description = subjectst_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -510,11 +489,11 @@ classdef SubjectST < Subject
 			
 			prop = SubjectST.getPropProp(pointer);
 			
-			switch prop
-				case SubjectST.BA
+			switch prop %CET: Computational Efficiency Trick
+				case 10 % SubjectST.BA
 					prop_settings = 'BrainAtlas';
-				case SubjectST.ST
-					prop_settings = Format.getFormatSettings(Format.CVECTOR);
+				case 11 % SubjectST.ST
+					prop_settings = Format.getFormatSettings(13);
 				otherwise
 					prop_settings = getPropSettings@Subject(prop);
 			end
@@ -541,22 +520,22 @@ classdef SubjectST < Subject
 			
 			prop = SubjectST.getPropProp(pointer);
 			
-			switch prop
-				case SubjectST.BA
-					prop_default = Format.getFormatDefault(Format.ITEM, SubjectST.getPropSettings(prop));
-				case SubjectST.ST
-					prop_default = Format.getFormatDefault(Format.CVECTOR, SubjectST.getPropSettings(prop));
-				case SubjectST.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 10 % SubjectST.BA
+					prop_default = Format.getFormatDefault(8, SubjectST.getPropSettings(prop));
+				case 11 % SubjectST.ST
+					prop_default = Format.getFormatDefault(13, SubjectST.getPropSettings(prop));
+				case 1 % SubjectST.ELCLASS
 					prop_default = 'SubjectST';
-				case SubjectST.NAME
+				case 2 % SubjectST.NAME
 					prop_default = 'Structural Subject';
-				case SubjectST.DESCRIPTION
+				case 3 % SubjectST.DESCRIPTION
 					prop_default = 'SubjectST with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.';
-				case SubjectST.ID
+				case 5 % SubjectST.ID
 					prop_default = 'SubjectST ID';
-				case SubjectST.LABEL
+				case 6 % SubjectST.LABEL
 					prop_default = 'SubjectST label';
-				case SubjectST.NOTES
+				case 7 % SubjectST.NOTES
 					prop_default = 'SubjectST notes';
 				otherwise
 					prop_default = getPropDefault@Subject(prop);
@@ -603,15 +582,15 @@ classdef SubjectST < Subject
 			% 
 			% SUB.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SubjectST:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SubjectST:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  SUB.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of SUB.
-			%   Error id: €BRAPH2.STR€:SubjectST:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SubjectST:WrongInput
 			%  Element.CHECKPROP(SubjectST, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SubjectST.
-			%   Error id: €BRAPH2.STR€:SubjectST:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SubjectST:WrongInput
 			%  SUB.CHECKPROP(SubjectST, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SubjectST.
-			%   Error id: €BRAPH2.STR€:SubjectST:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SubjectST:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(SUB) and Element.CHECKPROP('SubjectST')
 			%  are less computationally efficient.
@@ -622,12 +601,12 @@ classdef SubjectST < Subject
 			prop = SubjectST.getPropProp(pointer);
 			
 			switch prop
-				case SubjectST.BA % __SubjectST.BA__
-					check = Format.checkFormat(Format.ITEM, value, SubjectST.getPropSettings(prop));
-				case SubjectST.ST % __SubjectST.ST__
-					check = Format.checkFormat(Format.CVECTOR, value, SubjectST.getPropSettings(prop));
+				case 10 % SubjectST.BA
+					check = Format.checkFormat(8, value, SubjectST.getPropSettings(prop));
+				case 11 % SubjectST.ST
+					check = Format.checkFormat(13, value, SubjectST.getPropSettings(prop));
 				otherwise
-					if prop <= Subject.getPropNumber()
+					if prop <= 9
 						check = checkProp@Subject(prop, value);
 					end
 			end
@@ -636,8 +615,8 @@ classdef SubjectST < Subject
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SubjectST:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SubjectST:' 'WrongInput'], ...
+					['BRAPH2' ':SubjectST:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SubjectST.getPropTag(prop) ' (' SubjectST.getFormatTag(SubjectST.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -659,9 +638,9 @@ classdef SubjectST < Subject
 			msg = ['Error while checking ' tostring(sub) ' ' sub.getPropTag(prop) '.'];
 			
 			switch prop
-				case SubjectST.ST % __SubjectST.ST__
+				case 11 % SubjectST.ST
 					br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
-					check = (iscolumn(value) && isequal(size(value), [br_number, 1])) || (isempty(value) && br_number == 0); % Format.checkFormat(Format.CVECTOR, value) already checked
+					check = (iscolumn(value) && isequal(size(value), [br_number, 1])) || (isempty(value) && br_number == 0); % Format.checkFormat(13, value) already checked
 					if check
 					    msg = 'All ok!';
 					else   
@@ -669,7 +648,7 @@ classdef SubjectST < Subject
 					end
 					
 				otherwise
-					if prop <= Subject.getPropNumber()
+					if prop <= 9
 						[check, msg] = checkValue@Subject(sub, prop, value);
 					end
 			end
@@ -692,8 +671,8 @@ classdef SubjectST < Subject
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case SubjectST.ST % __SubjectST.ST__
-					pr = PanelPropMatrix('EL', sub, 'PROP', SubjectST.ST, ...
+				case 11 % SubjectST.ST
+					pr = PanelPropMatrix('EL', sub, 'PROP', 11, ...
 					    'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 					    'COLUMNNAME', {}, ...
 					    varargin{:});

@@ -6,6 +6,24 @@ classdef Triangles < Measure
 	%  also neighbors of each other within a layer. In weighted graphs, the triangles are 
 	%  calculated as the geometric mean of the weights of the edges forming the triangle.
 	%
+	% The list of Triangles properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Triangles.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Triangles.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Triangles.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Triangles.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Triangles.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Triangles.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Triangles.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Triangles.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
+	%
 	% Triangles methods (constructor):
 	%  Triangles - constructor
 	%
@@ -93,10 +111,10 @@ classdef Triangles < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = Measure.getPropNumber() + 1;
+		RULE = 16; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
-		RULE_CATEGORY = Category.PARAMETER;
-		RULE_FORMAT = Format.OPTION;
+		RULE_CATEGORY = 3;
+		RULE_FORMAT = 5;
 	end
 	methods % constructor
 		function m = Triangles(varargin)
@@ -109,6 +127,23 @@ classdef Triangles < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of Triangles properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Triangles.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Triangles.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Triangles.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Triangles.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Triangles.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Triangles.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Triangles.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Triangles.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.
 			%
 			% See also Category, Format.
 			
@@ -146,7 +181,7 @@ classdef Triangles < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('Triangles', [], [], true);
+			subclass_list = { 'Triangles'  'Clustering'  'ClusteringAv'  'Transitivity' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of triangles.
@@ -167,52 +202,30 @@ classdef Triangles < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						Triangles.RULE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						Triangles.RULE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -233,7 +246,31 @@ classdef Triangles < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(Triangles.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in triangles/error.
@@ -261,14 +298,14 @@ classdef Triangles < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == Triangles.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Triangles:' 'WrongInput'], ...
+					['BRAPH2' ':Triangles:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Triangles.'] ...
 					)
 			end
@@ -299,15 +336,14 @@ classdef Triangles < Measure
 			%
 			% See also getProps, existsTag.
 			
-			triangles_tag_list = cellfun(@(x) Triangles.getPropTag(x), num2cell(Triangles.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, triangles_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Triangles:' 'WrongInput'], ...
+					['BRAPH2' ':Triangles:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for Triangles.'] ...
 					)
 			end
@@ -333,8 +369,7 @@ classdef Triangles < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				triangles_tag_list = cellfun(@(x) Triangles.getPropTag(x), num2cell(Triangles.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, triangles_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -362,14 +397,9 @@ classdef Triangles < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case Triangles.RULE
-						tag = Triangles.RULE_TAG;
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				triangles_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				tag = triangles_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -394,12 +424,9 @@ classdef Triangles < Measure
 			
 			prop = Triangles.getPropProp(pointer);
 			
-			switch prop
-				case Triangles.RULE
-					prop_category = Triangles.RULE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			triangles_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = triangles_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -423,12 +450,9 @@ classdef Triangles < Measure
 			
 			prop = Triangles.getPropProp(pointer);
 			
-			switch prop
-				case Triangles.RULE
-					prop_format = Triangles.RULE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			triangles_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
+			prop_format = triangles_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -452,36 +476,9 @@ classdef Triangles < Measure
 			
 			prop = Triangles.getPropProp(pointer);
 			
-			switch prop
-				case Triangles.RULE
-					prop_description = 'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.';
-				case Triangles.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Triangles.';
-				case Triangles.NAME
-					prop_description = 'NAME (constant, string) is the name of the Triangles.';
-				case Triangles.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Triangles.';
-				case Triangles.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Triangles.';
-				case Triangles.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Triangles.';
-				case Triangles.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Triangles.';
-				case Triangles.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Triangles.';
-				case Triangles.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case Triangles.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case Triangles.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case Triangles.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case Triangles.M
-					prop_description = 'M (result, cell) is the Triangles.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			triangles_description_list = { 'ELCLASS (constant, string) is the class of the Triangles.'  'NAME (constant, string) is the name of the Triangles.'  'DESCRIPTION (constant, string) is the description of the Triangles.'  'TEMPLATE (parameter, item) is the template of the Triangles.'  'ID (data, string) is a few-letter code of the Triangles.'  'LABEL (metadata, string) is an extended label of the Triangles.'  'NOTES (metadata, string) are some specific notes about the Triangles.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Triangles.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option) is the rule to determine what is a triangle in a directed graph.' };
+			prop_description = triangles_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -505,10 +502,10 @@ classdef Triangles < Measure
 			
 			prop = Triangles.getPropProp(pointer);
 			
-			switch prop
-				case Triangles.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % Triangles.RULE
 					prop_settings = {'all' 'middleman' 'in' 'out' 'cycle'};
-				case Triangles.TEMPLATE
+				case 4 % Triangles.TEMPLATE
 					prop_settings = 'Triangles';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -536,30 +533,30 @@ classdef Triangles < Measure
 			
 			prop = Triangles.getPropProp(pointer);
 			
-			switch prop
-				case Triangles.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % Triangles.RULE
 					prop_default = 'cycle';
-				case Triangles.ELCLASS
+				case 1 % Triangles.ELCLASS
 					prop_default = 'Triangles';
-				case Triangles.NAME
+				case 2 % Triangles.NAME
 					prop_default = 'Triangles';
-				case Triangles.DESCRIPTION
+				case 3 % Triangles.DESCRIPTION
 					prop_default = 'The Triangles (Triangles) are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as the geometric mean of the weights of the edges forming the triangle.';
-				case Triangles.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, Triangles.getPropSettings(prop));
-				case Triangles.ID
+				case 4 % Triangles.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Triangles.getPropSettings(prop));
+				case 5 % Triangles.ID
 					prop_default = 'Triangles ID';
-				case Triangles.LABEL
+				case 6 % Triangles.LABEL
 					prop_default = 'Triangles label';
-				case Triangles.NOTES
+				case 7 % Triangles.NOTES
 					prop_default = 'Triangles notes';
-				case Triangles.SHAPE
-					prop_default = Measure.NODAL;
-				case Triangles.SCOPE
-					prop_default = Measure.UNILAYER;
-				case Triangles.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case Triangles.COMPATIBLE_GRAPHS
+				case 9 % Triangles.SHAPE
+					prop_default = 2;
+				case 10 % Triangles.SCOPE
+					prop_default = 2;
+				case 11 % Triangles.PARAMETRICITY
+					prop_default = 2;
+				case 12 % Triangles.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxWD' 'OrdMxBU' 'OrdMxBD' 'OrdMxBUT' 'MultilayerWD' 'MultilayerBD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -606,15 +603,15 @@ classdef Triangles < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:Triangles:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:Triangles:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:Triangles:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Triangles:WrongInput
 			%  Element.CHECKPROP(Triangles, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Triangles.
-			%   Error id: €BRAPH2.STR€:Triangles:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Triangles:WrongInput
 			%  M.CHECKPROP(Triangles, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Triangles.
-			%   Error id: €BRAPH2.STR€:Triangles:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:Triangles:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Triangles')
 			%  are less computationally efficient.
@@ -625,12 +622,12 @@ classdef Triangles < Measure
 			prop = Triangles.getPropProp(pointer);
 			
 			switch prop
-				case Triangles.RULE % __Triangles.RULE__
-					check = Format.checkFormat(Format.OPTION, value, Triangles.getPropSettings(prop));
-				case Triangles.TEMPLATE % __Triangles.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, Triangles.getPropSettings(prop));
+				case 16 % Triangles.RULE
+					check = Format.checkFormat(5, value, Triangles.getPropSettings(prop));
+				case 4 % Triangles.TEMPLATE
+					check = Format.checkFormat(8, value, Triangles.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -639,8 +636,8 @@ classdef Triangles < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Triangles:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Triangles:' 'WrongInput'], ...
+					['BRAPH2' ':Triangles:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Triangles.getPropTag(prop) ' (' Triangles.getFormatTag(Triangles.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -651,20 +648,20 @@ classdef Triangles < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case Triangles.M % __Triangles.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(Triangles.M), 'twister')
+				case 14 % Triangles.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');  % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.) 
@@ -676,7 +673,7 @@ classdef Triangles < Measure
 					for li = 1:1:L        
 					    Aii = A{li, li};    
 					    
-					    if directionality_type == Graph.UNDIRECTED  % undirected graphs
+					    if directionality_type == 2  % undirected graphs
 					        triangles_layer = diag((Aii.^(1/3))^3) / 2;
 					        triangles_layer(isnan(triangles_layer)) = 0;  % Should return zeros, not NaN
 					        triangles(li) = {triangles_layer};
@@ -704,7 +701,7 @@ classdef Triangles < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

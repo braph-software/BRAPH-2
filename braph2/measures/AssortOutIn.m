@@ -7,6 +7,23 @@ classdef AssortOutIn < Measure
 	% The corresponding coefficient for directed and weighted networks is calculated by 
 	%   using the weighted and directed variants of in-out-degree/in-out-strength.
 	%
+	% The list of AssortOutIn properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-In-Assortativity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-In-Assortativity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-In-Assortativity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-In-Assortativity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-In-Assortativity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-In-Assortativity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-In-Assortativity.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Out-In-Assortativity.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%
 	% AssortOutIn methods (constructor):
 	%  AssortOutIn - constructor
 	%
@@ -104,6 +121,22 @@ classdef AssortOutIn < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of AssortOutIn properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Out-In-Assortativity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Out-In-Assortativity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Out-In-Assortativity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Out-In-Assortativity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Out-In-Assortativity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Out-In-Assortativity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Out-In-Assortativity.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Out-In-Assortativity.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -141,7 +174,7 @@ classdef AssortOutIn < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('AssortOutIn', [], [], true);
+			subclass_list = { 'AssortOutIn' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of out-in-assortativity.
@@ -162,50 +195,30 @@ classdef AssortOutIn < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -226,7 +239,31 @@ classdef AssortOutIn < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(AssortOutIn.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 15;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in out-in-assortativity/error.
@@ -254,14 +291,14 @@ classdef AssortOutIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == AssortOutIn.getProps());
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput'], ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for AssortOutIn.'] ...
 					)
 			end
@@ -292,15 +329,14 @@ classdef AssortOutIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			assortoutin_tag_list = cellfun(@(x) AssortOutIn.getPropTag(x), num2cell(AssortOutIn.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, assortoutin_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput'], ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for AssortOutIn.'] ...
 					)
 			end
@@ -326,8 +362,7 @@ classdef AssortOutIn < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				assortoutin_tag_list = cellfun(@(x) AssortOutIn.getPropTag(x), num2cell(AssortOutIn.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, assortoutin_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -355,12 +390,9 @@ classdef AssortOutIn < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				assortoutin_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				tag = assortoutin_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -385,10 +417,9 @@ classdef AssortOutIn < Measure
 			
 			prop = AssortOutIn.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			assortoutin_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			prop_category = assortoutin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -412,10 +443,9 @@ classdef AssortOutIn < Measure
 			
 			prop = AssortOutIn.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			assortoutin_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			prop_format = assortoutin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -439,34 +469,9 @@ classdef AssortOutIn < Measure
 			
 			prop = AssortOutIn.getPropProp(pointer);
 			
-			switch prop
-				case AssortOutIn.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Out-In-Assortativity.';
-				case AssortOutIn.NAME
-					prop_description = 'NAME (constant, string) is the name of the Out-In-Assortativity.';
-				case AssortOutIn.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Out-In-Assortativity.';
-				case AssortOutIn.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Out-In-Assortativity.';
-				case AssortOutIn.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Out-In-Assortativity.';
-				case AssortOutIn.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Out-In-Assortativity.';
-				case AssortOutIn.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Out-In-Assortativity.';
-				case AssortOutIn.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
-				case AssortOutIn.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case AssortOutIn.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case AssortOutIn.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case AssortOutIn.M
-					prop_description = 'M (result, cell) is the Out-In-Assortativity.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			assortoutin_description_list = { 'ELCLASS (constant, string) is the class of the Out-In-Assortativity.'  'NAME (constant, string) is the name of the Out-In-Assortativity.'  'DESCRIPTION (constant, string) is the description of the Out-In-Assortativity.'  'TEMPLATE (parameter, item) is the template of the Out-In-Assortativity.'  'ID (data, string) is a few-letter code of the Out-In-Assortativity.'  'LABEL (metadata, string) is an extended label of the Out-In-Assortativity.'  'NOTES (metadata, string) are some specific notes about the Out-In-Assortativity.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Out-In-Assortativity.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			prop_description = assortoutin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -490,8 +495,8 @@ classdef AssortOutIn < Measure
 			
 			prop = AssortOutIn.getPropProp(pointer);
 			
-			switch prop
-				case AssortOutIn.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % AssortOutIn.TEMPLATE
 					prop_settings = 'AssortOutIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -519,28 +524,28 @@ classdef AssortOutIn < Measure
 			
 			prop = AssortOutIn.getPropProp(pointer);
 			
-			switch prop
-				case AssortOutIn.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % AssortOutIn.ELCLASS
 					prop_default = 'AssortOutIn';
-				case AssortOutIn.NAME
+				case 2 % AssortOutIn.NAME
 					prop_default = 'Out-In-Assortativity';
-				case AssortOutIn.DESCRIPTION
+				case 3 % AssortOutIn.DESCRIPTION
 					prop_default = 'The Out-In-Assortativity coefficient (AssortOutIn) of a graph is the correlation coefficient between the outward and inward degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-out-degree/in-out-strength.';
-				case AssortOutIn.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, AssortOutIn.getPropSettings(prop));
-				case AssortOutIn.ID
+				case 4 % AssortOutIn.TEMPLATE
+					prop_default = Format.getFormatDefault(8, AssortOutIn.getPropSettings(prop));
+				case 5 % AssortOutIn.ID
 					prop_default = 'AssortOutIn ID';
-				case AssortOutIn.LABEL
+				case 6 % AssortOutIn.LABEL
 					prop_default = 'Out-In-Assortativity label';
-				case AssortOutIn.NOTES
+				case 7 % AssortOutIn.NOTES
 					prop_default = 'Out-In-Assortativity notes';
-				case AssortOutIn.SHAPE
-					prop_default = Measure.GLOBAL;
-				case AssortOutIn.SCOPE
-					prop_default = Measure.UNILAYER;
-				case AssortOutIn.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case AssortOutIn.COMPATIBLE_GRAPHS
+				case 9 % AssortOutIn.SHAPE
+					prop_default = 1;
+				case 10 % AssortOutIn.SCOPE
+					prop_default = 2;
+				case 11 % AssortOutIn.PARAMETRICITY
+					prop_default = 2;
+				case 12 % AssortOutIn.COMPATIBLE_GRAPHS
 					prop_default = {'GraphBD' 'GraphWD' 'MultiplexWD' 'MultiplexBD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -587,15 +592,15 @@ classdef AssortOutIn < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:AssortOutIn:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:AssortOutIn:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:AssortOutIn:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:AssortOutIn:WrongInput
 			%  Element.CHECKPROP(AssortOutIn, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AssortOutIn.
-			%   Error id: €BRAPH2.STR€:AssortOutIn:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:AssortOutIn:WrongInput
 			%  M.CHECKPROP(AssortOutIn, PROP, VALUE) throws error if VALUE has not a valid format for PROP of AssortOutIn.
-			%   Error id: €BRAPH2.STR€:AssortOutIn:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:AssortOutIn:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('AssortOutIn')
 			%  are less computationally efficient.
@@ -606,10 +611,10 @@ classdef AssortOutIn < Measure
 			prop = AssortOutIn.getPropProp(pointer);
 			
 			switch prop
-				case AssortOutIn.TEMPLATE % __AssortOutIn.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, AssortOutIn.getPropSettings(prop));
+				case 4 % AssortOutIn.TEMPLATE
+					check = Format.checkFormat(8, value, AssortOutIn.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -618,8 +623,8 @@ classdef AssortOutIn < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':AssortOutIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput'], ...
+					['BRAPH2' ':AssortOutIn:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' AssortOutIn.getPropTag(prop) ' (' AssortOutIn.getFormatTag(AssortOutIn.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -630,20 +635,20 @@ classdef AssortOutIn < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case AssortOutIn.M % __AssortOutIn.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(AssortOutIn.M), 'twister')
+				case 14 % AssortOutIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -659,7 +664,7 @@ classdef AssortOutIn < Measure
 					    k_i = zeros(M, L);
 					    k_j = zeros(length(j), L);
 					    
-					    if connectivity_type == Graph.WEIGHTED  % weighted graphs
+					    if connectivity_type == 1  % weighted graphs
 					        in_strength = StrengthIn('G', g).get('M');
 					        out_strength = StrengthOut('G', g).get('M');
 					        d_in = in_strength{li};
@@ -685,7 +690,7 @@ classdef AssortOutIn < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

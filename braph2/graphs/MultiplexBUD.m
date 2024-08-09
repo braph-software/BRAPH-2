@@ -7,6 +7,51 @@ classdef MultiplexBUD < MultiplexWU
 	%  weighted supra-connectivity matrices binarized at different densities.
 	% The supra-connectivity matrix has a number of partitions equal to the number of densities.
 	%
+	% The list of MultiplexBUD properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the binary undirected multiplex with fixed densities.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the binary undirected multiplex with fixed densities.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed densities.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the binary undirected multiplex with fixed densities.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the binary undirected multiplex with fixed densities.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the binary undirected multiplex with fixed densities.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the binary undirected multiplex with fixed densities.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.
+	%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+	%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
+	%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+	%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+	%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+	%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+	%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+	%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
+	%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
+	%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.
+	%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+	%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition (density) labels for A.
+	%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+	%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+	%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+	%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+	%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
+	%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+	%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+	%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+	%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of multiplex layers for each partition (density) of the graph.
+	%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+	%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+	%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+	%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+	%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+	%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
+	%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
+	%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+	%  <strong>39</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
+	%  <strong>40</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+	%  <strong>41</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
+	%  <strong>42</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
+	%  <strong>43</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
+	%
 	% MultiplexBUD methods (constructor):
 	%  MultiplexBUD - constructor
 	%
@@ -94,10 +139,10 @@ classdef MultiplexBUD < MultiplexWU
 	%
 	
 	properties (Constant) % properties
-		DENSITIES = MultiplexWU.getPropNumber() + 1;
+		DENSITIES = 43; %CET: Computational Efficiency Trick
 		DENSITIES_TAG = 'DENSITIES';
-		DENSITIES_CATEGORY = Category.PARAMETER;
-		DENSITIES_FORMAT = Format.RVECTOR;
+		DENSITIES_CATEGORY = 3;
+		DENSITIES_FORMAT = 12;
 	end
 	methods % constructor
 		function g = MultiplexBUD(varargin)
@@ -110,6 +155,50 @@ classdef MultiplexBUD < MultiplexWU
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of MultiplexBUD properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the binary undirected multiplex with fixed densities.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the binary undirected multiplex with fixed densities.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed densities.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the binary undirected multiplex with fixed densities.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the binary undirected multiplex with fixed densities.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the binary undirected multiplex with fixed densities.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the binary undirected multiplex with fixed densities.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>GRAPH_TYPE</strong> 	GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.
+			%  <strong>10</strong> <strong>CONNECTIVITY_TYPE</strong> 	CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).
+			%  <strong>11</strong> <strong>DIRECTIONALITY_TYPE</strong> 	DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).
+			%  <strong>12</strong> <strong>SELFCONNECTIVITY_TYPE</strong> 	SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.
+			%  <strong>13</strong> <strong>NEGATIVITY_TYPE</strong> 	NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).
+			%  <strong>14</strong> <strong>LAYERTICKS</strong> 	LAYERTICKS (metadata, rvector) are the layer tick values.
+			%  <strong>15</strong> <strong>ALAYERTICKS</strong> 	ALAYERTICKS (query, rvector) returns the layer tick values.
+			%  <strong>16</strong> <strong>LAYERLABELS</strong> 	LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.
+			%  <strong>17</strong> <strong>ALAYERLABELS</strong> 	ALAYERLABELS (query, stringlist) returns the layer labels for A.
+			%  <strong>18</strong> <strong>PARTITIONTICKS</strong> 	PARTITIONTICKS (metadata, rvector) are the partition tick values.
+			%  <strong>19</strong> <strong>APARTITIONTICKS</strong> 	APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.
+			%  <strong>20</strong> <strong>PARTITIONLABELS</strong> 	PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.
+			%  <strong>21</strong> <strong>APARTITIONLABELS</strong> 	APARTITIONLABELS (query, stringlist) returns the partition (density) labels for A.
+			%  <strong>22</strong> <strong>NODELABELS</strong> 	NODELABELS (metadata, stringlist) are the node labels provided by the user.
+			%  <strong>23</strong> <strong>ANODELABELS</strong> 	ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+			%  <strong>24</strong> <strong>RANDOMIZE</strong> 	RANDOMIZE (parameter, logical) determines whether to randomize the graph.
+			%  <strong>25</strong> <strong>RANDOM_SEED</strong> 	RANDOM_SEED (parameter, scalar) is the randomization seed.
+			%  <strong>26</strong> <strong>A</strong> 	A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. 
+			%  <strong>27</strong> <strong>A_CHECK</strong> 	A_CHECK (query, logical) checks the format of the adjacency matrix.
+			%  <strong>28</strong> <strong>NODENUMBER</strong> 	NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.
+			%  <strong>29</strong> <strong>LAYERNUMBER</strong> 	LAYERNUMBER (result, scalar) returns the number of layers in the graph.
+			%  <strong>30</strong> <strong>PARTITIONS</strong> 	PARTITIONS (result, rvector) returns the number of multiplex layers for each partition (density) of the graph.
+			%  <strong>31</strong> <strong>M_DICT</strong> 	M_DICT (result, idict) contains the calculated measures of the graph.
+			%  <strong>32</strong> <strong>COMPATIBLE_MEASURES</strong> 	COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
+			%  <strong>33</strong> <strong>MEASURE</strong> 	MEASURE (query, item) returns a measure.
+			%  <strong>34</strong> <strong>PFGA</strong> 	PFGA (gui, item) contains the panel figure of the graph adjacency matrix.
+			%  <strong>35</strong> <strong>PFGH</strong> 	PFGH (gui, item) contains the panel figure of the graph histogram.
+			%  <strong>36</strong> <strong>B</strong> 	B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.
+			%  <strong>37</strong> <strong>SYMMETRIZE_RULE</strong> 	SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.
+			%  <strong>38</strong> <strong>SEMIPOSITIVIZE_RULE</strong> 	SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
+			%  <strong>39</strong> <strong>STANDARDIZE_RULE</strong> 	STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.
+			%  <strong>40</strong> <strong>ATTEMPTSPEREDGE</strong> 	ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
+			%  <strong>41</strong> <strong>NUMBEROFWEIGHTS</strong> 	NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.
+			%  <strong>42</strong> <strong>RANDOMIZATION</strong> 	RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.
+			%  <strong>43</strong> <strong>DENSITIES</strong> 	DENSITIES (parameter, rvector) is the vector of densities.
 			%
 			% See also Category, Format.
 			
@@ -147,7 +236,7 @@ classdef MultiplexBUD < MultiplexWU
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('MultiplexBUD', [], [], true);
+			subclass_list = { 'MultiplexBUD' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of binary undirected multiplex with fixed densities.
@@ -168,52 +257,30 @@ classdef MultiplexBUD < MultiplexWU
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					MultiplexWU.getProps() ...
-						MultiplexBUD.DENSITIES ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.PARAMETER) ...
-						MultiplexBUD.DENSITIES ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						MultiplexWU.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						MultiplexWU.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 32];
+				case 2 % Category.METADATA
+					prop_list = [6 7 14 16 18 20 22];
+				case 3 % Category.PARAMETER
+					prop_list = [4 24 25 37 38 39 40 41 43];
+				case 4 % Category.DATA
+					prop_list = [5 36];
+				case 5 % Category.RESULT
+					prop_list = [26 28 29 30 31];
+				case 6 % Category.QUERY
+					prop_list = [8 10 11 12 13 15 17 19 21 23 27 33 42];
+				case 9 % Category.GUI
+					prop_list = [34 35];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -234,7 +301,31 @@ classdef MultiplexBUD < MultiplexWU
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(MultiplexBUD.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 43;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 5;
+				case 2 % Category.METADATA
+					prop_number = 7;
+				case 3 % Category.PARAMETER
+					prop_number = 9;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 5;
+				case 6 % Category.QUERY
+					prop_number = 13;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in binary undirected multiplex with fixed densities/error.
@@ -262,14 +353,14 @@ classdef MultiplexBUD < MultiplexWU
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == MultiplexBUD.getProps());
+			check = prop >= 1 && prop <= 43 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for MultiplexBUD.'] ...
 					)
 			end
@@ -300,15 +391,14 @@ classdef MultiplexBUD < MultiplexWU
 			%
 			% See also getProps, existsTag.
 			
-			multiplexbud_tag_list = cellfun(@(x) MultiplexBUD.getPropTag(x), num2cell(MultiplexBUD.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, multiplexbud_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION'  'DENSITIES' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for MultiplexBUD.'] ...
 					)
 			end
@@ -334,8 +424,7 @@ classdef MultiplexBUD < MultiplexWU
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				multiplexbud_tag_list = cellfun(@(x) MultiplexBUD.getPropTag(x), num2cell(MultiplexBUD.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, multiplexbud_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION'  'DENSITIES' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -363,14 +452,9 @@ classdef MultiplexBUD < MultiplexWU
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case MultiplexBUD.DENSITIES
-						tag = MultiplexBUD.DENSITIES_TAG;
-					otherwise
-						tag = getPropTag@MultiplexWU(prop);
-				end
+				%CET: Computational Efficiency Trick
+				multiplexbud_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'GRAPH_TYPE'  'CONNECTIVITY_TYPE'  'DIRECTIONALITY_TYPE'  'SELFCONNECTIVITY_TYPE'  'NEGATIVITY_TYPE'  'LAYERTICKS'  'ALAYERTICKS'  'LAYERLABELS'  'ALAYERLABELS'  'PARTITIONTICKS'  'APARTITIONTICKS'  'PARTITIONLABELS'  'APARTITIONLABELS'  'NODELABELS'  'ANODELABELS'  'RANDOMIZE'  'RANDOM_SEED'  'A'  'A_CHECK'  'NODENUMBER'  'LAYERNUMBER'  'PARTITIONS'  'M_DICT'  'COMPATIBLE_MEASURES'  'MEASURE'  'PFGA'  'PFGH'  'B'  'SYMMETRIZE_RULE'  'SEMIPOSITIVIZE_RULE'  'STANDARDIZE_RULE'  'ATTEMPTSPEREDGE'  'NUMBEROFWEIGHTS'  'RANDOMIZATION'  'DENSITIES' };
+				tag = multiplexbud_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -395,12 +479,9 @@ classdef MultiplexBUD < MultiplexWU
 			
 			prop = MultiplexBUD.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexBUD.DENSITIES
-					prop_category = MultiplexBUD.DENSITIES_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@MultiplexWU(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexbud_category_list = { 1  1  1  3  4  2  2  6  1  6  6  6  6  2  6  2  6  2  6  2  6  2  6  3  3  5  6  5  5  5  5  1  6  9  9  4  3  3  3  3  3  6  3 };
+			prop_category = multiplexbud_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -424,12 +505,9 @@ classdef MultiplexBUD < MultiplexWU
 			
 			prop = MultiplexBUD.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexBUD.DENSITIES
-					prop_format = MultiplexBUD.DENSITIES_FORMAT;
-				otherwise
-					prop_format = getPropFormat@MultiplexWU(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexbud_format_list = { 2  2  2  8  2  2  2  2  11  15  15  15  11  12  12  3  3  12  12  3  3  3  3  4  11  16  4  12  11  12  10  7  8  8  8  16  5  5  5  11  11  16  12 };
+			prop_format = multiplexbud_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -453,54 +531,9 @@ classdef MultiplexBUD < MultiplexWU
 			
 			prop = MultiplexBUD.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexBUD.DENSITIES
-					prop_description = 'DENSITIES (parameter, rvector) is the vector of densities.';
-				case MultiplexBUD.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.NAME
-					prop_description = 'NAME (constant, string) is the name of the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.ID
-					prop_description = 'ID (data, string) is a few-letter code for the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the binary undirected multiplex with fixed densities.';
-				case MultiplexBUD.GRAPH_TYPE
-					prop_description = 'GRAPH_TYPE (constant, scalar) returns the graph type __Graph.MULTIPLEX__.';
-				case MultiplexBUD.CONNECTIVITY_TYPE
-					prop_description = 'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.BINARY__ * ones(layernumber).';
-				case MultiplexBUD.DIRECTIONALITY_TYPE
-					prop_description = 'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type __Graph.UNDIRECTED__ * ones(layernumber).';
-				case MultiplexBUD.SELFCONNECTIVITY_TYPE
-					prop_description = 'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__ on the diagonal and __Graph.SELFCONNECTED__ off diagonal.';
-				case MultiplexBUD.NEGATIVITY_TYPE
-					prop_description = 'NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__ * ones(layernumber).';
-				case MultiplexBUD.A
-					prop_description = 'A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. ';
-				case MultiplexBUD.PARTITIONS
-					prop_description = 'PARTITIONS (result, rvector) returns the number of multiplex layers for each partition (density) of the graph.';
-				case MultiplexBUD.ALAYERLABELS
-					prop_description = 'ALAYERLABELS (query, stringlist) returns the layer labels for A.';
-				case MultiplexBUD.APARTITIONLABELS
-					prop_description = 'APARTITIONLABELS (query, stringlist) returns the partition (density) labels for A.';
-				case MultiplexBUD.ALAYERTICKS
-					prop_description = 'ALAYERTICKS (query, rvector) returns the layer tick values.';
-				case MultiplexBUD.APARTITIONTICKS
-					prop_description = 'APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.';
-				case MultiplexBUD.COMPATIBLE_MEASURES
-					prop_description = 'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.';
-				case MultiplexBUD.ATTEMPTSPEREDGE
-					prop_description = 'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.';
-				case MultiplexBUD.RANDOMIZATION
-					prop_description = 'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.';
-				otherwise
-					prop_description = getPropDescription@MultiplexWU(prop);
-			end
+			%CET: Computational Efficiency Trick
+			multiplexbud_description_list = { 'ELCLASS (constant, string) is the class of the binary undirected multiplex with fixed densities.'  'NAME (constant, string) is the name of the binary undirected multiplex with fixed densities.'  'DESCRIPTION (constant, string) is the description of the binary undirected multiplex with fixed densities.'  'TEMPLATE (parameter, item) is the template of the binary undirected multiplex with fixed densities.'  'ID (data, string) is a few-letter code for the binary undirected multiplex with fixed densities.'  'LABEL (metadata, string) is an extended label of the binary undirected multiplex with fixed densities.'  'NOTES (metadata, string) are some specific notes about the binary undirected multiplex with fixed densities.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.BINARY * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.UNDIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition (density) ticks for A.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition (density) labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell array containing the multiplex binary adjacency matrices of the binary undirected multiplex. '  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of multiplex layers for each partition (density) of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.'  'SYMMETRIZE_RULE (parameter, option) determines how to symmetrize the matrix.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.'  'DENSITIES (parameter, rvector) is the vector of densities.' };
+			prop_description = multiplexbud_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -524,10 +557,10 @@ classdef MultiplexBUD < MultiplexWU
 			
 			prop = MultiplexBUD.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexBUD.DENSITIES
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case MultiplexBUD.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 43 % MultiplexBUD.DENSITIES
+					prop_settings = Format.getFormatSettings(12);
+				case 4 % MultiplexBUD.TEMPLATE
 					prop_settings = 'MultiplexBUD';
 				otherwise
 					prop_settings = getPropSettings@MultiplexWU(prop);
@@ -555,28 +588,28 @@ classdef MultiplexBUD < MultiplexWU
 			
 			prop = MultiplexBUD.getPropProp(pointer);
 			
-			switch prop
-				case MultiplexBUD.DENSITIES
-					prop_default = Format.getFormatDefault(Format.RVECTOR, MultiplexBUD.getPropSettings(prop));
-				case MultiplexBUD.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 43 % MultiplexBUD.DENSITIES
+					prop_default = Format.getFormatDefault(12, MultiplexBUD.getPropSettings(prop));
+				case 1 % MultiplexBUD.ELCLASS
 					prop_default = 'MultiplexBUD';
-				case MultiplexBUD.NAME
+				case 2 % MultiplexBUD.NAME
 					prop_default = 'Multiplex Binary Undirected at fixed Densities';
-				case MultiplexBUD.DESCRIPTION
+				case 3 % MultiplexBUD.DESCRIPTION
 					prop_default = 'In a binary undirected multiplex graph with fixed densities (MultiplexBUD), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different densities. The supra-connectivity matrix has a number of partitions equal to the number of densities.';
-				case MultiplexBUD.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, MultiplexBUD.getPropSettings(prop));
-				case MultiplexBUD.ID
+				case 4 % MultiplexBUD.TEMPLATE
+					prop_default = Format.getFormatDefault(8, MultiplexBUD.getPropSettings(prop));
+				case 5 % MultiplexBUD.ID
 					prop_default = 'MultiplexBUD ID';
-				case MultiplexBUD.LABEL
+				case 6 % MultiplexBUD.LABEL
 					prop_default = 'MultiplexBUD label';
-				case MultiplexBUD.NOTES
+				case 7 % MultiplexBUD.NOTES
 					prop_default = 'MultiplexBUD notes';
-				case MultiplexBUD.GRAPH_TYPE
-					prop_default = Graph.MULTIPLEX;
-				case MultiplexBUD.COMPATIBLE_MEASURES
-					prop_default = getCompatibleMeasures('MultiplexBUD');
-				case MultiplexBUD.ATTEMPTSPEREDGE
+				case 9 % MultiplexBUD.GRAPH_TYPE
+					prop_default = 4;
+				case 32 % MultiplexBUD.COMPATIBLE_MEASURES
+					prop_default = { 'Assortativity'  'BetweennessCentrality'  'Clustering'  'ClusteringAv'  'CorePeriphery'  'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeBetwCentr'  'EdgeOverlap'  'EigenVectorCentrality'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'KCore'  'KCorenessCentrality'  'LocalEfficiency'  'LocalEfficiencyAv'  'MultiRC'  'MultilayerCommunity'  'MultilayerM'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexP'  'MultiplexPAv'  'MultiplexRCDeg'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'PathLength'  'PathLengthAv'  'Persistence'  'RCDeg'  'Radius'  'RichClub'  'Richness'  'SmallWorldness'  'Transitivity'  'Triangles' };
+				case 40 % MultiplexBUD.ATTEMPTSPEREDGE
 					prop_default = 5;
 				otherwise
 					prop_default = getPropDefault@MultiplexWU(prop);
@@ -623,15 +656,15 @@ classdef MultiplexBUD < MultiplexWU
 			% 
 			% G.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:MultiplexBUD:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:MultiplexBUD:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  G.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of G.
-			%   Error id: €BRAPH2.STR€:MultiplexBUD:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexBUD:WrongInput
 			%  Element.CHECKPROP(MultiplexBUD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexBUD.
-			%   Error id: €BRAPH2.STR€:MultiplexBUD:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:MultiplexBUD:WrongInput
 			%  G.CHECKPROP(MultiplexBUD, PROP, VALUE) throws error if VALUE has not a valid format for PROP of MultiplexBUD.
-			%   Error id: €BRAPH2.STR€:MultiplexBUD:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:MultiplexBUD:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(G) and Element.CHECKPROP('MultiplexBUD')
 			%  are less computationally efficient.
@@ -642,12 +675,12 @@ classdef MultiplexBUD < MultiplexWU
 			prop = MultiplexBUD.getPropProp(pointer);
 			
 			switch prop
-				case MultiplexBUD.DENSITIES % __MultiplexBUD.DENSITIES__
-					check = Format.checkFormat(Format.RVECTOR, value, MultiplexBUD.getPropSettings(prop));
-				case MultiplexBUD.TEMPLATE % __MultiplexBUD.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, MultiplexBUD.getPropSettings(prop));
+				case 43 % MultiplexBUD.DENSITIES
+					check = Format.checkFormat(12, value, MultiplexBUD.getPropSettings(prop));
+				case 4 % MultiplexBUD.TEMPLATE
+					check = Format.checkFormat(8, value, MultiplexBUD.getPropSettings(prop));
 				otherwise
-					if prop <= MultiplexWU.getPropNumber()
+					if prop <= 42
 						check = checkProp@MultiplexWU(prop, value);
 					end
 			end
@@ -656,8 +689,8 @@ classdef MultiplexBUD < MultiplexWU
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':MultiplexBUD:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput'], ...
+					['BRAPH2' ':MultiplexBUD:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MultiplexBUD.getPropTag(prop) ' (' MultiplexBUD.getFormatTag(MultiplexBUD.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -668,53 +701,53 @@ classdef MultiplexBUD < MultiplexWU
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case MultiplexBUD.CONNECTIVITY_TYPE % __MultiplexBUD.CONNECTIVITY_TYPE__
+				case 10 % MultiplexBUD.CONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.BINARY * ones(layernumber);
+					value = 2 * ones(layernumber);
 					
-				case MultiplexBUD.DIRECTIONALITY_TYPE % __MultiplexBUD.DIRECTIONALITY_TYPE__
+				case 11 % MultiplexBUD.DIRECTIONALITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.UNDIRECTED * ones(layernumber);
+					value = 2 * ones(layernumber);
 					
-				case MultiplexBUD.SELFCONNECTIVITY_TYPE % __MultiplexBUD.SELFCONNECTIVITY_TYPE__
+				case 12 % MultiplexBUD.SELFCONNECTIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.SELFCONNECTED * ones(layernumber);
-					value(1:layernumber+1:end) = Graph.NONSELFCONNECTED;
+					value = 2 * ones(layernumber);
+					value(1:layernumber+1:end) = 1;
 					
-				case MultiplexBUD.NEGATIVITY_TYPE % __MultiplexBUD.NEGATIVITY_TYPE__
+				case 13 % MultiplexBUD.NEGATIVITY_TYPE
 					if isempty(varargin)
 					    layernumber = 1;
 					else
 					    layernumber = varargin{1};
 					end
-					value = Graph.NONNEGATIVE * ones(layernumber);
+					value =  ones(layernumber);
 					
-				case MultiplexBUD.A % __MultiplexBUD.A__
-					rng_settings_ = rng(); rng(g.getPropSeed(MultiplexBUD.A), 'twister')
+				case 26 % MultiplexBUD.A
+					rng_settings_ = rng(); rng(g.getPropSeed(26), 'twister')
 					
 					A_WU = calculateValue@MultiplexWU(g, prop);
 					
@@ -741,8 +774,8 @@ classdef MultiplexBUD < MultiplexWU
 					
 					rng(rng_settings_)
 					
-				case MultiplexBUD.PARTITIONS % __MultiplexBUD.PARTITIONS__
-					rng_settings_ = rng(); rng(g.getPropSeed(MultiplexBUD.PARTITIONS), 'twister')
+				case 30 % MultiplexBUD.PARTITIONS
+					rng_settings_ = rng(); rng(g.getPropSeed(30), 'twister')
 					
 					l = g.get('LAYERNUMBER');
 					densities = g.get('DENSITIES');
@@ -750,7 +783,7 @@ classdef MultiplexBUD < MultiplexWU
 					
 					rng(rng_settings_)
 					
-				case MultiplexBUD.ALAYERLABELS % __MultiplexBUD.ALAYERLABELS__
+				case 17 % MultiplexBUD.ALAYERLABELS
 					alayerlabels = g.get('LAYERLABELS');
 					if ~isa(g.getr('A'), 'NoValue') && length(alayerlabels) ~= g.get('LAYERNUMBER') % ensures that it's not unecessarily calculated
 					    densities = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
@@ -770,14 +803,14 @@ classdef MultiplexBUD < MultiplexWU
 					end
 					value = alayerlabels;
 					
-				case MultiplexBUD.APARTITIONLABELS % __MultiplexBUD.APARTITIONLABELS__
+				case 21 % MultiplexBUD.APARTITIONLABELS
 					apartitionlabels = g.get('PARTITIONLABELS');
 					if ~isa(g.getr('A'), 'NoValue') && length(apartitionlabels) ~= length(g.get('DENSITIES')) % ensures that it's not unecessarily calculated
 					    apartitionlabels = cellfun(@(x) [num2str(x) '%'], num2cell(g.get('DENSITIES')), 'uniformoutput', false);
 					end
 					value = apartitionlabels;
 					
-				case MultiplexBUD.ALAYERTICKS % __MultiplexBUD.ALAYERTICKS__
+				case 15 % MultiplexBUD.ALAYERTICKS
 					alayerticks = g.get('LAYERTICKS');
 					if length(alayerticks) ~= (g.get('LAYERNUMBER') / length(g.get('DENSITIES'))) % ensures that it's not unecessarily calculated
 					    l = g.get('LAYERNUMBER');
@@ -786,10 +819,10 @@ classdef MultiplexBUD < MultiplexWU
 					end
 					value = alayerticks;
 					
-				case MultiplexBUD.APARTITIONTICKS % __MultiplexBUD.APARTITIONTICKS__
+				case 19 % MultiplexBUD.APARTITIONTICKS
 					value = g.get('DENSITIES');
 					
-				case MultiplexBUD.RANDOMIZATION % __MultiplexBUD.RANDOMIZATION__
+				case 42 % MultiplexBUD.RANDOMIZATION
 					rng(g.get('RANDOM_SEED'), 'twister')
 					
 					if isempty(varargin)
@@ -811,7 +844,7 @@ classdef MultiplexBUD < MultiplexWU
 					value = A;
 					
 				otherwise
-					if prop <= MultiplexWU.getPropNumber()
+					if prop <= 42
 						value = calculateValue@MultiplexWU(g, prop, varargin{:});
 					else
 						value = calculateValue@Element(g, prop, varargin{:});
@@ -837,17 +870,17 @@ classdef MultiplexBUD < MultiplexWU
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case MultiplexBUD.DENSITIES % __MultiplexBUD.DENSITIES__
-					pr = PanelPropRVectorSmart('EL', g, 'PROP', MultiplexBUD.DENSITIES, 'MAX', 100, 'MIN', 0, varargin{:});
+				case 43 % MultiplexBUD.DENSITIES
+					pr = PanelPropRVectorSmart('EL', g, 'PROP', 43, 'MAX', 100, 'MIN', 0, varargin{:});
 					
-				case MultiplexBUD.A % __MultiplexBUD.A__
-					pr = PanelPropCell('EL', g, 'PROP', MultiplexBUD.A, ...
-					    'TABLE_HEIGHT', s(40), ...
+				case 26 % MultiplexBUD.A
+					pr = PanelPropCell('EL', g, 'PROP', 26, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'XYSLIDERLOCK', true, ... 
 					    'XSLIDERSHOW', false, ...
 					    'YSLIDERSHOW', true, ...
 					    'YSLIDERLABELS', g.getCallback('ALAYERLABELS'), ...
-					    'YSLIDERWIDTH', s(5), ...
+					    'YSLIDERWIDTH', 60, ...
 					    'ROWNAME', g.getCallback('ANODELABELS'), ...
 					    'COLUMNNAME', g.getCallback('ANODELABELS'), ...
 					    varargin{:});

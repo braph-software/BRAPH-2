@@ -7,6 +7,54 @@ classdef SettingsAmbientPP < SettingsPP
 	%  camlight, shading, and colormap.
 	% It works for all categories.
 	%
+	% The list of SettingsAmbientPP properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the prop panel for ambient settings.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the prop panel for ambient settings.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the prop panel for ambient settings.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the prop panel for ambient settings.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the prop panel for ambient settings.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the prop panel for ambient settings.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+	%  <strong>37</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
+	%  <strong>38</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
+	%  <strong>39</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
+	%  <strong>40</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
+	%  <strong>41</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
+	%  <strong>42</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
+	%  <strong>43</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
+	%  <strong>44</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
+	%  <strong>45</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
+	%  <strong>46</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
+	%
 	% SettingsAmbientPP methods (constructor):
 	%  SettingsAmbientPP - constructor
 	%
@@ -96,60 +144,60 @@ classdef SettingsAmbientPP < SettingsPP
 	% See also SettingsAmbient, uidropdown.
 	
 	properties (Constant) % properties
-		ENABLE = SettingsPP.getPropNumber() + 1;
+		ENABLE = 36; %CET: Computational Efficiency Trick
 		ENABLE_TAG = 'ENABLE';
-		ENABLE_CATEGORY = Category.GUI;
-		ENABLE_FORMAT = Format.LOGICAL;
+		ENABLE_CATEGORY = 9;
+		ENABLE_FORMAT = 4;
 		
-		LABEL_LIGHTING = SettingsPP.getPropNumber() + 2;
+		LABEL_LIGHTING = 37; %CET: Computational Efficiency Trick
 		LABEL_LIGHTING_TAG = 'LABEL_LIGHTING';
-		LABEL_LIGHTING_CATEGORY = Category.EVANESCENT;
-		LABEL_LIGHTING_FORMAT = Format.HANDLE;
+		LABEL_LIGHTING_CATEGORY = 7;
+		LABEL_LIGHTING_FORMAT = 18;
 		
-		DROPDOWN_LIGHTING = SettingsPP.getPropNumber() + 3;
+		DROPDOWN_LIGHTING = 38; %CET: Computational Efficiency Trick
 		DROPDOWN_LIGHTING_TAG = 'DROPDOWN_LIGHTING';
-		DROPDOWN_LIGHTING_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_LIGHTING_FORMAT = Format.HANDLE;
+		DROPDOWN_LIGHTING_CATEGORY = 7;
+		DROPDOWN_LIGHTING_FORMAT = 18;
 		
-		LABEL_MATERIAL = SettingsPP.getPropNumber() + 4;
+		LABEL_MATERIAL = 39; %CET: Computational Efficiency Trick
 		LABEL_MATERIAL_TAG = 'LABEL_MATERIAL';
-		LABEL_MATERIAL_CATEGORY = Category.EVANESCENT;
-		LABEL_MATERIAL_FORMAT = Format.HANDLE;
+		LABEL_MATERIAL_CATEGORY = 7;
+		LABEL_MATERIAL_FORMAT = 18;
 		
-		DROPDOWN_MATERIAL = SettingsPP.getPropNumber() + 5;
+		DROPDOWN_MATERIAL = 40; %CET: Computational Efficiency Trick
 		DROPDOWN_MATERIAL_TAG = 'DROPDOWN_MATERIAL';
-		DROPDOWN_MATERIAL_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_MATERIAL_FORMAT = Format.HANDLE;
+		DROPDOWN_MATERIAL_CATEGORY = 7;
+		DROPDOWN_MATERIAL_FORMAT = 18;
 		
-		LABEL_CAMLIGHT = SettingsPP.getPropNumber() + 6;
+		LABEL_CAMLIGHT = 41; %CET: Computational Efficiency Trick
 		LABEL_CAMLIGHT_TAG = 'LABEL_CAMLIGHT';
-		LABEL_CAMLIGHT_CATEGORY = Category.EVANESCENT;
-		LABEL_CAMLIGHT_FORMAT = Format.HANDLE;
+		LABEL_CAMLIGHT_CATEGORY = 7;
+		LABEL_CAMLIGHT_FORMAT = 18;
 		
-		DROPDOWN_CAMLIGHT = SettingsPP.getPropNumber() + 7;
+		DROPDOWN_CAMLIGHT = 42; %CET: Computational Efficiency Trick
 		DROPDOWN_CAMLIGHT_TAG = 'DROPDOWN_CAMLIGHT';
-		DROPDOWN_CAMLIGHT_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_CAMLIGHT_FORMAT = Format.HANDLE;
+		DROPDOWN_CAMLIGHT_CATEGORY = 7;
+		DROPDOWN_CAMLIGHT_FORMAT = 18;
 		
-		LABEL_SHADING = SettingsPP.getPropNumber() + 8;
+		LABEL_SHADING = 43; %CET: Computational Efficiency Trick
 		LABEL_SHADING_TAG = 'LABEL_SHADING';
-		LABEL_SHADING_CATEGORY = Category.EVANESCENT;
-		LABEL_SHADING_FORMAT = Format.HANDLE;
+		LABEL_SHADING_CATEGORY = 7;
+		LABEL_SHADING_FORMAT = 18;
 		
-		DROPDOWN_SHADING = SettingsPP.getPropNumber() + 9;
+		DROPDOWN_SHADING = 44; %CET: Computational Efficiency Trick
 		DROPDOWN_SHADING_TAG = 'DROPDOWN_SHADING';
-		DROPDOWN_SHADING_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_SHADING_FORMAT = Format.HANDLE;
+		DROPDOWN_SHADING_CATEGORY = 7;
+		DROPDOWN_SHADING_FORMAT = 18;
 		
-		LABEL_COLORMAP = SettingsPP.getPropNumber() + 10;
+		LABEL_COLORMAP = 45; %CET: Computational Efficiency Trick
 		LABEL_COLORMAP_TAG = 'LABEL_COLORMAP';
-		LABEL_COLORMAP_CATEGORY = Category.EVANESCENT;
-		LABEL_COLORMAP_FORMAT = Format.HANDLE;
+		LABEL_COLORMAP_CATEGORY = 7;
+		LABEL_COLORMAP_FORMAT = 18;
 		
-		DROPDOWN_COLORMAP = SettingsPP.getPropNumber() + 11;
+		DROPDOWN_COLORMAP = 46; %CET: Computational Efficiency Trick
 		DROPDOWN_COLORMAP_TAG = 'DROPDOWN_COLORMAP';
-		DROPDOWN_COLORMAP_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_COLORMAP_FORMAT = Format.HANDLE;
+		DROPDOWN_COLORMAP_CATEGORY = 7;
+		DROPDOWN_COLORMAP_FORMAT = 18;
 	end
 	methods % constructor
 		function pr = SettingsAmbientPP(varargin)
@@ -162,6 +210,53 @@ classdef SettingsAmbientPP < SettingsPP
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SettingsAmbientPP properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the concrete element.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the prop panel for ambient settings.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the prop panel for ambient settings.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the prop panel for ambient settings.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the prop panel for ambient settings.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the prop panel for ambient settings.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the prop panel for ambient settings.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the settings position panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>ENABLE</strong> 	ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.
+			%  <strong>37</strong> <strong>LABEL_LIGHTING</strong> 	LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.
+			%  <strong>38</strong> <strong>DROPDOWN_LIGHTING</strong> 	DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.
+			%  <strong>39</strong> <strong>LABEL_MATERIAL</strong> 	LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.
+			%  <strong>40</strong> <strong>DROPDOWN_MATERIAL</strong> 	DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.
+			%  <strong>41</strong> <strong>LABEL_CAMLIGHT</strong> 	LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.
+			%  <strong>42</strong> <strong>DROPDOWN_CAMLIGHT</strong> 	DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.
+			%  <strong>43</strong> <strong>LABEL_SHADING</strong> 	LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.
+			%  <strong>44</strong> <strong>DROPDOWN_SHADING</strong> 	DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.
+			%  <strong>45</strong> <strong>LABEL_COLORMAP</strong> 	LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.
+			%  <strong>46</strong> <strong>DROPDOWN_COLORMAP</strong> 	DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.
 			%
 			% See also Category, Format.
 			
@@ -199,7 +294,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SettingsAmbientPP', [], [], true);
+			subclass_list = { 'SettingsAmbientPP' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel for ambient settings.
@@ -220,72 +315,32 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					SettingsPP.getProps() ...
-						SettingsAmbientPP.ENABLE ...
-						SettingsAmbientPP.LABEL_LIGHTING ...
-						SettingsAmbientPP.DROPDOWN_LIGHTING ...
-						SettingsAmbientPP.LABEL_MATERIAL ...
-						SettingsAmbientPP.DROPDOWN_MATERIAL ...
-						SettingsAmbientPP.LABEL_CAMLIGHT ...
-						SettingsAmbientPP.DROPDOWN_CAMLIGHT ...
-						SettingsAmbientPP.LABEL_SHADING ...
-						SettingsAmbientPP.DROPDOWN_SHADING ...
-						SettingsAmbientPP.LABEL_COLORMAP ...
-						SettingsAmbientPP.DROPDOWN_COLORMAP ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						SettingsPP.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						SettingsPP.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						SettingsPP.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						SettingsPP.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						SettingsPP.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						SettingsPP.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						SettingsPP.getProps(Category.EVANESCENT) ...
-						SettingsAmbientPP.LABEL_LIGHTING ...
-						SettingsAmbientPP.DROPDOWN_LIGHTING ...
-						SettingsAmbientPP.LABEL_MATERIAL ...
-						SettingsAmbientPP.DROPDOWN_MATERIAL ...
-						SettingsAmbientPP.LABEL_CAMLIGHT ...
-						SettingsAmbientPP.DROPDOWN_CAMLIGHT ...
-						SettingsAmbientPP.LABEL_SHADING ...
-						SettingsAmbientPP.DROPDOWN_SHADING ...
-						SettingsAmbientPP.LABEL_COLORMAP ...
-						SettingsAmbientPP.DROPDOWN_COLORMAP ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						SettingsPP.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						SettingsPP.getProps(Category.GUI) ...
-						SettingsAmbientPP.ENABLE ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 37 38 39 40 41 42 43 44 45 46];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26 36];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -306,7 +361,33 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SettingsAmbientPP.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 46;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 20;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 5;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in prop panel for ambient settings/error.
@@ -334,14 +415,14 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SettingsAmbientPP.getProps());
+			check = prop >= 1 && prop <= 46 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsAmbientPP.'] ...
 					)
 			end
@@ -372,15 +453,14 @@ classdef SettingsAmbientPP < SettingsPP
 			%
 			% See also getProps, existsTag.
 			
-			settingsambientpp_tag_list = cellfun(@(x) SettingsAmbientPP.getPropTag(x), num2cell(SettingsAmbientPP.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, settingsambientpp_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsAmbientPP.'] ...
 					)
 			end
@@ -406,8 +486,7 @@ classdef SettingsAmbientPP < SettingsPP
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				settingsambientpp_tag_list = cellfun(@(x) SettingsAmbientPP.getPropTag(x), num2cell(SettingsAmbientPP.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, settingsambientpp_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -435,34 +514,9 @@ classdef SettingsAmbientPP < SettingsPP
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SettingsAmbientPP.ENABLE
-						tag = SettingsAmbientPP.ENABLE_TAG;
-					case SettingsAmbientPP.LABEL_LIGHTING
-						tag = SettingsAmbientPP.LABEL_LIGHTING_TAG;
-					case SettingsAmbientPP.DROPDOWN_LIGHTING
-						tag = SettingsAmbientPP.DROPDOWN_LIGHTING_TAG;
-					case SettingsAmbientPP.LABEL_MATERIAL
-						tag = SettingsAmbientPP.LABEL_MATERIAL_TAG;
-					case SettingsAmbientPP.DROPDOWN_MATERIAL
-						tag = SettingsAmbientPP.DROPDOWN_MATERIAL_TAG;
-					case SettingsAmbientPP.LABEL_CAMLIGHT
-						tag = SettingsAmbientPP.LABEL_CAMLIGHT_TAG;
-					case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-						tag = SettingsAmbientPP.DROPDOWN_CAMLIGHT_TAG;
-					case SettingsAmbientPP.LABEL_SHADING
-						tag = SettingsAmbientPP.LABEL_SHADING_TAG;
-					case SettingsAmbientPP.DROPDOWN_SHADING
-						tag = SettingsAmbientPP.DROPDOWN_SHADING_TAG;
-					case SettingsAmbientPP.LABEL_COLORMAP
-						tag = SettingsAmbientPP.LABEL_COLORMAP_TAG;
-					case SettingsAmbientPP.DROPDOWN_COLORMAP
-						tag = SettingsAmbientPP.DROPDOWN_COLORMAP_TAG;
-					otherwise
-						tag = getPropTag@SettingsPP(prop);
-				end
+				%CET: Computational Efficiency Trick
+				settingsambientpp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'ENABLE'  'LABEL_LIGHTING'  'DROPDOWN_LIGHTING'  'LABEL_MATERIAL'  'DROPDOWN_MATERIAL'  'LABEL_CAMLIGHT'  'DROPDOWN_CAMLIGHT'  'LABEL_SHADING'  'DROPDOWN_SHADING'  'LABEL_COLORMAP'  'DROPDOWN_COLORMAP' };
+				tag = settingsambientpp_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -487,32 +541,9 @@ classdef SettingsAmbientPP < SettingsPP
 			
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
-			switch prop
-				case SettingsAmbientPP.ENABLE
-					prop_category = SettingsAmbientPP.ENABLE_CATEGORY;
-				case SettingsAmbientPP.LABEL_LIGHTING
-					prop_category = SettingsAmbientPP.LABEL_LIGHTING_CATEGORY;
-				case SettingsAmbientPP.DROPDOWN_LIGHTING
-					prop_category = SettingsAmbientPP.DROPDOWN_LIGHTING_CATEGORY;
-				case SettingsAmbientPP.LABEL_MATERIAL
-					prop_category = SettingsAmbientPP.LABEL_MATERIAL_CATEGORY;
-				case SettingsAmbientPP.DROPDOWN_MATERIAL
-					prop_category = SettingsAmbientPP.DROPDOWN_MATERIAL_CATEGORY;
-				case SettingsAmbientPP.LABEL_CAMLIGHT
-					prop_category = SettingsAmbientPP.LABEL_CAMLIGHT_CATEGORY;
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-					prop_category = SettingsAmbientPP.DROPDOWN_CAMLIGHT_CATEGORY;
-				case SettingsAmbientPP.LABEL_SHADING
-					prop_category = SettingsAmbientPP.LABEL_SHADING_CATEGORY;
-				case SettingsAmbientPP.DROPDOWN_SHADING
-					prop_category = SettingsAmbientPP.DROPDOWN_SHADING_CATEGORY;
-				case SettingsAmbientPP.LABEL_COLORMAP
-					prop_category = SettingsAmbientPP.LABEL_COLORMAP_CATEGORY;
-				case SettingsAmbientPP.DROPDOWN_COLORMAP
-					prop_category = SettingsAmbientPP.DROPDOWN_COLORMAP_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@SettingsPP(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsambientpp_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  7  7  7  7  7  7  7  7  7  7 };
+			prop_category = settingsambientpp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -536,32 +567,9 @@ classdef SettingsAmbientPP < SettingsPP
 			
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
-			switch prop
-				case SettingsAmbientPP.ENABLE
-					prop_format = SettingsAmbientPP.ENABLE_FORMAT;
-				case SettingsAmbientPP.LABEL_LIGHTING
-					prop_format = SettingsAmbientPP.LABEL_LIGHTING_FORMAT;
-				case SettingsAmbientPP.DROPDOWN_LIGHTING
-					prop_format = SettingsAmbientPP.DROPDOWN_LIGHTING_FORMAT;
-				case SettingsAmbientPP.LABEL_MATERIAL
-					prop_format = SettingsAmbientPP.LABEL_MATERIAL_FORMAT;
-				case SettingsAmbientPP.DROPDOWN_MATERIAL
-					prop_format = SettingsAmbientPP.DROPDOWN_MATERIAL_FORMAT;
-				case SettingsAmbientPP.LABEL_CAMLIGHT
-					prop_format = SettingsAmbientPP.LABEL_CAMLIGHT_FORMAT;
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-					prop_format = SettingsAmbientPP.DROPDOWN_CAMLIGHT_FORMAT;
-				case SettingsAmbientPP.LABEL_SHADING
-					prop_format = SettingsAmbientPP.LABEL_SHADING_FORMAT;
-				case SettingsAmbientPP.DROPDOWN_SHADING
-					prop_format = SettingsAmbientPP.DROPDOWN_SHADING_FORMAT;
-				case SettingsAmbientPP.LABEL_COLORMAP
-					prop_format = SettingsAmbientPP.LABEL_COLORMAP_FORMAT;
-				case SettingsAmbientPP.DROPDOWN_COLORMAP
-					prop_format = SettingsAmbientPP.DROPDOWN_COLORMAP_FORMAT;
-				otherwise
-					prop_format = getPropFormat@SettingsPP(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsambientpp_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  4  18  18  18  18  18  18  18  18  18  18 };
+			prop_format = settingsambientpp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -585,60 +593,9 @@ classdef SettingsAmbientPP < SettingsPP
 			
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
-			switch prop
-				case SettingsAmbientPP.ENABLE
-					prop_description = 'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.';
-				case SettingsAmbientPP.LABEL_LIGHTING
-					prop_description = 'LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.';
-				case SettingsAmbientPP.DROPDOWN_LIGHTING
-					prop_description = 'DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.';
-				case SettingsAmbientPP.LABEL_MATERIAL
-					prop_description = 'LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.';
-				case SettingsAmbientPP.DROPDOWN_MATERIAL
-					prop_description = 'DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.';
-				case SettingsAmbientPP.LABEL_CAMLIGHT
-					prop_description = 'LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.';
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-					prop_description = 'DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.';
-				case SettingsAmbientPP.LABEL_SHADING
-					prop_description = 'LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.';
-				case SettingsAmbientPP.DROPDOWN_SHADING
-					prop_description = 'DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.';
-				case SettingsAmbientPP.LABEL_COLORMAP
-					prop_description = 'LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.';
-				case SettingsAmbientPP.DROPDOWN_COLORMAP
-					prop_description = 'DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.';
-				case SettingsAmbientPP.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the concrete element.';
-				case SettingsAmbientPP.NAME
-					prop_description = 'NAME (constant, string) is the name of the prop panel for ambient settings.';
-				case SettingsAmbientPP.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the prop panel for ambient settings.';
-				case SettingsAmbientPP.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the prop panel for ambient settings.';
-				case SettingsAmbientPP.ID
-					prop_description = 'ID (data, string) is a few-letter code for the prop panel for ambient settings.';
-				case SettingsAmbientPP.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the prop panel for ambient settings.';
-				case SettingsAmbientPP.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the prop panel for ambient settings.';
-				case SettingsAmbientPP.EL
-					prop_description = 'EL (data, item) is the element.';
-				case SettingsAmbientPP.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case SettingsAmbientPP.HEIGHT
-					prop_description = 'HEIGHT (gui, size) is the pixel height of the settings position panel.';
-				case SettingsAmbientPP.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case SettingsAmbientPP.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.';
-				case SettingsAmbientPP.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case SettingsAmbientPP.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				otherwise
-					prop_description = getPropDescription@SettingsPP(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingsambientpp_description_list = { 'ELCLASS (constant, string) is the class of the concrete element.'  'NAME (constant, string) is the name of the prop panel for ambient settings.'  'DESCRIPTION (constant, string) is the description of the prop panel for ambient settings.'  'TEMPLATE (parameter, item) is the template of the prop panel for ambient settings.'  'ID (data, string) is a few-letter code for the prop panel for ambient settings.'  'LABEL (metadata, string) is an extended label of the prop panel for ambient settings.'  'NOTES (metadata, string) are some specific notes about the prop panel for ambient settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the checkbox and editfields.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the settings position panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'ENABLE (gui, logical) switches the checkbox and editfields between active and inactive appearance when not editable.'  'LABEL_LIGHTING (evanescent, handle) is the label of the lighting dropdown menu.'  'DROPDOWN_LIGHTING (evanescent, handle) is the lighting dropdown menu.'  'LABEL_MATERIAL (evanescent, handle) is the label of the of the material dropdown menu.'  'DROPDOWN_MATERIAL (evanescent, handle) is the material dropdown menu.'  'LABEL_CAMLIGHT (evanescent, handle) is the label of the camlight dropdown menu.'  'DROPDOWN_CAMLIGHT (evanescent, handle) is the camlight dropdown menu.'  'LABEL_SHADING (evanescent, handle) is the label of the shading dropdown menu.'  'DROPDOWN_SHADING (evanescent, handle) is the shading dropdown menu.'  'LABEL_COLORMAP (evanescent, handle) is the label of the colormap dropdown menu.'  'DROPDOWN_COLORMAP (evanescent, handle) is the colormap dropdown menu.' };
+			prop_description = settingsambientpp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -662,30 +619,30 @@ classdef SettingsAmbientPP < SettingsPP
 			
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
-			switch prop
-				case SettingsAmbientPP.ENABLE
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case SettingsAmbientPP.LABEL_LIGHTING
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.DROPDOWN_LIGHTING
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.LABEL_MATERIAL
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.DROPDOWN_MATERIAL
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.LABEL_CAMLIGHT
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.LABEL_SHADING
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.DROPDOWN_SHADING
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.LABEL_COLORMAP
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.DROPDOWN_COLORMAP
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case SettingsAmbientPP.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % SettingsAmbientPP.ENABLE
+					prop_settings = Format.getFormatSettings(4);
+				case 37 % SettingsAmbientPP.LABEL_LIGHTING
+					prop_settings = Format.getFormatSettings(18);
+				case 38 % SettingsAmbientPP.DROPDOWN_LIGHTING
+					prop_settings = Format.getFormatSettings(18);
+				case 39 % SettingsAmbientPP.LABEL_MATERIAL
+					prop_settings = Format.getFormatSettings(18);
+				case 40 % SettingsAmbientPP.DROPDOWN_MATERIAL
+					prop_settings = Format.getFormatSettings(18);
+				case 41 % SettingsAmbientPP.LABEL_CAMLIGHT
+					prop_settings = Format.getFormatSettings(18);
+				case 42 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+					prop_settings = Format.getFormatSettings(18);
+				case 43 % SettingsAmbientPP.LABEL_SHADING
+					prop_settings = Format.getFormatSettings(18);
+				case 44 % SettingsAmbientPP.DROPDOWN_SHADING
+					prop_settings = Format.getFormatSettings(18);
+				case 45 % SettingsAmbientPP.LABEL_COLORMAP
+					prop_settings = Format.getFormatSettings(18);
+				case 46 % SettingsAmbientPP.DROPDOWN_COLORMAP
+					prop_settings = Format.getFormatSettings(18);
+				case 4 % SettingsAmbientPP.TEMPLATE
 					prop_settings = 'SettingsAmbientPP';
 				otherwise
 					prop_settings = getPropSettings@SettingsPP(prop);
@@ -713,49 +670,49 @@ classdef SettingsAmbientPP < SettingsPP
 			
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
-			switch prop
-				case SettingsAmbientPP.ENABLE
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % SettingsAmbientPP.ENABLE
 					prop_default = true;
-				case SettingsAmbientPP.LABEL_LIGHTING
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_LIGHTING
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_MATERIAL
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_MATERIAL
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_CAMLIGHT
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_SHADING
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_SHADING
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_COLORMAP
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_COLORMAP
-					prop_default = Format.getFormatDefault(Format.HANDLE, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.ELCLASS
+				case 37 % SettingsAmbientPP.LABEL_LIGHTING
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 38 % SettingsAmbientPP.DROPDOWN_LIGHTING
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 39 % SettingsAmbientPP.LABEL_MATERIAL
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 40 % SettingsAmbientPP.DROPDOWN_MATERIAL
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 41 % SettingsAmbientPP.LABEL_CAMLIGHT
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 42 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 43 % SettingsAmbientPP.LABEL_SHADING
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 44 % SettingsAmbientPP.DROPDOWN_SHADING
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 45 % SettingsAmbientPP.LABEL_COLORMAP
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 46 % SettingsAmbientPP.DROPDOWN_COLORMAP
+					prop_default = Format.getFormatDefault(18, SettingsAmbientPP.getPropSettings(prop));
+				case 1 % SettingsAmbientPP.ELCLASS
 					prop_default = 'SettingsAmbientPP';
-				case SettingsAmbientPP.NAME
+				case 2 % SettingsAmbientPP.NAME
 					prop_default = 'Prop Panel for Ambient Settings';
-				case SettingsAmbientPP.DESCRIPTION
+				case 3 % SettingsAmbientPP.DESCRIPTION
 					prop_default = 'A Prop Panel for Ambient Settings (SettingsAmbientPP) plots the panel for ambient settings, including drop-down lists for lighting, material, camlight, shading, and colormap. It works for all categories.';
-				case SettingsAmbientPP.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.ID
+				case 4 % SettingsAmbientPP.TEMPLATE
+					prop_default = Format.getFormatDefault(8, SettingsAmbientPP.getPropSettings(prop));
+				case 5 % SettingsAmbientPP.ID
 					prop_default = 'SettingsAmbientPP ID';
-				case SettingsAmbientPP.LABEL
+				case 6 % SettingsAmbientPP.LABEL
 					prop_default = 'SettingsAmbientPP label';
-				case SettingsAmbientPP.NOTES
+				case 7 % SettingsAmbientPP.NOTES
 					prop_default = 'SettingsAmbientPP notes';
-				case SettingsAmbientPP.EL
+				case 23 % SettingsAmbientPP.EL
 					prop_default = BrainSurfacePF();
-				case SettingsAmbientPP.PROP
-					prop_default = BrainSurfacePF.ST_AMBIENT;
-				case SettingsAmbientPP.HEIGHT
-					prop_default = s(12.5);
+				case 24 % SettingsAmbientPP.PROP
+					prop_default = 32;
+				case 25 % SettingsAmbientPP.HEIGHT
+					prop_default = 150;
 				otherwise
 					prop_default = getPropDefault@SettingsPP(prop);
 			end
@@ -801,15 +758,15 @@ classdef SettingsAmbientPP < SettingsPP
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SettingsAmbientPP:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SettingsAmbientPP:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:SettingsAmbientPP:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsAmbientPP:WrongInput
 			%  Element.CHECKPROP(SettingsAmbientPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsAmbientPP.
-			%   Error id: €BRAPH2.STR€:SettingsAmbientPP:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsAmbientPP:WrongInput
 			%  PR.CHECKPROP(SettingsAmbientPP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsAmbientPP.
-			%   Error id: €BRAPH2.STR€:SettingsAmbientPP:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SettingsAmbientPP:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('SettingsAmbientPP')
 			%  are less computationally efficient.
@@ -820,32 +777,32 @@ classdef SettingsAmbientPP < SettingsPP
 			prop = SettingsAmbientPP.getPropProp(pointer);
 			
 			switch prop
-				case SettingsAmbientPP.ENABLE % __SettingsAmbientPP.ENABLE__
-					check = Format.checkFormat(Format.LOGICAL, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_LIGHTING % __SettingsAmbientPP.LABEL_LIGHTING__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_LIGHTING % __SettingsAmbientPP.DROPDOWN_LIGHTING__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_MATERIAL % __SettingsAmbientPP.LABEL_MATERIAL__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_MATERIAL % __SettingsAmbientPP.DROPDOWN_MATERIAL__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_CAMLIGHT % __SettingsAmbientPP.LABEL_CAMLIGHT__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT % __SettingsAmbientPP.DROPDOWN_CAMLIGHT__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_SHADING % __SettingsAmbientPP.LABEL_SHADING__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_SHADING % __SettingsAmbientPP.DROPDOWN_SHADING__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.LABEL_COLORMAP % __SettingsAmbientPP.LABEL_COLORMAP__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.DROPDOWN_COLORMAP % __SettingsAmbientPP.DROPDOWN_COLORMAP__
-					check = Format.checkFormat(Format.HANDLE, value, SettingsAmbientPP.getPropSettings(prop));
-				case SettingsAmbientPP.TEMPLATE % __SettingsAmbientPP.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, SettingsAmbientPP.getPropSettings(prop));
+				case 36 % SettingsAmbientPP.ENABLE
+					check = Format.checkFormat(4, value, SettingsAmbientPP.getPropSettings(prop));
+				case 37 % SettingsAmbientPP.LABEL_LIGHTING
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 38 % SettingsAmbientPP.DROPDOWN_LIGHTING
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 39 % SettingsAmbientPP.LABEL_MATERIAL
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 40 % SettingsAmbientPP.DROPDOWN_MATERIAL
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 41 % SettingsAmbientPP.LABEL_CAMLIGHT
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 42 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 43 % SettingsAmbientPP.LABEL_SHADING
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 44 % SettingsAmbientPP.DROPDOWN_SHADING
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 45 % SettingsAmbientPP.LABEL_COLORMAP
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 46 % SettingsAmbientPP.DROPDOWN_COLORMAP
+					check = Format.checkFormat(18, value, SettingsAmbientPP.getPropSettings(prop));
+				case 4 % SettingsAmbientPP.TEMPLATE
+					check = Format.checkFormat(8, value, SettingsAmbientPP.getPropSettings(prop));
 				otherwise
-					if prop <= SettingsPP.getPropNumber()
+					if prop <= 35
 						check = checkProp@SettingsPP(prop, value);
 					end
 			end
@@ -854,8 +811,8 @@ classdef SettingsAmbientPP < SettingsPP
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsAmbientPP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsAmbientPP:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsAmbientPP.getPropTag(prop) ' (' SettingsAmbientPP.getFormatTag(SettingsAmbientPP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -866,19 +823,19 @@ classdef SettingsAmbientPP < SettingsPP
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case SettingsAmbientPP.LABEL_LIGHTING % __SettingsAmbientPP.LABEL_LIGHTING__
+				case 37 % SettingsAmbientPP.LABEL_LIGHTING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_lighting =  uilabel( ...
@@ -886,27 +843,27 @@ classdef SettingsAmbientPP < SettingsPP
 						'Tag', 'LABEL_LIGHTING', ...
 						'Text', 'lighting', ...
 						'Interpreter', 'html', ...
-						'FontSize', BRAPH2.FONTSIZE, ...
+						'FontSize', 12, ...
 						'HorizontalAlignment', 'right', ...
 						'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('LIGHTING')) ' ' el.get(prop).getPropDescription('LIGHTING')], ...
 						'BackgroundColor', pr.get('BKGCOLOR') ...
 						);
 					value = label_lighting;
 					
-				case SettingsAmbientPP.DROPDOWN_LIGHTING % __SettingsAmbientPP.DROPDOWN_LIGHTING__
+				case 38 % SettingsAmbientPP.DROPDOWN_LIGHTING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_lighting = uidropdown( ...
 					    'Parent', pr.memorize('H'), ...
 						'Tag', 'DROPDOWN_LIGHTING', ...
 						'Items', el.get(prop).getPropSettings('LIGHTING'), ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('LIGHTING')) ' ' el.get(prop).getPropDescription('LIGHTING')], ...
 					    'ValueChangedFcn', {@cb_ambient} ...
 					    );
 					value = dropdown_lighting;
 					
-				case SettingsAmbientPP.LABEL_MATERIAL % __SettingsAmbientPP.LABEL_MATERIAL__
+				case 39 % SettingsAmbientPP.LABEL_MATERIAL
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_material =  uilabel( ...
@@ -914,27 +871,27 @@ classdef SettingsAmbientPP < SettingsPP
 					    'Tag', 'LABEL_MATERIAL', ...
 					    'Text', 'material', ...
 					    'Interpreter', 'html', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('MATERIAL')) ' ' el.get(prop).getPropDescription('MATERIAL')], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_material;
 					
-				case SettingsAmbientPP.DROPDOWN_MATERIAL % __SettingsAmbientPP.DROPDOWN_MATERIAL__
+				case 40 % SettingsAmbientPP.DROPDOWN_MATERIAL
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_material = uidropdown( ...
 					    'Parent', pr.memorize('H'), ...
 					        'Tag', 'DROPDOWN_MATERIAL', ...
 					        'Items', el.get(prop).getPropSettings('MATERIAL'), ...
-					        'FontSize', BRAPH2.FONTSIZE, ...
+					        'FontSize', 12, ...
 					        'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('MATERIAL')) ' ' el.get(prop).getPropDescription('MATERIAL')], ...
 					        'ValueChangedFcn', {@cb_ambient} ... % callback in DROPBOX_LIGHTING
 					        );
 					value = dropdown_material;
 					
-				case SettingsAmbientPP.LABEL_CAMLIGHT % __SettingsAmbientPP.LABEL_CAMLIGHT__
+				case 41 % SettingsAmbientPP.LABEL_CAMLIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_camlight =  uilabel( ...
@@ -942,27 +899,27 @@ classdef SettingsAmbientPP < SettingsPP
 					    'Tag', 'LABEL_CAMLIGHT', ...
 					    'Text', 'camera light', ...
 					    'Interpreter', 'html', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('CAMLIGHT')) ' ' el.get(prop).getPropDescription('CAMLIGHT')], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_camlight;
 					
-				case SettingsAmbientPP.DROPDOWN_CAMLIGHT % __SettingsAmbientPP.DROPDOWN_CAMLIGHT__
+				case 42 % SettingsAmbientPP.DROPDOWN_CAMLIGHT
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_camlight = uidropdown( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'DROPDOWN_CAMLIGHT', ...
 					    'Items', el.get(prop).getPropSettings('CAMLIGHT'), ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('CAMLIGHT')) ' ' el.get(prop).getPropDescription('CAMLIGHT')], ...
 					    'ValueChangedFcn', {@cb_ambient} ... % callback in DROPBOX_LIGHTING
 					    );
 					value = dropdown_camlight;
 					
-				case SettingsAmbientPP.LABEL_SHADING % __SettingsAmbientPP.LABEL_SHADING__
+				case 43 % SettingsAmbientPP.LABEL_SHADING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_shading =  uilabel( ...
@@ -970,27 +927,27 @@ classdef SettingsAmbientPP < SettingsPP
 					    'Tag', 'LABEL_SHADING', ...
 					    'Text', 'shading', ...
 					    'Interpreter', 'html', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('SHADING')) ' ' el.get(prop).getPropDescription('SHADING')], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_shading;
 					
-				case SettingsAmbientPP.DROPDOWN_SHADING % __SettingsAmbientPP.DROPDOWN_SHADING__
+				case 44 % SettingsAmbientPP.DROPDOWN_SHADING
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_shading = uidropdown( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'DROPDOWN_SHADING', ...
 					    'Items', el.get(prop).getPropSettings('SHADING'), ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('SHADING')) ' ' el.get(prop).getPropDescription('SHADING')], ...
 					    'ValueChangedFcn', {@cb_ambient} ... % callback in DROPBOX_LIGHTING
 					    );
 					value = dropdown_shading;
 					
-				case SettingsAmbientPP.LABEL_COLORMAP % __SettingsAmbientPP.LABEL_COLORMAP__
+				case 45 % SettingsAmbientPP.LABEL_COLORMAP
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					label_colormap =  uilabel( ...
@@ -998,28 +955,28 @@ classdef SettingsAmbientPP < SettingsPP
 					    'Tag', 'LABEL_COLORMAP', ...
 					    'Text', 'colormap', ...
 					    'Interpreter', 'html', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'HorizontalAlignment', 'right', ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('COLORMAP')) ' ' el.get(prop).getPropDescription('COLORMAP')], ...
 					    'BackgroundColor', pr.get('BKGCOLOR') ...
 					    );
 					value = label_colormap;
 					
-				case SettingsAmbientPP.DROPDOWN_COLORMAP % __SettingsAmbientPP.DROPDOWN_COLORMAP__
+				case 46 % SettingsAmbientPP.DROPDOWN_COLORMAP
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					dropdown_colormap = uidropdown( ...
 					    'Parent', pr.memorize('H'), ...
 					    'Tag', 'DROPDOWN_COLORMAP', ...
 					    'Items', el.get(prop).getPropSettings('COLORMAP'), ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(prop) ' ' upper(el.getPropTag(prop)) '>' num2str(el.get(prop).getPropProp('COLORMAP')) ' ' el.get(prop).getPropDescription('COLORMAP')], ...
 					    'ValueChangedFcn', {@cb_ambient} ... % callback in DROPBOX_LIGHTING
 					    );
 					value = dropdown_colormap;
 					
-				case SettingsAmbientPP.X_DRAW % __SettingsAmbientPP.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % SettingsAmbientPP.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('LABEL_LIGHTING')
 					    pr.memorize('DROPDOWN_LIGHTING')
@@ -1037,8 +994,8 @@ classdef SettingsAmbientPP < SettingsPP
 					    pr.memorize('DROPDOWN_COLORMAP')
 					end
 					
-				case SettingsAmbientPP.UPDATE % __SettingsAmbientPP.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % SettingsAmbientPP.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					
 						el = pr.get('EL');
@@ -1053,14 +1010,14 @@ classdef SettingsAmbientPP < SettingsPP
 					    end
 					
 					    switch el.getPropCategory(prop)
-					        case Category.METADATA
+					        case 2
 					            set(pr.get('DROPDOWN_LIGHTING'), 'Value', el.get(prop).get('LIGHTING'))
 					            set(pr.get('DROPDOWN_MATERIAL'), 'Value', el.get(prop).get('MATERIAL'))
 					            set(pr.get('DROPDOWN_CAMLIGHT'), 'Value', el.get(prop).get('CAMLIGHT'))
 					            set(pr.get('DROPDOWN_SHADING'), 'Value', el.get(prop).get('SHADING'))
 					            set(pr.get('DROPDOWN_COLORMAP'), 'Value', el.get(prop).get('COLORMAP'))
 					
-					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+					        case {3, 4, 8, 9}
 					            set(pr.get('DROPDOWN_LIGHTING'), 'Value', el.get(prop).get('LIGHTING'))
 					            set(pr.get('DROPDOWN_MATERIAL'), 'Value', el.get(prop).get('MATERIAL'))
 					            set(pr.get('DROPDOWN_CAMLIGHT'), 'Value', el.get(prop).get('CAMLIGHT'))
@@ -1098,7 +1055,7 @@ classdef SettingsAmbientPP < SettingsPP
 					                    )
 					            end
 					            
-					        case Category.RESULT
+					        case 5
 					            value = el.getr(prop);
 					
 					            if isa(value, 'NoValue')
@@ -1147,29 +1104,29 @@ classdef SettingsAmbientPP < SettingsPP
 					    end
 					end
 					
-				case SettingsAmbientPP.REDRAW % __SettingsAmbientPP.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % SettingsAmbientPP.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('LABEL_LIGHTING'), 'Position', [s(.3) s(8.3) s(8) s(1.7)])
-					    set(pr.get('DROPDOWN_LIGHTING'), 'Position', [s(8.6) s(8.3) w_p-s(10) s(1.7)])
+					    set(pr.get('LABEL_LIGHTING'), 'Position', [4 100 96 21])
+					    set(pr.get('DROPDOWN_LIGHTING'), 'Position', [104 100 w_p-120 21])
 					
-					    set(pr.get('LABEL_MATERIAL'), 'Position', [s(.3) s(6.3) s(8) s(1.7)])
-					    set(pr.get('DROPDOWN_MATERIAL'), 'Position', [s(8.6) s(6.3) w_p-s(10) s(1.7)])
+					    set(pr.get('LABEL_MATERIAL'), 'Position', [4 76 96 21])
+					    set(pr.get('DROPDOWN_MATERIAL'), 'Position', [104 76 w_p-120 21])
 					
-					    set(pr.get('LABEL_CAMLIGHT'), 'Position', [s(.3) s(4.3) s(8) s(1.7)])
-					    set(pr.get('DROPDOWN_CAMLIGHT'), 'Position', [s(8.6) s(4.3) w_p-s(10) s(1.7)])
+					    set(pr.get('LABEL_CAMLIGHT'), 'Position', [4 52 96 21])
+					    set(pr.get('DROPDOWN_CAMLIGHT'), 'Position', [104 52 w_p-120 21])
 					
-					    set(pr.get('LABEL_SHADING'), 'Position', [s(.3) s(2.3) s(8) s(1.7)])
-					    set(pr.get('DROPDOWN_SHADING'), 'Position', [s(8.6) s(2.3) w_p-s(10) s(1.7)])
+					    set(pr.get('LABEL_SHADING'), 'Position', [4 28 96 21])
+					    set(pr.get('DROPDOWN_SHADING'), 'Position', [104 28 w_p-120 21])
 					
-					    set(pr.get('LABEL_COLORMAP'), 'Position', [s(.3) s(.3) s(8) s(1.7)])
-					    set(pr.get('DROPDOWN_COLORMAP'), 'Position', [s(8.6) s(.3) w_p-s(10) s(1.7)])
+					    set(pr.get('LABEL_COLORMAP'), 'Position', [4 4 96 21])
+					    set(pr.get('DROPDOWN_COLORMAP'), 'Position', [104 4 w_p-120 21])
 					end
 					
-				case SettingsAmbientPP.DELETE % __SettingsAmbientPP.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % SettingsAmbientPP.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('LABEL_LIGHTING', Element.getNoValue())
 					    pr.set('DROPDOWN_LIGHTING', Element.getNoValue())
@@ -1188,7 +1145,7 @@ classdef SettingsAmbientPP < SettingsPP
 					end
 					
 				otherwise
-					if prop <= SettingsPP.getPropNumber()
+					if prop <= 35
 						value = calculateValue@SettingsPP(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

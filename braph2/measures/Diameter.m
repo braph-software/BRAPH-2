@@ -4,6 +4,24 @@ classdef Diameter < Measure
 	%
 	% The Diameter (Diameter) is the maximum eccentricity among the vertices within a layer.
 	%
+	% The list of Diameter properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Diameter.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Diameter.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Diameter.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Diameter.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Diameter.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Diameter.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Diameter.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Diameter.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
+	%
 	% Diameter methods (constructor):
 	%  Diameter - constructor
 	%
@@ -91,10 +109,10 @@ classdef Diameter < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = Measure.getPropNumber() + 1;
+		RULE = 16; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
-		RULE_CATEGORY = Category.PARAMETER;
-		RULE_FORMAT = Format.OPTION;
+		RULE_CATEGORY = 3;
+		RULE_FORMAT = 5;
 	end
 	methods % constructor
 		function m = Diameter(varargin)
@@ -107,6 +125,23 @@ classdef Diameter < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of Diameter properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Diameter.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Diameter.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Diameter.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Diameter.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Diameter.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Diameter.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Diameter.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Diameter.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
 			% See also Category, Format.
 			
@@ -144,7 +179,7 @@ classdef Diameter < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('Diameter', [], [], true);
+			subclass_list = { 'Diameter' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of diameter.
@@ -165,52 +200,30 @@ classdef Diameter < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						Diameter.RULE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						Diameter.RULE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -231,7 +244,31 @@ classdef Diameter < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(Diameter.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in diameter/error.
@@ -259,14 +296,14 @@ classdef Diameter < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == Diameter.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Diameter:' 'WrongInput'], ...
+					['BRAPH2' ':Diameter:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Diameter.'] ...
 					)
 			end
@@ -297,15 +334,14 @@ classdef Diameter < Measure
 			%
 			% See also getProps, existsTag.
 			
-			diameter_tag_list = cellfun(@(x) Diameter.getPropTag(x), num2cell(Diameter.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, diameter_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Diameter:' 'WrongInput'], ...
+					['BRAPH2' ':Diameter:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for Diameter.'] ...
 					)
 			end
@@ -331,8 +367,7 @@ classdef Diameter < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				diameter_tag_list = cellfun(@(x) Diameter.getPropTag(x), num2cell(Diameter.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, diameter_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -360,14 +395,9 @@ classdef Diameter < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case Diameter.RULE
-						tag = Diameter.RULE_TAG;
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				diameter_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				tag = diameter_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -392,12 +422,9 @@ classdef Diameter < Measure
 			
 			prop = Diameter.getPropProp(pointer);
 			
-			switch prop
-				case Diameter.RULE
-					prop_category = Diameter.RULE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			diameter_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = diameter_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -421,12 +448,9 @@ classdef Diameter < Measure
 			
 			prop = Diameter.getPropProp(pointer);
 			
-			switch prop
-				case Diameter.RULE
-					prop_format = Diameter.RULE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			diameter_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
+			prop_format = diameter_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -450,36 +474,9 @@ classdef Diameter < Measure
 			
 			prop = Diameter.getPropProp(pointer);
 			
-			switch prop
-				case Diameter.RULE
-					prop_description = 'RULE (parameter, OPTION)  % calculation in a graph or its subgraph';
-				case Diameter.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Diameter.';
-				case Diameter.NAME
-					prop_description = 'NAME (constant, string) is the name of the Diameter.';
-				case Diameter.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Diameter.';
-				case Diameter.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Diameter.';
-				case Diameter.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Diameter.';
-				case Diameter.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Diameter.';
-				case Diameter.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Diameter.';
-				case Diameter.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.GLOBAL__.';
-				case Diameter.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case Diameter.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case Diameter.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case Diameter.M
-					prop_description = 'M (result, cell) is the Diameter.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			diameter_description_list = { 'ELCLASS (constant, string) is the class of the Diameter.'  'NAME (constant, string) is the name of the Diameter.'  'DESCRIPTION (constant, string) is the description of the Diameter.'  'TEMPLATE (parameter, item) is the template of the Diameter.'  'ID (data, string) is a few-letter code of the Diameter.'  'LABEL (metadata, string) is an extended label of the Diameter.'  'NOTES (metadata, string) are some specific notes about the Diameter.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.GLOBAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Diameter.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			prop_description = diameter_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -503,8 +500,8 @@ classdef Diameter < Measure
 			
 			prop = Diameter.getPropProp(pointer);
 			
-			switch prop
-				case Diameter.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % Diameter.RULE
 					prop_settings = {'all', 'subgraphs'};
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -532,28 +529,28 @@ classdef Diameter < Measure
 			
 			prop = Diameter.getPropProp(pointer);
 			
-			switch prop
-				case Diameter.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % Diameter.RULE
 					prop_default = 'all';
-				case Diameter.ELCLASS
+				case 1 % Diameter.ELCLASS
 					prop_default = 'Diameter';
-				case Diameter.NAME
+				case 2 % Diameter.NAME
 					prop_default = 'Diameter';
-				case Diameter.DESCRIPTION
+				case 3 % Diameter.DESCRIPTION
 					prop_default = 'The Diameter (Diameter) is the maximum eccentricity among the vertices within a layer.';
-				case Diameter.ID
+				case 5 % Diameter.ID
 					prop_default = 'Diameter ID';
-				case Diameter.LABEL
+				case 6 % Diameter.LABEL
 					prop_default = 'Diameter label';
-				case Diameter.NOTES
+				case 7 % Diameter.NOTES
 					prop_default = 'Diameter notes';
-				case Diameter.SHAPE
-					prop_default = Measure.GLOBAL;
-				case Diameter.SCOPE
-					prop_default = Measure.UNILAYER;
-				case Diameter.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case Diameter.COMPATIBLE_GRAPHS
+				case 9 % Diameter.SHAPE
+					prop_default = 1;
+				case 10 % Diameter.SCOPE
+					prop_default = 2;
+				case 11 % Diameter.PARAMETRICITY
+					prop_default = 2;
+				case 12 % Diameter.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -600,15 +597,15 @@ classdef Diameter < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:Diameter:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:Diameter:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:Diameter:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Diameter:WrongInput
 			%  Element.CHECKPROP(Diameter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Diameter.
-			%   Error id: €BRAPH2.STR€:Diameter:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Diameter:WrongInput
 			%  M.CHECKPROP(Diameter, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Diameter.
-			%   Error id: €BRAPH2.STR€:Diameter:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:Diameter:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Diameter')
 			%  are less computationally efficient.
@@ -619,10 +616,10 @@ classdef Diameter < Measure
 			prop = Diameter.getPropProp(pointer);
 			
 			switch prop
-				case Diameter.RULE % __Diameter.RULE__
-					check = Format.checkFormat(Format.OPTION, value, Diameter.getPropSettings(prop));
+				case 16 % Diameter.RULE
+					check = Format.checkFormat(5, value, Diameter.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -631,8 +628,8 @@ classdef Diameter < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Diameter:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Diameter:' 'WrongInput'], ...
+					['BRAPH2' ':Diameter:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Diameter.getPropTag(prop) ' (' Diameter.getFormatTag(Diameter.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -643,20 +640,20 @@ classdef Diameter < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case Diameter.M % __Diameter.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(Diameter.M), 'twister')
+				case 14 % Diameter.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -674,7 +671,7 @@ classdef Diameter < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

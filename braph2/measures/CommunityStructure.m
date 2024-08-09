@@ -6,6 +6,29 @@ classdef CommunityStructure < Measure
 	% non-overlapping groups of nodes which maximizes the number of within group 
 	% edges, and minimizes the number of between group edges.
 	%
+	% The list of CommunityStructure properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Community Structure.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Community Structure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Community Structure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Community Structure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Community Structure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Community Structure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Community Structure.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
+	%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+	%  <strong>18</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+	%  <strong>19</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+	%  <strong>20</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+	%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
+	%
 	% CommunityStructure methods (constructor):
 	%  CommunityStructure - constructor
 	%
@@ -93,35 +116,35 @@ classdef CommunityStructure < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = Measure.getPropNumber() + 1;
+		RULE = 16; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
-		RULE_CATEGORY = Category.PARAMETER;
-		RULE_FORMAT = Format.OPTION;
+		RULE_CATEGORY = 3;
+		RULE_FORMAT = 5;
 		
-		GAMMA = Measure.getPropNumber() + 2;
+		GAMMA = 17; %CET: Computational Efficiency Trick
 		GAMMA_TAG = 'GAMMA';
-		GAMMA_CATEGORY = Category.PARAMETER;
-		GAMMA_FORMAT = Format.SCALAR;
+		GAMMA_CATEGORY = 3;
+		GAMMA_FORMAT = 11;
 		
-		M0 = Measure.getPropNumber() + 3;
+		M0 = 18; %CET: Computational Efficiency Trick
 		M0_TAG = 'M0';
-		M0_CATEGORY = Category.DATA;
-		M0_FORMAT = Format.RVECTOR;
+		M0_CATEGORY = 4;
+		M0_FORMAT = 12;
 		
-		LOUVAIN_OM = Measure.getPropNumber() + 4;
+		LOUVAIN_OM = 19; %CET: Computational Efficiency Trick
 		LOUVAIN_OM_TAG = 'LOUVAIN_OM';
-		LOUVAIN_OM_CATEGORY = Category.DATA;
-		LOUVAIN_OM_FORMAT = Format.MATRIX;
+		LOUVAIN_OM_CATEGORY = 4;
+		LOUVAIN_OM_FORMAT = 14;
 		
-		OM_TYPE = Measure.getPropNumber() + 5;
+		OM_TYPE = 20; %CET: Computational Efficiency Trick
 		OM_TYPE_TAG = 'OM_TYPE';
-		OM_TYPE_CATEGORY = Category.DATA;
-		OM_TYPE_FORMAT = Format.OPTION;
+		OM_TYPE_CATEGORY = 4;
+		OM_TYPE_FORMAT = 5;
 		
-		QUALITY_FUNCTION = Measure.getPropNumber() + 6;
+		QUALITY_FUNCTION = 21; %CET: Computational Efficiency Trick
 		QUALITY_FUNCTION_TAG = 'QUALITY_FUNCTION';
-		QUALITY_FUNCTION_CATEGORY = Category.METADATA;
-		QUALITY_FUNCTION_FORMAT = Format.CELL;
+		QUALITY_FUNCTION_CATEGORY = 2;
+		QUALITY_FUNCTION_FORMAT = 16;
 	end
 	methods % constructor
 		function m = CommunityStructure(varargin)
@@ -134,6 +157,28 @@ classdef CommunityStructure < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of CommunityStructure properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Community Structure.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Community Structure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Community Structure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Community Structure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Community Structure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the community structure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Community Structure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Community Structure.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, option)
+			%  <strong>17</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+			%  <strong>18</strong> <strong>M0</strong> 	M0 (data, rvector) is the initial community affiliation vector.
+			%  <strong>19</strong> <strong>LOUVAIN_OM</strong> 	LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).
+			%  <strong>20</strong> <strong>OM_TYPE</strong> 	OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).
+			%  <strong>21</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (metadata, CELL)
 			%
 			% See also Category, Format.
 			
@@ -171,7 +216,7 @@ classdef CommunityStructure < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('CommunityStructure', [], [], true);
+			subclass_list = { 'CommunityStructure'  'Modularity' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of community structure.
@@ -192,62 +237,30 @@ classdef CommunityStructure < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						CommunityStructure.RULE ...
-						CommunityStructure.GAMMA ...
-						CommunityStructure.M0 ...
-						CommunityStructure.LOUVAIN_OM ...
-						CommunityStructure.OM_TYPE ...
-						CommunityStructure.QUALITY_FUNCTION ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						CommunityStructure.QUALITY_FUNCTION ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						CommunityStructure.RULE ...
-						CommunityStructure.GAMMA ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						CommunityStructure.M0 ...
-						CommunityStructure.LOUVAIN_OM ...
-						CommunityStructure.OM_TYPE ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7 21];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16 17];
+				case 4 % Category.DATA
+					prop_list = [5 13 18 19 20];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -268,7 +281,31 @@ classdef CommunityStructure < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(CommunityStructure.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 21;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 3;
+				case 4 % Category.DATA
+					prop_number = 5;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in community structure/error.
@@ -296,14 +333,14 @@ classdef CommunityStructure < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == CommunityStructure.getProps());
+			check = prop >= 1 && prop <= 21 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for CommunityStructure.'] ...
 					)
 			end
@@ -334,15 +371,14 @@ classdef CommunityStructure < Measure
 			%
 			% See also getProps, existsTag.
 			
-			communitystructure_tag_list = cellfun(@(x) CommunityStructure.getPropTag(x), num2cell(CommunityStructure.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, communitystructure_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for CommunityStructure.'] ...
 					)
 			end
@@ -368,8 +404,7 @@ classdef CommunityStructure < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				communitystructure_tag_list = cellfun(@(x) CommunityStructure.getPropTag(x), num2cell(CommunityStructure.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, communitystructure_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -397,24 +432,9 @@ classdef CommunityStructure < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case CommunityStructure.RULE
-						tag = CommunityStructure.RULE_TAG;
-					case CommunityStructure.GAMMA
-						tag = CommunityStructure.GAMMA_TAG;
-					case CommunityStructure.M0
-						tag = CommunityStructure.M0_TAG;
-					case CommunityStructure.LOUVAIN_OM
-						tag = CommunityStructure.LOUVAIN_OM_TAG;
-					case CommunityStructure.OM_TYPE
-						tag = CommunityStructure.OM_TYPE_TAG;
-					case CommunityStructure.QUALITY_FUNCTION
-						tag = CommunityStructure.QUALITY_FUNCTION_TAG;
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				communitystructure_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE'  'GAMMA'  'M0'  'LOUVAIN_OM'  'OM_TYPE'  'QUALITY_FUNCTION' };
+				tag = communitystructure_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -439,22 +459,9 @@ classdef CommunityStructure < Measure
 			
 			prop = CommunityStructure.getPropProp(pointer);
 			
-			switch prop
-				case CommunityStructure.RULE
-					prop_category = CommunityStructure.RULE_CATEGORY;
-				case CommunityStructure.GAMMA
-					prop_category = CommunityStructure.GAMMA_CATEGORY;
-				case CommunityStructure.M0
-					prop_category = CommunityStructure.M0_CATEGORY;
-				case CommunityStructure.LOUVAIN_OM
-					prop_category = CommunityStructure.LOUVAIN_OM_CATEGORY;
-				case CommunityStructure.OM_TYPE
-					prop_category = CommunityStructure.OM_TYPE_CATEGORY;
-				case CommunityStructure.QUALITY_FUNCTION
-					prop_category = CommunityStructure.QUALITY_FUNCTION_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			communitystructure_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  4  4  4  2 };
+			prop_category = communitystructure_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -478,22 +485,9 @@ classdef CommunityStructure < Measure
 			
 			prop = CommunityStructure.getPropProp(pointer);
 			
-			switch prop
-				case CommunityStructure.RULE
-					prop_format = CommunityStructure.RULE_FORMAT;
-				case CommunityStructure.GAMMA
-					prop_format = CommunityStructure.GAMMA_FORMAT;
-				case CommunityStructure.M0
-					prop_format = CommunityStructure.M0_FORMAT;
-				case CommunityStructure.LOUVAIN_OM
-					prop_format = CommunityStructure.LOUVAIN_OM_FORMAT;
-				case CommunityStructure.OM_TYPE
-					prop_format = CommunityStructure.OM_TYPE_FORMAT;
-				case CommunityStructure.QUALITY_FUNCTION
-					prop_format = CommunityStructure.QUALITY_FUNCTION_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			communitystructure_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5  11  12  14  5  16 };
+			prop_format = communitystructure_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -517,46 +511,9 @@ classdef CommunityStructure < Measure
 			
 			prop = CommunityStructure.getPropProp(pointer);
 			
-			switch prop
-				case CommunityStructure.RULE
-					prop_description = 'RULE (parameter, option)';
-				case CommunityStructure.GAMMA
-					prop_description = 'GAMMA (parameter, SCALAR) is the resolution parameter.';
-				case CommunityStructure.M0
-					prop_description = 'M0 (data, rvector) is the initial community affiliation vector.';
-				case CommunityStructure.LOUVAIN_OM
-					prop_description = 'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).';
-				case CommunityStructure.OM_TYPE
-					prop_description = 'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).';
-				case CommunityStructure.QUALITY_FUNCTION
-					prop_description = 'QUALITY_FUNCTION (metadata, CELL)';
-				case CommunityStructure.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Community Structure.';
-				case CommunityStructure.NAME
-					prop_description = 'NAME (constant, string) is the name of the Community Structure.';
-				case CommunityStructure.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Community Structure.';
-				case CommunityStructure.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Community Structure.';
-				case CommunityStructure.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Community Structure.';
-				case CommunityStructure.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the community structure.';
-				case CommunityStructure.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Community Structure.';
-				case CommunityStructure.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case CommunityStructure.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case CommunityStructure.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case CommunityStructure.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case CommunityStructure.M
-					prop_description = 'M (result, cell) is the Community Structure.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			communitystructure_description_list = { 'ELCLASS (constant, string) is the class of the Community Structure.'  'NAME (constant, string) is the name of the Community Structure.'  'DESCRIPTION (constant, string) is the description of the Community Structure.'  'TEMPLATE (parameter, item) is the template of the Community Structure.'  'ID (data, string) is a few-letter code of the Community Structure.'  'LABEL (metadata, string) is an extended label of the community structure.'  'NOTES (metadata, string) are some specific notes about the Community Structure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Community Structure.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, option)'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'M0 (data, rvector) is the initial community affiliation vector.'  'LOUVAIN_OM (data, MATRIX) is the custom objective matrix (Louvain).'  'OM_TYPE (data, OPTION) is the objective-function type algorithm (Louvain).'  'QUALITY_FUNCTION (metadata, CELL)' };
+			prop_description = communitystructure_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -580,20 +537,20 @@ classdef CommunityStructure < Measure
 			
 			prop = CommunityStructure.getPropProp(pointer);
 			
-			switch prop
-				case CommunityStructure.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % CommunityStructure.RULE
 					prop_settings = { 'louvain' 'newman' 'fixed'};
-				case CommunityStructure.GAMMA
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case CommunityStructure.M0
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case CommunityStructure.LOUVAIN_OM
-					prop_settings = Format.getFormatSettings(Format.MATRIX);
-				case CommunityStructure.OM_TYPE
+				case 17 % CommunityStructure.GAMMA
+					prop_settings = Format.getFormatSettings(11);
+				case 18 % CommunityStructure.M0
+					prop_settings = Format.getFormatSettings(12);
+				case 19 % CommunityStructure.LOUVAIN_OM
+					prop_settings = Format.getFormatSettings(14);
+				case 20 % CommunityStructure.OM_TYPE
 					prop_settings = {'modularity' 'potts' 'negative_sym' 'negative_asym'};
-				case CommunityStructure.QUALITY_FUNCTION
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case CommunityStructure.TEMPLATE
+				case 21 % CommunityStructure.QUALITY_FUNCTION
+					prop_settings = Format.getFormatSettings(16);
+				case 4 % CommunityStructure.TEMPLATE
 					prop_settings = 'CommunityStructure';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -621,40 +578,40 @@ classdef CommunityStructure < Measure
 			
 			prop = CommunityStructure.getPropProp(pointer);
 			
-			switch prop
-				case CommunityStructure.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % CommunityStructure.RULE
 					prop_default = 'louvain';
-				case CommunityStructure.GAMMA
+				case 17 % CommunityStructure.GAMMA
 					prop_default = 1;
-				case CommunityStructure.M0
+				case 18 % CommunityStructure.M0
 					prop_default = [];
-				case CommunityStructure.LOUVAIN_OM
+				case 19 % CommunityStructure.LOUVAIN_OM
 					prop_default = [];
-				case CommunityStructure.OM_TYPE
+				case 20 % CommunityStructure.OM_TYPE
 					prop_default = 'modularity';
-				case CommunityStructure.QUALITY_FUNCTION
-					prop_default = Format.getFormatDefault(Format.CELL, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.ELCLASS
+				case 21 % CommunityStructure.QUALITY_FUNCTION
+					prop_default = Format.getFormatDefault(16, CommunityStructure.getPropSettings(prop));
+				case 1 % CommunityStructure.ELCLASS
 					prop_default = 'CommunityStructure';
-				case CommunityStructure.NAME
+				case 2 % CommunityStructure.NAME
 					prop_default = 'Community Structure';
-				case CommunityStructure.DESCRIPTION
+				case 3 % CommunityStructure.DESCRIPTION
 					prop_default = 'The Community Structure (CommunityStructure) of a graph is a subdivision of the network into non-overlapping groups of nodes which maximizes the number of within group edges, and minimizes the number of between group edges.';
-				case CommunityStructure.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.ID
+				case 4 % CommunityStructure.TEMPLATE
+					prop_default = Format.getFormatDefault(8, CommunityStructure.getPropSettings(prop));
+				case 5 % CommunityStructure.ID
 					prop_default = 'CommunityStructure ID';
-				case CommunityStructure.LABEL
+				case 6 % CommunityStructure.LABEL
 					prop_default = 'Community Structure label';
-				case CommunityStructure.NOTES
+				case 7 % CommunityStructure.NOTES
 					prop_default = 'Community Structure notes';
-				case CommunityStructure.SHAPE
-					prop_default = Measure.NODAL;
-				case CommunityStructure.SCOPE
-					prop_default = Measure.UNILAYER;
-				case CommunityStructure.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case CommunityStructure.COMPATIBLE_GRAPHS
+				case 9 % CommunityStructure.SHAPE
+					prop_default = 2;
+				case 10 % CommunityStructure.SCOPE
+					prop_default = 2;
+				case 11 % CommunityStructure.PARAMETRICITY
+					prop_default = 2;
+				case 12 % CommunityStructure.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT'} ;;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -701,15 +658,15 @@ classdef CommunityStructure < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:CommunityStructure:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:CommunityStructure:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:CommunityStructure:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CommunityStructure:WrongInput
 			%  Element.CHECKPROP(CommunityStructure, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CommunityStructure.
-			%   Error id: €BRAPH2.STR€:CommunityStructure:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CommunityStructure:WrongInput
 			%  M.CHECKPROP(CommunityStructure, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CommunityStructure.
-			%   Error id: €BRAPH2.STR€:CommunityStructure:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:CommunityStructure:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('CommunityStructure')
 			%  are less computationally efficient.
@@ -720,22 +677,22 @@ classdef CommunityStructure < Measure
 			prop = CommunityStructure.getPropProp(pointer);
 			
 			switch prop
-				case CommunityStructure.RULE % __CommunityStructure.RULE__
-					check = Format.checkFormat(Format.OPTION, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.GAMMA % __CommunityStructure.GAMMA__
-					check = Format.checkFormat(Format.SCALAR, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.M0 % __CommunityStructure.M0__
-					check = Format.checkFormat(Format.RVECTOR, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.LOUVAIN_OM % __CommunityStructure.LOUVAIN_OM__
-					check = Format.checkFormat(Format.MATRIX, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.OM_TYPE % __CommunityStructure.OM_TYPE__
-					check = Format.checkFormat(Format.OPTION, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.QUALITY_FUNCTION % __CommunityStructure.QUALITY_FUNCTION__
-					check = Format.checkFormat(Format.CELL, value, CommunityStructure.getPropSettings(prop));
-				case CommunityStructure.TEMPLATE % __CommunityStructure.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, CommunityStructure.getPropSettings(prop));
+				case 16 % CommunityStructure.RULE
+					check = Format.checkFormat(5, value, CommunityStructure.getPropSettings(prop));
+				case 17 % CommunityStructure.GAMMA
+					check = Format.checkFormat(11, value, CommunityStructure.getPropSettings(prop));
+				case 18 % CommunityStructure.M0
+					check = Format.checkFormat(12, value, CommunityStructure.getPropSettings(prop));
+				case 19 % CommunityStructure.LOUVAIN_OM
+					check = Format.checkFormat(14, value, CommunityStructure.getPropSettings(prop));
+				case 20 % CommunityStructure.OM_TYPE
+					check = Format.checkFormat(5, value, CommunityStructure.getPropSettings(prop));
+				case 21 % CommunityStructure.QUALITY_FUNCTION
+					check = Format.checkFormat(16, value, CommunityStructure.getPropSettings(prop));
+				case 4 % CommunityStructure.TEMPLATE
+					check = Format.checkFormat(8, value, CommunityStructure.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -744,8 +701,8 @@ classdef CommunityStructure < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
+					['BRAPH2' ':CommunityStructure:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' CommunityStructure.getPropTag(prop) ' (' CommunityStructure.getFormatTag(CommunityStructure.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -756,20 +713,20 @@ classdef CommunityStructure < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case CommunityStructure.M % __CommunityStructure.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(CommunityStructure.M), 'twister')
+				case 14 % CommunityStructure.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G');  % graph from measure class
 					A = g.get('A');
@@ -790,7 +747,7 @@ classdef CommunityStructure < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});
@@ -806,7 +763,7 @@ classdef CommunityStructure < Measure
 			        case {'fixed'}
 			            M0 = m.get('M0');
 			            assert(isequal(size(M0, 2), size(1:N, 2)), ...
-			                    [BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
+			                    ['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
 			                    ['M0 initial community affiliation vector must have the same length than the number of nodes' ...
 			                    '(' tostring(size(1:N, 2)) ') while its length is ' tostring(size(M0, 2))])
 			            community_structure = {M0'};
@@ -814,7 +771,7 @@ classdef CommunityStructure < Measure
 			
 			        case {'newman'}  % Newman algorithm
 			            directionality_type = g.get('DIRECTIONALITY_TYPE', g.get('LAYERNUMBER'));
-			            if directionality_type(1, 1) == Graph.UNDIRECTED  % directed graphs
+			            if directionality_type(1, 1) == 2  % directed graphs
 			                n_perm = randperm(N);  % randomly permute order of nodes
 			                A = A(n_perm, n_perm);  % DB: use permuted matrix for subsequent analysis
 			                Ki = sum(A, 1);  % in-degree
@@ -964,7 +921,7 @@ classdef CommunityStructure < Measure
 			                M0 = 1:N;
 			            else
 			                assert(isequal(size(M0, 2), size(1:N, 2)), ...
-			                    [BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
+			                    ['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
 			                    ['M0 initial community affiliation vector must have the same length than the number of nodes' ...
 			                    '(' tostring(size(1:N, 2)) ') while its length is ' tostring(size(M0, 2))])
 			            end
@@ -977,7 +934,7 @@ classdef CommunityStructure < Measure
 			                switch lower(type_OM)
 			                    case {'potts'}
 			                        assert(all(all(W == logical(W))), ...
-			                            [BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
+			                            ['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
 			                            ['Potts-model Hamiltonian requires a binary adjacency matrix' ...
 			                            'while it is ' tostring(W)])
 			                        OM =  W - gamma*(~W);
@@ -986,7 +943,7 @@ classdef CommunityStructure < Measure
 			                end
 			            else  % OM matrix exists
 			                assert(isequal(size(W), size(OM)), ...
-			                    [BRAPH2.STR ':CommunityStructure:' BRAPH2.WRONG_INPUT], ...
+			                    ['BRAPH2' ':CommunityStructure:' 'WrongInput'], ...
 			                    ['OM matrix must have the same size than the adjacency matrix' ...
 			                    '(' tostring(size(W)) ') while its size is ' tostring(size(OM))])
 			            end

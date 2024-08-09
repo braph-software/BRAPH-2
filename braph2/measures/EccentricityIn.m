@@ -5,6 +5,24 @@ classdef EccentricityIn < Measure
 	% The In-Eccentricity (EccentricityIn) of a node is the maximal shortest in-path length 
 	% between a node and any other node within a layer.
 	%
+	% The list of EccentricityIn properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Eccentricity.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Eccentricity.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Eccentricity.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Eccentricity.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Eccentricity.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Eccentricity.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Eccentricity.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Eccentricity.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
+	%
 	% EccentricityIn methods (constructor):
 	%  EccentricityIn - constructor
 	%
@@ -92,10 +110,10 @@ classdef EccentricityIn < Measure
 	%
 	
 	properties (Constant) % properties
-		RULE = Measure.getPropNumber() + 1;
+		RULE = 16; %CET: Computational Efficiency Trick
 		RULE_TAG = 'RULE';
-		RULE_CATEGORY = Category.PARAMETER;
-		RULE_FORMAT = Format.OPTION;
+		RULE_CATEGORY = 3;
+		RULE_FORMAT = 5;
 	end
 	methods % constructor
 		function m = EccentricityIn(varargin)
@@ -108,6 +126,23 @@ classdef EccentricityIn < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of EccentricityIn properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the In-Eccentricity.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the In-Eccentricity.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the In-Eccentricity.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the In-Eccentricity.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the In-Eccentricity.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the In-Eccentricity.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the In-Eccentricity.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the In-Eccentricity.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>RULE</strong> 	RULE (parameter, OPTION)  % calculation in a graph or its subgraph
 			%
 			% See also Category, Format.
 			
@@ -145,7 +180,7 @@ classdef EccentricityIn < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('EccentricityIn', [], [], true);
+			subclass_list = { 'EccentricityIn'  'EccentricityInAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of in-eccentricity.
@@ -166,52 +201,30 @@ classdef EccentricityIn < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						EccentricityIn.RULE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						EccentricityIn.RULE ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16];
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -232,7 +245,31 @@ classdef EccentricityIn < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(EccentricityIn.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 16;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 2;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in in-eccentricity/error.
@@ -260,14 +297,14 @@ classdef EccentricityIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == EccentricityIn.getProps());
+			check = prop >= 1 && prop <= 16 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput'], ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for EccentricityIn.'] ...
 					)
 			end
@@ -298,15 +335,14 @@ classdef EccentricityIn < Measure
 			%
 			% See also getProps, existsTag.
 			
-			eccentricityin_tag_list = cellfun(@(x) EccentricityIn.getPropTag(x), num2cell(EccentricityIn.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, eccentricityin_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput'], ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for EccentricityIn.'] ...
 					)
 			end
@@ -332,8 +368,7 @@ classdef EccentricityIn < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				eccentricityin_tag_list = cellfun(@(x) EccentricityIn.getPropTag(x), num2cell(EccentricityIn.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, eccentricityin_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -361,14 +396,9 @@ classdef EccentricityIn < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case EccentricityIn.RULE
-						tag = EccentricityIn.RULE_TAG;
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				eccentricityin_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'RULE' };
+				tag = eccentricityin_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -393,12 +423,9 @@ classdef EccentricityIn < Measure
 			
 			prop = EccentricityIn.getPropProp(pointer);
 			
-			switch prop
-				case EccentricityIn.RULE
-					prop_category = EccentricityIn.RULE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			eccentricityin_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3 };
+			prop_category = eccentricityin_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -422,12 +449,9 @@ classdef EccentricityIn < Measure
 			
 			prop = EccentricityIn.getPropProp(pointer);
 			
-			switch prop
-				case EccentricityIn.RULE
-					prop_format = EccentricityIn.RULE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			eccentricityin_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  5 };
+			prop_format = eccentricityin_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -451,36 +475,9 @@ classdef EccentricityIn < Measure
 			
 			prop = EccentricityIn.getPropProp(pointer);
 			
-			switch prop
-				case EccentricityIn.RULE
-					prop_description = 'RULE (parameter, OPTION)  % calculation in a graph or its subgraph';
-				case EccentricityIn.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the In-Eccentricity.';
-				case EccentricityIn.NAME
-					prop_description = 'NAME (constant, string) is the name of the In-Eccentricity.';
-				case EccentricityIn.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the In-Eccentricity.';
-				case EccentricityIn.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the In-Eccentricity.';
-				case EccentricityIn.ID
-					prop_description = 'ID (data, string) is a few-letter code of the In-Eccentricity.';
-				case EccentricityIn.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the In-Eccentricity.';
-				case EccentricityIn.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the In-Eccentricity.';
-				case EccentricityIn.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case EccentricityIn.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case EccentricityIn.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case EccentricityIn.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case EccentricityIn.M
-					prop_description = 'M (result, cell) is the In-Eccentricity.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			eccentricityin_description_list = { 'ELCLASS (constant, string) is the class of the In-Eccentricity.'  'NAME (constant, string) is the name of the In-Eccentricity.'  'DESCRIPTION (constant, string) is the description of the In-Eccentricity.'  'TEMPLATE (parameter, item) is the template of the In-Eccentricity.'  'ID (data, string) is a few-letter code of the In-Eccentricity.'  'LABEL (metadata, string) is an extended label of the In-Eccentricity.'  'NOTES (metadata, string) are some specific notes about the In-Eccentricity.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the In-Eccentricity.'  'PFM (gui, item) contains the panel figure of the measure.'  'RULE (parameter, OPTION)  % calculation in a graph or its subgraph' };
+			prop_description = eccentricityin_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -504,10 +501,10 @@ classdef EccentricityIn < Measure
 			
 			prop = EccentricityIn.getPropProp(pointer);
 			
-			switch prop
-				case EccentricityIn.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % EccentricityIn.RULE
 					prop_settings = {'all', 'subgraphs'};
-				case EccentricityIn.TEMPLATE
+				case 4 % EccentricityIn.TEMPLATE
 					prop_settings = 'EccentricityIn';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -535,30 +532,30 @@ classdef EccentricityIn < Measure
 			
 			prop = EccentricityIn.getPropProp(pointer);
 			
-			switch prop
-				case EccentricityIn.RULE
+			switch prop %CET: Computational Efficiency Trick
+				case 16 % EccentricityIn.RULE
 					prop_default = 'all';
-				case EccentricityIn.ELCLASS
+				case 1 % EccentricityIn.ELCLASS
 					prop_default = 'EccentricityIn';
-				case EccentricityIn.NAME
+				case 2 % EccentricityIn.NAME
 					prop_default = 'In-Eccentricity';
-				case EccentricityIn.DESCRIPTION
+				case 3 % EccentricityIn.DESCRIPTION
 					prop_default = 'The In-Eccentricity (EccentricityIn) of a node is the maximal shortest in-path length between a node and any other node within a layer.';
-				case EccentricityIn.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, EccentricityIn.getPropSettings(prop));
-				case EccentricityIn.ID
+				case 4 % EccentricityIn.TEMPLATE
+					prop_default = Format.getFormatDefault(8, EccentricityIn.getPropSettings(prop));
+				case 5 % EccentricityIn.ID
 					prop_default = 'EccentricityIn ID';
-				case EccentricityIn.LABEL
+				case 6 % EccentricityIn.LABEL
 					prop_default = 'In-Eccentricity label';
-				case EccentricityIn.NOTES
+				case 7 % EccentricityIn.NOTES
 					prop_default = 'In-Eccentricity notes';
-				case EccentricityIn.SHAPE
-					prop_default = Measure.NODAL;
-				case EccentricityIn.SCOPE
-					prop_default = Measure.UNILAYER;
-				case EccentricityIn.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case EccentricityIn.COMPATIBLE_GRAPHS
+				case 9 % EccentricityIn.SHAPE
+					prop_default = 2;
+				case 10 % EccentricityIn.SCOPE
+					prop_default = 2;
+				case 11 % EccentricityIn.PARAMETRICITY
+					prop_default = 2;
+				case 12 % EccentricityIn.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'} ;;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -605,15 +602,15 @@ classdef EccentricityIn < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:EccentricityIn:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:EccentricityIn:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:EccentricityIn:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:EccentricityIn:WrongInput
 			%  Element.CHECKPROP(EccentricityIn, PROP, VALUE) throws error if VALUE has not a valid format for PROP of EccentricityIn.
-			%   Error id: €BRAPH2.STR€:EccentricityIn:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:EccentricityIn:WrongInput
 			%  M.CHECKPROP(EccentricityIn, PROP, VALUE) throws error if VALUE has not a valid format for PROP of EccentricityIn.
-			%   Error id: €BRAPH2.STR€:EccentricityIn:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:EccentricityIn:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('EccentricityIn')
 			%  are less computationally efficient.
@@ -624,12 +621,12 @@ classdef EccentricityIn < Measure
 			prop = EccentricityIn.getPropProp(pointer);
 			
 			switch prop
-				case EccentricityIn.RULE % __EccentricityIn.RULE__
-					check = Format.checkFormat(Format.OPTION, value, EccentricityIn.getPropSettings(prop));
-				case EccentricityIn.TEMPLATE % __EccentricityIn.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, EccentricityIn.getPropSettings(prop));
+				case 16 % EccentricityIn.RULE
+					check = Format.checkFormat(5, value, EccentricityIn.getPropSettings(prop));
+				case 4 % EccentricityIn.TEMPLATE
+					check = Format.checkFormat(8, value, EccentricityIn.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -638,8 +635,8 @@ classdef EccentricityIn < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':EccentricityIn:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput'], ...
+					['BRAPH2' ':EccentricityIn:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' EccentricityIn.getPropTag(prop) ' (' EccentricityIn.getFormatTag(EccentricityIn.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -650,20 +647,20 @@ classdef EccentricityIn < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case EccentricityIn.M % __EccentricityIn.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(EccentricityIn.M), 'twister')
+				case 14 % EccentricityIn.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -687,7 +684,7 @@ classdef EccentricityIn < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

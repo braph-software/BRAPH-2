@@ -8,6 +8,20 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 	%  (SubjectCON_FUN_MP). The subject ids of the two groups must match.
 	% The brain atlas and variables of interest are copied from the SubjectCON group.
 	%
+	% The list of CombineGroups_CON_FUN_MP properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (data, item) is a group of subjects with connectivity data.
+	%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (data, item) is a group of subjects with functional data.
+	%  <strong>12</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.
+	%
 	% CombineGroups_CON_FUN_MP methods (constructor):
 	%  CombineGroups_CON_FUN_MP - constructor
 	%
@@ -97,25 +111,25 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 	% See also SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN.
 	
 	properties (Constant) % properties
-		WAITBAR = ConcreteElement.getPropNumber() + 1;
+		WAITBAR = 9; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = Category.METADATA;
-		WAITBAR_FORMAT = Format.LOGICAL;
+		WAITBAR_CATEGORY = 2;
+		WAITBAR_FORMAT = 4;
 		
-		GR_CON = ConcreteElement.getPropNumber() + 2;
+		GR_CON = 10; %CET: Computational Efficiency Trick
 		GR_CON_TAG = 'GR_CON';
-		GR_CON_CATEGORY = Category.DATA;
-		GR_CON_FORMAT = Format.ITEM;
+		GR_CON_CATEGORY = 4;
+		GR_CON_FORMAT = 8;
 		
-		GR_FUN = ConcreteElement.getPropNumber() + 3;
+		GR_FUN = 11; %CET: Computational Efficiency Trick
 		GR_FUN_TAG = 'GR_FUN';
-		GR_FUN_CATEGORY = Category.DATA;
-		GR_FUN_FORMAT = Format.ITEM;
+		GR_FUN_CATEGORY = 4;
+		GR_FUN_FORMAT = 8;
 		
-		GR_CON_FUN_MP = ConcreteElement.getPropNumber() + 4;
+		GR_CON_FUN_MP = 12; %CET: Computational Efficiency Trick
 		GR_CON_FUN_MP_TAG = 'GR_CON_FUN_MP';
-		GR_CON_FUN_MP_CATEGORY = Category.RESULT;
-		GR_CON_FUN_MP_FORMAT = Format.ITEM;
+		GR_CON_FUN_MP_CATEGORY = 5;
+		GR_CON_FUN_MP_FORMAT = 8;
 	end
 	methods % constructor
 		function co = CombineGroups_CON_FUN_MP(varargin)
@@ -128,6 +142,19 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of CombineGroups_CON_FUN_MP properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of CON and FUN subject groups.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (metadata, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>GR_CON</strong> 	GR_CON (data, item) is a group of subjects with connectivity data.
+			%  <strong>11</strong> <strong>GR_FUN</strong> 	GR_FUN (data, item) is a group of subjects with functional data.
+			%  <strong>12</strong> <strong>GR_CON_FUN_MP</strong> 	GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.
 			%
 			% See also Category, Format.
 			
@@ -165,7 +192,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('CombineGroups_CON_FUN_MP', [], [], true);
+			subclass_list = { 'CombineGroups_CON_FUN_MP' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of combiner of CON and FUN subject groups.
@@ -186,58 +213,28 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						CombineGroups_CON_FUN_MP.WAITBAR ...
-						CombineGroups_CON_FUN_MP.GR_CON ...
-						CombineGroups_CON_FUN_MP.GR_FUN ...
-						CombineGroups_CON_FUN_MP.GR_CON_FUN_MP ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						CombineGroups_CON_FUN_MP.WAITBAR ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						CombineGroups_CON_FUN_MP.GR_CON ...
-						CombineGroups_CON_FUN_MP.GR_FUN ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						CombineGroups_CON_FUN_MP.GR_CON_FUN_MP ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 9];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 10 11];
+				case 5 % Category.RESULT
+					prop_list = 12;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -258,7 +255,29 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(CombineGroups_CON_FUN_MP.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 12;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 3;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in combiner of CON and FUN subject groups/error.
@@ -286,14 +305,14 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == CombineGroups_CON_FUN_MP.getProps());
+			check = prop >= 1 && prop <= 12 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput'], ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for CombineGroups_CON_FUN_MP.'] ...
 					)
 			end
@@ -324,15 +343,14 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			combinegroups_con_fun_mp_tag_list = cellfun(@(x) CombineGroups_CON_FUN_MP.getPropTag(x), num2cell(CombineGroups_CON_FUN_MP.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, combinegroups_con_fun_mp_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON'  'GR_FUN'  'GR_CON_FUN_MP' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput'], ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for CombineGroups_CON_FUN_MP.'] ...
 					)
 			end
@@ -358,8 +376,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				combinegroups_con_fun_mp_tag_list = cellfun(@(x) CombineGroups_CON_FUN_MP.getPropTag(x), num2cell(CombineGroups_CON_FUN_MP.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, combinegroups_con_fun_mp_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON'  'GR_FUN'  'GR_CON_FUN_MP' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -387,20 +404,9 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case CombineGroups_CON_FUN_MP.WAITBAR
-						tag = CombineGroups_CON_FUN_MP.WAITBAR_TAG;
-					case CombineGroups_CON_FUN_MP.GR_CON
-						tag = CombineGroups_CON_FUN_MP.GR_CON_TAG;
-					case CombineGroups_CON_FUN_MP.GR_FUN
-						tag = CombineGroups_CON_FUN_MP.GR_FUN_TAG;
-					case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
-						tag = CombineGroups_CON_FUN_MP.GR_CON_FUN_MP_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				combinegroups_con_fun_mp_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'GR_CON'  'GR_FUN'  'GR_CON_FUN_MP' };
+				tag = combinegroups_con_fun_mp_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -425,18 +431,9 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
-			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR
-					prop_category = CombineGroups_CON_FUN_MP.WAITBAR_CATEGORY;
-				case CombineGroups_CON_FUN_MP.GR_CON
-					prop_category = CombineGroups_CON_FUN_MP.GR_CON_CATEGORY;
-				case CombineGroups_CON_FUN_MP.GR_FUN
-					prop_category = CombineGroups_CON_FUN_MP.GR_FUN_CATEGORY;
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
-					prop_category = CombineGroups_CON_FUN_MP.GR_CON_FUN_MP_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			combinegroups_con_fun_mp_category_list = { 1  1  1  3  4  2  2  6  2  4  4  5 };
+			prop_category = combinegroups_con_fun_mp_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -460,18 +457,9 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
-			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR
-					prop_format = CombineGroups_CON_FUN_MP.WAITBAR_FORMAT;
-				case CombineGroups_CON_FUN_MP.GR_CON
-					prop_format = CombineGroups_CON_FUN_MP.GR_CON_FORMAT;
-				case CombineGroups_CON_FUN_MP.GR_FUN
-					prop_format = CombineGroups_CON_FUN_MP.GR_FUN_FORMAT;
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
-					prop_format = CombineGroups_CON_FUN_MP.GR_CON_FUN_MP_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			combinegroups_con_fun_mp_format_list = { 2  2  2  8  2  2  2  2  4  8  8  8 };
+			prop_format = combinegroups_con_fun_mp_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -495,32 +483,9 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
-			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR
-					prop_description = 'WAITBAR (metadata, logical) detemines whether to show the waitbar.';
-				case CombineGroups_CON_FUN_MP.GR_CON
-					prop_description = 'GR_CON (data, item) is a group of subjects with connectivity data.';
-				case CombineGroups_CON_FUN_MP.GR_FUN
-					prop_description = 'GR_FUN (data, item) is a group of subjects with functional data.';
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
-					prop_description = 'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.';
-				case CombineGroups_CON_FUN_MP.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.NAME
-					prop_description = 'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.ID
-					prop_description = 'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.';
-				case CombineGroups_CON_FUN_MP.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			combinegroups_con_fun_mp_description_list = { 'ELCLASS (constant, string) is the class of the combiner of CON and FUN subject groups.'  'NAME (constant, string) is the name of the combiner of CON and FUN subject groups.'  'DESCRIPTION (constant, string) is the description of the combiner of CON and FUN subject groups.'  'TEMPLATE (parameter, item) is the template of the combiner of CON and FUN subject groups.'  'ID (data, string) is a few-letter code for the combiner of CON and FUN subject groups.'  'LABEL (metadata, string) is an extended label of the combiner of CON and FUN subject groups.'  'NOTES (metadata, string) are some specific notes about the combiner of CON and FUN subject groups.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (metadata, logical) detemines whether to show the waitbar.'  'GR_CON (data, item) is a group of subjects with connectivity data.'  'GR_FUN (data, item) is a group of subjects with functional data.'  'GR_CON_FUN_MP (result, item) is a group of subjects with connectivity and functional data.' };
+			prop_description = combinegroups_con_fun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -544,14 +509,14 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
-			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case CombineGroups_CON_FUN_MP.GR_CON
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % CombineGroups_CON_FUN_MP.WAITBAR
+					prop_settings = Format.getFormatSettings(4);
+				case 10 % CombineGroups_CON_FUN_MP.GR_CON
 					prop_settings = 'Group';
-				case CombineGroups_CON_FUN_MP.GR_FUN
+				case 11 % CombineGroups_CON_FUN_MP.GR_FUN
 					prop_settings = 'Group';
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
+				case 12 % CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
 					prop_settings = 'Group';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -579,26 +544,26 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
-			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR
-					prop_default = Format.getFormatDefault(Format.LOGICAL, CombineGroups_CON_FUN_MP.getPropSettings(prop));
-				case CombineGroups_CON_FUN_MP.GR_CON
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % CombineGroups_CON_FUN_MP.WAITBAR
+					prop_default = Format.getFormatDefault(4, CombineGroups_CON_FUN_MP.getPropSettings(prop));
+				case 10 % CombineGroups_CON_FUN_MP.GR_CON
 					prop_default = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));
-				case CombineGroups_CON_FUN_MP.GR_FUN
+				case 11 % CombineGroups_CON_FUN_MP.GR_FUN
 					prop_default = Group('SUB_CLASS', 'SubjectFUN', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectFUN'));
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
+				case 12 % CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
 					prop_default = Group('SUB_CLASS', 'SubjectCON_FUN_MP', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON_FUN_MP'));
-				case CombineGroups_CON_FUN_MP.ELCLASS
+				case 1 % CombineGroups_CON_FUN_MP.ELCLASS
 					prop_default = 'CombineGroups_CON_FUN_MP';
-				case CombineGroups_CON_FUN_MP.NAME
+				case 2 % CombineGroups_CON_FUN_MP.NAME
 					prop_default = 'Multiplex Connectivity-Functional Group Combiner';
-				case CombineGroups_CON_FUN_MP.DESCRIPTION
+				case 3 % CombineGroups_CON_FUN_MP.DESCRIPTION
 					prop_default = 'CombineGroups_CON_FUN_MP combines a group of subjects with connectivity data (SubjectCON) with a group of subjects with functional data (SubjectFUN) into a group of subjects with connectivity and functional data (SubjectCON_FUN_MP). The subject ids of the two groups must match. The brain atlas and variables of interest are copied from the SubjectCON group.';
-				case CombineGroups_CON_FUN_MP.ID
+				case 5 % CombineGroups_CON_FUN_MP.ID
 					prop_default = 'CombineGroups_CON_FUN_MP ID';
-				case CombineGroups_CON_FUN_MP.LABEL
+				case 6 % CombineGroups_CON_FUN_MP.LABEL
 					prop_default = 'CombineGroups_CON_FUN_MP label';
-				case CombineGroups_CON_FUN_MP.NOTES
+				case 7 % CombineGroups_CON_FUN_MP.NOTES
 					prop_default = 'CombineGroups_CON_FUN_MP notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -645,15 +610,15 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			% 
 			% CO.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:CombineGroups_CON_FUN_MP:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:CombineGroups_CON_FUN_MP:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  CO.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of CO.
-			%   Error id: €BRAPH2.STR€:CombineGroups_CON_FUN_MP:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CombineGroups_CON_FUN_MP:WrongInput
 			%  Element.CHECKPROP(CombineGroups_CON_FUN_MP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CombineGroups_CON_FUN_MP.
-			%   Error id: €BRAPH2.STR€:CombineGroups_CON_FUN_MP:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CombineGroups_CON_FUN_MP:WrongInput
 			%  CO.CHECKPROP(CombineGroups_CON_FUN_MP, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CombineGroups_CON_FUN_MP.
-			%   Error id: €BRAPH2.STR€:CombineGroups_CON_FUN_MP:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:CombineGroups_CON_FUN_MP:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(CO) and Element.CHECKPROP('CombineGroups_CON_FUN_MP')
 			%  are less computationally efficient.
@@ -664,22 +629,22 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			prop = CombineGroups_CON_FUN_MP.getPropProp(pointer);
 			
 			switch prop
-				case CombineGroups_CON_FUN_MP.WAITBAR % __CombineGroups_CON_FUN_MP.WAITBAR__
-					check = Format.checkFormat(Format.LOGICAL, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
-				case CombineGroups_CON_FUN_MP.GR_CON % __CombineGroups_CON_FUN_MP.GR_CON__
-					check = Format.checkFormat(Format.ITEM, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
+				case 9 % CombineGroups_CON_FUN_MP.WAITBAR
+					check = Format.checkFormat(4, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
+				case 10 % CombineGroups_CON_FUN_MP.GR_CON
+					check = Format.checkFormat(8, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
 					if check
 						check = any(strcmp(value.get('SUB_CLASS'), SubjectCON.getSubclasses()));
 					end
-				case CombineGroups_CON_FUN_MP.GR_FUN % __CombineGroups_CON_FUN_MP.GR_FUN__
-					check = Format.checkFormat(Format.ITEM, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
+				case 11 % CombineGroups_CON_FUN_MP.GR_FUN
+					check = Format.checkFormat(8, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
 					if check
 						check = any(strcmp(value.get('SUB_CLASS'), SubjectFUN.getSubclasses()));
 					end
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP % __CombineGroups_CON_FUN_MP.GR_CON_FUN_MP__
-					check = Format.checkFormat(Format.ITEM, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
+				case 12 % CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
+					check = Format.checkFormat(8, value, CombineGroups_CON_FUN_MP.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -688,8 +653,8 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CombineGroups_CON_FUN_MP:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput'], ...
+					['BRAPH2' ':CombineGroups_CON_FUN_MP:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' CombineGroups_CON_FUN_MP.getPropTag(prop) ' (' CombineGroups_CON_FUN_MP.getFormatTag(CombineGroups_CON_FUN_MP.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -700,20 +665,20 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP % __CombineGroups_CON_FUN_MP.GR_CON_FUN_MP__
-					rng_settings_ = rng(); rng(co.getPropSeed(CombineGroups_CON_FUN_MP.GR_CON_FUN_MP), 'twister')
+				case 12 % CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
+					rng_settings_ = rng(); rng(co.getPropSeed(12), 'twister')
 					
 					wb = braph2waitbar(co.get('WAITBAR'), 0, 'Combining subject groups ...');
 					
@@ -722,8 +687,8 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 					gr_FUN = co.get('GR_FUN');
 					if gr_CON.get('SUB_DICT').get('LENGTH') ~= gr_FUN.get('SUB_DICT').get('LENGTH')
 					    error( ...
-					        [BRAPH2.STR ':' class(co) ':' BRAPH2.WRONG_INPUT], ...
-					        [BRAPH2.STR ':' class(co) ':' BRAPH2.WRONG_INPUT '\n' ...
+					        ['BRAPH2' ':' class(co) ':' 'WrongInput'], ...
+					        ['BRAPH2' ':' class(co) ':' 'WrongInput' '\n' ...
 					        'The groups to be combined must have the same number of subjects, ', ...
 					        'while group CON has ' int2str(gr_CON.get('SUB_DICT').get('LENGTH')) ' subjects and group FUN has ' int2str(gr_FUN.get('SUB_DICT').get('LENGTH')) ' subjects.'] ...
 					        )   
@@ -767,7 +732,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						value = calculateValue@ConcreteElement(co, prop, varargin{:});
 					else
 						value = calculateValue@Element(co, prop, varargin{:});
@@ -792,11 +757,11 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 			msg = ['Error while checking ' tostring(co) ' ' co.getPropTag(prop) '.'];
 			
 			switch prop
-				case CombineGroups_CON_FUN_MP.GR_CON_FUN_MP % __CombineGroups_CON_FUN_MP.GR_CON_FUN_MP__
+				case 12 % CombineGroups_CON_FUN_MP.GR_CON_FUN_MP
 					check = any(strcmp(value.get('SUB_CLASS'), SubjectCON_FUN_MP.getSubclasses()));
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						[check, msg] = checkValue@ConcreteElement(co, prop, value);
 					end
 			end

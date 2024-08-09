@@ -6,6 +6,30 @@ classdef SettingsSymbol < Settings
 	% including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.
 	% The handle can be a line.
 	%
+	% The list of SettingsSymbol properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the symbol settings.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the symbol settings.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the symbol settings.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the symbol settings.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the symbol settings.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the symbol settings.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the symbol settings.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+	%  <strong>16</strong> <strong>X</strong> 	X (figure, scalar) is the x-coordinate.
+	%  <strong>17</strong> <strong>Y</strong> 	Y (figure, scalar) is the y-coordinate.
+	%  <strong>18</strong> <strong>Z</strong> 	Z (figure, scalar) is the z-coordinate.
+	%  <strong>19</strong> <strong>SYMBOL</strong> 	SYMBOL (figure, marker) is the symbol.
+	%  <strong>20</strong> <strong>SYMBOLSIZE</strong> 	SYMBOLSIZE (figure, size) is the symbol size.
+	%  <strong>21</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+	%  <strong>22</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
+	%
 	% SettingsSymbol methods (constructor):
 	%  SettingsSymbol - constructor
 	%
@@ -95,45 +119,45 @@ classdef SettingsSymbol < Settings
 	% See also line, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		VISIBLE = Settings.getPropNumber() + 1;
+		VISIBLE = 15; %CET: Computational Efficiency Trick
 		VISIBLE_TAG = 'VISIBLE';
-		VISIBLE_CATEGORY = Category.FIGURE;
-		VISIBLE_FORMAT = Format.LOGICAL;
+		VISIBLE_CATEGORY = 8;
+		VISIBLE_FORMAT = 4;
 		
-		X = Settings.getPropNumber() + 2;
+		X = 16; %CET: Computational Efficiency Trick
 		X_TAG = 'X';
-		X_CATEGORY = Category.FIGURE;
-		X_FORMAT = Format.SCALAR;
+		X_CATEGORY = 8;
+		X_FORMAT = 11;
 		
-		Y = Settings.getPropNumber() + 3;
+		Y = 17; %CET: Computational Efficiency Trick
 		Y_TAG = 'Y';
-		Y_CATEGORY = Category.FIGURE;
-		Y_FORMAT = Format.SCALAR;
+		Y_CATEGORY = 8;
+		Y_FORMAT = 11;
 		
-		Z = Settings.getPropNumber() + 4;
+		Z = 18; %CET: Computational Efficiency Trick
 		Z_TAG = 'Z';
-		Z_CATEGORY = Category.FIGURE;
-		Z_FORMAT = Format.SCALAR;
+		Z_CATEGORY = 8;
+		Z_FORMAT = 11;
 		
-		SYMBOL = Settings.getPropNumber() + 5;
+		SYMBOL = 19; %CET: Computational Efficiency Trick
 		SYMBOL_TAG = 'SYMBOL';
-		SYMBOL_CATEGORY = Category.FIGURE;
-		SYMBOL_FORMAT = Format.MARKER;
+		SYMBOL_CATEGORY = 8;
+		SYMBOL_FORMAT = 23;
 		
-		SYMBOLSIZE = Settings.getPropNumber() + 6;
+		SYMBOLSIZE = 20; %CET: Computational Efficiency Trick
 		SYMBOLSIZE_TAG = 'SYMBOLSIZE';
-		SYMBOLSIZE_CATEGORY = Category.FIGURE;
-		SYMBOLSIZE_FORMAT = Format.SIZE;
+		SYMBOLSIZE_CATEGORY = 8;
+		SYMBOLSIZE_FORMAT = 22;
 		
-		EDGECOLOR = Settings.getPropNumber() + 7;
+		EDGECOLOR = 21; %CET: Computational Efficiency Trick
 		EDGECOLOR_TAG = 'EDGECOLOR';
-		EDGECOLOR_CATEGORY = Category.FIGURE;
-		EDGECOLOR_FORMAT = Format.COLOR;
+		EDGECOLOR_CATEGORY = 8;
+		EDGECOLOR_FORMAT = 20;
 		
-		FACECOLOR = Settings.getPropNumber() + 8;
+		FACECOLOR = 22; %CET: Computational Efficiency Trick
 		FACECOLOR_TAG = 'FACECOLOR';
-		FACECOLOR_CATEGORY = Category.FIGURE;
-		FACECOLOR_FORMAT = Format.COLOR;
+		FACECOLOR_CATEGORY = 8;
+		FACECOLOR_FORMAT = 20;
 	end
 	methods % constructor
 		function st = SettingsSymbol(varargin)
@@ -146,6 +170,29 @@ classdef SettingsSymbol < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SettingsSymbol properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the symbol settings.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the symbol settings.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the symbol settings.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the symbol settings.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the symbol settings.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the symbol settings.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the symbol settings.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>15</strong> <strong>VISIBLE</strong> 	VISIBLE (figure, logical) determines whether the symbol is visible.
+			%  <strong>16</strong> <strong>X</strong> 	X (figure, scalar) is the x-coordinate.
+			%  <strong>17</strong> <strong>Y</strong> 	Y (figure, scalar) is the y-coordinate.
+			%  <strong>18</strong> <strong>Z</strong> 	Z (figure, scalar) is the z-coordinate.
+			%  <strong>19</strong> <strong>SYMBOL</strong> 	SYMBOL (figure, marker) is the symbol.
+			%  <strong>20</strong> <strong>SYMBOLSIZE</strong> 	SYMBOLSIZE (figure, size) is the symbol size.
+			%  <strong>21</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the symbol RGB edge color.
+			%  <strong>22</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the symbol RGB face color.
 			%
 			% See also Category, Format.
 			
@@ -183,7 +230,7 @@ classdef SettingsSymbol < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SettingsSymbol', [], [], true);
+			subclass_list = { 'SettingsSymbol' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of symbol settings.
@@ -204,66 +251,30 @@ classdef SettingsSymbol < Settings
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Settings.getProps() ...
-						SettingsSymbol.VISIBLE ...
-						SettingsSymbol.X ...
-						SettingsSymbol.Y ...
-						SettingsSymbol.Z ...
-						SettingsSymbol.SYMBOL ...
-						SettingsSymbol.SYMBOLSIZE ...
-						SettingsSymbol.EDGECOLOR ...
-						SettingsSymbol.FACECOLOR ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Settings.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Settings.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Settings.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Settings.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Settings.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Settings.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Settings.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Settings.getProps(Category.FIGURE) ...
-						SettingsSymbol.VISIBLE ...
-						SettingsSymbol.X ...
-						SettingsSymbol.Y ...
-						SettingsSymbol.Z ...
-						SettingsSymbol.SYMBOL ...
-						SettingsSymbol.SYMBOLSIZE ...
-						SettingsSymbol.EDGECOLOR ...
-						SettingsSymbol.FACECOLOR ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Settings.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 13 14];
+				case 8 % Category.FIGURE
+					prop_list = [15 16 17 18 19 20 21 22];
+				case 9 % Category.GUI
+					prop_list = [9 10 11 12];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -284,7 +295,31 @@ classdef SettingsSymbol < Settings
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SettingsSymbol.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 22;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 3;
+				case 8 % Category.FIGURE
+					prop_number = 8;
+				case 9 % Category.GUI
+					prop_number = 4;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in symbol settings/error.
@@ -312,14 +347,14 @@ classdef SettingsSymbol < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SettingsSymbol.getProps());
+			check = prop >= 1 && prop <= 22 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsSymbol.'] ...
 					)
 			end
@@ -350,15 +385,14 @@ classdef SettingsSymbol < Settings
 			%
 			% See also getProps, existsTag.
 			
-			settingssymbol_tag_list = cellfun(@(x) SettingsSymbol.getPropTag(x), num2cell(SettingsSymbol.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, settingssymbol_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsSymbol.'] ...
 					)
 			end
@@ -384,8 +418,7 @@ classdef SettingsSymbol < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				settingssymbol_tag_list = cellfun(@(x) SettingsSymbol.getPropTag(x), num2cell(SettingsSymbol.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, settingssymbol_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -413,28 +446,9 @@ classdef SettingsSymbol < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SettingsSymbol.VISIBLE
-						tag = SettingsSymbol.VISIBLE_TAG;
-					case SettingsSymbol.X
-						tag = SettingsSymbol.X_TAG;
-					case SettingsSymbol.Y
-						tag = SettingsSymbol.Y_TAG;
-					case SettingsSymbol.Z
-						tag = SettingsSymbol.Z_TAG;
-					case SettingsSymbol.SYMBOL
-						tag = SettingsSymbol.SYMBOL_TAG;
-					case SettingsSymbol.SYMBOLSIZE
-						tag = SettingsSymbol.SYMBOLSIZE_TAG;
-					case SettingsSymbol.EDGECOLOR
-						tag = SettingsSymbol.EDGECOLOR_TAG;
-					case SettingsSymbol.FACECOLOR
-						tag = SettingsSymbol.FACECOLOR_TAG;
-					otherwise
-						tag = getPropTag@Settings(prop);
-				end
+				%CET: Computational Efficiency Trick
+				settingssymbol_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'VISIBLE'  'X'  'Y'  'Z'  'SYMBOL'  'SYMBOLSIZE'  'EDGECOLOR'  'FACECOLOR' };
+				tag = settingssymbol_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -459,26 +473,9 @@ classdef SettingsSymbol < Settings
 			
 			prop = SettingsSymbol.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSymbol.VISIBLE
-					prop_category = SettingsSymbol.VISIBLE_CATEGORY;
-				case SettingsSymbol.X
-					prop_category = SettingsSymbol.X_CATEGORY;
-				case SettingsSymbol.Y
-					prop_category = SettingsSymbol.Y_CATEGORY;
-				case SettingsSymbol.Z
-					prop_category = SettingsSymbol.Z_CATEGORY;
-				case SettingsSymbol.SYMBOL
-					prop_category = SettingsSymbol.SYMBOL_CATEGORY;
-				case SettingsSymbol.SYMBOLSIZE
-					prop_category = SettingsSymbol.SYMBOLSIZE_CATEGORY;
-				case SettingsSymbol.EDGECOLOR
-					prop_category = SettingsSymbol.EDGECOLOR_CATEGORY;
-				case SettingsSymbol.FACECOLOR
-					prop_category = SettingsSymbol.FACECOLOR_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssymbol_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8  8  8  8  8 };
+			prop_category = settingssymbol_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -502,26 +499,9 @@ classdef SettingsSymbol < Settings
 			
 			prop = SettingsSymbol.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSymbol.VISIBLE
-					prop_format = SettingsSymbol.VISIBLE_FORMAT;
-				case SettingsSymbol.X
-					prop_format = SettingsSymbol.X_FORMAT;
-				case SettingsSymbol.Y
-					prop_format = SettingsSymbol.Y_FORMAT;
-				case SettingsSymbol.Z
-					prop_format = SettingsSymbol.Z_FORMAT;
-				case SettingsSymbol.SYMBOL
-					prop_format = SettingsSymbol.SYMBOL_FORMAT;
-				case SettingsSymbol.SYMBOLSIZE
-					prop_format = SettingsSymbol.SYMBOLSIZE_FORMAT;
-				case SettingsSymbol.EDGECOLOR
-					prop_format = SettingsSymbol.EDGECOLOR_FORMAT;
-				case SettingsSymbol.FACECOLOR
-					prop_format = SettingsSymbol.FACECOLOR_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssymbol_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  4  11  11  11  23  22  20  20 };
+			prop_format = settingssymbol_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -545,40 +525,9 @@ classdef SettingsSymbol < Settings
 			
 			prop = SettingsSymbol.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSymbol.VISIBLE
-					prop_description = 'VISIBLE (figure, logical) determines whether the symbol is visible.';
-				case SettingsSymbol.X
-					prop_description = 'X (figure, scalar) is the x-coordinate.';
-				case SettingsSymbol.Y
-					prop_description = 'Y (figure, scalar) is the y-coordinate.';
-				case SettingsSymbol.Z
-					prop_description = 'Z (figure, scalar) is the z-coordinate.';
-				case SettingsSymbol.SYMBOL
-					prop_description = 'SYMBOL (figure, marker) is the symbol.';
-				case SettingsSymbol.SYMBOLSIZE
-					prop_description = 'SYMBOLSIZE (figure, size) is the symbol size.';
-				case SettingsSymbol.EDGECOLOR
-					prop_description = 'EDGECOLOR (figure, color) is the symbol RGB edge color.';
-				case SettingsSymbol.FACECOLOR
-					prop_description = 'FACECOLOR (figure, color) is the symbol RGB face color.';
-				case SettingsSymbol.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the symbol settings.';
-				case SettingsSymbol.NAME
-					prop_description = 'NAME (constant, string) is the name of the symbol settings.';
-				case SettingsSymbol.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the symbol settings.';
-				case SettingsSymbol.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the symbol settings.';
-				case SettingsSymbol.ID
-					prop_description = 'ID (data, string) is a few-letter code for the symbol settings.';
-				case SettingsSymbol.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the symbol settings.';
-				case SettingsSymbol.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the symbol settings.';
-				otherwise
-					prop_description = getPropDescription@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssymbol_description_list = { 'ELCLASS (constant, string) is the class of the symbol settings.'  'NAME (constant, string) is the name of the symbol settings.'  'DESCRIPTION (constant, string) is the description of the symbol settings.'  'TEMPLATE (parameter, item) is the template of the symbol settings.'  'ID (data, string) is a few-letter code for the symbol settings.'  'LABEL (metadata, string) is an extended label of the symbol settings.'  'NOTES (metadata, string) are some specific notes about the symbol settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'VISIBLE (figure, logical) determines whether the symbol is visible.'  'X (figure, scalar) is the x-coordinate.'  'Y (figure, scalar) is the y-coordinate.'  'Z (figure, scalar) is the z-coordinate.'  'SYMBOL (figure, marker) is the symbol.'  'SYMBOLSIZE (figure, size) is the symbol size.'  'EDGECOLOR (figure, color) is the symbol RGB edge color.'  'FACECOLOR (figure, color) is the symbol RGB face color.' };
+			prop_description = settingssymbol_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -602,24 +551,24 @@ classdef SettingsSymbol < Settings
 			
 			prop = SettingsSymbol.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSymbol.VISIBLE
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case SettingsSymbol.X
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case SettingsSymbol.Y
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case SettingsSymbol.Z
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case SettingsSymbol.SYMBOL
-					prop_settings = Format.getFormatSettings(Format.MARKER);
-				case SettingsSymbol.SYMBOLSIZE
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case SettingsSymbol.EDGECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsSymbol.FACECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsSymbol.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsSymbol.VISIBLE
+					prop_settings = Format.getFormatSettings(4);
+				case 16 % SettingsSymbol.X
+					prop_settings = Format.getFormatSettings(11);
+				case 17 % SettingsSymbol.Y
+					prop_settings = Format.getFormatSettings(11);
+				case 18 % SettingsSymbol.Z
+					prop_settings = Format.getFormatSettings(11);
+				case 19 % SettingsSymbol.SYMBOL
+					prop_settings = Format.getFormatSettings(23);
+				case 20 % SettingsSymbol.SYMBOLSIZE
+					prop_settings = Format.getFormatSettings(22);
+				case 21 % SettingsSymbol.EDGECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 22 % SettingsSymbol.FACECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 4 % SettingsSymbol.TEMPLATE
 					prop_settings = 'SettingsSymbol';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -647,36 +596,36 @@ classdef SettingsSymbol < Settings
 			
 			prop = SettingsSymbol.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSymbol.VISIBLE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsSymbol.VISIBLE
 					prop_default = false;
-				case SettingsSymbol.X
-					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.Y
-					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.Z
-					prop_default = Format.getFormatDefault(Format.SCALAR, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.SYMBOL
-					prop_default = Format.getFormatDefault(Format.MARKER, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.SYMBOLSIZE
+				case 16 % SettingsSymbol.X
+					prop_default = Format.getFormatDefault(11, SettingsSymbol.getPropSettings(prop));
+				case 17 % SettingsSymbol.Y
+					prop_default = Format.getFormatDefault(11, SettingsSymbol.getPropSettings(prop));
+				case 18 % SettingsSymbol.Z
+					prop_default = Format.getFormatDefault(11, SettingsSymbol.getPropSettings(prop));
+				case 19 % SettingsSymbol.SYMBOL
+					prop_default = Format.getFormatDefault(23, SettingsSymbol.getPropSettings(prop));
+				case 20 % SettingsSymbol.SYMBOLSIZE
 					prop_default = 10;
-				case SettingsSymbol.EDGECOLOR
+				case 21 % SettingsSymbol.EDGECOLOR
 					prop_default = [0 0 0];
-				case SettingsSymbol.FACECOLOR
-					prop_default = BRAPH2.COL;
-				case SettingsSymbol.ELCLASS
+				case 22 % SettingsSymbol.FACECOLOR
+					prop_default = [0.9 0.4 0.1];
+				case 1 % SettingsSymbol.ELCLASS
 					prop_default = 'SettingsSymbol';
-				case SettingsSymbol.NAME
+				case 2 % SettingsSymbol.NAME
 					prop_default = 'Symbol Settings';
-				case SettingsSymbol.DESCRIPTION
+				case 3 % SettingsSymbol.DESCRIPTION
 					prop_default = 'A Symbol Settings (SettingsSymbol) provides the settings for a symbol, including visibility, x, y, z, symbol marker, symbol size, face color, and edge color.';
-				case SettingsSymbol.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.ID
+				case 4 % SettingsSymbol.TEMPLATE
+					prop_default = Format.getFormatDefault(8, SettingsSymbol.getPropSettings(prop));
+				case 5 % SettingsSymbol.ID
 					prop_default = 'SettingsSymbol ID';
-				case SettingsSymbol.LABEL
+				case 6 % SettingsSymbol.LABEL
 					prop_default = 'SettingsSymbol label';
-				case SettingsSymbol.NOTES
+				case 7 % SettingsSymbol.NOTES
 					prop_default = 'SettingsSymbol notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -723,15 +672,15 @@ classdef SettingsSymbol < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SettingsSymbol:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SettingsSymbol:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: €BRAPH2.STR€:SettingsSymbol:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsSymbol:WrongInput
 			%  Element.CHECKPROP(SettingsSymbol, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSymbol.
-			%   Error id: €BRAPH2.STR€:SettingsSymbol:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsSymbol:WrongInput
 			%  ST.CHECKPROP(SettingsSymbol, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSymbol.
-			%   Error id: €BRAPH2.STR€:SettingsSymbol:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SettingsSymbol:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsSymbol')
 			%  are less computationally efficient.
@@ -742,26 +691,26 @@ classdef SettingsSymbol < Settings
 			prop = SettingsSymbol.getPropProp(pointer);
 			
 			switch prop
-				case SettingsSymbol.VISIBLE % __SettingsSymbol.VISIBLE__
-					check = Format.checkFormat(Format.LOGICAL, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.X % __SettingsSymbol.X__
-					check = Format.checkFormat(Format.SCALAR, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.Y % __SettingsSymbol.Y__
-					check = Format.checkFormat(Format.SCALAR, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.Z % __SettingsSymbol.Z__
-					check = Format.checkFormat(Format.SCALAR, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.SYMBOL % __SettingsSymbol.SYMBOL__
-					check = Format.checkFormat(Format.MARKER, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.SYMBOLSIZE % __SettingsSymbol.SYMBOLSIZE__
-					check = Format.checkFormat(Format.SIZE, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.EDGECOLOR % __SettingsSymbol.EDGECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.FACECOLOR % __SettingsSymbol.FACECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsSymbol.getPropSettings(prop));
-				case SettingsSymbol.TEMPLATE % __SettingsSymbol.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, SettingsSymbol.getPropSettings(prop));
+				case 15 % SettingsSymbol.VISIBLE
+					check = Format.checkFormat(4, value, SettingsSymbol.getPropSettings(prop));
+				case 16 % SettingsSymbol.X
+					check = Format.checkFormat(11, value, SettingsSymbol.getPropSettings(prop));
+				case 17 % SettingsSymbol.Y
+					check = Format.checkFormat(11, value, SettingsSymbol.getPropSettings(prop));
+				case 18 % SettingsSymbol.Z
+					check = Format.checkFormat(11, value, SettingsSymbol.getPropSettings(prop));
+				case 19 % SettingsSymbol.SYMBOL
+					check = Format.checkFormat(23, value, SettingsSymbol.getPropSettings(prop));
+				case 20 % SettingsSymbol.SYMBOLSIZE
+					check = Format.checkFormat(22, value, SettingsSymbol.getPropSettings(prop));
+				case 21 % SettingsSymbol.EDGECOLOR
+					check = Format.checkFormat(20, value, SettingsSymbol.getPropSettings(prop));
+				case 22 % SettingsSymbol.FACECOLOR
+					check = Format.checkFormat(20, value, SettingsSymbol.getPropSettings(prop));
+				case 4 % SettingsSymbol.TEMPLATE
+					check = Format.checkFormat(8, value, SettingsSymbol.getPropSettings(prop));
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -770,8 +719,8 @@ classdef SettingsSymbol < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSymbol:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSymbol:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsSymbol.getPropTag(prop) ' (' SettingsSymbol.getFormatTag(SettingsSymbol.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -791,7 +740,7 @@ classdef SettingsSymbol < Settings
 			%  checkValue.
 			
 			switch prop
-				case SettingsSymbol.VISIBLE % __SettingsSymbol.VISIBLE__
+				case 15 % SettingsSymbol.VISIBLE
 					h = st.get('H');
 					if check_graphics(h, 'line') && ( ...
 					        get(h, 'Visible') ~= st.get('VISIBLE') || ...
@@ -820,7 +769,7 @@ classdef SettingsSymbol < Settings
 					end
 					
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						postprocessing@Settings(st, prop);
 					end
 			end

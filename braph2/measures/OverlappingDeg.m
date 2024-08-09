@@ -5,6 +5,23 @@ classdef OverlappingDeg < Degree
 	% The Overlapping Degree (OverlappingDeg) of a graph is the sum of the 
 	%  degrees of a node in all layers.
 	%
+	% The list of OverlappingDeg properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Degree.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Degree.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%
 	% OverlappingDeg methods (constructor):
 	%  OverlappingDeg - constructor
 	%
@@ -102,6 +119,22 @@ classdef OverlappingDeg < Degree
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of OverlappingDeg properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Overlapping Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Overlapping Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Overlapping Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Overlapping Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Overlapping Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Overlapping Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Overlapping Degree.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Overlapping Degree.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -139,7 +172,7 @@ classdef OverlappingDeg < Degree
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('OverlappingDeg', [], [], true);
+			subclass_list = { 'OverlappingDeg'  'OverlappingDegAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of ovrlapdeg.
@@ -160,50 +193,30 @@ classdef OverlappingDeg < Degree
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Degree.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Degree.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Degree.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Degree.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Degree.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Degree.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Degree.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Degree.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Degree.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Degree.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -224,7 +237,31 @@ classdef OverlappingDeg < Degree
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(OverlappingDeg.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 15;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in ovrlapdeg/error.
@@ -252,14 +289,14 @@ classdef OverlappingDeg < Degree
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == OverlappingDeg.getProps());
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput'], ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for OverlappingDeg.'] ...
 					)
 			end
@@ -290,15 +327,14 @@ classdef OverlappingDeg < Degree
 			%
 			% See also getProps, existsTag.
 			
-			overlappingdeg_tag_list = cellfun(@(x) OverlappingDeg.getPropTag(x), num2cell(OverlappingDeg.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, overlappingdeg_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput'], ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for OverlappingDeg.'] ...
 					)
 			end
@@ -324,8 +360,7 @@ classdef OverlappingDeg < Degree
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				overlappingdeg_tag_list = cellfun(@(x) OverlappingDeg.getPropTag(x), num2cell(OverlappingDeg.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, overlappingdeg_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -353,12 +388,9 @@ classdef OverlappingDeg < Degree
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@Degree(prop);
-				end
+				%CET: Computational Efficiency Trick
+				overlappingdeg_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				tag = overlappingdeg_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -383,10 +415,9 @@ classdef OverlappingDeg < Degree
 			
 			prop = OverlappingDeg.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@Degree(prop);
-			end
+			%CET: Computational Efficiency Trick
+			overlappingdeg_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			prop_category = overlappingdeg_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -410,10 +441,9 @@ classdef OverlappingDeg < Degree
 			
 			prop = OverlappingDeg.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@Degree(prop);
-			end
+			%CET: Computational Efficiency Trick
+			overlappingdeg_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			prop_format = overlappingdeg_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -437,34 +467,9 @@ classdef OverlappingDeg < Degree
 			
 			prop = OverlappingDeg.getPropProp(pointer);
 			
-			switch prop
-				case OverlappingDeg.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Overlapping Degree.';
-				case OverlappingDeg.NAME
-					prop_description = 'NAME (constant, string) is the name of the Overlapping Degree.';
-				case OverlappingDeg.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Overlapping Degree.';
-				case OverlappingDeg.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Overlapping Degree.';
-				case OverlappingDeg.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Overlapping Degree.';
-				case OverlappingDeg.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Overlapping Degree.';
-				case OverlappingDeg.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Overlapping Degree.';
-				case OverlappingDeg.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case OverlappingDeg.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case OverlappingDeg.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case OverlappingDeg.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case OverlappingDeg.M
-					prop_description = 'M (result, cell) is the Overlapping Degree.';
-				otherwise
-					prop_description = getPropDescription@Degree(prop);
-			end
+			%CET: Computational Efficiency Trick
+			overlappingdeg_description_list = { 'ELCLASS (constant, string) is the class of the Overlapping Degree.'  'NAME (constant, string) is the name of the Overlapping Degree.'  'DESCRIPTION (constant, string) is the description of the Overlapping Degree.'  'TEMPLATE (parameter, item) is the template of the Overlapping Degree.'  'ID (data, string) is a few-letter code of the Overlapping Degree.'  'LABEL (metadata, string) is an extended label of the Overlapping Degree.'  'NOTES (metadata, string) are some specific notes about the Overlapping Degree.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Overlapping Degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			prop_description = overlappingdeg_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -488,8 +493,8 @@ classdef OverlappingDeg < Degree
 			
 			prop = OverlappingDeg.getPropProp(pointer);
 			
-			switch prop
-				case OverlappingDeg.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % OverlappingDeg.TEMPLATE
 					prop_settings = 'OverlappingDeg';
 				otherwise
 					prop_settings = getPropSettings@Degree(prop);
@@ -517,28 +522,28 @@ classdef OverlappingDeg < Degree
 			
 			prop = OverlappingDeg.getPropProp(pointer);
 			
-			switch prop
-				case OverlappingDeg.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % OverlappingDeg.ELCLASS
 					prop_default = 'OverlappingDeg';
-				case OverlappingDeg.NAME
+				case 2 % OverlappingDeg.NAME
 					prop_default = 'Overlapping Degree';
-				case OverlappingDeg.DESCRIPTION
+				case 3 % OverlappingDeg.DESCRIPTION
 					prop_default = 'The Overlapping Degree (OverlappingDeg) of a graph is the sum of the degrees of a node in all layers.';
-				case OverlappingDeg.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, OverlappingDeg.getPropSettings(prop));
-				case OverlappingDeg.ID
+				case 4 % OverlappingDeg.TEMPLATE
+					prop_default = Format.getFormatDefault(8, OverlappingDeg.getPropSettings(prop));
+				case 5 % OverlappingDeg.ID
 					prop_default = 'OverlappingDeg ID';
-				case OverlappingDeg.LABEL
+				case 6 % OverlappingDeg.LABEL
 					prop_default = 'Overlapping Degree label';
-				case OverlappingDeg.NOTES
+				case 7 % OverlappingDeg.NOTES
 					prop_default = 'Overlapping Degree notes';
-				case OverlappingDeg.SHAPE
-					prop_default = Measure.NODAL;
-				case OverlappingDeg.SCOPE
-					prop_default = Measure.SUPERGLOBAL;
-				case OverlappingDeg.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case OverlappingDeg.COMPATIBLE_GRAPHS
+				case 9 % OverlappingDeg.SHAPE
+					prop_default = 2;
+				case 10 % OverlappingDeg.SCOPE
+					prop_default = 1;
+				case 11 % OverlappingDeg.PARAMETRICITY
+					prop_default = 2;
+				case 12 % OverlappingDeg.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'MultilayerWU' 'OrdMlWU' 'MultilayerBU'};;
 				otherwise
 					prop_default = getPropDefault@Degree(prop);
@@ -585,15 +590,15 @@ classdef OverlappingDeg < Degree
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:OverlappingDeg:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:OverlappingDeg:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:OverlappingDeg:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OverlappingDeg:WrongInput
 			%  Element.CHECKPROP(OverlappingDeg, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OverlappingDeg.
-			%   Error id: €BRAPH2.STR€:OverlappingDeg:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:OverlappingDeg:WrongInput
 			%  M.CHECKPROP(OverlappingDeg, PROP, VALUE) throws error if VALUE has not a valid format for PROP of OverlappingDeg.
-			%   Error id: €BRAPH2.STR€:OverlappingDeg:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:OverlappingDeg:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('OverlappingDeg')
 			%  are less computationally efficient.
@@ -604,10 +609,10 @@ classdef OverlappingDeg < Degree
 			prop = OverlappingDeg.getPropProp(pointer);
 			
 			switch prop
-				case OverlappingDeg.TEMPLATE % __OverlappingDeg.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, OverlappingDeg.getPropSettings(prop));
+				case 4 % OverlappingDeg.TEMPLATE
+					check = Format.checkFormat(8, value, OverlappingDeg.getPropSettings(prop));
 				otherwise
-					if prop <= Degree.getPropNumber()
+					if prop <= 15
 						check = checkProp@Degree(prop, value);
 					end
 			end
@@ -616,8 +621,8 @@ classdef OverlappingDeg < Degree
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':OverlappingDeg:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput'], ...
+					['BRAPH2' ':OverlappingDeg:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' OverlappingDeg.getPropTag(prop) ' (' OverlappingDeg.getFormatTag(OverlappingDeg.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -628,20 +633,20 @@ classdef OverlappingDeg < Degree
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case OverlappingDeg.M % __OverlappingDeg.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(OverlappingDeg.M), 'twister')
+				case 14 % OverlappingDeg.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -674,7 +679,7 @@ classdef OverlappingDeg < Degree
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Degree.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Degree(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

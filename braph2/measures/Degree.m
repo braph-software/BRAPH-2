@@ -5,6 +5,23 @@ classdef Degree < Measure
 	% The Degree (Degree) of a node is the number of edges connected to the node within a layer. 
 	%  Connection weights are ignored in calculations.
 	%
+	% The list of Degree properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Degree.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Degree.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Degree.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Degree.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Degree.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Degree.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Degree.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Degree.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%
 	% Degree methods (constructor):
 	%  Degree - constructor
 	%
@@ -102,6 +119,22 @@ classdef Degree < Measure
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of Degree properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Degree.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Degree.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Degree.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Degree.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Degree.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Degree.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Degree.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Degree.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
 			%
 			% See also Category, Format.
 			
@@ -139,7 +172,7 @@ classdef Degree < Measure
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('Degree', [], [], true);
+			subclass_list = { 'Degree'  'CorePeriphery'  'DegreeAv'  'MultiRC'  'MultiplexCP'  'MultiplexRCDeg'  'OverlappingDeg'  'OverlappingDegAv'  'RCDeg'  'RichClub'  'Richness' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of degree.
@@ -160,50 +193,30 @@ classdef Degree < Measure
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Measure.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Measure.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Measure.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Measure.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Measure.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Measure.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Measure.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Measure.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Measure.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Measure.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 13];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -224,7 +237,31 @@ classdef Degree < Measure
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(Degree.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 15;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in degree/error.
@@ -252,14 +289,14 @@ classdef Degree < Measure
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == Degree.getProps());
+			check = prop >= 1 && prop <= 15 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Degree:' 'WrongInput'], ...
+					['BRAPH2' ':Degree:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Degree.'] ...
 					)
 			end
@@ -290,15 +327,14 @@ classdef Degree < Measure
 			%
 			% See also getProps, existsTag.
 			
-			degree_tag_list = cellfun(@(x) Degree.getPropTag(x), num2cell(Degree.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, degree_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Degree:' 'WrongInput'], ...
+					['BRAPH2' ':Degree:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for Degree.'] ...
 					)
 			end
@@ -324,8 +360,7 @@ classdef Degree < Measure
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				degree_tag_list = cellfun(@(x) Degree.getPropTag(x), num2cell(Degree.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, degree_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -353,12 +388,9 @@ classdef Degree < Measure
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@Measure(prop);
-				end
+				%CET: Computational Efficiency Trick
+				degree_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM' };
+				tag = degree_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -383,10 +415,9 @@ classdef Degree < Measure
 			
 			prop = Degree.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degree_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9 };
+			prop_category = degree_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -410,10 +441,9 @@ classdef Degree < Measure
 			
 			prop = Degree.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degree_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8 };
+			prop_format = degree_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -437,34 +467,9 @@ classdef Degree < Measure
 			
 			prop = Degree.getPropProp(pointer);
 			
-			switch prop
-				case Degree.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Degree.';
-				case Degree.NAME
-					prop_description = 'NAME (constant, string) is the name of the Degree.';
-				case Degree.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Degree.';
-				case Degree.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Degree.';
-				case Degree.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Degree.';
-				case Degree.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Degree.';
-				case Degree.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Degree.';
-				case Degree.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case Degree.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.UNILAYER__.';
-				case Degree.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case Degree.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case Degree.M
-					prop_description = 'M (result, cell) is the Degree.';
-				otherwise
-					prop_description = getPropDescription@Measure(prop);
-			end
+			%CET: Computational Efficiency Trick
+			degree_description_list = { 'ELCLASS (constant, string) is the class of the Degree.'  'NAME (constant, string) is the name of the Degree.'  'DESCRIPTION (constant, string) is the description of the Degree.'  'TEMPLATE (parameter, item) is the template of the Degree.'  'ID (data, string) is a few-letter code of the Degree.'  'LABEL (metadata, string) is an extended label of the Degree.'  'NOTES (metadata, string) are some specific notes about the Degree.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.UNILAYER.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Degree.'  'PFM (gui, item) contains the panel figure of the measure.' };
+			prop_description = degree_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -488,8 +493,8 @@ classdef Degree < Measure
 			
 			prop = Degree.getPropProp(pointer);
 			
-			switch prop
-				case Degree.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % Degree.TEMPLATE
 					prop_settings = 'Degree';
 				otherwise
 					prop_settings = getPropSettings@Measure(prop);
@@ -517,28 +522,28 @@ classdef Degree < Measure
 			
 			prop = Degree.getPropProp(pointer);
 			
-			switch prop
-				case Degree.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % Degree.ELCLASS
 					prop_default = 'Degree';
-				case Degree.NAME
+				case 2 % Degree.NAME
 					prop_default = 'Degree';
-				case Degree.DESCRIPTION
+				case 3 % Degree.DESCRIPTION
 					prop_default = 'The Degree (Degree) of a node is the number of edges connected to the node within a layer. Connection weights are ignored in calculations.';
-				case Degree.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, Degree.getPropSettings(prop));
-				case Degree.ID
+				case 4 % Degree.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Degree.getPropSettings(prop));
+				case 5 % Degree.ID
 					prop_default = 'Degree ID';
-				case Degree.LABEL
+				case 6 % Degree.LABEL
 					prop_default = 'Degree label';
-				case Degree.NOTES
+				case 7 % Degree.NOTES
 					prop_default = 'Degree notes';
-				case Degree.SHAPE
-					prop_default = Measure.NODAL;
-				case Degree.SCOPE
-					prop_default = Measure.UNILAYER;
-				case Degree.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case Degree.COMPATIBLE_GRAPHS
+				case 9 % Degree.SHAPE
+					prop_default = 2;
+				case 10 % Degree.SCOPE
+					prop_default = 2;
+				case 11 % Degree.PARAMETRICITY
+					prop_default = 2;
+				case 12 % Degree.COMPATIBLE_GRAPHS
 					prop_default = {'GraphWU' 'GraphBU' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexBU' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU' 'OrdMxBU' 'OrdMxBUT' 'OrdMxBUD' 'MultilayerWU' 'OrdMlWU' 'MultilayerBUT' 'MultilayerBU' 'MultilayerBUD' 'OrdMlBU' 'OrdMlBUD' 'OrdMlBUT'};
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
@@ -585,15 +590,15 @@ classdef Degree < Measure
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:Degree:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:Degree:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:Degree:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Degree:WrongInput
 			%  Element.CHECKPROP(Degree, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Degree.
-			%   Error id: €BRAPH2.STR€:Degree:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Degree:WrongInput
 			%  M.CHECKPROP(Degree, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Degree.
-			%   Error id: €BRAPH2.STR€:Degree:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:Degree:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Degree')
 			%  are less computationally efficient.
@@ -604,10 +609,10 @@ classdef Degree < Measure
 			prop = Degree.getPropProp(pointer);
 			
 			switch prop
-				case Degree.TEMPLATE % __Degree.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, Degree.getPropSettings(prop));
+				case 4 % Degree.TEMPLATE
+					check = Format.checkFormat(8, value, Degree.getPropSettings(prop));
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						check = checkProp@Measure(prop, value);
 					end
 			end
@@ -616,8 +621,8 @@ classdef Degree < Measure
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Degree:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Degree:' 'WrongInput'], ...
+					['BRAPH2' ':Degree:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Degree.getPropTag(prop) ' (' Degree.getFormatTag(Degree.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -628,20 +633,20 @@ classdef Degree < Measure
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case Degree.M % __Degree.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(Degree.M), 'twister')
+				case 14 % Degree.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -659,7 +664,7 @@ classdef Degree < Measure
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= Measure.getPropNumber()
+					if prop <= 15
 						value = calculateValue@Measure(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});

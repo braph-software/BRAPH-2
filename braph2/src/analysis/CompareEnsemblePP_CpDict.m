@@ -5,6 +5,48 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 	% A Comparison Plot for Ensemble Analysis (CompareEnsemblePP_CpDict) plots the panel to manage the comparisons of an ensemble analysis.
 	% It is intended to be used only with the property CP_DICT of CompareEnsemble.
 	%
+	% The list of CompareEnsemblePP_CpDict properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the comparison panel for ensemble analysis.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+	%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+	%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+	%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+	%  <strong>40</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
+	%
 	% CompareEnsemblePP_CpDict methods (constructor):
 	%  CompareEnsemblePP_CpDict - constructor
 	%
@@ -94,30 +136,30 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 	% See also uitable, CompareEnsemble, ComparisonEnsemble.
 	
 	properties (Constant) % properties
-		TABLE_HEIGHT = PanelProp.getPropNumber() + 1;
+		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
 		TABLE_HEIGHT_TAG = 'TABLE_HEIGHT';
-		TABLE_HEIGHT_CATEGORY = Category.GUI;
-		TABLE_HEIGHT_FORMAT = Format.SIZE;
+		TABLE_HEIGHT_CATEGORY = 9;
+		TABLE_HEIGHT_FORMAT = 22;
 		
-		SELECTED = PanelProp.getPropNumber() + 2;
+		SELECTED = 37; %CET: Computational Efficiency Trick
 		SELECTED_TAG = 'SELECTED';
-		SELECTED_CATEGORY = Category.GUI;
-		SELECTED_FORMAT = Format.CVECTOR;
+		SELECTED_CATEGORY = 9;
+		SELECTED_FORMAT = 13;
 		
-		TABLE = PanelProp.getPropNumber() + 3;
+		TABLE = 38; %CET: Computational Efficiency Trick
 		TABLE_TAG = 'TABLE';
-		TABLE_CATEGORY = Category.EVANESCENT;
-		TABLE_FORMAT = Format.HANDLE;
+		TABLE_CATEGORY = 7;
+		TABLE_FORMAT = 18;
 		
-		CONTEXTMENU = PanelProp.getPropNumber() + 4;
+		CONTEXTMENU = 39; %CET: Computational Efficiency Trick
 		CONTEXTMENU_TAG = 'CONTEXTMENU';
-		CONTEXTMENU_CATEGORY = Category.EVANESCENT;
-		CONTEXTMENU_FORMAT = Format.HANDLE;
+		CONTEXTMENU_CATEGORY = 7;
+		CONTEXTMENU_FORMAT = 18;
 		
-		GUI_CP_DICT = PanelProp.getPropNumber() + 5;
+		GUI_CP_DICT = 40; %CET: Computational Efficiency Trick
 		GUI_CP_DICT_TAG = 'GUI_CP_DICT';
-		GUI_CP_DICT_CATEGORY = Category.GUI;
-		GUI_CP_DICT_FORMAT = Format.IDICT;
+		GUI_CP_DICT_CATEGORY = 9;
+		GUI_CP_DICT_FORMAT = 10;
 	end
 	methods % constructor
 		function pr = CompareEnsemblePP_CpDict(varargin)
@@ -130,6 +172,47 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of CompareEnsemblePP_CpDict properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the comparison panel for ensemble analysis.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the table.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the prop panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>TABLE_HEIGHT</strong> 	TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.
+			%  <strong>37</strong> <strong>SELECTED</strong> 	SELECTED (gui, cvector) is the list of selected items.
+			%  <strong>38</strong> <strong>TABLE</strong> 	TABLE (evanescent, handle) is the table.
+			%  <strong>39</strong> <strong>CONTEXTMENU</strong> 	CONTEXTMENU (evanescent, handle) is the context menu.
+			%  <strong>40</strong> <strong>GUI_CP_DICT</strong> 	GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.
 			%
 			% See also Category, Format.
 			
@@ -167,7 +250,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('CompareEnsemblePP_CpDict', [], [], true);
+			subclass_list = { 'CompareEnsemblePP_CpDict' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of comparison plot for ensemble analysis.
@@ -188,60 +271,32 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelProp.getProps() ...
-						CompareEnsemblePP_CpDict.TABLE_HEIGHT ...
-						CompareEnsemblePP_CpDict.SELECTED ...
-						CompareEnsemblePP_CpDict.TABLE ...
-						CompareEnsemblePP_CpDict.CONTEXTMENU ...
-						CompareEnsemblePP_CpDict.GUI_CP_DICT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelProp.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelProp.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelProp.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelProp.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelProp.getProps(Category.EVANESCENT) ...
-						CompareEnsemblePP_CpDict.TABLE ...
-						CompareEnsemblePP_CpDict.CONTEXTMENU ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelProp.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelProp.getProps(Category.GUI) ...
-						CompareEnsemblePP_CpDict.TABLE_HEIGHT ...
-						CompareEnsemblePP_CpDict.SELECTED ...
-						CompareEnsemblePP_CpDict.GUI_CP_DICT ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 38 39];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26 36 37 40];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -262,7 +317,33 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(CompareEnsemblePP_CpDict.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 40;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 12;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 7;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in comparison plot for ensemble analysis/error.
@@ -290,14 +371,14 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == CompareEnsemblePP_CpDict.getProps());
+			check = prop >= 1 && prop <= 40 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput'], ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for CompareEnsemblePP_CpDict.'] ...
 					)
 			end
@@ -328,15 +409,14 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			compareensemblepp_cpdict_tag_list = cellfun(@(x) CompareEnsemblePP_CpDict.getPropTag(x), num2cell(CompareEnsemblePP_CpDict.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, compareensemblepp_cpdict_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput'], ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for CompareEnsemblePP_CpDict.'] ...
 					)
 			end
@@ -362,8 +442,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				compareensemblepp_cpdict_tag_list = cellfun(@(x) CompareEnsemblePP_CpDict.getPropTag(x), num2cell(CompareEnsemblePP_CpDict.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, compareensemblepp_cpdict_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -391,22 +470,9 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-						tag = CompareEnsemblePP_CpDict.TABLE_HEIGHT_TAG;
-					case CompareEnsemblePP_CpDict.SELECTED
-						tag = CompareEnsemblePP_CpDict.SELECTED_TAG;
-					case CompareEnsemblePP_CpDict.TABLE
-						tag = CompareEnsemblePP_CpDict.TABLE_TAG;
-					case CompareEnsemblePP_CpDict.CONTEXTMENU
-						tag = CompareEnsemblePP_CpDict.CONTEXTMENU_TAG;
-					case CompareEnsemblePP_CpDict.GUI_CP_DICT
-						tag = CompareEnsemblePP_CpDict.GUI_CP_DICT_TAG;
-					otherwise
-						tag = getPropTag@PanelProp(prop);
-				end
+				%CET: Computational Efficiency Trick
+				compareensemblepp_cpdict_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'TABLE_HEIGHT'  'SELECTED'  'TABLE'  'CONTEXTMENU'  'GUI_CP_DICT' };
+				tag = compareensemblepp_cpdict_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -431,20 +497,9 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
-			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-					prop_category = CompareEnsemblePP_CpDict.TABLE_HEIGHT_CATEGORY;
-				case CompareEnsemblePP_CpDict.SELECTED
-					prop_category = CompareEnsemblePP_CpDict.SELECTED_CATEGORY;
-				case CompareEnsemblePP_CpDict.TABLE
-					prop_category = CompareEnsemblePP_CpDict.TABLE_CATEGORY;
-				case CompareEnsemblePP_CpDict.CONTEXTMENU
-					prop_category = CompareEnsemblePP_CpDict.CONTEXTMENU_CATEGORY;
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT
-					prop_category = CompareEnsemblePP_CpDict.GUI_CP_DICT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			compareensemblepp_cpdict_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  9  9  7  7  9 };
+			prop_category = compareensemblepp_cpdict_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -468,20 +523,9 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
-			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-					prop_format = CompareEnsemblePP_CpDict.TABLE_HEIGHT_FORMAT;
-				case CompareEnsemblePP_CpDict.SELECTED
-					prop_format = CompareEnsemblePP_CpDict.SELECTED_FORMAT;
-				case CompareEnsemblePP_CpDict.TABLE
-					prop_format = CompareEnsemblePP_CpDict.TABLE_FORMAT;
-				case CompareEnsemblePP_CpDict.CONTEXTMENU
-					prop_format = CompareEnsemblePP_CpDict.CONTEXTMENU_FORMAT;
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT
-					prop_format = CompareEnsemblePP_CpDict.GUI_CP_DICT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			compareensemblepp_cpdict_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  22  13  18  18  10 };
+			prop_format = compareensemblepp_cpdict_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -505,52 +549,9 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
-			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-					prop_description = 'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.';
-				case CompareEnsemblePP_CpDict.SELECTED
-					prop_description = 'SELECTED (gui, cvector) is the list of selected items.';
-				case CompareEnsemblePP_CpDict.TABLE
-					prop_description = 'TABLE (evanescent, handle) is the table.';
-				case CompareEnsemblePP_CpDict.CONTEXTMENU
-					prop_description = 'CONTEXTMENU (evanescent, handle) is the context menu.';
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT
-					prop_description = 'GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.';
-				case CompareEnsemblePP_CpDict.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.NAME
-					prop_description = 'NAME (constant, string) is the name of the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.ID
-					prop_description = 'ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.';
-				case CompareEnsemblePP_CpDict.EL
-					prop_description = 'EL (data, item) is the element.';
-				case CompareEnsemblePP_CpDict.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case CompareEnsemblePP_CpDict.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case CompareEnsemblePP_CpDict.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the table.';
-				case CompareEnsemblePP_CpDict.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case CompareEnsemblePP_CpDict.SHOW
-					prop_description = 'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.';
-				case CompareEnsemblePP_CpDict.HIDE
-					prop_description = 'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.';
-				case CompareEnsemblePP_CpDict.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				case CompareEnsemblePP_CpDict.CLOSE
-					prop_description = 'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.';
-				otherwise
-					prop_description = getPropDescription@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			compareensemblepp_cpdict_description_list = { 'ELCLASS (constant, string) is the class of the comparison panel for ensemble analysis.'  'NAME (constant, string) is the name of the comparison panel for ensemble analysis.'  'DESCRIPTION (constant, string) is the description of the comparison panel for ensemble analysis.'  'TEMPLATE (parameter, item) is the template of the comparison panel for ensemble analysis.'  'ID (data, string) is a few-letter code for the comparison panel for ensemble analysis.'  'LABEL (metadata, string) is an extended label of the comparison panel for ensemble analysis.'  'NOTES (metadata, string) are some specific notes about the comparison panel for ensemble analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the item figures.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the item figures.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the item figures.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the table.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the prop panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'TABLE_HEIGHT (gui, size) is the pixel height of the property panel when the table is shown.'  'SELECTED (gui, cvector) is the list of selected items.'  'TABLE (evanescent, handle) is the table.'  'CONTEXTMENU (evanescent, handle) is the context menu.'  'GUI_CP_DICT (gui, idict) contains the GUIs for the comparison.' };
+			prop_description = compareensemblepp_cpdict_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -574,18 +575,18 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
-			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case CompareEnsemblePP_CpDict.SELECTED
-					prop_settings = Format.getFormatSettings(Format.CVECTOR);
-				case CompareEnsemblePP_CpDict.TABLE
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case CompareEnsemblePP_CpDict.CONTEXTMENU
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % CompareEnsemblePP_CpDict.TABLE_HEIGHT
+					prop_settings = Format.getFormatSettings(22);
+				case 37 % CompareEnsemblePP_CpDict.SELECTED
+					prop_settings = Format.getFormatSettings(13);
+				case 38 % CompareEnsemblePP_CpDict.TABLE
+					prop_settings = Format.getFormatSettings(18);
+				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
+					prop_settings = Format.getFormatSettings(18);
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
 					prop_settings = 'GUIElement';
-				case CompareEnsemblePP_CpDict.TEMPLATE
+				case 4 % CompareEnsemblePP_CpDict.TEMPLATE
 					prop_settings = 'CompareEnsemblePP_CpDict';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -613,35 +614,35 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
-			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT
-					prop_default = s(30);
-				case CompareEnsemblePP_CpDict.SELECTED
-					prop_default = Format.getFormatDefault(Format.CVECTOR, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.TABLE
-					prop_default = Format.getFormatDefault(Format.HANDLE, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.CONTEXTMENU
-					prop_default = Format.getFormatDefault(Format.HANDLE, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % CompareEnsemblePP_CpDict.TABLE_HEIGHT
+					prop_default = 360;
+				case 37 % CompareEnsemblePP_CpDict.SELECTED
+					prop_default = Format.getFormatDefault(13, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 38 % CompareEnsemblePP_CpDict.TABLE
+					prop_default = Format.getFormatDefault(18, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
+					prop_default = Format.getFormatDefault(18, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
+					prop_default = Format.getFormatDefault(10, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 1 % CompareEnsemblePP_CpDict.ELCLASS
 					prop_default = 'CompareEnsemblePP_CpDict';
-				case CompareEnsemblePP_CpDict.NAME
+				case 2 % CompareEnsemblePP_CpDict.NAME
 					prop_default = 'CompareEnsemblePP_CpDict';
-				case CompareEnsemblePP_CpDict.DESCRIPTION
+				case 3 % CompareEnsemblePP_CpDict.DESCRIPTION
 					prop_default = 'A Comparison Plot for Ensemble Analysis (CompareEnsemblePP_CpDict) plots the panel to manage the comparisons of an ensemble analysis. It is intended to be used only with the property CP_DICT of CompareEnsemble.';
-				case CompareEnsemblePP_CpDict.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.ID
+				case 4 % CompareEnsemblePP_CpDict.TEMPLATE
+					prop_default = Format.getFormatDefault(8, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 5 % CompareEnsemblePP_CpDict.ID
 					prop_default = 'CompareEnsemblePP_CpDict';
-				case CompareEnsemblePP_CpDict.LABEL
+				case 6 % CompareEnsemblePP_CpDict.LABEL
 					prop_default = 'CompareEnsemblePP_CpDict label';
-				case CompareEnsemblePP_CpDict.NOTES
+				case 7 % CompareEnsemblePP_CpDict.NOTES
 					prop_default = 'CompareEnsemblePP_CpDict';
-				case CompareEnsemblePP_CpDict.EL
+				case 23 % CompareEnsemblePP_CpDict.EL
 					prop_default = CompareEnsemble();
-				case CompareEnsemblePP_CpDict.PROP
-					prop_default = CompareEnsemble.CP_DICT;
+				case 24 % CompareEnsemblePP_CpDict.PROP
+					prop_default = 20;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -681,8 +682,8 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%  By default, this function does not do anything, so it should be
 			%  implemented in the subclasses of Element when needed.
 			%
-			% Conditioning is only used for props of Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI.
+			% Conditioning is only used for props of 2,
+			%  3, 4, 8 and 9.
 			%
 			% See also preset, checkProp, postset, postprocessing, calculateValue,
 			%  checkValue.
@@ -690,13 +691,13 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
 			switch prop
-				case CompareEnsemblePP_CpDict.SELECTED % __CompareEnsemblePP_CpDict.SELECTED__
+				case 37 % CompareEnsemblePP_CpDict.SELECTED
 					if isrow(value)
 					    value = value';
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = conditioning@PanelProp(pointer, value);
 					end
 			end
@@ -717,15 +718,15 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:CompareEnsemblePP_CpDict:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:CompareEnsemblePP_CpDict:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:CompareEnsemblePP_CpDict:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CompareEnsemblePP_CpDict:WrongInput
 			%  Element.CHECKPROP(CompareEnsemblePP_CpDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CompareEnsemblePP_CpDict.
-			%   Error id: €BRAPH2.STR€:CompareEnsemblePP_CpDict:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:CompareEnsemblePP_CpDict:WrongInput
 			%  PR.CHECKPROP(CompareEnsemblePP_CpDict, PROP, VALUE) throws error if VALUE has not a valid format for PROP of CompareEnsemblePP_CpDict.
-			%   Error id: €BRAPH2.STR€:CompareEnsemblePP_CpDict:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:CompareEnsemblePP_CpDict:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('CompareEnsemblePP_CpDict')
 			%  are less computationally efficient.
@@ -736,20 +737,20 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			prop = CompareEnsemblePP_CpDict.getPropProp(pointer);
 			
 			switch prop
-				case CompareEnsemblePP_CpDict.TABLE_HEIGHT % __CompareEnsemblePP_CpDict.TABLE_HEIGHT__
-					check = Format.checkFormat(Format.SIZE, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.SELECTED % __CompareEnsemblePP_CpDict.SELECTED__
-					check = Format.checkFormat(Format.CVECTOR, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.TABLE % __CompareEnsemblePP_CpDict.TABLE__
-					check = Format.checkFormat(Format.HANDLE, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.CONTEXTMENU % __CompareEnsemblePP_CpDict.CONTEXTMENU__
-					check = Format.checkFormat(Format.HANDLE, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.GUI_CP_DICT % __CompareEnsemblePP_CpDict.GUI_CP_DICT__
-					check = Format.checkFormat(Format.IDICT, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
-				case CompareEnsemblePP_CpDict.TEMPLATE % __CompareEnsemblePP_CpDict.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 36 % CompareEnsemblePP_CpDict.TABLE_HEIGHT
+					check = Format.checkFormat(22, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 37 % CompareEnsemblePP_CpDict.SELECTED
+					check = Format.checkFormat(13, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 38 % CompareEnsemblePP_CpDict.TABLE
+					check = Format.checkFormat(18, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
+					check = Format.checkFormat(18, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 40 % CompareEnsemblePP_CpDict.GUI_CP_DICT
+					check = Format.checkFormat(10, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
+				case 4 % CompareEnsemblePP_CpDict.TEMPLATE
+					check = Format.checkFormat(8, value, CompareEnsemblePP_CpDict.getPropSettings(prop));
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -758,8 +759,8 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':CompareEnsemblePP_CpDict:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput'], ...
+					['BRAPH2' ':CompareEnsemblePP_CpDict:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' CompareEnsemblePP_CpDict.getPropTag(prop) ' (' CompareEnsemblePP_CpDict.getFormatTag(CompareEnsemblePP_CpDict.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -770,23 +771,23 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case CompareEnsemblePP_CpDict.TABLE % __CompareEnsemblePP_CpDict.TABLE__
+				case 38 % CompareEnsemblePP_CpDict.TABLE
 					table = uitable( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'table', ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'ColumnSortable', true, ...
 					    'ColumnName', {'', 'Measure', 'Shape', 'Scope', 'Notes'}, ...
 					    'ColumnFormat', {'logical',  'char', 'char', 'char', 'char'}, ...
@@ -796,7 +797,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					    );
 					value = table;
 					
-				case CompareEnsemblePP_CpDict.CONTEXTMENU % __CompareEnsemblePP_CpDict.CONTEXTMENU__
+				case 39 % CompareEnsemblePP_CpDict.CONTEXTMENU
 					contextmenu = uicontextmenu( ...
 					    'Parent', ancestor(pr.get('H'), 'figure'), ...
 					    'Tag', 'CONTEXTMENU' ...
@@ -871,15 +872,15 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					
 					value = contextmenu;
 					
-				case CompareEnsemblePP_CpDict.X_DRAW % __CompareEnsemblePP_CpDict.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % CompareEnsemblePP_CpDict.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('TABLE')
 					    pr.memorize('CONTEXTMENU')
 					end
 					
-				case CompareEnsemblePP_CpDict.UPDATE % __CompareEnsemblePP_CpDict.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % CompareEnsemblePP_CpDict.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 						el = pr.get('EL');
 						prop = pr.get('PROP');
@@ -895,16 +896,16 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					    end
 					end
 					
-				case CompareEnsemblePP_CpDict.REDRAW % __CompareEnsemblePP_CpDict.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % CompareEnsemblePP_CpDict.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('TABLE'), 'Position', [s(.3) s(.3) w_p-s(.6) max(1, pr.get('HEIGHT')-s(2.2))])
+					    set(pr.get('TABLE'), 'Position', [4 4 w_p-8 max(1, pr.get('HEIGHT')-27)])
 					end
 					
-				case CompareEnsemblePP_CpDict.SHOW % __CompareEnsemblePP_CpDict.SHOW__
-					value = calculateValue@PanelProp(pr, PanelProp.SHOW, varargin{:}); % also warning
+				case 16 % CompareEnsemblePP_CpDict.SHOW
+					value = calculateValue@PanelProp(pr, 16, varargin{:}); % also warning
 					if value    
 					    % figures for comparison data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
@@ -916,8 +917,8 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					    end
 					end
 					
-				case CompareEnsemblePP_CpDict.HIDE % __CompareEnsemblePP_CpDict.HIDE__
-					value = calculateValue@PanelProp(pr, PanelProp.HIDE, varargin{:}); % also warning
+				case 17 % CompareEnsemblePP_CpDict.HIDE
+					value = calculateValue@PanelProp(pr, 17, varargin{:}); % also warning
 					if value
 					    % figures for measure data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
@@ -929,15 +930,15 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					    end
 					end
 					
-				case CompareEnsemblePP_CpDict.DELETE % __CompareEnsemblePP_CpDict.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % CompareEnsemblePP_CpDict.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('TABLE', Element.getNoValue())
 					    pr.set('CONTEXTMENU', Element.getNoValue())
 					end
 					
-				case CompareEnsemblePP_CpDict.CLOSE % __CompareEnsemblePP_CpDict.CLOSE__
-					value = calculateValue@PanelProp(pr, PanelProp.CLOSE, varargin{:}); % also warning
+				case 19 % CompareEnsemblePP_CpDict.CLOSE
+					value = calculateValue@PanelProp(pr, 19, varargin{:}); % also warning
 					if value
 					    % figures for measure data
 					    gui_cp_dict = pr.get('GUI_CP_DICT');
@@ -950,7 +951,7 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});
@@ -1278,19 +1279,19 @@ classdef CompareEnsemblePP_CpDict < PanelProp
 			
 			        data{mi, 2} = eval([m_list{mi} '.getPropDefault(''NAME'')']);
 			
-			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.NODAL
+			        if Element.getPropDefault(m_list{mi}, 'SHAPE') == 2
 			            data{mi, 3} = 'NODAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.GLOBAL
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 1
 			            data{mi, 3} = 'GLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == Measure.BINODAL
+			        elseif Element.getPropDefault(m_list{mi}, 'SHAPE') == 3
 			            data{mi, 3} = 'BINODAL';
 			        end
 			
-			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.SUPERGLOBAL
+			        if Element.getPropDefault(m_list{mi}, 'SCOPE') == 1
 			            data{mi, 4} = 'SUPERGLOBAL';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.UNILAYER
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 2
 			            data{mi, 4} = 'UNILAYER';
-			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == Measure.BILAYER
+			        elseif Element.getPropDefault(m_list{mi}, 'SCOPE') == 3
 			            data{mi, 4} = 'BILAYER';
 			        end
 			        

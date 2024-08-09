@@ -30,6 +30,36 @@ classdef PanelElement < Panel
 	%     pe.get('<strong>RESIZEX</strong>') - resizes the x-extension of the element panel and its prop panels.
 	%     pe.get('<strong>RESIZEY</strong>') - resizes the y-extension of the element panel and its prop panels.
 	%
+	% The list of PanelElement properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the element panel.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the element panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the grid layout handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) brings to the front the figures dependent on the element panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figures dependent on the element panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the element panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figures dependent on the element panel.
+	%  <strong>20</strong> <strong>EL</strong> 	EL (data, item) is the element to be plotted.
+	%  <strong>21</strong> <strong>PR_ORDER</strong> 	PR_ORDER (gui, rvector) is the order of the property plots.
+	%  <strong>22</strong> <strong>PR_TITLE</strong> 	PR_TITLE (gui, stringlist) is the list of property plot titles.
+	%  <strong>23</strong> <strong>PR_VISIBLE</strong> 	PR_VISIBLE (gui, rvector) is the list of visible property plots.
+	%  <strong>24</strong> <strong>PR_DICT</strong> 	PR_DICT (result, idict) is a dictionary of the property plots.
+	%  <strong>25</strong> <strong>MIN_WIDTH</strong> 	MIN_WIDTH (gui, size) is the minimal panel width in pixels.
+	%  <strong>26</strong> <strong>RESIZEX</strong> 	RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.
+	%  <strong>27</strong> <strong>RESIZEY</strong> 	RESIZEY (query, logical) resizes the y-extension of the element panel and its prop panels.
+	%  <strong>28</strong> <strong>LISTENER_PPHEIGHT</strong> 	LISTENER_PPHEIGHT (evanescent, handlelist) contains the listeners to the PropSet events.
+	%
 	% PanelElement methods (constructor):
 	%  PanelElement - constructor
 	%
@@ -119,50 +149,50 @@ classdef PanelElement < Panel
 	% See also uigridlayout, GUI, GUIElement, PanelProp.
 	
 	properties (Constant) % properties
-		EL = Panel.getPropNumber() + 1;
+		EL = 20; %CET: Computational Efficiency Trick
 		EL_TAG = 'EL';
-		EL_CATEGORY = Category.DATA;
-		EL_FORMAT = Format.ITEM;
+		EL_CATEGORY = 4;
+		EL_FORMAT = 8;
 		
-		PR_ORDER = Panel.getPropNumber() + 2;
+		PR_ORDER = 21; %CET: Computational Efficiency Trick
 		PR_ORDER_TAG = 'PR_ORDER';
-		PR_ORDER_CATEGORY = Category.GUI;
-		PR_ORDER_FORMAT = Format.RVECTOR;
+		PR_ORDER_CATEGORY = 9;
+		PR_ORDER_FORMAT = 12;
 		
-		PR_TITLE = Panel.getPropNumber() + 3;
+		PR_TITLE = 22; %CET: Computational Efficiency Trick
 		PR_TITLE_TAG = 'PR_TITLE';
-		PR_TITLE_CATEGORY = Category.GUI;
-		PR_TITLE_FORMAT = Format.STRINGLIST;
+		PR_TITLE_CATEGORY = 9;
+		PR_TITLE_FORMAT = 3;
 		
-		PR_VISIBLE = Panel.getPropNumber() + 4;
+		PR_VISIBLE = 23; %CET: Computational Efficiency Trick
 		PR_VISIBLE_TAG = 'PR_VISIBLE';
-		PR_VISIBLE_CATEGORY = Category.GUI;
-		PR_VISIBLE_FORMAT = Format.RVECTOR;
+		PR_VISIBLE_CATEGORY = 9;
+		PR_VISIBLE_FORMAT = 12;
 		
-		PR_DICT = Panel.getPropNumber() + 5;
+		PR_DICT = 24; %CET: Computational Efficiency Trick
 		PR_DICT_TAG = 'PR_DICT';
-		PR_DICT_CATEGORY = Category.RESULT;
-		PR_DICT_FORMAT = Format.IDICT;
+		PR_DICT_CATEGORY = 5;
+		PR_DICT_FORMAT = 10;
 		
-		MIN_WIDTH = Panel.getPropNumber() + 6;
+		MIN_WIDTH = 25; %CET: Computational Efficiency Trick
 		MIN_WIDTH_TAG = 'MIN_WIDTH';
-		MIN_WIDTH_CATEGORY = Category.GUI;
-		MIN_WIDTH_FORMAT = Format.SIZE;
+		MIN_WIDTH_CATEGORY = 9;
+		MIN_WIDTH_FORMAT = 22;
 		
-		RESIZEX = Panel.getPropNumber() + 7;
+		RESIZEX = 26; %CET: Computational Efficiency Trick
 		RESIZEX_TAG = 'RESIZEX';
-		RESIZEX_CATEGORY = Category.QUERY;
-		RESIZEX_FORMAT = Format.LOGICAL;
+		RESIZEX_CATEGORY = 6;
+		RESIZEX_FORMAT = 4;
 		
-		RESIZEY = Panel.getPropNumber() + 8;
+		RESIZEY = 27; %CET: Computational Efficiency Trick
 		RESIZEY_TAG = 'RESIZEY';
-		RESIZEY_CATEGORY = Category.QUERY;
-		RESIZEY_FORMAT = Format.LOGICAL;
+		RESIZEY_CATEGORY = 6;
+		RESIZEY_FORMAT = 4;
 		
-		LISTENER_PPHEIGHT = Panel.getPropNumber() + 9;
+		LISTENER_PPHEIGHT = 28; %CET: Computational Efficiency Trick
 		LISTENER_PPHEIGHT_TAG = 'LISTENER_PPHEIGHT';
-		LISTENER_PPHEIGHT_CATEGORY = Category.EVANESCENT;
-		LISTENER_PPHEIGHT_FORMAT = Format.HANDLELIST;
+		LISTENER_PPHEIGHT_CATEGORY = 7;
+		LISTENER_PPHEIGHT_FORMAT = 19;
 	end
 	methods % constructor
 		function pe = PanelElement(varargin)
@@ -175,6 +205,35 @@ classdef PanelElement < Panel
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of PanelElement properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the element panel.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the element panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the element panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the element panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the element panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the element panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the element panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the element panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the grid layout handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) brings to the front the figures dependent on the element panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figures dependent on the element panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the element panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figures dependent on the element panel.
+			%  <strong>20</strong> <strong>EL</strong> 	EL (data, item) is the element to be plotted.
+			%  <strong>21</strong> <strong>PR_ORDER</strong> 	PR_ORDER (gui, rvector) is the order of the property plots.
+			%  <strong>22</strong> <strong>PR_TITLE</strong> 	PR_TITLE (gui, stringlist) is the list of property plot titles.
+			%  <strong>23</strong> <strong>PR_VISIBLE</strong> 	PR_VISIBLE (gui, rvector) is the list of visible property plots.
+			%  <strong>24</strong> <strong>PR_DICT</strong> 	PR_DICT (result, idict) is a dictionary of the property plots.
+			%  <strong>25</strong> <strong>MIN_WIDTH</strong> 	MIN_WIDTH (gui, size) is the minimal panel width in pixels.
+			%  <strong>26</strong> <strong>RESIZEX</strong> 	RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.
+			%  <strong>27</strong> <strong>RESIZEY</strong> 	RESIZEY (query, logical) resizes the y-extension of the element panel and its prop panels.
+			%  <strong>28</strong> <strong>LISTENER_PPHEIGHT</strong> 	LISTENER_PPHEIGHT (evanescent, handlelist) contains the listeners to the PropSet events.
 			%
 			% See also Category, Format.
 			
@@ -212,7 +271,7 @@ classdef PanelElement < Panel
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('PanelElement', [], [], true);
+			subclass_list = { 'PanelElement' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of element panel.
@@ -233,68 +292,34 @@ classdef PanelElement < Panel
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Panel.getProps() ...
-						PanelElement.EL ...
-						PanelElement.PR_ORDER ...
-						PanelElement.PR_TITLE ...
-						PanelElement.PR_VISIBLE ...
-						PanelElement.PR_DICT ...
-						PanelElement.MIN_WIDTH ...
-						PanelElement.RESIZEX ...
-						PanelElement.RESIZEY ...
-						PanelElement.LISTENER_PPHEIGHT ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Panel.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Panel.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Panel.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Panel.getProps(Category.DATA) ...
-						PanelElement.EL ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Panel.getProps(Category.RESULT) ...
-						PanelElement.PR_DICT ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Panel.getProps(Category.QUERY) ...
-						PanelElement.RESIZEX ...
-						PanelElement.RESIZEY ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Panel.getProps(Category.EVANESCENT) ...
-						PanelElement.LISTENER_PPHEIGHT ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Panel.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Panel.getProps(Category.GUI) ...
-						PanelElement.PR_ORDER ...
-						PanelElement.PR_TITLE ...
-						PanelElement.PR_VISIBLE ...
-						PanelElement.MIN_WIDTH ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 20];
+				case 5 % Category.RESULT
+					prop_list = 24;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 26 27];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 28];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 21 22 23 25];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -315,7 +340,35 @@ classdef PanelElement < Panel
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(PanelElement.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 28;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 9;
+				case 7 % Category.EVANESCENT
+					prop_number = 3;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 6;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in element panel/error.
@@ -343,14 +396,14 @@ classdef PanelElement < Panel
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == PanelElement.getProps());
+			check = prop >= 1 && prop <= 28 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelElement:' 'WrongInput'], ...
+					['BRAPH2' ':PanelElement:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelElement.'] ...
 					)
 			end
@@ -381,15 +434,14 @@ classdef PanelElement < Panel
 			%
 			% See also getProps, existsTag.
 			
-			panelelement_tag_list = cellfun(@(x) PanelElement.getPropTag(x), num2cell(PanelElement.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, panelelement_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL'  'PR_ORDER'  'PR_TITLE'  'PR_VISIBLE'  'PR_DICT'  'MIN_WIDTH'  'RESIZEX'  'RESIZEY'  'LISTENER_PPHEIGHT' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelElement:' 'WrongInput'], ...
+					['BRAPH2' ':PanelElement:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for PanelElement.'] ...
 					)
 			end
@@ -415,8 +467,7 @@ classdef PanelElement < Panel
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				panelelement_tag_list = cellfun(@(x) PanelElement.getPropTag(x), num2cell(PanelElement.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, panelelement_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL'  'PR_ORDER'  'PR_TITLE'  'PR_VISIBLE'  'PR_DICT'  'MIN_WIDTH'  'RESIZEX'  'RESIZEY'  'LISTENER_PPHEIGHT' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -444,30 +495,9 @@ classdef PanelElement < Panel
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case PanelElement.EL
-						tag = PanelElement.EL_TAG;
-					case PanelElement.PR_ORDER
-						tag = PanelElement.PR_ORDER_TAG;
-					case PanelElement.PR_TITLE
-						tag = PanelElement.PR_TITLE_TAG;
-					case PanelElement.PR_VISIBLE
-						tag = PanelElement.PR_VISIBLE_TAG;
-					case PanelElement.PR_DICT
-						tag = PanelElement.PR_DICT_TAG;
-					case PanelElement.MIN_WIDTH
-						tag = PanelElement.MIN_WIDTH_TAG;
-					case PanelElement.RESIZEX
-						tag = PanelElement.RESIZEX_TAG;
-					case PanelElement.RESIZEY
-						tag = PanelElement.RESIZEY_TAG;
-					case PanelElement.LISTENER_PPHEIGHT
-						tag = PanelElement.LISTENER_PPHEIGHT_TAG;
-					otherwise
-						tag = getPropTag@Panel(prop);
-				end
+				%CET: Computational Efficiency Trick
+				panelelement_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'EL'  'PR_ORDER'  'PR_TITLE'  'PR_VISIBLE'  'PR_DICT'  'MIN_WIDTH'  'RESIZEX'  'RESIZEY'  'LISTENER_PPHEIGHT' };
+				tag = panelelement_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -492,28 +522,9 @@ classdef PanelElement < Panel
 			
 			prop = PanelElement.getPropProp(pointer);
 			
-			switch prop
-				case PanelElement.EL
-					prop_category = PanelElement.EL_CATEGORY;
-				case PanelElement.PR_ORDER
-					prop_category = PanelElement.PR_ORDER_CATEGORY;
-				case PanelElement.PR_TITLE
-					prop_category = PanelElement.PR_TITLE_CATEGORY;
-				case PanelElement.PR_VISIBLE
-					prop_category = PanelElement.PR_VISIBLE_CATEGORY;
-				case PanelElement.PR_DICT
-					prop_category = PanelElement.PR_DICT_CATEGORY;
-				case PanelElement.MIN_WIDTH
-					prop_category = PanelElement.MIN_WIDTH_CATEGORY;
-				case PanelElement.RESIZEX
-					prop_category = PanelElement.RESIZEX_CATEGORY;
-				case PanelElement.RESIZEY
-					prop_category = PanelElement.RESIZEY_CATEGORY;
-				case PanelElement.LISTENER_PPHEIGHT
-					prop_category = PanelElement.LISTENER_PPHEIGHT_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Panel(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelelement_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  4  9  9  9  5  9  6  6  7 };
+			prop_category = panelelement_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -537,28 +548,9 @@ classdef PanelElement < Panel
 			
 			prop = PanelElement.getPropProp(pointer);
 			
-			switch prop
-				case PanelElement.EL
-					prop_format = PanelElement.EL_FORMAT;
-				case PanelElement.PR_ORDER
-					prop_format = PanelElement.PR_ORDER_FORMAT;
-				case PanelElement.PR_TITLE
-					prop_format = PanelElement.PR_TITLE_FORMAT;
-				case PanelElement.PR_VISIBLE
-					prop_format = PanelElement.PR_VISIBLE_FORMAT;
-				case PanelElement.PR_DICT
-					prop_format = PanelElement.PR_DICT_FORMAT;
-				case PanelElement.MIN_WIDTH
-					prop_format = PanelElement.MIN_WIDTH_FORMAT;
-				case PanelElement.RESIZEX
-					prop_format = PanelElement.RESIZEX_FORMAT;
-				case PanelElement.RESIZEY
-					prop_format = PanelElement.RESIZEY_FORMAT;
-				case PanelElement.LISTENER_PPHEIGHT
-					prop_format = PanelElement.LISTENER_PPHEIGHT_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Panel(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelelement_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  12  3  12  10  22  4  4  19 };
+			prop_format = panelelement_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -582,60 +574,9 @@ classdef PanelElement < Panel
 			
 			prop = PanelElement.getPropProp(pointer);
 			
-			switch prop
-				case PanelElement.EL
-					prop_description = 'EL (data, item) is the element to be plotted.';
-				case PanelElement.PR_ORDER
-					prop_description = 'PR_ORDER (gui, rvector) is the order of the property plots.';
-				case PanelElement.PR_TITLE
-					prop_description = 'PR_TITLE (gui, stringlist) is the list of property plot titles.';
-				case PanelElement.PR_VISIBLE
-					prop_description = 'PR_VISIBLE (gui, rvector) is the list of visible property plots.';
-				case PanelElement.PR_DICT
-					prop_description = 'PR_DICT (result, idict) is a dictionary of the property plots.';
-				case PanelElement.MIN_WIDTH
-					prop_description = 'MIN_WIDTH (gui, size) is the minimal panel width in pixels.';
-				case PanelElement.RESIZEX
-					prop_description = 'RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.';
-				case PanelElement.RESIZEY
-					prop_description = 'RESIZEY (query, logical) resizes the y-extension of the element panel and its prop panels.';
-				case PanelElement.LISTENER_PPHEIGHT
-					prop_description = 'LISTENER_PPHEIGHT (evanescent, handlelist) contains the listeners to the PropSet events.';
-				case PanelElement.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the element panel.';
-				case PanelElement.NAME
-					prop_description = 'NAME (constant, string) is the name of the element panel.';
-				case PanelElement.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the element panel.';
-				case PanelElement.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the element panel.';
-				case PanelElement.ID
-					prop_description = 'ID (data, string) is a few-letter code for the element panel.';
-				case PanelElement.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the element panel.';
-				case PanelElement.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the element panel.';
-				case PanelElement.PARENT
-					prop_description = 'PARENT (gui, item) is the panel parent.';
-				case PanelElement.H
-					prop_description = 'H (evanescent, handle) is the grid layout handle.';
-				case PanelElement.H_WAITBAR
-					prop_description = 'H_WAITBAR (evanescent, handle) is the waitbar handle.';
-				case PanelElement.DRAW
-					prop_description = 'DRAW (query, logical) draws the element panel.';
-				case PanelElement.DRAWN
-					prop_description = 'DRAWN (query, logical) returns whether the panel has been drawn.';
-				case PanelElement.SHOW
-					prop_description = 'SHOW (query, logical) brings to the front the figures dependent on the element panel.';
-				case PanelElement.HIDE
-					prop_description = 'HIDE (query, logical) hides the figures dependent on the element panel.';
-				case PanelElement.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the element panel is deleted.';
-				case PanelElement.CLOSE
-					prop_description = 'CLOSE (query, logical) closes the figures dependent on the element panel.';
-				otherwise
-					prop_description = getPropDescription@Panel(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelelement_description_list = { 'ELCLASS (constant, string) is the class of the element panel.'  'NAME (constant, string) is the name of the element panel.'  'DESCRIPTION (constant, string) is the description of the element panel.'  'TEMPLATE (parameter, item) is the template of the element panel.'  'ID (data, string) is a few-letter code for the element panel.'  'LABEL (metadata, string) is an extended label of the element panel.'  'NOTES (metadata, string) are some specific notes about the element panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the element panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the grid layout handle.'  'SHOW (query, logical) brings to the front the figures dependent on the element panel.'  'HIDE (query, logical) hides the figures dependent on the element panel.'  'DELETE (query, logical) resets the handles when the element panel is deleted.'  'CLOSE (query, logical) closes the figures dependent on the element panel.'  'EL (data, item) is the element to be plotted.'  'PR_ORDER (gui, rvector) is the order of the property plots.'  'PR_TITLE (gui, stringlist) is the list of property plot titles.'  'PR_VISIBLE (gui, rvector) is the list of visible property plots.'  'PR_DICT (result, idict) is a dictionary of the property plots.'  'MIN_WIDTH (gui, size) is the minimal panel width in pixels.'  'RESIZEX (query, logical) resizes the x-extension of the element panel and its prop panels.'  'RESIZEY (query, logical) resizes the y-extension of the element panel and its prop panels.'  'LISTENER_PPHEIGHT (evanescent, handlelist) contains the listeners to the PropSet events.' };
+			prop_description = panelelement_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -659,26 +600,26 @@ classdef PanelElement < Panel
 			
 			prop = PanelElement.getPropProp(pointer);
 			
-			switch prop
-				case PanelElement.EL
-					prop_settings = Format.getFormatSettings(Format.ITEM);
-				case PanelElement.PR_ORDER
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case PanelElement.PR_TITLE
-					prop_settings = Format.getFormatSettings(Format.STRINGLIST);
-				case PanelElement.PR_VISIBLE
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case PanelElement.PR_DICT
+			switch prop %CET: Computational Efficiency Trick
+				case 20 % PanelElement.EL
+					prop_settings = Format.getFormatSettings(8);
+				case 21 % PanelElement.PR_ORDER
+					prop_settings = Format.getFormatSettings(12);
+				case 22 % PanelElement.PR_TITLE
+					prop_settings = Format.getFormatSettings(3);
+				case 23 % PanelElement.PR_VISIBLE
+					prop_settings = Format.getFormatSettings(12);
+				case 24 % PanelElement.PR_DICT
 					prop_settings = 'PanelProp';
-				case PanelElement.MIN_WIDTH
-					prop_settings = Format.getFormatSettings(Format.SIZE);
-				case PanelElement.RESIZEX
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelElement.RESIZEY
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case PanelElement.LISTENER_PPHEIGHT
-					prop_settings = Format.getFormatSettings(Format.HANDLELIST);
-				case PanelElement.TEMPLATE
+				case 25 % PanelElement.MIN_WIDTH
+					prop_settings = Format.getFormatSettings(22);
+				case 26 % PanelElement.RESIZEX
+					prop_settings = Format.getFormatSettings(4);
+				case 27 % PanelElement.RESIZEY
+					prop_settings = Format.getFormatSettings(4);
+				case 28 % PanelElement.LISTENER_PPHEIGHT
+					prop_settings = Format.getFormatSettings(19);
+				case 4 % PanelElement.TEMPLATE
 					prop_settings = 'PanelElement';
 				otherwise
 					prop_settings = getPropSettings@Panel(prop);
@@ -706,40 +647,40 @@ classdef PanelElement < Panel
 			
 			prop = PanelElement.getPropProp(pointer);
 			
-			switch prop
-				case PanelElement.EL
-					prop_default = Format.getFormatDefault(Format.ITEM, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_ORDER
-					prop_default = Format.getFormatDefault(Format.RVECTOR, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_TITLE
-					prop_default = Format.getFormatDefault(Format.STRINGLIST, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_VISIBLE
-					prop_default = Format.getFormatDefault(Format.RVECTOR, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_DICT
-					prop_default = Format.getFormatDefault(Format.IDICT, PanelElement.getPropSettings(prop));
-				case PanelElement.MIN_WIDTH
+			switch prop %CET: Computational Efficiency Trick
+				case 20 % PanelElement.EL
+					prop_default = Format.getFormatDefault(8, PanelElement.getPropSettings(prop));
+				case 21 % PanelElement.PR_ORDER
+					prop_default = Format.getFormatDefault(12, PanelElement.getPropSettings(prop));
+				case 22 % PanelElement.PR_TITLE
+					prop_default = Format.getFormatDefault(3, PanelElement.getPropSettings(prop));
+				case 23 % PanelElement.PR_VISIBLE
+					prop_default = Format.getFormatDefault(12, PanelElement.getPropSettings(prop));
+				case 24 % PanelElement.PR_DICT
+					prop_default = Format.getFormatDefault(10, PanelElement.getPropSettings(prop));
+				case 25 % PanelElement.MIN_WIDTH
 					prop_default = 300;
-				case PanelElement.RESIZEX
-					prop_default = Format.getFormatDefault(Format.LOGICAL, PanelElement.getPropSettings(prop));
-				case PanelElement.RESIZEY
-					prop_default = Format.getFormatDefault(Format.LOGICAL, PanelElement.getPropSettings(prop));
-				case PanelElement.LISTENER_PPHEIGHT
-					prop_default = Format.getFormatDefault(Format.HANDLELIST, PanelElement.getPropSettings(prop));
-				case PanelElement.ELCLASS
+				case 26 % PanelElement.RESIZEX
+					prop_default = Format.getFormatDefault(4, PanelElement.getPropSettings(prop));
+				case 27 % PanelElement.RESIZEY
+					prop_default = Format.getFormatDefault(4, PanelElement.getPropSettings(prop));
+				case 28 % PanelElement.LISTENER_PPHEIGHT
+					prop_default = Format.getFormatDefault(19, PanelElement.getPropSettings(prop));
+				case 1 % PanelElement.ELCLASS
 					prop_default = 'PanelElement';
-				case PanelElement.NAME
+				case 2 % PanelElement.NAME
 					prop_default = 'Element Panel';
-				case PanelElement.DESCRIPTION
+				case 3 % PanelElement.DESCRIPTION
 					prop_default = 'An Element Panel (PanelElement) plots all properties of an element in a panel, which contains a series of stacked property panels, one for each property of the element being plotted.';
-				case PanelElement.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, PanelElement.getPropSettings(prop));
-				case PanelElement.ID
+				case 4 % PanelElement.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PanelElement.getPropSettings(prop));
+				case 5 % PanelElement.ID
 					prop_default = 'PanelElement ID';
-				case PanelElement.LABEL
+				case 6 % PanelElement.LABEL
 					prop_default = 'PanelElement label';
-				case PanelElement.NOTES
+				case 7 % PanelElement.NOTES
 					prop_default = 'PanelElement notes';
-				case PanelElement.PARENT
+				case 13 % PanelElement.PARENT
 					prop_default = GUI();
 				otherwise
 					prop_default = getPropDefault@Panel(prop);
@@ -776,8 +717,8 @@ classdef PanelElement < Panel
 			%PRESET preprocesses the value of a property before setting it.
 			%
 			% VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
-			%  PROP. It works only with properties with Category.METADATA,
-			%  Category.PARAMETER, Category.DATA, Category.FIGURE and Category.GUI. By
+			%  PROP. It works only with properties with 2,
+			%  3, 4, 8 and 9. By
 			%  default, this function does not do anything, so it should be implemented
 			%  in the subclasses of Element when needed.
 			%
@@ -785,23 +726,23 @@ classdef PanelElement < Panel
 			%  calculateValue, checkValue.
 			
 			switch prop
-				case PanelElement.PR_ORDER % __PanelElement.PR_ORDER__
+				case 21 % PanelElement.PR_ORDER
 					if isempty(value) && ~isa(pe.getr('EL'), 'NoValue')
 					    [value, ~, ~] = load_layout(pe.get('EL'));
 					end
 					
-				case PanelElement.PR_TITLE % __PanelElement.PR_TITLE__
+				case 22 % PanelElement.PR_TITLE
 					if isempty(value) && ~isa(pe.getr('EL'), 'NoValue')
 					    [~, value, ~] = load_layout(pe.get('EL'));
 					end
 					
-				case PanelElement.PR_VISIBLE % __PanelElement.PR_VISIBLE__
+				case 23 % PanelElement.PR_VISIBLE
 					if isempty(value) && ~isa(pe.getr('EL'), 'NoValue')
 					    [~, ~, value] = load_layout(pe.get('EL'));
 					end
 					
 				otherwise
-					if prop <= Panel.getPropNumber()
+					if prop <= 19
 						value = preset@Panel(pe, prop, value);
 					end
 			end
@@ -822,15 +763,15 @@ classdef PanelElement < Panel
 			% 
 			% PE.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:PanelElement:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:PanelElement:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PE.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PE.
-			%   Error id: €BRAPH2.STR€:PanelElement:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelElement:WrongInput
 			%  Element.CHECKPROP(PanelElement, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelElement.
-			%   Error id: €BRAPH2.STR€:PanelElement:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelElement:WrongInput
 			%  PE.CHECKPROP(PanelElement, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelElement.
-			%   Error id: €BRAPH2.STR€:PanelElement:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:PanelElement:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PE) and Element.CHECKPROP('PanelElement')
 			%  are less computationally efficient.
@@ -841,33 +782,33 @@ classdef PanelElement < Panel
 			prop = PanelElement.getPropProp(pointer);
 			
 			switch prop
-				case PanelElement.EL % __PanelElement.EL__
-					check = Format.checkFormat(Format.ITEM, value, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_ORDER % __PanelElement.PR_ORDER__
-					check = Format.checkFormat(Format.RVECTOR, value, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_TITLE % __PanelElement.PR_TITLE__
-					check = Format.checkFormat(Format.STRINGLIST, value, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_VISIBLE % __PanelElement.PR_VISIBLE__
-					check = Format.checkFormat(Format.RVECTOR, value, PanelElement.getPropSettings(prop));
-				case PanelElement.PR_DICT % __PanelElement.PR_DICT__
-					check = Format.checkFormat(Format.IDICT, value, PanelElement.getPropSettings(prop));
-				case PanelElement.MIN_WIDTH % __PanelElement.MIN_WIDTH__
-					check = Format.checkFormat(Format.SIZE, value, PanelElement.getPropSettings(prop));
-				case PanelElement.RESIZEX % __PanelElement.RESIZEX__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelElement.getPropSettings(prop));
-				case PanelElement.RESIZEY % __PanelElement.RESIZEY__
-					check = Format.checkFormat(Format.LOGICAL, value, PanelElement.getPropSettings(prop));
-				case PanelElement.LISTENER_PPHEIGHT % __PanelElement.LISTENER_PPHEIGHT__
-					check = Format.checkFormat(Format.HANDLELIST, value, PanelElement.getPropSettings(prop));
-				case PanelElement.TEMPLATE % __PanelElement.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, PanelElement.getPropSettings(prop));
-				case PanelElement.PARENT % __PanelElement.PARENT__
-					check = Format.checkFormat(Format.ITEM, value, PanelElement.getPropSettings(prop));
+				case 20 % PanelElement.EL
+					check = Format.checkFormat(8, value, PanelElement.getPropSettings(prop));
+				case 21 % PanelElement.PR_ORDER
+					check = Format.checkFormat(12, value, PanelElement.getPropSettings(prop));
+				case 22 % PanelElement.PR_TITLE
+					check = Format.checkFormat(3, value, PanelElement.getPropSettings(prop));
+				case 23 % PanelElement.PR_VISIBLE
+					check = Format.checkFormat(12, value, PanelElement.getPropSettings(prop));
+				case 24 % PanelElement.PR_DICT
+					check = Format.checkFormat(10, value, PanelElement.getPropSettings(prop));
+				case 25 % PanelElement.MIN_WIDTH
+					check = Format.checkFormat(22, value, PanelElement.getPropSettings(prop));
+				case 26 % PanelElement.RESIZEX
+					check = Format.checkFormat(4, value, PanelElement.getPropSettings(prop));
+				case 27 % PanelElement.RESIZEY
+					check = Format.checkFormat(4, value, PanelElement.getPropSettings(prop));
+				case 28 % PanelElement.LISTENER_PPHEIGHT
+					check = Format.checkFormat(19, value, PanelElement.getPropSettings(prop));
+				case 4 % PanelElement.TEMPLATE
+					check = Format.checkFormat(8, value, PanelElement.getPropSettings(prop));
+				case 13 % PanelElement.PARENT
+					check = Format.checkFormat(8, value, PanelElement.getPropSettings(prop));
 					if check
 						check = isa(value, 'GUI') || isa(value, 'Panel');
 					end
 				otherwise
-					if prop <= Panel.getPropNumber()
+					if prop <= 19
 						check = checkProp@Panel(prop, value);
 					end
 			end
@@ -876,8 +817,8 @@ classdef PanelElement < Panel
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelElement:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelElement:' 'WrongInput'], ...
+					['BRAPH2' ':PanelElement:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelElement.getPropTag(prop) ' (' PanelElement.getFormatTag(PanelElement.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -897,7 +838,7 @@ classdef PanelElement < Panel
 			%  checkValue.
 			
 			switch prop
-				case PanelElement.EL % __PanelElement.EL__
+				case 20 % PanelElement.EL
 					pe.lock('EL', 'Iterative', false)
 					
 					[order, title, visible] = load_layout(pe.get('EL'));
@@ -907,13 +848,13 @@ classdef PanelElement < Panel
 					    'PR_VISIBLE', visible ...
 					    )
 					
-				case PanelElement.PARENT % __PanelElement.PARENT__
+				case 13 % PanelElement.PARENT
 					if check_graphics(pe.getr('H'), 'uigridlayout') % H = gl for grid layout
 					    set(pe.get('H'), 'Parent', pe.get('PARENT').get('H')) % H = f for GUI and H = p for Panel
 					end
 					
 				otherwise
-					if prop <= Panel.getPropNumber()
+					if prop <= 19
 						postset@Panel(pe, prop);
 					end
 			end
@@ -924,20 +865,20 @@ classdef PanelElement < Panel
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case PanelElement.PR_DICT % __PanelElement.PR_DICT__
-					rng_settings_ = rng(); rng(pe.getPropSeed(PanelElement.PR_DICT), 'twister')
+				case 24 % PanelElement.PR_DICT
+					rng_settings_ = rng(); rng(pe.getPropSeed(24), 'twister')
 					
 					el = pe.get('EL');
 					
@@ -950,7 +891,7 @@ classdef PanelElement < Panel
 					pr_list = cell(1, sum(visible)); % sum(visible) = sum of visible prop
 					for prop = 1:1:el.getPropNumber()
 					    
-					    braph2waitbar(wb, 0 + .5 * (prop - 1) / el.getPropNumber(), ['Analyzing prop ' int2str(prop) ' of ' int2str(el.getPropNumber())])
+					    braph2waitbar(wb, .5 * (prop - 1) / el.getPropNumber(), ['Analyzing prop ' int2str(prop) ' of ' int2str(el.getPropNumber())])
 					
 					    if visible(prop)
 					        pr = el.getPanelProp(prop);
@@ -964,7 +905,7 @@ classdef PanelElement < Panel
 					        end
 					        
 					        if isa(pr.getr('WAITBAR'), 'NoValue')
-					            pr.set('WAITBAR', pe.getCallback(PanelElement.WAITBAR))
+					            pr.set('WAITBAR', pe.getCallback(9))
 					        end
 					        
 					        pr_list{order(prop)} = pr;
@@ -979,7 +920,7 @@ classdef PanelElement < Panel
 					
 					rng(rng_settings_)
 					
-				case PanelElement.RESIZEX % __PanelElement.RESIZEX__
+				case 26 % PanelElement.RESIZEX
 					if pe.get('DRAWN')
 					    pr_dict = pe.get('PR_DICT');
 					    
@@ -993,8 +934,8 @@ classdef PanelElement < Panel
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''RESIZEX'') has NOT been executed.\n' ...
 					        'First, the panel ' pe.get('ID') ' should be drawn calling pe.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1002,15 +943,15 @@ classdef PanelElement < Panel
 					    value = false;
 					end
 					
-				case PanelElement.RESIZEY % __PanelElement.RESIZEY__
+				case 27 % PanelElement.RESIZEY
 					if pe.get('DRAWN')
 					    set(pe.get('H'), 'RowHeight', cellfun(@(pr) {pr.get('HEIGHT')}, pe.get('PR_DICT').get('IT_LIST')))
 					
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''RESIZEY'') has NOT been executed.\n' ...
 					        'First, the panel ' pe.get('ID') ' should be drawn calling pe.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1018,30 +959,30 @@ classdef PanelElement < Panel
 					    value = false;
 					end
 					
-				case PanelElement.LISTENER_PPHEIGHT % __PanelElement.LISTENER_PPHEIGHT__
+				case 28 % PanelElement.LISTENER_PPHEIGHT
 					value = cellfun(@(pr) listener(pr, 'PropSet', @cb_listener_ppheight), pe.get('PR_DICT').get('IT_LIST'), 'UniformOutput', false);
 					
-				case PanelElement.H % __PanelElement.H__
+				case 15 % PanelElement.H
 					gl = uigridlayout([pe.memorize('PR_DICT').get('LENGTH') 1], ... % set grid layout
 					    'Parent', pe.memorize('PARENT').memorize('H'), ... % H = f for GUI and H = p for Panel
 					    'Tag', 'H', ...
 					    'UserData', pe, ... % handle to retrieve the panel
 					    'Scrollable', 'on', ...
 					    'RowSpacing', 5, ...
-					    'Padding', [5 s(1.5) 15 5], ...    
+					    'Padding', [5 18 15 5], ...    
 					    'BackgroundColor', pe.get('BKGCOLOR'), ...
 					    'DeleteFcn', {@cb_get, 'DELETE'} ...
 					    );
 					value = gl;
 					
-				case PanelElement.H_WAITBAR % __PanelElement.H_WAITBAR__
+				case 10 % PanelElement.H_WAITBAR
 					if pe.get('WAITBAR')
 					    value = braph2waitbar(pe.get('WAITBAR'), 0, 'Drawing the element panel ...'); % wb
 					else
 					    value = gobjects(1);
 					end
 					
-				case PanelElement.DRAW % __PanelElement.DRAW__
+				case 11 % PanelElement.DRAW
 					if check_graphics(pe.memorize('H'), 'uigridlayout') % H = gl for grid layout
 					    gl = pe.get('H');
 					    
@@ -1068,18 +1009,18 @@ classdef PanelElement < Panel
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''DRAW'') did not work.\n' ...
 					        'This shouldn''t happen with well-written code!'] ...
 					        )
 					    value = false;
 					end
 					
-				case PanelElement.DRAWN % __PanelElement.DRAWN__
+				case 12 % PanelElement.DRAWN
 					value = check_graphics(pe.getr('H'), 'uigridlayout'); % H = gl for grid layout
 					
-				case PanelElement.SHOW % __PanelElement.SHOW__
+				case 16 % PanelElement.SHOW
 					if pe.get('DRAWN')
 					    
 					    pr_dict = pe.get('PR_DICT');
@@ -1088,13 +1029,13 @@ classdef PanelElement < Panel
 					        pr.get('SHOW', 'ShowParentFigure', false)
 					    end
 					
-					    calculateValue@Panel(pe, Panel.SHOW, varargin{:});
+					    calculateValue@Panel(pe, 16, varargin{:});
 					    
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''SHOW'') has NOT been executed.\n' ...
 					        'First, the panel ' pe.get('ID') ' should be drawn calling pe.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1102,7 +1043,7 @@ classdef PanelElement < Panel
 					    value = false;
 					end
 					
-				case PanelElement.HIDE % __PanelElement.HIDE__
+				case 17 % PanelElement.HIDE
 					if pe.get('DRAWN')
 					    
 					    pr_dict = pe.get('PR_DICT');
@@ -1111,13 +1052,13 @@ classdef PanelElement < Panel
 					        pr.get('HIDE', 'HideParentFigure', false)
 					    end
 					
-					    calculateValue@Panel(pe, Panel.HIDE, varargin{:});
+					    calculateValue@Panel(pe, 17, varargin{:});
 					
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''HIDE'') has NOT been executed.\n' ...
 					        'First, the panel ' pe.get('ID') ' should be drawn calling pe.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1125,13 +1066,13 @@ classdef PanelElement < Panel
 					    value = false;
 					end
 					
-				case PanelElement.DELETE % __PanelElement.DELETE__
-					value = calculateValue@Panel(pe, Panel.DELETE, varargin{:}); % also warning
+				case 18 % PanelElement.DELETE
+					value = calculateValue@Panel(pe, 18, varargin{:}); % also warning
 					if value
 					    pe.set('LISTENER_PPHEIGHT', Element.getNoValue())
 					end
 					
-				case PanelElement.CLOSE % __PanelElement.CLOSE__
+				case 19 % PanelElement.CLOSE
 					if pe.get('DRAWN')
 					    
 					    pr_dict = pe.get('PR_DICT');
@@ -1140,13 +1081,13 @@ classdef PanelElement < Panel
 					        pr.get('CLOSE', 'CloseParentFigure', false)
 					    end
 					    
-					    calculateValue@Panel(pe, Panel.CLOSE, varargin{:});
+					    calculateValue@Panel(pe, 19, varargin{:});
 					    
 					    value = true;
 					else
 					    warning( ...
-					        [BRAPH2.STR ':' class(pe)], ...
-					        [BRAPH2.STR ':' class(pe) '\n' ...
+					        ['BRAPH2' ':' class(pe)], ...
+					        ['BRAPH2' ':' class(pe) '\n' ...
 					        'The call pe.get(''CLOSE'') has NOT been executed.\n' ...
 					        'First, the panel ' pe.get('ID') ' should be drawn calling pe.get(''DRAW'').\n' ...
 					        'Probably, not a big deal, but this shouldn''t happen with well-written code!'] ...
@@ -1155,7 +1096,7 @@ classdef PanelElement < Panel
 					end
 					
 				otherwise
-					if prop <= Panel.getPropNumber()
+					if prop <= 19
 						value = calculateValue@Panel(pe, prop, varargin{:});
 					else
 						value = calculateValue@Element(pe, prop, varargin{:});
@@ -1166,7 +1107,7 @@ classdef PanelElement < Panel
 				pe.get(varargin{:})
 			end
 			function cb_listener_ppheight(~, event)
-			    if ismember(PanelProp.HEIGHT, cell2mat(event.props)) && pe.get('DRAWN')
+			    if ismember(25, cell2mat(event.props)) && pe.get('DRAWN')
 			        pe.get('RESIZEY')
 			    end
 			end

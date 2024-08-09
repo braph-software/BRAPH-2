@@ -5,6 +5,46 @@ classdef PanelPropLine < PanelProp
 	% A Line Prop Panel (PanelPropLine) plots the panel for an LINE property with a drop-down list.
 	% It works for all categories.
 	%
+	% The list of PanelPropLine properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the line property panel.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the line property panel.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the line property panel.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line property panel.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line property panel.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line property panel.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line property panel.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+	%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+	%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+	%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+	%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+	%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+	%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
+	%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+	%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+	%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+	%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+	%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+	%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+	%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+	%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+	%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+	%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the marker value dropdown.
+	%  <strong>37</strong> <strong>AXES</strong> 	AXES (evanescent, handle) is the marker value axes.
+	%  <strong>38</strong> <strong>LN</strong> 	LN (evanescent, handle) is the marker value line.
+	%
 	% PanelPropLine methods (constructor):
 	%  PanelPropLine - constructor
 	%
@@ -94,20 +134,20 @@ classdef PanelPropLine < PanelProp
 	% See also uidropdown, uiaxes, line, GUI, PanelElement.
 	
 	properties (Constant) % properties
-		DROPDOWN = PanelProp.getPropNumber() + 1;
+		DROPDOWN = 36; %CET: Computational Efficiency Trick
 		DROPDOWN_TAG = 'DROPDOWN';
-		DROPDOWN_CATEGORY = Category.EVANESCENT;
-		DROPDOWN_FORMAT = Format.HANDLE;
+		DROPDOWN_CATEGORY = 7;
+		DROPDOWN_FORMAT = 18;
 		
-		AXES = PanelProp.getPropNumber() + 2;
+		AXES = 37; %CET: Computational Efficiency Trick
 		AXES_TAG = 'AXES';
-		AXES_CATEGORY = Category.EVANESCENT;
-		AXES_FORMAT = Format.HANDLE;
+		AXES_CATEGORY = 7;
+		AXES_FORMAT = 18;
 		
-		LN = PanelProp.getPropNumber() + 3;
+		LN = 38; %CET: Computational Efficiency Trick
 		LN_TAG = 'LN';
-		LN_CATEGORY = Category.EVANESCENT;
-		LN_FORMAT = Format.HANDLE;
+		LN_CATEGORY = 7;
+		LN_FORMAT = 18;
 	end
 	methods % constructor
 		function pr = PanelPropLine(varargin)
@@ -120,6 +160,45 @@ classdef PanelPropLine < PanelProp
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of PanelPropLine properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the line property panel.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the line property panel.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the line property panel.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the line property panel.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the line property panel.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the line property panel.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the line property panel.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the property panel.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.
+			%  <strong>20</strong> <strong>X_DRAW</strong> 	X_DRAW (query, logical) draws the property panel.
+			%  <strong>21</strong> <strong>UPDATE</strong> 	UPDATE (query, logical) updates the content and permissions of the editfield.
+			%  <strong>22</strong> <strong>REDRAW</strong> 	REDRAW (query, logical) resizes the property panel and repositions its graphical objects.
+			%  <strong>23</strong> <strong>EL</strong> 	EL (data, item) is the element.
+			%  <strong>24</strong> <strong>PROP</strong> 	PROP (data, scalar) is the property number.
+			%  <strong>25</strong> <strong>HEIGHT</strong> 	HEIGHT (gui, size) is the pixel height of the property panel.
+			%  <strong>26</strong> <strong>TITLE</strong> 	TITLE (gui, string) is the property title.
+			%  <strong>27</strong> <strong>LABEL_TITLE</strong> 	LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.
+			%  <strong>28</strong> <strong>BUTTON_CB</strong> 	BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].
+			%  <strong>29</strong> <strong>GUI_CB</strong> 	GUI_CB (data, item) is the handle to the item figure.
+			%  <strong>30</strong> <strong>LISTENER_CB</strong> 	LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.
+			%  <strong>31</strong> <strong>BUTTON_CALC</strong> 	BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>32</strong> <strong>BUTTON_DEL</strong> 	BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].
+			%  <strong>33</strong> <strong>LISTENER_SET</strong> 	LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.
+			%  <strong>34</strong> <strong>LISTENER_MEMORIZED</strong> 	LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.
+			%  <strong>35</strong> <strong>LISTENER_LOCKED</strong> 	LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.
+			%  <strong>36</strong> <strong>DROPDOWN</strong> 	DROPDOWN (evanescent, handle) is the marker value dropdown.
+			%  <strong>37</strong> <strong>AXES</strong> 	AXES (evanescent, handle) is the marker value axes.
+			%  <strong>38</strong> <strong>LN</strong> 	LN (evanescent, handle) is the marker value line.
 			%
 			% See also Category, Format.
 			
@@ -157,7 +236,7 @@ classdef PanelPropLine < PanelProp
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('PanelPropLine', [], [], true);
+			subclass_list = { 'PanelPropLine' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of line prop panel.
@@ -178,56 +257,32 @@ classdef PanelPropLine < PanelProp
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					PanelProp.getProps() ...
-						PanelPropLine.DROPDOWN ...
-						PanelPropLine.AXES ...
-						PanelPropLine.LN ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						PanelProp.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						PanelProp.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						PanelProp.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						PanelProp.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						PanelProp.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						PanelProp.getProps(Category.EVANESCENT) ...
-						PanelPropLine.DROPDOWN ...
-						PanelPropLine.AXES ...
-						PanelPropLine.LN ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						PanelProp.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						PanelProp.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 23 24 29];
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 20 21 22];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 27 28 30 31 32 33 34 35 36 37 38];
+				case 8 % Category.FIGURE
+					prop_list = 14;
+				case 9 % Category.GUI
+					prop_list = [9 13 25 26];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -248,7 +303,33 @@ classdef PanelPropLine < PanelProp
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(PanelPropLine.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 38;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 10;
+				case 7 % Category.EVANESCENT
+					prop_number = 13;
+				case 8 % Category.FIGURE
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 4;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in line prop panel/error.
@@ -276,14 +357,14 @@ classdef PanelPropLine < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == PanelPropLine.getProps());
+			check = prop >= 1 && prop <= 38 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for PanelPropLine.'] ...
 					)
 			end
@@ -314,15 +395,14 @@ classdef PanelPropLine < PanelProp
 			%
 			% See also getProps, existsTag.
 			
-			panelpropline_tag_list = cellfun(@(x) PanelPropLine.getPropTag(x), num2cell(PanelPropLine.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, panelpropline_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN'  'AXES'  'LN' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for PanelPropLine.'] ...
 					)
 			end
@@ -348,8 +428,7 @@ classdef PanelPropLine < PanelProp
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				panelpropline_tag_list = cellfun(@(x) PanelPropLine.getPropTag(x), num2cell(PanelPropLine.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, panelpropline_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN'  'AXES'  'LN' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -377,18 +456,9 @@ classdef PanelPropLine < PanelProp
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case PanelPropLine.DROPDOWN
-						tag = PanelPropLine.DROPDOWN_TAG;
-					case PanelPropLine.AXES
-						tag = PanelPropLine.AXES_TAG;
-					case PanelPropLine.LN
-						tag = PanelPropLine.LN_TAG;
-					otherwise
-						tag = getPropTag@PanelProp(prop);
-				end
+				%CET: Computational Efficiency Trick
+				panelpropline_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'X_DRAW'  'UPDATE'  'REDRAW'  'EL'  'PROP'  'HEIGHT'  'TITLE'  'LABEL_TITLE'  'BUTTON_CB'  'GUI_CB'  'LISTENER_CB'  'BUTTON_CALC'  'BUTTON_DEL'  'LISTENER_SET'  'LISTENER_MEMORIZED'  'LISTENER_LOCKED'  'DROPDOWN'  'AXES'  'LN' };
+				tag = panelpropline_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -413,16 +483,9 @@ classdef PanelPropLine < PanelProp
 			
 			prop = PanelPropLine.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropLine.DROPDOWN
-					prop_category = PanelPropLine.DROPDOWN_CATEGORY;
-				case PanelPropLine.AXES
-					prop_category = PanelPropLine.AXES_CATEGORY;
-				case PanelPropLine.LN
-					prop_category = PanelPropLine.LN_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropline_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  6  6  6  4  4  9  9  7  7  4  7  7  7  7  7  7  7  7  7 };
+			prop_category = panelpropline_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -446,16 +509,9 @@ classdef PanelPropLine < PanelProp
 			
 			prop = PanelPropLine.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropLine.DROPDOWN
-					prop_format = PanelPropLine.DROPDOWN_FORMAT;
-				case PanelPropLine.AXES
-					prop_format = PanelPropLine.AXES_FORMAT;
-				case PanelPropLine.LN
-					prop_format = PanelPropLine.LN_FORMAT;
-				otherwise
-					prop_format = getPropFormat@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropline_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  4  4  4  8  11  22  2  18  18  8  18  18  18  19  19  19  18  18  18 };
+			prop_format = panelpropline_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -479,44 +535,9 @@ classdef PanelPropLine < PanelProp
 			
 			prop = PanelPropLine.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropLine.DROPDOWN
-					prop_description = 'DROPDOWN (evanescent, handle) is the marker value dropdown.';
-				case PanelPropLine.AXES
-					prop_description = 'AXES (evanescent, handle) is the marker value axes.';
-				case PanelPropLine.LN
-					prop_description = 'LN (evanescent, handle) is the marker value line.';
-				case PanelPropLine.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the line property panel.';
-				case PanelPropLine.NAME
-					prop_description = 'NAME (constant, string) is the name of the line property panel.';
-				case PanelPropLine.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the line property panel.';
-				case PanelPropLine.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the line property panel.';
-				case PanelPropLine.ID
-					prop_description = 'ID (data, string) is a few-letter code for the line property panel.';
-				case PanelPropLine.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the line property panel.';
-				case PanelPropLine.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the line property panel.';
-				case PanelPropLine.EL
-					prop_description = 'EL (data, item) is the element.';
-				case PanelPropLine.PROP
-					prop_description = 'PROP (data, scalar) is the property number.';
-				case PanelPropLine.HEIGHT
-					prop_description = 'HEIGHT (gui, size) is the pixel height of the property panel.';
-				case PanelPropLine.X_DRAW
-					prop_description = 'X_DRAW (query, logical) draws the property panel.';
-				case PanelPropLine.UPDATE
-					prop_description = 'UPDATE (query, logical) updates the content and permissions of the editfield.';
-				case PanelPropLine.REDRAW
-					prop_description = 'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.';
-				case PanelPropLine.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel is deleted.';
-				otherwise
-					prop_description = getPropDescription@PanelProp(prop);
-			end
+			%CET: Computational Efficiency Trick
+			panelpropline_description_list = { 'ELCLASS (constant, string) is the class of the line property panel.'  'NAME (constant, string) is the name of the line property panel.'  'DESCRIPTION (constant, string) is the description of the line property panel.'  'TEMPLATE (parameter, item) is the template of the line property panel.'  'ID (data, string) is a few-letter code for the line property panel.'  'LABEL (metadata, string) is an extended label of the line property panel.'  'NOTES (metadata, string) are some specific notes about the line property panel.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the property panel.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel and, possibly, the callback figure.'  'HIDE (query, logical) hides the figure containing the panel and, possibly, the callback figure.'  'DELETE (query, logical) resets the handles when the panel is deleted.'  'CLOSE (query, logical) closes the figure containing the panel and, possibly, the callback figure.'  'X_DRAW (query, logical) draws the property panel.'  'UPDATE (query, logical) updates the content and permissions of the editfield.'  'REDRAW (query, logical) resizes the property panel and repositions its graphical objects.'  'EL (data, item) is the element.'  'PROP (data, scalar) is the property number.'  'HEIGHT (gui, size) is the pixel height of the property panel.'  'TITLE (gui, string) is the property title.'  'LABEL_TITLE (evanescent, handle) is the handle for the title uilabel.'  'BUTTON_CB (evanescent, handle) is the handle for the callback button [only for PARAMETER, DATA, FIGURE and GUI].'  'GUI_CB (data, item) is the handle to the item figure.'  'LISTENER_CB (evanescent, handle) contains the listener to the updates in the property callback.'  'BUTTON_CALC (evanescent, handle) is the handle for the calculate button [only for RESULT, QUERY and EVANESCENT].'  'BUTTON_DEL (evanescent, handle) is the handle for the delete button [only for RESULT, QUERY and EVANESCENT].'  'LISTENER_SET (evanescent, handlelist) contains the listeners to the PropSet events.'  'LISTENER_MEMORIZED (evanescent, handlelist) contains the listeners to the PropMemorized events.'  'LISTENER_LOCKED (evanescent, handlelist) contains the listeners to the PropLocked events.'  'DROPDOWN (evanescent, handle) is the marker value dropdown.'  'AXES (evanescent, handle) is the marker value axes.'  'LN (evanescent, handle) is the marker value line.' };
+			prop_description = panelpropline_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -540,14 +561,14 @@ classdef PanelPropLine < PanelProp
 			
 			prop = PanelPropLine.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropLine.DROPDOWN
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropLine.AXES
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropLine.LN
-					prop_settings = Format.getFormatSettings(Format.HANDLE);
-				case PanelPropLine.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropLine.DROPDOWN
+					prop_settings = Format.getFormatSettings(18);
+				case 37 % PanelPropLine.AXES
+					prop_settings = Format.getFormatSettings(18);
+				case 38 % PanelPropLine.LN
+					prop_settings = Format.getFormatSettings(18);
+				case 4 % PanelPropLine.TEMPLATE
 					prop_settings = 'PanelPropLine';
 				otherwise
 					prop_settings = getPropSettings@PanelProp(prop);
@@ -575,33 +596,33 @@ classdef PanelPropLine < PanelProp
 			
 			prop = PanelPropLine.getPropProp(pointer);
 			
-			switch prop
-				case PanelPropLine.DROPDOWN
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.AXES
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.LN
-					prop_default = Format.getFormatDefault(Format.HANDLE, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 36 % PanelPropLine.DROPDOWN
+					prop_default = Format.getFormatDefault(18, PanelPropLine.getPropSettings(prop));
+				case 37 % PanelPropLine.AXES
+					prop_default = Format.getFormatDefault(18, PanelPropLine.getPropSettings(prop));
+				case 38 % PanelPropLine.LN
+					prop_default = Format.getFormatDefault(18, PanelPropLine.getPropSettings(prop));
+				case 1 % PanelPropLine.ELCLASS
 					prop_default = 'PanelPropLine';
-				case PanelPropLine.NAME
+				case 2 % PanelPropLine.NAME
 					prop_default = 'Line Prop Panel';
-				case PanelPropLine.DESCRIPTION
+				case 3 % PanelPropLine.DESCRIPTION
 					prop_default = 'A Line Prop Panel (PanelPropLine) plots the panel for an LINE property with a drop-down list. It works for all categories.';
-				case PanelPropLine.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.ID
+				case 4 % PanelPropLine.TEMPLATE
+					prop_default = Format.getFormatDefault(8, PanelPropLine.getPropSettings(prop));
+				case 5 % PanelPropLine.ID
 					prop_default = 'PanelPropLine ID';
-				case PanelPropLine.LABEL
+				case 6 % PanelPropLine.LABEL
 					prop_default = 'PanelPropLine label';
-				case PanelPropLine.NOTES
+				case 7 % PanelPropLine.NOTES
 					prop_default = 'PanelPropLine notes';
-				case PanelPropLine.EL
+				case 23 % PanelPropLine.EL
 					prop_default = SettingsLine();
-				case PanelPropLine.PROP
-					prop_default = SettingsLine.LINESTYLE;
-				case PanelPropLine.HEIGHT
-					prop_default = s(4);
+				case 24 % PanelPropLine.PROP
+					prop_default = 19;
+				case 25 % PanelPropLine.HEIGHT
+					prop_default = 48;
 				otherwise
 					prop_default = getPropDefault@PanelProp(prop);
 			end
@@ -647,15 +668,15 @@ classdef PanelPropLine < PanelProp
 			% 
 			% PR.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:PanelPropLine:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:PanelPropLine:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PR.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PR.
-			%   Error id: €BRAPH2.STR€:PanelPropLine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropLine:WrongInput
 			%  Element.CHECKPROP(PanelPropLine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropLine.
-			%   Error id: €BRAPH2.STR€:PanelPropLine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:PanelPropLine:WrongInput
 			%  PR.CHECKPROP(PanelPropLine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of PanelPropLine.
-			%   Error id: €BRAPH2.STR€:PanelPropLine:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:PanelPropLine:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PR) and Element.CHECKPROP('PanelPropLine')
 			%  are less computationally efficient.
@@ -666,16 +687,16 @@ classdef PanelPropLine < PanelProp
 			prop = PanelPropLine.getPropProp(pointer);
 			
 			switch prop
-				case PanelPropLine.DROPDOWN % __PanelPropLine.DROPDOWN__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.AXES % __PanelPropLine.AXES__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.LN % __PanelPropLine.LN__
-					check = Format.checkFormat(Format.HANDLE, value, PanelPropLine.getPropSettings(prop));
-				case PanelPropLine.TEMPLATE % __PanelPropLine.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, PanelPropLine.getPropSettings(prop));
+				case 36 % PanelPropLine.DROPDOWN
+					check = Format.checkFormat(18, value, PanelPropLine.getPropSettings(prop));
+				case 37 % PanelPropLine.AXES
+					check = Format.checkFormat(18, value, PanelPropLine.getPropSettings(prop));
+				case 38 % PanelPropLine.LN
+					check = Format.checkFormat(18, value, PanelPropLine.getPropSettings(prop));
+				case 4 % PanelPropLine.TEMPLATE
+					check = Format.checkFormat(8, value, PanelPropLine.getPropSettings(prop));
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						check = checkProp@PanelProp(prop, value);
 					end
 			end
@@ -684,8 +705,8 @@ classdef PanelPropLine < PanelProp
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':PanelPropLine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput'], ...
+					['BRAPH2' ':PanelPropLine:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' PanelPropLine.getPropTag(prop) ' (' PanelPropLine.getFormatTag(PanelPropLine.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -696,19 +717,19 @@ classdef PanelPropLine < PanelProp
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case PanelPropLine.DROPDOWN % __PanelPropLine.DROPDOWN__
+				case 36 % PanelPropLine.DROPDOWN
 					el = pr.get('EL');
 					prop = pr.get('PROP');
 					
@@ -716,14 +737,14 @@ classdef PanelPropLine < PanelProp
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'DROPDOWN', ...
 					    'Items', el.getPropSettings(prop), ...
-					    'FontSize', BRAPH2.FONTSIZE, ...
+					    'FontSize', 12, ...
 					    'Tooltip', [num2str(el.getPropProp(prop)) ' ' el.getPropDescription(prop)], ...
 					    'ValueChangedFcn', {@cb_dropdown} ...
 					    );
 					
 					value = dropdown;
 					
-				case PanelPropLine.AXES % __PanelPropLine.AXES__
+				case 37 % PanelPropLine.AXES
 					axes = uiaxes( ...
 					    'Parent', pr.memorize('H'), ... % H = p for Panel
 					    'Tag', 'AXES' ...
@@ -734,7 +755,7 @@ classdef PanelPropLine < PanelProp
 					
 					value = axes;
 					
-				case PanelPropLine.LN % __PanelPropLine.LN__
+				case 38 % PanelPropLine.LN
 					axes = pr.memorize('AXES');
 					
 					ln = plot(axes, ...
@@ -748,29 +769,29 @@ classdef PanelPropLine < PanelProp
 					
 					value = ln;
 					
-				case PanelPropLine.X_DRAW % __PanelPropLine.X_DRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.X_DRAW, varargin{:}); % also warning
+				case 20 % PanelPropLine.X_DRAW
+					value = calculateValue@PanelProp(pr, 20, varargin{:}); % also warning
 					if value
 					    pr.memorize('DROPDOWN')
 					    pr.memorize('AXES')
 					    pr.memorize('LN')
 					end
 					
-				case PanelPropLine.UPDATE % __PanelPropLine.UPDATE__
-					value = calculateValue@PanelProp(pr, PanelProp.UPDATE, varargin{:}); % also warning
+				case 21 % PanelPropLine.UPDATE
+					value = calculateValue@PanelProp(pr, 21, varargin{:}); % also warning
 					if value
 					    el = pr.get('EL');
 					    prop = pr.get('PROP');
 					    
 					    switch el.getPropCategory(prop)
-					        case Category.CONSTANT
+					        case 1
 					            set(pr.get('DROPDOWN'), ...
 					                'Value', el.get(prop), ...
 					                'Enable', 'off' ...
 					                )
 					            set(pr.get('LN'), 'LineStyle', el.get(prop))
 					            
-					        case Category.METADATA
+					        case 2
 					            set(pr.get('DROPDOWN'), 'Value', el.get(prop))
 					            set(pr.get('LN'), 'LineStyle', el.get(prop))
 					
@@ -778,7 +799,7 @@ classdef PanelPropLine < PanelProp
 					                set(pr.get('DROPDOWN'), 'Enable', 'off')
 					            end
 					            
-					        case {Category.PARAMETER, Category.DATA, Category.FIGURE, Category.GUI}
+					        case {3, 4, 8, 9}
 					            set(pr.get('DROPDOWN'), 'Value', el.get(prop))
 					            set(pr.get('LN'), 'LineStyle', el.get(prop))
 					
@@ -787,7 +808,7 @@ classdef PanelPropLine < PanelProp
 					                set(pr.get('DROPDOWN'), 'Enable', 'off')
 					            end
 					
-					        case {Category.RESULT Category.QUERY Category.EVANESCENT}
+					        case {5 6 7}
 					            prop_value = el.getr(prop);
 					
 					            if isa(prop_value, 'NoValue')
@@ -802,17 +823,17 @@ classdef PanelPropLine < PanelProp
 					    end
 					end
 					
-				case PanelPropLine.REDRAW % __PanelPropLine.REDRAW__
-					value = calculateValue@PanelProp(pr, PanelProp.REDRAW, varargin{:}); % also warning
+				case 22 % PanelPropLine.REDRAW
+					value = calculateValue@PanelProp(pr, 22, varargin{:}); % also warning
 					if value 
 					    w_p = get_from_varargin(w(pr.get('H'), 'pixels'), 'Width', varargin);
 					    
-					    set(pr.get('DROPDOWN'), 'Position', [s(.3) s(.3) .15*w_p s(1.75)])
-					    set(pr.get('AXES'), 'InnerPosition', [s(.3)+.15*w_p+s(1.7) s(.3) .70*w_p s(1.7)])
+					    set(pr.get('DROPDOWN'), 'Position', [4 4 .15*w_p 21])
+					    set(pr.get('AXES'), 'InnerPosition', [4+.15*w_p+21 4 .70*w_p 21])
 					end
 					
-				case PanelPropLine.DELETE % __PanelPropLine.DELETE__
-					value = calculateValue@PanelProp(pr, PanelProp.DELETE, varargin{:}); % also warning
+				case 18 % PanelPropLine.DELETE
+					value = calculateValue@PanelProp(pr, 18, varargin{:}); % also warning
 					if value
 					    pr.set('DROPDOWN', Element.getNoValue())
 					    pr.set('AXES', Element.getNoValue())
@@ -820,7 +841,7 @@ classdef PanelPropLine < PanelProp
 					end
 					
 				otherwise
-					if prop <= PanelProp.getPropNumber()
+					if prop <= 35
 						value = calculateValue@PanelProp(pr, prop, varargin{:});
 					else
 						value = calculateValue@Element(pr, prop, varargin{:});

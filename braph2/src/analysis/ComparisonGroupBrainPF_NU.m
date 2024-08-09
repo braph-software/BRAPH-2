@@ -4,6 +4,61 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 	%
 	% ComparisonGroupBrainPF_NU manages the basic functionalities to plot of a nodal unilayer group comparison on brain surface figure.
 	%
+	% The list of ComparisonGroupBrainPF_NU properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer group comparison on brain surface figure.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+	%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+	%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
+	%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+	%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+	%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+	%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+	%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+	%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+	%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+	%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+	%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+	%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+	%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+	%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+	%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+	%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+	%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+	%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+	%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+	%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+	%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+	%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+	%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+	%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+	%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+	%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+	%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+	%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+	%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+	%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+	%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+	%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+	%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+	%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+	%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+	%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+	%  <strong>46</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison on brain surface.
+	%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+	%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
+	%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
+	%  <strong>50</strong> <strong>SIZE_SCALE</strong> 	SIZE_SCALE (figure, scalar) determines the scale of size effect.
+	%  <strong>51</strong> <strong>COLOR_DIFF</strong> 	COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.
+	%  <strong>52</strong> <strong>FDR</strong> 	FDR (figure, option) determines whether the difference is shown with FDR correction.
+	%  <strong>53</strong> <strong>QVALUE</strong> 	QVALUE (figure, scalar) determines the QVALUE for FDR correction.
+	%
 	% ComparisonGroupBrainPF_NU methods (constructor):
 	%  ComparisonGroupBrainPF_NU - constructor
 	%
@@ -93,35 +148,35 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 	% See also ComparisonGroup, ComparisonGroupBrainPF.
 	
 	properties (Constant) % properties
-		LAYER = ComparisonGroupBrainPF.getPropNumber() + 1;
+		LAYER = 48; %CET: Computational Efficiency Trick
 		LAYER_TAG = 'LAYER';
-		LAYER_CATEGORY = Category.FIGURE;
-		LAYER_FORMAT = Format.SCALAR;
+		LAYER_CATEGORY = 8;
+		LAYER_FORMAT = 11;
 		
-		SIZE_DIFF = ComparisonGroupBrainPF.getPropNumber() + 2;
+		SIZE_DIFF = 49; %CET: Computational Efficiency Trick
 		SIZE_DIFF_TAG = 'SIZE_DIFF';
-		SIZE_DIFF_CATEGORY = Category.FIGURE;
-		SIZE_DIFF_FORMAT = Format.OPTION;
+		SIZE_DIFF_CATEGORY = 8;
+		SIZE_DIFF_FORMAT = 5;
 		
-		SIZE_SCALE = ComparisonGroupBrainPF.getPropNumber() + 3;
+		SIZE_SCALE = 50; %CET: Computational Efficiency Trick
 		SIZE_SCALE_TAG = 'SIZE_SCALE';
-		SIZE_SCALE_CATEGORY = Category.FIGURE;
-		SIZE_SCALE_FORMAT = Format.SCALAR;
+		SIZE_SCALE_CATEGORY = 8;
+		SIZE_SCALE_FORMAT = 11;
 		
-		COLOR_DIFF = ComparisonGroupBrainPF.getPropNumber() + 4;
+		COLOR_DIFF = 51; %CET: Computational Efficiency Trick
 		COLOR_DIFF_TAG = 'COLOR_DIFF';
-		COLOR_DIFF_CATEGORY = Category.FIGURE;
-		COLOR_DIFF_FORMAT = Format.OPTION;
+		COLOR_DIFF_CATEGORY = 8;
+		COLOR_DIFF_FORMAT = 5;
 		
-		FDR = ComparisonGroupBrainPF.getPropNumber() + 5;
+		FDR = 52; %CET: Computational Efficiency Trick
 		FDR_TAG = 'FDR';
-		FDR_CATEGORY = Category.FIGURE;
-		FDR_FORMAT = Format.OPTION;
+		FDR_CATEGORY = 8;
+		FDR_FORMAT = 5;
 		
-		QVALUE = ComparisonGroupBrainPF.getPropNumber() + 6;
+		QVALUE = 53; %CET: Computational Efficiency Trick
 		QVALUE_TAG = 'QVALUE';
-		QVALUE_CATEGORY = Category.FIGURE;
-		QVALUE_FORMAT = Format.SCALAR;
+		QVALUE_CATEGORY = 8;
+		QVALUE_FORMAT = 11;
 	end
 	methods % constructor
 		function pf = ComparisonGroupBrainPF_NU(varargin)
@@ -134,6 +189,60 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of ComparisonGroupBrainPF_NU properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer group comparison on brain surface figure.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) detemines whether to show the waitbar.
+			%  <strong>10</strong> <strong>H_WAITBAR</strong> 	H_WAITBAR (evanescent, handle) is the waitbar handle.
+			%  <strong>11</strong> <strong>DRAW</strong> 	DRAW (query, logical) draws the figure brain atlas.
+			%  <strong>12</strong> <strong>DRAWN</strong> 	DRAWN (query, logical) returns whether the panel has been drawn.
+			%  <strong>13</strong> <strong>PARENT</strong> 	PARENT (gui, item) is the panel parent.
+			%  <strong>14</strong> <strong>BKGCOLOR</strong> 	BKGCOLOR (figure, color) is the panel background color.
+			%  <strong>15</strong> <strong>H</strong> 	H (evanescent, handle) is the panel handle.
+			%  <strong>16</strong> <strong>SHOW</strong> 	SHOW (query, logical) shows the figure containing the panel.
+			%  <strong>17</strong> <strong>HIDE</strong> 	HIDE (query, logical) hides the figure containing the panel.
+			%  <strong>18</strong> <strong>DELETE</strong> 	DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.
+			%  <strong>19</strong> <strong>CLOSE</strong> 	CLOSE (query, logical) closes the figure containing the panel.
+			%  <strong>20</strong> <strong>ST_POSITION</strong> 	ST_POSITION (figure, item) determines the panel position.
+			%  <strong>21</strong> <strong>H_TOOLBAR</strong> 	H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.
+			%  <strong>22</strong> <strong>H_TOOLS</strong> 	H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.
+			%  <strong>23</strong> <strong>H_AXES</strong> 	H_AXES (evanescent, handle) is the handle for the axes.
+			%  <strong>24</strong> <strong>VIEW</strong> 	VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
+			%  <strong>25</strong> <strong>ST_AXIS</strong> 	ST_AXIS (figure, item) determines the axis settings.
+			%  <strong>26</strong> <strong>LISTENER_ST_AXIS</strong> 	LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.
+			%  <strong>27</strong> <strong>SURFFILE</strong> 	SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.
+			%  <strong>28</strong> <strong>SURF</strong> 	SURF (metadata, item) is the brain surface to be plotted.
+			%  <strong>29</strong> <strong>H_BRAIN</strong> 	H_BRAIN (evanescent, handle) is the handle for brain surface.
+			%  <strong>30</strong> <strong>BRAIN</strong> 	BRAIN (figure, logical) determines whether the brain surface is shown.
+			%  <strong>31</strong> <strong>ST_SURFACE</strong> 	ST_SURFACE (figure, item) determines the surface settings.
+			%  <strong>32</strong> <strong>ST_AMBIENT</strong> 	ST_AMBIENT (figure, item) determines the ambient settings.
+			%  <strong>33</strong> <strong>BA</strong> 	BA (metadata, item) is the brain atlas with the brain regions.
+			%  <strong>34</strong> <strong>H_SPHS</strong> 	H_SPHS (evanescent, handlelist) is the set of handles for the spheres.
+			%  <strong>35</strong> <strong>SPHS</strong> 	SPHS (figure, logical) determines whether the spheres are shown.
+			%  <strong>36</strong> <strong>SPH_DICT</strong> 	SPH_DICT (figure, idict) contains the spheres of the brain regions.
+			%  <strong>37</strong> <strong>H_SYMS</strong> 	H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
+			%  <strong>38</strong> <strong>SYMS</strong> 	SYMS (figure, logical) determines whether the symbols are shown.
+			%  <strong>39</strong> <strong>SYM_DICT</strong> 	SYM_DICT (figure, idict) contains the symbols of the brain regions.
+			%  <strong>40</strong> <strong>H_IDS</strong> 	H_IDS (evanescent, handlelist) is the set of handles for the ids.
+			%  <strong>41</strong> <strong>IDS</strong> 	IDS (figure, logical) determines whether the ids are shown.
+			%  <strong>42</strong> <strong>ID_DICT</strong> 	ID_DICT (figure, idict) contains the ids of the brain regions.
+			%  <strong>43</strong> <strong>H_LABS</strong> 	H_LABS (evanescent, handlelist) is the set of handles for the labels.
+			%  <strong>44</strong> <strong>LABS</strong> 	LABS (figure, logical) determines whether the labels are shown.
+			%  <strong>45</strong> <strong>LAB_DICT</strong> 	LAB_DICT (figure, idict) contains the labels of the brain regions.
+			%  <strong>46</strong> <strong>CP</strong> 	CP (metadata, item) is the group comparison on brain surface.
+			%  <strong>47</strong> <strong>SETUP</strong> 	SETUP (query, empty) calculates the group comparison figure value and stores it.
+			%  <strong>48</strong> <strong>LAYER</strong> 	LAYER (figure, scalar) is the layer number of the nodal measure.
+			%  <strong>49</strong> <strong>SIZE_DIFF</strong> 	SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.
+			%  <strong>50</strong> <strong>SIZE_SCALE</strong> 	SIZE_SCALE (figure, scalar) determines the scale of size effect.
+			%  <strong>51</strong> <strong>COLOR_DIFF</strong> 	COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.
+			%  <strong>52</strong> <strong>FDR</strong> 	FDR (figure, option) determines whether the difference is shown with FDR correction.
+			%  <strong>53</strong> <strong>QVALUE</strong> 	QVALUE (figure, scalar) determines the QVALUE for FDR correction.
 			%
 			% See also Category, Format.
 			
@@ -171,7 +280,7 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('ComparisonGroupBrainPF_NU', [], [], true);
+			subclass_list = { 'ComparisonGroupBrainPF_NU' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of panel nodal unilayer group comparison on brain surface figure.
@@ -192,62 +301,32 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ComparisonGroupBrainPF.getProps() ...
-						ComparisonGroupBrainPF_NU.LAYER ...
-						ComparisonGroupBrainPF_NU.SIZE_DIFF ...
-						ComparisonGroupBrainPF_NU.SIZE_SCALE ...
-						ComparisonGroupBrainPF_NU.COLOR_DIFF ...
-						ComparisonGroupBrainPF_NU.FDR ...
-						ComparisonGroupBrainPF_NU.QVALUE ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ComparisonGroupBrainPF.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.FIGURE) ...
-						ComparisonGroupBrainPF_NU.LAYER ...
-						ComparisonGroupBrainPF_NU.SIZE_DIFF ...
-						ComparisonGroupBrainPF_NU.SIZE_SCALE ...
-						ComparisonGroupBrainPF_NU.COLOR_DIFF ...
-						ComparisonGroupBrainPF_NU.FDR ...
-						ComparisonGroupBrainPF_NU.QVALUE ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ComparisonGroupBrainPF.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 28 33 46];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 11 12 16 17 18 19 47];
+				case 7 % Category.EVANESCENT
+					prop_list = [10 15 21 22 23 26 29 34 37 40 43];
+				case 8 % Category.FIGURE
+					prop_list = [14 20 24 25 27 30 31 32 35 36 38 39 41 42 44 45 48 49 50 51 52 53];
+				case 9 % Category.GUI
+					prop_list = [9 13];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -268,7 +347,33 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(ComparisonGroupBrainPF_NU.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 53;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 5;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 8;
+				case 7 % Category.EVANESCENT
+					prop_number = 11;
+				case 8 % Category.FIGURE
+					prop_number = 22;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in panel nodal unilayer group comparison on brain surface figure/error.
@@ -296,14 +401,14 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == ComparisonGroupBrainPF_NU.getProps());
+			check = prop >= 1 && prop <= 53 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for ComparisonGroupBrainPF_NU.'] ...
 					)
 			end
@@ -334,15 +439,14 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%
 			% See also getProps, existsTag.
 			
-			comparisongroupbrainpf_nu_tag_list = cellfun(@(x) ComparisonGroupBrainPF_NU.getPropTag(x), num2cell(ComparisonGroupBrainPF_NU.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, comparisongroupbrainpf_nu_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF'  'FDR'  'QVALUE' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for ComparisonGroupBrainPF_NU.'] ...
 					)
 			end
@@ -368,8 +472,7 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				comparisongroupbrainpf_nu_tag_list = cellfun(@(x) ComparisonGroupBrainPF_NU.getPropTag(x), num2cell(ComparisonGroupBrainPF_NU.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, comparisongroupbrainpf_nu_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF'  'FDR'  'QVALUE' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -397,24 +500,9 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case ComparisonGroupBrainPF_NU.LAYER
-						tag = ComparisonGroupBrainPF_NU.LAYER_TAG;
-					case ComparisonGroupBrainPF_NU.SIZE_DIFF
-						tag = ComparisonGroupBrainPF_NU.SIZE_DIFF_TAG;
-					case ComparisonGroupBrainPF_NU.SIZE_SCALE
-						tag = ComparisonGroupBrainPF_NU.SIZE_SCALE_TAG;
-					case ComparisonGroupBrainPF_NU.COLOR_DIFF
-						tag = ComparisonGroupBrainPF_NU.COLOR_DIFF_TAG;
-					case ComparisonGroupBrainPF_NU.FDR
-						tag = ComparisonGroupBrainPF_NU.FDR_TAG;
-					case ComparisonGroupBrainPF_NU.QVALUE
-						tag = ComparisonGroupBrainPF_NU.QVALUE_TAG;
-					otherwise
-						tag = getPropTag@ComparisonGroupBrainPF(prop);
-				end
+				%CET: Computational Efficiency Trick
+				comparisongroupbrainpf_nu_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'WAITBAR'  'H_WAITBAR'  'DRAW'  'DRAWN'  'PARENT'  'BKGCOLOR'  'H'  'SHOW'  'HIDE'  'DELETE'  'CLOSE'  'ST_POSITION'  'H_TOOLBAR'  'H_TOOLS'  'H_AXES'  'VIEW'  'ST_AXIS'  'LISTENER_ST_AXIS'  'SURFFILE'  'SURF'  'H_BRAIN'  'BRAIN'  'ST_SURFACE'  'ST_AMBIENT'  'BA'  'H_SPHS'  'SPHS'  'SPH_DICT'  'H_SYMS'  'SYMS'  'SYM_DICT'  'H_IDS'  'IDS'  'ID_DICT'  'H_LABS'  'LABS'  'LAB_DICT'  'CP'  'SETUP'  'LAYER'  'SIZE_DIFF'  'SIZE_SCALE'  'COLOR_DIFF'  'FDR'  'QVALUE' };
+				tag = comparisongroupbrainpf_nu_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -439,22 +527,9 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER
-					prop_category = ComparisonGroupBrainPF_NU.LAYER_CATEGORY;
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF
-					prop_category = ComparisonGroupBrainPF_NU.SIZE_DIFF_CATEGORY;
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE
-					prop_category = ComparisonGroupBrainPF_NU.SIZE_SCALE_CATEGORY;
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF
-					prop_category = ComparisonGroupBrainPF_NU.COLOR_DIFF_CATEGORY;
-				case ComparisonGroupBrainPF_NU.FDR
-					prop_category = ComparisonGroupBrainPF_NU.FDR_CATEGORY;
-				case ComparisonGroupBrainPF_NU.QVALUE
-					prop_category = ComparisonGroupBrainPF_NU.QVALUE_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ComparisonGroupBrainPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_nu_category_list = { 1  1  1  3  4  2  2  6  9  7  6  6  9  8  7  6  6  6  6  8  7  7  7  8  8  7  8  2  7  8  8  8  2  7  8  8  7  8  8  7  8  8  7  8  8  2  6  8  8  8  8  8  8 };
+			prop_category = comparisongroupbrainpf_nu_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -478,22 +553,9 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER
-					prop_format = ComparisonGroupBrainPF_NU.LAYER_FORMAT;
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF
-					prop_format = ComparisonGroupBrainPF_NU.SIZE_DIFF_FORMAT;
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE
-					prop_format = ComparisonGroupBrainPF_NU.SIZE_SCALE_FORMAT;
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF
-					prop_format = ComparisonGroupBrainPF_NU.COLOR_DIFF_FORMAT;
-				case ComparisonGroupBrainPF_NU.FDR
-					prop_format = ComparisonGroupBrainPF_NU.FDR_FORMAT;
-				case ComparisonGroupBrainPF_NU.QVALUE
-					prop_format = ComparisonGroupBrainPF_NU.QVALUE_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ComparisonGroupBrainPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_nu_format_list = { 2  2  2  8  2  2  2  2  4  18  4  4  8  20  18  4  4  4  4  8  18  19  18  12  8  18  5  8  18  4  8  8  8  19  4  10  19  4  10  19  4  10  19  4  10  8  1  11  5  11  5  5  11 };
+			prop_format = comparisongroupbrainpf_nu_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -517,42 +579,9 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER
-					prop_description = 'LAYER (figure, scalar) is the layer number of the nodal measure.';
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF
-					prop_description = 'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.';
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE
-					prop_description = 'SIZE_SCALE (figure, scalar) determines the scale of size effect.';
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF
-					prop_description = 'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.';
-				case ComparisonGroupBrainPF_NU.FDR
-					prop_description = 'FDR (figure, option) determines whether the difference is shown with FDR correction.';
-				case ComparisonGroupBrainPF_NU.QVALUE
-					prop_description = 'QVALUE (figure, scalar) determines the QVALUE for FDR correction.';
-				case ComparisonGroupBrainPF_NU.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the % % % .';
-				case ComparisonGroupBrainPF_NU.NAME
-					prop_description = 'NAME (constant, string) is the name of the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.ID
-					prop_description = 'ID (data, string) is a few-letter code for the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.DRAW
-					prop_description = 'DRAW (query, logical) draws the figure brain atlas.';
-				case ComparisonGroupBrainPF_NU.DELETE
-					prop_description = 'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.';
-				case ComparisonGroupBrainPF_NU.SETUP
-					prop_description = 'SETUP (query, empty) calculates the group comparison figure value and stores it.';
-				otherwise
-					prop_description = getPropDescription@ComparisonGroupBrainPF(prop);
-			end
+			%CET: Computational Efficiency Trick
+			comparisongroupbrainpf_nu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the panel figure nodal unilayer group comparison on brain surface figure.'  'DESCRIPTION (constant, string) is the description of the panel figure nodal unilayer group comparison on brain surface figure.'  'TEMPLATE (parameter, item) is the template of the panel figure nodal unilayer group comparison on brain surface figure.'  'ID (data, string) is a few-letter code for the panel figure nodal unilayer group comparison on brain surface figure.'  'LABEL (metadata, string) is an extended label of the panel figure nodal unilayer group comparison on brain surface figure.'  'NOTES (metadata, string) are some specific notes about the panel figure nodal unilayer group comparison on brain surface figure.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'H_WAITBAR (evanescent, handle) is the waitbar handle.'  'DRAW (query, logical) draws the figure brain atlas.'  'DRAWN (query, logical) returns whether the panel has been drawn.'  'PARENT (gui, item) is the panel parent.'  'BKGCOLOR (figure, color) is the panel background color.'  'H (evanescent, handle) is the panel handle.'  'SHOW (query, logical) shows the figure containing the panel.'  'HIDE (query, logical) hides the figure containing the panel.'  'DELETE (query, logical) resets the handles when the panel figure brain surface is deleted.'  'CLOSE (query, logical) closes the figure containing the panel.'  'ST_POSITION (figure, item) determines the panel position.'  'H_TOOLBAR (evanescent, handle) returns the handle of the toolbar.'  'H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.'  'H_AXES (evanescent, handle) is the handle for the axes.'  'VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.'  'ST_AXIS (figure, item) determines the axis settings.'  'LISTENER_ST_AXIS (evanescent, handle) contains the listener to the axis settings to update the pushbuttons.'  'SURFFILE (figure, option) is the name of the file of the brain surface to be plotted.'  'SURF (metadata, item) is the brain surface to be plotted.'  'H_BRAIN (evanescent, handle) is the handle for brain surface.'  'BRAIN (figure, logical) determines whether the brain surface is shown.'  'ST_SURFACE (figure, item) determines the surface settings.'  'ST_AMBIENT (figure, item) determines the ambient settings.'  'BA (metadata, item) is the brain atlas with the brain regions.'  'H_SPHS (evanescent, handlelist) is the set of handles for the spheres.'  'SPHS (figure, logical) determines whether the spheres are shown.'  'SPH_DICT (figure, idict) contains the spheres of the brain regions.'  'H_SYMS (evanescent, handlelist) is the set of handles for the symbols.'  'SYMS (figure, logical) determines whether the symbols are shown.'  'SYM_DICT (figure, idict) contains the symbols of the brain regions.'  'H_IDS (evanescent, handlelist) is the set of handles for the ids.'  'IDS (figure, logical) determines whether the ids are shown.'  'ID_DICT (figure, idict) contains the ids of the brain regions.'  'H_LABS (evanescent, handlelist) is the set of handles for the labels.'  'LABS (figure, logical) determines whether the labels are shown.'  'LAB_DICT (figure, idict) contains the labels of the brain regions.'  'CP (metadata, item) is the group comparison on brain surface.'  'SETUP (query, empty) calculates the group comparison figure value and stores it.'  'LAYER (figure, scalar) is the layer number of the nodal measure.'  'SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.'  'SIZE_SCALE (figure, scalar) determines the scale of size effect.'  'COLOR_DIFF (figure, option) determines whether the difference is shown with color effect.'  'FDR (figure, option) determines whether the difference is shown with FDR correction.'  'QVALUE (figure, scalar) determines the QVALUE for FDR correction.' };
+			prop_description = comparisongroupbrainpf_nu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -576,20 +605,20 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF
+			switch prop %CET: Computational Efficiency Trick
+				case 48 % ComparisonGroupBrainPF_NU.LAYER
+					prop_settings = Format.getFormatSettings(11);
+				case 49 % ComparisonGroupBrainPF_NU.SIZE_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF
+				case 50 % ComparisonGroupBrainPF_NU.SIZE_SCALE
+					prop_settings = Format.getFormatSettings(11);
+				case 51 % ComparisonGroupBrainPF_NU.COLOR_DIFF
 					prop_settings = {'on' 'off' 'disable'};
-				case ComparisonGroupBrainPF_NU.FDR
+				case 52 % ComparisonGroupBrainPF_NU.FDR
 					prop_settings = {'on' 'off' 'disable'};
-				case ComparisonGroupBrainPF_NU.QVALUE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case ComparisonGroupBrainPF_NU.TEMPLATE
+				case 53 % ComparisonGroupBrainPF_NU.QVALUE
+					prop_settings = Format.getFormatSettings(11);
+				case 4 % ComparisonGroupBrainPF_NU.TEMPLATE
 					prop_settings = 'ComparisonGroupBrainPF_NU';
 				otherwise
 					prop_settings = getPropSettings@ComparisonGroupBrainPF(prop);
@@ -617,32 +646,32 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
-			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER
+			switch prop %CET: Computational Efficiency Trick
+				case 48 % ComparisonGroupBrainPF_NU.LAYER
 					prop_default = 1;
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF
+				case 49 % ComparisonGroupBrainPF_NU.SIZE_DIFF
 					prop_default = 'on';
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE
+				case 50 % ComparisonGroupBrainPF_NU.SIZE_SCALE
 					prop_default = 5;
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF
+				case 51 % ComparisonGroupBrainPF_NU.COLOR_DIFF
 					prop_default = 'on';
-				case ComparisonGroupBrainPF_NU.FDR
+				case 52 % ComparisonGroupBrainPF_NU.FDR
 					prop_default = 'off';
-				case ComparisonGroupBrainPF_NU.QVALUE
+				case 53 % ComparisonGroupBrainPF_NU.QVALUE
 					prop_default = 0.05;
-				case ComparisonGroupBrainPF_NU.ELCLASS
+				case 1 % ComparisonGroupBrainPF_NU.ELCLASS
 					prop_default = 'ComparisonGroupBrainPF_NU';
-				case ComparisonGroupBrainPF_NU.NAME
+				case 2 % ComparisonGroupBrainPF_NU.NAME
 					prop_default = 'ComparisonGroupBrainPF_NU';
-				case ComparisonGroupBrainPF_NU.DESCRIPTION
+				case 3 % ComparisonGroupBrainPF_NU.DESCRIPTION
 					prop_default = 'ComparisonGroupBrainPF_NU manages the basic functionalities to plot of a nodal unilayer group comparison on brain surface figure.';
-				case ComparisonGroupBrainPF_NU.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.ID
+				case 4 % ComparisonGroupBrainPF_NU.TEMPLATE
+					prop_default = Format.getFormatDefault(8, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 5 % ComparisonGroupBrainPF_NU.ID
 					prop_default = 'ComparisonGroupBrainPF_NU ID';
-				case ComparisonGroupBrainPF_NU.LABEL
+				case 6 % ComparisonGroupBrainPF_NU.LABEL
 					prop_default = 'ComparisonGroupBrainPF_NU label';
-				case ComparisonGroupBrainPF_NU.NOTES
+				case 7 % ComparisonGroupBrainPF_NU.NOTES
 					prop_default = 'ComparisonGroupBrainPF_NU notes';
 				otherwise
 					prop_default = getPropDefault@ComparisonGroupBrainPF(prop);
@@ -689,15 +718,15 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			% 
 			% PF.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:ComparisonGroupBrainPF_NU:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:ComparisonGroupBrainPF_NU:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  PF.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of PF.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF_NU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupBrainPF_NU:WrongInput
 			%  Element.CHECKPROP(ComparisonGroupBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupBrainPF_NU.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF_NU:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:ComparisonGroupBrainPF_NU:WrongInput
 			%  PF.CHECKPROP(ComparisonGroupBrainPF_NU, PROP, VALUE) throws error if VALUE has not a valid format for PROP of ComparisonGroupBrainPF_NU.
-			%   Error id: €BRAPH2.STR€:ComparisonGroupBrainPF_NU:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:ComparisonGroupBrainPF_NU:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(PF) and Element.CHECKPROP('ComparisonGroupBrainPF_NU')
 			%  are less computationally efficient.
@@ -708,22 +737,22 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			prop = ComparisonGroupBrainPF_NU.getPropProp(pointer);
 			
 			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER % __ComparisonGroupBrainPF_NU.LAYER__
-					check = Format.checkFormat(Format.SCALAR, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF % __ComparisonGroupBrainPF_NU.SIZE_DIFF__
-					check = Format.checkFormat(Format.OPTION, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE % __ComparisonGroupBrainPF_NU.SIZE_SCALE__
-					check = Format.checkFormat(Format.SCALAR, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF % __ComparisonGroupBrainPF_NU.COLOR_DIFF__
-					check = Format.checkFormat(Format.OPTION, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.FDR % __ComparisonGroupBrainPF_NU.FDR__
-					check = Format.checkFormat(Format.OPTION, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.QVALUE % __ComparisonGroupBrainPF_NU.QVALUE__
-					check = Format.checkFormat(Format.SCALAR, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
-				case ComparisonGroupBrainPF_NU.TEMPLATE % __ComparisonGroupBrainPF_NU.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 48 % ComparisonGroupBrainPF_NU.LAYER
+					check = Format.checkFormat(11, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 49 % ComparisonGroupBrainPF_NU.SIZE_DIFF
+					check = Format.checkFormat(5, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 50 % ComparisonGroupBrainPF_NU.SIZE_SCALE
+					check = Format.checkFormat(11, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 51 % ComparisonGroupBrainPF_NU.COLOR_DIFF
+					check = Format.checkFormat(5, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 52 % ComparisonGroupBrainPF_NU.FDR
+					check = Format.checkFormat(5, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 53 % ComparisonGroupBrainPF_NU.QVALUE
+					check = Format.checkFormat(11, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
+				case 4 % ComparisonGroupBrainPF_NU.TEMPLATE
+					check = Format.checkFormat(8, value, ComparisonGroupBrainPF_NU.getPropSettings(prop));
 				otherwise
-					if prop <= ComparisonGroupBrainPF.getPropNumber()
+					if prop <= 47
 						check = checkProp@ComparisonGroupBrainPF(prop, value);
 					end
 			end
@@ -732,8 +761,8 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':ComparisonGroupBrainPF_NU:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput'], ...
+					['BRAPH2' ':ComparisonGroupBrainPF_NU:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroupBrainPF_NU.getPropTag(prop) ' (' ComparisonGroupBrainPF_NU.getFormatTag(ComparisonGroupBrainPF_NU.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -753,27 +782,27 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%  checkValue.
 			
 			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER % __ComparisonGroupBrainPF_NU.LAYER__
+				case 48 % ComparisonGroupBrainPF_NU.LAYER
 					pf.get('SETUP');
 					
-				case ComparisonGroupBrainPF_NU.SIZE_DIFF % __ComparisonGroupBrainPF_NU.SIZE_DIFF__
+				case 49 % ComparisonGroupBrainPF_NU.SIZE_DIFF
 					pf.get('SETUP');
 					
-				case ComparisonGroupBrainPF_NU.SIZE_SCALE % __ComparisonGroupBrainPF_NU.SIZE_SCALE__
+				case 50 % ComparisonGroupBrainPF_NU.SIZE_SCALE
 					pf.get('SETUP');
 					
-				case ComparisonGroupBrainPF_NU.COLOR_DIFF % __ComparisonGroupBrainPF_NU.COLOR_DIFF__
+				case 51 % ComparisonGroupBrainPF_NU.COLOR_DIFF
 					pf.get('SETUP');
 					
-				case ComparisonGroupBrainPF_NU.FDR % __ComparisonGroupBrainPF_NU.FDR__
+				case 52 % ComparisonGroupBrainPF_NU.FDR
 					pf.get('SETUP');
 					
-				case ComparisonGroupBrainPF_NU.QVALUE % __ComparisonGroupBrainPF_NU.QVALUE__
+				case 53 % ComparisonGroupBrainPF_NU.QVALUE
 					pf.get('CP').set('QVALUE', pf.get('QVALUE'));
 					pf.get('SETUP');
 					
 				otherwise
-					if prop <= ComparisonGroupBrainPF.getPropNumber()
+					if prop <= 47
 						postset@ComparisonGroupBrainPF(pf, prop);
 					end
 			end
@@ -793,13 +822,13 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%  checkValue.
 			
 			switch prop
-				case ComparisonGroupBrainPF_NU.QVALUE % __ComparisonGroupBrainPF_NU.QVALUE__
+				case 53 % ComparisonGroupBrainPF_NU.QVALUE
 					if isempty(pf.get('QVALUE'))
 					    pf.set('QVALUE', pf.get('CP').get('QVALUE'));
 					end
 					
 				otherwise
-					if prop <= ComparisonGroupBrainPF.getPropNumber()
+					if prop <= 47
 						postprocessing@ComparisonGroupBrainPF(pf, prop);
 					end
 			end
@@ -810,20 +839,20 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case ComparisonGroupBrainPF_NU.DRAW % __ComparisonGroupBrainPF_NU.DRAW__
-					value = calculateValue@ComparisonGroupBrainPF(pf, ComparisonGroupBrainPF.DRAW, varargin{:}); % also warning
+				case 11 % ComparisonGroupBrainPF_NU.DRAW
+					value = calculateValue@ComparisonGroupBrainPF(pf, 11, varargin{:}); % also warning
 					if value
 					    % reset the ambient lighting
 					    pf.get('ST_AMBIENT').get('SETUP')
@@ -832,13 +861,13 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 					    pf.get('SETUP');
 					end
 					
-				case ComparisonGroupBrainPF_NU.DELETE % __ComparisonGroupBrainPF_NU.DELETE__
-					value = calculateValue@ComparisonGroupBrainPF(pf, ComparisonGroupBrainPF.DELETE, varargin{:}); % also warning
+				case 18 % ComparisonGroupBrainPF_NU.DELETE
+					value = calculateValue@ComparisonGroupBrainPF(pf, 18, varargin{:}); % also warning
 					if value
 					
 					end
 					
-				case ComparisonGroupBrainPF_NU.SETUP % __ComparisonGroupBrainPF_NU.SETUP__
+				case 47 % ComparisonGroupBrainPF_NU.SETUP
 					cp = pf.get('CP');
 					g = cp.get('C').get('A1').get('G');
 					
@@ -968,7 +997,7 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 					value = [];
 					
 				otherwise
-					if prop <= ComparisonGroupBrainPF.getPropNumber()
+					if prop <= 47
 						value = calculateValue@ComparisonGroupBrainPF(pf, prop, varargin{:});
 					else
 						value = calculateValue@Element(pf, prop, varargin{:});
@@ -994,8 +1023,8 @@ classdef ComparisonGroupBrainPF_NU < ComparisonGroupBrainPF
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case ComparisonGroupBrainPF_NU.LAYER % __ComparisonGroupBrainPF_NU.LAYER__
-					pr = ComparisonGroupBrainPF_xUPP_Layer('EL', pf, 'PROP', ComparisonGroupBrainPF_NU.LAYER);
+				case 48 % ComparisonGroupBrainPF_NU.LAYER
+					pr = ComparisonGroupBrainPF_xUPP_Layer('EL', pf, 'PROP', 48);
 					
 				otherwise
 					pr = getPanelProp@ComparisonGroupBrainPF(pf, prop, varargin{:});

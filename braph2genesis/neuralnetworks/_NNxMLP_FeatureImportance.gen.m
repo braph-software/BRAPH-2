@@ -120,7 +120,7 @@ D (data, item) is the NN dataset to be tested on feature importance.
 %%% ¡prop!
 NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.
 %%%% ¡settings!
-'NNBase'
+'NNClassifierMLP'
 %%%% ¡check_prop!
 check = any(strcmp(value.get('ELCLASS'), {'NNClassifierMLP', 'NNRegressorMLP'}));
 
@@ -175,6 +175,8 @@ value = num2cell(1:num_feature);
 
 %%% ¡prop!
 BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
+%%%% ¡default!
+{}
 %%%% ¡calculate!
 value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
 

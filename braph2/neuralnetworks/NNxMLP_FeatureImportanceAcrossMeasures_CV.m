@@ -8,6 +8,32 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 	% It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, 
 	%  such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.
 	%
+	% The list of NNxMLP_FeatureImportanceAcrossMeasures_CV properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>NNCV</strong> 	NNCV (data, item) is the neural network cross validation to be tested on feature importance.
+	%  <strong>10</strong> <strong>FI_TEMPLATE</strong> 	FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+	%  <strong>11</strong> <strong>FI_LIST</strong> 	FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.
+	%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+	%  <strong>13</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+	%  <strong>14</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.
+	%  <strong>15</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+	%  <strong>16</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+	%  <strong>17</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+	%  <strong>18</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+	%  <strong>19</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+	%  <strong>20</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+	%  <strong>21</strong> <strong>RESHAPED_AV_FEATURE_IMPORTANCE</strong> 	RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.
+	%  <strong>22</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+	%  <strong>23</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+	%  <strong>24</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
+	%
 	% NNxMLP_FeatureImportanceAcrossMeasures_CV methods (constructor):
 	%  NNxMLP_FeatureImportanceAcrossMeasures_CV - constructor
 	%
@@ -107,6 +133,31 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNxMLP_FeatureImportanceAcrossMeasures_CV properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>NNCV</strong> 	NNCV (data, item) is the neural network cross validation to be tested on feature importance.
+			%  <strong>10</strong> <strong>FI_TEMPLATE</strong> 	FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+			%  <strong>11</strong> <strong>FI_LIST</strong> 	FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.
+			%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+			%  <strong>13</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+			%  <strong>14</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.
+			%  <strong>15</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+			%  <strong>16</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+			%  <strong>17</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+			%  <strong>18</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+			%  <strong>19</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+			%  <strong>20</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+			%  <strong>21</strong> <strong>RESHAPED_AV_FEATURE_IMPORTANCE</strong> 	RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.
+			%  <strong>22</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+			%  <strong>23</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+			%  <strong>24</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
 			%
 			% See also Category, Format.
 			
@@ -144,7 +195,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNxMLP_FeatureImportanceAcrossMeasures_CV', [], [], true);
+			subclass_list = { 'NNxMLP_FeatureImportanceAcrossMeasures_CV' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of neural network feature importace for multi-layer perceptron.
@@ -165,50 +216,30 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					NNxMLP_FeatureImportance_CV.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						NNxMLP_FeatureImportance_CV.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						NNxMLP_FeatureImportance_CV.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 16];
+				case 3 % Category.PARAMETER
+					prop_list = [4 10 12 14 15 17];
+				case 4 % Category.DATA
+					prop_list = [5 9];
+				case 5 % Category.RESULT
+					prop_list = [11 13 20 21];
+				case 6 % Category.QUERY
+					prop_list = [8 22 23 24];
+				case 9 % Category.GUI
+					prop_list = [18 19];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -229,7 +260,31 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNxMLP_FeatureImportanceAcrossMeasures_CV.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 24;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 6;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 4;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in neural network feature importace for multi-layer perceptron/error.
@@ -257,14 +312,14 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNxMLP_FeatureImportanceAcrossMeasures_CV.getProps());
+			check = prop >= 1 && prop <= 24 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNxMLP_FeatureImportanceAcrossMeasures_CV.'] ...
 					)
 			end
@@ -295,15 +350,14 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%
 			% See also getProps, existsTag.
 			
-			nnxmlp_featureimportanceacrossmeasures_cv_tag_list = cellfun(@(x) NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropTag(x), num2cell(NNxMLP_FeatureImportanceAcrossMeasures_CV.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nnxmlp_featureimportanceacrossmeasures_cv_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNxMLP_FeatureImportanceAcrossMeasures_CV.'] ...
 					)
 			end
@@ -329,8 +383,7 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nnxmlp_featureimportanceacrossmeasures_cv_tag_list = cellfun(@(x) NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropTag(x), num2cell(NNxMLP_FeatureImportanceAcrossMeasures_CV.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nnxmlp_featureimportanceacrossmeasures_cv_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -358,12 +411,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@NNxMLP_FeatureImportance_CV(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nnxmlp_featureimportanceacrossmeasures_cv_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' };
+				tag = nnxmlp_featureimportanceacrossmeasures_cv_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -388,10 +438,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@NNxMLP_FeatureImportance_CV(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_cv_category_list = { 1  1  1  3  4  2  2  6  4  3  5  3  5  3  3  2  3  9  9  5  5  6  6  6 };
+			prop_category = nnxmlp_featureimportanceacrossmeasures_cv_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -415,10 +464,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@NNxMLP_FeatureImportance_CV(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_cv_format_list = { 2  2  2  8  2  2  2  2  8  8  9  11  12  4  4  4  11  4  11  16  16  1  1  1 };
+			prop_format = nnxmlp_featureimportanceacrossmeasures_cv_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -442,28 +490,9 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.NAME
-					prop_description = 'NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.ID
-					prop_description = 'ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE
-					prop_description = 'AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.FEATURE_IMPORTANCE_FOLDS
-					prop_description = 'FEATURE_IMPORTANCE_FOLDS (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.';
-				otherwise
-					prop_description = getPropDescription@NNxMLP_FeatureImportance_CV(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportanceacrossmeasures_cv_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NNCV (data, item) is the neural network cross validation to be tested on feature importance.'  'FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.'  'FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.'  'AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.' };
+			prop_description = nnxmlp_featureimportanceacrossmeasures_cv_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -487,8 +516,8 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
 					prop_settings = 'NNxMLP_FeatureImportanceAcrossMeasures_CV';
 				otherwise
 					prop_settings = getPropSettings@NNxMLP_FeatureImportance_CV(prop);
@@ -516,20 +545,20 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % NNxMLP_FeatureImportanceAcrossMeasures_CV.ELCLASS
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures_CV';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.NAME
+				case 2 % NNxMLP_FeatureImportanceAcrossMeasures_CV.NAME
 					prop_default = 'Feature Importace for Multi-layer Perceptron';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.DESCRIPTION
+				case 3 % NNxMLP_FeatureImportanceAcrossMeasures_CV.DESCRIPTION
 					prop_default = 'Neural Network Feature Importance Across Graph Measures with Cross-Validation (NNxMLP_FeatureImportanceAcrossMeasures_CV) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled. The feature importance score for each measure is then averaged across all folds. It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.ID
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropSettings(prop));
+				case 5 % NNxMLP_FeatureImportanceAcrossMeasures_CV.ID
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures_CV ID';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.LABEL
+				case 6 % NNxMLP_FeatureImportanceAcrossMeasures_CV.LABEL
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures_CV label';
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.NOTES
+				case 7 % NNxMLP_FeatureImportanceAcrossMeasures_CV.NOTES
 					prop_default = 'NNxMLP_FeatureImportanceAcrossMeasures_CV notes';
 				otherwise
 					prop_default = getPropDefault@NNxMLP_FeatureImportance_CV(prop);
@@ -576,15 +605,15 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			% 
 			% NNFICV.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures_CV:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures_CV:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NNFICV.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NNFICV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures_CV:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures_CV:WrongInput
 			%  Element.CHECKPROP(NNxMLP_FeatureImportanceAcrossMeasures_CV, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportanceAcrossMeasures_CV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures_CV:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures_CV:WrongInput
 			%  NNFICV.CHECKPROP(NNxMLP_FeatureImportanceAcrossMeasures_CV, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportanceAcrossMeasures_CV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportanceAcrossMeasures_CV:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNxMLP_FeatureImportanceAcrossMeasures_CV:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(NNFICV) and Element.CHECKPROP('NNxMLP_FeatureImportanceAcrossMeasures_CV')
 			%  are less computationally efficient.
@@ -595,10 +624,10 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			prop = NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropProp(pointer);
 			
 			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE % __NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropSettings(prop));
+				case 4 % NNxMLP_FeatureImportanceAcrossMeasures_CV.TEMPLATE
+					check = Format.checkFormat(8, value, NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropSettings(prop));
 				otherwise
-					if prop <= NNxMLP_FeatureImportance_CV.getPropNumber()
+					if prop <= 24
 						check = checkProp@NNxMLP_FeatureImportance_CV(prop, value);
 					end
 			end
@@ -607,8 +636,8 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropTag(prop) ' (' NNxMLP_FeatureImportanceAcrossMeasures_CV.getFormatTag(NNxMLP_FeatureImportanceAcrossMeasures_CV.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -631,20 +660,11 @@ classdef NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE % __NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE__
+				case 20 % NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE
 					fi_list = nnficv.get('FI_LIST');
 					m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
-					pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
-					    'TABLE_HEIGHT', s(40), ...
-					    'ROWNAME', {}, ...
-					    'COLUMNNAME', m_list, ...
-					    varargin{:});
-					
-				case NNxMLP_FeatureImportanceAcrossMeasures_CV.FEATURE_IMPORTANCE_FOLDS % __NNxMLP_FeatureImportanceAcrossMeasures_CV.FEATURE_IMPORTANCE_FOLDS__
-					fi_list = nnficv.get('FI_LIST');
-					m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
-					pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
-					    'TABLE_HEIGHT', s(40), ...
+					pr = PanelPropCell('EL', nnficv, 'PROP', 20, ...
+					    'TABLE_HEIGHT', 480, ...
 					    'ROWNAME', {}, ...
 					    'COLUMNNAME', m_list, ...
 					    varargin{:});

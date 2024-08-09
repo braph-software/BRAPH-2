@@ -8,6 +8,32 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 	% It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, 
 	%  such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.
 	%
+	% The list of NNxMLP_FeatureImportance_CV properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network feature importance for cross validation.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network feature importance for cross validation.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network feature importance for cross validation.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network feature importance for cross validation.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the neural network feature importance for cross validation.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network feature importance for cross validation.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network feature importance for cross validation.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>NNCV</strong> 	NNCV (data, item) is the neural network cross validation to be tested on feature importance.
+	%  <strong>10</strong> <strong>FI_TEMPLATE</strong> 	FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+	%  <strong>11</strong> <strong>FI_LIST</strong> 	FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.
+	%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+	%  <strong>13</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+	%  <strong>14</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.
+	%  <strong>15</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+	%  <strong>16</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+	%  <strong>17</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+	%  <strong>18</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+	%  <strong>19</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+	%  <strong>20</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) is determined by applying bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+	%  <strong>21</strong> <strong>RESHAPED_AV_FEATURE_IMPORTANCE</strong> 	RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.
+	%  <strong>22</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+	%  <strong>23</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+	%  <strong>24</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
+	%
 	% NNxMLP_FeatureImportance_CV methods (constructor):
 	%  NNxMLP_FeatureImportance_CV - constructor
 	%
@@ -97,85 +123,85 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 	% See also NNxMLP_FeatureImportance, NNClassifierMLP_CrossValidation, NNRegressorMLP_CrossValidation.
 	
 	properties (Constant) % properties
-		NNCV = ConcreteElement.getPropNumber() + 1;
+		NNCV = 9; %CET: Computational Efficiency Trick
 		NNCV_TAG = 'NNCV';
-		NNCV_CATEGORY = Category.DATA;
-		NNCV_FORMAT = Format.ITEM;
+		NNCV_CATEGORY = 4;
+		NNCV_FORMAT = 8;
 		
-		FI_TEMPLATE = ConcreteElement.getPropNumber() + 2;
+		FI_TEMPLATE = 10; %CET: Computational Efficiency Trick
 		FI_TEMPLATE_TAG = 'FI_TEMPLATE';
-		FI_TEMPLATE_CATEGORY = Category.PARAMETER;
-		FI_TEMPLATE_FORMAT = Format.ITEM;
+		FI_TEMPLATE_CATEGORY = 3;
+		FI_TEMPLATE_FORMAT = 8;
 		
-		FI_LIST = ConcreteElement.getPropNumber() + 3;
+		FI_LIST = 11; %CET: Computational Efficiency Trick
 		FI_LIST_TAG = 'FI_LIST';
-		FI_LIST_CATEGORY = Category.RESULT;
-		FI_LIST_FORMAT = Format.ITEMLIST;
+		FI_LIST_CATEGORY = 5;
+		FI_LIST_FORMAT = 9;
 		
-		P = ConcreteElement.getPropNumber() + 4;
+		P = 12; %CET: Computational Efficiency Trick
 		P_TAG = 'P';
-		P_CATEGORY = Category.PARAMETER;
-		P_FORMAT = Format.SCALAR;
+		P_CATEGORY = 3;
+		P_FORMAT = 11;
 		
-		PERM_SEEDS = ConcreteElement.getPropNumber() + 5;
+		PERM_SEEDS = 13; %CET: Computational Efficiency Trick
 		PERM_SEEDS_TAG = 'PERM_SEEDS';
-		PERM_SEEDS_CATEGORY = Category.RESULT;
-		PERM_SEEDS_FORMAT = Format.RVECTOR;
+		PERM_SEEDS_CATEGORY = 5;
+		PERM_SEEDS_FORMAT = 12;
 		
-		APPLY_BONFERRONI = ConcreteElement.getPropNumber() + 6;
+		APPLY_BONFERRONI = 14; %CET: Computational Efficiency Trick
 		APPLY_BONFERRONI_TAG = 'APPLY_BONFERRONI';
-		APPLY_BONFERRONI_CATEGORY = Category.PARAMETER;
-		APPLY_BONFERRONI_FORMAT = Format.LOGICAL;
+		APPLY_BONFERRONI_CATEGORY = 3;
+		APPLY_BONFERRONI_FORMAT = 4;
 		
-		APPLY_CONFIDENCE_INTERVALS = ConcreteElement.getPropNumber() + 7;
+		APPLY_CONFIDENCE_INTERVALS = 15; %CET: Computational Efficiency Trick
 		APPLY_CONFIDENCE_INTERVALS_TAG = 'APPLY_CONFIDENCE_INTERVALS';
-		APPLY_CONFIDENCE_INTERVALS_CATEGORY = Category.PARAMETER;
-		APPLY_CONFIDENCE_INTERVALS_FORMAT = Format.LOGICAL;
+		APPLY_CONFIDENCE_INTERVALS_CATEGORY = 3;
+		APPLY_CONFIDENCE_INTERVALS_FORMAT = 4;
 		
-		VERBOSE = ConcreteElement.getPropNumber() + 8;
+		VERBOSE = 16; %CET: Computational Efficiency Trick
 		VERBOSE_TAG = 'VERBOSE';
-		VERBOSE_CATEGORY = Category.METADATA;
-		VERBOSE_FORMAT = Format.LOGICAL;
+		VERBOSE_CATEGORY = 2;
+		VERBOSE_FORMAT = 4;
 		
-		SIG_LEVEL = ConcreteElement.getPropNumber() + 9;
+		SIG_LEVEL = 17; %CET: Computational Efficiency Trick
 		SIG_LEVEL_TAG = 'SIG_LEVEL';
-		SIG_LEVEL_CATEGORY = Category.PARAMETER;
-		SIG_LEVEL_FORMAT = Format.SCALAR;
+		SIG_LEVEL_CATEGORY = 3;
+		SIG_LEVEL_FORMAT = 11;
 		
-		WAITBAR = ConcreteElement.getPropNumber() + 10;
+		WAITBAR = 18; %CET: Computational Efficiency Trick
 		WAITBAR_TAG = 'WAITBAR';
-		WAITBAR_CATEGORY = Category.GUI;
-		WAITBAR_FORMAT = Format.LOGICAL;
+		WAITBAR_CATEGORY = 9;
+		WAITBAR_FORMAT = 4;
 		
-		INTERRUPTIBLE = ConcreteElement.getPropNumber() + 11;
+		INTERRUPTIBLE = 19; %CET: Computational Efficiency Trick
 		INTERRUPTIBLE_TAG = 'INTERRUPTIBLE';
-		INTERRUPTIBLE_CATEGORY = Category.GUI;
-		INTERRUPTIBLE_FORMAT = Format.SCALAR;
+		INTERRUPTIBLE_CATEGORY = 9;
+		INTERRUPTIBLE_FORMAT = 11;
 		
-		AV_FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 12;
+		AV_FEATURE_IMPORTANCE = 20; %CET: Computational Efficiency Trick
 		AV_FEATURE_IMPORTANCE_TAG = 'AV_FEATURE_IMPORTANCE';
-		AV_FEATURE_IMPORTANCE_CATEGORY = Category.RESULT;
-		AV_FEATURE_IMPORTANCE_FORMAT = Format.CELL;
+		AV_FEATURE_IMPORTANCE_CATEGORY = 5;
+		AV_FEATURE_IMPORTANCE_FORMAT = 16;
 		
-		RESHAPED_AV_FEATURE_IMPORTANCE = ConcreteElement.getPropNumber() + 13;
+		RESHAPED_AV_FEATURE_IMPORTANCE = 21; %CET: Computational Efficiency Trick
 		RESHAPED_AV_FEATURE_IMPORTANCE_TAG = 'RESHAPED_AV_FEATURE_IMPORTANCE';
-		RESHAPED_AV_FEATURE_IMPORTANCE_CATEGORY = Category.RESULT;
-		RESHAPED_AV_FEATURE_IMPORTANCE_FORMAT = Format.CELL;
+		RESHAPED_AV_FEATURE_IMPORTANCE_CATEGORY = 5;
+		RESHAPED_AV_FEATURE_IMPORTANCE_FORMAT = 16;
 		
-		MAP_TO_CELL = ConcreteElement.getPropNumber() + 14;
+		MAP_TO_CELL = 22; %CET: Computational Efficiency Trick
 		MAP_TO_CELL_TAG = 'MAP_TO_CELL';
-		MAP_TO_CELL_CATEGORY = Category.QUERY;
-		MAP_TO_CELL_FORMAT = Format.EMPTY;
+		MAP_TO_CELL_CATEGORY = 6;
+		MAP_TO_CELL_FORMAT = 1;
 		
-		COUNT_ELEMENTS = ConcreteElement.getPropNumber() + 15;
+		COUNT_ELEMENTS = 23; %CET: Computational Efficiency Trick
 		COUNT_ELEMENTS_TAG = 'COUNT_ELEMENTS';
-		COUNT_ELEMENTS_CATEGORY = Category.QUERY;
-		COUNT_ELEMENTS_FORMAT = Format.EMPTY;
+		COUNT_ELEMENTS_CATEGORY = 6;
+		COUNT_ELEMENTS_FORMAT = 1;
 		
-		FLATTEN_CELL = ConcreteElement.getPropNumber() + 16;
+		FLATTEN_CELL = 24; %CET: Computational Efficiency Trick
 		FLATTEN_CELL_TAG = 'FLATTEN_CELL';
-		FLATTEN_CELL_CATEGORY = Category.QUERY;
-		FLATTEN_CELL_FORMAT = Format.EMPTY;
+		FLATTEN_CELL_CATEGORY = 6;
+		FLATTEN_CELL_FORMAT = 1;
 	end
 	methods % constructor
 		function nnficv = NNxMLP_FeatureImportance_CV(varargin)
@@ -188,6 +214,31 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNxMLP_FeatureImportance_CV properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network feature importance for cross validation.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network feature importance for cross validation.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network feature importance for cross validation.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network feature importance for cross validation.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the neural network feature importance for cross validation.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network feature importance for cross validation.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network feature importance for cross validation.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>NNCV</strong> 	NNCV (data, item) is the neural network cross validation to be tested on feature importance.
+			%  <strong>10</strong> <strong>FI_TEMPLATE</strong> 	FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+			%  <strong>11</strong> <strong>FI_LIST</strong> 	FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.
+			%  <strong>12</strong> <strong>P</strong> 	P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+			%  <strong>13</strong> <strong>PERM_SEEDS</strong> 	PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
+			%  <strong>14</strong> <strong>APPLY_BONFERRONI</strong> 	APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.
+			%  <strong>15</strong> <strong>APPLY_CONFIDENCE_INTERVALS</strong> 	APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
+			%  <strong>16</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+			%  <strong>17</strong> <strong>SIG_LEVEL</strong> 	SIG_LEVEL (parameter, scalar) determines the significant level.
+			%  <strong>18</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
+			%  <strong>19</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+			%  <strong>20</strong> <strong>AV_FEATURE_IMPORTANCE</strong> 	AV_FEATURE_IMPORTANCE (result, cell) is determined by applying bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+			%  <strong>21</strong> <strong>RESHAPED_AV_FEATURE_IMPORTANCE</strong> 	RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.
+			%  <strong>22</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
+			%  <strong>23</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
+			%  <strong>24</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
 			%
 			% See also Category, Format.
 			
@@ -225,7 +276,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNxMLP_FeatureImportance_CV', [], [], true);
+			subclass_list = { 'NNxMLP_FeatureImportance_CV'  'NNxMLP_FeatureImportanceAcrossMeasures_CV' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of neural network feature importace for multi-layer perceptron.
@@ -246,82 +297,30 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						NNxMLP_FeatureImportance_CV.NNCV ...
-						NNxMLP_FeatureImportance_CV.FI_TEMPLATE ...
-						NNxMLP_FeatureImportance_CV.FI_LIST ...
-						NNxMLP_FeatureImportance_CV.P ...
-						NNxMLP_FeatureImportance_CV.PERM_SEEDS ...
-						NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI ...
-						NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS ...
-						NNxMLP_FeatureImportance_CV.VERBOSE ...
-						NNxMLP_FeatureImportance_CV.SIG_LEVEL ...
-						NNxMLP_FeatureImportance_CV.WAITBAR ...
-						NNxMLP_FeatureImportance_CV.INTERRUPTIBLE ...
-						NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE ...
-						NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE ...
-						NNxMLP_FeatureImportance_CV.MAP_TO_CELL ...
-						NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS ...
-						NNxMLP_FeatureImportance_CV.FLATTEN_CELL ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						NNxMLP_FeatureImportance_CV.VERBOSE ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						NNxMLP_FeatureImportance_CV.FI_TEMPLATE ...
-						NNxMLP_FeatureImportance_CV.P ...
-						NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI ...
-						NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS ...
-						NNxMLP_FeatureImportance_CV.SIG_LEVEL ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						NNxMLP_FeatureImportance_CV.NNCV ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						NNxMLP_FeatureImportance_CV.FI_LIST ...
-						NNxMLP_FeatureImportance_CV.PERM_SEEDS ...
-						NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE ...
-						NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						NNxMLP_FeatureImportance_CV.MAP_TO_CELL ...
-						NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS ...
-						NNxMLP_FeatureImportance_CV.FLATTEN_CELL ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						NNxMLP_FeatureImportance_CV.WAITBAR ...
-						NNxMLP_FeatureImportance_CV.INTERRUPTIBLE ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7 16];
+				case 3 % Category.PARAMETER
+					prop_list = [4 10 12 14 15 17];
+				case 4 % Category.DATA
+					prop_list = [5 9];
+				case 5 % Category.RESULT
+					prop_list = [11 13 20 21];
+				case 6 % Category.QUERY
+					prop_list = [8 22 23 24];
+				case 9 % Category.GUI
+					prop_list = [18 19];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -342,7 +341,31 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNxMLP_FeatureImportance_CV.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 24;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 3;
+				case 3 % Category.PARAMETER
+					prop_number = 6;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 4;
+				case 6 % Category.QUERY
+					prop_number = 4;
+				case 9 % Category.GUI
+					prop_number = 2;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in neural network feature importace for multi-layer perceptron/error.
@@ -370,14 +393,14 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNxMLP_FeatureImportance_CV.getProps());
+			check = prop >= 1 && prop <= 24 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNxMLP_FeatureImportance_CV.'] ...
 					)
 			end
@@ -408,15 +431,14 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			nnxmlp_featureimportance_cv_tag_list = cellfun(@(x) NNxMLP_FeatureImportance_CV.getPropTag(x), num2cell(NNxMLP_FeatureImportance_CV.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nnxmlp_featureimportance_cv_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNxMLP_FeatureImportance_CV.'] ...
 					)
 			end
@@ -442,8 +464,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nnxmlp_featureimportance_cv_tag_list = cellfun(@(x) NNxMLP_FeatureImportance_CV.getPropTag(x), num2cell(NNxMLP_FeatureImportance_CV.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nnxmlp_featureimportance_cv_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -471,44 +492,9 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNxMLP_FeatureImportance_CV.NNCV
-						tag = NNxMLP_FeatureImportance_CV.NNCV_TAG;
-					case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
-						tag = NNxMLP_FeatureImportance_CV.FI_TEMPLATE_TAG;
-					case NNxMLP_FeatureImportance_CV.FI_LIST
-						tag = NNxMLP_FeatureImportance_CV.FI_LIST_TAG;
-					case NNxMLP_FeatureImportance_CV.P
-						tag = NNxMLP_FeatureImportance_CV.P_TAG;
-					case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-						tag = NNxMLP_FeatureImportance_CV.PERM_SEEDS_TAG;
-					case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
-						tag = NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI_TAG;
-					case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
-						tag = NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS_TAG;
-					case NNxMLP_FeatureImportance_CV.VERBOSE
-						tag = NNxMLP_FeatureImportance_CV.VERBOSE_TAG;
-					case NNxMLP_FeatureImportance_CV.SIG_LEVEL
-						tag = NNxMLP_FeatureImportance_CV.SIG_LEVEL_TAG;
-					case NNxMLP_FeatureImportance_CV.WAITBAR
-						tag = NNxMLP_FeatureImportance_CV.WAITBAR_TAG;
-					case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
-						tag = NNxMLP_FeatureImportance_CV.INTERRUPTIBLE_TAG;
-					case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-						tag = NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE_TAG;
-					case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-						tag = NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE_TAG;
-					case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-						tag = NNxMLP_FeatureImportance_CV.MAP_TO_CELL_TAG;
-					case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-						tag = NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS_TAG;
-					case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-						tag = NNxMLP_FeatureImportance_CV.FLATTEN_CELL_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nnxmlp_featureimportance_cv_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'NNCV'  'FI_TEMPLATE'  'FI_LIST'  'P'  'PERM_SEEDS'  'APPLY_BONFERRONI'  'APPLY_CONFIDENCE_INTERVALS'  'VERBOSE'  'SIG_LEVEL'  'WAITBAR'  'INTERRUPTIBLE'  'AV_FEATURE_IMPORTANCE'  'RESHAPED_AV_FEATURE_IMPORTANCE'  'MAP_TO_CELL'  'COUNT_ELEMENTS'  'FLATTEN_CELL' };
+				tag = nnxmlp_featureimportance_cv_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -533,42 +519,9 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV
-					prop_category = NNxMLP_FeatureImportance_CV.NNCV_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
-					prop_category = NNxMLP_FeatureImportance_CV.FI_TEMPLATE_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.FI_LIST
-					prop_category = NNxMLP_FeatureImportance_CV.FI_LIST_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.P
-					prop_category = NNxMLP_FeatureImportance_CV.P_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-					prop_category = NNxMLP_FeatureImportance_CV.PERM_SEEDS_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
-					prop_category = NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
-					prop_category = NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.VERBOSE
-					prop_category = NNxMLP_FeatureImportance_CV.VERBOSE_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL
-					prop_category = NNxMLP_FeatureImportance_CV.SIG_LEVEL_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.WAITBAR
-					prop_category = NNxMLP_FeatureImportance_CV.WAITBAR_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
-					prop_category = NNxMLP_FeatureImportance_CV.INTERRUPTIBLE_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-					prop_category = NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-					prop_category = NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-					prop_category = NNxMLP_FeatureImportance_CV.MAP_TO_CELL_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-					prop_category = NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS_CATEGORY;
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-					prop_category = NNxMLP_FeatureImportance_CV.FLATTEN_CELL_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportance_cv_category_list = { 1  1  1  3  4  2  2  6  4  3  5  3  5  3  3  2  3  9  9  5  5  6  6  6 };
+			prop_category = nnxmlp_featureimportance_cv_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -592,42 +545,9 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV
-					prop_format = NNxMLP_FeatureImportance_CV.NNCV_FORMAT;
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
-					prop_format = NNxMLP_FeatureImportance_CV.FI_TEMPLATE_FORMAT;
-				case NNxMLP_FeatureImportance_CV.FI_LIST
-					prop_format = NNxMLP_FeatureImportance_CV.FI_LIST_FORMAT;
-				case NNxMLP_FeatureImportance_CV.P
-					prop_format = NNxMLP_FeatureImportance_CV.P_FORMAT;
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-					prop_format = NNxMLP_FeatureImportance_CV.PERM_SEEDS_FORMAT;
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
-					prop_format = NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI_FORMAT;
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
-					prop_format = NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS_FORMAT;
-				case NNxMLP_FeatureImportance_CV.VERBOSE
-					prop_format = NNxMLP_FeatureImportance_CV.VERBOSE_FORMAT;
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL
-					prop_format = NNxMLP_FeatureImportance_CV.SIG_LEVEL_FORMAT;
-				case NNxMLP_FeatureImportance_CV.WAITBAR
-					prop_format = NNxMLP_FeatureImportance_CV.WAITBAR_FORMAT;
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
-					prop_format = NNxMLP_FeatureImportance_CV.INTERRUPTIBLE_FORMAT;
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-					prop_format = NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE_FORMAT;
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-					prop_format = NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE_FORMAT;
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-					prop_format = NNxMLP_FeatureImportance_CV.MAP_TO_CELL_FORMAT;
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-					prop_format = NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS_FORMAT;
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-					prop_format = NNxMLP_FeatureImportance_CV.FLATTEN_CELL_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportance_cv_format_list = { 2  2  2  8  2  2  2  2  8  8  9  11  12  4  4  4  11  4  11  16  16  1  1  1 };
+			prop_format = nnxmlp_featureimportance_cv_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -651,56 +571,9 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV
-					prop_description = 'NNCV (data, item) is the neural network cross validation to be tested on feature importance.';
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
-					prop_description = 'FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.';
-				case NNxMLP_FeatureImportance_CV.FI_LIST
-					prop_description = 'FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.';
-				case NNxMLP_FeatureImportance_CV.P
-					prop_description = 'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. ';
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-					prop_description = 'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.';
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
-					prop_description = 'APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.';
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
-					prop_description = 'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.';
-				case NNxMLP_FeatureImportance_CV.VERBOSE
-					prop_description = 'VERBOSE (metadata, logical) is an indicator to display permutation progress information.';
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL
-					prop_description = 'SIG_LEVEL (parameter, scalar) determines the significant level.';
-				case NNxMLP_FeatureImportance_CV.WAITBAR
-					prop_description = 'WAITBAR (gui, logical) determines whether to show the waitbar.';
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
-					prop_description = 'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.';
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-					prop_description = 'AV_FEATURE_IMPORTANCE (result, cell) is determined by applying bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.';
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-					prop_description = 'RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.';
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-					prop_description = 'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.';
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-					prop_description = 'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.';
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-					prop_description = 'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.';
-				case NNxMLP_FeatureImportance_CV.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.NAME
-					prop_description = 'NAME (constant, string) is the name of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.ID
-					prop_description = 'ID (data, string) is a few-letter code of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the neural network feature importance for cross validation.';
-				case NNxMLP_FeatureImportance_CV.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the neural network feature importance for cross validation.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nnxmlp_featureimportance_cv_description_list = { 'ELCLASS (constant, string) is the class of the neural network feature importance for cross validation.'  'NAME (constant, string) is the name of the neural network feature importance for cross validation.'  'DESCRIPTION (constant, string) is the description of the neural network feature importance for cross validation.'  'TEMPLATE (parameter, item) is the template of the neural network feature importance for cross validation.'  'ID (data, string) is a few-letter code of the neural network feature importance for cross validation.'  'LABEL (metadata, string) is an extended label of the neural network feature importance for cross validation.'  'NOTES (metadata, string) are some specific notes about the neural network feature importance for cross validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NNCV (data, item) is the neural network cross validation to be tested on feature importance.'  'FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.'  'FI_LIST (result, itemlist) contains a list of feature importance analysis for all folds.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the features. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply bonferroni correction.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.'  'AV_FEATURE_IMPORTANCE (result, cell) is determined by applying bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_AV_FEATURE_IMPORTANCE (result, cell) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.' };
+			prop_description = nnxmlp_featureimportance_cv_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -724,40 +597,40 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % NNxMLP_FeatureImportance_CV.NNCV
 					prop_settings = 'NNCrossValidation';
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
+				case 10 % NNxMLP_FeatureImportance_CV.FI_TEMPLATE
 					prop_settings = 'NNxMLP_FeatureImportance';
-				case NNxMLP_FeatureImportance_CV.FI_LIST
+				case 11 % NNxMLP_FeatureImportance_CV.FI_LIST
 					prop_settings = 'NNxMLP_FeatureImportance';
-				case NNxMLP_FeatureImportance_CV.P
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-					prop_settings = Format.getFormatSettings(Format.RVECTOR);
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case NNxMLP_FeatureImportance_CV.VERBOSE
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case NNxMLP_FeatureImportance_CV.WAITBAR
-					prop_settings = Format.getFormatSettings(Format.LOGICAL);
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
-					prop_settings = Format.getFormatSettings(Format.SCALAR);
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-					prop_settings = Format.getFormatSettings(Format.CELL);
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-					prop_settings = Format.getFormatSettings(Format.EMPTY);
-				case NNxMLP_FeatureImportance_CV.TEMPLATE
+				case 12 % NNxMLP_FeatureImportance_CV.P
+					prop_settings = Format.getFormatSettings(11);
+				case 13 % NNxMLP_FeatureImportance_CV.PERM_SEEDS
+					prop_settings = Format.getFormatSettings(12);
+				case 14 % NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
+					prop_settings = Format.getFormatSettings(4);
+				case 15 % NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
+					prop_settings = Format.getFormatSettings(4);
+				case 16 % NNxMLP_FeatureImportance_CV.VERBOSE
+					prop_settings = Format.getFormatSettings(4);
+				case 17 % NNxMLP_FeatureImportance_CV.SIG_LEVEL
+					prop_settings = Format.getFormatSettings(11);
+				case 18 % NNxMLP_FeatureImportance_CV.WAITBAR
+					prop_settings = Format.getFormatSettings(4);
+				case 19 % NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
+					prop_settings = Format.getFormatSettings(11);
+				case 20 % NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(16);
+				case 21 % NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
+					prop_settings = Format.getFormatSettings(16);
+				case 22 % NNxMLP_FeatureImportance_CV.MAP_TO_CELL
+					prop_settings = Format.getFormatSettings(1);
+				case 23 % NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
+					prop_settings = Format.getFormatSettings(1);
+				case 24 % NNxMLP_FeatureImportance_CV.FLATTEN_CELL
+					prop_settings = Format.getFormatSettings(1);
+				case 4 % NNxMLP_FeatureImportance_CV.TEMPLATE
 					prop_settings = 'NNxMLP_FeatureImportance_CV';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -785,52 +658,52 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
-			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV
-					prop_default = Format.getFormatDefault(Format.ITEM, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FI_LIST
-					prop_default = Format.getFormatDefault(Format.ITEMLIST, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.P
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % NNxMLP_FeatureImportance_CV.NNCV
+					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 10 % NNxMLP_FeatureImportance_CV.FI_TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 11 % NNxMLP_FeatureImportance_CV.FI_LIST
+					prop_default = Format.getFormatDefault(9, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 12 % NNxMLP_FeatureImportance_CV.P
 					prop_default = 1e+2;
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS
-					prop_default = Format.getFormatDefault(Format.RVECTOR, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
+				case 13 % NNxMLP_FeatureImportance_CV.PERM_SEEDS
+					prop_default = Format.getFormatDefault(12, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 14 % NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
 					prop_default = true;
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
+				case 15 % NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
 					prop_default = true;
-				case NNxMLP_FeatureImportance_CV.VERBOSE
+				case 16 % NNxMLP_FeatureImportance_CV.VERBOSE
 					prop_default = false;
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL
+				case 17 % NNxMLP_FeatureImportance_CV.SIG_LEVEL
 					prop_default = 0.05;
-				case NNxMLP_FeatureImportance_CV.WAITBAR
+				case 18 % NNxMLP_FeatureImportance_CV.WAITBAR
 					prop_default = true;
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
+				case 19 % NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
 					prop_default = .001;
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
-					prop_default = Format.getFormatDefault(Format.CELL, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
-					prop_default = Format.getFormatDefault(Format.CELL, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL
-					prop_default = Format.getFormatDefault(Format.EMPTY, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
-					prop_default = Format.getFormatDefault(Format.EMPTY, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL
-					prop_default = Format.getFormatDefault(Format.EMPTY, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.ELCLASS
+				case 20 % NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 21 % NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
+					prop_default = Format.getFormatDefault(16, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 22 % NNxMLP_FeatureImportance_CV.MAP_TO_CELL
+					prop_default = Format.getFormatDefault(1, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 23 % NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
+					prop_default = Format.getFormatDefault(1, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 24 % NNxMLP_FeatureImportance_CV.FLATTEN_CELL
+					prop_default = Format.getFormatDefault(1, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 1 % NNxMLP_FeatureImportance_CV.ELCLASS
 					prop_default = 'NNxMLP_FeatureImportance_CV';
-				case NNxMLP_FeatureImportance_CV.NAME
+				case 2 % NNxMLP_FeatureImportance_CV.NAME
 					prop_default = 'Feature Importace for Multi-layer Perceptron';
-				case NNxMLP_FeatureImportance_CV.DESCRIPTION
+				case 3 % NNxMLP_FeatureImportance_CV.DESCRIPTION
 					prop_default = 'Neural Network Feature Importance for Multi-Layer Perceptron with Cross-Validation (NNxMLP_FeatureImportance_CV) assesses the importance of features across all folds by measuring the increase in model error when the feature values are randomly shuffled. The feature importance score for each feature is then averaged across all folds. It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.';
-				case NNxMLP_FeatureImportance_CV.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.ID
+				case 4 % NNxMLP_FeatureImportance_CV.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 5 % NNxMLP_FeatureImportance_CV.ID
 					prop_default = 'NNxMLP_FeatureImportance_CV ID';
-				case NNxMLP_FeatureImportance_CV.LABEL
+				case 6 % NNxMLP_FeatureImportance_CV.LABEL
 					prop_default = 'NNxMLP_FeatureImportance_CV label';
-				case NNxMLP_FeatureImportance_CV.NOTES
+				case 7 % NNxMLP_FeatureImportance_CV.NOTES
 					prop_default = 'NNxMLP_FeatureImportance_CV notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -877,15 +750,15 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			% 
 			% NNFICV.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNxMLP_FeatureImportance_CV:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNxMLP_FeatureImportance_CV:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  NNFICV.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of NNFICV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportance_CV:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportance_CV:WrongInput
 			%  Element.CHECKPROP(NNxMLP_FeatureImportance_CV, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportance_CV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportance_CV:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNxMLP_FeatureImportance_CV:WrongInput
 			%  NNFICV.CHECKPROP(NNxMLP_FeatureImportance_CV, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNxMLP_FeatureImportance_CV.
-			%   Error id: €BRAPH2.STR€:NNxMLP_FeatureImportance_CV:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNxMLP_FeatureImportance_CV:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(NNFICV) and Element.CHECKPROP('NNxMLP_FeatureImportance_CV')
 			%  are less computationally efficient.
@@ -896,45 +769,45 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			prop = NNxMLP_FeatureImportance_CV.getPropProp(pointer);
 			
 			switch prop
-				case NNxMLP_FeatureImportance_CV.NNCV % __NNxMLP_FeatureImportance_CV.NNCV__
-					check = Format.checkFormat(Format.ITEM, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE % __NNxMLP_FeatureImportance_CV.FI_TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FI_LIST % __NNxMLP_FeatureImportance_CV.FI_LIST__
-					check = Format.checkFormat(Format.ITEMLIST, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.P % __NNxMLP_FeatureImportance_CV.P__
-					check = Format.checkFormat(Format.SCALAR, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 9 % NNxMLP_FeatureImportance_CV.NNCV
+					check = Format.checkFormat(8, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 10 % NNxMLP_FeatureImportance_CV.FI_TEMPLATE
+					check = Format.checkFormat(8, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 11 % NNxMLP_FeatureImportance_CV.FI_LIST
+					check = Format.checkFormat(9, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 12 % NNxMLP_FeatureImportance_CV.P
+					check = Format.checkFormat(11, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
 					if check
 						check = value > 0 && value == round(value);
 					end
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS % __NNxMLP_FeatureImportance_CV.PERM_SEEDS__
-					check = Format.checkFormat(Format.RVECTOR, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI % __NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI__
-					check = Format.checkFormat(Format.LOGICAL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS % __NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS__
-					check = Format.checkFormat(Format.LOGICAL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.VERBOSE % __NNxMLP_FeatureImportance_CV.VERBOSE__
-					check = Format.checkFormat(Format.LOGICAL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL % __NNxMLP_FeatureImportance_CV.SIG_LEVEL__
-					check = Format.checkFormat(Format.SCALAR, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.WAITBAR % __NNxMLP_FeatureImportance_CV.WAITBAR__
-					check = Format.checkFormat(Format.LOGICAL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.INTERRUPTIBLE % __NNxMLP_FeatureImportance_CV.INTERRUPTIBLE__
-					check = Format.checkFormat(Format.SCALAR, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE % __NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE__
-					check = Format.checkFormat(Format.CELL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE % __NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE__
-					check = Format.checkFormat(Format.CELL, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL % __NNxMLP_FeatureImportance_CV.MAP_TO_CELL__
-					check = Format.checkFormat(Format.EMPTY, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS % __NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS__
-					check = Format.checkFormat(Format.EMPTY, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL % __NNxMLP_FeatureImportance_CV.FLATTEN_CELL__
-					check = Format.checkFormat(Format.EMPTY, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
-				case NNxMLP_FeatureImportance_CV.TEMPLATE % __NNxMLP_FeatureImportance_CV.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 13 % NNxMLP_FeatureImportance_CV.PERM_SEEDS
+					check = Format.checkFormat(12, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 14 % NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
+					check = Format.checkFormat(4, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 15 % NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
+					check = Format.checkFormat(4, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 16 % NNxMLP_FeatureImportance_CV.VERBOSE
+					check = Format.checkFormat(4, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 17 % NNxMLP_FeatureImportance_CV.SIG_LEVEL
+					check = Format.checkFormat(11, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 18 % NNxMLP_FeatureImportance_CV.WAITBAR
+					check = Format.checkFormat(4, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 19 % NNxMLP_FeatureImportance_CV.INTERRUPTIBLE
+					check = Format.checkFormat(11, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 20 % NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
+					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 21 % NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
+					check = Format.checkFormat(16, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 22 % NNxMLP_FeatureImportance_CV.MAP_TO_CELL
+					check = Format.checkFormat(1, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 23 % NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
+					check = Format.checkFormat(1, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 24 % NNxMLP_FeatureImportance_CV.FLATTEN_CELL
+					check = Format.checkFormat(1, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
+				case 4 % NNxMLP_FeatureImportance_CV.TEMPLATE
+					check = Format.checkFormat(8, value, NNxMLP_FeatureImportance_CV.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -943,8 +816,8 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput'], ...
+					['BRAPH2' ':NNxMLP_FeatureImportance_CV:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNxMLP_FeatureImportance_CV.getPropTag(prop) ' (' NNxMLP_FeatureImportance_CV.getFormatTag(NNxMLP_FeatureImportance_CV.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -964,20 +837,20 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%  checkValue.
 			
 			switch prop
-				case NNxMLP_FeatureImportance_CV.P % __NNxMLP_FeatureImportance_CV.P__
+				case 12 % NNxMLP_FeatureImportance_CV.P
 					nnficv.memorize('FI_TEMPLATE').set('P', nnficv.getCallback('P'));
 					
-				case NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI % __NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI__
+				case 14 % NNxMLP_FeatureImportance_CV.APPLY_BONFERRONI
 					nnficv.memorize('FI_TEMPLATE').set('APPLY_BONFERRONI', nnficv.getCallback('APPLY_BONFERRONI'));
 					
-				case NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS % __NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS__
+				case 15 % NNxMLP_FeatureImportance_CV.APPLY_CONFIDENCE_INTERVALS
 					nnficv.memorize('FI_TEMPLATE').set('APPLY_CONFIDENCE_INTERVALS', nnficv.getCallback('APPLY_CONFIDENCE_INTERVALS'));
 					
-				case NNxMLP_FeatureImportance_CV.SIG_LEVEL % __NNxMLP_FeatureImportance_CV.SIG_LEVEL__
+				case 17 % NNxMLP_FeatureImportance_CV.SIG_LEVEL
 					nnficv.memorize('FI_TEMPLATE').set('SIG_LEVEL', nnficv.getCallback('SIG_LEVEL'));
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						postset@ConcreteElement(nnficv, prop);
 					end
 			end
@@ -988,20 +861,20 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNxMLP_FeatureImportance_CV.FI_LIST % __NNxMLP_FeatureImportance_CV.FI_LIST__
-					rng_settings_ = rng(); rng(nnficv.getPropSeed(NNxMLP_FeatureImportance_CV.FI_LIST), 'twister')
+				case 11 % NNxMLP_FeatureImportance_CV.FI_LIST
+					rng_settings_ = rng(); rng(nnficv.getPropSeed(11), 'twister')
 					
 					if ~isa(nnficv.getr('FI_TEMPLATE'), 'NoValue')
 					    fi_template = nnficv.get('FI_TEMPLATE');
@@ -1026,15 +899,15 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case NNxMLP_FeatureImportance_CV.PERM_SEEDS % __NNxMLP_FeatureImportance_CV.PERM_SEEDS__
-					rng_settings_ = rng(); rng(nnficv.getPropSeed(NNxMLP_FeatureImportance_CV.PERM_SEEDS), 'twister')
+				case 13 % NNxMLP_FeatureImportance_CV.PERM_SEEDS
+					rng_settings_ = rng(); rng(nnficv.getPropSeed(13), 'twister')
 					
 					value = randi(intmax('uint32'), 1, nnfi.get('P'));
 					
 					rng(rng_settings_)
 					
-				case NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE % __NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE__
-					rng_settings_ = rng(); rng(nnficv.getPropSeed(NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE), 'twister')
+				case 20 % NNxMLP_FeatureImportance_CV.AV_FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nnficv.getPropSeed(20), 'twister')
 					
 					fi_list = nnficv.memorize('FI_LIST');
 					fi_value_list = cellfun(@(fi) cell2mat(fi.memorize('FEATURE_IMPORTANCE')'), fi_list, 'UniformOutput', false);
@@ -1043,8 +916,8 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE % __NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE__
-					rng_settings_ = rng(); rng(nnficv.getPropSeed(NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE), 'twister')
+				case 21 % NNxMLP_FeatureImportance_CV.RESHAPED_AV_FEATURE_IMPORTANCE
+					rng_settings_ = rng(); rng(nnficv.getPropSeed(21), 'twister')
 					
 					cell1 = nnficv.get('AV_FEATURE_IMPORTANCE');
 					datasets = nnficv.get('NNCV').get('D_LIST');
@@ -1057,7 +930,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					rng(rng_settings_)
 					
-				case NNxMLP_FeatureImportance_CV.MAP_TO_CELL % __NNxMLP_FeatureImportance_CV.MAP_TO_CELL__
+				case 22 % NNxMLP_FeatureImportance_CV.MAP_TO_CELL
 					if isempty(varargin)
 					    value = {};
 					    return
@@ -1084,7 +957,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					value = mappedCellArray;
 					
-				case NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS % __NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS__
+				case 23 % NNxMLP_FeatureImportance_CV.COUNT_ELEMENTS
 					if isempty(varargin)
 					    value = {};
 					    return
@@ -1101,7 +974,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					
 					value = count;
 					
-				case NNxMLP_FeatureImportance_CV.FLATTEN_CELL % __NNxMLP_FeatureImportance_CV.FLATTEN_CELL__
+				case 24 % NNxMLP_FeatureImportance_CV.FLATTEN_CELL
 					if isempty(varargin)
 					    value = {};
 					    return
@@ -1123,7 +996,7 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 					value = flattened_input;
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						value = calculateValue@ConcreteElement(nnficv, prop, varargin{:});
 					else
 						value = calculateValue@Element(nnficv, prop, varargin{:});
@@ -1149,8 +1022,8 @@ classdef NNxMLP_FeatureImportance_CV < ConcreteElement
 			%  PanelPropString, PanelPropStringList.
 			
 			switch prop
-				case NNxMLP_FeatureImportance_CV.FI_TEMPLATE % __NNxMLP_FeatureImportance_CV.FI_TEMPLATE__
-					pr = PanelPropItem('EL', nnficv, 'PROP', NNxMLP_FeatureImportance_CV.FI_TEMPLATE, ...
+				case 10 % NNxMLP_FeatureImportance_CV.FI_TEMPLATE
+					pr = PanelPropItem('EL', nnficv, 'PROP', 10, ...
 					    'BUTTON_TEXT', ['FEATURE IMPORTANCE TEMPLATE (' nnficv.get('FI_TEMPLATE').getClass() ')'], ...
 					    varargin{:});
 					

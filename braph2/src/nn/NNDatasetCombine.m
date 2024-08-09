@@ -6,6 +6,18 @@ classdef NNDatasetCombine < ConcreteElement
 	% The resulting combined dataset contains all the unique datapoints from the input datasets, 
 	% and any overlapping datapoints are excluded to ensure data consistency.
 	%
+	% The list of NNDatasetCombine properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of neural networks datasets.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of neural networks datasets.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of neural networks datasets.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of neural networks datasets.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the combiner of neural networks datasets.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of neural networks datasets.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes of the combiner of neural networks datasets.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
+	%  <strong>10</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
+	%
 	% NNDatasetCombine methods (constructor):
 	%  NNDatasetCombine - constructor
 	%
@@ -95,15 +107,15 @@ classdef NNDatasetCombine < ConcreteElement
 	% See also NNDataset, NNDatasetSplit.
 	
 	properties (Constant) % properties
-		D_LIST = ConcreteElement.getPropNumber() + 1;
+		D_LIST = 9; %CET: Computational Efficiency Trick
 		D_LIST_TAG = 'D_LIST';
-		D_LIST_CATEGORY = Category.DATA;
-		D_LIST_FORMAT = Format.ITEMLIST;
+		D_LIST_CATEGORY = 4;
+		D_LIST_FORMAT = 9;
 		
-		D = ConcreteElement.getPropNumber() + 2;
+		D = 10; %CET: Computational Efficiency Trick
 		D_TAG = 'D';
-		D_CATEGORY = Category.RESULT;
-		D_FORMAT = Format.ITEM;
+		D_CATEGORY = 5;
+		D_FORMAT = 8;
 	end
 	methods % constructor
 		function dco = NNDatasetCombine(varargin)
@@ -116,6 +128,17 @@ classdef NNDatasetCombine < ConcreteElement
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of NNDatasetCombine properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the combiner of neural networks datasets.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the combiner of neural networks datasets.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the combiner of neural networks datasets.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the combiner of neural networks datasets.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the combiner of neural networks datasets.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the combiner of neural networks datasets.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes of the combiner of neural networks datasets.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>D_LIST</strong> 	D_LIST (data, itemlist) is a items of datasets to be combined.
+			%  <strong>10</strong> <strong>D</strong> 	D (result, item) is the combined neural network dataset.
 			%
 			% See also Category, Format.
 			
@@ -153,7 +176,7 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('NNDatasetCombine', [], [], true);
+			subclass_list = { 'NNDatasetCombine' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of combiner of a neural network data.
@@ -174,54 +197,28 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					ConcreteElement.getProps() ...
-						NNDatasetCombine.D_LIST ...
-						NNDatasetCombine.D ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.DATA) ...
-						NNDatasetCombine.D_LIST ...
-						];
-				case Category.RESULT
-					prop_list = [
-						ConcreteElement.getProps(Category.RESULT) ...
-						NNDatasetCombine.D ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						ConcreteElement.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = [5 9];
+				case 5 % Category.RESULT
+					prop_list = 10;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -242,7 +239,29 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(NNDatasetCombine.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 10;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 2;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in combiner of a neural network data/error.
@@ -270,14 +289,14 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == NNDatasetCombine.getProps());
+			check = prop >= 1 && prop <= 10 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput'], ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for NNDatasetCombine.'] ...
 					)
 			end
@@ -308,15 +327,14 @@ classdef NNDatasetCombine < ConcreteElement
 			%
 			% See also getProps, existsTag.
 			
-			nndatasetcombine_tag_list = cellfun(@(x) NNDatasetCombine.getPropTag(x), num2cell(NNDatasetCombine.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, nndatasetcombine_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput'], ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for NNDatasetCombine.'] ...
 					)
 			end
@@ -342,8 +360,7 @@ classdef NNDatasetCombine < ConcreteElement
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				nndatasetcombine_tag_list = cellfun(@(x) NNDatasetCombine.getPropTag(x), num2cell(NNDatasetCombine.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, nndatasetcombine_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -371,16 +388,9 @@ classdef NNDatasetCombine < ConcreteElement
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case NNDatasetCombine.D_LIST
-						tag = NNDatasetCombine.D_LIST_TAG;
-					case NNDatasetCombine.D
-						tag = NNDatasetCombine.D_TAG;
-					otherwise
-						tag = getPropTag@ConcreteElement(prop);
-				end
+				%CET: Computational Efficiency Trick
+				nndatasetcombine_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'D_LIST'  'D' };
+				tag = nndatasetcombine_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -405,14 +415,9 @@ classdef NNDatasetCombine < ConcreteElement
 			
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
-			switch prop
-				case NNDatasetCombine.D_LIST
-					prop_category = NNDatasetCombine.D_LIST_CATEGORY;
-				case NNDatasetCombine.D
-					prop_category = NNDatasetCombine.D_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatasetcombine_category_list = { 1  1  1  3  4  2  2  6  4  5 };
+			prop_category = nndatasetcombine_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -436,14 +441,9 @@ classdef NNDatasetCombine < ConcreteElement
 			
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
-			switch prop
-				case NNDatasetCombine.D_LIST
-					prop_format = NNDatasetCombine.D_LIST_FORMAT;
-				case NNDatasetCombine.D
-					prop_format = NNDatasetCombine.D_FORMAT;
-				otherwise
-					prop_format = getPropFormat@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatasetcombine_format_list = { 2  2  2  8  2  2  2  2  9  8 };
+			prop_format = nndatasetcombine_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -467,28 +467,9 @@ classdef NNDatasetCombine < ConcreteElement
 			
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
-			switch prop
-				case NNDatasetCombine.D_LIST
-					prop_description = 'D_LIST (data, itemlist) is a items of datasets to be combined.';
-				case NNDatasetCombine.D
-					prop_description = 'D (result, item) is the combined neural network dataset.';
-				case NNDatasetCombine.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the combiner of neural networks datasets.';
-				case NNDatasetCombine.NAME
-					prop_description = 'NAME (constant, string) is the name of the combiner of neural networks datasets.';
-				case NNDatasetCombine.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the combiner of neural networks datasets.';
-				case NNDatasetCombine.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the combiner of neural networks datasets.';
-				case NNDatasetCombine.ID
-					prop_description = 'ID (data, string) is a few-letter code of the combiner of neural networks datasets.';
-				case NNDatasetCombine.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the combiner of neural networks datasets.';
-				case NNDatasetCombine.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes of the combiner of neural networks datasets.';
-				otherwise
-					prop_description = getPropDescription@ConcreteElement(prop);
-			end
+			%CET: Computational Efficiency Trick
+			nndatasetcombine_description_list = { 'ELCLASS (constant, string) is the class of the combiner of neural networks datasets.'  'NAME (constant, string) is the name of the combiner of neural networks datasets.'  'DESCRIPTION (constant, string) is the description of the combiner of neural networks datasets.'  'TEMPLATE (parameter, item) is the template of the combiner of neural networks datasets.'  'ID (data, string) is a few-letter code of the combiner of neural networks datasets.'  'LABEL (metadata, string) is an extended label of the combiner of neural networks datasets.'  'NOTES (metadata, string) are some specific notes of the combiner of neural networks datasets.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D_LIST (data, itemlist) is a items of datasets to be combined.'  'D (result, item) is the combined neural network dataset.' };
+			prop_description = nndatasetcombine_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -512,12 +493,12 @@ classdef NNDatasetCombine < ConcreteElement
 			
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
-			switch prop
-				case NNDatasetCombine.D_LIST
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % NNDatasetCombine.D_LIST
 					prop_settings = 'NNDataset';
-				case NNDatasetCombine.D
+				case 10 % NNDatasetCombine.D
 					prop_settings = 'NNDataset';
-				case NNDatasetCombine.TEMPLATE
+				case 4 % NNDatasetCombine.TEMPLATE
 					prop_settings = 'NNDatasetCombine';
 				otherwise
 					prop_settings = getPropSettings@ConcreteElement(prop);
@@ -545,24 +526,24 @@ classdef NNDatasetCombine < ConcreteElement
 			
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
-			switch prop
-				case NNDatasetCombine.D_LIST
-					prop_default = Format.getFormatDefault(Format.ITEMLIST, NNDatasetCombine.getPropSettings(prop));
-				case NNDatasetCombine.D
-					prop_default = Format.getFormatDefault(Format.ITEM, NNDatasetCombine.getPropSettings(prop));
-				case NNDatasetCombine.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 9 % NNDatasetCombine.D_LIST
+					prop_default = Format.getFormatDefault(9, NNDatasetCombine.getPropSettings(prop));
+				case 10 % NNDatasetCombine.D
+					prop_default = Format.getFormatDefault(8, NNDatasetCombine.getPropSettings(prop));
+				case 1 % NNDatasetCombine.ELCLASS
 					prop_default = 'NNDatasetCombine';
-				case NNDatasetCombine.NAME
+				case 2 % NNDatasetCombine.NAME
 					prop_default = 'Neural Network Dataset Combiner';
-				case NNDatasetCombine.DESCRIPTION
+				case 3 % NNDatasetCombine.DESCRIPTION
 					prop_default = 'A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.';
-				case NNDatasetCombine.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, NNDatasetCombine.getPropSettings(prop));
-				case NNDatasetCombine.ID
+				case 4 % NNDatasetCombine.TEMPLATE
+					prop_default = Format.getFormatDefault(8, NNDatasetCombine.getPropSettings(prop));
+				case 5 % NNDatasetCombine.ID
 					prop_default = 'NNDatasetCombine ID';
-				case NNDatasetCombine.LABEL
+				case 6 % NNDatasetCombine.LABEL
 					prop_default = 'NNDatasetCombine label';
-				case NNDatasetCombine.NOTES
+				case 7 % NNDatasetCombine.NOTES
 					prop_default = 'NNDatasetCombine notes';
 				otherwise
 					prop_default = getPropDefault@ConcreteElement(prop);
@@ -609,15 +590,15 @@ classdef NNDatasetCombine < ConcreteElement
 			% 
 			% DCO.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:NNDatasetCombine:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:NNDatasetCombine:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  DCO.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of DCO.
-			%   Error id: €BRAPH2.STR€:NNDatasetCombine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNDatasetCombine:WrongInput
 			%  Element.CHECKPROP(NNDatasetCombine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDatasetCombine.
-			%   Error id: €BRAPH2.STR€:NNDatasetCombine:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:NNDatasetCombine:WrongInput
 			%  DCO.CHECKPROP(NNDatasetCombine, PROP, VALUE) throws error if VALUE has not a valid format for PROP of NNDatasetCombine.
-			%   Error id: €BRAPH2.STR€:NNDatasetCombine:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:NNDatasetCombine:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(DCO) and Element.CHECKPROP('NNDatasetCombine')
 			%  are less computationally efficient.
@@ -628,8 +609,8 @@ classdef NNDatasetCombine < ConcreteElement
 			prop = NNDatasetCombine.getPropProp(pointer);
 			
 			switch prop
-				case NNDatasetCombine.D_LIST % __NNDatasetCombine.D_LIST__
-					check = Format.checkFormat(Format.ITEMLIST, value, NNDatasetCombine.getPropSettings(prop));
+				case 9 % NNDatasetCombine.D_LIST
+					check = Format.checkFormat(9, value, NNDatasetCombine.getPropSettings(prop));
 					if check
 						if ~isempty(value)
 						    dp_classes = cellfun(@(x) x.get('DP_CLASS'), value, 'uniformoutput', false);
@@ -640,12 +621,12 @@ classdef NNDatasetCombine < ConcreteElement
 						    end
 						end
 					end
-				case NNDatasetCombine.D % __NNDatasetCombine.D__
-					check = Format.checkFormat(Format.ITEM, value, NNDatasetCombine.getPropSettings(prop));
-				case NNDatasetCombine.TEMPLATE % __NNDatasetCombine.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, NNDatasetCombine.getPropSettings(prop));
+				case 10 % NNDatasetCombine.D
+					check = Format.checkFormat(8, value, NNDatasetCombine.getPropSettings(prop));
+				case 4 % NNDatasetCombine.TEMPLATE
+					check = Format.checkFormat(8, value, NNDatasetCombine.getPropSettings(prop));
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						check = checkProp@ConcreteElement(prop, value);
 					end
 			end
@@ -654,8 +635,8 @@ classdef NNDatasetCombine < ConcreteElement
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':NNDatasetCombine:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput'], ...
+					['BRAPH2' ':NNDatasetCombine:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' NNDatasetCombine.getPropTag(prop) ' (' NNDatasetCombine.getFormatTag(NNDatasetCombine.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -666,20 +647,20 @@ classdef NNDatasetCombine < ConcreteElement
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case NNDatasetCombine.D % __NNDatasetCombine.D__
-					rng_settings_ = rng(); rng(dco.getPropSeed(NNDatasetCombine.D), 'twister')
+				case 10 % NNDatasetCombine.D
+					rng_settings_ = rng(); rng(dco.getPropSeed(10), 'twister')
 					
 					dp_list = cellfun(@(x) x.get('DP_DICT').get('IT_LIST'), dco.get('D_LIST'), 'UniformOutput', false);
 					dp_classes = cellfun(@(x) x.get('DP_CLASS'), dco.get('D_LIST'), 'UniformOutput', false);
@@ -718,7 +699,7 @@ classdef NNDatasetCombine < ConcreteElement
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= ConcreteElement.getPropNumber()
+					if prop <= 8
 						value = calculateValue@ConcreteElement(dco, prop, varargin{:});
 					else
 						value = calculateValue@Element(dco, prop, varargin{:});

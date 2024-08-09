@@ -6,6 +6,26 @@ classdef SettingsSurface < Settings
 	%  including face color, face alpha, edge color, and edge alpha.
 	% The handle can be either a patch or a surface.
 	%
+	% The list of SettingsSurface properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the surface settings.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the surface settings.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the surface settings.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the surface settings.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the surface settings.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the surface settings.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the surface settings.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+	%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+	%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+	%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+	%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+	%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+	%  <strong>15</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
+	%  <strong>16</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
+	%  <strong>17</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
+	%  <strong>18</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
+	%
 	% SettingsSurface methods (constructor):
 	%  SettingsSurface - constructor
 	%
@@ -95,25 +115,25 @@ classdef SettingsSurface < Settings
 	% See also patch, surface, SettingsSurfacePP, PanelFig, GUIFig, check_graphics.
 	
 	properties (Constant) % properties
-		EDGECOLOR = Settings.getPropNumber() + 1;
+		EDGECOLOR = 15; %CET: Computational Efficiency Trick
 		EDGECOLOR_TAG = 'EDGECOLOR';
-		EDGECOLOR_CATEGORY = Category.FIGURE;
-		EDGECOLOR_FORMAT = Format.COLOR;
+		EDGECOLOR_CATEGORY = 8;
+		EDGECOLOR_FORMAT = 20;
 		
-		EDGEALPHA = Settings.getPropNumber() + 2;
+		EDGEALPHA = 16; %CET: Computational Efficiency Trick
 		EDGEALPHA_TAG = 'EDGEALPHA';
-		EDGEALPHA_CATEGORY = Category.FIGURE;
-		EDGEALPHA_FORMAT = Format.ALPHA;
+		EDGEALPHA_CATEGORY = 8;
+		EDGEALPHA_FORMAT = 21;
 		
-		FACECOLOR = Settings.getPropNumber() + 3;
+		FACECOLOR = 17; %CET: Computational Efficiency Trick
 		FACECOLOR_TAG = 'FACECOLOR';
-		FACECOLOR_CATEGORY = Category.FIGURE;
-		FACECOLOR_FORMAT = Format.COLOR;
+		FACECOLOR_CATEGORY = 8;
+		FACECOLOR_FORMAT = 20;
 		
-		FACEALPHA = Settings.getPropNumber() + 4;
+		FACEALPHA = 18; %CET: Computational Efficiency Trick
 		FACEALPHA_TAG = 'FACEALPHA';
-		FACEALPHA_CATEGORY = Category.FIGURE;
-		FACEALPHA_FORMAT = Format.ALPHA;
+		FACEALPHA_CATEGORY = 8;
+		FACEALPHA_FORMAT = 21;
 	end
 	methods % constructor
 		function st = SettingsSurface(varargin)
@@ -126,6 +146,25 @@ classdef SettingsSurface < Settings
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of SettingsSurface properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the surface settings.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the surface settings.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the surface settings.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the surface settings.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the surface settings.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the surface settings.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the surface settings.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>PANEL</strong> 	PANEL (gui, item) is the panel to which the graphics object belongs.
+			%  <strong>10</strong> <strong>PROP</strong> 	PROP (gui, scalar) is the prop of the graphics handle(list).
+			%  <strong>11</strong> <strong>TAG</strong> 	TAG (gui, string) is the tag of the graphics handle(s).
+			%  <strong>12</strong> <strong>I</strong> 	I (gui, scalar) is the index of the handle, used only by handlelists.
+			%  <strong>13</strong> <strong>H</strong> 	H (query, handle) is the graphics object handle.
+			%  <strong>14</strong> <strong>SETUP</strong> 	SETUP (query, scalar) sets all figure props.
+			%  <strong>15</strong> <strong>EDGECOLOR</strong> 	EDGECOLOR (figure, color) is the RGB edge color.
+			%  <strong>16</strong> <strong>EDGEALPHA</strong> 	EDGEALPHA (figure, alpha) is the edge transparency.
+			%  <strong>17</strong> <strong>FACECOLOR</strong> 	FACECOLOR (figure, color) is the RGB face color.
+			%  <strong>18</strong> <strong>FACEALPHA</strong> 	FACEALPHA (figure, alpha) is the face transparency.
 			%
 			% See also Category, Format.
 			
@@ -163,7 +202,7 @@ classdef SettingsSurface < Settings
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('SettingsSurface', [], [], true);
+			subclass_list = { 'SettingsSurface'  'SettingsSphere' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of surface settings.
@@ -184,58 +223,30 @@ classdef SettingsSurface < Settings
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					Settings.getProps() ...
-						SettingsSurface.EDGECOLOR ...
-						SettingsSurface.EDGEALPHA ...
-						SettingsSurface.FACECOLOR ...
-						SettingsSurface.FACEALPHA ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						Settings.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						Settings.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						Settings.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						Settings.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						Settings.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						Settings.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						Settings.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						Settings.getProps(Category.FIGURE) ...
-						SettingsSurface.EDGECOLOR ...
-						SettingsSurface.EDGEALPHA ...
-						SettingsSurface.FACECOLOR ...
-						SettingsSurface.FACEALPHA ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						Settings.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = 4;
+				case 4 % Category.DATA
+					prop_list = 5;
+				case 6 % Category.QUERY
+					prop_list = [8 13 14];
+				case 8 % Category.FIGURE
+					prop_list = [15 16 17 18];
+				case 9 % Category.GUI
+					prop_list = [9 10 11 12];
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -256,7 +267,31 @@ classdef SettingsSurface < Settings
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(SettingsSurface.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 18;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 3;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 1;
+				case 4 % Category.DATA
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 3;
+				case 8 % Category.FIGURE
+					prop_number = 4;
+				case 9 % Category.GUI
+					prop_number = 4;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in surface settings/error.
@@ -284,14 +319,14 @@ classdef SettingsSurface < Settings
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == SettingsSurface.getProps());
+			check = prop >= 1 && prop <= 18 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for SettingsSurface.'] ...
 					)
 			end
@@ -322,15 +357,14 @@ classdef SettingsSurface < Settings
 			%
 			% See also getProps, existsTag.
 			
-			settingssurface_tag_list = cellfun(@(x) SettingsSurface.getPropTag(x), num2cell(SettingsSurface.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, settingssurface_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for SettingsSurface.'] ...
 					)
 			end
@@ -356,8 +390,7 @@ classdef SettingsSurface < Settings
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				settingssurface_tag_list = cellfun(@(x) SettingsSurface.getPropTag(x), num2cell(SettingsSurface.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, settingssurface_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -385,20 +418,9 @@ classdef SettingsSurface < Settings
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					case SettingsSurface.EDGECOLOR
-						tag = SettingsSurface.EDGECOLOR_TAG;
-					case SettingsSurface.EDGEALPHA
-						tag = SettingsSurface.EDGEALPHA_TAG;
-					case SettingsSurface.FACECOLOR
-						tag = SettingsSurface.FACECOLOR_TAG;
-					case SettingsSurface.FACEALPHA
-						tag = SettingsSurface.FACEALPHA_TAG;
-					otherwise
-						tag = getPropTag@Settings(prop);
-				end
+				%CET: Computational Efficiency Trick
+				settingssurface_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'PANEL'  'PROP'  'TAG'  'I'  'H'  'SETUP'  'EDGECOLOR'  'EDGEALPHA'  'FACECOLOR'  'FACEALPHA' };
+				tag = settingssurface_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -423,18 +445,9 @@ classdef SettingsSurface < Settings
 			
 			prop = SettingsSurface.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSurface.EDGECOLOR
-					prop_category = SettingsSurface.EDGECOLOR_CATEGORY;
-				case SettingsSurface.EDGEALPHA
-					prop_category = SettingsSurface.EDGEALPHA_CATEGORY;
-				case SettingsSurface.FACECOLOR
-					prop_category = SettingsSurface.FACECOLOR_CATEGORY;
-				case SettingsSurface.FACEALPHA
-					prop_category = SettingsSurface.FACEALPHA_CATEGORY;
-				otherwise
-					prop_category = getPropCategory@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssurface_category_list = { 1  1  1  3  4  2  2  6  9  9  9  9  6  6  8  8  8  8 };
+			prop_category = settingssurface_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -458,18 +471,9 @@ classdef SettingsSurface < Settings
 			
 			prop = SettingsSurface.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSurface.EDGECOLOR
-					prop_format = SettingsSurface.EDGECOLOR_FORMAT;
-				case SettingsSurface.EDGEALPHA
-					prop_format = SettingsSurface.EDGEALPHA_FORMAT;
-				case SettingsSurface.FACECOLOR
-					prop_format = SettingsSurface.FACECOLOR_FORMAT;
-				case SettingsSurface.FACEALPHA
-					prop_format = SettingsSurface.FACEALPHA_FORMAT;
-				otherwise
-					prop_format = getPropFormat@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssurface_format_list = { 2  2  2  8  2  2  2  2  8  11  2  11  18  11  20  21  20  21 };
+			prop_format = settingssurface_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -493,32 +497,9 @@ classdef SettingsSurface < Settings
 			
 			prop = SettingsSurface.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSurface.EDGECOLOR
-					prop_description = 'EDGECOLOR (figure, color) is the RGB edge color.';
-				case SettingsSurface.EDGEALPHA
-					prop_description = 'EDGEALPHA (figure, alpha) is the edge transparency.';
-				case SettingsSurface.FACECOLOR
-					prop_description = 'FACECOLOR (figure, color) is the RGB face color.';
-				case SettingsSurface.FACEALPHA
-					prop_description = 'FACEALPHA (figure, alpha) is the face transparency.';
-				case SettingsSurface.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the surface settings.';
-				case SettingsSurface.NAME
-					prop_description = 'NAME (constant, string) is the name of the surface settings.';
-				case SettingsSurface.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the surface settings.';
-				case SettingsSurface.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the surface settings.';
-				case SettingsSurface.ID
-					prop_description = 'ID (data, string) is a few-letter code for the surface settings.';
-				case SettingsSurface.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the surface settings.';
-				case SettingsSurface.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the surface settings.';
-				otherwise
-					prop_description = getPropDescription@Settings(prop);
-			end
+			%CET: Computational Efficiency Trick
+			settingssurface_description_list = { 'ELCLASS (constant, string) is the class of the surface settings.'  'NAME (constant, string) is the name of the surface settings.'  'DESCRIPTION (constant, string) is the description of the surface settings.'  'TEMPLATE (parameter, item) is the template of the surface settings.'  'ID (data, string) is a few-letter code for the surface settings.'  'LABEL (metadata, string) is an extended label of the surface settings.'  'NOTES (metadata, string) are some specific notes about the surface settings.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'PANEL (gui, item) is the panel to which the graphics object belongs.'  'PROP (gui, scalar) is the prop of the graphics handle(list).'  'TAG (gui, string) is the tag of the graphics handle(s).'  'I (gui, scalar) is the index of the handle, used only by handlelists.'  'H (query, handle) is the graphics object handle.'  'SETUP (query, scalar) sets all figure props.'  'EDGECOLOR (figure, color) is the RGB edge color.'  'EDGEALPHA (figure, alpha) is the edge transparency.'  'FACECOLOR (figure, color) is the RGB face color.'  'FACEALPHA (figure, alpha) is the face transparency.' };
+			prop_description = settingssurface_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -542,16 +523,16 @@ classdef SettingsSurface < Settings
 			
 			prop = SettingsSurface.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSurface.EDGECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsSurface.EDGEALPHA
-					prop_settings = Format.getFormatSettings(Format.ALPHA);
-				case SettingsSurface.FACECOLOR
-					prop_settings = Format.getFormatSettings(Format.COLOR);
-				case SettingsSurface.FACEALPHA
-					prop_settings = Format.getFormatSettings(Format.ALPHA);
-				case SettingsSurface.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsSurface.EDGECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 16 % SettingsSurface.EDGEALPHA
+					prop_settings = Format.getFormatSettings(21);
+				case 17 % SettingsSurface.FACECOLOR
+					prop_settings = Format.getFormatSettings(20);
+				case 18 % SettingsSurface.FACEALPHA
+					prop_settings = Format.getFormatSettings(21);
+				case 4 % SettingsSurface.TEMPLATE
 					prop_settings = 'SettingsSurface';
 				otherwise
 					prop_settings = getPropSettings@Settings(prop);
@@ -579,28 +560,28 @@ classdef SettingsSurface < Settings
 			
 			prop = SettingsSurface.getPropProp(pointer);
 			
-			switch prop
-				case SettingsSurface.EDGECOLOR
+			switch prop %CET: Computational Efficiency Trick
+				case 15 % SettingsSurface.EDGECOLOR
 					prop_default = [0 0 0];
-				case SettingsSurface.EDGEALPHA
+				case 16 % SettingsSurface.EDGEALPHA
 					prop_default = 0;
-				case SettingsSurface.FACECOLOR
+				case 17 % SettingsSurface.FACECOLOR
 					prop_default = [.5 .5 .5];
-				case SettingsSurface.FACEALPHA
+				case 18 % SettingsSurface.FACEALPHA
 					prop_default = .5;
-				case SettingsSurface.ELCLASS
+				case 1 % SettingsSurface.ELCLASS
 					prop_default = 'SettingsSurface';
-				case SettingsSurface.NAME
+				case 2 % SettingsSurface.NAME
 					prop_default = 'Surface Settings';
-				case SettingsSurface.DESCRIPTION
+				case 3 % SettingsSurface.DESCRIPTION
 					prop_default = 'A Surface Settings (SettingsSurface) provides the settings for a surface, including face color, face alpha, edge color, and edge alpha.';
-				case SettingsSurface.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, SettingsSurface.getPropSettings(prop));
-				case SettingsSurface.ID
+				case 4 % SettingsSurface.TEMPLATE
+					prop_default = Format.getFormatDefault(8, SettingsSurface.getPropSettings(prop));
+				case 5 % SettingsSurface.ID
 					prop_default = 'SettingsSurface ID';
-				case SettingsSurface.LABEL
+				case 6 % SettingsSurface.LABEL
 					prop_default = 'SettingsSurface label';
-				case SettingsSurface.NOTES
+				case 7 % SettingsSurface.NOTES
 					prop_default = 'SettingsSurface notes';
 				otherwise
 					prop_default = getPropDefault@Settings(prop);
@@ -647,15 +628,15 @@ classdef SettingsSurface < Settings
 			% 
 			% ST.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:SettingsSurface:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:SettingsSurface:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  ST.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of ST.
-			%   Error id: €BRAPH2.STR€:SettingsSurface:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsSurface:WrongInput
 			%  Element.CHECKPROP(SettingsSurface, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSurface.
-			%   Error id: €BRAPH2.STR€:SettingsSurface:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:SettingsSurface:WrongInput
 			%  ST.CHECKPROP(SettingsSurface, PROP, VALUE) throws error if VALUE has not a valid format for PROP of SettingsSurface.
-			%   Error id: €BRAPH2.STR€:SettingsSurface:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:SettingsSurface:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(ST) and Element.CHECKPROP('SettingsSurface')
 			%  are less computationally efficient.
@@ -666,18 +647,18 @@ classdef SettingsSurface < Settings
 			prop = SettingsSurface.getPropProp(pointer);
 			
 			switch prop
-				case SettingsSurface.EDGECOLOR % __SettingsSurface.EDGECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsSurface.getPropSettings(prop));
-				case SettingsSurface.EDGEALPHA % __SettingsSurface.EDGEALPHA__
-					check = Format.checkFormat(Format.ALPHA, value, SettingsSurface.getPropSettings(prop));
-				case SettingsSurface.FACECOLOR % __SettingsSurface.FACECOLOR__
-					check = Format.checkFormat(Format.COLOR, value, SettingsSurface.getPropSettings(prop));
-				case SettingsSurface.FACEALPHA % __SettingsSurface.FACEALPHA__
-					check = Format.checkFormat(Format.ALPHA, value, SettingsSurface.getPropSettings(prop));
-				case SettingsSurface.TEMPLATE % __SettingsSurface.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, SettingsSurface.getPropSettings(prop));
+				case 15 % SettingsSurface.EDGECOLOR
+					check = Format.checkFormat(20, value, SettingsSurface.getPropSettings(prop));
+				case 16 % SettingsSurface.EDGEALPHA
+					check = Format.checkFormat(21, value, SettingsSurface.getPropSettings(prop));
+				case 17 % SettingsSurface.FACECOLOR
+					check = Format.checkFormat(20, value, SettingsSurface.getPropSettings(prop));
+				case 18 % SettingsSurface.FACEALPHA
+					check = Format.checkFormat(21, value, SettingsSurface.getPropSettings(prop));
+				case 4 % SettingsSurface.TEMPLATE
+					check = Format.checkFormat(8, value, SettingsSurface.getPropSettings(prop));
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						check = checkProp@Settings(prop, value);
 					end
 			end
@@ -686,8 +667,8 @@ classdef SettingsSurface < Settings
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':SettingsSurface:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput'], ...
+					['BRAPH2' ':SettingsSurface:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' SettingsSurface.getPropTag(prop) ' (' SettingsSurface.getFormatTag(SettingsSurface.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -707,32 +688,32 @@ classdef SettingsSurface < Settings
 			%  checkValue.
 			
 			switch prop
-				case SettingsSurface.EDGECOLOR % __SettingsSurface.EDGECOLOR__
+				case 15 % SettingsSurface.EDGECOLOR
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'EdgeColor', st.get('EDGECOLOR'))
 					end
 					
-				case SettingsSurface.EDGEALPHA % __SettingsSurface.EDGEALPHA__
+				case 16 % SettingsSurface.EDGEALPHA
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'EdgeAlpha', st.get('EDGEALPHA'))
 					end
 					
-				case SettingsSurface.FACECOLOR % __SettingsSurface.FACECOLOR__
+				case 17 % SettingsSurface.FACECOLOR
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'FaceColor', st.get('FACECOLOR'))
 					end
 					
-				case SettingsSurface.FACEALPHA % __SettingsSurface.FACEALPHA__
+				case 18 % SettingsSurface.FACEALPHA
 					h = st.get('H');
 					if check_graphics(h, 'patch') || check_graphics(h, 'surface')
 					    set(h, 'FaceAlpha', st.get('FACEALPHA'))
 					end
 					
 				otherwise
-					if prop <= Settings.getPropNumber()
+					if prop <= 14
 						postset@Settings(st, prop);
 					end
 			end

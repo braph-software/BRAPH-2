@@ -9,6 +9,31 @@ classdef Flexibility < MultilayerCommunity
 	% adjacent layers, whereas in categorical multilayer networks, 
 	% community assignment changes are possible between any pairs of layers.
 	%
+	% The list of Flexibility properties is:
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Flexibility.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Flexibility.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Flexibility.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Flexibility.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Flexibility.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Flexibility.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Flexibility.
+	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+	%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+	%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
+	%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+	%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+	%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+	%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Flexibility.
+	%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+	%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
+	%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
+	%  <strong>18</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
+	%  <strong>19</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+	%  <strong>20</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
+	%  <strong>21</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
+	%  <strong>22</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
+	%  <strong>23</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
+	%
 	% Flexibility methods (constructor):
 	%  Flexibility - constructor
 	%
@@ -106,6 +131,30 @@ classdef Flexibility < MultilayerCommunity
 			% Multiple properties can be initialized at once identifying
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
+			% The list of Flexibility properties is:
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Flexibility.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the Flexibility.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the Flexibility.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the Flexibility.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code of the Flexibility.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the Flexibility.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the Flexibility.
+			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
+			%  <strong>9</strong> <strong>SHAPE</strong> 	SHAPE (constant, scalar) is the measure shape Measure.NODAL.
+			%  <strong>10</strong> <strong>SCOPE</strong> 	SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.
+			%  <strong>11</strong> <strong>PARAMETRICITY</strong> 	PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.
+			%  <strong>12</strong> <strong>COMPATIBLE_GRAPHS</strong> 	COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
+			%  <strong>13</strong> <strong>G</strong> 	G (data, item) is the measure graph.
+			%  <strong>14</strong> <strong>M</strong> 	M (result, cell) is the Flexibility.
+			%  <strong>15</strong> <strong>PFM</strong> 	PFM (gui, item) contains the panel figure of the measure.
+			%  <strong>16</strong> <strong>LIMIT</strong> 	LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.
+			%  <strong>17</strong> <strong>RANDORD</strong> 	RANDORD (parameter, LOGICAL) is used to set randperm.
+			%  <strong>18</strong> <strong>RANDMOVE</strong> 	RANDMOVE (parameter, LOGICAL) is the move function.
+			%  <strong>19</strong> <strong>GAMMA</strong> 	GAMMA (parameter, SCALAR) is the resolution parameter.
+			%  <strong>20</strong> <strong>OMEGA</strong> 	OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.
+			%  <strong>21</strong> <strong>S0</strong> 	S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.
+			%  <strong>22</strong> <strong>OM</strong> 	OM (data, MATRIX) is the multilayer modularity matrix.
+			%  <strong>23</strong> <strong>QUALITY_FUNCTION</strong> 	QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.
 			%
 			% See also Category, Format.
 			
@@ -143,7 +192,7 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also subclasses.
 			
-			subclass_list = subclasses('Flexibility', [], [], true);
+			subclass_list = { 'Flexibility'  'FlexibilityAv' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of flexibility.
@@ -164,50 +213,30 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getPropNumber, Category.
 			
+			%CET: Computational Efficiency Trick
+			
 			if nargin == 0
-				prop_list = [ ...
-					MultilayerCommunity.getProps() ...
-						];
+				prop_list = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23];
 				return
 			end
 			
 			switch category
-				case Category.CONSTANT
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.CONSTANT) ...
-						];
-				case Category.METADATA
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.METADATA) ...
-						];
-				case Category.PARAMETER
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.PARAMETER) ...
-						];
-				case Category.DATA
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.DATA) ...
-						];
-				case Category.RESULT
-					prop_list = [
-						MultilayerCommunity.getProps(Category.RESULT) ...
-						];
-				case Category.QUERY
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.QUERY) ...
-						];
-				case Category.EVANESCENT
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.EVANESCENT) ...
-						];
-				case Category.FIGURE
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.FIGURE) ...
-						];
-				case Category.GUI
-					prop_list = [ ...
-						MultilayerCommunity.getProps(Category.GUI) ...
-						];
+				case 1 % Category.CONSTANT
+					prop_list = [1 2 3 9 10 11 12];
+				case 2 % Category.METADATA
+					prop_list = [6 7];
+				case 3 % Category.PARAMETER
+					prop_list = [4 16 17 18 19 20];
+				case 4 % Category.DATA
+					prop_list = [5 13 21 22 23];
+				case 5 % Category.RESULT
+					prop_list = 14;
+				case 6 % Category.QUERY
+					prop_list = 8;
+				case 9 % Category.GUI
+					prop_list = 15;
+				otherwise
+					prop_list = [];
 			end
 		end
 		function prop_number = getPropNumber(varargin)
@@ -228,7 +257,31 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getProps, Category.
 			
-			prop_number = numel(Flexibility.getProps(varargin{:}));
+			%CET: Computational Efficiency Trick
+			
+			if nargin == 0
+				prop_number = 23;
+				return
+			end
+			
+			switch varargin{1} % category = varargin{1}
+				case 1 % Category.CONSTANT
+					prop_number = 7;
+				case 2 % Category.METADATA
+					prop_number = 2;
+				case 3 % Category.PARAMETER
+					prop_number = 6;
+				case 4 % Category.DATA
+					prop_number = 5;
+				case 5 % Category.RESULT
+					prop_number = 1;
+				case 6 % Category.QUERY
+					prop_number = 1;
+				case 9 % Category.GUI
+					prop_number = 1;
+				otherwise
+					prop_number = 0;
+			end
 		end
 		function check_out = existsProp(prop)
 			%EXISTSPROP checks whether property exists in flexibility/error.
@@ -256,14 +309,14 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getProps, existsTag.
 			
-			check = any(prop == Flexibility.getProps());
+			check = prop >= 1 && prop <= 23 && round(prop) == prop; %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Flexibility:' 'WrongInput'], ...
+					['BRAPH2' ':Flexibility:' 'WrongInput' '\n' ...
 					'The value ' tostring(prop, 100, ' ...') ' is not a valid prop for Flexibility.'] ...
 					)
 			end
@@ -294,15 +347,14 @@ classdef Flexibility < MultilayerCommunity
 			%
 			% See also getProps, existsTag.
 			
-			flexibility_tag_list = cellfun(@(x) Flexibility.getPropTag(x), num2cell(Flexibility.getProps()), 'UniformOutput', false);
-			check = any(strcmp(tag, flexibility_tag_list));
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Flexibility:' 'WrongInput'], ...
+					['BRAPH2' ':Flexibility:' 'WrongInput' '\n' ...
 					'The value ' tag ' is not a valid tag for Flexibility.'] ...
 					)
 			end
@@ -328,8 +380,7 @@ classdef Flexibility < MultilayerCommunity
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				flexibility_tag_list = cellfun(@(x) Flexibility.getPropTag(x), num2cell(Flexibility.getProps()), 'UniformOutput', false);
-				prop = find(strcmp(pointer, flexibility_tag_list)); % tag = pointer
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -357,12 +408,9 @@ classdef Flexibility < MultilayerCommunity
 			if ischar(pointer)
 				tag = pointer;
 			else % numeric
-				prop = pointer;
-				
-				switch prop
-					otherwise
-						tag = getPropTag@MultilayerCommunity(prop);
-				end
+				%CET: Computational Efficiency Trick
+				flexibility_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'SHAPE'  'SCOPE'  'PARAMETRICITY'  'COMPATIBLE_GRAPHS'  'G'  'M'  'PFM'  'LIMIT'  'RANDORD'  'RANDMOVE'  'GAMMA'  'OMEGA'  'S0'  'OM'  'QUALITY_FUNCTION' };
+				tag = flexibility_tag_list{pointer}; % prop = pointer
 			end
 		end
 		function prop_category = getPropCategory(pointer)
@@ -387,10 +435,9 @@ classdef Flexibility < MultilayerCommunity
 			
 			prop = Flexibility.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_category = getPropCategory@MultilayerCommunity(prop);
-			end
+			%CET: Computational Efficiency Trick
+			flexibility_category_list = { 1  1  1  3  4  2  2  6  1  1  1  1  4  5  9  3  3  3  3  3  4  4  4 };
+			prop_category = flexibility_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
 			%GETPROPFORMAT returns the format of a property.
@@ -414,10 +461,9 @@ classdef Flexibility < MultilayerCommunity
 			
 			prop = Flexibility.getPropProp(pointer);
 			
-			switch prop
-				otherwise
-					prop_format = getPropFormat@MultilayerCommunity(prop);
-			end
+			%CET: Computational Efficiency Trick
+			flexibility_format_list = { 2  2  2  8  2  2  2  2  11  11  11  7  8  16  8  11  4  4  11  11  13  14  14 };
+			prop_format = flexibility_format_list{prop};
 		end
 		function prop_description = getPropDescription(pointer)
 			%GETPROPDESCRIPTION returns the description of a property.
@@ -441,34 +487,9 @@ classdef Flexibility < MultilayerCommunity
 			
 			prop = Flexibility.getPropProp(pointer);
 			
-			switch prop
-				case Flexibility.ELCLASS
-					prop_description = 'ELCLASS (constant, string) is the class of the Flexibility.';
-				case Flexibility.NAME
-					prop_description = 'NAME (constant, string) is the name of the Flexibility.';
-				case Flexibility.DESCRIPTION
-					prop_description = 'DESCRIPTION (constant, string) is the description of the Flexibility.';
-				case Flexibility.TEMPLATE
-					prop_description = 'TEMPLATE (parameter, item) is the template of the Flexibility.';
-				case Flexibility.ID
-					prop_description = 'ID (data, string) is a few-letter code of the Flexibility.';
-				case Flexibility.LABEL
-					prop_description = 'LABEL (metadata, string) is an extended label of the Flexibility.';
-				case Flexibility.NOTES
-					prop_description = 'NOTES (metadata, string) are some specific notes about the Flexibility.';
-				case Flexibility.SHAPE
-					prop_description = 'SHAPE (constant, scalar) is the measure shape __Measure.NODAL__.';
-				case Flexibility.SCOPE
-					prop_description = 'SCOPE (constant, scalar) is the measure scope __Measure.SUPERGLOBAL__.';
-				case Flexibility.PARAMETRICITY
-					prop_description = 'PARAMETRICITY (constant, scalar) is the parametricity of the measure __Measure.NONPARAMETRIC__.';
-				case Flexibility.COMPATIBLE_GRAPHS
-					prop_description = 'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.';
-				case Flexibility.M
-					prop_description = 'M (result, cell) is the Flexibility.';
-				otherwise
-					prop_description = getPropDescription@MultilayerCommunity(prop);
-			end
+			%CET: Computational Efficiency Trick
+			flexibility_description_list = { 'ELCLASS (constant, string) is the class of the Flexibility.'  'NAME (constant, string) is the name of the Flexibility.'  'DESCRIPTION (constant, string) is the description of the Flexibility.'  'TEMPLATE (parameter, item) is the template of the Flexibility.'  'ID (data, string) is a few-letter code of the Flexibility.'  'LABEL (metadata, string) is an extended label of the Flexibility.'  'NOTES (metadata, string) are some specific notes about the Flexibility.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'SHAPE (constant, scalar) is the measure shape Measure.NODAL.'  'SCOPE (constant, scalar) is the measure scope Measure.SUPERGLOBAL.'  'PARAMETRICITY (constant, scalar) is the parametricity of the measure Measure.NONPARAMETRIC.'  'COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.'  'G (data, item) is the measure graph.'  'M (result, cell) is the Flexibility.'  'PFM (gui, item) contains the panel figure of the measure.'  'LIMIT (parameter, SCALAR) is the maximum size of multilayer modularity matrix.'  'RANDORD (parameter, LOGICAL) is used to set randperm.'  'RANDMOVE (parameter, LOGICAL) is the move function.'  'GAMMA (parameter, SCALAR) is the resolution parameter.'  'OMEGA (parameter, SCALAR) is the inter-layer coupling parameter.'  'S0 (data, cvector) is the initial partition size of the multilayer modularity matrix.'  'OM (data, MATRIX) is the multilayer modularity matrix.'  'QUALITY_FUNCTION (data, MATRIX) is the multilayer modularity quality function.' };
+			prop_description = flexibility_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
 			%GETPROPSETTINGS returns the settings of a property.
@@ -492,8 +513,8 @@ classdef Flexibility < MultilayerCommunity
 			
 			prop = Flexibility.getPropProp(pointer);
 			
-			switch prop
-				case Flexibility.TEMPLATE
+			switch prop %CET: Computational Efficiency Trick
+				case 4 % Flexibility.TEMPLATE
 					prop_settings = 'Flexibility';
 				otherwise
 					prop_settings = getPropSettings@MultilayerCommunity(prop);
@@ -521,28 +542,28 @@ classdef Flexibility < MultilayerCommunity
 			
 			prop = Flexibility.getPropProp(pointer);
 			
-			switch prop
-				case Flexibility.ELCLASS
+			switch prop %CET: Computational Efficiency Trick
+				case 1 % Flexibility.ELCLASS
 					prop_default = 'Flexibility';
-				case Flexibility.NAME
+				case 2 % Flexibility.NAME
 					prop_default = 'Flexibility';
-				case Flexibility.DESCRIPTION
+				case 3 % Flexibility.DESCRIPTION
 					prop_default = 'The Flexibility (Flexibility) of each node in a multilayer network is calculated as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
-				case Flexibility.TEMPLATE
-					prop_default = Format.getFormatDefault(Format.ITEM, Flexibility.getPropSettings(prop));
-				case Flexibility.ID
+				case 4 % Flexibility.TEMPLATE
+					prop_default = Format.getFormatDefault(8, Flexibility.getPropSettings(prop));
+				case 5 % Flexibility.ID
 					prop_default = 'Flexibility ID';
-				case Flexibility.LABEL
+				case 6 % Flexibility.LABEL
 					prop_default = 'Flexibility label';
-				case Flexibility.NOTES
+				case 7 % Flexibility.NOTES
 					prop_default = 'Flexibility notes';
-				case Flexibility.SHAPE
-					prop_default = Measure.NODAL;
-				case Flexibility.SCOPE
-					prop_default = Measure.SUPERGLOBAL;
-				case Flexibility.PARAMETRICITY
-					prop_default = Measure.NONPARAMETRIC;
-				case Flexibility.COMPATIBLE_GRAPHS
+				case 9 % Flexibility.SHAPE
+					prop_default = 2;
+				case 10 % Flexibility.SCOPE
+					prop_default = 1;
+				case 11 % Flexibility.PARAMETRICITY
+					prop_default = 2;
+				case 12 % Flexibility.COMPATIBLE_GRAPHS
 					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@MultilayerCommunity(prop);
@@ -589,15 +610,15 @@ classdef Flexibility < MultilayerCommunity
 			% 
 			% M.CHECKPROP(POINTER, VALUE) throws an error if VALUE is
 			%  NOT an acceptable value for the format of the property POINTER.
-			%  Error id: €BRAPH2.STR€:Flexibility:€BRAPH2.WRONG_INPUT€
+			%  Error id: BRAPH2:Flexibility:WrongInput
 			% 
 			% Alternative forms to call this method are (POINTER = PROP or TAG):
 			%  M.CHECKPROP(POINTER, VALUE) throws error if VALUE has not a valid format for PROP of M.
-			%   Error id: €BRAPH2.STR€:Flexibility:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Flexibility:WrongInput
 			%  Element.CHECKPROP(Flexibility, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Flexibility.
-			%   Error id: €BRAPH2.STR€:Flexibility:€BRAPH2.WRONG_INPUT€
+			%   Error id: BRAPH2:Flexibility:WrongInput
 			%  M.CHECKPROP(Flexibility, PROP, VALUE) throws error if VALUE has not a valid format for PROP of Flexibility.
-			%   Error id: €BRAPH2.STR€:Flexibility:€BRAPH2.WRONG_INPUT€]
+			%   Error id: BRAPH2:Flexibility:WrongInput]
 			% 
 			% Note that the Element.CHECKPROP(M) and Element.CHECKPROP('Flexibility')
 			%  are less computationally efficient.
@@ -608,10 +629,10 @@ classdef Flexibility < MultilayerCommunity
 			prop = Flexibility.getPropProp(pointer);
 			
 			switch prop
-				case Flexibility.TEMPLATE % __Flexibility.TEMPLATE__
-					check = Format.checkFormat(Format.ITEM, value, Flexibility.getPropSettings(prop));
+				case 4 % Flexibility.TEMPLATE
+					check = Format.checkFormat(8, value, Flexibility.getPropSettings(prop));
 				otherwise
-					if prop <= MultilayerCommunity.getPropNumber()
+					if prop <= 23
 						check = checkProp@MultilayerCommunity(prop, value);
 					end
 			end
@@ -620,8 +641,8 @@ classdef Flexibility < MultilayerCommunity
 				prop_check = check;
 			elseif ~check
 				error( ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT], ...
-					[BRAPH2.STR ':Flexibility:' BRAPH2.WRONG_INPUT '\n' ...
+					['BRAPH2' ':Flexibility:' 'WrongInput'], ...
+					['BRAPH2' ':Flexibility:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' Flexibility.getPropTag(prop) ' (' Flexibility.getFormatTag(Flexibility.getPropFormat(prop)) ').'] ...
 					)
 			end
@@ -632,20 +653,20 @@ classdef Flexibility < MultilayerCommunity
 			%CALCULATEVALUE calculates the value of a property.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP) calculates the value of the property
-			%  PROP. It works only with properties with Category.RESULT,
-			%  Category.QUERY, and Category.EVANESCENT. By default this function
+			%  PROP. It works only with properties with 5,
+			%  6, and 7. By default this function
 			%  returns the default value for the prop and should be implemented in the
 			%  subclasses of Element when needed.
 			%
 			% VALUE = CALCULATEVALUE(EL, PROP, VARARGIN) works with properties with
-			%  Category.QUERY.
+			%  6.
 			%
 			% See also getPropDefaultConditioned, conditioning, preset, checkProp,
 			%  postset, postprocessing, checkValue.
 			
 			switch prop
-				case Flexibility.M % __Flexibility.M__
-					rng_settings_ = rng(); rng(m.getPropSeed(Flexibility.M), 'twister')
+				case 14 % Flexibility.M
+					rng_settings_ = rng(); rng(m.getPropSeed(14), 'twister')
 					
 					g = m.get('G'); % graph from measure class
 					A = g.get('A'); % cell with adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.)
@@ -680,7 +701,7 @@ classdef Flexibility < MultilayerCommunity
 					rng(rng_settings_)
 					
 				otherwise
-					if prop <= MultilayerCommunity.getPropNumber()
+					if prop <= 23
 						value = calculateValue@MultilayerCommunity(m, prop, varargin{:});
 					else
 						value = calculateValue@Element(m, prop, varargin{:});
