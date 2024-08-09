@@ -5,6 +5,11 @@
 For *structural data*, you will upload a file containing the structural values for different brain areas across subjects that belong to the same group. For example, the structural values could correspond to cortical thickness or gray matter volumes obtained from T1-weighted MRI data. From these values, a connectivity matrix will be later computed using correlations in structural values between each pair of brain regions. This tutorial explains how to prepare and work with this kind of data.
 
 
+<img src="fig01.jpg" alt="GUI for a group of subjects with structural data">
+
+> **Figure 1. GUI for a group of subjects with structural data**
+> Full graphical user interface to upload a group with structural data in BRAPH 2.
+
 ## Table of Contents
 > [Generation of Example Data](#Generation-of-Example-Data)
 >
@@ -20,10 +25,6 @@ For *structural data*, you will upload a file containing the structural values f
 >
 
 
-<img src="fig01.jpg" alt="GUI for a group of subjects with structural data">
-
-> **Figure 1. GUI for a group of subjects with structural data**
-> Full graphical user interface to upload a group with structural data in BRAPH 2.
 
 
 ## Generation of Example Data  [⬆](#Table-of-Contents)

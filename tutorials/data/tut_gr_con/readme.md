@@ -6,6 +6,11 @@ For *connectivity data*, a connectivity matrix per subject is already available 
 This Tutorial explains how to prepare and work with this kind of data.
 
 
+<img src="fig01.jpg" alt="GUI for a group of subjects with connectivity data">
+
+> **Figure 1. GUI for a group of subjects with connectivity data**
+> Full graphical user interface to upload a group of subjects with connectivity data in BRAPH 2.
+
 ## Table of Contents
 > [Generation of Example Data](#Generation-of-Example-Data)
 >
@@ -21,11 +26,6 @@ This Tutorial explains how to prepare and work with this kind of data.
 >
 
 
-	
-<img src="fig01.jpg" alt="GUI for a group of subjects with connectivity data">
-
-> **Figure 1. GUI for a group of subjects with connectivity data**
-> Full graphical user interface to upload a group of subjects with connectivity data in BRAPH 2.
 
 
 ## Generation of Example Data  [⬆](#Table-of-Contents)

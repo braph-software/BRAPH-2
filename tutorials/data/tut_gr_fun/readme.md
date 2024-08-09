@@ -5,6 +5,11 @@
 For *functional data*, you will upload a folder containing the functional files for different subjects that belong to the same group. For example, the functional values could correspond to brain activation signals derived from functional MRI data, from which a connectivity matrix is later computed using correlations in functional values between each pair of brain regions. This tutorial explains how to prepare and work with this kind of data.
 
 
+<img src="fig01.jpg" alt="GUI for a group of subjects with functional files">
+
+> **Figure 1. GUI for a group of subjects with functional files**
+> Full graphical user interface to upload a group with functional data in BRAPH 2.
+
 ## Table of Contents
 > [Generation of Example Data](#Generation-of-Example-Data)
 >
@@ -20,11 +25,6 @@ For *functional data*, you will upload a folder containing the functional files 
 >
 
 
-	
-<img src="fig01.jpg" alt="GUI for a group of subjects with functional files">
-
-> **Figure 1. GUI for a group of subjects with functional files**
-> Full graphical user interface to upload a group with functional data in BRAPH 2.
 
 
 ## Generation of Example Data  [⬆](#Table-of-Contents)
