@@ -1,11 +1,8 @@
-clear all
-tex_file = 'tut_ba.tex';
-readme_file = 'readme.md';
-% function generate_readme(tex_file, readme_file)
-% 
-% if nargin < 2
-%     readme_file = 'readme.md';
-% end
+function generate_readme(tex_file, readme_file)
+
+if nargin < 2
+    readme_file = 'readme.md';
+end
 
 tex = fileread(tex_file);
  
@@ -88,6 +85,42 @@ for i = length(figures):-1:1
     figure_ref = strtrim(figure{2});
     document = regexprep(document, ['\\Figref{' figure_ref '}'], ['Figure ' int2str(i)]);
     document = regexprep(document, ['\\Figsref{' figure_ref '}'], ['Figures ' int2str(i)]);
+end
+
+% codes
+codes_start = regexp(document, '\\begin{lstlisting}', 'end', 'all');
+codes_end = regexp(document, '\\end{lstlisting}', 'start', 'all');
+assert(length(codes_start) == length(codes_end), 'The number of start and end codes should be equal!')
+
+for i = length(codes_start):-1:1
+    code = regexp(document(codes_start(i) + 1:codes_end(i) - 1), '\[\s*label=([^,]*),\s*caption={\s*([^{}]*)\s*}\s*\]\s*(.*)', 'tokens', 'all');
+    code_labels{i} = strtrim(code{1}{1});
+    code_caption = strtrim(code{1}{2});
+    code_code = strtrim(code{1}{3});
+    
+    document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
+        '**Code ' int2str(i) '.** ' code_caption newline() ...
+        '````matlab' newline() code_code newline() '````' newline() ...
+        document(codes_end(i) + length('\end{lstlisting}'):end)];
+end
+for i = 1:1:length(code_labels)
+    document = regexprep(document, ['\\Coderef{' code_labels{i} '}'], ['Code ' int2str(i)]);
+    document = regexprep(document, ['\\Codesref{' code_labels{i} '}'], ['Codes ' int2str(i)]);    
+end
+
+% colorboxes
+cb_start = regexp(document, '\\begin{tcolorbox}', 'end', 'all');
+cb_end = regexp(document, '\\end{tcolorbox}', 'start', 'all');
+assert(length(cb_start) == length(cb_end), 'The number of start and end colorboxes should be equal!')
+
+for i = length(codes_start):-1:1
+    cb = regexp(document(cb_start(i) + 1:cb_end(i) - 1), '\[\s*title=([^\[\]]*)\s*\]\s*(.*)', 'tokens', 'all');
+    cb_title = strtrim(cb{1}{1});
+    cb_content = strtrim(cb{1}{2});
+    
+    document = [document(1:cb_start(i) - length('\begin{tcolorbox}')) ...
+        strrep([newline() '**' cb_title '**' newline() cb_content], newline(), [newline() '> ']) ...
+        document(cb_end(i) + length('\end{tcolorbox}'):end)];
 end
 
 %% Generate README file
