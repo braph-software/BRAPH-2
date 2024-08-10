@@ -178,10 +178,11 @@ Furthermore, each instance of a prop has the following features:
 
 Additional functions to operate with these features can be found by using the command `help Element` in the MatLab command line.
 
-\begin{fullwidth}
+
 
 > **Property Categories**
 > \begin{description} 
+> 
 >  \item[`CONSTANT`] Static constant equal for all instances of the element. It allows incoming callbacks.
 >  
 >  \item[`METADATA`] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
@@ -201,10 +202,11 @@ Additional functions to operate with these features can be found by using the co
 >  \item[`FIGURE`] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 >                 
 >  \item[`GUI`] Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+> 
 > \end{description}
-\end{fullwidth}
 
-\begin{fullwidth}
+
+
 
 > **Property Formats**
 > \begin{description} 
@@ -267,7 +269,7 @@ Additional functions to operate with these features can be found by using the co
 >  
 > - [`LINE`] Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line).
 > \end{description}
-\end{fullwidth}
+
 
 Even though it is possible to create instances of `Element`, it does not have any props and typically one uses its subclasses.
 Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure 1.
@@ -451,7 +453,7 @@ If a property of category `QUERY` is memorized, a warning is thrown with warning
 
 A generator file has the structure illustrated Code 9.
 
-\begin{fullwidth}
+
 **Code 9.** **Element tokens in a generator file.**
 		All tokens available in a generator file.
 		The name of this file must end with ".gen.m", and tipically starts with "_".
@@ -593,7 +595,7 @@ A generator file has the structure illustrated Code 9.
   Can be on multiple lines.
 ````
 
-\end{fullwidth}
+
 
 A list of special instructions is shown in Code 10.
 
@@ -642,7 +644,7 @@ Finally, BRAPH 2 is provided with a set of unit tests (executable by the command
 
 We will now see how to implement a few concrete elements.
 
-\begin{fullwidth}
+
 
 > **Light compilation of BRAPH 2**
 > To speed up the compilation of BRAPH 2 when trying these examples, it is possible to perform a light version of the compilation using the script `braph2genesis_with_rollcall`, which permits one to exclude/include specific folders or elements, as shown in Code 11.
@@ -689,7 +691,7 @@ We will now see how to implement a few concrete elements.
 > 
 > Importantly, the directory "braph2genesis" must be in the MatLab file path and the directory "braph2" must not be in the MatLab file path.
 > The compiled BRAPH 2 is saved in "brap2_with_rollcall", which is ignored by GIT.
-\end{fullwidth}
+
 
 <a id="A-Simple-Calculator"></a>
 ### A Simple Calculator  [⬆](#Table-of-Contents)
