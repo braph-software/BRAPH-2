@@ -117,7 +117,7 @@ Each element is essentially a container for a series of *props* (properties). Ea
 		
 - A *tag* (a string).
 	
-- A *category*, which determines for how a prop is used.\footnote{The possible categories and formats are shown in the boxes below.}
+- A *category*, which determines for how a prop is used. (The possible categories and formats are shown in the boxes below.)
 	
 - A *format*, which determines what a prop can contain.
 
@@ -127,7 +127,7 @@ The functions to inspect these features can be found by using the command `help 
 Furthermore, each instance of a prop has the following features:
 
 
-- A *value*.\footnote{The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.}
+- A *value*. (The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.)
 	The functions to set, get, and memorize a value will be discussed in the following sections.
 	
 - A *seed* for the random number generator to ensure the reproducibility of the results. 
@@ -139,7 +139,7 @@ Furthermore, each instance of a prop has the following features:
 	It cannot be changed.
  	
 - A *checked* status, which is true by default.
-	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changed in the file "BRAPH2.m".}
+	Checked props are checked for format when they are set and for value when they are set/calculated. (When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changed in the file "BRAPH2.m".)
 	
 	The checked status of a prop can be altered with the functions:
 	`el.checked(pointer)`
@@ -148,7 +148,7 @@ Furthermore, each instance of a prop has the following features:
 	`checked = el.isChecked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-- A *locked* status, which is false by default.\footnote{The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.}
+- A *locked* status, which is false by default. (The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.)
 	
 	A prop can be locked with the function:
 	`el.lock(pointer)`
@@ -157,7 +157,7 @@ Furthermore, each instance of a prop has the following features:
 	`locked = el.isLocked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-- A *callback* instance.\footnote{Callbacks are not used with `METADATA` props.}
+- A *callback* instance. (Callbacks are not used with `METADATA` props.)
 	
 	The callback to a prop can be obtained using the function:
 	`cb = el.getCallback(pointer)`
@@ -328,7 +328,7 @@ When a prop is set to a certain value, the following operations are performed:
 	
 	This can be set with the token `¡conditioning!`.
 	
-1. The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement).\footnote{Differently from the *static* function `conditioning()`, the function `preset()` has access to the element instance.}
+1. The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement). (Differently from the *static* function `conditioning()`, the function `preset()` has access to the element instance.)
 
 	This can be set with the token `¡preset!`.
 	
