@@ -51,34 +51,38 @@ The script starts by importing the brain atlas. For this, it uses the element `I
 		This section defines the importer to load the brain atlas.
 ````matlab
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS( ...  % [1]
-    'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...
-    'WAITBAR', true ...
+im_ba = ImporterBrainAtlasXLS( ...
+    'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...  % [1]
+    'WAITBAR', true ...  % [2]
     );
 
 ba = im_ba.get('BA');
 ````
 
-[1] First, the script loads the brain atlas from the file "atlas.xlsx".
+[1] loads the brain atlas from the file "atlas.xlsx".
+
+[2] shows a waitbar during the loading process.
 
 
 <a id="Data-Loading"></a>
 ## Data Loading  [⬆](#Table-of-Contents)
 
-This step is to load the data of two groups. In this section, we use "ImporterGroupSubjectST\_MP\_XLS" as an example, Users can define the path to the group data in XLS/XLSX files contained in a folder.
-**Code 3.** **Group Subject Data Importer.**
-		The group data importer section provides the code for loading group subject data.
+The next step is to load the data of the two groups from the folders where the relative "*.xlsx" files are stored. It uses the element `ImporterGroupSubjectST\_MP\_XLS` to load the `SubjectST\_MP` subjects, as shown in Code 3.
+
+**Code 3.** **Load groups of subjects.**
+		The group data importer section provides the code for loading the data corresponding to the groups of subjects.
 ````matlab
-im_gr1 = ImporterGroupSubjectST_MP_XLS( ... % [1]
-    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...
-    'BA', ba, ...
-    'WAITBAR', true ...
+%% Load Groups of SubjectST_MP
+im_gr1 = ImporterGroupSubjectST_MP_XLS( ...
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...  % [1]
+    'BA', ba, ...  % [1]
+    'WAITBAR', true ...  % [3]
     );
 
 gr1 = im_gr1.get('GR');
 
-im_gr2 = ImporterGroupSubjectST_MP_XLS( ... % [2]
-    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_2_XLS'], ...
+im_gr2 = ImporterGroupSubjectST_MP_XLS( ...
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_2_XLS'], ...  % [4]
     'BA', ba, ...
     'WAITBAR', true ...
     );
@@ -86,38 +90,53 @@ im_gr2 = ImporterGroupSubjectST_MP_XLS( ... % [2]
 gr2 = im_gr2.get('GR');
 ````
 
-[1] ImporterGroupSubjectST\_MP\_XLS imports a group of subjects with structural data and their covariates (optional) from another XLS/XLSX file.
+[1] imports the first group of subjects with structural data and their (optional) covariates from the files contained in the folder.
 
-[2] imports a second group of subjects with structural data and their covariates (optional) from another XLS/XLSX file.
+[1] uses the previously loaded brain atlas.
 
+[3] shows a waitbar during the loading process.
+
+[4] imports the first group of subjects.
 
 
 <a id="Group-Analysis"></a>
 ## Group Analysis  [⬆](#Table-of-Contents)
-This step is to initialize the group data analysis. Users are allowed to specify the correlation type and "NEGATIVE\_WEIGHT\_RULE"  in this section, the script will perform the group analysis automatically for each group loaded from previous step.
-**Code 4.** **Group Subject Data Analysis.**
-		The group data analysis provides code for initialization of group data analysis.
+
+The next step is to perform the group data analysis using the element ``, as shown in Code 4.
+
+**Code 4.** **Analysis.**
+		The group data analysis sections provides code to perform the analyses for the two groups.
 ````matlab
-a_WU1 = AnalyzeGroup_ST_MP_WU( ... % [1]
-    'GR', gr1, ...
-    'CORRELATION_RULE', Correlation.PEARSON ...
+%% Analysis ST MP WU
+a_WU1 = AnalyzeGroup_ST_MP_WU( ...
+    'GR', gr1, ...  % [1]
+    'CORRELATION_RULE', Correlation.PEARSON ...  % [2]
     );
 
-a_WU2 = AnalyzeGroup_ST_MP_WU( ... % [1]
-    'TEMPLATE', a_WU1, ...
-    'GR', gr2 ...
+a_WU2 = AnalyzeGroup_ST_MP_WU( ...
+    'TEMPLATE', a_WU1, ...  % [3]
+    'GR', gr2 ...  % [4]
     );
 ````
 
-[1] creation of the group analysis with the loaded atlas and groups data.
+[1] uses the previously defined group `gr1` for the first analysis.
 
-%
+[2] defines the correlation rule to be used.
+
+[3] uses the same parameters as in the analysis `a\_WU1`.
+
+[4] uses the previously defined group `gr2` for the second analysis.
+
+
 <a id="Measure-Calculation"></a>
 ## Measure Calculation  [⬆](#Table-of-Contents)
+
 This step is to calculate graph measures with data loaded in the previous step. Here we use "overlapping strength" as an example.
+
 **Code 5.** **Group Subject Data Analysis.**
 		The group data analysis provides code for initialization of group data analysis.
 ````matlab
+% measure calculation
 g_WU1 = a_WU1.memorize('G'); % [1]
 ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M'); % [2]
 ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');  % [3]
@@ -134,10 +153,9 @@ ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M'); % [3]
 [3] Other measures can also be calculated by changing the measure name. For example, "OverlappingS" calculates overlapping strength and "OverlappingSAv" calculates overlapping strength average
 
 
-
-
 <a id="Group-Comparison"></a>
 ## Group Comparison  [⬆](#Table-of-Contents)
+
 The last step is to perform group comparison. "CompareGroup" contains the results of a group-based comparison for a given measure.
 Specifically, it contains the one-tailed and two-tailed p-values and the 95\% confidence interval.
 **Code 6.** **Group Subject Data Analysis.**
@@ -171,8 +189,3 @@ ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); % [6]
 [5] "CIL" calculates the lower value of the 95\% confidence interval.
 
 [6] "CIU" calculates the upper value of the 95\% confidence interval.
-
-
-
-%%%%% %%%%% %%%%% %%%%% %%%%%
-%
