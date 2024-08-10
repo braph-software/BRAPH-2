@@ -1,3 +1,3 @@
-# BRAPH 2.0 — Pipeline for Comparison of Structural Multiplex Data using Binary Weighted Undirected graphs at fixed Densities
+# BRAPH 2 — Pipeline for Comparison of Structural Multiplex Data using Binary Weighted Undirected Graphs at Fixed Densities
 
-This Page is not ready. You can find a similar one in [Structural WU](../tut_a_st_wu)
+This tutorial is not ready yet. You can find a similar one in [Structural WU](../tut_a_st_wu).
