@@ -54,15 +54,17 @@ The brain atlas GUI is the first step in most BRAPH 2 pipelines. You can open it
 > **Brain Atlas GUI launch from command line**
 > You can also open the GUI and upload the brain atlas using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code 1. In this case, you can upload the atlas as shown in Figure 3a-d.
 > 
-> **Code 1.** **Code to launch the Brain Atlas GUI.**
-> 		This code can be used in the MatLab command line to launch the  Brain Atlas GUI without having to open a pipeline.
-> ````matlab
-> ba = BrainAtlas();
 > 
-> gui = GUIElement('PE', ba);
-> gui.get('DRAW')
-> gui.get('SHOW')
-> ````
+> > **Code 1.** **Code to launch the Brain Atlas GUI.**
+> > 		This code can be used in the MatLab command line to launch the  Brain Atlas GUI without having to open a pipeline.
+> > ````matlab
+> > ba = BrainAtlas();
+> > 
+> > gui = GUIElement('PE', ba);
+> > gui.get('DRAW')
+> > gui.get('SHOW')
+> > ````
+> >
 
 
 <a id="Upload-the-Brain-Atlas"></a>

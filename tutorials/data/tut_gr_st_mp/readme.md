@@ -32,17 +32,18 @@ For *structural multiplex data*, we will upload a folder containing the structur
 
 If you do not have the "Example data ST_MP XLS" folder inside "structural multiplex", then you can generate it by running the commands in Code 1.
 
-**Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data ST_MP XLS" folder to the "structural multiplex" pipeline folder.
-````matlab
-create_data_ST_MP_XLS()  ①
-create_data_ST_MP_TXT()  ②
-````
 
-① generates the example structural multiplex XLS data folder.
-
-② generates the example structural multiplex TXT data folder.
-
+> **Code 1.** **Code to generate the example data folder.**
+> 		This code can be used in the MatLab command line to generate the "Example data ST_MP XLS" folder to the "structural multiplex" pipeline folder.
+> ````matlab
+> create_data_ST_MP_XLS()  ①
+> create_data_ST_MP_TXT()  ②
+> ````
+> 
+> ① generates the example structural multiplex XLS data folder.
+> 
+> ② generates the example structural multiplex TXT data folder.
+> 
 
 <a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
@@ -64,15 +65,17 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > **GUI launch from command line**
 > You can also open the GUI and upload the brain structural multiplex data using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code 2. In this case, you can upload the data as shown in Figure 2a-f.
 > %
-> **Code 2.** **Code to launch the GUI to upload a group of subjects with structural multiplex data.**
-> 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with structural multiplex data without having to open a pipeline.
-> ````matlab
-> gr = Group('SUB_CLASS', 'SubjectST_MP');
 > 
-> gui = GUIElement('PE', gr);
-> gui.get('DRAW')
-> gui.get('SHOW'
-> ````
+> > **Code 2.** **Code to launch the GUI to upload a group of subjects with structural multiplex data.**
+> > 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with structural multiplex data without having to open a pipeline.
+> > ````matlab
+> > gr = Group('SUB_CLASS', 'SubjectST_MP');
+> > 
+> > gui = GUIElement('PE', gr);
+> > gui.get('DRAW')
+> > gui.get('SHOW'
+> > ````
+> >
 
 <a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)

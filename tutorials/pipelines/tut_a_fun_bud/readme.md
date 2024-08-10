@@ -40,12 +40,13 @@ This tutorial shows how to perform a network analysis using *functional data* (s
 
 You can generate the example data by typing in the command line the instruction in Code 1.
 
-**Code 1.** **Command to generate example data.**
-		Command to generate the example data for functional analyses. They will be placed in the folder "./braph2/pipelines/functional/Example data FUN XLS", and include the brain atlas "atlas.xlsx", two folders with the subject files "FUN_Group_1_XLS" and "FUN_Group_2_XLS", and the associated covariates files "FUN_Group_1_XLS.vois.xlsx" and "FUN_Group_2_XLS.vois.xlsx". The details about the format of these files can be found in the tutorials [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba) and [Group of Subjects with Functional Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_fun).
-````matlab
-create_data_FUN_XLS()
-````
 
+> **Code 1.** **Command to generate example data.**
+> 		Command to generate the example data for functional analyses. They will be placed in the folder "./braph2/pipelines/functional/Example data FUN XLS", and include the brain atlas "atlas.xlsx", two folders with the subject files "FUN_Group_1_XLS" and "FUN_Group_2_XLS", and the associated covariates files "FUN_Group_1_XLS.vois.xlsx" and "FUN_Group_2_XLS.vois.xlsx". The details about the format of these files can be found in the tutorials [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba) and [Group of Subjects with Functional Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_fun).
+> ````matlab
+> create_data_FUN_XLS()
+> ````
+> 
 
 <a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
@@ -63,18 +64,20 @@ The general GUI of BRAPH 2 can be opened by typing `braph2` in MatLab's terminal
 > **Pipeline launch from command line**
 > To open the GUI and upload the functional comparison pipeline, you can use the command line by typing the commands in Code 2.
 > 
-> **Code 2.** **Code to launch the GUI to upload a pipeline file to compare two groups of subjects.**
-> 		This code can be used in the MatLab command line to launch the GUI to upload a pipeline file.
-> ````matlab
-> im = ImporterPipelineBRAPH2( ...
->     'FILE', which('pipeline_functional_comparison_BUD.braph2') ...
->     );
-> pip = im.get('PIP');
 > 
-> gui = GUIElement('PE', pip, 'WAITBAR', true)
-> gui.get('DRAW')
-> gui.get('SHOW')
-> ````
+> > **Code 2.** **Code to launch the GUI to upload a pipeline file to compare two groups of subjects.**
+> > 		This code can be used in the MatLab command line to launch the GUI to upload a pipeline file.
+> > ````matlab
+> > im = ImporterPipelineBRAPH2( ...
+> >     'FILE', which('pipeline_functional_comparison_BUD.braph2') ...
+> >     );
+> > pip = im.get('PIP');
+> > 
+> > gui = GUIElement('PE', pip, 'WAITBAR', true)
+> > gui.get('DRAW')
+> > gui.get('SHOW')
+> > ````
+> >
 
 Once the pipeline is uploaded, you can see a GUI that contains different steps to: upload a brain atlas, upload the functional data of two groups, analyze them, and finally, compare the groups (Figure 3). 
 

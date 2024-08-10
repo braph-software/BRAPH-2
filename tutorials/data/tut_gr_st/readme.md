@@ -32,17 +32,18 @@ For *structural data*, you will upload a file containing the structural values f
 
 If you do not have the "Example data ST XLS" folder inside "structural", then you can generate it by running the commands in Code 1.
 
-**Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data ST XLS" folder to the "structural" pipeline folder.
-````matlab
-create_data_ST_XLS()  ①
-create_data_ST_TXT()  ②
-````
 
-① generates the example structural XLS data folder.
-
-② generates the example structural TXT data folder.
-
+> **Code 1.** **Code to generate the example data folder.**
+> 		This code can be used in the MatLab command line to generate the "Example data ST XLS" folder to the "structural" pipeline folder.
+> ````matlab
+> create_data_ST_XLS()  ①
+> create_data_ST_TXT()  ②
+> ````
+> 
+> ① generates the example structural XLS data folder.
+> 
+> ② generates the example structural TXT data folder.
+> 
 
 <a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
@@ -64,15 +65,17 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > **GUI launch from command line**
 > You can also open the GUI and upload the brain structural data using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code 2. In this case, you can upload the data as shown in Figure 2a-f.
 > 
-> **Code 2.** **Code to launch the GUI to upload a structural file for a group of subjects.**
-> 		This code can be used in the MatLab command line to launch the GUI to upload a structural file without having to open a pipeline.
-> ````matlab
-> gr = Group('SUB_CLASS', 'SubjectST');
 > 
-> gui = GUIElement('PE', gr);
-> gui.get('DRAW')
-> gui.get('SHOW')
-> ````
+> > **Code 2.** **Code to launch the GUI to upload a structural file for a group of subjects.**
+> > 		This code can be used in the MatLab command line to launch the GUI to upload a structural file without having to open a pipeline.
+> > ````matlab
+> > gr = Group('SUB_CLASS', 'SubjectST');
+> > 
+> > gui = GUIElement('PE', gr);
+> > gui.get('DRAW')
+> > gui.get('SHOW')
+> > ````
+> >
 
 <a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)

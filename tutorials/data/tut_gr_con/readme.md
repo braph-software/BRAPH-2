@@ -33,17 +33,18 @@ This Tutorial explains how to prepare and work with this kind of data.
 
 If you do not have the "Example data CON XLS" folder inside "connectivity", then you can generate it by running the commands in Code 1.
 
-**Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data CON XLS" folder to the "connectivity" pipeline folder.
-````matlab
-create_data_CON_XLS()  ①
-create_data_CON_TXT() ②
-````
 
-① generates the example connectivity XLS data folder.
-
-② generates the example connectivity TXT data folder.
-
+> **Code 1.** **Code to generate the example data folder.**
+> 		This code can be used in the MatLab command line to generate the "Example data CON XLS" folder to the "connectivity" pipeline folder.
+> ````matlab
+> create_data_CON_XLS()  ①
+> create_data_CON_TXT() ②
+> ````
+> 
+> ① generates the example connectivity XLS data folder.
+> 
+> ② generates the example connectivity TXT data folder.
+> 
 
 <a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
@@ -63,15 +64,17 @@ In most analysis pipelines, the group GUI is the second step after you have sele
 > **GUI launch from command line**
 > You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code 2. In this case, you can upload the data as shown in Figure 2a-f.
 > 
-> **Code 2.** **Code to launch the GUI to upload a group of subjects with connectivity data.**
-> 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with connectivity data without having to open a pipeline.
-> ````matlab
-> gr = Group('SUB_CLASS', 'SubjectCON');
 > 
-> gui = GUIElement('PE', gr);
-> gui.get('DRAW')
-> gui.get('SHOW')
-> ````
+> > **Code 2.** **Code to launch the GUI to upload a group of subjects with connectivity data.**
+> > 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with connectivity data without having to open a pipeline.
+> > ````matlab
+> > gr = Group('SUB_CLASS', 'SubjectCON');
+> > 
+> > gui = GUIElement('PE', gr);
+> > gui.get('DRAW')
+> > gui.get('SHOW')
+> > ````
+> >
 
 <a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)

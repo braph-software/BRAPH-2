@@ -32,17 +32,18 @@ For *connectivity-functional multiplex data*, you will upload two folders, one c
 
 If you do not have the "Example data CON_FUN_MP XLS" folder inside "connectivity-functional multiplex", then you can generate it by running the commands in Code 1.
 
-**Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data CON_FUN_MP XLS" folder to the "connectivity-functional multiplex" pipeline folder.
-````matlab
-create_data_CON_FUN_MP_XLS()  ①
-create_data_CON_FUN_MP_TXT()  ②
-````
 
-① generates the example connectivity-functional multiplex XLS data folder.
-
-② generates the example connectivity-functional multiplex XLS data folder.
-
+> **Code 1.** **Code to generate the example data folder.**
+> 		This code can be used in the MatLab command line to generate the "Example data CON_FUN_MP XLS" folder to the "connectivity-functional multiplex" pipeline folder.
+> ````matlab
+> create_data_CON_FUN_MP_XLS()  ①
+> create_data_CON_FUN_MP_TXT()  ②
+> ````
+> 
+> ① generates the example connectivity-functional multiplex XLS data folder.
+> 
+> ② generates the example connectivity-functional multiplex XLS data folder.
+> 
 
 <a id="Upload-the-Group-Data"></a>
 ## Upload the Group Data  [⬆](#Table-of-Contents)
