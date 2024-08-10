@@ -666,7 +666,7 @@ The compiled BRAPH~2 is saved in \fn{brap2\_with\_rollcall}, which is ignored by
 
 \subsection{A Simple Calculator}
 
-We will now create our first element (\Coderef{cd:ao}), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
+You will now create your first element (\Coderef{cd:ao}), a simple calculator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
 
 \begin{lstlisting}[
 	label=cd:ao,
@@ -675,7 +675,7 @@ We will now create our first element (\Coderef{cd:ao}), a simple calcualator tha
 		This is a simple element direclty deriving from \code{ConcreteElement}.
 	}
 ]
-%% ¡header! ¥\circled{1}\circlednote{1}{The \code{¡header!} token is the only required one.}¥
+%% ¡header! ¥\circled{1}\circlednote{1}{The \code{¡header!} and \circled{2} \code{¡build!} tokens are the only required one.}¥
 ArithmeticOperations < ConcreteElement (ao, arithmetic operation calculator) calculates simple arithmetic operations.
 
 %%% ¡description!
@@ -686,13 +686,16 @@ An Arithmetic Operation Calculator (ArithmeticOperations) contains two
 %%% ¡seealso!
 LogicalOperations, GeometricalOperations
 
+%%% ¡build! ¥\circled{2}¥
+1
 
-%% ¡props_update! ¥\circled{2}\circlednote{2}{The \code{¡props\_update!} token permits to update the properties of the \code{ConcreteElement}. The updated parts have been highlighted.}¥
+
+%% ¡props_update! ¥\circled{3}\circlednote{3}{The \code{¡props\_update!} token permits to update the properties of the \code{ConcreteElement}. The updated parts have been highlighted.}¥
 
 %%% ¡prop!
 ¤ELCLASS (constant, string) is the class of the¤ arithmetic operation calculator¤.¤
 %%%% ¡default!
-'ArithmeticOperations' ¥\circled{3}\circlednote{3}{must be the name of the element.}¥
+'ArithmeticOperations' ¥\circled{4}\circlednote{4}{must be the name of the element.}¥
 
 %%% ¡prop!
 ¤NAME (constant, string) is the name of the¤ arithmetic operation calculator¤.¤
@@ -707,7 +710,7 @@ LogicalOperations, GeometricalOperations
 %%% ¡prop!
 ¤TEMPLATE (parameter, item) is the template of the¤ arithmetic operation calculator¤.¤
 %%%% ¡settings!
-'ArithmeticOperations' ¥\circled{4}\circlednote{4}{must be the name of the element.}¥
+'ArithmeticOperations' ¥\circled{5}\circlednote{5}{must be the name of the element.}¥
 
 %%% ¡prop!
 ¤ID (data, string) is a few-letter code for the¤ arithmetic operation calculator¤.¤
@@ -724,34 +727,34 @@ LogicalOperations, GeometricalOperations
 %%%% ¡default!
 'ArithmeticOperations notes'
 
-%%% ¡prop! ¥\circled{5}\circlednote{5}{Often, it is not necessary to updated \code{TOSTRING}, as the default works for most cases.}¥
+%%% ¡prop! ¥\circled{6}\circlednote{6}{Often, it is not necessary to updated \code{TOSTRING}, as the default works for most cases.}¥
 ¤TOSTRING (query, string) returns a string that represents the ¤ arithmetic operation calculator¤.¤
-%%%% ¡calcualte! ¥\circled{6}\circlednote{6}{returns the string, which must be saved in the variable \code{value}.}¥
+%%%% ¡calculate! ¥\circled{7}\circlednote{7}{returns the string, which must be saved in the variable \code{value}.}¥
 a = ao.get('A');
 b = ao.get('B');
 value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B)];
 
 
-%% ¡props! ¥\circled{7}\circlednote{7}{The \code{¡props!} token permits to add additional props.}¥
+%% ¡props! ¥\circled{8}\circlednote{8}{The \code{¡props!} token permits to add additional props.}¥
 
-%%% ¡prop! ¥\circled{8}\twocirclednotes{8}{9}{are two data props.}¥
+%%% ¡prop! ¥\circled{9}\circlednote{9}{and \circle{10} are two data props.}¥
 A (data, scalar) is the first number.
 
-%%% ¡prop! ¥\circled{9}¥
+%%% ¡prop! ¥\circled{10}¥
 B (data, scalar) is the second number.
 
-%%% ¡prop! ¥\circled{10}\circlednote{10}{is a result prop.}¥
+%%% ¡prop! ¥\circled{11}\circlednote{11}{is a result prop.}¥
 SUM (result, scalar) is the sum of the two numbers (A + B).
-%%%% ¡calculate! ¥\circled{11}\circlednote{11}{calculates the sum of the two numbers. The result must be saved in the variable \code{value}.}¥
+%%%% ¡calculate! ¥\circled{12}\circlednote{12}{calculates the sum of the two numbers. The result must be saved in the variable \code{value}.}¥
 value = ao.get('A') + ao.get('B');
 
-%%% ¡prop! ¥\circled{12}\circlednote{12}{is a result prop.}¥
+%%% ¡prop! ¥\circled{13}\circlednote{13}{is a result prop.}¥
 DIFF (result, scalar) is the difference of the two numbers (A - B).
-%%%% ¡calculate! ¥\circled{13}\circlednote{13}{calculates the difference of the two numbers. The result must be saved in the variable \code{value}.}¥
+%%%% ¡calculate! ¥\circled{14}\circlednote{14}{calculates the difference of the two numbers. The result must be saved in the variable \code{value}.}¥
 value = ao.get('A') - ao.get('B');
 
 
-%% ¡tests! ¥\circled{14}\circlednote{14}{The \code{¡tests!} token permits to add unit tests.}¥
+%% ¡tests! ¥\circled{15}\circlednote{15}{The \code{¡tests!} token permits to add unit tests.}¥
 
 %%% ¡test!
 %%%% ¡name!
@@ -760,21 +763,21 @@ Simple test
 ao = ArithmeticOperations('A', 6, 'B', 4)
 
 string = ao.get('TOSTRING')
-assert(~ao.isLocked('A')) ¥\circled{15}\twocirclednotes{15}{16}{Both props \code{A} and \code{B} are not locked, even though the query prop \code{TOSTRING} has been calculated.}¥
-assert(~ao.isLocked('B')) ¥\circled{16}¥
+assert(~ao.isLocked('A')) ¥\circled{16}\circlednote{16}{and \circled{17} Both props \code{A} and \code{B} are not locked, even though the query prop \code{TOSTRING} has been calculated.}¥
+assert(~ao.isLocked('B')) ¥\circled{17}¥
 
 sum = ao.get('SUM')
 
-assert(ao.isLocked('A')) ¥\circled{17}\twocirclednotes{17}{18}{Both props \code{A} and \code{B} are now locked, because the result prop \code{SUM} has been calculated. From now on their value cannot be changed.}¥
-assert(ao.isLocked('B')) ¥\circled{18}¥
+assert(ao.isLocked('A')) ¥\circled{18}\circlednote{18}{and \circled{19} Both props \code{A} and \code{B} are now locked, because the result prop \code{SUM} has been calculated. From now on their value cannot be changed.}¥
+assert(ao.isLocked('B')) ¥\circled{19}¥
 
 diff = ao.get('DIFF')
 
-sum_raw = ao.getr('SUM') ¥\circled{19}\twocirclednotes{19}{20}{Note that both the result props \code{SUM} and \code{DIFF} are \code{NoValue}, because they have not been memorized yet.}¥
-diff_raw = ao.getr('DIFF') ¥\circled{20}¥
+sum_raw = ao.getr('SUM') ¥\circled{20}\circlednote{20}{and \circled{21} Note that both the result props \code{SUM} and \code{DIFF} are \code{NoValue}, because they have not been memorized yet.}¥
+diff_raw = ao.getr('DIFF') ¥\circled{21}¥
 assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 
-%%% ¡test!  ¥\circled{21}\circlednote{21}{alters the previous test to memorize the results.}¥
+%%% ¡test!  ¥\circled{22}\circlednote{22}{alters the previous test to memorize the results.}¥
 %%%% ¡name!
 Simple test with memorization
 %%%% ¡code!

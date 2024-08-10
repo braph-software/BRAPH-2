@@ -705,7 +705,7 @@ We will now see how to implement a few concrete elements.
 <a id="A-Simple-Calculator"></a>
 ### A Simple Calculator  [⬆](#Table-of-Contents)
 
-We will now create our first element (Code 12), a simple calcualator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
+You will now create your first element (Code 12), a simple calculator that contains two numbers (which are data scalar props) and calculates their sum and difference (which are result scalar props).
 
 
 > **Code 12.** **Arithmetic Operation Calculator.**
@@ -722,72 +722,75 @@ We will now create our first element (Code 12), a simple calcualator that contai
 > %%% ¡seealso!
 > LogicalOperations, GeometricalOperations
 > 
+> %%% ¡build!  ②
+> 1
 > 
-> %% ¡props_update!  ②
+> 
+> %% ¡props_update!  ③
 > 
 > %%% ¡prop!
-> ¤ELCLASS (constant, string) is the class of the¤ arithmetic operation calculator¤.¤
+> ELCLASS (constant, string) is the class of the arithmetic operation calculator.
 > %%%% ¡default!
-> 'ArithmeticOperations'  ③
+> 'ArithmeticOperations'  ④
 > 
 > %%% ¡prop!
-> ¤NAME (constant, string) is the name of the¤ arithmetic operation calculator¤.¤
+> NAME (constant, string) is the name of the arithmetic operation calculator.
 > %%%% ¡default!
 > 'Arithmetic Operation Calculator'
 > 
 > %%% ¡prop!
-> ¤DESCRIPTION (constant, string) is the description of the¤ arithmetic operation calculator¤.¤
+> DESCRIPTION (constant, string) is the description of the arithmetic operation calculator.
 > %%%% ¡default!
 > 'An Arithmetic Operations element (ArithmeticOperations) contains two numbers as data scalar props and calculates their sum and difference as result scalar props.'
 > 
 > %%% ¡prop!
-> ¤TEMPLATE (parameter, item) is the template of the¤ arithmetic operation calculator¤.¤
+> TEMPLATE (parameter, item) is the template of the arithmetic operation calculator.
 > %%%% ¡settings!
-> 'ArithmeticOperations'  ④
+> 'ArithmeticOperations'  ⑤
 > 
 > %%% ¡prop!
-> ¤ID (data, string) is a few-letter code for the¤ arithmetic operation calculator¤.¤
+> ID (data, string) is a few-letter code for the arithmetic operation calculator.
 > %%%% ¡default!
 > 'ArithmeticOperations ID'
 > 
 > %%% ¡prop!
-> ¤LABEL (metadata, string) is an extended label of the¤ arithmetic operation calculator¤.¤
+> LABEL (metadata, string) is an extended label of the arithmetic operation calculator.
 > %%%% ¡default!
 > 'ArithmeticOperations label'
 > 
 > %%% ¡prop!
-> ¤NOTES (metadata, string) are some specific notes about the¤ arithmetic operation calculator¤.¤
+> NOTES (metadata, string) are some specific notes about the arithmetic operation calculator.
 > %%%% ¡default!
 > 'ArithmeticOperations notes'
 > 
-> %%% ¡prop!  ⑤
-> ¤TOSTRING (query, string) returns a string that represents the ¤ arithmetic operation calculator¤.¤
-> %%%% ¡calcualte!  ⑥
+> %%% ¡prop!  ⑥
+> TOSTRING (query, string) returns a string that represents the  arithmetic operation calculator.
+> %%%% ¡calculate!  ⑦
 > a = ao.get('A');
 > b = ao.get('B');
 > value = ['Calculator of the sum and difference of ' num2str(A) ' and ' num2str(B)];
 > 
 > 
-> %% ¡props!  ⑦
-> 
-> %%% ¡prop!  ⑧
-> A (data, scalar) is the first number.
+> %% ¡props!  ⑧
 > 
 > %%% ¡prop!  ⑨
-> B (data, scalar) is the second number.
+> A (data, scalar) is the first number.
 > 
 > %%% ¡prop!  ⑩
+> B (data, scalar) is the second number.
+> 
+> %%% ¡prop!  ⑪
 > SUM (result, scalar) is the sum of the two numbers (A + B).
-> %%%% ¡calculate!  ⑪
+> %%%% ¡calculate!  ⑫
 > value = ao.get('A') + ao.get('B');
 > 
-> %%% ¡prop!  ⑫
+> %%% ¡prop!  ⑬
 > DIFF (result, scalar) is the difference of the two numbers (A - B).
-> %%%% ¡calculate!  ⑬
+> %%%% ¡calculate!  ⑭
 > value = ao.get('A') - ao.get('B');
 > 
 > 
-> %% ¡tests!  ⑭
+> %% ¡tests!  ⑮
 > 
 > %%% ¡test!
 > %%%% ¡name!
@@ -796,59 +799,67 @@ We will now create our first element (Code 12), a simple calcualator that contai
 > ao = ArithmeticOperations('A', 6, 'B', 4)
 > 
 > string = ao.get('TOSTRING')
-> assert(~ao.isLocked('A'))  ⑮
-> assert(~ao.isLocked('B'))  ⑯
+> assert(~ao.isLocked('A'))  ⑯
+> assert(~ao.isLocked('B'))  ⑰
 > 
 > sum = ao.get('SUM')
 > 
-> assert(ao.isLocked('A'))  ⑰
-> assert(ao.isLocked('B'))  ⑱
+> assert(ao.isLocked('A'))  ⑱
+> assert(ao.isLocked('B'))  ⑲
 > 
 > diff = ao.get('DIFF')
 > 
-> sum_raw = ao.getr('SUM')  ⑲
-> diff_raw = ao.getr('DIFF')  ⑳
+> sum_raw = ao.getr('SUM')  ⑳
+> diff_raw = ao.getr('DIFF')  ¡!21!¡
 > assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 > 
-> %%% ¡test!   ¡!21!¡
+> %%% ¡test!   ¡!22!¡
 > %%%% ¡name!
 > Simple test with memorization
 > %%%% ¡code!
-> ¤ao = ArithmeticOperations('A', 6, 'B', 4)
+> ao = ArithmeticOperations('A', 6, 'B', 4)
 > 
-> sum = ao.¤memorize¤('SUM')
-> diff = ao.¤memorize¤('DIFF')
+> sum = ao.memorize('SUM')
+> diff = ao.memorize('DIFF')
 > 
 > sum_raw = ao.getr('SUM')
-> diff_raw = ao.getr('DIFF')¤
+> diff_raw = ao.getr('DIFF')
 > assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
 > ````
 > 
-> ① The `¡header!` token is the only required one.
+> ① The `¡header!` and ② `¡build!` tokens are the only required one.
 > 
-> ② The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
-> 
-> ③ must be the name of the element.
+> ③ The `¡props_update!` token permits to update the properties of the `ConcreteElement`. The updated parts have been highlighted.
 > 
 > ④ must be the name of the element.
 > 
-> ⑤ Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
+> ⑤ must be the name of the element.
 > 
-> ⑥ returns the string, which must be saved in the variable `value`.
+> ⑥ Often, it is not necessary to updated `TOSTRING`, as the default works for most cases.
 > 
-> ⑦ The `¡props!` token permits to add additional props.
+> ⑦ returns the string, which must be saved in the variable `value`.
 > 
-> ⑩ is a result prop.
+> ⑧ The `¡props!` token permits to add additional props.
 > 
-> ⑪ calculates the sum of the two numbers. The result must be saved in the variable `value`.
+> ⑨ and \circle{10} are two data props.
 > 
-> ⑫ is a result prop.
+> ⑪ is a result prop.
 > 
-> ⑬ calculates the difference of the two numbers. The result must be saved in the variable `value`.
+> ⑫ calculates the sum of the two numbers. The result must be saved in the variable `value`.
 > 
-> ⑭ The `¡tests!` token permits to add unit tests.
+> ⑬ is a result prop.
 > 
-> ¡!21!¡ alters the previous test to memorize the results.
+> ⑭ calculates the difference of the two numbers. The result must be saved in the variable `value`.
+> 
+> ⑮ The `¡tests!` token permits to add unit tests.
+> 
+> ⑯ and ⑰ Both props `A` and `B` are not locked, even though the query prop `TOSTRING` has been calculated.
+> 
+> ⑱ and ⑲ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
+> 
+> ⑳ and ¡!21!¡ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+> 
+> ¡!22!¡ alters the previous test to memorize the results.
 > 
 
 <a id="Calculator-with-Seeded-Randomness"></a>
@@ -870,7 +881,7 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > %% ¡props_update!
 > 
 > %%% ¡prop!
-> ¤ELCLASS (constant, string) is the class of the¤ randomizer¤.¤
+> ELCLASS (constant, string) is the class of the randomizer.
 > %%%% ¡default!
 > 'SeededRandomness'
 > 
@@ -924,7 +935,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %% ¡props_update!
 > 
 > %%% ¡prop!
-> ¤ELCLASS (constant, string) is the class of the ¤calculator with query¤.¤
+> ELCLASS (constant, string) is the class of the calculator with query.
 > %%%% ¡default!
 > 'ArithmeticOperationsWithQuery'
 > 
@@ -995,7 +1006,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > %% ¡props_update!
 > 
 > %%% ¡prop!
-> ¤ELCLASS (constant, string) is the class of the¤ element with figure¤.¤
+> ELCLASS (constant, string) is the class of the element with figure.
 > %%%% ¡default!
 > 'ElementWithFigure'
 > 
