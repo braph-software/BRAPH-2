@@ -10,7 +10,7 @@ In this tutorial, you will learn how to edit a "*.braph2" file to change the ste
 > [Adaption of the pipeline](#Adaption-of-the-pipeline)
 >
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id=Adaption-of-the-pipeline></a>
 ## Adaption of the pipeline  [⬆](#Table-of-Contents)
