@@ -131,10 +131,10 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 <a id="Measure-Calculation"></a>
 ## Measure Calculation  [⬆](#Table-of-Contents)
 
-You can now calculate graph measures with the analyses defined in the previous step.
+You can now calculate graph measures with the analyses defined in the previous step, as shown in Code 5.
 
-**Code 5.** **Group Subject Data Analysis.**
-		The group data analysis provides code for initialization of group data analysis.
+**Code 5.** **Within-group measure calculation.**
+		The measure calculation section calculates the measures for each group independently.
 ````matlab
 % measure calculation
 g_WU1 = a_WU1.memorize('G');  % [1]
@@ -158,19 +158,21 @@ ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');
 <a id="Group-Comparison"></a>
 ## Group Comparison  [⬆](#Table-of-Contents)
 
-The last step is to perform group comparison. "CompareGroup" contains the results of a group-based comparison for a given measure.
+The last step is to perform the group comparison. This uses the element `CompareGroup` as shown in Code 6.
+
 Specifically, it contains the one-tailed and two-tailed p-values and the 95\% confidence interval.
-**Code 6.** **Group Subject Data Analysis.**
-		The group data analysis provides code for initialization of group data analysis.
+
+**Code 6.** **Between-group measure comparison.**
+		The comparison section performs the comparison of the measures between the two groups.
 ````matlab
 % comparison
-c_WU = CompareGroup( ... % [1]
-    'P', 10, ...
-    'A1', a_WU1, ...
-    'A2', a_WU2, ...
-    'WAITBAR', true, ...
-    'VERBOSE', false, ...
-    'MEMORIZE', true ...
+c_WU = CompareGroup( ...
+    'P', 1000, ...  % [1]
+    'A1', a_WU1, ...  % [2]
+    'A2', a_WU2, ...  % [3]
+    'WAITBAR', true, ...  % [4]
+    'VERBOSE', false, ...  % [5]
+    'MEMORIZE', true ...  % [6]
     );
 
 ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF'); % [2]
@@ -180,7 +182,15 @@ ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL'); % [5]
 ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); % [6]
 ````
 
-[1] Creation of group comparison based on previous group analysis.
+[1] uses 1000 permutations in the false-discovery-rate (FDR) test.
+
+[2] and \circled{3} define the two analyses to be compared.
+
+[4] shows a waitbar during the comparison.
+
+[5] does not print updates during the comparison.
+
+[5] memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
 
 [2] "DIFF" calculates the difference of group comparison.
 
