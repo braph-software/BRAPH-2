@@ -7,7 +7,7 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 
 
 
-<img src="fig01.png" alt="Figure examples">
+<img src="fig01.png" alt="Figure examples" height="400px">
 
 > **Figure 1. Figure examples**
 > Examples of displays of "Community Structure" with connectivity data binarized at fixed thresholds obtained using BRAPH 2.
