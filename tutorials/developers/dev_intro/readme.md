@@ -642,7 +642,7 @@ A list of special instructions is shown in Code 10.
 The directory structure of "braph2" and the relation with "braph2genesis" is illustrated in Figure 2.
 All objects are derived from a base object called `Element` and written in a simplified pseudocode (files "*.gen.m") that is compiled into the actual elements (files "*.m") by the command `braph2genesis` (some examples of these elements are shown).
 The compiled code can be launched by the command `braph2`.
-The core of BRAPH 2.0 (gray shaded area) includes the compiler (`genesis`), the essential source code ("src"), and the essential functionalities for the GUI ("gui", yellow-shaded area).
+The core of BRAPH 2 (gray shaded area) includes the compiler (`genesis`), the essential source code ("src"), and the essential functionalities for the GUI ("gui", yellow-shaded area).
 The users can easily add new brain surfaces ("brainsurfs"), atlases ("atlases"), example scripts and GUI pipelines (in the corresponding folder under "pipelines").
 Furthermore, the users can add new elements such as new graphs (e.g., `GraphWU` in "graphs"), measures (e.g., `Strength` in "measures"), data types (e.g., `SubjectCON` in "pipelines/connectivity"), data importers (e.g., `ImporterGroupSubjectCON_XLS` in "pipelines/connectivity"), data exporters (e.g., `ExporterGroupSubjectCON_XLS` in "pipelines/connectivity"), and analyses (e.g., `AnalyzeEnsemble_CON_WU` in "pipelines/connectivity") by writing new elements and recompiling the whole code: the new elements and their functionalities will be immediately available also in the GUI.
 Finally, BRAPH 2 is provided with a set of unit tests (executable by the command "test_braph2") that ensure the formal correctness of the code, including that of any newly added elements.
@@ -662,7 +662,7 @@ We will now see how to implement a few concrete elements.
 > > 		Using `braph2genesis_with_rollcall` (which is found in the folder "sandbox"), it is possible to exclude some folders and elements, which are defined in the variable `rollcall`.
 > > 		You can place your elements in the folder "sandbox".
 > > ````matlab
-> > ¤...¤
+> > ¤¤¤¤¤
 > > %% Add here all included and excluded folders and elements
 > > % '-folder'                 the folder and its elements will be excluded
 > > %
@@ -690,9 +690,9 @@ We will now see how to implement a few concrete elements.
 > >     '-neuralnetworks', ...
 > >     '-pipelines', ...
 > >     '+test*', ...
-> >     '-sandbox' ...
+> >     '+sandbox*' ...
 > >     };
-> > ¤...¤
+> > ¤¤¤¤¤
 > > ````
 > > 
 > 
@@ -864,7 +864,7 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 > 
 > %%% ¡description!
-> ¤...¤  ①
+> ¤¤¤¤¤  ①
 > 
 > 
 > %% ¡props_update!
@@ -874,7 +874,7 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > %%%% ¡default!
 > 'SeededRandomness'
 > 
-> ¤...¤  ②
+> ¤¤¤¤¤  ②
 > 
 > 
 > %% ¡props!
@@ -918,7 +918,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
 > 
 > %%% ¡description!
-> ¤...¤
+> ¤¤¤¤¤
 > 
 > 
 > %% ¡props_update!
@@ -928,7 +928,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %%%% ¡default!
 > 'ArithmeticOperationsWithQuery'
 > 
-> ¤...¤
+> ¤¤¤¤¤
 > 
 > 
 > %% ¡props!
@@ -989,7 +989,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
 > 
 > %%% ¡description!
-> ¤...¤
+> ¤¤¤¤¤
 > 
 > 
 > %% ¡props_update!
@@ -999,7 +999,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > %%%% ¡default!
 > 'ElementWithFigure'
 > 
-> ¤...¤
+> ¤¤¤¤¤
 > 
 > 
 > %% ¡props!
