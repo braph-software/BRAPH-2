@@ -1002,7 +1002,7 @@ You can now learn how to use query props by expanding the `ArithmeticOperations`
 <a id="Evanescent-Gui-Figure"></a>
 ### Evanescent, Gui, Figure  [⬆](#Table-of-Contents)
 
-We can now demonstrate the use of evanescent props and graphical handles (Code 15).
+You can now learn how to use evanescent props and graphical handles (Code 15).
 
 
 > **Code 15.** **Element with figure.**
@@ -1013,6 +1013,9 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > 
 > %%% ¡description!
 > . . . . .
+> 
+> %%% ¡build!
+> 1
 > 
 > 
 > %% ¡props_update!
