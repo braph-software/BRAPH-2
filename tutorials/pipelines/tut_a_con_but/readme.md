@@ -17,11 +17,11 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 >
 > [Open the GUI](#Open-the-GUI)
 >
-> [Step 1-Load the Brain Atlas](#Step-1-Load-the-Brain-Atlas)
+> [Step 1: Load the Brain Atlas](#Step--Load-the-Brain-Atlas)
 >
-> [Step 2: Load the Connectivity Group Data](#Step-2:-Load-the-Connectivity-Group-Data)
+> [Step 2: Load the Connectivity Group Data](#Step--Load-the-Connectivity-Group-Data)
 >
-> [Step 3: Analyzing the Data of Group 1](#Step-3:-Analyzing-the-Data-of-Group-1)
+> [Step 3: Analyzing the Data of Group 1](#Step--Analyzing-the-Data-of-Group-)
 >
 >> [Setting Analysis Parameters](#Setting-Analysis-Parameters)
 >>
@@ -31,13 +31,13 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 >>
 >> [Calculate Measures](#Calculate-Measures)
 >>
-> [Step 4: Analyzing the Data of Group 2](#Step-4:-Analyzing-the-Data-of-Group-2)
+> [Step 4: Analyzing the Data of Group 2](#Step--Analyzing-the-Data-of-Group-)
 >
-> [Step 5: Comparing Groups](#Step-5:-Comparing-Groups)
+> [Step 5: Comparing Groups](#Step--Comparing-Groups)
 >
 
 
-<a id="Generate-Example-Data"></a>
+<a id=Generate-Example-Data></a>
 ## Generate Example Data  [⬆](#Table-of-Contents)
 
 You can generate the example data by typing in the command line the instruction in Code 1.
@@ -49,7 +49,7 @@ create_data_CON_XLS()
 ````
 
 
-<a id="Open-the-GUI"></a>
+<a id=Open-the-GUI></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
 
 The general GUI of BRAPH 2 can be opened by typing `braph2` in MatLab's terminal. This GUI allows you to select a pipeline, in this case, *Pipeline Connectivity Comparison BUT*, as shown in Figure 2.
@@ -87,8 +87,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 > These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 
 
-<a id="Step-1-Load-the-Brain-Atlas"></a>
-## Step 1-Load the Brain Atlas  [⬆](#Table-of-Contents)
+<a id=Step--Load-the-Brain-Atlas></a>
+## Step 1: Load the Brain Atlas  [⬆](#Table-of-Contents)
 
 Figure 4 shows how to upload and plot the brain atlas that you used to extract the *connectivity data* for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba).
 
@@ -103,7 +103,7 @@ Figure 4 shows how to upload and plot the brain atlas that you used to extract t
 > 	**c** You can visualize the brain atlas by pressing "Plot Brain Atlas".
  
 
-<a id="Step-2:-Load-the-Connectivity-Group-Data"></a>
+<a id=Step--Load-the-Connectivity-Group-Data></a>
 ## Step 2: Load the Connectivity Group Data  [⬆](#Table-of-Contents)
 
 After you loaded the brain atlas, you can upload the *connectivity data* for each group as shown in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s connectivity matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial [Group of Subjects with Connectivity Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con)).
@@ -119,7 +119,7 @@ After you loaded the brain atlas, you can upload the *connectivity data* for eac
 > 	You can then repeat the same procedure for group 2.
 
 
-<a id="Step-3:-Analyzing-the-Data-of-Group-1"></a>
+<a id=Step--Analyzing-the-Data-of-Group-></a>
 ## Step 3: Analyzing the Data of Group 1  [⬆](#Table-of-Contents)
 
 Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on "Analyze Group 1" (Figure 5a). 
@@ -133,7 +133,7 @@ Before these network measures are calculated, it is important to ensure the foll
 
 Importantly, the parameters you select at the beginning will remain fixed for the rest of pipeline (including the analysis of the second group and the comparison between groups). We will now guide you through the process of preparing these parameters for both measures and graphs. It is important to keep in mind that the default parameters should work well for most cases.
 
-<a id="Setting-Analysis-Parameters"></a>
+<a id=Setting-Analysis-Parameters></a>
 ### Setting Analysis Parameters  [⬆](#Table-of-Contents)
 
 In the "Analyze Ensemble" interface (Figure 6), you can configure the analysis parameters.
@@ -146,7 +146,7 @@ In the `THRESHOLDS` section, you can define the thresholds by entering values li
 > **a** To initiate the analysis of data for group 1, click on "Analyze Group 1".
 > 	**b** You define the thresholds in the `THRESHOLDS` section.
 
-<a id="Setting-Graph-Parameters"></a>
+<a id=Setting-Graph-Parameters></a>
 ### Setting Graph Parameters  [⬆](#Table-of-Contents)
 
 To configure the graph parameters, you click on the section `GRAPH \& MEASURE PARAMETERS` (Figure 7). This will open a new interface for graph template settings. 
@@ -172,7 +172,7 @@ The available parameters are:
 	- `RANDOMIZATION ATTEMPTS PER EDGE` is the attempts to rewire each edge. *Typically not used*
 
 
-<a id="Setting-Measure-Parameters"></a>
+<a id=Setting-Measure-Parameters></a>
 ### Setting Measure Parameters  [⬆](#Table-of-Contents)
 
 Now, if you scroll down to find the `Graph MEASURES` section, by clicking on the `C` button, all compatible measures will be displayed in a table. 
@@ -190,7 +190,7 @@ This will open the measure window, allowing you to specify the rules or paramete
 > 	**b** The measure window that opens allows you to define the parameters for the `Community Structure` measure. Select the `louvain` algorithm to calculate it.
 
 
-<a id="Calculate-Measures"></a>
+<a id=Calculate-Measures></a>
 ### Calculate Measures  [⬆](#Table-of-Contents)
  
 After configuring the parameters, you can proceed to calculate specific graph measures (Figure 9). To do this, return to the "Analyze Ensemble" interface (Figure 9a) and scroll down to locate the "Group-averaged MEASURES" panel. By clicking the 'C' button, you will see a table displaying all measures.
@@ -217,7 +217,7 @@ For instance, within the settings menu (Figure 9e), you can disable the size eff
 
 Finally, when you right-click in the `Group-averaged MEASURES` panel, you will find other options to explore, such as `Plot Selected Measures` (which generates a line plot for the selected measure at different thresholds and/or different nodes) and `Data Selected Measure` (providing the calculated values of the selected measures). These options can also be saved for further analyses outside BRAPH 2.
 
-<a id="Step-4:-Analyzing-the-Data-of-Group-2"></a>
+<a id=Step--Analyzing-the-Data-of-Group-></a>
 ## Step 4: Analyzing the Data of Group 2  [⬆](#Table-of-Contents)
 
 After completing the analysis of the first group, you can analyze the second group by simply clicking on `Analyze Group 2` (Figure 10a). You will notice that in the new GUI (Figure 10b-d), the parameters you previously selected for the first group are already preselected and fixed for this analysis. 
@@ -233,7 +233,7 @@ After completing the analysis of the first group, you can analyze the second gro
 If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a `C` (Figure 10e) near the analysis of the first group.
  
 
-<a id="Step-5:-Comparing-Groups"></a>
+<a id=Step--Comparing-Groups></a>
 ## Step 5: Comparing Groups  [⬆](#Table-of-Contents)
 
 After exploring the network measures for each group, you can proceed to their statistical comparison by clicking on `Compare Groups` (Figure 11a).
