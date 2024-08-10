@@ -106,7 +106,7 @@ Figure 4 shows how to upload and plot the brain atlas that you used to extract t
 ## Step 2: Load the Structural Group Data  [⬆](#Table-of-Contents)
 
 After you loaded the brain atlas, you can upload the *structural data* for each group as shown in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s structural values by selecting
-the subject, right click, and select “Open selection” (for more information check tutorial *Group of Subjects with Structural Data*).
+the subject, right click, and select “Open selection” (for more information check tutorial [Group of Subjects with Structural Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_st)).
 	
 
 
