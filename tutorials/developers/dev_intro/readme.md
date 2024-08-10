@@ -610,7 +610,7 @@ A list of special instructions is shown in Code 10.
 > **Code 10.** **Special instruction in a generator file.**
 > 		There are some special and specialized instructions that can be used in a generator file.
 > ````matlab
-> ¥€¥ConcreteElement.NAME¥€¥  ①
+> €ConcreteElement.NAME€  ①
 > 
 > __Category.CONSTANT__  ②
 > __Category.CONSTANT_TAG__  ③

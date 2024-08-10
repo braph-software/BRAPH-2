@@ -39,6 +39,7 @@ document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
 document = regexprep(document, '\\emph{([^{}]*)}', '*$1*');  % \emph{...}
 document = regexprep(document, '\\&', '&');  % \&
 document = regexprep(document, '\\_', '_');  % \_
+document = regexprep(document, '¥€¥', '€');  % ¥€¥
 document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % {\bf ...}
 document = regexprep(document, '\\footnote{([^{}]*)}', ' ($1)');  % \footnote{...}
 document = regexprep(document, '\\begin{fullwidth}', '');  % \begin{fullwidth}
