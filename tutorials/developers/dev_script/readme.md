@@ -192,4 +192,4 @@ ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU');  % [11]
 
 [6] memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
 
-[7] -[11] calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).
+[7] - [11] calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).
