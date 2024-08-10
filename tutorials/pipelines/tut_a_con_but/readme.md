@@ -241,9 +241,9 @@ After completing the analysis of the first group, you can analyze the second gro
 
 > **Figure 10. Parameters blocked in the Analysis of Group 2**
 > **a** Click on "Analysis 2" in the pipeline's GUI.
-> 	**b** In this new window, you can see that the measure parameters, such as the **b** "GRAPH TEMPLATE" and **c** rule for "Community Structure", as well as the graph property **d** "THRESHOLDS", are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a `C` next to the settings of Group 1 **e**.
+> 	**b** In this new window, you can see that the measure parameters, such as the **b** "GRAPH TEMPLATE" and **c** rule for "Community Structure", as well as the graph property **d** "THRESHOLDS", are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a `D` next to the settings of Group 1 **e**.
 	
-If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a `C` (Figure 10e) near the analysis of the first group.
+If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a `D` (Figure 10e) near the analysis of the first group.
  
 
 <a id=Step--Comparing-Groups></a>
