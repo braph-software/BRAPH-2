@@ -40,11 +40,11 @@ In this developer tutorial, you will learn how BRAPH 2 is compiled, how the elem
 BRAPH 2 is a compiled object-oriented programming software.
 Its objects are *elements*, which contain a set of *props* of various *categories* and *formats*, as described in detail in the following sections. 
 These elements are written in the BRAPH 2 pseudocode, which simplifies and streamlines the coding process.
-To convert them into usable matlab objects, BRAPH 2 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole code, as shown in Code 1.
+To convert them into usable MatLab objects, BRAPH 2 needs to be compiled, which is done by calling the script `braph2genesis`, which will compile the whole BRAPH 2 code base, as shown in Code 1.
 
 **Code 1.** **Compilation of BRAPH 2.**
 		Executing the script `braph2genesis` compiles BRAPH 2 and , subsequently, unit tests it.
-		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
+		Importantly, this script might take several hours to run (plus several more hours to unit test the compiled code).
 ````matlab
 >> braph2genesis
 ````
@@ -52,9 +52,13 @@ To convert them into usable matlab objects, BRAPH 2 needs to be compiled, which 
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
 \begin{enumerate}
-	- **First compilation**, where the elements are created.
-	- **Second compilation**, where the elements are computationally optimized.
-	- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+
+- **First compilation**, where the elements are created.
+
+- **Second compilation**, where the elements are computationally optimized.
+
+- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+
 \end{enumerate}
 
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2. 
