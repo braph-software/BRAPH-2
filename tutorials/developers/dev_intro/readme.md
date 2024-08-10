@@ -662,7 +662,7 @@ We will now see how to implement a few concrete elements.
 > > 		Using `braph2genesis_with_rollcall` (which is found in the folder "sandbox"), it is possible to exclude some folders and elements, which are defined in the variable `rollcall`.
 > > 		You can place your elements in the folder "sandbox".
 > > ````matlab
-> > ¤¤¤¤¤
+> > . . . . .
 > > %% Add here all included and excluded folders and elements
 > > % '-folder'                 the folder and its elements will be excluded
 > > %
@@ -692,7 +692,7 @@ We will now see how to implement a few concrete elements.
 > >     '+test*', ...
 > >     '+sandbox*' ...
 > >     };
-> > ¤¤¤¤¤
+> > . . . . .
 > > ````
 > > 
 > 
@@ -864,7 +864,7 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 > 
 > %%% ¡description!
-> ¤¤¤¤¤  ①
+> . . . . .  ①
 > 
 > 
 > %% ¡props_update!
@@ -874,7 +874,7 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > %%%% ¡default!
 > 'SeededRandomness'
 > 
-> ¤¤¤¤¤  ②
+> . . . . .  ②
 > 
 > 
 > %% ¡props!
@@ -918,7 +918,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query) calculates simple arithmetic operations with a query.
 > 
 > %%% ¡description!
-> ¤¤¤¤¤
+> . . . . .
 > 
 > 
 > %% ¡props_update!
@@ -928,7 +928,7 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > %%%% ¡default!
 > 'ArithmeticOperationsWithQuery'
 > 
-> ¤¤¤¤¤
+> . . . . .
 > 
 > 
 > %% ¡props!
@@ -989,7 +989,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > ElementWithFigure < ConcreteElement (ef, element with figure) is an element with a figure.
 > 
 > %%% ¡description!
-> ¤¤¤¤¤
+> . . . . .
 > 
 > 
 > %% ¡props_update!
@@ -999,7 +999,7 @@ We can now demonstrate the use of evanescent props and graphical handles (Code 1
 > %%%% ¡default!
 > 'ElementWithFigure'
 > 
-> ¤¤¤¤¤
+> . . . . .
 > 
 > 
 > %% ¡props!
