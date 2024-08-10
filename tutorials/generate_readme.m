@@ -27,7 +27,6 @@ document = regexprep(document, '\\end\{abstract\}', '');
 document = regexprep(document, 'BRAPH~2', 'BRAPH 2');
 document = regexprep(document, '---', '-');  % ---
 document = regexprep(document, '\\\\\n', '\n');  % \\
-document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % bold
 document = regexprep(document, '\\fn{([^{}]*)}', '"$1"');  % \fn
 document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
 document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
@@ -36,6 +35,7 @@ document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
 document = regexprep(document, '\\emph{([^{}]*)}', '*$1*');  % \emph{...}
 document = regexprep(document, '\\&', '&');  % \&
 document = regexprep(document, '\\_', '_');  % \_
+document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % bold
 
 % table of contents
 sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');
