@@ -128,11 +128,11 @@ This will open a new interface called "Analyze Ensemble", which allows you to ca
 Before these network measures are calculated, it is important to ensure the following things: 
 
 
-	- The analysis parameters are set correctly (e.g., the thresholds).
+- The analysis parameters are set correctly (e.g., the thresholds).
 
-	- The graph parameters are set correctly.
+- The graph parameters are set correctly.
 
-	- The measures are configured with the parameters you desire (note that not all measures have parameters).
+- The measures are configured with the parameters you desire (note that not all measures have parameters).
 
 
 
@@ -168,13 +168,20 @@ Adjusting these thresholds allows you to explore varying levels of brain connect
 
 The available parameters are:
 
-	- `SYMMETRIZATION RULE` determines how to symmetrize the matrix.
-	- `NEGATIVE EDGE RULE` determines how to remove the negative edges.
-	- `NORMALIZATION RULE` determines how to normalize the weights between 0 and 1.
-	- `THRESHOLDS` determines the thresholds. *This cannot be set here. It is set in the previous step.*
-	- `RANDOMIZE ON/OFF` determines whether to randomize the graph. *Typically does not need to be changed.*
-	- `RANDOM SEED` is the randomization seed. *Typically does not need to be changed.*
+
+- `SYMMETRIZATION RULE` determines how to symmetrize the matrix.
+
+- `NEGATIVE EDGE RULE` determines how to remove the negative edges.
+
+- `NORMALIZATION RULE` determines how to normalize the weights between 0 and 1.
+
+- `THRESHOLDS` determines the thresholds. *This cannot be set here. It is set in the previous step.*
+
+- `RANDOMIZE ON/OFF` determines whether to randomize the graph. *Typically does not need to be changed.*
+
+- `RANDOM SEED` is the randomization seed. *Typically does not need to be changed.*
 	- `RANDOMIZATION ATTEMPTS PER EDGE` is the attempts to rewire each edge. *Typically does not need to be changed.*
+
 
 
 <a id=Setting-Measure-Parameters></a>
