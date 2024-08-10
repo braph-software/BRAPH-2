@@ -51,15 +51,15 @@ To convert them into usable MatLab objects, BRAPH 2 needs to be compiled, which 
 
 
 During the compilation, there are several phases to improve the computational efficiency of the executable code:
-\begin{enumerate}
 
-- **First compilation**, where the elements are created.
 
-- **Second compilation**, where the elements are computationally optimized.
+1. **First compilation**, where the elements are created.
 
-- **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+1. **Second compilation**, where the elements are computationally optimized.
 
-\end{enumerate}
+1. **Constant hard-coding**, where several contants are hard-coded in the executable code to further optimize the run time.
+
+
 
 Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
@@ -317,7 +317,7 @@ el = el.set('ID', 'new el id')  ④
 
 
 When a prop is set to a certain value, the following operations are performed:
-\begin{enumerate}
+
 	- The value is **conditioned** before being set (by calling the protected *static* function `conditioning()`, which can be defined in each subelement).
 	
 	This can be set with the token `¡conditioning!`.
@@ -354,7 +354,7 @@ When a prop is set to a certain value, the following operations are performed:
 	`BRAPH2:<Element Class>:WrongInput`.
 	
 	- When a prop is successfully set, an **event** `PropSet()` is **notified**.
-\end{enumerate} 
+ 
 
 <a id="Getting-Props"></a>
 ### Getting Props  [⬆](#Table-of-Contents)
