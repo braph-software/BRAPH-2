@@ -59,7 +59,7 @@ The general GUI of BRAPH~2 can be opened by typing \code{braph2} in MatLab's ter
 \begin{tcolorbox}[
 	title=Pipeline launch from command line
 ]
-To open the GUI and upload the connectivity comparison pipeline, you can also do it from the command line by typing the commands in \Coderef{cd:launch}.
+To open the GUI and upload the connectivity comparison pipeline, you can also use the command line by typing the commands in \Coderef{cd:launch}.
 
 \begin{lstlisting}[
 	label=cd:launch,
@@ -73,7 +73,8 @@ im = ImporterPipelineBRAPH2( ...
 	);
 pip = im.get('PIP');
 
-gui = GUIElement('PE', pip, 'WAITBAR', true); gui.get('DRAW')
+gui = GUIElement('PE', pip, 'WAITBAR', true)
+gui.get('DRAW')
 gui.get('SHOW')
 \end{lstlisting}
 \end{tcolorbox}
@@ -90,7 +91,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 	These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 }
 
-%! FIG3 !%
+%! FIG3 400px !%
 
 \clearpage
 \section{Step 1: Load the Brain Atlas}

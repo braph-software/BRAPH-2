@@ -63,7 +63,7 @@ The general GUI of BRAPH 2 can be opened by typing `braph2` in MatLab's terminal
 
 
 > **Pipeline launch from command line**
-> To open the GUI and upload the connectivity comparison pipeline, you can also do it from the command line by typing the commands in Code 2.
+> To open the GUI and upload the connectivity comparison pipeline, you can also use the command line by typing the commands in Code 2.
 > 
 > **Code 2.** **Code to launch the GUI to upload a pipeline file to compare two groups of subjects.**
 > 		This code can be used in the MatLab command line to launch the GUI to upload a pipeline file.
@@ -73,7 +73,8 @@ The general GUI of BRAPH 2 can be opened by typing `braph2` in MatLab's terminal
 > 	);
 > pip = im.get('PIP');
 > 
-> gui = GUIElement('PE', pip, 'WAITBAR', true); gui.get('DRAW')
+> gui = GUIElement('PE', pip, 'WAITBAR', true)
+> gui.get('DRAW')
 > gui.get('SHOW')
 > ````
 
@@ -81,7 +82,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 
 
 
-<img src="fig03.jpg" alt="Pipeline steps">
+<img src="fig03.jpg" alt="Pipeline steps" height="400px">
 
 > **Figure 3. Pipeline steps**
 > These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
