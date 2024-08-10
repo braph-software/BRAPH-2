@@ -12,7 +12,7 @@ In this tutorial, you will learn how to edit a "*.braph2" file to change the ste
 
 
 
-<a id=Adaption-of-the-pipeline></a>
+<a id="Adaption-of-the-pipeline"></a>
 ## Adaption of the pipeline  [⬆](#Table-of-Contents)
 
 You will adapt in `Pipeline Structural Multiplex Comparison BUD` in the file "pipeline\_structural\_multiplex\_comparison\_bud.braph2" as shown in Code 1. The changes are highlighted in the comments.

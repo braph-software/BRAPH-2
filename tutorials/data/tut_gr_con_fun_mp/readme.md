@@ -17,7 +17,7 @@ For *connectivity-functional multiplex data*, you will upload two folders, one c
 >
 > [Visualize the Group Data](#Visualize-the-Group-Data)
 >
-> [Visualize Each Subject's Data](#Visualize-Each-Subject's-Data)
+> [Visualize Each Subject's Data](#Visualize-Each-Subjects-Data)
 >
 > [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
@@ -76,7 +76,7 @@ After completing the steps described in Figure 2, you can see the data (Figure 3
 > **a** The GUI of the group's connectivity multiplex data. 
 > 	**b** The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 
-<a id="Visualize-Each-Subject's-Data"></a>
+<a id="Visualize-Each-Subjects-Data"></a>
 ## Visualize Each Subject's Data  [⬆](#Table-of-Contents)
 
 Finally, you can open each subject's connectivity-functional multiplex data by selecting the subject, right click, and select ''Open selection'' (Figure 4a), which shows the matrix values from the connectivity layer and the functional layer (Figure 4b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the values of its connectivity and functional data.

@@ -1,7 +1,9 @@
 function generate_readme(tex_file, readme_file)
 
+[tex_file_dir, tex_file_name] = fileparts(tex_file);
+
 if nargin < 2
-    readme_file = 'readme.md';
+    readme_file = [tex_file_dir filesep 'readme.md'];
 end
 
 tex = fileread(tex_file);
@@ -50,7 +52,7 @@ for i = 1:1:length(sections)
         level = 1;
     end
 
-    toc = [toc newline() repmat('>', 1, level) ' [' section_title '](#' regexprep(regexprep(section_title, '[^a-zA-Z0-9\s]', ''), ' ', '-') ')' newline() repmat('>', 1, level)]; %#ok<AGROW> 
+    toc = [toc newline() repmat('>', 1, level) ' [' section_title '](#' regexprep(regexprep(section_title, '[^a-zA-Z0-9"\s]', ''), ' ', '-') ')' newline() repmat('>', 1, level)]; %#ok<AGROW> 
 end
 document = regexprep(document, '\\tableofcontents', toc);
 
@@ -63,7 +65,7 @@ document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['<a id="$1"></a>' 
 a_start = regexp(document, '<a id="', 'end', 'all');
 a_end = regexp(document, '"></a>', 'start', 'all');
 for i = length(a_start):-1:1
-    section_title = regexprep(document(a_start(i):a_end(i)), '[^a-zA-Z0-9\s]', '');
+    section_title = regexprep(document(a_start(i):a_end(i)), '[^a-zA-Z0-9"\s]', '');
     document = [document(1:a_start(i) - 1) strrep(section_title, ' ', '-') document(a_end(i) + 1:end)];
 end
 
@@ -102,6 +104,7 @@ codes_start = regexp(document, '\\begin{lstlisting}', 'end', 'all');
 codes_end = regexp(document, '\\end{lstlisting}', 'start', 'all');
 assert(length(codes_start) == length(codes_end), 'The number of start and end codes should be equal!')
 
+code_labels = {};
 for i = length(codes_start):-1:1
     code = regexp(document(codes_start(i) + 1:codes_end(i) - 1), '\[\s*label=([^,]*),\s*caption={\s*([^{}]*)\s*}\s*\]\s*(.*)', 'tokens', 'all');
     code_labels{i} = strtrim(code{1}{1});
@@ -145,7 +148,7 @@ end
 readme = [
     '# ' title newline() ...
     newline() ...
-    '[![Tutorial ' title '](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](' tex_file(1:end-4) '.pdf)' newline() ...
+    '[![Tutorial ' title '](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](' tex_file_name '.pdf)' newline() ...
     newline() ...
     strtrim(document)
     ];
