@@ -139,13 +139,17 @@ After you have loaded the brain atlas, you can upload the \emph{connectivity dat
 Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on \fn{Analyze Group 1} (\Figref{fig:05}a). 
 This will open a new interface called \fn{Analyze Ensemble}, which allows you to calculate and visualize graph measures for the first group. 
 Before these network measures are calculated, it is important to ensure the following things: 
-\begin{enumerate}
-	\item The analysis parameters are set correctly (e.g., the thresholds).
-	\item The graph parameters are set correctly.
-	\item The measures are configured with the parameters you desire (note that not all measures have parameters).
-\end{enumerate}
+\begin{itemize}
 
-Importantly, the parameters you select at the beginning will remain fixed for the rest of pipeline (including the analysis of the second group and the comparison between groups). We will now guide you through the process of preparing these parameters for both measures and graphs. It is important to keep in mind that the default parameters should work well for most cases.
+	\item The analysis parameters are set correctly (e.g., the thresholds).
+
+	\item The graph parameters are set correctly.
+
+	\item The measures are configured with the parameters you desire (note that not all measures have parameters).
+
+\end{itemize}
+
+Importantly, the parameters you select at the beginning will remain fixed for the rest of pipeline to ensure the consistency of the analysis (including the analysis of the second group and the comparison between groups). We will now guide you through the process of preparing these parameters for both measures and graphs. It is important to keep in mind that the default parameters should work well for most cases.
 
 \subsection{Setting Analysis Parameters}
 
@@ -189,9 +193,9 @@ The available parameters are:
 	\item \code{NEGATIVE EDGE RULE} determines how to remove the negative edges.
 	\item \code{NORMALIZATION RULE} determines how to normalize the weights between 0 and 1.
 	\item \code{THRESHOLDS} determines the thresholds. \emph{This cannot be set here. It is set in the previous step.}
-	\item \code{RANDOMIZE ON/OFF} determines whether to randomize the graph. \emph{Typically not used}
-	\item \code{RANDOM SEED} is the randomization seed. \emph{Typically not used}
-	\item \code{RANDOMIZATION ATTEMPTS PER EDGE} is the attempts to rewire each edge. \emph{Typically not used}
+	\item \code{RANDOMIZE ON/OFF} determines whether to randomize the graph. \emph{Typically does not need to be changed.}
+	\item \code{RANDOM SEED} is the randomization seed. \emph{Typically does not need to be changed.}
+	\item \code{RANDOMIZATION ATTEMPTS PER EDGE} is the attempts to rewire each edge. \emph{Typically does not need to be changed.}
 \end{itemize}
 
 \subsection{Setting Measure Parameters}
@@ -218,7 +222,7 @@ This will open the measure window, allowing you to specify the rules or paramete
 \clearpage
 \subsection{Calculate Measures}
  
-After configuring the parameters, you can proceed to calculate specific graph measures (\Figref{fig:09}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:09}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the 'C' button, you will see a table displaying all measures.
+After configuring the parameters, you can proceed to calculate specific graph measures (\Figref{fig:09}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:09}a) and scroll down to locate the \fn{Group-averaged MEASURES} panel. By clicking the \code{C} button, you will see a table displaying all measures.
 
 \fig{figure*}
 {fig:09}
@@ -259,7 +263,7 @@ After completing the analysis of the first group, you can analyze the second gro
 {Parameters blocked in the Analysis of Group 2}
 {
 	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
-	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property {\bf d} \fn{THRESHOLDS}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf e}.
+	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property {\bf d} \fn{THRESHOLDS}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a \code{C} next to the settings of Group 1 {\bf e}.
 }
 
 %! FIG10 !%
