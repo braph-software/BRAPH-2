@@ -17,11 +17,11 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 >
 > [Open the GUI](#Open-the-GUI)
 >
-> [Step 1: Load the Brain Atlas](#Step--Load-the-Brain-Atlas)
+> [Step 1: Load the Brain Atlas](#Step-1-Load-the-Brain-Atlas)
 >
-> [Step 2: Load the Connectivity Group Data](#Step--Load-the-Connectivity-Group-Data)
+> [Step 2: Load the Connectivity Group Data](#Step-2-Load-the-Connectivity-Group-Data)
 >
-> [Step 3: Analyzing the Data of Group 1](#Step--Analyzing-the-Data-of-Group-)
+> [Step 3: Analyzing the Data of Group 1](#Step-3-Analyzing-the-Data-of-Group-1)
 >
 >> [Setting Analysis Parameters](#Setting-Analysis-Parameters)
 >>
@@ -31,9 +31,9 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 >>
 >> [Calculate Measures](#Calculate-Measures)
 >>
-> [Step 4: Analyzing the Data of Group 2](#Step--Analyzing-the-Data-of-Group-)
+> [Step 4: Analyzing the Data of Group 2](#Step-4-Analyzing-the-Data-of-Group-2)
 >
-> [Step 5: Comparing Groups](#Step--Comparing-Groups)
+> [Step 5: Comparing Groups](#Step-5-Comparing-Groups)
 >
 
 
@@ -88,7 +88,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 > These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 
 
-<a id=Step--Load-the-Brain-Atlas></a>
+<a id=Step-1-Load-the-Brain-Atlas></a>
 ## Step 1: Load the Brain Atlas  [⬆](#Table-of-Contents)
 
 Figure 4 shows how to upload and plot the brain atlas that you used to extract the data for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba).
@@ -104,7 +104,7 @@ Figure 4 shows how to upload and plot the brain atlas that you used to extract t
 > 	**c** You can visualize the brain atlas by pressing "Plot Brain Atlas".
  
 
-<a id=Step--Load-the-Connectivity-Group-Data></a>
+<a id=Step-2-Load-the-Connectivity-Group-Data></a>
 ## Step 2: Load the Connectivity Group Data  [⬆](#Table-of-Contents)
 
 After you have loaded the brain atlas, you can upload the *connectivity data* for each group as shown in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s connectivity matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial [Group of Subjects with Connectivity Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con)).
@@ -120,7 +120,7 @@ After you have loaded the brain atlas, you can upload the *connectivity data* fo
 > 	You can then repeat the same procedure for group 2.
 
 
-<a id=Step--Analyzing-the-Data-of-Group-></a>
+<a id=Step-3-Analyzing-the-Data-of-Group-1></a>
 ## Step 3: Analyzing the Data of Group 1  [⬆](#Table-of-Contents)
 
 Once you have loaded the data for both groups, you can begin analyzing the data for the first group by clicking on "Analyze Group 1" (Figure 5a). 
@@ -230,7 +230,7 @@ For instance, within the settings menu (Figure 9e), you can disable the size eff
 
 Finally, when you right-click in the `Group-averaged MEASURES` panel, you will find other options to explore, such as `Plot Selected Measures` (which generates a line plot for the selected measure at different thresholds and/or different nodes) and `Data Selected Measure` (providing the calculated values of the selected measures). These options can also be saved for further analyses outside BRAPH 2.
 
-<a id=Step--Analyzing-the-Data-of-Group-></a>
+<a id=Step-4-Analyzing-the-Data-of-Group-2></a>
 ## Step 4: Analyzing the Data of Group 2  [⬆](#Table-of-Contents)
 
 After completing the analysis of the first group, you can analyze the second group by simply clicking on `Analyze Group 2` (Figure 10a). You will notice that in the new GUI (Figure 10b-d), the parameters you previously selected for the first group are already preselected and fixed for this analysis. 
@@ -246,7 +246,7 @@ After completing the analysis of the first group, you can analyze the second gro
 If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a `D` (Figure 10e) near the analysis of the first group.
  
 
-<a id=Step--Comparing-Groups></a>
+<a id=Step-5-Comparing-Groups></a>
 ## Step 5: Comparing Groups  [⬆](#Table-of-Contents)
 
 After exploring the network measures for each group, you can proceed to their statistical comparison by clicking on `Compare Groups` (Figure 11a).

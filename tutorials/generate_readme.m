@@ -50,7 +50,7 @@ for i = 1:1:length(sections)
         level = 1;
     end
 
-    toc = [toc newline() repmat('>', 1, level) ' [' section_title '](#' regexprep(regexprep(section_title, '[^a-zA-Z\s]', ''), ' ', '-') ')' newline() repmat('>', 1, level)]; %#ok<AGROW> 
+    toc = [toc newline() repmat('>', 1, level) ' [' section_title '](#' regexprep(regexprep(section_title, '[^a-zA-Z0-9\s]', ''), ' ', '-') ')' newline() repmat('>', 1, level)]; %#ok<AGROW> 
 end
 document = regexprep(document, '\\tableofcontents', toc);
 
@@ -63,7 +63,7 @@ document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['<a id="$1"></a>' 
 a_start = regexp(document, '<a id="', 'end', 'all');
 a_end = regexp(document, '"></a>', 'start', 'all');
 for i = length(a_start):-1:1
-    section_title = regexprep(document(a_start(i):a_end(i)), '[^a-zA-Z\s]', '');
+    section_title = regexprep(document(a_start(i):a_end(i)), '[^a-zA-Z0-9\s]', '');
     document = [document(1:a_start(i) - 1) strrep(section_title, ' ', '-') document(a_end(i) + 1:end)];
 end
 
