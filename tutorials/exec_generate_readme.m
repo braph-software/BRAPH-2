@@ -23,4 +23,4 @@ generate_readme(['pipelines' filesep 'tut_a_mp_con_fun_wu' filesep 'tut_a_mp_con
 
 generate_readme(['developers' filesep 'dev_pipeline' filesep 'dev_pipeline.tex'])
 generate_readme(['developers' filesep 'dev_script' filesep 'dev_script.tex'])
-% generate_readme(['developers' filesep 'dev_intro' filesep 'dev_intro.tex'])
+generate_readme(['developers' filesep 'dev_intro' filesep 'dev_intro.tex'])
