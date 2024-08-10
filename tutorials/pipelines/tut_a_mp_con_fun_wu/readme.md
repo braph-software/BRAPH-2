@@ -1,6 +1,6 @@
-# Pipeline for Comparison of Connectivity-Functional Multiplex Data using Weighted Undirected graphs
+# Pipeline for Comparison of Connectivity-Functional Multiplex Data using Weighted Undirected Graphs
 
-[![Tutorial Pipeline for Comparison of Connectivity-Functional Multiplex Data using Weighted Undirected graphs](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_a_mp_con_fun_wu.pdf)
+[![Tutorial Pipeline for Comparison of Connectivity-Functional Multiplex Data using Weighted Undirected Graphs](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](tut_a_mp_con_fun_wu.pdf)
 
 This tutorial shows how to perform a network analysis using *connectivity-functional multiplex data* (see tutorial [Group of Subjects with Connectivity-Functional Multiplex Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con_fun_mp)), where both connectivity and functional data are available per subject, as in diffusion weighted imaging and activation signals for each brain region derived from functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects.  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
 
