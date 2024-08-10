@@ -810,10 +810,10 @@ You will now create your first element (Code 12), a simple calculator that conta
 > diff = ao.get('DIFF')
 > 
 > sum_raw = ao.getr('SUM')  ⑳
-> diff_raw = ao.getr('DIFF')  ¡!21!¡
+> diff_raw = ao.getr('DIFF')  ㉑
 > assert(isa(sum_raw, 'NoValue') && isa(diff_raw, 'NoValue'))
 > 
-> %%% ¡test!   ¡!22!¡
+> %%% ¡test!   ㉒
 > %%%% ¡name!
 > Simple test with memorization
 > %%%% ¡code!
@@ -841,7 +841,7 @@ You will now create your first element (Code 12), a simple calculator that conta
 > 
 > ⑧ The `¡props!` token permits to add additional props.
 > 
-> ⑨ and \circle{10} are two data props.
+> ⑨ and ⑩ are two data props.
 > 
 > ⑪ is a result prop.
 > 
@@ -857,9 +857,9 @@ You will now create your first element (Code 12), a simple calculator that conta
 > 
 > ⑱ and ⑲ Both props `A` and `B` are now locked, because the result prop `SUM` has been calculated. From now on their value cannot be changed.
 > 
-> ⑳ and ¡!21!¡ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
+> ⑳ and ㉑ Note that both the result props `SUM` and `DIFF` are `NoValue`, because they have not been memorized yet.
 > 
-> ¡!22!¡ alters the previous test to memorize the results.
+> ㉒ alters the previous test to memorize the results.
 > 
 
 <a id="Calculator-with-Seeded-Randomness"></a>

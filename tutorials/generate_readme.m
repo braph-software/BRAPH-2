@@ -156,6 +156,9 @@ end
 for i = 1:1:20
     document = regexprep(document, ['¡!' int2str(i) '!¡'], char(9311 + i));
 end
+for i = 21:1:50
+    document = regexprep(document, ['¡!' int2str(i) '!¡'], char(12860 + i));
+end
 
 % colorboxes
 cb_start = regexp(document, '\\begin{tcolorbox}', 'end', 'all');
