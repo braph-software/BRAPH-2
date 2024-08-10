@@ -49,7 +49,7 @@ During the compilation, there are several phases to improve the computational ef
 
 \end{enumerate}
 
-Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH~2. 
+Because of this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH~2. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:regenerate}.
 
@@ -57,10 +57,10 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 	label=cd:regenerate,
 	caption={
 		{\bf Regeneration of elements.}
-		The function \code{regenerate()} can be used to regenerate some elements, as long as they already exist in the current BRAPH~2 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH~2 with \code{braph2genesis}.
+		The function \code{regenerate()} can be used to regenerate some elements, as long as they already exist in the current BRAPH~2 compilation and their list of props has not been altered (e.g., renamed, moved, added), in which case it is necessary to recompile BRAPH~2 with \code{braph2genesis}.
 	}
 ]
->> close all; delete(findall(0, 'type', 'figure')); clear all ¥\circled{1}\circlednote{1}{clears the workspace (not always necessary, but needed is some element instances are still in the workspace).}¥
+>> close all; delete(findall(0, 'type', 'figure')); clear all ¥\circled{1}\circlednote{1}{clears the workspace (not always necessary, but needed if some element instances are still in the workspace).}¥
 
 >> regenerate('/src/gui', {'Pipeline'}) ¥\circled{2}\circlednote{2}{regenerates \code{Pipeline}.}¥
 
@@ -74,7 +74,7 @@ This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:
 
 >> regenerate('/src/gui', {'Pipeline'}, 'UnitTest', false) ¥\circled{7}\circlednote{7}{does not perform the unit test.}¥
 
->> regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ¥\circled{8}\circlednote{8}{Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.}¥
+>> regenerate('/src/gui', {'Pipeline'}, 'CreateLayout', false, 'UnitTest', false) ¥\circled{8}\circlednote{8}{Multiple options can be selected at once. In this case, it does not regenerate the layout and it does not perform the unit test.}¥
 
 >> regenerate('/src/gui', {'Pipeline', 'GUI'}) ¥\circled{9}\circlednote{9}{Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.}¥
 \end{lstlisting}

@@ -61,12 +61,12 @@ During the compilation, there are several phases to improve the computational ef
 
 
 
-Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2. 
+Because of this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH 2. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function `regenerate()`, as shown in Code 2.
 
 **Code 2.** **Regeneration of elements.**
-		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH 2 with `braph2genesis`.
+		The function `regenerate()` can be used to regenerate some elements, as long as they already exist in the current BRAPH 2 compilation and their list of props has not been altered (e.g., renamed, moved, added), in which case it is necessary to recompile BRAPH 2 with `braph2genesis`.
 ````matlab
 >> close all; delete(findall(0, 'type', 'figure')); clear all  ①
 
@@ -87,7 +87,7 @@ This can be done with the function `regenerate()`, as shown in Code 2.
 >> regenerate('/src/gui', {'Pipeline', 'GUI'})  ⑨
 ````
 
-① clears the workspace (not always necessary, but needed is some element instances are still in the workspace).
+① clears the workspace (not always necessary, but needed if some element instances are still in the workspace).
 
 ② regenerates `Pipeline`.
 
@@ -101,7 +101,7 @@ This can be done with the function `regenerate()`, as shown in Code 2.
 
 ⑦ does not perform the unit test.
 
-⑧ Multiple options can be selected at once. In this ces, it does not regenerate the layout and it does not perform the unit test.
+⑧ Multiple options can be selected at once. In this case, it does not regenerate the layout and it does not perform the unit test.
 
 ⑨ Multiple elements can be regenerated at once. This can throw an error, typically because an instance of the element to be regenerated remains in the workspace. In this case, regenerate the elements one by one.
 
