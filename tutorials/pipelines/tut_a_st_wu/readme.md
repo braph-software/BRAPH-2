@@ -199,7 +199,7 @@ Once you have explored the network measures for each group, you can proceed with
 > **a** Click on "Compare Groups" in the pipeline's GUI.
 > 	**b** In this new window, you can select what to turn ON/OFF the wait bar and verbose functions, you can change the number of permutations, and whether to perform a longitudinal group comparison. We set the number of permutations to 10 for this tutorial **c**. Finally, you can calculate the comparison of some graph measures between groups **d**.
  
-To obtain the results from the measure comparison, select the measures in the "GRAPH $&$ MEASURES" panel and press "Data Selected Comparisons"({Figure 11a}), and a new window will open ({Figure 11b}) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
+To obtain the results from the measure comparison, select the measures in the `GRAPH & MEASURES` panel and press `Data Selected Comparisons` (Figure 11a), and a new window will open (Figure 11b) where we can check the difference value between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
 
 
@@ -209,7 +209,7 @@ To obtain the results from the measure comparison, select the measures in the "G
 > **a** Click on "Data Selected Comparisons" in the Comparisons panel.
 > 	**b** In this new window, you can see the results from the comparison: the difference values between groups, the p-values (1-tailed and 2-tailed), as well as the confidence intervals.
 
-Finally, we can visualize the comparison results on a brain surface by selecting the measure comparisons we want and right click and press "Plot Selected Comparisons on Brain" ({Figure 12a}). A new window with comparison results on a brain surface will appear, where blue color indicates group 1 > group 2 and red color group 2 > group 1, and the size of the spheres is proportional to the absolute difference value between groups. If you press the Settings button ({Figure 12b}), then you will have available more options, for example to apply FDR correction to your plot ({Figure 12c}), which by default is set to off.
+Finally, we can visualize the comparison results on a brain surface by selecting the measure comparisons we want and right click and press `Plot Selected Comparisons on Brain` (Figure 12a). A new window with comparison results on a brain surface will appear, where blue color indicates group 1 > group 2 and red color group 2 > group 1, and the size of the spheres is proportional to the absolute difference value between groups. If you press the Settings button (Figure 12b), then you will have available more options, for example to apply FDR correction to your plot (Figure 12c), which by default is set to off.
 
 
 
