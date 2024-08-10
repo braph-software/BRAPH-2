@@ -214,7 +214,7 @@ Additional functions to operate with these features can be found by using the co
 > - **`LOGICAL`** Logical is a boolean value.
 >  
 > - **`OPTION`** Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
->                 Settings: cell array of chars representing the options, e.g., \code{\{'plus', 'minus', 'zero'\}}.
+>                 Settings: cell array of chars representing the options, e.g., `{'plus', 'minus', 'zero'}`.
 >  
 > - **`CLASS`** Class is a char array corresponding to an element class.
 > 

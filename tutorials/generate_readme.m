@@ -23,6 +23,10 @@ document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
 
+% parentesi graffe (1)
+document = regexprep(document, '\\{', '¡!parentesi graffa aperta!¡');
+document = regexprep(document, '\\}', '¡!parentesi graffa chiusa!¡');
+
 % basic reformatting
 document = regexprep(document, 'BRAPH~2', 'BRAPH 2');
 document = regexprep(document, '---', '-');  % ---
@@ -162,6 +166,10 @@ for i = length(cb_start):-1:1
         strrep([newline() '**' cb_title '**' newline() cb_content], newline(), [newline() '> ']) ...
         document(cb_end(i) + length('\end{tcolorbox}'):end)];
 end
+
+% parentesi graffe (1)
+document = regexprep(document, '¡!parentesi graffa aperta!¡', '{');
+document = regexprep(document, '¡!parentesi graffa chiusa!¡', '}');
 
 %% Generate README file
 readme = [
