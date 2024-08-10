@@ -118,6 +118,7 @@ for i = length(codes_start):-1:1
     for j = 1:1:length(code_notes)
         code_notes_txt = [code_notes_txt newline() '[' code_notes{j}{1} '] ' code_notes{j}{2} newline()]; %#ok<AGROW> 
     end
+    code_notes_txt = regexprep(code_notes_txt, '\\circled{(\d*)}', '[$1]');
 
     document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
         '**Code ' int2str(i) '.** ' code_caption newline() ...

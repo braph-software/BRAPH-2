@@ -184,7 +184,7 @@ ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); % [6]
 
 [1] uses 1000 permutations in the false-discovery-rate (FDR) test.
 
-[2] and \circled{3} define the two analyses to be compared.
+[2] and [3] define the two analyses to be compared.
 
 [4] shows a waitbar during the comparison.
 
