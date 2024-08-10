@@ -112,22 +112,25 @@ This can be done with the function `regenerate()`, as shown in Code 2.
 The base class for all elements is `Element`. 
 Each element is essentially a container for a series of *props* (properties). Each prop is characterized by the following static features (i.e., equal for all instances of the prop):
 
-	- A *sequential number* (integer starting from 1).
+
+- A *sequential number* (integer starting from 1).
 		
-	- A *tag* (a string).
+- A *tag* (a string).
 	
-	- A *category*, which determines for how a prop is used.\footnote{The possible categories and formats are shown in the boxes below.}
+- A *category*, which determines for how a prop is used.\footnote{The possible categories and formats are shown in the boxes below.}
 	
-	- A *format*, which determines what a prop can contain.
+- A *format*, which determines what a prop can contain.
+
 
 The functions to inspect these features can be found by using the command `help Element` in the MatLab command line.
 
 Furthermore, each instance of a prop has the following features:
 
-	- A *value*.\footnote{The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.}
+
+- A *value*.\footnote{The value is by defalut a `NoValue`. For `PARAMETER`, `DATA`, `FIGURE`, and `GUI` props, it can also be a callback. For `CONSTANT` props, it is usually a concrete value.}
 	The functions to set, get, and memorize a value will be discussed in the following sections.
 	
-	- A *seed* for the random number generator to ensure the reproducibility of the results. 
+- A *seed* for the random number generator to ensure the reproducibility of the results. 
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
@@ -135,8 +138,8 @@ Furthermore, each instance of a prop has the following features:
 	where `pointer` can be either a prop number or tag.
 	It cannot be changed.
  	
-	- A *checked* status, which is true by default.
-	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changes in the file "BRAPH2.m".}
+- A *checked* status, which is true by default.
+	Checked props are checked for format when they are set and for value when they are set/calculated.\footnote{When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changed in the file "BRAPH2.m".}
 	
 	The checked status of a prop can be altered with the functions:
 	`el.checked(pointer)`
@@ -145,7 +148,7 @@ Furthermore, each instance of a prop has the following features:
 	`checked = el.isChecked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-	- A *locked* status, which is false by default.\footnote{The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.}
+- A *locked* status, which is false by default.\footnote{The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.}
 	
 	A prop can be locked with the function:
 	`el.lock(pointer)`
@@ -154,7 +157,7 @@ Furthermore, each instance of a prop has the following features:
 	`locked = el.isLocked(pointer)`
 	where `pointer` can be either a prop number or tag.
 	
-	- A *callback* instance.\footnote{Callbacks are not used with `METADATA` props.}
+- A *callback* instance.\footnote{Callbacks are not used with `METADATA` props.}
 	
 	The callback to a prop can be obtained using the function:
 	`cb = el.getCallback(pointer)`
@@ -167,25 +170,25 @@ Additional functions to operate with these features can be found by using the co
 
 > **Property Categories**
 > \begin{description} 
->  	\item[`CONSTANT`] Static constant equal for all instances of the element. It allows incoming callbacks.
+>  \item[`CONSTANT`] Static constant equal for all instances of the element. It allows incoming callbacks.
 >  
->  	\item[`METADATA`] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
+>  \item[`METADATA`] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
 >  
->  	\item[`PARAMETER`] Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
+>  \item[`PARAMETER`] Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
 >  
->  	\item[`DATA`] Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
+>  \item[`DATA`] Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
 >  
->  	\item[`RESULT`] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
+>  \item[`RESULT`] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
 >  
->  	\item[`QUERY`] Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
+>  \item[`QUERY`] Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
 > It does not allow callbacks.
 >  
->  	\item[`EVANESCENT`] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
+>  \item[`EVANESCENT`] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
 > It does not allow callbacks.
 >  
->  	\item[`FIGURE`] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+>  \item[`FIGURE`] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 >                 
->  	\item[`GUI`] Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+>  \item[`GUI`] Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 > \end{description}
 \end{fullwidth}
 
@@ -193,64 +196,64 @@ Additional functions to operate with these features can be found by using the co
 
 > **Property Formats**
 > \begin{description} 
-> 	- [`EMPTY`] Empty has an empty value and is typically used as a result or query to execute some code. 
+> - [`EMPTY`] Empty has an empty value and is typically used as a result or query to execute some code. 
 >  
-> 	- [`STRING`] String is a char array.
+> - [`STRING`] String is a char array.
 >  
-> 	- [`STRINGLIST`] StringList is a cell array with char arrays.
+> - [`STRINGLIST`] StringList is a cell array with char arrays.
 >  
-> 	- [`LOGICAL`] Logical is a boolean value.
+> - [`LOGICAL`] Logical is a boolean value.
 >  
-> 	- [`OPTION`] Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
+> - [`OPTION`] Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
 >                 Settings: cell array of chars representing the options, e.g., \code{\{'plus', 'minus', 'zero'\}}.
 >  
-> 	- [`CLASS`] Class is a char array corresponding to an element class.
+> - [`CLASS`] Class is a char array corresponding to an element class.
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
-> 	- [`CLASSLIST`] ClassList is a cell array with char arrays corresponding to element classes.
+> - [`CLASSLIST`] ClassList is a cell array with char arrays corresponding to element classes.
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
-> 	- [`ITEM`] Item is a pointer to an element of a class defined in the element.\\ 
+> - [`ITEM`] Item is a pointer to an element of a class defined in the element.\\ 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
-> 	- [`ITEMLIST`] ItemList is a cell array with pointers to elements of a class defined in the element.
+> - [`ITEMLIST`] ItemList is a cell array with pointers to elements of a class defined in the element.
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
-> 	- [`IDICT`] Idict is an indexed dictionary of elements of a class defined in the element.
+> - [`IDICT`] Idict is an indexed dictionary of elements of a class defined in the element.
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
 >  
-> 	- [`SCALAR`] Scalar is a scalar numerical value.
+> - [`SCALAR`] Scalar is a scalar numerical value.
 >  
-> 	- [`RVECTOR`] RVector is a numerical row vector.
+> - [`RVECTOR`] RVector is a numerical row vector.
 >  
-> 	- [`CVECTOR`] CVector is a numerical column vector.
+> - [`CVECTOR`] CVector is a numerical column vector.
 >  
-> 	- [`MATRIX`] Matrix is a numerical matrix.
+> - [`MATRIX`] Matrix is a numerical matrix.
 >  
-> 	- [`SMATRIX`] SMatrix is a numerical square matrix.
+> - [`SMATRIX`] SMatrix is a numerical square matrix.
 >  
-> 	- [`CELL`] Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
+> - [`CELL`] Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
 >  
-> 	- [`NET`] Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
+> - [`NET`] Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
 >  
-> 	- [`HANDLE`] Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
+> - [`HANDLE`] Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
 >  
-> 	- [`HANDLELIST`] HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
+> - [`HANDLELIST`] HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
 >  
-> 	- [`COLOR`] Color is an RGB color, e.g., `'[1 0 0]'` for red.
+> - [`COLOR`] Color is an RGB color, e.g., `'[1 0 0]'` for red.
 >  
-> 	- [`ALPHA`] Alpha is a transparency level between 0 and 1.
+> - [`ALPHA`] Alpha is a transparency level between 0 and 1.
 >  
-> 	- [`SIZE`] Size represents the size of a graphical componet. It is a positive number (default = 1).
+> - [`SIZE`] Size represents the size of a graphical componet. It is a positive number (default = 1).
 >  
-> 	- [`MARKER`] Marker represents the marker style.
+> - [`MARKER`] Marker represents the marker style.
 >                 It can be `'o'`, `'+'`, `'*'`, `'.'`, 'x', `'_'`, `'|'`, `'s'`, `'d'`, `'\^'`, `'v'`, `'>'`, `'<'`, `'p'`, `'h'`, `''` (no marker).
 >  
-> 	- [`LINE`] Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line).
+> - [`LINE`] Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line).
 > \end{description}
 \end{fullwidth}
 
-Even though it is possible to create instances of `Element`, typically one uses its subclasses and does not have any props.
+Even though it is possible to create instances of `Element`, it does not have any props and typically one uses its subclasses.
 Its three direct subclasses are `NoValue`, `Callback`, and `ConcreteElement`, as shown in Figure 1.
 
 
@@ -311,6 +314,8 @@ el.set( ...  ③
 el = el.set('ID', 'new el id')  ④
 ````
 
+① and ② set the value of a prop with the prop tag or the prop number.
+
 ③ sets the values of multiple props at once. The pointers can be either property numbers or property tags.
 
 ④ returns the element.
@@ -318,42 +323,41 @@ el = el.set('ID', 'new el id')  ④
 
 When a prop is set to a certain value, the following operations are performed:
 
-	- The value is **conditioned** before being set (by calling the protected *static* function `conditioning()`, which can be defined in each subelement).
+
+1. The value is **conditioned** before being set (by calling the protected *static* function `conditioning()`, which can be defined in each subelement).
 	
 	This can be set with the token `¡conditioning!`.
 	
-	- The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement).\footnote{Differently from the *static* function `conditioning()`, the function `preset()` has access to the element instance.}
+1. The value is **preset** before being set (by calling the protected function `preset()`, which can be defined in each subelement).\footnote{Differently from the *static* function `conditioning()`, the function `preset()` has access to the element instance.}
 
 	This can be set with the token `¡preset!`.
 	
-	- If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
-	If the check fails, the property is not set and an error is thrown with error id
-	`BRAPH2:<Element Class>:WrongInput`.
+1. If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
+	If the check fails, the property is not set and an error is thrown with error id `BRAPH2:<Element Class>:WrongInput`.
 	
 	This can be set with the token `¡checkProp!`.
 
-	- The value is **set**.
+1. The value is **set**.
 
 		If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
 		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
-		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id
-		`BRAPH2:<Element Class>`.
+		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id `BRAPH2:<Element Class>`.
  
-		If the property is of category RESULT, QUERY or EVANESCENT, the value can only be set to `Element.getNoValue()`.
+		If the property is of category `RESULT`, `QUERY` or `EVANESCENT`, the value can only be set to `Element.getNoValue()`.
 
-	- The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
+1. The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
 	
 	This can be set with the token `¡postset!`.
 
-	- **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
+1. **All props** are **postprocessed** after being set (by calling the protected function `postprocessing()`, which is defined in each subelement).
 	
 	This can be set with the token `¡postprocessing!`.
 
-	- If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
-	If the check fails an error is thrown with error id
-	`BRAPH2:<Element Class>:WrongInput`.
+1. If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
+	If the check fails an error is thrown with error id `BRAPH2:<Element Class>:WrongInput`.
 	
-	- When a prop is successfully set, an **event** `PropSet()` is **notified**.
+1. When a prop is successfully set, an **event** `PropSet()` is **notified**.
+
  
 
 <a id="Getting-Props"></a>
