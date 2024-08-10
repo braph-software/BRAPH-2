@@ -154,7 +154,7 @@ In the `THRESHOLDS` section, you can define the thresholds by entering values li
 <a id=Setting-Graph-Parameters></a>
 ### Setting Graph Parameters  [⬆](#Table-of-Contents)
 
-To configure the graph parameters, you click on the section `GRAPH \& MEASURE PARAMETERS` (Figure 7). This will open a new interface for graph template settings. 
+To configure the graph parameters, you click on the section `GRAPH & MEASURE PARAMETERS` (Figure 7). This will open a new interface for graph template settings. 
 In brain connectivity analysis, threshold values dictate the required connection strength between different brain regions for them to be considered “connected” in a binary undirected graph. 
 Adjusting these thresholds allows you to explore varying levels of brain connectivity, providing insights into how regions communicate at different threshold settings.
 
