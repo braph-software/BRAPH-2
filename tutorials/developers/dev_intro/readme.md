@@ -353,13 +353,13 @@ When a prop is set to a certain value, the following operations are performed:
 
 1. The value is **set**.
 
-		If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
+	If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
 
-		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
+	If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
 
-		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id `BRAPH2:<Element Class>`.
+	If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id `BRAPH2:<Element Class>`.
  
-		If the property is of category `RESULT`, `QUERY` or `EVANESCENT`, the value can only be set to `Element.getNoValue()`.
+	If the property is of category `RESULT`, `QUERY` or `EVANESCENT`, the value can only be set to `Element.getNoValue()`.
 
 1. The value is **postset** after being set (by calling the protected function `postset()`, which is defined in each subelement).
 	

@@ -324,11 +324,11 @@ When a prop is set to a certain value, the following operations are performed:
 
 \item{} The value is {\bf set}.
 
-		If the property is of category \code{PARAMETER}, \code{DATA}, \code{FIGURE}, or \code{GUI}, the value is set only if the property is unlocked.\\
-		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id \code{BRAPH2:<Element Class>}.\\
-		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id \code{BRAPH2:<Element Class>}.
+	If the property is of category \code{PARAMETER}, \code{DATA}, \code{FIGURE}, or \code{GUI}, the value is set only if the property is unlocked.\\
+	If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id \code{BRAPH2:<Element Class>}.\\
+	If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id \code{BRAPH2:<Element Class>}.
  
-		If the property is of category \code{RESULT}, \code{QUERY} or \code{EVANESCENT}, the value can only be set to \code{Element.getNoValue()}.
+	If the property is of category \code{RESULT}, \code{QUERY} or \code{EVANESCENT}, the value can only be set to \code{Element.getNoValue()}.
 
 \item{} The value is {\bf postset} after being set (by calling the protected function \code{postset()}, which is defined in each subelement).
 	
