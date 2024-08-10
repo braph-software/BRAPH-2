@@ -35,13 +35,13 @@ If you do not have the "Example data FUN XLS" folder inside "functional", then y
 **Code 1.** **Code to generate the example data folder.**
 		This code can be used in the MatLab command line to generate the "Example data FUN XLS" folder to the "functional" pipeline folder.
 ````matlab
-create_data_FUN_XLS()  % [1]
-create_data_FUN_TXT()  % [2]
+create_data_FUN_XLS()  ①
+create_data_FUN_TXT()  ②
 ````
 
-[1] generates the example functional XLS data folder.
+① generates the example functional XLS data folder.
 
-[2] generates the example functional TXT data folder.
+② generates the example functional TXT data folder.
 
 
 <a id="Open-the-GUI"></a>

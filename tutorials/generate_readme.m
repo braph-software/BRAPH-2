@@ -113,12 +113,12 @@ for i = length(codes_start):-1:1
     code_code = strtrim(regexprep(code{1}{3}, '\t', '    '));
 
     code_notes = regexp(code_code, '¥\\circled{\d*}\\circlednote{(\d*)}{([^¥]*)}¥', 'tokens', 'all');
-    code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' % [$1]');
+    code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' ¡!$1!¡');
     code_notes_txt = '';
     for j = 1:1:length(code_notes)
-        code_notes_txt = [code_notes_txt newline() '[' code_notes{j}{1} '] ' code_notes{j}{2} newline()]; %#ok<AGROW> 
+        code_notes_txt = [code_notes_txt newline() '¡!' code_notes{j}{1} '!¡ ' code_notes{j}{2} newline()]; %#ok<AGROW> 
     end
-    code_notes_txt = regexprep(code_notes_txt, '\\circled{(\d*)}', '[$1]');
+    code_notes_txt = regexprep(code_notes_txt, '\\circled{(\d*)}', '¡!$1!¡');
 
     document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
         '**Code ' int2str(i) '.** ' code_caption newline() ...
@@ -129,6 +129,10 @@ end
 for i = 1:1:length(code_labels)
     document = regexprep(document, ['\\Coderef{' code_labels{i} '}'], ['Code ' int2str(i)]);
     document = regexprep(document, ['\\Codesref{' code_labels{i} '}'], ['Codes ' int2str(i)]);    
+end
+
+for i = 1:1:20
+    document = regexprep(document, ['¡!' int2str(i) '!¡'], char(9311 + i));
 end
 
 % colorboxes

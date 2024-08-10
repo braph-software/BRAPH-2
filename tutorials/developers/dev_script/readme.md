@@ -29,17 +29,17 @@ The header section of the script in "example_ST_MP_WU.m" is shown in Code 1.
 **Code 1.** **Script header.**
 		The header section of the pipeline names and describes the script.
 ````matlab
-% EXAMPLE_ST_MP_WU  % [1]
-% Script example pipeline ST MP WU  % [2]
+% EXAMPLE_ST_MP_WU  ①
+% Script example pipeline ST MP WU  ②
 
-clear variables %#ok<*NASGU>  % [3]
+clear variables %#ok<*NASGU>  ③
 ````
 
-[1] defines the name of the script.
+① defines the name of the script.
 
-[2] provides a brief description of the script.
+② provides a brief description of the script.
 
-[3] clears the workspace.
+③ clears the workspace.
 
 
 <a id="Atlas-Loading"></a>
@@ -52,16 +52,16 @@ The script starts by importing the brain atlas. For this, it uses the element `I
 ````matlab
 %% Load BrainAtlas
 im_ba = ImporterBrainAtlasXLS( ...
-    'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...  % [1]
-    'WAITBAR', true ...  % [2]
+    'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...  ①
+    'WAITBAR', true ...  ②
     );
 
 ba = im_ba.get('BA');
 ````
 
-[1] loads the brain atlas from the file "atlas.xlsx".
+① loads the brain atlas from the file "atlas.xlsx".
 
-[2] shows a waitbar during the loading process.
+② shows a waitbar during the loading process.
 
 
 <a id="Data-Loading"></a>
@@ -74,15 +74,15 @@ The next step is to load the data of the two groups from the folders where the r
 ````matlab
 %% Load Groups of SubjectST_MP
 im_gr1 = ImporterGroupSubjectST_MP_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...  % [1]
-    'BA', ba, ...  % [1]
-    'WAITBAR', true ...  % [3]
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...  ①
+    'BA', ba, ...  ①
+    'WAITBAR', true ...  ③
     );
 
 gr1 = im_gr1.get('GR');
 
 im_gr2 = ImporterGroupSubjectST_MP_XLS( ...
-    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_2_XLS'], ...  % [4]
+    'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_2_XLS'], ...  ④
     'BA', ba, ...
     'WAITBAR', true ...
     );
@@ -90,13 +90,13 @@ im_gr2 = ImporterGroupSubjectST_MP_XLS( ...
 gr2 = im_gr2.get('GR');
 ````
 
-[1] imports the first group of subjects with structural data and their (optional) covariates from the files contained in the folder.
+① imports the first group of subjects with structural data and their (optional) covariates from the files contained in the folder.
 
-[1] uses the previously loaded brain atlas.
+① uses the previously loaded brain atlas.
 
-[3] shows a waitbar during the loading process.
+③ shows a waitbar during the loading process.
 
-[4] imports the first group of subjects.
+④ imports the first group of subjects.
 
 
 <a id="Group-Analysis"></a>
@@ -109,23 +109,23 @@ The next step is to perform the group data analysis using the element ``, as sho
 ````matlab
 %% Analysis ST MP WU
 a_WU1 = AnalyzeGroup_ST_MP_WU( ...
-    'GR', gr1, ...  % [1]
-    'CORRELATION_RULE', Correlation.PEARSON ...  % [2]
+    'GR', gr1, ...  ①
+    'CORRELATION_RULE', Correlation.PEARSON ...  ②
     );
 
 a_WU2 = AnalyzeGroup_ST_MP_WU( ...
-    'TEMPLATE', a_WU1, ...  % [3]
-    'GR', gr2 ...  % [4]
+    'TEMPLATE', a_WU1, ...  ③
+    'GR', gr2 ...  ④
     );
 ````
 
-[1] uses the previously defined group `gr1` for the first analysis.
+① uses the previously defined group `gr1` for the first analysis.
 
-[2] defines the correlation rule to be used.
+② defines the correlation rule to be used.
 
-[3] uses the same parameters as in the analysis `a_WU1`.
+③ uses the same parameters as in the analysis `a_WU1`.
 
-[4] uses the previously defined group `gr2` for the second analysis.
+④ uses the previously defined group `gr2` for the second analysis.
 
 
 <a id="Measure-Calculation"></a>
@@ -137,22 +137,22 @@ You can now calculate graph measures with the analyses defined in the previous s
 		The measure calculation section calculates the measures for each group independently.
 ````matlab
 % measure calculation
-g_WU1 = a_WU1.memorize('G');  % [1]
-ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');  % [2]
-ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');  % [3]
+g_WU1 = a_WU1.memorize('G');  ①
+ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');  ②
+ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');  ③
 
-g_WU2 = a_WU2.get('G');  % [4]
+g_WU2 = a_WU2.get('G');  ④
 ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');
 ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');
 ````
 
-[1] memorizes the graphs to ensure consistency if there are measures with non-default rules.
+① memorizes the graphs to ensure consistency if there are measures with non-default rules.
 
-[2] calculates the *overlapping strength* measure for the analysis `a_WU1`.
+② calculates the *overlapping strength* measure for the analysis `a_WU1`.
 
-[3] calculates the *overlapping strength average* measure for the analysis `a_WU1`.
+③ calculates the *overlapping strength average* measure for the analysis `a_WU1`.
 
-[4] calcualtes the same measures for the analysis `a_WU2`.
+④ calcualtes the same measures for the analysis `a_WU2`.
 
 
 <a id="Group-Comparison"></a>
@@ -167,29 +167,29 @@ Specifically, it contains the one-tailed and two-tailed p-values and the 95\% co
 ````matlab
 % comparison
 c_WU = CompareGroup( ...
-    'P', 1000, ...  % [1]
-    'A1', a_WU1, ...  % [2]
-    'A2', a_WU2, ...  % [3]
-    'WAITBAR', true, ...  % [4]
-    'VERBOSE', false, ...  % [5]
-    'MEMORIZE', true ...  % [6]
+    'P', 1000, ...  ①
+    'A1', a_WU1, ...  ②
+    'A2', a_WU2, ...  ③
+    'WAITBAR', true, ...  ④
+    'VERBOSE', false, ...  ⑤
+    'MEMORIZE', true ...  ⑥
     );
 
-ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF');  % [7]
-ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1');  % [8]
-ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2');  % [9]
-ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL');  % [10]
-ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU');  % [11]
+ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF');  ⑦
+ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1');  ⑧
+ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2');  ⑨
+ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL');  ⑩
+ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU');  ⑪
 ````
 
-[1] uses 1000 permutations in the false-discovery-rate (FDR) test.
+① uses 1000 permutations in the false-discovery-rate (FDR) test.
 
-[2] and [3] define the two analyses to be compared.
+② and ③ define the two analyses to be compared.
 
-[4] shows a waitbar during the comparison.
+④ shows a waitbar during the comparison.
 
-[5] does not print updates during the comparison.
+⑤ does not print updates during the comparison.
 
-[6] memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
+⑥ memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
 
-[7] - [11] calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).
+⑦ - ⑪ calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).

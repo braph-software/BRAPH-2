@@ -35,13 +35,13 @@ If you do not have the "Example data ST XLS" folder inside "structural", then yo
 **Code 1.** **Code to generate the example data folder.**
 		This code can be used in the MatLab command line to generate the "Example data ST XLS" folder to the "structural" pipeline folder.
 ````matlab
-create_data_ST_XLS()  % [1]
-create_data_ST_TXT()  % [2]
+create_data_ST_XLS()  ①
+create_data_ST_TXT()  ②
 ````
 
-[1] generates the example structural XLS data folder.
+① generates the example structural XLS data folder.
 
-[2] generates the example structural TXT data folder.
+② generates the example structural TXT data folder.
 
 
 <a id="Open-the-GUI"></a>
