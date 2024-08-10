@@ -2,7 +2,7 @@
 
 [![Tutorial Adapt an Example Script](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_script.pdf)
 
-This is the developer tutorial for adapting a script to calculate different graph measures. In this tutorial, you will learn how to edit an example script to calculate different graph measures. Here, you will use the scrip in file "example\_ST\_MP\_WU.m" as an example to learn how to edit this script to calculate different graph measures for structural data using a multiplex weighted undirected graph.
+This is the developer tutorial for adapting a script to calculate different graph measures. In this tutorial, you will learn how to edit an example script to calculate different graph measures. Here, you will use the scrip in file "example_ST_MP_WU.m" as an example to learn how to edit this script to calculate different graph measures for structural data using a multiplex weighted undirected graph.
 
 
 ## Table of Contents
@@ -24,7 +24,7 @@ This is the developer tutorial for adapting a script to calculate different grap
 <a id="Header"></a>
 ## Header  [⬆](#Table-of-Contents)
 
-The header section of the script in "example\_ST\_MP\_WU.m" is shown in Code 1.
+The header section of the script in "example_ST_MP_WU.m" is shown in Code 1.
 
 **Code 1.** **Script header.**
 		The header section of the pipeline names and describes the script.
@@ -67,7 +67,7 @@ ba = im_ba.get('BA');
 <a id="Data-Loading"></a>
 ## Data Loading  [⬆](#Table-of-Contents)
 
-The next step is to load the data of the two groups from the folders where the relative "*.xlsx" files are stored. It uses the element `ImporterGroupSubjectST\_MP\_XLS` to load the `SubjectST\_MP` subjects, as shown in Code 3.
+The next step is to load the data of the two groups from the folders where the relative "*.xlsx" files are stored. It uses the element `ImporterGroupSubjectST_MP_XLS` to load the `SubjectST_MP` subjects, as shown in Code 3.
 
 **Code 3.** **Load groups of subjects.**
 		The group data importer section provides the code for loading the data corresponding to the groups of subjects.
@@ -123,7 +123,7 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 
 [2] defines the correlation rule to be used.
 
-[3] uses the same parameters as in the analysis `a\_WU1`.
+[3] uses the same parameters as in the analysis `a_WU1`.
 
 [4] uses the previously defined group `gr2` for the second analysis.
 

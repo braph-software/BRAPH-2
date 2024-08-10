@@ -3,7 +3,7 @@
 [![Tutorial Adapt a Pipeline Script](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_pipeline.pdf)
 
 This is the developer tutorial for adapting a pipeline script. 
-In this tutorial, you will learn how to edit a "*.braph2" file to change the steps of a pipeline. Here, you will use as an example the pipeline `Pipeline Structural Multiplex Comparison BUD` in the file "pipeline\_structural\_multiplex\_comparison\_bud.braph2" (the pipeline for comparing two groups of subjects using structural multiplex data and binary undirected graphs at fixed densities) and adapt it in order to add a third group for structural multiplex.
+In this tutorial, you will learn how to edit a "*.braph2" file to change the steps of a pipeline. Here, you will use as an example the pipeline `Pipeline Structural Multiplex Comparison BUD` in the file "pipeline_structural_multiplex_comparison_bud.braph2" (the pipeline for comparing two groups of subjects using structural multiplex data and binary undirected graphs at fixed densities) and adapt it in order to add a third group for structural multiplex.
 
 
 ## Table of Contents
@@ -15,7 +15,7 @@ In this tutorial, you will learn how to edit a "*.braph2" file to change the ste
 <a id="Adaption-of-the-pipeline"></a>
 ## Adaption of the pipeline  [⬆](#Table-of-Contents)
 
-You will adapt in `Pipeline Structural Multiplex Comparison BUD` in the file "pipeline\_structural\_multiplex\_comparison\_bud.braph2" as shown in Code 1. The changes are highlighted in the comments.
+You will adapt in `Pipeline Structural Multiplex Comparison BUD` in the file "pipeline_structural_multiplex_comparison_bud.braph2" as shown in Code 1. The changes are highlighted in the comments.
 
 **Code 1.** Adapted pipeline to compare three groups of subjects using structural multiplex data and binary undirected graphs at fixed densities.
 ````matlab

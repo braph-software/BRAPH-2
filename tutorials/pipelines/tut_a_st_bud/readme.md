@@ -40,7 +40,7 @@ In this tutorial, you will upload a file containing the pipeline with the differ
 You can generate the example data by typing in the command line the instruction in Code 1.
 
 **Code 1.** **Command to generate example data.**
-		Command to generate the example data for structural analyses. They will be placed in the folder "./braph2/pipelines/structural/Example data ST XLS", and include the brain atlas "atlas.xlsx", two folders with the subject files "ST\_Group\_1\_XLS" and "ST\_Group\_2\_XLS", and the associated covariates files "ST\_Group\_1\_XLS.vois.xlsx" and "ST\_Group\_2\_XLS.vois.xlsx". The details about the format of these files can be found in the tutorials [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba) and [Group of Subjects with Structural Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_st).
+		Command to generate the example data for structural analyses. They will be placed in the folder "./braph2/pipelines/structural/Example data ST XLS", and include the brain atlas "atlas.xlsx", two folders with the subject files "ST_Group_1_XLS" and "ST_Group_2_XLS", and the associated covariates files "ST_Group_1_XLS.vois.xlsx" and "ST_Group_2_XLS.vois.xlsx". The details about the format of these files can be found in the tutorials [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba) and [Group of Subjects with Structural Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_st).
 ````matlab
 create_data_ST_XLS()
 ````

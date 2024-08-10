@@ -31,10 +31,10 @@ This Tutorial explains how to prepare and work with this kind of data.
 <a id="Generation-of-Example-Data"></a>
 ## Generation of Example Data  [⬆](#Table-of-Contents)
 
-If you do not have the "Example data CON\_MP XLS" folder inside "connectivity multiplex", then you can generate it by running the commands in Code 1.
+If you do not have the "Example data CON_MP XLS" folder inside "connectivity multiplex", then you can generate it by running the commands in Code 1.
 
 **Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data CON\_MP XLS" folder to the "connectivity multiplex" pipeline folder.
+		This code can be used in the MatLab command line to generate the "Example data CON_MP XLS" folder to the "connectivity multiplex" pipeline folder.
 ````matlab
 create_data_CON_MP_XLS()  % [1]
 create_data_CON_MP_TXT()  % [2]
