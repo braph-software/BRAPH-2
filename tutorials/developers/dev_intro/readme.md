@@ -994,9 +994,9 @@ You can now learn how to use query props by expanding the `ArithmeticOperations`
 > 
 > ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
 > 
-> ③ and ④ returns the sum or the difference depening on the argument.
+> ③ and ④ return the sum or the difference depening on the argument.
 > 
-> ⑤ and ⑥ retunrs `NaN` when the input is absent or unexpected.
+> ⑤ and ⑥ return `NaN` when the input is absent or unexpected.
 > 
 
 <a id="Evanescent-Gui-Figure"></a>
@@ -1130,7 +1130,4 @@ You can now learn how to use evanescent props and graphical handles (Code 15).
 > ⑮ memorizes the prop `BUTTON`, which in turn memorizes the props `PANEL` and `FIG`.
 > 
 > ⑯ closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>

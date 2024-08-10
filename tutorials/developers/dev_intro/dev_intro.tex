@@ -908,9 +908,9 @@ Simple test
 %%%% ¡code!
 ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
 
-assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ¥\circled{3}\circlednote{3}{and \circled{4} returns the sum or the difference depening on the argument.}¥
+assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ¥\circled{3}\circlednote{3}{and \circled{4} return the sum or the difference depening on the argument.}¥
 assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF')) ¥\circled{4}¥
-assert(isnan(ao.get('SUM_OR_DIFF'))) ¥\circled{5}\circlednote{5}{and \circled{6} retunrs \code{NaN} when the input is absent or unexpected.}¥
+assert(isnan(ao.get('SUM_OR_DIFF'))) ¥\circled{5}\circlednote{5}{and \circled{6} return \code{NaN} when the input is absent or unexpected.}¥
 assert(isnan(ao.get('SUM_OR_DIFF', 'anything else'))) ¥\circled{6}¥
 \end{lstlisting}
 
@@ -1023,8 +1023,5 @@ ef.memorize('BUTTONS') ¥\circled{15}\circlednote{15}{memorizes the prop \code{B
 
 close(ef.get('FIG')) ¥\circled{16}\circlednote{16}{closes the figure created in this test to ensure that no figures are left over at the end of the unit testing.}¥
 \end{lstlisting}
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
 
 \end{document}
