@@ -175,11 +175,11 @@ c_WU = CompareGroup( ...
     'MEMORIZE', true ...  % [6]
     );
 
-ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF'); % [2]
-ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1'); % [3]
-ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2'); % [4]
-ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL'); % [5]
-ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); % [6]
+ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF');  % [7]
+ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1');  % [8]
+ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2');  % [9]
+ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL');  % [10]
+ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU');  % [11]
 ````
 
 [1] uses 1000 permutations in the false-discovery-rate (FDR) test.
@@ -190,14 +190,6 @@ ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); % [6]
 
 [5] does not print updates during the comparison.
 
-[5] memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
+[6] memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
 
-[2] "DIFF" calculates the difference of group comparison.
-
-[3] "P1"  calculates the one-tailed p-value.
-
-[4] "P1" calculates the two-tailed p-value.
-
-[5] "CIL" calculates the lower value of the 95\% confidence interval.
-
-[6] "CIU" calculates the upper value of the 95\% confidence interval.
+[7] -[11] calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).

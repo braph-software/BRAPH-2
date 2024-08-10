@@ -149,14 +149,14 @@ c_WU = CompareGroup( ...
     'A2', a_WU2, ... ¥\circled{3}¥
     'WAITBAR', true, ... ¥\circled{4}\circlednote{4}{shows a waitbar during the comparison.}¥
     'VERBOSE', false, ... ¥\circled{5}\circlednote{5}{does not print updates during the comparison.}¥
-    'MEMORIZE', true ... ¥\circled{6}\circlednote{5}{memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.}¥
+    'MEMORIZE', true ... ¥\circled{6}\circlednote{6}{memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.}¥
     );
 
-ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF');¥\circled{2}\circlednote{2}{\fn{DIFF} calculates the difference of group comparison.}¥
-ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1');¥\circled{3}\circlednote{3}{\fn{P1}  calculates the one-tailed p-value.}¥
-ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2');¥\circled{4}\circlednote{4}{\fn{P1} calculates the two-tailed p-value.}¥
-ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL');¥\circled{5}\circlednote{5}{\fn{CIL} calculates the lower value of the 95\% confidence interval.}¥
-ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU');¥\circled{6}\circlednote{6}{\fn{CIU} calculates the upper value of the 95\% confidence interval.}¥
+ovstrength_WU_diff = c_WU.get('COMPARISON', 'OverlappingS').get('DIFF'); ¥\circled{7}\circlednote{7}{-\circled{11} calculate the difference of group comparison (\code{'DIFF'}), the one-tailed p-value (\code{'P1'}), the two-tailed p-value (\code{'P2'}), the lower value of the 95\% confidence interval (\code{'CIL'}), and the upper value of the 95\% confidence interval (\code{'CIU'}) for the overlapping strength measure (\code{'OverlappingS'}).}¥
+ovstrength_WU_p1 = c_WU.get('COMPARISON', 'OverlappingS').get('P1'); ¥\circled{8}¥
+ovstrength_WU_p2 = c_WU.get('COMPARISON', 'OverlappingS').get('P2'); ¥\circled{9}¥
+ovstrength_WU_cil = c_WU.get('COMPARISON', 'OverlappingS').get('CIL'); ¥\circled{10}¥
+ovstrength_WU_ciu = c_WU.get('COMPARISON', 'OverlappingS').get('CIU'); ¥\circled{11}¥
 \end{lstlisting}
 
 \end{document}
