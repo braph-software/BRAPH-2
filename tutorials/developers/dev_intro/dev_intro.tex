@@ -793,13 +793,13 @@ assert(~isa(sum_raw, 'NoValue') && ~isa(diff_raw, 'NoValue'))
 
 \subsection{Calculator with Seeded Randomness}
 
-We can now create an element that demonstrate how the seeded randomness works (\Coderef{cd:sr}).
+You can now create an element that demonstrate how the seeded randomness works (\Coderef{cd:sr}).
 
 \begin{lstlisting}[
 	label=cd:sr,
 	caption={
 		{\bf Arithmetic Operation Calculator.}
-		This is a simple element direclty deriving from \code{ConcreteElement}.
+		This is a simple element directly deriving from \code{ConcreteElement}.
 	}
 ]
 %% ¡header!
@@ -807,6 +807,9 @@ SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 
 %%% ¡description!
 ¤...¤ ¥\circled{1}\circlednote{1}{Here, a detailed description should be provided.}¥
+
+%%% ¡build!
+1
 
 
 %% ¡props_update!
@@ -835,14 +838,14 @@ Simple test
 sr1 = SeededRandomness()
 sr2 = SeededRandomness()
 
-assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER')) ¥\circled{3}\twocirclednotes{3}{4}{check that subsequent calls to the calculation of the random number return the same value.}¥
+assert(sr1.get('RANDOM_NUMBER') == sr1.get('RANDOM_NUMBER')) ¥\circled{3}\circlednote{3}{and \circled{4} check that subsequent calls to the calculation of the random number return the same value.}¥
 assert(sr2.get('RANDOM_NUMBER') == sr2.get('RANDOM_NUMBER')) ¥\circled{5}¥
 assert(sr1.get('RANDOM_NUMBER') ~= sr2.get('RANDOM_NUMBER')) ¥\circled{6}\circlednote{6}{checks that calls to the calculation of the random number of differen randomizers return different values.}¥
 \end{lstlisting}
 
 \subsection{Query}
 
-We can now demonstrate the use of query props by expanding the \code{ArithmeticOperations} (\Coderef{cd:ao2}).
+You can now learn how to use query props by expanding the \code{ArithmeticOperations} (\Coderef{cd:ao2}).
 
 \begin{lstlisting}[
 	label=cd:ao2,
@@ -856,6 +859,9 @@ ArithmeticOperationsWithQuery < ArithmeticOperations (ao, calculator with query)
 
 %%% ¡description!
 ¤...¤
+
+%%% ¡build!
+1
 
 
 %% ¡props_update!
@@ -902,15 +908,15 @@ Simple test
 %%%% ¡code!
 ao = ArithmeticOperationsWithQuery('A', 6, 'B', 4)
 
-assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ¥\circled{3}\twocirclednotes{3}{4}{returns the sum or the difference depening on the argument.}¥
+assert(ao.get('SUM_OR_DIFF', 'SUM') == ao.get('SUM')) ¥\circled{3}\circlednote{3}{and \circled{4} returns the sum or the difference depening on the argument.}¥
 assert(ao.get('SUM_OR_DIFF', 'DIFF') == ao.get('DIFF')) ¥\circled{4}¥
-assert(isnan(ao.get('SUM_OR_DIFF'))) ¥\circled{5}\twocirclednotes{5}{6}{retunrs \code{NaN} when the input is absent or unexpected.}¥
+assert(isnan(ao.get('SUM_OR_DIFF'))) ¥\circled{5}\circlednote{5}{and \circled{6} retunrs \code{NaN} when the input is absent or unexpected.}¥
 assert(isnan(ao.get('SUM_OR_DIFF', 'anything else'))) ¥\circled{6}¥
 \end{lstlisting}
 
 \subsection{Evanescent, Gui, Figure}
 
-We can now demonstrate the use of evanescent props and graphical handles (\Coderef{cd:f}).
+You can now learn how to use evanescent props and graphical handles (\Coderef{cd:f}).
 
 \begin{lstlisting}[
 	label=cd:f,
@@ -924,6 +930,9 @@ ElementWithFigure < ConcreteElement (ef, element with figure) is an element with
 
 %%% ¡description!
 ¤...¤
+
+%%% ¡build!
+1
 
 
 %% ¡props_update!

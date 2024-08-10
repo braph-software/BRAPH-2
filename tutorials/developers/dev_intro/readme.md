@@ -865,17 +865,20 @@ You will now create your first element (Code 12), a simple calculator that conta
 <a id="Calculator-with-Seeded-Randomness"></a>
 ### Calculator with Seeded Randomness  [⬆](#Table-of-Contents)
 
-We can now create an element that demonstrate how the seeded randomness works (Code 13).
+You can now create an element that demonstrate how the seeded randomness works (Code 13).
 
 
 > **Code 13.** **Arithmetic Operation Calculator.**
-> 		This is a simple element direclty deriving from `ConcreteElement`.
+> 		This is a simple element directly deriving from `ConcreteElement`.
 > ````matlab
 > %% ¡header!
 > SeededRandomness < ConcreteElement (sr, randomizer) generates a random number.
 > 
 > %%% ¡description!
 > . . . . .  ①
+> 
+> %%% ¡build!
+> 1
 > 
 > 
 > %% ¡props_update!
@@ -913,13 +916,15 @@ We can now create an element that demonstrate how the seeded randomness works (C
 > 
 > ② Here, the other standard properties derived from `ConcreteElement` should be updated as well (with the possible exception of `TOSTRING`).
 > 
+> ③ and ④ check that subsequent calls to the calculation of the random number return the same value.
+> 
 > ⑥ checks that calls to the calculation of the random number of differen randomizers return different values.
 > 
 
 <a id="Query"></a>
 ### Query  [⬆](#Table-of-Contents)
 
-We can now demonstrate the use of query props by expanding the `ArithmeticOperations` (Code 14).
+You can now learn how to use query props by expanding the `ArithmeticOperations` (Code 14).
 
 
 > **Code 14.** **Arithmetic Operation Calculator with Queries.**
@@ -930,6 +935,9 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > 
 > %%% ¡description!
 > . . . . .
+> 
+> %%% ¡build!
+> 1
 > 
 > 
 > %% ¡props_update!
@@ -985,6 +993,10 @@ We can now demonstrate the use of query props by expanding the `ArithmeticOperat
 > ① It is good practice to add some comments about the arguments for the query.
 > 
 > ② It is also good practice to check the input arguments and provide a reasonable output for absent/unexpected arguments.
+> 
+> ③ and ④ returns the sum or the difference depening on the argument.
+> 
+> ⑤ and ⑥ retunrs `NaN` when the input is absent or unexpected.
 > 
 
 <a id="Evanescent-Gui-Figure"></a>
