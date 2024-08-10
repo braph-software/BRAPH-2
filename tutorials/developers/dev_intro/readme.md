@@ -400,6 +400,8 @@ The value of a prop can be retrieved with Code 6.
 > 
 > ② gets the value of a prop using the prop number.
 > 
+> ③ and ④ do not return any output value. This can be useful, e.g., when a code needs to be executed, e.g., by a `QUERY`.
+> 
 > ⑤ can be used with a series of arguments for props of category `QUERY`. Any additional arguments are ignored for props of other categories.
 > 
 
@@ -424,11 +426,11 @@ The raw value of a prop can be retrieved with Code 7.
 <a id="Memorizing-Props"></a>
 ### Memorizing Props  [⬆](#Table-of-Contents)  
 
-The value of a prop can be memorized using \Coderef{cd:memorize}.
+The value of a prop can be memorized using Code 8.
 
 
-> **Code 8.** **Getting a prop.**
-> 		This script illustrates various ways in which the value of a prop can be retrieved.
+> **Code 8.** **Memorizing a prop.**
+> 		This script illustrates various ways in which the value of a prop can be memorized.
 > ````matlab
 > value = el.memorize('ID');  ①
 > value = el.memorize(ConcreteElement.ID);  ②
@@ -436,6 +438,10 @@ The value of a prop can be memorized using \Coderef{cd:memorize}.
 > el.memorize('ID')  ③
 > el.memorize(ConcreteElement.ID)  ④
 > ````
+> 
+> ① and ② memorize the value of a prop using the prop tag and the prop number.
+> 
+> ③ and ④ do not return any output value.
 > 
 
 If the property is of category `RESULT`, `QUERY`, or `EVANESCENT`, it calls the function check, proceed to save the result, and notifies an **event PropMemorized**.
