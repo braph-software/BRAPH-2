@@ -180,7 +180,8 @@ The available parameters are:
 - `RANDOMIZE ON/OFF` determines whether to randomize the graph. *Typically does not need to be changed.*
 
 - `RANDOM SEED` is the randomization seed. *Typically does not need to be changed.*
-	- `RANDOMIZATION ATTEMPTS PER EDGE` is the attempts to rewire each edge. *Typically does not need to be changed.*
+
+- `RANDOMIZATION ATTEMPTS PER EDGE` is the attempts to rewire each edge. *Typically does not need to be changed.*
 
 
 
