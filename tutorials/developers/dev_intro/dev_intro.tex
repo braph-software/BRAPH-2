@@ -12,9 +12,9 @@
 
 \begin{abstract}
 \noindent
-The software architecture of BRAPH~2.0 provides a clear structure for developers to understand and extend its functionalities. All objects (\emph{elements}) in BRAPH~2.0 are derived from the base object \code{Element}. Developers can easily add new elements by writing the new elements in the simplified BRAPH~2.0 pseudocode. 
-By recompiling BRAPH~2.0, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
-In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the elements are strcutured, and how new elements can be implemented.
+The software architecture of BRAPH~2 provides a clear structure for developers to understand and extend its functionalities. All objects (\emph{elements}) in BRAPH~2 are derived from the base object \code{Element}. Developers can easily add new elements by writing the new elements in the simplified BRAPH~2 pseudocode. 
+By recompiling BRAPH~2, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
+In this Developer Tutorial, we will explain how BRAPH~2 is compiled, how the elements are strcutured, and how new elements can be implemented.
 \end{abstract}
 
 \tableofcontents
@@ -22,16 +22,16 @@ In this Developer Tutorial, we will explain how BRAPH~2.0 is compiled, how the e
 \clearpage
 \section{Compilation and Element (Re)Generation}
 
-BRAPH~2.0 is a compiled object-oriented programming software.
+BRAPH~2 is a compiled object-oriented programming software.
 Its objects are \emph{elements}, which contain a set of \emph{props} of various \emph{categories} and \emph{formats}, as described in detail in the following sections. 
-These elements are written in the BRAPH~2.0 pseudocode, which simplifies and streamlines the coding process.
-To convert them into usable matlab objects, BRAPH~2.0 needs to be compiled, which is done by calling the script \code{braph2genesis}, which will compile the whole code, as shown in \Coderef{cd:compilation}.
-%
+These elements are written in the BRAPH~2 pseudocode, which simplifies and streamlines the coding process.
+To convert them into usable matlab objects, BRAPH~2 needs to be compiled, which is done by calling the script \code{braph2genesis}, which will compile the whole code, as shown in \Coderef{cd:compilation}.
+
 \begin{lstlisting}[
 	label=cd:compilation,
 	caption={
-		{\bf Compilation of BRAPH~2.0.}
-		Executing the script \code{braph2genesis} compiles BRAPH~2.0 and , subsequently, unit tests it.
+		{\bf Compilation of BRAPH~2.}
+		Executing the script \code{braph2genesis} compiles BRAPH~2 and , subsequently, unit tests it.
 		Importantly, this function might take several hours to run (plus several more hours to unit test the compiled code).
 	}
 ]
@@ -45,15 +45,15 @@ During the compilation, there are several phases to improve the computational ef
 	\item {\bf Constant hard-coding}, where several contants are hard-coded in the executable code to further optimize the run time.
 \end{enumerate}
 
-Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH~2.0. 
+Because this multi-stage compilation, it is not always possible to regenerate a single element without regenerating the whole BRAPH~2. 
 Nevertheless, it is usually possible to regenerate a single element as long as the element already exists and its props have not been changed.
 This can be done with the function \code{regenerate()}, as shown in \Coderef{cd:regenerate}.
-%
+
 \begin{lstlisting}[
 	label=cd:regenerate,
 	caption={
 		{\bf Regeneration of elements.}
-		The function \code{regenerate()} can be used to regenerate some elements, as long as they already exist in the current BRAPH~2.0 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH~2.0 with \code{braph2genesis}.
+		The function \code{regenerate()} can be used to regenerate some elements, as long as they already exist in the current BRAPH~2 compilation and their list of props has not been altered (e.g., renamed, moved, added). In this case, it is necessary to recompile BRAPH~2 with \code{braph2genesis}.
 	}
 ]
 >> close all; delete(findall(0, 'type', 'figure')); clear all ¥\circled{1}\circlednote{1}{clears the workspace (not always necessary, but needed is some element instances are still in the workspace).}¥
@@ -235,11 +235,11 @@ Its three direct subclasses are \code{NoValue}, \code{Callback}, and \code{Concr
 	Concrete elements further derive directly or indirectly from \code{ConcreteElement}.
 	}
 
-#!FIG01
+%! FIG1 !%
 
 The element \code{NoValue} is used to represent a value that has not been set (for properties of categories \code{METADATA}, \code{PARAMETER}, \code{DATA}, \code{FIGURE} or \code{GUI}) or calculated (for properties of category \code{RESULT}, \code{QUERY}, \code{EVANESCENT}), while it should not be used for properties of category \code{CONSTANT}.
 It should be instantiated using \Coderef{cd:novalue}.
-%
+
 \begin{lstlisting}[
 	label=cd:novalue,
 	caption={
@@ -249,12 +249,12 @@ It should be instantiated using \Coderef{cd:novalue}.
 ]
 Element.getNoValue()
 \end{lstlisting}
-%
+
 No element can be a subclass of NoValue.
   
 A \code{Callback} refers to a prop of another element \code{el}, identified by prop number or tag.
 It should be instantiated using \Coderef{cd:callback}.
-%
+
 \begin{lstlisting}[
 	label=cd:callback,
 	caption={
@@ -265,7 +265,7 @@ It should be instantiated using \Coderef{cd:callback}.
 el.getCallback('PROP', PROP_NUMBER)
 el.getCallback('TAG', PROP_TAG)
 \end{lstlisting}
-%
+
 No element can be a subclass of \code{Callback}.
 
 A concrete element (\code{ConcreteElement}) provides the infrastructure necessary for all concrete elements. 
@@ -275,7 +275,7 @@ Even though it is possible to create instances of \code{ConcreteElement}, typica
 \subsection{Setting Props}
 
 The value of a prop can be set with \Coderef{cd:set}.
-%
+
 \begin{lstlisting}[
 	label=cd:set,
 	caption={
@@ -294,7 +294,7 @@ el.set( ... ¥\circled{3}\circlednote{3}{sets the values of multiple props at on
 
 el = el.set('ID', 'new el id') ¥\circled{4}\circlednote{4}{returns the element.}¥
 \end{lstlisting}
-%
+
 When a prop is set to a certain value, the following operations are performed:
 \begin{enumerate}
 	\item The value is {\bf conditioned} before being set (by calling the protected \emph{static} function \code{conditioning()}, which can be defined in each subelement).
@@ -338,7 +338,7 @@ When a prop is set to a certain value, the following operations are performed:
 \subsection{Getting Props}
 
 The value of a prop can be retrieved with \Coderef{cd:get}.
-%
+
 \begin{lstlisting}[
 	label=cd:get,
 	caption={
@@ -364,7 +364,7 @@ If a property of category \code{RESULT}, \code{QUERY}, or \code{EVANESCENT} is n
 If the property is checked, it proceeds to check all properties after the calculation calling the function \code{check()}. If the check fails, it resets the property to \code{NoValue} and returns \code{NoValue}, does not lock the property, and throws a warning with warning id \code{BRAPH2:<Element Class>}.
 
 The raw value of a prop can be retrieved with \Coderef{cd:getr}.
-%
+
 \begin{lstlisting}[
 	label=cd:getr,
 	caption={
@@ -379,7 +379,7 @@ value = el.getr(ConcreteElement.ID);
 \subsection{Memorizing Props}  
 
 The value of a prop can be memorized using \Coderef{cd:memorize}.
-%
+
 \begin{lstlisting}[
 	label=cd:get,
 	caption={
@@ -405,7 +405,7 @@ If a property of category \code{QUERY} is memorized, a warning is thrown with wa
 \section{Element tokens}
 
 A generator file has the structure illustrated \Coderef{cd:tokens}.
-%
+
 \begin{fullwidth}
 \begin{lstlisting}[
 	label=cd:tokens,
@@ -554,7 +554,7 @@ A generator file has the structure illustrated \Coderef{cd:tokens}.
 \end{fullwidth}
 
 A list of special instructions is shown in \Coderef{cd:special}.
-%
+
 \begin{lstlisting}[
 	label=cd:special,
 	caption={
@@ -579,12 +579,12 @@ __Format.EMPTY_TAG__ ¥\circled{5}¥
 \fig{figure*}
 	{fig:genesis}
 	{\includegraphics{../braph2genesis.png}}
-	{BRAPH~2.0 genesis.}
+	{BRAPH~2 genesis.}
 	{
 	Directory structure of \fn{braph2genesis} (left) and \fn{braph2} (right).
 	}
 
-#!FIG02
+%! FIG2 !%
 
 The directory structure of \fn{braph2} and the relation with \fn{braph2genesis} is illustrated in \Figref{fig:genesis}.
 All objects are derived from a base object called \code{Element} and written in a simplified pseudocode (files \fn{*.gen.m}) that is compiled into the actual elements (files \fn{*.m}) by the command \code{braph2genesis} (some examples of these elements are shown).
@@ -592,7 +592,7 @@ The compiled code can be launched by the command \code{braph2}.
 The core of BRAPH 2.0 (gray shaded area) includes the compiler (\code{genesis}), the essential source code (\fn{src}), and the essential functionalities for the GUI (\fn{gui}, yellow-shaded area).
 The users can easily add new brain surfaces (\fn{brainsurfs}), atlases (\fn{atlases}), example scripts and GUI pipelines (in the corresponding folder under \fn{pipelines}).
 Furthermore, the users can add new elements such as new graphs (e.g., \code{GraphWU} in \fn{graphs}), measures (e.g., \code{Strength} in \fn{measures}), data types (e.g., \code{SubjectCON} in \fn{pipelines/connectivity}), data importers (e.g., \code{ImporterGroupSubjectCON\_XLS} in \fn{pipelines/connectivity}), data exporters (e.g., \code{ExporterGroupSubjectCON\_XLS} in \fn{pipelines/connectivity}), and analyses (e.g., \code{AnalyzeEnsemble\_CON\_WU} in \fn{pipelines/connectivity}) by writing new elements and recompiling the whole code: the new elements and their functionalities will be immediately available also in the GUI.
-Finally, BRAPH~2.0 is provided with a set of unit tests (executable by the command \fn{test\_braph2}) that ensure the formal correctness of the code, including that of any newly added elements.
+Finally, BRAPH~2 is provided with a set of unit tests (executable by the command \fn{test\_braph2}) that ensure the formal correctness of the code, including that of any newly added elements.
 
 \section{Implementation of an Element}
 
@@ -600,14 +600,14 @@ We will now see how to implement a few concrete elements.
 
 \begin{fullwidth}
 \begin{tcolorbox}[
-	title=Light compilation of BRAPH~2.0
+	title=Light compilation of BRAPH~2
 ]
-To speed up the compilation of BRAPH~2.0 when trying these examples, it is possible to perform a light version of the compilation using the script \code{braph2genesis\_with\_rollcall}, which permits one to exclude/include specific folders or elements, as shown in \Coderef{cd:rollcall}.
-%
+To speed up the compilation of BRAPH~2 when trying these examples, it is possible to perform a light version of the compilation using the script \code{braph2genesis\_with\_rollcall}, which permits one to exclude/include specific folders or elements, as shown in \Coderef{cd:rollcall}.
+
 \begin{lstlisting}[
 	label=cd:rollcall,
 	caption={
-		{\bf BRAPH~2.0 genesis with rollcall.}
+		{\bf BRAPH~2 genesis with rollcall.}
 		Using \code{braph2genesis\_with\_rollcall} (which is found in the folder \fn{sandbox}), it is possible to exclude some folders and elements, which are defined in the variable \code{rollcall}.
 		You can place your elements in the folder \fn{sandbox}.
 	}
@@ -648,7 +648,7 @@ rollcall = { ...
 This same approach (appropriately altering the included/excluded folders and elements) can also be used to reduce the compilation time when developing new functionalities.
 
 Importantly, the directory \fn{braph2genesis} must be in the MatLab file path and the directory \fn{braph2} must not be in the MatLab file path.
-The compiled BRAPH~2.0 is saved in \fn{brap2\_with\_rollcall}, which is ignored by GIT.
+The compiled BRAPH~2 is saved in \fn{brap2\_with\_rollcall}, which is ignored by GIT.
 \end{tcolorbox}
 \end{fullwidth}
 
