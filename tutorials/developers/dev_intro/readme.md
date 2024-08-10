@@ -213,7 +213,8 @@ Additional functions to operate with these features can be found by using the co
 >  
 > - **`LOGICAL`** Logical is a boolean value.
 >  
-> - **`OPTION`** Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
+> - **`OPTION`** Option is a char array representing an option within a set defined in the element (case sensitive).
+>  
 >                 Settings: cell array of chars representing the options, e.g., `{'plus', 'minus', 'zero'}`.
 >  
 > - **`CLASS`** Class is a char array corresponding to an element class.
@@ -224,7 +225,8 @@ Additional functions to operate with these features can be found by using the co
 > 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
-> - **`ITEM`** Item is a pointer to an element of a class defined in the element.\\ 
+> - **`ITEM`** Item is a pointer to an element of a class defined in the element.
+> 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
 > - **`ITEMLIST`** ItemList is a cell array with pointers to elements of a class defined in the element.
