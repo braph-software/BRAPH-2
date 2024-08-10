@@ -131,26 +131,28 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 <a id="Measure-Calculation"></a>
 ## Measure Calculation  [⬆](#Table-of-Contents)
 
-This step is to calculate graph measures with data loaded in the previous step. Here we use "overlapping strength" as an example.
+You can now calculate graph measures with the analyses defined in the previous step.
 
 **Code 5.** **Group Subject Data Analysis.**
 		The group data analysis provides code for initialization of group data analysis.
 ````matlab
 % measure calculation
-g_WU1 = a_WU1.memorize('G'); % [1]
-ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M'); % [2]
+g_WU1 = a_WU1.memorize('G');  % [1]
+ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');  % [2]
 ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');  % [3]
 
-g_WU2 = a_WU2.get('G');
-ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M'); % [2]
-ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M'); % [3]
+g_WU2 = a_WU2.get('G');  % [4]
+ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');
+ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');
 ````
 
-[1] memorize in case there are measures with non-default rules.
+[1] memorizes the graphs to ensure consistency if there are measures with non-default rules.
 
-[2] The function calculates graph measure. In this case, "overlapping strength" is calculated.
+[2] calculates the *overlapping strength* measure for the analysis `a_WU1`.
 
-[3] Other measures can also be calculated by changing the measure name. For example, "OverlappingS" calculates overlapping strength and "OverlappingSAv" calculates overlapping strength average
+[3] calculates the *overlapping strength average* measure for the analysis `a_WU1`.
+
+[4] calcualtes the same measures for the analysis `a_WU2`.
 
 
 <a id="Group-Comparison"></a>

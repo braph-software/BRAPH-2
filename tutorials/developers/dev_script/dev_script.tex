@@ -110,7 +110,7 @@ a_WU2 = AnalyzeGroup_ST_MP_WU( ...
 
 \section{Measure Calculation}
 
-This step is to calculate graph measures with data loaded in the previous step. Here we use \fn{overlapping strength} as an example.
+You can now calculate graph measures with the analyses defined in the previous step.
 
 \begin{lstlisting}[
 	label=cd:m,
@@ -120,13 +120,13 @@ This step is to calculate graph measures with data loaded in the previous step. 
 	}
 ]
 % measure calculation
-g_WU1 = a_WU1.memorize('G');¥\circled{1}\circlednote{1}{memorize in case there are measures with non-default rules.}¥
-ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');¥\circled{2}\circlednote{2}{The function calculates graph measure. In this case, \fn{overlapping strength} is calculated.}¥
-ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M'); ¥\circled{3}\circlednote{3}{Other measures can also be calculated by changing the measure name. For example, \fn{OverlappingS} calculates overlapping strength and \fn{OverlappingSAv} calculates overlapping strength average}¥
+g_WU1 = a_WU1.memorize('G'); ¥\circled{1}\circlednote{1}{memorizes the graphs to ensure consistency if there are measures with non-default rules.}¥
+ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M'); ¥\circled{2}\circlednote{2}{calculates the \emph{overlapping strength} measure for the analysis \code{a\_WU1}.}¥
+ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M'); ¥\circled{3}\circlednote{3}{calculates the \emph{overlapping strength average} measure for the analysis \code{a\_WU1}.}¥
 
-g_WU2 = a_WU2.get('G');
-ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');¥\circled{2}¥
-ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');¥\circled{3}¥
+g_WU2 = a_WU2.get('G'); ¥\circled{4}\circlednote{4}{calcualtes the same measures for the analysis \code{a\_WU2}.}¥
+ovstrength_WU2 = g_WU2.get('MEASURE', 'OverlappingS').get('M');
+ovstrength_av_WU2 = g_WU2.get('MEASURE', 'OverlappingSAv').get('M');
 \end{lstlisting}
 
 \section{Group Comparison}
