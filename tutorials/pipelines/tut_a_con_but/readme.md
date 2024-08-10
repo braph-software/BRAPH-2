@@ -91,7 +91,7 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 <a id=Step--Load-the-Brain-Atlas></a>
 ## Step 1: Load the Brain Atlas  [⬆](#Table-of-Contents)
 
-Figure 4 shows how to upload and plot the brain atlas that you used to extract the *connectivity data* for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba).
+Figure 4 shows how to upload and plot the brain atlas that you used to extract the data for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_ba).
 
 
 
@@ -100,14 +100,14 @@ Figure 4 shows how to upload and plot the brain atlas that you used to extract t
 > **Figure 4. Uploading the Brain Atlas**
 > Steps to upload the brain atlas:
 > 	**a** Click on "Load Atlas" from the pipeline GUI.
-> 	**b** Navigate to the BRAPH 2.0 folder "atlases" and select one of the atlas files, in this example the "atlas.xlsx". 
+> 	**b** Navigate to the BRAPH 2 folder "atlases" and select one of the atlas files, in this example the "atlas.xlsx". 
 > 	**c** You can visualize the brain atlas by pressing "Plot Brain Atlas".
  
 
 <a id=Step--Load-the-Connectivity-Group-Data></a>
 ## Step 2: Load the Connectivity Group Data  [⬆](#Table-of-Contents)
 
-After you loaded the brain atlas, you can upload the *connectivity data* for each group as shown in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s connectivity matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial [Group of Subjects with Connectivity Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con)).
+After you have loaded the brain atlas, you can upload the *connectivity data* for each group as shown in Figure 5. A new interface will be shown containing the data for the group you just selected. You can open each subject’s connectivity matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial [Group of Subjects with Connectivity Data](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con)).
 
 
 
