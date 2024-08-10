@@ -1,10 +1,10 @@
-# General Developer Tutorial for BRAPH 2.0
+# General Developer Tutorial for BRAPH 2
 
-[![Tutorial General Developer Tutorial for BRAPH 2.0](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_intro.pdf)
+[![Tutorial General Developer Tutorial for BRAPH 2](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_intro.pdf)
 
 The software architecture of BRAPH 2 provides a clear structure for developers to understand and extend its functionalities. All objects (*elements*) in BRAPH 2 are derived from the base object `Element`. Developers can easily add new elements by writing the new elements in the simplified BRAPH 2 pseudocode. 
 By recompiling BRAPH 2, the new elements and their functionalities are immediately integrated, also into the graphical user interface.
-In this Developer Tutorial, we will explain how BRAPH 2 is compiled, how the elements are strcutured, and how new elements can be implemented.
+In this developer tutorial, you will learn how BRAPH 2 is compiled, how the elements are strcutured, and how new elements can be implemented.
 
 
 ## Table of Contents
