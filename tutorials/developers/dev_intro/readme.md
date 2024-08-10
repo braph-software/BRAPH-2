@@ -462,7 +462,7 @@ A generator file has the structure illustrated Code 9.
 > **Code 9.** **Element tokens in a generator file.**
 > 		All tokens available in a generator file.
 > 		The name of this file must end with ".gen.m", and tipically starts with "_".
-> 		The token `¡header!` is required, while the rest is optional.
+> 		The token `¡header!` is required (and the token `¡build!`), while the rest is optional.
 > ````matlab
 > %% ¡header!
 >   <class_name> < <superclass_name> (<moniker>, <descriptive_name>) <header_description>.
@@ -473,7 +473,9 @@ A generator file has the structure illustrated Code 9.
 >    It can occupy several lines.
 >   %%% ¡seealso!
 >    Related functions and classes in a single line, coma-separated and without fullstop.
->   
+>   %%% ¡build!
+>   Number of the build of the element starting from 1.
+>     
 >  %% ¡constants!
 >   Constants.
 >  
@@ -622,7 +624,7 @@ A list of special instructions is shown in Code 10.
 > 
 > ① substitutes the prop with its default value, when hard-coding the element.
 > 
-> ② keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value. ③-⑤ It works similarly also for the other constants of `Category` and `Format`.
+> ② keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value. ③ - ⑤ It works similarly also for the other constants of `Category` and `Format`.
 > 
 > ⑥ adds a warning that the specific feature is not implemented yet.
 > 
