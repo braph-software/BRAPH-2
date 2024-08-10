@@ -17,7 +17,7 @@ This tutorial shows how to perform a network analysis using *structural data* (s
 >
 > [Open the GUI](#Open-the-GUI)
 >
-> [Step 1: Load the Brain Atlas](#Step-1:-Load-the-Brain-Atlas)
+> [Step 1-Load the Brain Atlas](#Step-1-Load-the-Brain-Atlas)
 >
 > [Step 2: Load the Connectivity Group Data](#Step-2:-Load-the-Connectivity-Group-Data)
 >
@@ -87,8 +87,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 > These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 
 
-<a id="Step-1:-Load-the-Brain-Atlas"></a>
-## Step 1: Load the Brain Atlas  [⬆](#Table-of-Contents)
+<a id="Step-1-Load-the-Brain-Atlas"></a>
+## Step 1-Load the Brain Atlas  [⬆](#Table-of-Contents)
 
 Figure 4 shows how to upload and plot the brain atlas that you used to extract the *connectivity data* for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial [Brain Atlas](https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba).
 
