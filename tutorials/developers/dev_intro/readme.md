@@ -134,7 +134,9 @@ Furthermore, each instance of a prop has the following features:
 	The seed of each property is a 32-bit unsigned integer and is initialized when an element is constructed by calling `randi(intmax('uint32'))`.
 	
 	The seed can be obtained using:
+
 	`seed = el.getPropSeed(pointer)`
+
 	where `pointer` can be either a prop number or tag.
 	It cannot be changed.
  	
@@ -142,25 +144,35 @@ Furthermore, each instance of a prop has the following features:
 	Checked props are checked for format when they are set and for value when they are set/calculated. (When `BRAPH2.CHECKED = false`, no checks are performed. This needs to be changed in the file "BRAPH2.m".)
 	
 	The checked status of a prop can be altered with the functions:
+
 	`el.checked(pointer)`
+
 	`el.unchecked(pointer)`
+
 	The checked status of a prop can be assessed with the function:
 	`checked = el.isChecked(pointer)`
+
 	where `pointer` can be either a prop number or tag.
 	
 - A *locked* status, which is false by default. (The `PARAMETER` and `DATA` props get locked the first time a `RESULT` property is successfully calculated. The locked status is not used for `CONSTANT` props.)
 	
 	A prop can be locked with the function:
+
 	`el.lock(pointer)`
+
 	Once locked, it cannot be unlocked.
 	The locked status of a prop can be assessed with the function:
+
 	`locked = el.isLocked(pointer)`
+
 	where `pointer` can be either a prop number or tag.
 	
 - A *callback* instance. (Callbacks are not used with `METADATA` props.)
 	
 	The callback to a prop can be obtained using the function:
+
 	`cb = el.getCallback(pointer)`
+
 	where `pointer` can be either a prop number or tag.
 	
 
@@ -208,18 +220,22 @@ Additional functions to operate with these features can be found by using the co
 >                 Settings: cell array of chars representing the options, e.g., \code{\{'plus', 'minus', 'zero'\}}.
 >  
 > - [`CLASS`] Class is a char array corresponding to an element class.
+> 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
 > - [`CLASSLIST`] ClassList is a cell array with char arrays corresponding to element classes.
+> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
 > - [`ITEM`] Item is a pointer to an element of a class defined in the element.\\ 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
 > - [`ITEMLIST`] ItemList is a cell array with pointers to elements of a class defined in the element.
+> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
 > - [`IDICT`] Idict is an indexed dictionary of elements of a class defined in the element.
+> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
 >  
 > - [`SCALAR`] Scalar is a scalar numerical value.
@@ -333,6 +349,7 @@ When a prop is set to a certain value, the following operations are performed:
 	This can be set with the token `¡preset!`.
 	
 1. If a property is checked, its **format is checked** before proceeding to its setting by calling `Format.checkFormat()`.
+
 	If the check fails, the property is not set and an error is thrown with error id `BRAPH2:<Element Class>:WrongInput`.
 	
 	This can be set with the token `¡checkProp!`.
@@ -340,7 +357,9 @@ When a prop is set to a certain value, the following operations are performed:
 1. The value is **set**.
 
 		If the property is of category `PARAMETER`, `DATA`, `FIGURE`, or `GUI`, the value is set only if the property is unlocked.
+
 		If an attempt is made to set a locked property, no setting occurs and a warning is thrown with warning id `BRAPH2:<Element Class>`.
+
 		If the value is a callback, a warning is thrown if the element, property number and/or settings of the callback do not coincide with those of the property with warning id `BRAPH2:<Element Class>`.
  
 		If the property is of category `RESULT`, `QUERY` or `EVANESCENT`, the value can only be set to `Element.getNoValue()`.
@@ -354,6 +373,7 @@ When a prop is set to a certain value, the following operations are performed:
 	This can be set with the token `¡postprocessing!`.
 
 1. If ANY property is checked, the function `Element.check()` is called after all settings are made and the consistency of the values of **all pros** are **checked**.
+
 	If the check fails an error is thrown with error id `BRAPH2:<Element Class>:WrongInput`.
 	
 1. When a prop is successfully set, an **event** `PropSet()` is **notified**.

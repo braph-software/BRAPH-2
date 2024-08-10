@@ -93,13 +93,21 @@ They are available in the BRAPH 2 folder "atlases" in XLS and TXT formats, and t
 
 > **Figure 5. Brain Atlases**
 > Some brain atlases provided by BRAPH 2: 
+> 
 > 	**AAL90** Automated Anatomical Labelling atlas with 90 cortical and subcortical regions.
+> 
 > 	**AAL116** Automated Anatomical Labelling atlas with 116 cortical and subcortical regions, including cerebellar areas.
+> 
 > 	**BNA** Brainnetome atlas with 246 cortical and subcortical regions.
+> 
 > 	**Craddock** Functional atlas with 200 cortical and subcortical regions, including cerebellar areas.
+> 
 > 	**Desikan** Anatomical atlas with 68 cortical from the FreeSurfer software.
+> 
 > 	**Destrieux** Anatomical atlas with 148 cortical from the FreeSurfer software.
+> 
 > 	**Schaefer** Functional brain atlas with 200 cortical regions that belong to 7 different resting-state fMRI networks.
+> 
 > 	**Subcortical FreeSurfer** Anatomical atlas with 14 subcortical gray matter regions from the FreeSurfer software.
 
 

@@ -26,7 +26,7 @@ document = regexprep(document, '\\end\{abstract\}', '');
 % basic reformatting
 document = regexprep(document, 'BRAPH~2', 'BRAPH 2');
 document = regexprep(document, '---', '-');  % ---
-document = regexprep(document, '\\\\\n', '\n');  % \\
+document = regexprep(document, '\\\\\n', '\n\n');  % \\
 document = regexprep(document, '\\fn{([^{}]*)}', '"$1"');  % \fn
 document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
 document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
