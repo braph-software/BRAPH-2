@@ -10,30 +10,43 @@
 
 \begin{abstract}
 \noindent
-This is the developer tutorial for adapting a script for calculating different graph measures. In this tutorial, we will explain how to edit an example script to calculate different graph measures in braph2genesis. Here, we use. \fn{EXAMPLE\_ST\_MP\_WU} as an example to show how to edit this script to calculate different graph measures for structural data using a multiplex weighted undirected graph.
+This is the developer tutorial for adapting a script to calculate different graph measures. In this tutorial, you will learn how to edit an example script to calculate different graph measures. Here, you will use the scrip in file \fn{example\_ST\_MP\_WU.m} as an example to learn how to edit this script to calculate different graph measures for structural data using a multiplex weighted undirected graph.
 \end{abstract}
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Atlas Loading}
-We started with implementing the brain atlas. Here we use the function \fn{ImporterBrainAtlasXLS} as an example. The function allows users to import the atlas from an XLS/XLSX file. 
+
+\section{Header}
+
+The header section of the script in \fn{example\_ST\_MP\_WU.m} is shown in \Coderef{cd:header}.
+
 \begin{lstlisting}[
-	label=cd:m:degree:header,
+	label=cd:header,
 	caption={
-		{\bf Brain Atlas Importer.}
-		The \code{header} section of the pipeline \fn{EXAMPLE\_ST\_MP\_WU}. It defines the importer for Atlas loading.
+		{\bf Script header.}
+		The header section of the pipeline names and describes the script.
 	}
 ]
-%% ¡header!
-% EXAMPLE_ST_MP_WU
-% Script example pipeline ST MP WU
+% EXAMPLE_ST_MP_WU ¥\circled{1}\circlednote{1}{defines the name of the script.}¥
+% Script example pipeline ST MP WU ¥\circled{2}\circlednote{2}{provides a brief description of the script.}¥
 
-clear variables %#ok<*NASGU>
+clear variables %#ok<*NASGU> ¥\circled{3}\circlednote{3}{clears the workspace.}¥
+\end{lstlisting}
 
+\section{Atlas Loading}
+
+The script starts by importing the brain atlas. For this, it uses the element \code{ImporterBrainAtlasXLS} to import the atlas from an \fn{*.xlsx} file, as shown in \Coderef{cd:atlas}.
+ 
+\begin{lstlisting}[
+	label=cd:atlas,
+	caption={
+		{\bf Load brain atlas.}
+		This section defines the importer to load the brain atlas.
+	}
+]
 %% Load BrainAtlas
-im_ba = ImporterBrainAtlasXLS( ... ¥\circled{1}\circlednote{1}{First, the script loads the brain atlas from the excel file atlas.xlsx}¥
+im_ba = ImporterBrainAtlasXLS( ... ¥\circled{1}\circlednote{1}{First, the script loads the brain atlas from the file \fn{atlas.xlsx}.}¥
     'FILE', [fileparts(which('example_ST_MP_WU')) filesep 'Example data ST_MP XLS' filesep 'atlas.xlsx'], ...
     'WAITBAR', true ...
     );
@@ -41,13 +54,8 @@ im_ba = ImporterBrainAtlasXLS( ... ¥\circled{1}\circlednote{1}{First, the scrip
 ba = im_ba.get('BA');
 \end{lstlisting}
 
-
-
-
-
-%%%%% %%%%% %%%%% %%%%% %%%%%
-%\clearpage
 \section{Data Loading}
+
 This step is to load the data of two groups. In this section, we use \fn{ImporterGroupSubjectST\_MP\_XLS} as an example, Users can define the path to the group data in XLS/XLSX files contained in a folder.
 \begin{lstlisting}[
 	label=cd:m:degreeav:header,

@@ -22,3 +22,4 @@ generate_readme(['pipelines' filesep 'tut_a_mp_con_fun_wu' filesep 'tut_a_mp_con
 % generate_readme(['pipelines' filesep 'tut_nn_clas_fun_wu_xval' filesep 'tut_nn_clas_fun_wu_xval.tex'])
 
 generate_readme(['developers' filesep 'dev_pipeline' filesep 'dev_pipeline.tex'])
+generate_readme(['developers' filesep 'dev_script' filesep 'dev_script.tex'])

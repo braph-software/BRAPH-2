@@ -66,10 +66,10 @@ The general GUI of BRAPH 2 can be opened by typing `braph2` in MatLab's terminal
 > 		This code can be used in the MatLab command line to launch the GUI to upload a pipeline file
 > ````matlab
 > im = ImporterPipelineBRAPH2( ...
-> 	'FILE', which('pipeline_structural_comparison_wu.braph2') ...
-> 	);
+>     'FILE', which('pipeline_structural_comparison_wu.braph2') ...
+>     );
 > pip = im.get('PIP');
-> 	
+>     
 > gui = GUIElement('PE', pip, 'WAITBAR', true)
 > gui.get('DRAW')
 > gui.get('SHOW')

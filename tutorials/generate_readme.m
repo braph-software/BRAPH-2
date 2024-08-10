@@ -109,7 +109,7 @@ for i = length(codes_start):-1:1
     code = regexp(document(codes_start(i) + 1:codes_end(i) - 1), '\[\s*label=([^,]*),\s*caption={\s*([^{}]*)\s*}\s*\]\s*(.*)', 'tokens', 'all');
     code_labels{i} = strtrim(code{1}{1});
     code_caption = strtrim(code{1}{2});
-    code_code = strtrim(code{1}{3});
+    code_code = strtrim(regexprep(code{1}{3}, '\t', '    '));
 
     code_notes = regexp(code_code, '¥\\circled{\d*}\\circlednote{(\d*)}{([^¥]*)}¥', 'tokens', 'all');
     code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' % [$1]');
