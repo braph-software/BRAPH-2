@@ -214,27 +214,21 @@ Additional functions to operate with these features can be found by using the co
 > - **`LOGICAL`** Logical is a boolean value.
 >  
 > - **`OPTION`** Option is a char array representing an option within a set defined in the element (case sensitive).
->  
 >                 Settings: cell array of chars representing the options, e.g., `{'plus', 'minus', 'zero'}`.
 >  
 > - **`CLASS`** Class is a char array corresponding to an element class.
-> 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
 > - **`CLASSLIST`** ClassList is a cell array with char arrays corresponding to element classes.
-> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
 > - **`ITEM`** Item is a pointer to an element of a class defined in the element.
-> 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
 > - **`ITEMLIST`** ItemList is a cell array with pointers to elements of a class defined in the element.
-> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
 > - **`IDICT`** Idict is an indexed dictionary of elements of a class defined in the element.
-> 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
 >  
 > - **`SCALAR`** Scalar is a scalar numerical value.
@@ -259,7 +253,7 @@ Additional functions to operate with these features can be found by using the co
 >  
 > - **`ALPHA`** Alpha is a transparency level between 0 and 1.
 >  
-> - **`SIZE`** Size represents the size of a graphical componet. It is a positive number (default = 1).
+> - **`SIZE`** Size represents the size of a graphical component. It is a positive number (default = 1).
 >  
 > - **`MARKER`** Marker represents the marker style.
 >                 It can be `'o'`, `'+'`, `'*'`, `'.'`, 'x', `'_'`, `'|'`, `'s'`, `'d'`, `'\^'`, `'v'`, `'>'`, `'<'`, `'p'`, `'h'`, `''` (no marker).
