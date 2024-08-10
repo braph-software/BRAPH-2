@@ -83,6 +83,11 @@ document = regexprep(document, '\\begin{enumerate}', '');
 document = regexprep(document, '\\item{} ', '1. ');
 document = regexprep(document, '\\end{enumerate}', '');
 
+% description
+document = regexprep(document, '\\begin{description}', '');
+document = regexprep(document, '\\item\[([^\]]*)\] ', '- **$1** ');
+document = regexprep(document, '\\end{description}', '');
+
 % figures
 figures = regexp(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', 'tokens', 'all');
 document = regexprep(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', '');

@@ -181,94 +181,88 @@ Additional functions to operate with these features can be found by using the co
 
 
 > **Property Categories**
-> \begin{description} 
-> 
->  \item[`CONSTANT`] Static constant equal for all instances of the element. It allows incoming callbacks.
+> - **`CONSTANT`** Static constant equal for all instances of the element. It allows incoming callbacks.
 >  
->  \item[`METADATA`] Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
+>  - **`METADATA`** Metadata NOT used in the calculation of the results. It does not allow callbacks. It is not locked when a result is calculated.
 >  
->  \item[`PARAMETER`] Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
+>  - **`PARAMETER`** Parameter used to calculate the results of the element. It allows incoming and outgoing callbacks. It is connected with a callback when using a template. It is locked when a result is calculated.
 >  
->  \item[`DATA`] Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
+>  - **`DATA`** Data used to calculate the results of the element. It is `NoValue` when not set. It allows incoming and outgoing callbacks. It is locked when a result is calculated.
 >  
->  \item[`RESULT`] Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
+>  - **`RESULT`** Result calculated by the element using parameters and data. The calculation of a result locks the element. It is `NoValue` when not calculated. It allows incoming callbacks.
 >  
->  \item[`QUERY`] Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
+>  - **`QUERY`** Query result calculated by the element. The calculation of a query does NOT lock the element. It is `NoValue` when not calculated. Typically, it should not be memorized.
 > It does not allow callbacks.
 >  
->  \item[`EVANESCENT`] Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
+>  - **`EVANESCENT`** Evanescent variable calculated at runtime (typically employed for handles of GUI components). It is `NoValue` when not calculated. Typically, it should be memorized at first use.
 > It does not allow callbacks.
 >  
->  \item[`FIGURE`] Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
+>  - **`FIGURE`** Parameter used to plot the results in a figure. It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 >                 
->  \item[`GUI`] Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
-> 
-> \end{description}
+>  - **`GUI`** Parameter used by the graphical user interface (GUI). It allows incoming and outgoing callbacks. It is not locked when a result is calculated.
 
 
 
 
 > **Property Formats**
-> \begin{description} 
-> - [`EMPTY`] Empty has an empty value and is typically used as a result or query to execute some code. 
+> - **`EMPTY`** Empty has an empty value and is typically used as a result or query to execute some code. 
 >  
-> - [`STRING`] String is a char array.
+> - **`STRING`** String is a char array.
 >  
-> - [`STRINGLIST`] StringList is a cell array with char arrays.
+> - **`STRINGLIST`** StringList is a cell array with char arrays.
 >  
-> - [`LOGICAL`] Logical is a boolean value.
+> - **`LOGICAL`** Logical is a boolean value.
 >  
-> - [`OPTION`] Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
+> - **`OPTION`** Option is a char array representing an option within a set defined in the element (case sensitive).\\ 
 >                 Settings: cell array of chars representing the options, e.g., \code{\{'plus', 'minus', 'zero'\}}.
 >  
-> - [`CLASS`] Class is a char array corresponding to an element class.
+> - **`CLASS`** Class is a char array corresponding to an element class.
 > 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
-> - [`CLASSLIST`] ClassList is a cell array with char arrays corresponding to element classes.
+> - **`CLASSLIST`** ClassList is a cell array with char arrays corresponding to element classes.
 > 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
-> - [`ITEM`] Item is a pointer to an element of a class defined in the element.\\ 
+> - **`ITEM`** Item is a pointer to an element of a class defined in the element.\\ 
 >                 Settings: class name of a subclass of Element (or Element itself).
 >  
-> - [`ITEMLIST`] ItemList is a cell array with pointers to elements of a class defined in the element.
+> - **`ITEMLIST`** ItemList is a cell array with pointers to elements of a class defined in the element.
 > 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the base element.
 >  
-> - [`IDICT`] Idict is an indexed dictionary of elements of a class defined in the element.
+> - **`IDICT`** Idict is an indexed dictionary of elements of a class defined in the element.
 > 
 >                 Settings: class name of a subclass of Element (or Element itself), which represents the dictionary element.
 >  
-> - [`SCALAR`] Scalar is a scalar numerical value.
+> - **`SCALAR`** Scalar is a scalar numerical value.
 >  
-> - [`RVECTOR`] RVector is a numerical row vector.
+> - **`RVECTOR`** RVector is a numerical row vector.
 >  
-> - [`CVECTOR`] CVector is a numerical column vector.
+> - **`CVECTOR`** CVector is a numerical column vector.
 >  
-> - [`MATRIX`] Matrix is a numerical matrix.
+> - **`MATRIX`** Matrix is a numerical matrix.
 >  
-> - [`SMATRIX`] SMatrix is a numerical square matrix.
+> - **`SMATRIX`** SMatrix is a numerical square matrix.
 >  
-> - [`CELL`] Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
+> - **`CELL`** Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.
 >  
-> - [`NET`] Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
+> - **`NET`** Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).
 >  
-> - [`HANDLE`] Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
+> - **`HANDLE`** Handle is a handle for a graphical or listener component. It should only be used as an evanescent property.
 >  
-> - [`HANDLELIST`] HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
+> - **`HANDLELIST`** HandleList is a cell array with handles for graphical or listener components. It should only be used as an evanescent property.
 >  
-> - [`COLOR`] Color is an RGB color, e.g., `'[1 0 0]'` for red.
+> - **`COLOR`** Color is an RGB color, e.g., `'[1 0 0]'` for red.
 >  
-> - [`ALPHA`] Alpha is a transparency level between 0 and 1.
+> - **`ALPHA`** Alpha is a transparency level between 0 and 1.
 >  
-> - [`SIZE`] Size represents the size of a graphical componet. It is a positive number (default = 1).
+> - **`SIZE`** Size represents the size of a graphical componet. It is a positive number (default = 1).
 >  
-> - [`MARKER`] Marker represents the marker style.
+> - **`MARKER`** Marker represents the marker style.
 >                 It can be `'o'`, `'+'`, `'*'`, `'.'`, 'x', `'_'`, `'|'`, `'s'`, `'d'`, `'\^'`, `'v'`, `'>'`, `'<'`, `'p'`, `'h'`, `''` (no marker).
 >  
-> - [`LINE`] Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line).
-> \end{description}
+> - **`LINE`** Line represents the line style. It can be `'-'`, `':'`, `'-.'`, `'--'`, `''` (no line).
 
 
 Even though it is possible to create instances of `Element`, it does not have any props and typically one uses its subclasses.
