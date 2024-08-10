@@ -10,29 +10,26 @@
 
 \begin{abstract}
 \noindent
-This tutorial shows how to perform a network analysis using \emph{structura data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con}{Group of Subjects with Connectivity Data}), where one connectivity matrix per subject is available, as in diffusion weighted imaging or pre-calculated matrices obtained from functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects at fixed thresholds, which correspond, for example, to fixed levels of white matter integrity or of correlation between activation signals of pairs of brain areas.  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
+This tutorial shows how to perform a network analysis using \emph{structural data} (see tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/data/tut_gr_con}{Group of Subjects with Connectivity Data}), where one connectivity matrix per subject is available, as in diffusion weighted imaging or pre-calculated matrices obtained from functional MRI, MEG, or EEG. Step by step, this pipeline guides you to compare the data from two groups of subjects at fixed thresholds, which correspond, for example, to fixed levels of white matter integrity or of correlation between activation signals of pairs of brain areas.  With this tutorial, you will be able to extract and plot differences between two groups. You will also be able to generate publication-quality figures.
 \end{abstract}
 
 \fig{marginfigure}
 {fig:01}
-{
-	\includegraphics{fig01_01.jpg}
-	\includegraphics{fig01_02.jpg}
-	\includegraphics{fig01_03.jpg}
-}
+{\includegraphics{fig01.png}}
 {Figure examples}
 {
-	Examples of displays of \fn{Community Structure} with connectivity data binarized at fixed thresholds obtained using BRAPH 2.
+	Examples of displays of \fn{Community Structure} with connectivity data binarized at fixed thresholds obtained using BRAPH~2.
 }
-#!FIG01
-	
+
+%! FIG1 !%
+
 \tableofcontents
 
 \clearpage
 \section{Generate Example Data}
 
 You can generate the example data by typing in the command line the instruction in \Coderef{cd:generate}.
-%
+
 \begin{lstlisting}[
 	label=cd:generate,
 	caption={
@@ -45,24 +42,25 @@ create_data_CON_XLS()
 
 \section{Open the GUI}
 
-The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Connectivity Comparison BUT}, as shown in \Figref{fig:02}.
+The general GUI of BRAPH~2 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Connectivity Comparison BUT}, as shown in \Figref{fig:02}.
 
 \fig{figure}
 {fig:02}
 {
 	\includegraphics{fig02.jpg}
 }
-{BRAPH 2 main GUI}
+{BRAPH~2 main GUI}
 {
-	BRAPH 2 main GUI with the pipeline \emph{Pipeline Connectivity Comparison BUT} selected.
+	BRAPH~2 main GUI with the pipeline \emph{Pipeline Connectivity Comparison BUT} selected.
 }
-#!FIG02
+
+%! FIG2 !%
 
 \begin{tcolorbox}[
 	title=Pipeline launch from command line
 ]
 To open the GUI and upload the connectivity comparison pipeline, you can also do it from the command line by typing the commands in \Coderef{cd:launch}.
-%
+
 \begin{lstlisting}[
 	label=cd:launch,
 	caption={
@@ -91,7 +89,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 {
 	These are the steps of the pipeline. Only the first step is active when the pipeline is first opened. Subsequent steps will become active sequentially.
 }
-#!FIG03
+
+%! FIG3 !%
 
 \clearpage
 \section{Step 1: Load the Brain Atlas}
@@ -110,7 +109,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 	{\bf b} Navigate to the BRAPH~2.0 folder \fn{atlases} and select one of the atlas files, in this example the \fn{atlas.xlsx}. 
 	{\bf c} You can visualize the brain atlas by pressing \fn{Plot Brain Atlas}. 
 }
-#!FIG04
+
+%! FIG4 !%
  
 \clearpage
 \section{Step 2: Load the Connectivity Group Data}
@@ -129,7 +129,8 @@ After you loaded the brain atlas, you can upload the \emph{connectivity data} fo
 	{\bf c} This will open the connectivity matrix of the subject in addition to the age and sex of that subject (which are the variables of interest available for the example data).
 	You can then repeat the same procedure for group 2.
 }
-#!FIG05
+
+%! FIG5 !%
 
 \clearpage
 \section{Step 3: Analyzing the Data of Group 1}
@@ -160,7 +161,7 @@ In the \code{THRESHOLDS} section, you can define the thresholds by entering valu
 	{\bf a} To initiate the analysis of data for group 1, click on \fn{Analyze Group 1}.
 	{\bf b} You define the thresholds in the \code{THRESHOLDS} section.
 }
-#!FIG06
+%! FIG6 !%
 
 \subsection{Setting Graph Parameters}
 
@@ -178,7 +179,8 @@ Adjusting these thresholds allows you to explore varying levels of brain connect
 	{\bf a} By clicking on the section \code{GRAPH \& MEASURE PARAMETERS}, you open {\bf b} a new interface that permits you to configure the graph parameters.
 	{\bf c} The available parameters shall be set at this point.
 }
-#!FIG07
+
+%! FIG7 !%
 
 The available parameters are:
 \begin{itemize}
@@ -209,7 +211,8 @@ This will open the measure window, allowing you to specify the rules or paramete
 	Select the \code{Community Structure} measure and then right-click at the top of the table. In the right-click menu, choose \code{Data Selected Measures}.
 	{\bf b} The measure window that opens allows you to define the parameters for the \code{Community Structure} measure. Select the \code{louvain} algorithm to calculate it.
 }
-#!FIG08
+
+%! FIG8 !%
 
 \clearpage
 \subsection{Calculate Measures}
@@ -229,7 +232,8 @@ After configuring the parameters, you can proceed to calculate specific graph me
 	{\bf d} Adjust visualization settings by clicking on the \code{Settings Panel Figure} button in the same toolbar.
 	{\bf e} Customize and save plot visualizations within the settings menu. Here, we turned off the option to show the spheres corresponding to the nodes of each community with different sizes.
 }
-#!FIG09
+
+%! FIG9 !%
 
 As an example, let us select the \code{Community Structure} measure, for which we previously set the rule to \code{louvain}. Right-click at the top of the table and choose \code{Calculate Selected Measures}. Once the calculation is complete, you will notice a \code{C} appearing in front of the \code{Community Structure} row, indicating that this measure has been calculated.
 
@@ -240,7 +244,7 @@ For instance, by clicking on the \code{Axial dorsal} button (\Figref{fig:09}c), 
 
 For instance, within the settings menu (\Figref{fig:09}e), you can disable the size effect, resulting in the same kind of figure as shown in \Figref{fig:09}d. Within the settings menu, you can customize the visualization of the plots and save them for reference.
 
-Finally, when you right-click in the \code{Group-averaged MEASURES} panel, you will find other options to explore, such as \code{Plot Selected Measures} (which generates a line plot for the selected measure at different thresholds and/or different nodes) and \code{Data Selected Measure} (providing the calculated values of the selected measures). These options can also be saved for further analyses outside BRAPH 2.0.
+Finally, when you right-click in the \code{Group-averaged MEASURES} panel, you will find other options to explore, such as \code{Plot Selected Measures} (which generates a line plot for the selected measure at different thresholds and/or different nodes) and \code{Data Selected Measure} (providing the calculated values of the selected measures). These options can also be saved for further analyses outside BRAPH~2.
 
 \section{Step 4: Analyzing the Data of Group 2}
 
@@ -256,7 +260,8 @@ After completing the analysis of the first group, you can analyze the second gro
 	{\bf a} Click on \fn{Analysis 2} in the pipeline's GUI.
 	{\bf b} In this new window, you can see that the measure parameters, such as the {\bf b} \fn{GRAPH TEMPLATE} and {\bf c} rule for \fn{Community Structure}, as well as the graph property {\bf d} \fn{THRESHOLDS}, are blocked since they should be the same as the ones set in the analysis of group 1. You can reset the analysis parameters for Group 1 by clicking on the checkbox marked with a 'C' next to the settings of Group 1 {\bf e}.
 }
-#!FIG10
+
+%! FIG10 !%
 	
 If you want to change some of the parameters you previously selected, you can reset the analysis parameters by clicking on the cancel button marked with a \code{C} (\Figref{fig:10}e) near the analysis of the first group.
  
@@ -275,7 +280,8 @@ After exploring the network measures for each group, you can proceed to their st
 	{\bf a} Click on \code{Compare Groups} in the pipeline's GUI.
 	{\bf b} In this new window, you can select to turn ON/OFF the wait bar and verbose functions, you can change the number of permutations, and whether to perform a longitudinal group comparison. We set the number of permutations to 10 for this tutorial {\bf c}. Finally, you can calculate the comparisons of some graph measures between groups {\bf d}.
 }
-#!FIG11
+
+%! FIG11 !%
 	
 In the new window, you have several options to configure the analysis. First, you can choose whether to enable a progress bar and verbose functions while the analysis is running, which can help you monitor the progress of the analysis. You can also specify how many permutations you want to use to assess differences between groups (\Figref{fig:11}b).
 
@@ -300,7 +306,8 @@ To obtain the results from the comparisons, select the measures in the \code{COM
 	{\bf b} In this new window, you will see the comparison results, with positive values in red and negative values in blue on the brain surface.
 {\bf c} You can customize this visualization using the settings menu.
 }
-#!FIG12
+
+%! FIG12 !%
 
 If you wish to visualize the results, right-click at the top of the table and select \code{Brain Graph Selected Comparison} within the Compare Ensemble interface (\Figref{fig:12}a). This action will open a brain surface displaying the difference between these two groups in terms of the \fn{Degree} data or any other nodal measure you have calculated.
 

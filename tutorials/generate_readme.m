@@ -75,7 +75,7 @@ figures = regexp(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s
 document = regexprep(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', '');
 
 figs = regexp(document, '(%! ?FIG\d*) ?(\w*) ?!%', 'tokens', 'all');
-assert(length(figures) == length(figs), 'The number of figures and %!FIG should be equal!')
+assert(length(figures) == length(figs), 'The number of figures and %!FIGxx!% should be equal!')
 
 for i = length(figures):-1:1
     figure = figures{i};
