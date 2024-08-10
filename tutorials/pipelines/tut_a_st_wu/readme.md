@@ -171,7 +171,7 @@ If you want to visualize the results, select the measure and press "Plot Selecte
 > **a** Click on "Plot Selected Measures on Brain" in the analysis' GUI and a brain surface with the results from the calculated measures will appear. The size of the spheres and the color are proportional to the measure's value.   
 > 	**b** In the new window, press the button settings to obtain further visualization options of the results **c**.
  
- Finally, when you do right click, in the "GRAPH $&$ MEASURES" panel, there are other options you can explore such as "Plot Graph Plot" (connectivity adjacency matrix) as well as "Data Graph" (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
+ Finally, when you do right click, in the `GRAPH & MEASURES` panel, there are other options you can explore such as `Plot Graph Plot` (connectivity adjacency matrix) as well as `Data Graph` (labels of brain regions, values of the adjacency matrix, options to plot matrix and histogram), all of which can also be saved.
   
 <a id=Step--Analyzing-the-Data-of-Group-></a>
 ## Step 4: Analyzing the Data of Group 2  [⬆](#Table-of-Contents)
