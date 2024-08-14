@@ -13,7 +13,7 @@ In this tutorial, you will learn how to create the generator file "*.gen.m" for 
 >>
 > [Implementation of Multilayer Graphs](#Implementation-of-Multilayer-Graphs)
 >
->> [Weigthed Directed Multilayer Graph (MultilayerWD )](#Weigthed-Directed-Multilayer-Graph-MultilayerWD-)
+>> [Weigthed Directed Multilayer Graph (MultilayerWD)](#Weigthed-Directed-Multilayer-Graph-MultilayerWD)
 >>
 >> [Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)](#Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-MultiplexBUT)
 >>
@@ -125,7 +125,6 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 >     A = {random_A};
 > end
 > value = A;  ⑬
-> 
 > %%%% ¡gui!  ⑭
 > pr = PanelPropCell('EL', g, 'PROP', GraphBD.A, ... 
 >     'TABLE_HEIGHT', s(40), ... 
@@ -134,43 +133,42 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 >     'ROWNAME' , g.getCallback('ANODELABELS'), ... 
 >     'COLUMNNAME', g.getCallback('ANODELABELS'));
 > 
-> 
 > %%% ¡prop!  ⑮
 > COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.
 > %%%% ¡default!
 > getCompatibleMeasures('GraphBD')
 > ````
 > 
-> ①defines the *graph type*: `Graph.GRAPH` (single layer), `Graph.MULTIGRAPH` (multiple unconnected layers), `Graph.MULTILAYER` (multiple layers), `Graph.ORDERED_MULTILAYER` (multiple layers with subsequent layers) `Graph.MULTIPLEX` (multilayer with connections between corresponding nodes), and `Graph.ORDERED_MULTIPLEX` (multilayer with connections between corresponding nodes in subsequent layers).
+> ① defines the *graph type*: `Graph.GRAPH` (single layer), `Graph.MULTIGRAPH` (multiple unconnected layers), `Graph.MULTILAYER` (multiple layers), `Graph.ORDERED_MULTILAYER` (multiple subsequent layers) `Graph.MULTIPLEX` (multilayer with connections between corresponding nodes), and `Graph.ORDERED_MULTIPLEX` (multilayer with connections between corresponding nodes in subsequent layers).
 > 
-> ②defines the *graph connectivity*: `Graph.BINARY` (0 or 1) or `Graph.WEIGHTED`.
+> ② defines the *graph connectivity*: `Graph.BINARY` (0 or 1) or `Graph.WEIGHTED`.
 > 
-> ③defines the *edge directionality*: `Graph.DIRECTED` or `Graph.UNDIRECTED`.
+> ③ defines the *edge directionality*: `Graph.DIRECTED` or `Graph.UNDIRECTED`.
 > 
-> ④defines the *graph self-connectivity*: `Graph.NONSELFCONNECTED` or `Graph.SELFCONNECTED`.
+> ④ defines the *graph self-connectivity*: `Graph.NONSELFCONNECTED` or `Graph.SELFCONNECTED`.
 > 
-> ⑤defines the *graph negativity*: `Graph.NONNEGATIVE` or `Graph.NEGATIVE`.
+> ⑤ defines the *graph negativity*: `Graph.NONNEGATIVE` or `Graph.NEGATIVE`.
 > 
-> ⑥The property `A` contains the supra-adjacency matrix of the graph, which is calculated by the code under `¡calculate!`.
+> ⑥ The property `A` contains the supra-adjacency matrix of the graph, which is calculated by the code under `¡calculate!`.
 > 
-> ⑦retrieves the adjacency matrix of the graph `B`, defined in the new properties below.
+> ⑦ retrieves the adjacency matrix of the graph `B`, defined in the new properties below.
 > 
 > ⑧, ⑨, and ⑩ condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: `diagonalize` (removes the off-diagonal), `dediagonalize` (removes the diagonal), `binarize` (binarizes with threshold=0), `semipositivize` (removes negative weights), `standardize` (normalizes between 0 and 1) or `symmetrize` (symmetrizes the matrix). Use the MatLab help to see additional functionalities.
 > 
-> ⑪preallocates the adjacency matrix to be calculated.
+> ⑪ preallocates the adjacency matrix to be calculated.
 > 
-> ⑫randomizes adjacency matrix when `'RANDOMIZE'` is `true` by calling the function of the graph named `RANDOMIZATION`
+> ⑫ randomizes adjacency matrix when `'RANDOMIZE'` is `true` by calling the function of the graph named `RANDOMIZATION`
 > 
-> ⑬returns the calculated graph `A` assigning it to the output variable `value`.
+> ⑬ returns the calculated graph `A` assigning it to the output variable `value`.
 > 
-> ⑭employes the property panel `PanelPropCell` to be employed to visualize `A`, setting also its properties.
+> ⑭ employs the property panel `PanelPropCell` to be employed to visualize `A`, setting also its properties.
 > 
-> ⑮determines the list of compatible figures.
+> ⑮ determines the list of compatible figures.
 > 
 
 
 > **Code 3.** **GraphBD element props.**
-> 		The `props` section of generator code for "GraphBD.gen.m" defines the properties to be used in "GraphBD".
+> 		The `props` section of the generator code in "_GraphBD.gen.m" defines the properties to be used in `GraphBD`.
 > ````matlab
 > %% ¡props!
 > 
@@ -181,7 +179,7 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 >     'TABLE_HEIGHT' , s(40), ...
 >     'ROWNAME' , g.getCallback('ANODELABELS'), ... 
 >     'COLUMNNAME', g.getCallback('ANODELABELS'), ...
->     varargin{:});¥\circlednote{3}{defines the semi-positivation rule (i.e., how to remove the negative edges) to be used when generating the adjacency matrix `A` from the intput property `B`. The admissible options are: 'zero' (default, convert negative values to zeros) or 'absolute' (convert negative values to absolute value). }¥
+>     varargin{:});
 > 
 > %%% ¡prop!  ③
 > SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.
@@ -194,7 +192,7 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 > 5
 > 
 > %%% ¡prop! ⑤
-> RANDOMIZATION (query, cell) randomizes matrix contained in the cell
+> RANDOMIZATION (query, cell) randomizes matrix contained in the cell.
 > %%%% ¡calculate!
 > rng(g.get('RANDOM_SEED'), 'twister')
 > 
@@ -264,41 +262,41 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 > value = random_A;
 > ````
 > 
-> ①contains the input adjacency matrix  `B`, which is typically weighted and directed.
+> ① contains the input adjacency matrix  `B`, which is typically weighted and directed.
 > 
-> ②defines the property panel `PanelPropMatrix` to plot this property with a table.
+> ② defines the property panel `PanelPropMatrix` to plot this property with a table.
 > 
-> ④defines the number of attempts that will be used for each edge when calling `RANDOMIZATION`
+> ③ defines the semi-positivation rule (i.e., how to remove the negative edges) to be used when generating the adjacency matrix `A` from the intput property `B`. The admissible options are: `'zero'` (default, convert negative values to zeros) or `'absolute'` (convert negative values to absolute value).
 > 
-> ⑤randomizes the adjacency matrix contained in `cell`
+> ④ defines the number of attempts that will be used for each edge when calling `RANDOMIZATION`.
 > 
-> ⑥returns empty cell is the input is an empty cell
+> ⑤ randomizes the adjacency matrix contained in `cell`.
 > 
-> ⑦finds number of edges in the matrix (different from zero)
+> ⑥ returns empty cell is the input is an empty cell.
 > 
-> ⑧returns number of edges in the matrix (different from zero)
+> ⑦ finds number of edges in the matrix (different from zero).
 > 
-> ⑨returns same input matrix if it is all zeros
+> ⑧ returns number of edges in the matrix (different from zero).
 > 
-> ⑩randomizes the edge when there is only one edge in the input matrix
+> ⑨ returns same input matrix if it is all zeros.
 > 
-> ⑪randomizes edges in the matrix when more than one edge (non-zero) were found in the input matrix
+> ⑩ randomizes the edge when there is only one edge in the input matrix.
 > 
-> ⑫takes two random edges
+> ⑪ randomizes edges in the matrix when more than one edge (non-zero) were found in the input matrix.
 > 
-> ⑬saves the values of the selected random edges (this is important when the property `RANDOMIZATION` is used by weighted graphs)
+> ⑫ takes two random edges.
 > 
-> ⑭deletes edges in the old positions
+> ⑬ saves the values of the selected random edges (this is important when the property `RANDOMIZATION` is used by weighted graphs).
 > 
-> ⑮sets values of edges in the new random positions
+> ⑭ deletes edges in the old positions.
 > 
-
-
+> ⑮ sets values of edges in the new random positions.
+> 
 
 
 > **Code 4.** **GraphBD element tests.**
 > 		The `tests` section in the element generator "_GraphBD.gen.m".
-> 		A general test should be prepared to test the properties of the graph  when it is empty and full. Furthermore, additional tests should be prepared for the rules defined (one test per rule).
+> 		A general test should be prepared to test the properties of the graph  when it is empty and full. Furthermore, additional tests should be prepared for the defined rules (one test per rule).
 > ````matlab
 > %% ¡tests!
 > 
@@ -438,67 +436,70 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 > 'GraphBD Randomize is not functioning well.')
 > ````
 > 
-> ①List of properties that are excluded from testing.
+> ① List of properties that are excluded from testing.
 > 
-> ②checks that an empty "GraphBD" graph is constructing well.
+> ② checks that an empty `GraphBD` graph is constructing well.
 > 
-> ③assigns a low test execution probability.
+> ③ assigns a low test execution probability.
 > 
-> ④initializes an empty input adjacency matrix `B`.
+> ④ initializes an empty input adjacency matrix `B`.
 > 
-> ⑤constructs the "GraphBD" graph from the initialized "B".
+> ⑤ constructs the `GraphBD` graph from the initialized `B`.
 > 
-> ⑥performs the corresponding checks for the format of the adjacency matrix `A`: `GRAPH_TYPE`, `CONNECTIVITY_TYPE`, `DIRECTIONALITY_TYPE`, `SELFCONNECTIVITY_TYPE`, and `NEGATIVITY_TYPE`.
+> ⑥ performs the corresponding checks for the format of the adjacency matrix `A`: `GRAPH_TYPE`, `CONNECTIVITY_TYPE`, `DIRECTIONALITY_TYPE`, `SELFCONNECTIVITY_TYPE`, and `NEGATIVITY_TYPE`.
 > 
-> ⑦calculates the value of the graph by apply the corresponding properties function.
+> ⑦ calculates the value of the graph by applying the corresponding functions.
 > 
-> ⑧tests that the value of generated graph calculated by applying the properties functions coincides with the expected value.
+> ⑧ tests that the value of generated graph calculated by applying the functions coincides with the expected value.
 > 
-> ⑨checks that a full "GraphBD" graph is constructing well.
+> ⑨ checks that a full `GraphBD` graph is constructing well.
 > 
-> ⑩generates a random input adjacency matrix `B`.
+> ⑩ generates a random input adjacency matrix `B`.
 > 
-> ⑪checks the "SEMIPOSITIVIZE_RULE" on the "GraphBD" graph.
+> ⑪ checks the `SEMIPOSITIVIZE_RULE` on the `GraphBD` graph.
 > 
-> ⑫generates an input adjacency matrix with negative weights.
+> ⑫ generates an input adjacency matrix with negative weights.
 > 
-> ⑬constructs the "GraphBD" graph from the initialized "B" with default RULE for "SEMIPOSITIVIZE_RULE".
+> ⑬ constructs the `GraphBD` graph from the initialized `B` with default RULE for `SEMIPOSITIVIZE_RULE`.
 > 
-> ⑭provides the expected value of `A` calculated by external means.
+> ⑭ provides the expected value of `A` calculated by external means.
 > 
-> ⑮constructs the "GraphBD" graph from the initialized "B" with RULE = 'zero' for "SEMIPOSITIVIZE_RULE".
+> ⑮ constructs the `GraphBD` graph from the initialized `B` with RULE = 'zero' for `SEMIPOSITIVIZE_RULE`.
 > 
-> ⑯constructs the "GraphBD" graph from the initialized "B" with RULE = 'absolute' for `SEMIPOSITIVIZE_RULE`.
+> ⑯ constructs the `GraphBD` graph from the initialized `B` with RULE = 'absolute' for `SEMIPOSITIVIZE_RULE`.
 > 
-> ⑰tests that `RANZOMIZATION` works properly.
+> ⑰ tests that `RANZOMIZATION` works properly.
 > 
-> ⑱tests that `RANZOMIZATION` returns a matrix with same size.
+> ⑱ tests that `RANZOMIZATION` returns a matrix with same size.
 > 
-> ⑲tests that `RANZOMIZATION` returns a matrix of zeros when input matrix is all zeros.
+> ⑲ tests that `RANZOMIZATION` returns a matrix of zeros when input matrix is all zeros.
 > 
-> ⑳tests that `RANZOMIZATION` returns a matrix of ones when input matrix is all ones (except diagonal).
+> ⑳ tests that `RANZOMIZATION` returns a matrix of ones when input matrix is all ones (except diagonal).
 > 
-> ㉑tests that new random matrix is different from original one.
+> ㉑ tests that new random matrix is different from original one.
 > 
-> ㉒tests that new random matrix has the same number of nodes as the original one
+> ㉒ tests that new random matrix has the same number of nodes as the original one
 > 
-> ㉓tests that new random matrix has the same degree distribution as the original one
+> ㉓ tests that new random matrix has the same degree distribution as the original one
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
+
+
 
 <a id="Implementation-of-Multilayer-Graphs"></a>
 ## Implementation of Multilayer Graphs  [⬆](#Table-of-Contents)
 
-<a id="Weigthed-Directed-Multilayer-Graph-MultilayerWD-"></a>
-### Weigthed Directed Multilayer Graph (MultilayerWD )  [⬆](#Table-of-Contents)
+<a id="Weigthed-Directed-Multilayer-Graph-MultilayerWD"></a>
+### Weigthed Directed Multilayer Graph (MultilayerWD)  [⬆](#Table-of-Contents)
 
-We can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. The parts of the code that are modified are highlighted.
+You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. 
+{The parts of the code that are modified are highlighted.}%TEX 
 A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
 
 
 > **Code 5.** **MultilayerWD element header.**
-> 		The `header` section of generator code for "_MultilayerWD.gen.m" provides the general information about the `MultilayerWD` element.
+> 		The `header` section of generator code in "_MultilayerWD.gen.m" provides the general information about the `MultilayerWD` element.
 > 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
@@ -506,12 +507,15 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > 
 > %%% ¡description!
 > In a multilayer weighted directed (WD) graph, layers could have different number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. The connectivity matrices are symmetric (within layer). All node connections are allowed between layers.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
 > **Code 6.** **MultilayerWD element prop update.**
-> 		The `props_update` section of generator code for "_MultilayerWD.gen.m" updates the properties of `MultilayerWD`.
+> 		The `props_update` section of the generator code in "_MultilayerWD.gen.m" updates the properties of `MultilayerWD`.
 > 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
@@ -619,7 +623,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 >     A = g.get('RANDOMIZATION', A);
 > end
 > value = A;
-> %%%% ¡gui!¥\circlednote{2}{These are some properties of graph adjacency matrix `A` that can be used in the gui to make the visualization user friendly. The list of properties that can be used are: `ALAYERTICKS` (to set ticks for each layer according to the layer number), `ALAYERLABELS` (to set labels for each layer), and `ANODELABELS` (to set the nodel labels for each layer)).}¥
+> %%%% ¡gui!
 > pr = PanelPropCell('EL', g, 'PROP', MultilayerWD.A, ...
 >     'TABLE_HEIGHT', s(40), ...
 >     'XYSLIDERLOCK', true, ... 
@@ -651,18 +655,20 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > getCompatibleMeasures('MultilayerWD')
 > ````
 > 
-> ①For each layer in "MultilayerWD" graph, the corresponding functions are applied as in the notes ⑧, ⑨, and  ⑩ of Code 2.
+> ① For each layer in `MultilayerWD` graph, the corresponding functions are applied as in the notes ⑧, ⑨, and  ⑩ of Code 2.
 > 
-> ③returns the labels of the graph layers provided by the user.
+> ② These are some properties of the graph adjacency matrix `A` used in its  visualization. The list of properties that can be used are: `ALAYERTICKS` (to set ticks for each layer according to the layer number), `ALAYERLABELS` (to set labels for each layer), and `ANODELABELS` (to set the nodal labels for each layer)).
 > 
-> ④constructs the labels of the layers based on the number of the layer (in case no layer labels were provided by the user).
+> ③ returns the labels of the graph layers provided by the user.
+> 
+> ④ constructs the labels of the layers based on the number of the layer (in case no layer labels were provided by the user).
 > 
 
 
 
 
 > **Code 7.** **MultilayerWD element props.**
-> 	The `props` section of generator code for "MultilayerWD.gen.m" defines the properties to be used in "MultilayerWD".
+> 	The `props` section of the generator code for "_MultilayerWD.gen.m" defines the properties to be used in `MultilayerWD`.
 > 	This code modifies Code 3.
 > ````matlab
 > %% ¡props!
@@ -728,15 +734,15 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > value = A;
 > ````
 > 
-> ①Same as in note ② of Code 3.
+> ① Same as in note ② of Code 3.
 > 
-> ②Same as in  note ③ of Code 3.
+> ② Same as in  note ③ of Code 3.
 > 
-> ③defines the number of weights that will be sorted at the same time when using `RANDOMIZATION`.
+> ③ defines the number of weights that will be sorted at the same time when using `RANDOMIZATION`.
 > 
-> ④iterates over each layer in `MultilayerWD` to randomize it.
+> ④ iterates over each layer in `MultilayerWD` to randomize it.
 > 
-> ⑤initizalizes empty `GraphWD` to get `RANDOMIZATION` property from it.
+> ⑤ initizalizes empty `GraphWD` to get `RANDOMIZATION` property from it.
 > 
 
 
@@ -851,7 +857,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > end
 > ````
 > 
-> ①tests `RANDOMIZATION` as in Code 4 for each layer in `A2`.
+> ① tests `RANDOMIZATION` as in Code 4 for each layer in `A2`.
 > 
 
 
@@ -859,7 +865,8 @@ A multilayer graph allows connections between any nodes across the multiple laye
 <a id="Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-MultiplexBUT"></a>
 ### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [⬆](#Table-of-Contents)
 
-Now we implement the `MultiplexBUT` graph based on previous codes `GraphBD` and `MultilayerWD`, again highlighting the differences.
+Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. 
+{Again, the difference will be highlighted.}%TEX
 A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
 
@@ -874,7 +881,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > In a binary undirected multiplex with fixed thresholds (BUT), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds.The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 > ````
 > 
-> ①MultiplexBUT is a child of "MultiplexWU", which in turn derives from `Graph`.
+> ① MultiplexBUT is a child of `MultiplexWU`, which in turn derives from `Graph`.
 > 
 
 
@@ -1055,30 +1062,30 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > value = A;
 > ````
 > 
-> ①calculates the graph MultiplexWU calling its parent "MultiplexWU".
+> ① calculates the graph MultiplexWU calling its parent `MultiplexWU`.
 > 
-> ②gets the thresholds to be applied to "A_WU".
+> ② gets the thresholds to be applied to `A_WU`.
 > 
-> ③gets the number of layers in graph "A_WU".
+> ③ gets the number of layers in graph `A_WU`.
 > 
-> ④The new "MultiplexBUT" graph will have "L" layers for each threshold applied.
+> ④ The new `MultiplexBUT` graph will have `L` layers for each threshold applied.
 > 
-> ⑤iterates over all the thresholds to be applied.
+> ⑤ iterates over all the thresholds to be applied.
 > 
-> ⑥iterates over all the layers in "A_WU".
+> ⑥ iterates over all the layers in `A_WU`.
 > 
-> ⑦binarizes the present layer of the "A_WU" graph according to the present threshold.
+> ⑦ binarizes the present layer of the `A_WU` graph according to the present threshold.
 > 
-> ⑧Same as in note ② of Code 2.
+> ⑧ Same as in note ② of Code 2.
 > 
-> ⑨sets the labels of the layers considering the thresholds and the number of layers in each multiplex graph for each threshold
+> ⑨ sets the labels of the layers considering the thresholds and the number of layers in each multiplex graph for each threshold
 > 
-> ⑩Same as in  Code 6 but using `GraphBU`
+> ⑩ Same as in  Code 6 but using `GraphBU`
 > 
 
 
 > **Code 11.** **MultiplexBUT element props.**
-> 	The `props` section of generator code for "MultiplexBUT.gen.m" defines the properties to be used in "MultiplexBUT".
+> 	The `props` section of generator code for "_MultiplexBUT.gen.m" defines the properties to be used in `MultiplexBUT`.
 > 	This code modifies Code 3.
 > ````matlab
 > %% ¡props!
@@ -1092,7 +1099,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 >     varargin{:});
 > ````
 > 
-> ①`PanelPropRVectorSmart` plots the panel for a row vector with an edit field. Smart means that (almost) any MatLab expression leading to a correct row vector can be introduced in the edit field. Also, the value of the vector can be limited between some MIN and MAX.
+> ① `PanelPropRVectorSmart` plots the panel for a row vector with an edit field. Smart means that (almost) any MatLab expression leading to a correct row vector can be introduced in the edit field. Also, the value of the vector can be limited between some MIN and MAX.
 > 
 
 
@@ -1194,11 +1201,11 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > end
 > ````
 > 
-> ①creates an example of the necessary input adjacency matrices.
+> ① creates an example of the necessary input adjacency matrices.
 > 
-> ②defines the thresholds.
+> ② defines the thresholds.
 > 
-> ③checks symmetry of each layer in the new random graph `random_A` since they are undirected
+> ③ checks symmetry of each layer in the new random graph `random_A` since they are undirected
 > 
 
 
@@ -1221,7 +1228,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > In a binary undirected ordinal multiplex with fixed thresholds (BUT), all the layers consist of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
 > ````
 > 
-> ①`OrdMxBUT` is a child of `OrdMxWU`, which in turn derives from `Graph`.
+> ① `OrdMxBUT` is a child of `OrdMxWU`, which in turn derives from `Graph`.
 > 
 
 
@@ -1398,28 +1405,28 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > value = A;
 > ````
 > 
-> ①calculates the graph OrdMxWU calling the parent `OrdMxWU`.
+> ① calculates the graph OrdMxWU calling the parent `OrdMxWU`.
 > 
-> ②Same as in notes  ②, ③, and ④ of Code 10..
+> ② Same as in notes  ②, ③, and ④ of Code 10..
 > 
-> ③constructs an ordinal muliplex binary undirected graph for each threshold.
+> ③ constructs an ordinal muliplex binary undirected graph for each threshold.
 > 
-> ④loops over the layers of `A_Wu` for each threshold.
+> ④ loops over the layers of `A_Wu` for each threshold.
 > 
-> ⑤sets the layers constructed by binarizing `A_Wu` according to the present threshold on the diagonal of the supra-adjacency matrix.
+> ⑤ sets the layers constructed by binarizing `A_Wu` according to the present threshold on the diagonal of the supra-adjacency matrix.
 > 
-> ⑥connects consecutive layers.
+> ⑥ connects consecutive layers.
 > 
-> ⑦does NOT connect NON-consecutive layers.
+> ⑦ does NOT connect NON-consecutive layers.
 > 
-> ⑧same as in Code 10
+> ⑧ same as in Code 10
 > 
 
 
 
 
 > **Code 15.** **OrdMxBUT element props.**
-> 	The `props` section of generator code for "OrdMxBUT.gen.m" defines the properties to be used in "MultiplexBUT".
+> 	The `props` section of generator code for "_OrdMxBUT.gen.m" defines the properties to be used in `MultiplexBUT`.
 > 	This code modifies Code 11.
 > ````matlab
 > %% ¡props!
@@ -1538,7 +1545,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > end
 > ````
 > 
-> ①same as in Code 12
+> ① same as in Code 12
 > 
 
 %\bibliography{biblio}
