@@ -1,9 +1,9 @@
-# Implement a new Neural Network Regressor
+# Implement a New Neural Network Regressor
 
-[![Tutorial Implement a new Neural Network Regressor](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_reg.pdf)
+[![Tutorial Implement a New Neural Network Regressor](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_reg.pdf)
 
 This is the developer tutorial for implementing a new neural network regressor. 
-In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new neural network regressor, which can then be compiled by `braph2genesis`. All kinds of neural network models are (direct or indirect) extensions of the base element `NNBase`. Here, we will use as examples the neural network regressor `NNRegressorMLP` (multi-layer perceptron regressor).
+In this tutorial, you will learn how to create the generator file "*.gen.m" for a new neural network regressor, which can then be compiled by `braph2genesis`. All kinds of neural network models are (direct or indirect) extensions of the base element `NNBase`. Here, you will use as example the neural network regressor `NNRegressorMLP` (multi-layer perceptron regressor).
 
 
 ## Table of Contents
@@ -15,12 +15,12 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 <a id="Implementation-of-a-neural-network-regressor-NNRegressorMLP"></a>
 ## Implementation of a neural network regressor (`NNRegressorMLP`)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `NNRegressorMLP`, which is a direct extension of `NNBase`.
+You will start by implementing in detail `NNRegressorMLP`, which is a direct extension of `NNBase`.
 A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perceptron regressor model and a given dataset.
 
 
 > **Code 1.** **NNRegressorMLP element header.**
-> 		The `header` section of the generator code for "_NNRegressorMLP.gen.m" provides the general information about the `NNRegressorMLP` element.
+> 		The `header` section of the generator code in "_NNRegressorMLP.gen.m" provides the general information about the `NNRegressorMLP` element.
 > ````matlab
 > %% ¡header!
 > NNRegressorMLP < NNBase (nn, multi-layer perceptron regressor) comprises a multi-layer perceptron regressor model and a given dataset.  ①
@@ -28,14 +28,17 @@ A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perc
 > %%% ¡description!
 > A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset.
 > NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
-> ①defines `NNRegressorMLP` as a subclass of `NNBase`. The moniker will be `nn`.
+> ① defines `NNRegressorMLP` as a subclass of `NNBase`. The moniker will be `nn`.
 > 
 
 
 > **Code 2.** **NNRegressorMLP element prop update.**
-> 		The `props_update` section of the generator code for "_NNRegressorMLP.gen.m" updates the properties of the `NNRegressorMLP` element. This defines the core properties of the data point.
+> 		The `props_update` section of the generator code in "_NNRegressorMLP.gen.m" updates the properties of the `NNRegressorMLP` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -179,26 +182,28 @@ A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perc
 > end
 > ````
 > 
-> ①defines `NNDataset` which contains the `NNDataPoint` to train this regressor.
+> ① defines `NNDataset` which contains the `NNDataPoint` to train this regressor.
 > 
-> ②defines the compatible `NNDataPoint` classes with this `NNRegressorMLP`.
+> ② defines the compatible `NNDataPoint` classes with this `NNRegressorMLP`.
 > 
-> ③is a query that transforms the input data of `NNDataPoint` to the CB (channel-batch) format by flattening its included cells.
+> ③ is a query that transforms the input data of `NNDataPoint` to the CB (channel-batch) format by flattening its included cells.
 > 
-> ④is a query that collects all the target values from all data points.
+> ④ is a query that collects all the target values from all data points.
 > 
-> ⑤trains the regressor with the defined dataset by the code under `¡calculate!`.
+> ⑤ trains the regressor.
 > 
-> ⑧defines the neural network architecture with user specified number of neurons and number of layers.
+> ⑥ and ⑦ extract the inputs and targets.
 > 
-> ⑨defines the neural network training options.
+> ⑧ defines the neural network architecture with user-specified number of neurons and number of layers.
 > 
-> ⑩trains the model with those parameters and the neural network architecture.
+> ⑨ defines the neural network training options.
+> 
+> ⑩ trains the model with those parameters and the neural network architecture.
 > 
 
 
 > **Code 3.** **NNRegressorMLP element props.**
-> 		The `props` section of generator code for "_NNRegressorMLP.gen.m" defines the properties to be used in "NNRegressorMLP".
+> 		The `props` section of generator code in "_NNRegressorMLP.gen.m" defines the properties to be used in "NNRegressorMLP".
 > ````matlab
 > %% ¡props!
 > 
@@ -276,9 +281,11 @@ A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perc
 > value = feature_importance_all_permutations;
 > ````
 > 
-> ①defines the number of neuron per layer. For example, `[32 32]` represents two layers, each containing 32 neurons.
+> ① defines the number of neuron per layer. For example, `[32 32]` represents two layers, each containing 32 neurons.
 > 
-> ②is a query that calculates the permuation feature importance. Note that, other neural network architectures, such as convolutional neural network, have other techniques to obtain feature importance.
+> ② is a query that calculates the permuation feature importance. Note that, other neural network architectures, such as convolutional neural network, have other techniques to obtain feature importance.
+> 
+> ④ and ⑤ iteratively shuffle the feature values from any given dataset P times and measuring the resulting average decrease in model performance.
 > 
 
 
@@ -347,7 +354,7 @@ A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perc
 >     )
 > ````
 > 
-> ①checks whether the number of layers from the trained model is correctly set.
+> ① checks whether the number of layers from the trained model is correctly set.
 > 
 
 %\bibliography{biblio}
