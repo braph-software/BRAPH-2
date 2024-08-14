@@ -34,12 +34,12 @@ In this Tutorial, you will learn how to create the generator file "*.gen.m" for 
 <a id="Connectivity-data-point-for-regression-NNDataPointCONREG"></a>
 ### Connectivity data point for regression (`NNDataPoint_CON_REG`)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `NNDataPoint_CON_REG`, which is a direct extension of `NNDataPoint`.
-A data point for regression with connectivity data `NNDataPoint_CON_REG` contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON), where the input is the subject's connectivity data and the target is the subject's variables of interest.
+You will start by implementing in detail `NNDataPoint_CON_REG`, which is a direct extension of `NNDataPoint`.
+A `NNDataPoint_CON_REG` contains the input and target for neural network analysis with a subject with connectivity data (`SubjectCON`), where the input is the subject's connectivity data and the target are the subject's variables of interest.
 
 
 > **Code 1.** **NNDataPoint_CON_REG element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_CON_REG.gen.m" provides the general information about the `NNDataPoint_CON_REG` element.
+> 		The `header` section of the generator code in "_NNDataPoint_CON_REG.gen.m" provides the general information about the `NNDataPoint_CON_REG` element.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_CON_REG < NNDataPoint (dp, connectivity regression data point) is a data point for regression with connectivity data.
@@ -50,15 +50,17 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 > contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
 > The input is the connectivity data of the subject.
 > The target is obtained from the variables of interest of the subject.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① defines `NNDataPoint_CON_REG` as a subclass of `NNDataPoint`. The moniker will be `dp`.
 > 
 
 
-
-> **Code 2.** **NNDataPoint_CON_REG element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_CON_REG.gen.m" updates the properties of the `NNDataPoint_CON_REG` element. This defines the core properties of the data point.
+> **Code 2.** **NNDataPoint_CON_REG element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_CON_REG.gen.m" updates the properties of the `NNDataPoint` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -95,22 +97,22 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 > %%% ¡prop!   ①
 > INPUT (result, cell) is the input value for this data point.
 > %%%% ¡calculate!
-> value = {dp.get('SUB').get('CON')};
+> value = {dp.get('SUB').get('CON')};  ②
 >     
-> %%% ¡prop!  ②
+> %%% ¡prop!  ③
 > TARGET (result, cell) is the target value for this data point.
 > %%%% ¡calculate!
-> value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);
+> value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);  ④
 > ````
 > 
-> ① The property `INPUT` is the input value for this data point, which is obtained directly from the connectivity data of `Subject_CON` by the code under `¡calculate!`.
+> ① The property `INPUT` is the input value for this data point, which is obtained directly from the connectivity data of `Subject_CON` ②.
 > 
-> ② The property `TARGET` is the target value for this data point, which is obtained directly from the variables of interest of `VOI_DICT` by the code under `¡calculate!`.
+> ③ The property `TARGET` is the target value for this data point, which is obtained directly from the variables of interest ④.
 > 
 
 
 > **Code 3.** **NNDataPoint_CON_REG element props.**
-> 		The `props` section of generator code for "_NNDataPoint_CON_REG.gen.m" defines the properties to be used in "NNDataPoint_CON_REG".
+> 		The `props` section of generator code in "_NNDataPoint_CON_REG.gen.m" defines the properties to be used in "NNDataPoint_CON_REG".
 > ````matlab
 > %% ¡props!
 > 
@@ -123,7 +125,7 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 > TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as regression targets.
 > ````
 > 
-> ① The property `SUB` is a subject with connectivity data (`Subject_CON`), which is used to calculated the mentioned properties `INPUT` and `TARGET`.
+> ① The property `SUB` is a subject with connectivity data (`Subject_CON`), which is used to calculated the properties `INPUT` and `TARGET`.
 > 
 > ② The property `TARGET_IDS` defines the IDs of target, where the target IDs should be from the subject's variable-of-interest IDs.
 > 
@@ -311,7 +313,7 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 > 
 > ⑤ generates random rewiring probability settings for each subject.
 > 
-> ⑥utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function `WattsStrogatz` ⑩.
+> ⑥ utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function `WattsStrogatz` ⑩.
 > 
 > ⑦ exports the adjacency matrix of the graph to an Excel file.
 > 
@@ -337,12 +339,9 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 <a id="Connectivity-data-point-for-classification-NNDataPointCONCLA"></a>
 ### Connectivity data point for classification (`NNDataPoint_CON_CLA`)  [⬆](#Table-of-Contents)
 
-We can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint_CON_CLA`.
-The parts of the code that are modified are highlighted. 
-
-
+You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint_CON_CLA`, which can be used for classification tasks.
 > **Code 5.** **NNDataPoint_CON_CLA element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_CON_CLA.gen.m" provides the general information about the `NNDataPoint_CON_CLA` element.
+> 		The `header` section of the generator code in "_NNDataPoint_CON_CLA.gen.m" provides the general information about the `NNDataPoint_CON_CLA` element. This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_CON_CLA < NNDataPoint (dp, connectivity classification data point) is a data point for classification with connectivity data. . . . .%%% ¡description!
@@ -350,13 +349,15 @@ The parts of the code that are modified are highlighted.
 > contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
 > The input is the connectivity data of the subject.
 > The target is obtained from the variables of interest of the subject.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-
-> **Code 6.** **NNDataPoint_CON_CLA element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_CON_CLA.gen.m" updates the properties of the `NNDataPoint_CON_CLA` element. This defines the core properties of the data point.
+> **Code 6.** **NNDataPoint_CON_CLA element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_CON_CLA.gen.m" updates the properties of the `NNDataPoint_CON_CLA` element. This defines the core properties of the data point. This code modifies Code {cd:m:NNDataPoint_CON_REG:prop_update}.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -396,17 +397,21 @@ The parts of the code that are modified are highlighted.
 > value = {dp.get('SUB').get('CON')};
 >     
 > %%% ¡prop!  ①
-> TARGET (result, stringlist) is the target values for this data point.
+> TARGET (result, cell) is the target values for this data point.  ¡!0!¡
 > %%%% ¡calculate!
-> value = dp.get('TARGET_IDS');
+> value = {dp.get('TARGET_CLASS')};  ¡!0!¡
 > ````
 > 
-> ① defines the target value using the data point's label in the form of a string list, e.g., 'Group1'.
+> ① defines the target value using the data point's label in the form of a string, e.g., `'Group1'`, contained in a cell array and representing the class of the data point.
+> 
+> ¡!0!¡**changed stringlist to cell.**
+> 
+> ¡!0!¡**changed prop name.**
 > 
 
 
 > **Code 7.** **NNDataPoint_CON_CLA element props.**
-> 		The `props` section of generator code for "_NNDataPoint_CON_CLA.gen.m" defines the properties to be used in "NNDataPoint_CON_CLA".
+> 		The `props` section of generator code in "_NNDataPoint_CON_CLA.gen.m" defines the properties to be used in "NNDataPoint_CON_CLA".
 > ````matlab
 > %% ¡props!
 > 
@@ -415,12 +420,12 @@ The parts of the code that are modified are highlighted.
 > %%%% ¡settings!
 > 'SubjectCON'
 > 
-> %%% ¡prop! 
-> TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+> %%% ¡prop!  ¡!0!¡
+> TARGET_CLASS (parameter, string) is the name of the class of the data point.
 > ````
 > 
-
-
+> ¡!0!¡**changed. revise also the tests.**
+> 
 
 
 > **Code 8.** **NNDataPoint_CON_CLA element tests.**
@@ -580,7 +585,7 @@ The parts of the code that are modified are highlighted.
 > it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', group_folder_name), ...  ¡!0!¡
 >     gr1.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -588,7 +593,7 @@ The parts of the code that are modified are highlighted.
 > it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', group_folder_name), ...  ¡!0!¡
 >     gr2.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -666,7 +671,7 @@ The parts of the code that are modified are highlighted.
 >     test_NNDataPoint_CON_CLA % create example files
 > . . . . .
 > 
-> example_NN_CON_CLA
+> example_NN_CON_CLA  ¡!0!¡
 > ````
 > 
 > ① creates the first group of simulated data.
@@ -679,6 +684,10 @@ The parts of the code that are modified are highlighted.
 > 
 > ⑦ creates two datasets for the two groups.
 > 
+> ¡!0!¡**changed.**
+> 
+> ¡!0!¡**changed.**
+> 
 > ⑧ tests the number of inputs from the dataset matches the number of subjects in the group.
 > 
 > ⑨ tests the number of targets from the dataset matches the number of subjects in the group.
@@ -686,6 +695,8 @@ The parts of the code that are modified are highlighted.
 > ⑩ tests the value of each input from the data point matches the subject's connectivity data.
 > 
 > ⑪ executes the corresponding example scripts to ensure the functionalities.
+> 
+> ¡!0!¡**revise next ones to take into account the changes.**
 > 
 
 
@@ -696,13 +707,13 @@ The parts of the code that are modified are highlighted.
 <a id="Graph-data-point-for-regression-NNDataPointGraphREG"></a>
 ### Graph data point for regression (`NNDataPoint_Graph_REG`)  [⬆](#Table-of-Contents)
 
-Now we implement `NNDataPoint_Graph_REG` based on previous codes `NNDataPoint_CON_REG`.
+Now you will implement `NNDataPoint_Graph_REG` based on previous codes `NNDataPoint_CON_REG`.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
 The modified parts of the code are highlighted.
 
 
 > **Code 9.** **NNDataPoint_Graph_REG element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_Graph_REG.gen.m" provides the general information about the `NNDataPoint_Graph_REG` element.
+> 		The `header` section of the generator code in "_NNDataPoint_Graph_REG.gen.m" provides the general information about the `NNDataPoint_Graph_REG` element.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_Graph_REG < NNDataPoint (dp, measure regressioni data point) is a data point for regression with a graph.
@@ -712,13 +723,15 @@ The modified parts of the code are highlighted.
 >  contains both input and target for neural network analysis.
 > The input is the value of the adjacency matrix extracted from the derived graph of the subject.
 > The target is obtained from the variables of interest of the subject.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-
-> **Code 10.** **NNDataPoint_Graph_REG element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_Graph_REG.gen.m" updates the properties of the `NNDataPoint_Graph_REG` element. This defines the core properties of the data point.
+> **Code 10.** **NNDataPoint_Graph_REG element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_Graph_REG.gen.m" updates the properties of the `NNDataPoint_Graph_REG` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -768,7 +781,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 11.** **NNDataPoint_Graph_REG element props.**
-> 		The `props` section of generator code for "_NNDataPoint_Graph_REG.gen.m" defines the properties to be used in "NNDataPoint_Graph_REG".
+> 		The `props` section of generator code in "_NNDataPoint_Graph_REG.gen.m" defines the properties to be used in "NNDataPoint_Graph_REG".
 > ````matlab
 > %% ¡props!
 > 
@@ -986,7 +999,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 13.** **NNDataPoint_Graph_CLA element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_Graph_CLA.gen.m" provides the general information about the `NNDataPoint_Graph_CLA` element.
+> 		The `header` section of the generator code in "_NNDataPoint_Graph_CLA.gen.m" provides the general information about the `NNDataPoint_Graph_CLA` element.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_Graph_CLA < NNDataPoint (dp, graph classification data point) is a data point for classification with a graph.
@@ -1001,8 +1014,8 @@ The modified parts of the code are highlighted.
 
 
 
-> **Code 14.** **NNDataPoint_Graph_CLA element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_Graph_CLA.gen.m" updates the properties of the `NNDataPoint_Graph_CLA` element. This defines the core properties of the data point.
+> **Code 14.** **NNDataPoint_Graph_CLA element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_Graph_CLA.gen.m" updates the properties of the `NNDataPoint_Graph_CLA` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1052,7 +1065,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 15.** **NNDataPoint_Graph_CLA element props.**
-> 		The `props` section of generator code for "_NNDataPoint_Graph_CLA.gen.m" defines the properties to be used in "NNDataPoint_Graph_CLA".
+> 		The `props` section of generator code in "_NNDataPoint_Graph_CLA.gen.m" defines the properties to be used in "NNDataPoint_Graph_CLA".
 > ````matlab
 > %% ¡props!
 > 
@@ -1290,7 +1303,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 17.** **NNDataPoint_Measure_REG element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_Measure_REG.gen.m" provides the general information about the `NNDataPoint_Measure_REG` element.
+> 		The `header` section of the generator code in "_NNDataPoint_Measure_REG.gen.m" provides the general information about the `NNDataPoint_Measure_REG` element.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_Measure_REG < NNDataPoint (dp, measure regression data point) is a data point for regression with graph measures.
@@ -1306,8 +1319,8 @@ The modified parts of the code are highlighted.
 
 
 
-> **Code 18.** **NNDataPoint_Measure_REG element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_Measure_REG.gen.m" updates the properties of the `NNDataPoint_Measure_REG` element. This defines the core properties of the data point.
+> **Code 18.** **NNDataPoint_Measure_REG element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_Measure_REG.gen.m" updates the properties of the `NNDataPoint_Measure_REG` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1357,7 +1370,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 19.** **NNDataPoint_Measure_REG element props.**
-> 		The `props` section of generator code for "_NNDataPoint_Measure_REG.gen.m" defines the properties to be used in "NNDataPoint_Measure_REG".
+> 		The `props` section of generator code in "_NNDataPoint_Measure_REG.gen.m" defines the properties to be used in "NNDataPoint_Measure_REG".
 > ````matlab
 > %% ¡props!
 > 
@@ -1552,7 +1565,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 21.** **NNDataPoint_Measure_CLA element header.**
-> 		The `header` section of the generator code for "_NNDataPoint_Measure_CLA.gen.m" provides the general information about the `NNDataPoint_Measure_CLA` element.
+> 		The `header` section of the generator code in "_NNDataPoint_Measure_CLA.gen.m" provides the general information about the `NNDataPoint_Measure_CLA` element.
 > ````matlab
 > %% ¡header!
 > NNDataPoint_Measure_CLA < NNDataPoint (dp, measure classification data point) is a data point for classification with graph measures.
@@ -1567,8 +1580,8 @@ The modified parts of the code are highlighted.
 > 
 
 
-> **Code 22.** **NNDataPoint_Measure_CLA element prop update.**
-> 		The `props_update` section of the generator code for "_NNDataPoint_Measure_CLA.gen.m" updates the properties of the `NNDataPoint_Measure_CLA` element. This defines the core properties of the data point.
+> **Code 22.** **NNDataPoint_Measure_CLA element props update.**
+> 		The `props_update` section of the generator code in "_NNDataPoint_Measure_CLA.gen.m" updates the properties of the `NNDataPoint_Measure_CLA` element. This defines the core properties of the data point.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1618,7 +1631,7 @@ The modified parts of the code are highlighted.
 
 
 > **Code 23.** **NNDataPoint_Measure_CLA element props.**
-> 		The `props` section of generator code for "_NNDataPoint_Measure_CLA.gen.m" defines the properties to be used in "NNDataPoint_Measure_CLA".
+> 		The `props` section of generator code in "_NNDataPoint_Measure_CLA.gen.m" defines the properties to be used in "NNDataPoint_Measure_CLA".
 > ````matlab
 > %% ¡props!
 > 

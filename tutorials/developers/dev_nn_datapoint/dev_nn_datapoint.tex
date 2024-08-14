@@ -24,14 +24,14 @@ In this Tutorial, you will learn how to create the generator file \fn{*.gen.m} f
 
 \subsection{Connectivity data point for regression (\code{NNDataPoint\_CON\_REG})}
 
-We will start by implementing in detail \code{NNDataPoint\_CON\_REG}, which is a direct extension of \code{NNDataPoint}.
-A data point for regression with connectivity data \code{NNDataPoint\_CON\_REG} contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON), where the input is the subject's connectivity data and the target is the subject's variables of interest.
+You will start by implementing in detail \code{NNDataPoint\_CON\_REG}, which is a direct extension of \code{NNDataPoint}.
+A \code{NNDataPoint\_CON\_REG} contains the input and target for neural network analysis with a subject with connectivity data (\code{SubjectCON}), where the input is the subject's connectivity data and the target are the subject's variables of interest.
 
 \begin{lstlisting}[
 	label=cd:m:NNDataPoint_CON_REG:header,
 	caption={
 		{\bf NNDataPoint\_CON\_REG element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_CON\_REG.gen.m} provides the general information about the \code{NNDataPoint\_CON\_REG} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_CON\_REG.gen.m} provides the general information about the \code{NNDataPoint\_CON\_REG} element.
 		}
 ]
 %% ¡header!
@@ -43,14 +43,16 @@ A data point for regression with connectivity data (NNDataPoint_CON_REG)
 contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
 The input is the connectivity data of the subject.
 The target is obtained from the variables of interest of the subject.
-\end{lstlisting}
 
+%%% ¡build!
+1
+\end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_CON_REG:prop_update},
 	caption={
-		{\bf NNDataPoint\_CON\_REG element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_CON\_REG.gen.m} updates the properties of the \code{NNDataPoint\_CON\_REG} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_CON\_REG element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_CON\_REG.gen.m} updates the properties of the \code{NNDataPoint} element. This defines the core properties of the data point.
 	}
 ]
 %% ¡props_update!
@@ -85,28 +87,27 @@ NOTES (metadata, string) are some specific notes about a data point for regressi
 %%%% ¡default!
 'NNDataPoint_CON_REG notes'
 
-%%% ¡prop!  ¥\circled{1}\circlednote{1}{ The property \code{INPUT} is the input value for this data point, which is obtained directly from the connectivity data of \code{Subject\_CON} by the code under \code{¡calculate!}.}¥
+%%% ¡prop!  ¥\circled{1}\circlednote{1}{ The property \code{INPUT} is the input value for this data point, which is obtained directly from the connectivity data of \code{Subject\_CON} \circled{2}.}¥
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!
-value = {dp.get('SUB').get('CON')};
+value = {dp.get('SUB').get('CON')}; ¥\circled{2}¥
     
-%%% ¡prop! ¥\circled{2}\circlednote{2}{ The property \code{TARGET} is the target value for this data point, which is obtained directly from the variables of interest of \code{VOI\_DICT} by the code under \code{¡calculate!}.}¥
+%%% ¡prop! ¥\circled{3}\circlednote{3}{ The property \code{TARGET} is the target value for this data point, which is obtained directly from the variables of interest \circled{4}.}¥
 TARGET (result, cell) is the target value for this data point.
 %%%% ¡calculate!
-value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);
-
+value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false); ¥\circled{4}¥
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_CON_REG:props},
 	caption={
 		{\bf NNDataPoint\_CON\_REG element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_CON\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_CON\_REG}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_CON\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_CON\_REG}.
 	}
 ]
 %% ¡props!
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{ The property \code{SUB} is a subject with connectivity data (\code{Subject\_CON}), which is used to calculated the mentioned properties \code{INPUT} and \code{TARGET}.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ The property \code{SUB} is a subject with connectivity data (\code{Subject\_CON}), which is used to calculated the properties \code{INPUT} and \code{TARGET}.}¥
 SUB (data, item) is a subject with connectivity data.
 %%%% ¡settings!
 'SubjectCON'
@@ -168,7 +169,7 @@ if ~isdir(data_dir)
         sub_id = ['SubjectCON_' num2str(i)];
         % create WS graphs with random beta
         beta(i) = rand(1); ¥\circled{5}\circlednote{5}{ generates random rewiring probability settings for each subject.}¥
-        h = WattsStrogatz(N, K, beta(i)); % create WS graph ¥\circled{6}\circlednote{6}{utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function \code{WattsStrogatz} \circled{10}.}¥
+        h = WattsStrogatz(N, K, beta(i)); % create WS graph ¥\circled{6}\circlednote{6}{ utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function \code{WattsStrogatz} \circled{10}.}¥
 
         A = full(adjacency(h)); A(1:length(A)+1:numel(A)) = 0; % extract the adjacency matrix
         r = 0 + (0.5 - 0) * rand(size(A)); diffA = A - r; A(A ~= 0) = diffA(A ~= 0); % make the adjacency matrix weighted
@@ -297,14 +298,16 @@ example_NN_CON_REG
 
 \subsection{Connectivity data point for classification (\code{NNDataPoint\_CON\_CLA})}
 
-We can now use \code{NNDataPoint\_CON\_REG} as the basis to implement the \code{NNDataPoint\_CON\_CLA}.
-The parts of the code that are modified are highlighted. 
+You can now use \code{NNDataPoint\_CON\_REG} as the basis to implement the \code{NNDataPoint\_CON\_CLA}, which can be used for classification tasks.
+{%TEX
+The parts of the code that are modified are highlighted.
+}%TEX
 
 \begin{lstlisting}[
 	label=cd:m:NNDataPoint_CON_CLA:header,
 	caption={
 		{\bf NNDataPoint\_CON\_CLA element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_CON\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_CON\_CLA} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_CON\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_CON\_CLA} element. \expand{cd:m:NNDataPoint_CON_REG:header}
 		}
 ]
 ¤%% ¡header!¤
@@ -314,15 +317,17 @@ NNDataPoint_CON_CLA ¤< NNDataPoint¤ (dp, connectivity classification data poin
 ¤A data point for ¤classification¤ with connectivity data¤ (NNDataPoint_CON_CLA) 
 ¤contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON).
 The input is the connectivity data of the subject.
-The target is obtained from the variables of interest of the subject.¤
-\end{lstlisting}
+The target is obtained from the variables of interest of the subject.
 
+%%% ¡build!
+¤1
+\end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_CON_CLA:prop_update},
 	caption={
-		{\bf NNDataPoint\_CON\_CLA element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_CON\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_CON\_CLA} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_CON\_CLA element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_CON\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_CON\_CLA} element. This defines the core properties of the data point. \expand{cd:m:NNDataPoint_CON_REG:prop_update}
 	}
 ]
 ¤%% ¡props_update!¤
@@ -362,18 +367,17 @@ INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!
 value = {dp.get('SUB').get('CON')};¤
     
-¤%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the target value using the data point's label in the form of a string list, e.g., 'Group1'.}¥
-TARGET (result, stringlist) is the target values for this data point.
-%%%% ¡calculate!¤
-value = dp.get('TARGET_IDS'); 
-
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the target value using the data point's label in the form of a string, e.g., \code{'Group1'}, contained in a cell array and representing the class of the data point.}¥
+TARGET (result, cell) is the target values for this data point. ¥\circled{0}\circlednote{0}{{\bf changed stringlist to cell.}}¥
+%%%% ¡calculate!
+value = {dp.get('TARGET_CLASS')}; ¥\circled{0}\circlednote{0}{{\bf changed prop name.}}¥
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_CON_CLA:props},
 	caption={
 		{\bf NNDataPoint\_CON\_CLA element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_CON\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_CON\_CLA}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_CON\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_CON\_CLA}.
 	}
 ]
 ¤%% ¡props!¤
@@ -383,12 +387,9 @@ SUB (data, item) is a subject with connectivity data.
 %%%% ¡settings!
 'SubjectCON'¤
 
-¤%%% ¡prop!¤ 
-¤TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as ¤the class targets.
-
+%%% ¡prop! ¥\circled{0}\circlednote{0}{{\bf changed. revise also the tests.}}¥
+TARGET_CLASS (parameter, string) is the name of the class of the data point.
 \end{lstlisting}
-
-\clearpage
 
 \begin{lstlisting}[
 	label=cd:m:NNDataPoint_CON_CLA:tests,
@@ -551,7 +552,7 @@ gr2 = im_gr2.get('GR');
 it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_IDS', {group_folder_name}), ...
+    'TARGET_CLASS', group_folder_name), ... ¥\circled{0}\circlednote{0}{{\bf changed.}}¥
     gr1.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
@@ -559,7 +560,7 @@ it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_IDS', {group_folder_name}), ...
+    'TARGET_CLASS', group_folder_name), ... ¥\circled{0}\circlednote{0}{{\bf changed.}}¥
     gr2.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
@@ -637,8 +638,7 @@ if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA
     test_NNDataPoint_CON_CLA % create example files
 ¤end¤
 
-example_NN_CON_CLA
-
+example_NN_CON_CLA ¥\circled{0}\circlednote{0}{{\bf revise next ones to take into account the changes.}}¥
 \end{lstlisting}
 
 \clearpage
@@ -647,7 +647,7 @@ example_NN_CON_CLA
 
 \subsection{Graph data point for regression (\code{NNDataPoint\_Graph\_REG})}
 
-Now we implement \code{NNDataPoint\_Graph\_REG} based on previous codes \code{NNDataPoint\_CON\_REG}.
+Now you will implement \code{NNDataPoint\_Graph\_REG} based on previous codes \code{NNDataPoint\_CON\_REG}.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
 The modified parts of the code are highlighted.
 
@@ -655,7 +655,7 @@ The modified parts of the code are highlighted.
 	label=cd:m:NNDataPoint_Graph_REG:header,
 	caption={
 		{\bf NNDataPoint\_Graph\_REG element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_Graph\_REG.gen.m} provides the general information about the \code{NNDataPoint\_Graph\_REG} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_Graph\_REG.gen.m} provides the general information about the \code{NNDataPoint\_Graph\_REG} element.
 		}
 ]
 ¤%% ¡header!¤
@@ -666,14 +666,16 @@ A data point for regression with a graph (NNDataPoint_Graph_REG)
  contains both input and target for neural network analysis.
 The input is the value of the adjacency matrix extracted from the derived graph of the subject.
 The target is obtained from the variables of interest of the subject.
-\end{lstlisting}
 
+¤%%% ¡build!¤
+1
+\end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_Graph_REG:prop_update},
 	caption={
-		{\bf NNDataPoint\_Graph\_REG element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_Graph\_REG.gen.m} updates the properties of the \code{NNDataPoint\_Graph\_REG} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_Graph\_REG element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_Graph\_REG.gen.m} updates the properties of the \code{NNDataPoint\_Graph\_REG} element. This defines the core properties of the data point.
 	}
 ]
 ¤%% ¡props_update!¤
@@ -724,7 +726,7 @@ value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get
 	label={cd:m:NNDataPoint_Graph_REG:props},
 	caption={
 		{\bf NNDataPoint\_Graph\_REG element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_Graph\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_Graph\_REG}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_Graph\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_Graph\_REG}.
 	}
 ]
 ¤%% ¡props!¤
@@ -929,7 +931,7 @@ The modified parts of the code are highlighted.
 	label=cd:m:NNDataPoint_Graph_CLA:header,
 	caption={
 		{\bf NNDataPoint\_Graph\_CLA element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_Graph\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_Graph\_CLA} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_Graph\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_Graph\_CLA} element.
 		}
 ]
 ¤%% ¡header!¤
@@ -946,8 +948,8 @@ The target is obtained from the variables of interest of the subject.
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_Graph_CLA:prop_update},
 	caption={
-		{\bf NNDataPoint\_Graph\_CLA element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_Graph\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_Graph\_CLA} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_Graph\_CLA element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_Graph\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_Graph\_CLA} element. This defines the core properties of the data point.
 	}
 ]
 ¤%% ¡props_update!¤
@@ -998,7 +1000,7 @@ value = dp.get('TARGET_IDS');¤
 	label={cd:m:NNDataPoint_Graph_CLA:props},
 	caption={
 		{\bf NNDataPoint\_Graph\_CLA element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_Graph\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_Graph\_CLA}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_Graph\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_Graph\_CLA}.
 	}
 ]
 ¤%% ¡props!¤
@@ -1226,7 +1228,7 @@ The modified parts of the code are highlighted.
 	label=cd:m:NNDataPoint_Measure_REG:header,
 	caption={
 		{\bf NNDataPoint\_Measure\_REG element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_Measure\_REG.gen.m} provides the general information about the \code{NNDataPoint\_Measure\_REG} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_Measure\_REG.gen.m} provides the general information about the \code{NNDataPoint\_Measure\_REG} element.
 		}
 ]
 ¤%% ¡header!¤
@@ -1244,8 +1246,8 @@ The target is obtained from the variables of interest of the subject.
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_Measure_REG:prop_update},
 	caption={
-		{\bf NNDataPoint\_Measure\_REG element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_Measure\_REG.gen.m} updates the properties of the \code{NNDataPoint\_Measure\_REG} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_Measure\_REG element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_Measure\_REG.gen.m} updates the properties of the \code{NNDataPoint\_Measure\_REG} element. This defines the core properties of the data point.
 	}
 ]
 ¤%% ¡props_update!¤
@@ -1296,7 +1298,7 @@ value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get
 	label={cd:m:NNDataPoint_Measure_REG:props},
 	caption={
 		{\bf NNDataPoint\_Measure\_REG element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_Measure\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_Measure\_REG}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_Measure\_REG.gen.m} defines the properties to be used in \fn{NNDataPoint\_Measure\_REG}.
 	}
 ]
 ¤%% ¡props!¤
@@ -1486,7 +1488,7 @@ The modified parts of the code are highlighted.
 	label=cd:m:NNDataPoint_Measure_CLA:header,
 	caption={
 		{\bf NNDataPoint\_Measure\_CLA element header.}
-		The \code{header} section of the generator code for \fn{\_NNDataPoint\_Measure\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_Measure\_CLA} element.
+		The \code{header} section of the generator code in \fn{\_NNDataPoint\_Measure\_CLA.gen.m} provides the general information about the \code{NNDataPoint\_Measure\_CLA} element.
 		}
 ]
 ¤%% ¡header!¤
@@ -1503,8 +1505,8 @@ The target is obtained from the variables of interest of the subject.
 \begin{lstlisting}[
 	label={cd:m:NNDataPoint_Measure_CLA:prop_update},
 	caption={
-		{\bf NNDataPoint\_Measure\_CLA element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNDataPoint\_Measure\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_Measure\_CLA} element. This defines the core properties of the data point.
+		{\bf NNDataPoint\_Measure\_CLA element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_NNDataPoint\_Measure\_CLA.gen.m} updates the properties of the \code{NNDataPoint\_Measure\_CLA} element. This defines the core properties of the data point.
 	}
 ]
 ¤%% ¡props_update!¤
@@ -1555,7 +1557,7 @@ value = dp.get('TARGET_IDS');¤
 	label={cd:m:NNDataPoint_Measure_CLA:props},
 	caption={
 		{\bf NNDataPoint\_Measure\_CLA element props.}
-		The \code{props} section of generator code for \fn{\_NNDataPoint\_Measure\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_Measure\_CLA}.
+		The \code{props} section of generator code in \fn{\_NNDataPoint\_Measure\_CLA.gen.m} defines the properties to be used in \fn{NNDataPoint\_Measure\_CLA}.
 	}
 ]
 ¤%% ¡props!¤
