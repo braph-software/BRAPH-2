@@ -11,7 +11,7 @@
 \maketitle
 
 \begin{abstract}
-This is the developer tutorial for implementing, exporting and importing groups of subjects.
+This is the developer tutorial for implementing, importing, and exporting groups of subjects.
 We will explain how to create generator files \fn{*.gen.m} for new subjects and well as to export and import them. All \fn{*.gen.m} files can then be compiled by \code{braph2genesis}. 
 All types of subjects are extensions of the base element \code{Subject}. 
 We will use as examples the subjects \code{SubjectCON} (subject with connectivity data), \code{SubjectCON\_MP} (subject with connectivity multiplex data), \code{SubjectFUN} (subject with functional data), \code{SubjectFUN\_MP} (subject with functional multiplex data), \code{SubjectST} (subject with structural data), and \code{SubjectST\_MP} (subject with structural multiplex data). 
@@ -21,8 +21,8 @@ Furthermore, all exporters and importers are extensions of the base elements \co
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
+
 \section{Implementation of a subject with connectivity data}
 
 \subsection{Subject with connectivity data (SubjectCON)}
@@ -301,11 +301,11 @@ gui.get('SHOW')
 gui.get('CLOSE')
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of Importer and Exporter of the data (for SubjectCON)}
 
-\subsection{Importer of a CON subject group from TXT (ImporterGroupSubjectCON\_TXT)}
+\section{Implementation of importer and exporter (for SubjectCON)}
+
+\subsection{Importer from TXT (ImporterGroupSubjectCON\_TXT)}
 
 We will start by implementing in detail \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -647,10 +647,9 @@ gui.get('SHOW')
 gui.get('CLOSE')
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
 
-\subsection{Importer of a CON subject group from XLS/XLSX (ImporterGroupSubjectCON\_XLS)}
+\subsection{Importer from XLS/XLSX (ImporterGroupSubjectCON\_XLS)}
 
 In this section we will show how to implement in detail \code{ImporterGroupSubjectCON\_XLS}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.xls' or '.xlsx'.
 
@@ -1008,7 +1007,7 @@ gui.get('CLOSE')
 %%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
 
-\subsection{Exporter of a CON subject group from TXT (ExporterGroupSubjectCON\_TXT)}
+\subsection{Exporter to TXT (ExporterGroupSubjectCON\_TXT)}
 
 In this section we will show how to implement in detail \code{ExporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1344,9 +1343,10 @@ end
 
 rmdir(directory, 's') ¥\circled{17}\circlednote{17}{ deletes the testing data.}¥
 \end{lstlisting}
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 \clearpage
-\subsection{Exporter of a CON subject group from XLS/XLSX (ExporterGroupSubjectCON\_XLS)}
+
+\subsection{Exporter to XLS/XLSX (ExporterGroupSubjectCON\_XLS)}
 
 In this section we will show how to implement in detail \code{ExporterGroupSubjectCON\_XLS}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1682,9 +1682,11 @@ end
 
 rmdir(directory, 's')
 \end{lstlisting}
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 \clearpage
+
 \section{Implementation of a subject with functional data}
+
 \subsection{Subject with functional data (SubjectFUN)}
 
 In this section we will show how to implement in detail \code{SubjectFUN}. The connectivity matrix can be obtained from fMRI data.
@@ -1808,8 +1810,8 @@ gui.get('SHOW')
 gui.get('CLOSE')
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
+
 \subsection{Subject with functional multiplex data (SubjectFUN\_MP)}
 
 In this section we will show how to implement in detail \code{SubjectFUN\_MP}. The functional matrix can be obtained from fMRI data.
@@ -1954,8 +1956,8 @@ gui.get('SHOW')
 gui.get('CLOSE')¤
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
+
 \section{Implementation of a subject with connectivity and functional data}
 
 \subsection{Subject with connectivity and functional multiplex data (SubjectCON\_FUN\_MP)}
@@ -2085,8 +2087,8 @@ gui.get('SHOW')
 gui.get('CLOSE')¤
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
+
 \section{Implementation of a subject with structural data}
 
 \subsection{Subject with structural data (SubjectST)}
@@ -2213,8 +2215,8 @@ gui.get('SHOW')
 gui.get('CLOSE')¤
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
+
 \subsection{Subject with structural multiplex data (SubjectST\_MP)}
 
 In this section we will show how to implement in detail \code{SubjectST\_MP}. The structural matrix can be obtained from sMRI data.

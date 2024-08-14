@@ -2,7 +2,7 @@
 
 [![Tutorial Implement, Export, and Import Groups of Subjects](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_subject.pdf)
 
-This is the developer tutorial for implementing, exporting and importing groups of subjects.
+This is the developer tutorial for implementing, importing, and exporting groups of subjects.
 We will explain how to create generator files "*.gen.m" for new subjects and well as to export and import them. All "*.gen.m" files can then be compiled by `braph2genesis`. 
 All types of subjects are extensions of the base element `Subject`. 
 We will use as examples the subjects `SubjectCON` (subject with connectivity data), `SubjectCON_MP` (subject with connectivity multiplex data), `SubjectFUN` (subject with functional data), `SubjectFUN_MP` (subject with functional multiplex data), `SubjectST` (subject with structural data), and `SubjectST_MP` (subject with structural multiplex data). 
@@ -17,15 +17,15 @@ Furthermore, all exporters and importers are extensions of the base elements `Ex
 >>
 >> [Subject with connectivity multiplex data (SubjectCON_MP)](#Subject-with-connectivity-multiplex-data-SubjectCONMP)
 >>
-> [Implementation of Importer and Exporter of the data (for SubjectCON)](#Implementation-of-Importer-and-Exporter-of-the-data-for-SubjectCON)
+> [Implementation of importer and exporter (for SubjectCON)](#Implementation-of-importer-and-exporter-for-SubjectCON)
 >
->> [Importer of a CON subject group from TXT (ImporterGroupSubjectCON_TXT)](#Importer-of-a-CON-subject-group-from-TXT-ImporterGroupSubjectCONTXT)
+>> [Importer from TXT (ImporterGroupSubjectCON_TXT)](#Importer-from-TXT-ImporterGroupSubjectCONTXT)
 >>
->> [Importer of a CON subject group from XLS/XLSX (ImporterGroupSubjectCON_XLS)](#Importer-of-a-CON-subject-group-from-XLSXLSX-ImporterGroupSubjectCONXLS)
+>> [Importer from XLS/XLSX (ImporterGroupSubjectCON_XLS)](#Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS)
 >>
->> [Exporter of a CON subject group from TXT (ExporterGroupSubjectCON_TXT)](#Exporter-of-a-CON-subject-group-from-TXT-ExporterGroupSubjectCONTXT)
+>> [Exporter to TXT (ExporterGroupSubjectCON_TXT)](#Exporter-to-TXT-ExporterGroupSubjectCONTXT)
 >>
->> [Exporter of a CON subject group from XLS/XLSX (ExporterGroupSubjectCON_XLS)](#Exporter-of-a-CON-subject-group-from-XLSXLSX-ExporterGroupSubjectCONXLS)
+>> [Exporter to XLS/XLSX (ExporterGroupSubjectCON_XLS)](#Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS)
 >>
 > [Implementation of a subject with functional data](#Implementation-of-a-subject-with-functional-data)
 >
@@ -44,7 +44,7 @@ Furthermore, all exporters and importers are extensions of the base elements `Ex
 >> [Subject with structural multiplex data (SubjectST_MP)](#Subject-with-structural-multiplex-data-SubjectSTMP)
 >>
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id="Implementation-of-a-subject-with-connectivity-data"></a>
 ## Implementation of a subject with connectivity data  [⬆](#Table-of-Contents)
@@ -375,13 +375,13 @@ The multilayer data allows connections between any nodes across the multiple lay
 > ③ constructs 3 layers randomly with size of brain regions by brain regions.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-Importer-and-Exporter-of-the-data-for-SubjectCON"></a>
-## Implementation of Importer and Exporter of the data (for SubjectCON)  [⬆](#Table-of-Contents)
 
-<a id="Importer-of-a-CON-subject-group-from-TXT-ImporterGroupSubjectCONTXT"></a>
-### Importer of a CON subject group from TXT (ImporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
+<a id="Implementation-of-importer-and-exporter-for-SubjectCON"></a>
+## Implementation of importer and exporter (for SubjectCON)  [⬆](#Table-of-Contents)
+
+<a id="Importer-from-TXT-ImporterGroupSubjectCONTXT"></a>
+### Importer from TXT (ImporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
 
 We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -838,11 +838,10 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > ㉞ assigns the panel element and don't confirm close.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
 
-<a id="Importer-of-a-CON-subject-group-from-XLSXLSX-ImporterGroupSubjectCONXLS"></a>
-### Importer of a CON subject group from XLS/XLSX (ImporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
+<a id="Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS"></a>
+### Importer from XLS/XLSX (ImporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
 
 In this section we will show how to implement in detail `ImporterGroupSubjectCON_XLS`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.xls' or '.xlsx'.
 
@@ -1196,8 +1195,8 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 %%%%% %%%%% %%%%% %%%%% %%%%%
 
 
-<a id="Exporter-of-a-CON-subject-group-from-TXT-ExporterGroupSubjectCONTXT"></a>
-### Exporter of a CON subject group from TXT (ExporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
+<a id="Exporter-to-TXT-ExporterGroupSubjectCONTXT"></a>
+### Exporter to TXT (ExporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
 
 In this section we will show how to implement in detail `ExporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1591,10 +1590,11 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > 
 > ⑰ deletes the testing data.
 > 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Exporter-of-a-CON-subject-group-from-XLSXLSX-ExporterGroupSubjectCONXLS"></a>
-### Exporter of a CON subject group from XLS/XLSX (ExporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
+
+
+<a id="Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS"></a>
+### Exporter to XLS/XLSX (ExporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
 
 In this section we will show how to implement in detail `ExporterGroupSubjectCON_XLS`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1925,10 +1925,12 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > rmdir(directory, 's')
 > ````
 > 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
+
 
 <a id="Implementation-of-a-subject-with-functional-data"></a>
 ## Implementation of a subject with functional data  [⬆](#Table-of-Contents)
+
 <a id="Subject-with-functional-data-SubjectFUN"></a>
 ### Subject with functional data (SubjectFUN)  [⬆](#Table-of-Contents)
 
@@ -2052,7 +2054,7 @@ In this section we will show how to implement in detail `SubjectFUN`. The connec
 > ① constructs the random adjacency matrix with the size of 10 timepoints by the number of brain regions.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id="Subject-with-functional-multiplex-data-SubjectFUNMP"></a>
 ### Subject with functional multiplex data (SubjectFUN_MP)  [⬆](#Table-of-Contents)
@@ -2203,7 +2205,7 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 > ① Same as in note ① ② ③ of Code 6.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id="Implementation-of-a-subject-with-connectivity-and-functional-data"></a>
 ## Implementation of a subject with connectivity and functional data  [⬆](#Table-of-Contents)
@@ -2337,7 +2339,7 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 > ③ constructs functional matrix.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id="Implementation-of-a-subject-with-structural-data"></a>
 ## Implementation of a subject with structural data  [⬆](#Table-of-Contents)
@@ -2466,7 +2468,7 @@ In this section we will show how to implement in detail `SubjectST`. The structu
 > ① constructs the random adjacency matrix with size of the number of brain regions by 1.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 <a id="Subject-with-structural-multiplex-data-SubjectSTMP"></a>
 ### Subject with structural multiplex data (SubjectST_MP)  [⬆](#Table-of-Contents)

@@ -7,23 +7,23 @@ In this tutorial, you will learn how to create the generator file "*.gen.m" for 
 
 
 ## Table of Contents
-> [Implementation of Unilayer Measures](#Implementation-of-Unilayer-Measures)
+> [Implementation of unilayer measures](#Implementation-of-unilayer-measures)
 >
->> [Nodal Unilayer Measure (Degree)](#Nodal-Unilayer-Measure-Degree)
+>> [Nodal unilayer measure (Degree)](#Nodal-unilayer-measure-Degree)
 >>
->> [Global Unilayer Measure (DegreeAv)](#Global-Unilayer-Measure-DegreeAv)
+>> [Global unilayer measure (DegreeAv)](#Global-unilayer-measure-DegreeAv)
 >>
->> [Binodal Unilayer Measure (Distance)](#Binodal-Unilayer-Measure-Distance)
+>> [Binodal unilayer measure (Distance)](#Binodal-unilayer-measure-Distance)
 >>
-> [Implementation of Measure Parameters (Triangles)](#Implementation-of-Measure-Parameters-Triangles)
+> [Implementation of measure parameters (Triangles)](#Implementation-of-measure-parameters-Triangles)
 >
 
 
-<a id="Implementation-of-Unilayer-Measures"></a>
-## Implementation of Unilayer Measures  [⬆](#Table-of-Contents)
+<a id="Implementation-of-unilayer-measures"></a>
+## Implementation of unilayer measures  [⬆](#Table-of-Contents)
 
-<a id="Nodal-Unilayer-Measure-Degree"></a>
-### Nodal Unilayer Measure (Degree)  [⬆](#Table-of-Contents)
+<a id="Nodal-unilayer-measure-Degree"></a>
+### Nodal unilayer measure (Degree)  [⬆](#Table-of-Contents)
 
 You will start by implementing in detail the measure `Degree`, which applies to most graphs and is a direct extension of the element `Measure`.
 
@@ -199,10 +199,10 @@ You will start by implementing in detail the measure `Degree`, which applies to 
 > ⑧ tests that the value of the measure extracted from the graph coicides with its expected value.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Global-Unilayer-Measure-DegreeAv"></a>
-### Global Unilayer Measure (DegreeAv)  [⬆](#Table-of-Contents)
+
+<a id="Global-unilayer-measure-DegreeAv"></a>
+### Global unilayer measure (DegreeAv)  [⬆](#Table-of-Contents)
 
 You can now use `Degree` as the basis to implement the global measure `DegreeAv`.
 > **Code 4.** **DegreeAv element header.**
@@ -338,10 +338,10 @@ You can now use `Degree` as the basis to implement the global measure `DegreeAv`
 > ````
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Binodal-Unilayer-Measure-Distance"></a>
-### Binodal Unilayer Measure (Distance)  [⬆](#Table-of-Contents)
+
+<a id="Binodal-unilayer-measure-Distance"></a>
+### Binodal unilayer measure (Distance)  [⬆](#Table-of-Contents)
 
 Now you will implement the binodal measure `Distance`. 
 > **Code 7.** **Distance element header.**
@@ -504,10 +504,10 @@ Now you will implement the binodal measure `Distance`.
 > ````
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-Measure-Parameters-Triangles"></a>
-## Implementation of Measure Parameters (Triangles)  [⬆](#Table-of-Contents)
+
+<a id="Implementation-of-measure-parameters-Triangles"></a>
+## Implementation of measure parameters (Triangles)  [⬆](#Table-of-Contents)
 
 Now, you will implement the (nodal unilayer) measure `Triangles`, which depends on a parameter `RULE`, which we add as a property of category `parameter`.
 > **Code 10.** **Triangles element header.**
