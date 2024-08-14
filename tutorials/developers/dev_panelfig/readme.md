@@ -3,9 +3,9 @@
 [![Tutorial Implement a new Property Panel](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_panelfig.pdf)
 
 This is the developer tutorial for implementing a new figure panel. 
-In this tutorial, we will explain how to create the generator file "*.gen.m" for a new figure panel, which can then be compiled by `braph2genesis`. 
+In this tutorial, you will learn how to create the generator file "*.gen.m" for a new figure panel, which can then be compiled by `braph2genesis`. 
 All figure panels are (direct or indirect) extensions of the element `PanelFig`.
-We will use the figure panels `BrainSurfacePF` and `BrainAtlasPF` as an examples.
+You will use the figure panels `BrainSurfacePF` and `BrainAtlasPF` as an examples.
 
 
 ## Table of Contents
@@ -23,7 +23,7 @@ We will use the figure panels `BrainSurfacePF` and `BrainAtlasPF` as an examples
 <a id="Implementation-of-figure-panel-BrainSurfacePF"></a>
 ## Implementation of figure panel (BrainSurfacePF)  [⬆](#Table-of-Contents)
 
-To illustrate the general concepts of a figure panel, we will start by implementing in detail the figure panel `BrainSurfacePF`, which is a direct extension of the element `PanelFig`.
+To understand the general concepts of a figure panel, you will start by implementing in detail the figure panel `BrainSurfacePF`, which is a direct extension of the element `PanelFig`.
 
 
 > **Code 1.** **BrainSurfacePF element header.**
@@ -45,7 +45,7 @@ To illustrate the general concepts of a figure panel, we will start by implement
 > BrainSurface
 > ````
 > 
-> ①The element `BrainSurfacePF` is defined as a subclass of `PabelFig`. The moniker will be `pf`.
+> ① The element `BrainSurfacePF` is defined as a subclass of `PabelFig`. The moniker will be `pf`.
 > 
 
 
@@ -233,39 +233,39 @@ To illustrate the general concepts of a figure panel, we will start by implement
 > pr = SettingsAmbientPP('EL', pf, 'PROP', BrainSurfacePF.ST_AMBIENT, varargin{:});  ⑱
 > ````
 > 
-> ①defines the evanescent handle of the axes where the brain surface will be plotted. It also defines its general properties.
+> ① defines the evanescent handle of the axes where the brain surface will be plotted. It also defines its general properties.
 > 
-> ②ensures that the parent panel is memorized.
+> ② ensures that the parent panel is memorized.
 > 
-> ③determines the view of the brain surface.
+> ③ determines the view of the brain surface.
 > 
-> ④is executed only when the `VIEW` property is set. It takes care of adjusting the view and resetting the lightning.
+> ④ is executed only when the `VIEW` property is set. It takes care of adjusting the view and resetting the lightning.
 > 
-> ⑤determines the axis setting through the container property `SettingsAxis`, which derives from `Settings`.
+> ⑤ determines the axis setting through the container property `SettingsAxis`, which derives from `Settings`.
 > 
-> ⑥defines the default values by instantiating a default instance of `SettingsAxis`.
+> ⑥ defines the default values by instantiating a default instance of `SettingsAxis`.
 > 
-> ⑦employs the property panel `SettingsAxisPP`, which is specialized for `SettingsAxis` and derives from `SettingsPP`.
+> ⑦ employs the property panel `SettingsAxisPP`, which is specialized for `SettingsAxis` and derives from `SettingsPP`.
 > 
-> ⑧contains the file from which the brain surface is plotted.
+> ⑧ contains the file from which the brain surface is plotted.
 > 
-> ⑨is executed only when the `SURFILE` property is set. It updates the property `SURF` loading the data from the file. It the figure panel is already drawn, it refreshes the brain handle and redraws it.
+> ⑨ is executed only when the `SURFILE` property is set. It updates the property `SURF` loading the data from the file. It the figure panel is already drawn, it refreshes the brain handle and redraws it.
 > 
-> ⑩contains the `BrainSurface` element.
+> ⑩ contains the `BrainSurface` element.
 > 
-> ⑪is the evanescent handle for the brain surface. This is calcualted by ⑫.
+> ⑪ is the evanescent handle for the brain surface. This is calcualted by ⑫.
 > 
-> ⑬determines whether the brain surface is shown.
+> ⑬ determines whether the brain surface is shown.
 > 
-> ⑭determines the brain surface settings throught the container property `SettingsSurface`, which derives from `Settings`.
+> ⑭ determines the brain surface settings throught the container property `SettingsSurface`, which derives from `Settings`.
 > 
-> ⑮employs the property panel `SettingsSurfacePP`, which is specialized for `SettingsSurface` and derives from `SettingsPP`.
+> ⑮ employs the property panel `SettingsSurfacePP`, which is specialized for `SettingsSurface` and derives from `SettingsPP`.
 > 
-> ⑯determines the ambient lighting settings throught the container property `SettingsAmbient`, which is derived from `Settings`.
+> ⑯ determines the ambient lighting settings throught the container property `SettingsAmbient`, which is derived from `Settings`.
 > 
-> ⑰defines the default values by instantiating a default instance of `SettingsAmbient`.
+> ⑰ defines the default values by instantiating a default instance of `SettingsAmbient`.
 > 
-> ⑱employs the property panel `SettingsAmbientPP`, which is specialized for `SettingsAmbient` and derives from `SettingsPP`.
+> ⑱ employs the property panel `SettingsAmbientPP`, which is specialized for `SettingsAmbient` and derives from `SettingsPP`.
 > 
 
 
@@ -300,21 +300,21 @@ To illustrate the general concepts of a figure panel, we will start by implement
 > end
 > ````
 > 
-> ①initializes the various graphical elements are drawn.
+> ① initializes the various graphical elements are drawn.
 > 
-> ②calls the constructor of the parent. It returns `value = true` if the panel is drawn correctly. It gives a warning if the panel is not drawn correctly.
+> ② calls the constructor of the parent. It returns `value = true` if the panel is drawn correctly. It gives a warning if the panel is not drawn correctly.
 > 
-> ③ensures that the axes are memorized.
+> ③ ensures that the axes are memorized.
 > 
-> ④creates, memorizes, and sets up the property `H_AXES`.
+> ④ creates, memorizes, and sets up the property `H_AXES`.
 > 
-> ⑤memorizes the property `H_BRAIN`.
+> ⑤ memorizes the property `H_BRAIN`.
 > 
-> ⑥creates, memorizes, and sets up the property `ST_SURFACE`.
+> ⑥ creates, memorizes, and sets up the property `ST_SURFACE`.
 > 
-> ⑦creates, memorizes, and sets up the property `ST_AMBIENT`.
+> ⑦ creates, memorizes, and sets up the property `ST_AMBIENT`.
 > 
-> ⑧deletes all evanescent hnadles when the figure containing the panel is deleted.
+> ⑧ deletes all evanescent hnadles when the figure containing the panel is deleted.
 > 
 
 
@@ -339,11 +339,11 @@ To illustrate the general concepts of a figure panel, we will start by implement
 > warning('on', [BRAPH2.STR ':BrainSurfacePF'])
 > ````
 > 
-> ①some properties need to be excluded from the tests, mainly because they are initialized by other proprties and therefore could give some spurious errors.
+> ① some properties need to be excluded from the tests, mainly because they are initialized by other proprties and therefore could give some spurious errors.
 > 
-> ②throws an error if there remains a different number of figures than expected.
+> ② throws an error if there remains a different number of figures than expected.
 > 
-> ③removes the figures remaining from the testing.
+> ③ removes the figures remaining from the testing.
 > 
 
 <a id="Addition-of-toolbar-buttons"></a>
@@ -516,21 +516,21 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > . . . . .
 > ````
 > 
-> ①provides a list of evanescent handles to toolbar pushbuttons.
+> ① provides a list of evanescent handles to toolbar pushbuttons.
 > 
-> ②retrieves the toolbar and ③ checks that it is actually drawn.
+> ② retrieves the toolbar and ③ checks that it is actually drawn.
 > 
-> ④reorders the pushbuttons.
+> ④ reorders the pushbuttons.
 > 
-> ⑤provides the callback functions for the pushbuttons.
+> ⑤ provides the callback functions for the pushbuttons.
 > 
-> ①ensures that the `postset` code is executed by resetting `VIEW` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
+> ① ensures that the `postset` code is executed by resetting `VIEW` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
 > 
-> ②memorizes also the listener to the changes in `ST_AXIS`. This is neede to ensure that the toolbar pushbuttons are synchronized with the content of `ST_AXIS`.
+> ② memorizes also the listener to the changes in `ST_AXIS`. This is neede to ensure that the toolbar pushbuttons are synchronized with the content of `ST_AXIS`.
 > 
-> ③ensures that the `postset` code is executed by resetting `BRAIN` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
+> ③ ensures that the `postset` code is executed by resetting `BRAIN` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
 > 
-> ④deletes also the evanescent handle for the `LISTENER_ST_AXIS`.
+> ④ deletes also the evanescent handle for the `LISTENER_ST_AXIS`.
 > 
 
 
@@ -620,13 +620,13 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > ...
 > ````
 > 
-> ①ensures that toolbar pushbuttons are updated with the current view.
+> ① ensures that toolbar pushbuttons are updated with the current view.
 > 
-> ②ensures that the toolbar pushbuttons are updated whenever the `ST_AXIS` property is updated.
+> ② ensures that the toolbar pushbuttons are updated whenever the `ST_AXIS` property is updated.
 > 
-> ③ensures that the toolbar pushbuttons are updated whenever the `ST_AXIS` property is updated.
+> ③ ensures that the toolbar pushbuttons are updated whenever the `ST_AXIS` property is updated.
 > 
-> ③ensures that the toolbar pushbuttons are updated whenever the `BRAIN` property is updated.
+> ③ ensures that the toolbar pushbuttons are updated whenever the `BRAIN` property is updated.
 > 
 
 
@@ -641,7 +641,7 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > ...
 > ````
 > 
-> ①excludes from testing also `LISTENER_ST_AXIS`.
+> ① excludes from testing also `LISTENER_ST_AXIS`.
 > 
 
 
@@ -780,25 +780,25 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > . . . . .
 > ````
 > 
-> ①containes the brain atlas to be visualized.
+> ① containes the brain atlas to be visualized.
 > 
-> ②contains the evanescent handles for the spehres. ③ draws the spheres and creates the handles.
+> ② contains the evanescent handles for the spehres. ③ draws the spheres and creates the handles.
 > 
-> ④determines whether the shperes are shown. When it is set to `FALSE`, ⑤ sets all spheres already drawn to invisible. When it is set to `TRUE`, ⑥ triggers the update of the sphere dictionary containing the elements corresponding to each sphere.
+> ④ determines whether the shperes are shown. When it is set to `FALSE`, ⑤ sets all spheres already drawn to invisible. When it is set to `TRUE`, ⑥ triggers the update of the sphere dictionary containing the elements corresponding to each sphere.
 > 
-> ⑦provides the dictionary with all sphere elements, which is only executed if ⑧ the brain atlas is set.
+> ⑦ provides the dictionary with all sphere elements, which is only executed if ⑧ the brain atlas is set.
 > 
-> ⑨creates the sphere elements if they do not already exist. Each sphere element is a `SettingsSphere` with all properties necessary to set the sphere.
+> ⑨ creates the sphere elements if they do not already exist. Each sphere element is a `SettingsSphere` with all properties necessary to set the sphere.
 > 
-> ⑩setups the sphere objects by calling the property `SETUP` on each of them.
+> ⑩ setups the sphere objects by calling the property `SETUP` on each of them.
 > 
-> ⑪uses `PanelPropIDictTable` to provide a table where the sphere settings can be managed.
+> ⑪ uses `PanelPropIDictTable` to provide a table where the sphere settings can be managed.
 > 
-> ⑫memorizes the sphere handles.
+> ⑫ memorizes the sphere handles.
 > 
-> ⑬sets the sphere elements `SettingsSphere` by triggering the `postset` of `SPHS`.
+> ⑬ sets the sphere elements `SettingsSphere` by triggering the `postset` of `SPHS`.
 > 
-> ⑭deletes the sphere handles when the figure panel is deleted.
+> ⑭ deletes the sphere handles when the figure panel is deleted.
 > 
 
 
