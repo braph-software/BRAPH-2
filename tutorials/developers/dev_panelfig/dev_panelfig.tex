@@ -19,9 +19,9 @@ We will use the figure panels \code{BrainSurfacePF} and \code{BrainAtlasPF} as a
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of Figure Panel (BrainSurfacePF)}
+
+\section{Implementation of figure panel (BrainSurfacePF)}
 
 To illustrate the general concepts of a figure panel, we will start by implementing in detail the figure panel \code{BrainSurfacePF}, which is a direct extension of the element \code{PanelFig}.
 
@@ -298,7 +298,7 @@ delete(findall(0, 'type', 'figure')) ¥\circled{3}\circlednote{3}{removes the fi
 warning('on', [BRAPH2.STR ':BrainSurfacePF'])
 \end{lstlisting}
 
-\subsection{Addition of Toolbar Buttons}
+\subsection{Addition of toolbar buttons}
 
 We will now see how to add the pushbuttons in the toolbar of the figure, opportunely altering the code so far implemented.
 
@@ -575,9 +575,9 @@ if pf.get('DRAWN')
 ...¤
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Extension of Figure Panel (BrainAtlasPF)}
+
+\section{Extension of figure panel (BrainAtlasPF)}
 
 We will now explore how to extend \code{BrainSurfacePF} to plot also brain regions. We will therefore implement \code{BrainAtlasPF}.
 
@@ -1050,7 +1050,7 @@ if value
 ...¤
 \end{lstlisting}
 
-\subsection{Extension of Toolbar Buttons}
+\subsection{Extension of toolbar buttons}
 
 We will now see how to add toolbar pushbuttons to the previous code.
 
