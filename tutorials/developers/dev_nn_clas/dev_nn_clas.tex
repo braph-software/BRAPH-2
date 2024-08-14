@@ -18,9 +18,9 @@ In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} 
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Neural Network Classifier}
+
+\section{Implementation of a neural network classifier (\code{NNClassifierMLP})}
 
 We will start by implementing in detail \code{NNClassifierMLP}, which is a direct extension of \code{NNBase}.
 A multi-layer perceptron classifier \code{NNClassifierMLP} comprises a multi-layer perceptron classifier model and a given dataset.
@@ -33,7 +33,7 @@ A multi-layer perceptron classifier \code{NNClassifierMLP} comprises a multi-lay
 		}
 ]
 %% ¡header!
-NNClassifierMLP < NNBase (nn, multi-layer perceptron classifier) comprises a multi-layer perceptron classifier model and a given dataset.  ¥\circled{1}\circlednote{1}{defines \code{NNClassifierMLP} as a subclass of \code{NNBase}. The moniker will be \code{nn}.}¥
+NNClassifierMLP < NNBase (nn, multi-layer perceptron classifier) comprises a multi-layer perceptron classifier model and a given dataset.  ¥\circled{1}\circlednote{1}{ defines \code{NNClassifierMLP} as a subclass of \code{NNBase}. The moniker will be \code{nn}.}¥
 
 %%% ¡description!
 A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset. NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.
@@ -78,7 +78,7 @@ NOTES (metadata, string) are some specific notes about the neural network multi-
 %%%% ¡default!
 'NNClassifierMLP notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines \code{NNDataset} which contains the \code{NNDataPoint} to train this classifier.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines \code{NNDataset} which contains the \code{NNDataPoint} to train this classifier.}¥
 D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.
 %%%% ¡settings!
 'NNDataset'
@@ -87,12 +87,12 @@ NNDataset('DP_CLASS', 'NNDataPoint_CON_CLA')
 
 %%% ¡prop!
 DP_CLASSES (parameter, classlist) is the list of compatible data points. 
-%%%% ¡default! ¥\circled{2}\circlednote{2}{defines the compatible \code{NNDataPoint} classes with this \code{NNClassifierMLP}.}¥
+%%%% ¡default! ¥\circled{2}\circlednote{2}{ defines the compatible \code{NNDataPoint} classes with this \code{NNClassifierMLP}.}¥
 {'NNDataPoint_CON_CLA' 'NNDataPoint_CON_FUN_MP_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'}
 
 %%% ¡prop!
 INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
-%%%% ¡calculate! ¥\circled{3}\circlednote{3}{is a query that transforms the input data of \code{NNDataPoint} to the CB (channel-batch) format by flattening its included cells.}¥
+%%%% ¡calculate! ¥\circled{3}\circlednote{3}{ is a query that transforms the input data of \code{NNDataPoint} to the CB (channel-batch) format by flattening its included cells.}¥
 % inputs = nn.get('inputs', D) returns a cell array with the
 %  inputs for all data points in dataset D.
 if isempty(varargin)
@@ -127,7 +127,7 @@ end
 
 %%% ¡prop!
 TARGETS (query, cell) constructs the targets in the CB (channel-batch) format with one-hot vectors.
-%%%% ¡calculate! ¥\circled{4}\circlednote{4}{is a query that constructs the one-hot vectors for the target classes.}¥
+%%%% ¡calculate! ¥\circled{4}\circlednote{4}{ is a query that constructs the one-hot vectors for the target classes.}¥
 % targets = nn.get('TARGETS', D) returns a cell array with the
 %  targets for all data points in dataset D with one-hot vectors.
 if isempty(varargin)
@@ -141,9 +141,9 @@ value = onehotencode(categorical(target_ids), 2);
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network model.
-%%%% ¡calculate! ¥\circled{5}\circlednote{5}{trains the classifier with the defined dataset by the code under \code{¡calculate!}.}¥
+%%%% ¡calculate! ¥\circled{5}\circlednote{5}{ trains the classifier with the defined dataset by the code under \code{¡calculate!}.}¥
 inputs = cell2mat(nn.get('INPUTS', nn.get('D'))); ¥\circled{6}¥
-targets = nn.get('TARGET_IDS', nn.get('D')); ¥\circled{7}\twocirclednotes{6}{7}{firstly extract the inputs and targets with the corresponding format.}¥
+targets = nn.get('TARGET_IDS', nn.get('D')); ¥\circled{7}\circlednote{6}{ and \circled{7} extract the inputs and targets.}¥
 if isempty(inputs) || isempty(targets)
     value = network();
 else
@@ -152,7 +152,7 @@ else
     targets = categorical(targets); 
     number_classes = numel(categories(targets));
     
-    layers = nn.get('LAYERS'); ¥\circled{8}\circlednote{8}{defines the neural network architecture with user specified number of neurons and number of layers.}¥
+    layers = nn.get('LAYERS'); ¥\circled{8}\circlednote{8}{ defines the neural network architecture with user specified number of neurons and number of layers.}¥
     nn_architecture = [featureInputLayer(number_features, 'Name', 'Input')];
     for i = 1:1:length(layers)
         nn_architecture = [nn_architecture
@@ -168,7 +168,7 @@ else
         classificationLayer('Name', 'Output')
         ];
 
-    % specify trianing options  ¥\circled{9}\circlednote{9}{defines the neural network training options.}¥
+    % specify trianing options  ¥\circled{9}\circlednote{9}{ defines the neural network training options.}¥
     options = trainingOptions(nn.get('SOLVER'), ...
         'MiniBatchSize', nn.get('BATCH'), ...
         'MaxEpochs', nn.get('EPOCHS'), ...
@@ -176,7 +176,7 @@ else
         'Plots', nn.get('PLOT_TRAINING'), ...
         'Verbose', nn.get('VERBOSE'));
 
-    % train the neural network ¥\circled{10}\circlednote{10}{trains the model with those parameters and the neural network architecture.}¥
+    % train the neural network ¥\circled{10}\circlednote{10}{ trains the model with those parameters and the neural network architecture.}¥
     value = trainNetwork(inputs, targets, nn_architecture, options);
 end
 
@@ -194,7 +194,7 @@ end
 
 %%% ¡prop! 
 TARGET_IDS (query, stringlist) constructs the target IDs which represent the class of each data point.
-%%%% ¡calculate!  ¥\circled{1}\circlednote{1}{is a query that collects all the target class for all data points.}¥
+%%%% ¡calculate!  ¥\circled{1}\circlednote{1}{ is a query that collects all the target class for all data points.}¥
 % targets = nn.get('TARGET_IDS', D) returns a cell array with the
 %  targets for all data points in dataset D.
 if isempty(varargin)
@@ -214,7 +214,7 @@ else
     value = nn_targets;
 end
 
-%%% ¡prop! ¥\circled{2}\circlednote{2}{defines the number of neuron per layer. For example, \code{[32 32]} represents two layers, each containing 32 neurons.}¥
+%%% ¡prop! ¥\circled{2}\circlednote{2}{ defines the number of neuron per layer. For example, \code{[32 32]} represents two layers, each containing 32 neurons.}¥
 LAYERS (data, rvector) defines the number of layers and their neurons.
 %%%% ¡default!
 [32 32]
@@ -234,7 +234,7 @@ INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interrupt
 %%%% ¡default!
 .001
 
-%%% ¡prop! ¥\circled{3}\circlednote{3}{is a query that calculates the permuation feature importance. Note that, other neural network architectures, such as convolutional neural network, have other techniques to obtain feature importance.}¥
+%%% ¡prop! ¥\circled{3}\circlednote{3}{ is a query that calculates the permuation feature importance. Note that, other neural network architectures, such as convolutional neural network, have other techniques to obtain feature importance.}¥
 FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.
 %%%% ¡calculate!
 % fi = nn.get('FEATURE_IMPORTANCE', D, P, SEED) retrieves a cell array containing
@@ -262,7 +262,7 @@ original_loss = crossentropy(net.predict(inputs), targets);
 wb = braph2waitbar(nn.get('WAITBAR'), 0, ['Feature importance permutation ...']);
 
 start = tic;
-for i = 1:1:P ¥\circled{4}\twocirclednotes{4}{5}{iteratively shuffle the feature values from any given dataset P times and measuring the resulting average decrease in model performance.}¥
+for i = 1:1:P ¥\circled{4}\circlednote{4}{ and \circled{5}iteratively shuffle the feature values from any given dataset P times and measuring the resulting average decrease in model performance.}¥
     rng(seeds(i), 'twister')
     parfor j = 1:1:number_features ¥\circled{5}¥
         scrambled_inputs = inputs;
@@ -380,7 +380,7 @@ d = NNDatasetCombine('D_LIST', {d1, d2}).get('D');
 nn = NNClassifierMLP('D', d, 'LAYERS', [10 10 10]);
 trained_model = nn.get('MODEL');
 
-% Check whether the number of fully-connected layer matches (excluding Dense_output layer)¥\circled{1}\circlednote{1}{checks whether the number of layers from the trained model is correctly set.}¥
+% Check whether the number of fully-connected layer matches (excluding Dense_output layer)¥\circled{1}\circlednote{1}{ checks whether the number of layers from the trained model is correctly set.}¥
 assert(length(nn.get('LAYERS')) == sum(contains({trained_model.Layers.Name}, 'Dense')) - 1, ...
     [BRAPH2.STR ':NNClassifierMLP:' BRAPH2.FAIL_TEST], ...
     'NNClassifierMLP does not construct the layers correctly. The number of the inputs should be the same as the length of dense layers the property.' ...
