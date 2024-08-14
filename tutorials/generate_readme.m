@@ -46,6 +46,7 @@ document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % {\bf ...}
 document = regexprep(document, '\\footnote{([^{}]*)}', ' ($1)');  % \footnote{...}
 document = regexprep(document, '\\begin{fullwidth}', '');  % \begin{fullwidth}
 document = regexprep(document, '\\end{fullwidth}', '');  % \end{fullwidth}
+document = regexprep(document, [newline() '{%TEX[^{}]*}%TEX\s*' newline()], '');  % {%TEX ... }%TEX
 
 % table of contents
 sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');

@@ -493,9 +493,7 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 <a id="Weigthed-Directed-Multilayer-Graph-MultilayerWD"></a>
 ### Weigthed Directed Multilayer Graph (MultilayerWD)  [⬆](#Table-of-Contents)
 
-You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. 
-{The parts of the code that are modified are highlighted.}%TEX 
-A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
+You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
 
 
 > **Code 5.** **MultilayerWD element header.**
@@ -865,9 +863,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 <a id="Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-MultiplexBUT"></a>
 ### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [⬆](#Table-of-Contents)
 
-Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. 
-{Again, the difference will be highlighted.}%TEX
-A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
+Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
 
 > **Code 9.** **MultiplexBUT element header.**

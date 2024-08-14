@@ -389,7 +389,9 @@ assert(isequal(0, h), ... % ¥\circled{23}\circlednote{23}{ tests that new rando
 \subsection{Weigthed Directed Multilayer Graph (MultilayerWD)}
 
 You can now use \code{GraphBD} as the basis to implement the \code{MultilayerWD} graph. 
-{The parts of the code that are modified are highlighted.}%TEX 
+{%TEX
+The parts of the code that are modified are highlighted.
+}%TEX
 A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
 
 \begin{lstlisting}[
@@ -749,7 +751,9 @@ end
 \subsection{Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)}
 
 Now you will implement the \code{MultiplexBUT} graph building on the previous codes \code{GraphBD} and \code{MultilayerWD}. 
-{Again, the difference will be highlighted.}%TEX
+{%TEX
+Again, the differences will be highlighted.
+}%TEX
 A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
 \begin{lstlisting}[
