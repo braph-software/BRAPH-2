@@ -3,11 +3,10 @@
 [![Tutorial Implement, Export, and Import Groups of Subjects](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_subject.pdf)
 
 This is the developer tutorial for implementing, importing, and exporting groups of subjects.
-We will explain how to create generator files "*.gen.m" for new subjects and well as to export and import them. All "*.gen.m" files can then be compiled by `braph2genesis`. 
+You will learn how to create generator files "*.gen.m" for new subjects and well as to import and export them. All "*.gen.m" files can then be compiled by `braph2genesis`. 
 All types of subjects are extensions of the base element `Subject`. 
-We will use as examples the subjects `SubjectCON` (subject with connectivity data), `SubjectCON_MP` (subject with connectivity multiplex data), `SubjectFUN` (subject with functional data), `SubjectFUN_MP` (subject with functional multiplex data), `SubjectST` (subject with structural data), and `SubjectST_MP` (subject with structural multiplex data). 
-Furthermore, all exporters and importers are extensions of the base elements `Exporter` and `Importer`, respectively. Here, we will use as examples `ExporterGroupSubjectCON_TXT` (exports a group of subjects with connectivity data to a series of TXT file), `ExporterGroupSubjectCON_XLS` (exports a group of subjects with connectivity data to a series of XLSX file), `ImporterGroupSubjectCON_TXT` (imports a group of subjects with connectivity data to a series of TXT file), and `ImporterGroupSubjectCON_XLS` (imports a group of subjects with connectivity data to a series of XLSX file).
-
+You will use as examples the subjects `SubjectCON` (subject with connectivity data), `SubjectCON_MP` (subject with connectivity multiplex data), `SubjectFUN` (subject with functional data), `SubjectFUN_MP` (subject with functional multiplex data), `SubjectST` (subject with structural data), and `SubjectST_MP` (subject with structural multiplex data). 
+Furthermore, all importers and exporters are extensions of the base elements `Exporter` and `Importer`, respectively. Here, you will use as examples `ImporterGroupSubjectCON_TXT` (importing a group of subjects with connectivity data to a series of TXT file),`ImporterGroupSubjectCON_XLS` (importing a group of subjects with connectivity data to a series of XLSX file), `ExporterGroupSubjectCON_TXT` (exporting a group of subjects with connectivity data to a series of TXT file), and `ExporterGroupSubjectCON_XLS` (exporting a group of subjects with connectivity data to a series of XLSX file).
 
 
 ## Table of Contents
@@ -52,11 +51,11 @@ Furthermore, all exporters and importers are extensions of the base elements `Ex
 <a id="Subject-with-connectivity-data-SubjectCON"></a>
 ### Subject with connectivity data (SubjectCON)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `SubjectCON`. The connectivity matrix can be obtained from DTI data.
+You will start by implementing in detail `SubjectCON`, which holds a connectivity matrix (for example, obtained from DTI data).
 
 
 > **Code 1.** **SubjectCON element header.**
-> 		The `header` section of the generator code for "_SubjectCON.gen.m" provides the general information about the `SubjectCON` element.
+> 		The `header` section of the generator code in "_SubjectCON.gen.m" provides the general information about the `SubjectCON` element.
 > ````matlab
 > %% ¡header!
 > SubjectCON < Subject (sub, subject with connectivity matrix) is a subject with connectivity matrix (e.g. DTI).  ①
@@ -66,17 +65,19 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 > 
 > %%% ¡seealso!  ②
 > ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① The element `SubjectCON` is defined as a subclass of `Subject`. The moniker will be `sub`.
 > 
-> ② Other related functions.
+> ② Other related elements.
 > 
 
 
-
-> **Code 2.** **SubjectCON element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectCON.gen.m" updates the properties of the `Subject` element. This defines the core properties of the subject.
+> **Code 2.** **SubjectCON element props update.**
+> 		The `props_update` section of the generator code in "_SubjectCON.gen.m" updates the properties of the `SubjectCON` element. This defines the core properties of the subject.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -109,40 +110,48 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectCON notes'
+> ````
 > 
+
+
+> **Code 3.** **SubjectCON element props.**
+> 		The `props` section of the generator code in "_SubjectCON.gen.m" defines the properties specific for the `SubjectCON` element, including the connectivity matrix.
+> ````matlab
 > %% ¡props!
 > 
-> %%% ¡prop! 
+> %%% ¡prop!  ①
 > BA (data, item) is a brain atlas.
 > %%%% ¡settings!
 > 'BrainAtlas'
 > 
-> 
 > %%% ¡prop! 
 > CON (data, smatrix) is an adjacency matrix.
 > %%%% ¡check_value!
-> br_number = sub.get('BA').get('BR_DICT').get('LENGTH');  ①
-> check = isequal(size(value), [br_number, br_number]); ¥ \circled{2}¥
-> if check ¥ \circled{3}¥
+> br_number = sub.get('BA').get('BR_DICT').get('LENGTH');  ②
+> check = isequal(size(value), [br_number, br_number]); ¥ \circled{3}\circlednote{3}{ checks that the size of `value` (`value` is the connectivity matrix) is equal to the number of brain regions.}¥
+> if check ¥ \circled{4}\circlednote{4}{ returns the check information `msg` according to the variable `check`.}¥
 >     msg = 'All ok!';
 > else   
 >     msg = ['CON must be a square matrix with the dimension equal to the number of brain regions (' int2str(br_number) ').'];
 > end
-> 
-> %%%% ¡gui!  ④
+> %%%% ¡gui!  ⑤
 > pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
 >     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 >     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
 >     varargin{:});
 > ````
 > 
-> ① defines the number of brain regions from the Brain Atlas.}\circlednote{2}{ The `value` is the data matrix. Checking the size of `value` is equal to the number of brain regions.}\circlednote{3}{ returns the check information `msg` according to the variable `check`.}\circlednote{4}{ plots the panel of a property matrix-like with element `sub` and the property number `SubjectCon.Con`. `ROWNAME` and `COLUMNNAME` are the name of regions from brain atlas.
+> ① defines the brain atlas used for the connectivity matrix.
+> 
+> ② determines the number of brain regions from the Brain Atlas.
+> 
+> ⑤ plots the panel of a property matrix-like with element `sub` and the property number `SubjectCON.CON`. `ROWNAME` and `COLUMNNAME` are the name of the brain regions obtained from brain atlas.
 > 
 
 
 
 
-> **Code 3.** **SubjectCON element tests.**
+> **Code 4.** **SubjectCON element tests.**
 > 		The `tests` section from the element generator "_SubjectCON.gen.m".
 > 		A general test should be prepared to test the properties of the Subject when it is empty and full. Furthermore, additional tests should be prepared for the rules defined.
 > ````matlab
@@ -178,7 +187,7 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 > gui.get('CLOSE')  ⑭
 > ````
 > 
-> ① checks that GUI is constructing well.
+> ① This test checks that the GUI is constructing well.
 > 
 > ② assigns a low test execution probability.
 > 
@@ -188,7 +197,7 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 > 
 > ⑤ represents a group of subjects whose class is defined in the property `'SUB_CLASS'`. `'SUB_DICT'` manages the subjects as an indexed dictionary of subjects.
 > 
-> ⑥ construts 50 subjects.
+> ⑥ construts 50 subjects with random connectivity matrices.
 > 
 > ⑦ defines the `'ID'`, `'LABEL'`, `'NOTES'`, `'BA'` (Brain Atlas) and `'CON'` (a random adjacency matrix) for a subject.
 > 
@@ -198,7 +207,7 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 > 
 > ⑩ adds `'sub'` into group.
 > 
-> ⑪ constructs the GUI panel from `gr`. Setting the `'CLOSEREQ'` to `false` means doesn't confirm whether the GUI is close.
+> ⑪ constructs the GUI panel from `gr`. Setting the `'CLOSEREQ'` to `false` switched off the confirmation panel for closing the GUI.
 > 
 > ⑫ draws the contents of a GUI before showing it.
 > 
@@ -212,11 +221,11 @@ We will start by implementing in detail `SubjectCON`. The connectivity matrix ca
 <a id="Subject-with-connectivity-multiplex-data-SubjectCONMP"></a>
 ### Subject with connectivity multiplex data (SubjectCON_MP)  [⬆](#Table-of-Contents)
 
-We can now use `SubjectCON` as the basis to implement the `SubjectCON_MP`. The parts of the code that are modified are highlighted.
-The multilayer data allows connections between any nodes across the multiple layers. The `SubjectCON_MP` can also be used on ordinal multilayer data.
+You can now use `SubjectCON` as the basis to implement the `SubjectCON_MP`. While the multilayer data allows connections between any nodes across the multiple layers, the `SubjectCON_MP` can also be used for ordinal multilayer data.
 
-> **Code 4.** **SubjectCON_MP element header.**
-> 		The `header` section of the generator code for "_SubjectCON_MP.gen.m" provides the general information about the `SubjectCON_MP` element. This code modifies Code 1.
+
+> **Code 5.** **SubjectCON_MP element header.**
+> 		The `header` section of the generator code in "_SubjectCON_MP.gen.m" provides the general information about the `SubjectCON_MP` element. This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > SubjectCON_MP < Subject (sub, subject with connectivity multiplex data) is a subject with connectivity multiplex data.
@@ -226,12 +235,15 @@ The multilayer data allows connections between any nodes across the multiple lay
 > 
 > %%% ¡seealso!
 > ImporterGroupSubjectCON_MP_TXT, ExporterGroupSubjectCON_MP_TXT, ImporterGroupSubjectCON_MP_XLS, ExporterGroupSubjectCON_MP_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-> **Code 5.** **SubjectCON_MP element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectCON_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON:prop_update}.
+> **Code 6.** **SubjectCON_MP element props update.**
+> 		The `props_update` section of the generator code in "_SubjectCON_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -264,7 +276,13 @@ The multilayer data allows connections between any nodes across the multiple lay
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectCON_MP notes'
+> ````
 > 
+
+
+> **Code 7.** **SubjectCON_MP element props.**
+> 		The `props` section of the generator code in "_SubjectCON_MP.gen.m" defines the properties specific for the `SubjectCON_MP` element, including the connectivity matrices for each layer. This code modifies Code 3.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -309,7 +327,7 @@ The multilayer data allows connections between any nodes across the multiple lay
 > 
 > ① defines a parameter to determine the number of layers of subject data. This property must be of a scalar parameter.
 > 
-> ② defines the default option, in this case `'2'`.
+> ② defines the default option, in this case `2`.
 > 
 > ③ defines a parameter to determine the labels for each layer. This property must be of string list parameter.
 > 
@@ -317,22 +335,22 @@ The multilayer data allows connections between any nodes across the multiple lay
 > 
 > ⑤ defines the `value` from the property `'LAYERLABELS'` of SubjectCON_MP.
 > 
-> ⑥ defines the number of layers.
+> ⑥ gets the number of layers.
 > 
 > ⑦ checks the size of each layer is equal to the number of brain regions.
 > 
 > ⑧ defines the height of table.
 > 
-> ⑨ defines the option of showing in X-axis slider.
+> ⑨ shows the x-axis slider.
 > 
-> ⑩ defines the X-axis sliders' labels.
+> ⑩ shows the x-axis slider's labels.
 > 
-> ⑪ defines the option of not showing in Y-axis slider.
+> ⑪ does not show the y-axis slider.
 > 
 
 
-> **Code 6.** **SubjectCON_MP element tests.**
-> 		The `tests` section from the element generator "_SubjectCON_MP.gen.m". This code modifies Code 3.
+> **Code 8.** **SubjectCON_MP element tests.**
+> 		The `tests` section from the element generator "_SubjectCON_MP.gen.m". This code modifies Code 4.
 > ````matlab
 > %% ¡tests!
 > 
@@ -372,7 +390,7 @@ The multilayer data allows connections between any nodes across the multiple lay
 > 
 > ② defines the label of each layer.
 > 
-> ③ constructs 3 layers randomly with size of brain regions by brain regions.
+> ③ constructs 3 layers randomly using connectivity matrices with size of brain regions by brain regions.
 > 
 
 
@@ -383,11 +401,11 @@ The multilayer data allows connections between any nodes across the multiple lay
 <a id="Importer-from-TXT-ImporterGroupSubjectCONTXT"></a>
 ### Importer from TXT (ImporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+You will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data should be stored in the folder "Group1" and "Group2", and the file format is ".txt".
 
 
-> **Code 7.** **ImporterGroupSubjectCON_TXT element header.**
-> 		The `header` section of the generator code for "_ImporterGroupSubjectCON_TXT.gen.m" provides the general information about the `Importer` element.
+> **Code 9.** **ImporterGroupSubjectCON_TXT element header.**
+> 		The `header` section of the generator code in "_ImporterGroupSubjectCON_TXT.gen.m" provides the general information about the `Importer` element.
 > ````matlab
 > %% ¡header!
 > ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT files.  ①
@@ -397,14 +415,17 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > %%% ¡seealso!
 > Group, SunbjectCON, ExporterGroupSubjectCON_TXT
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① The element `ImporterGroupSubjectCON_TXT` is defined as a subclass of `Importer`. The moniker will be `im`.
 > 
 
 
-> **Code 8.** **ImporterGroupSubjectCON_TXT element prop update.**
-> 		The `props_update` section of the generator code for "_ImporterGroupSubjectCON_TXT.gen.m" updates the properties of the `Importer` element.
+> **Code 10.** **ImporterGroupSubjectCON_TXT element props update.**
+> 		The `props_update` section of the generator code in "_ImporterGroupSubjectCON_TXT.gen.m" updates the properties of the `Importer` element.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -437,7 +458,13 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > NOTES (metadata, string) are some specific notes about the CON subject group importer from TXT.
 > %%%% ¡default!
 > 'ImporterGroupSubjectCON_TXT notes'
+> ````
 > 
+
+
+> **Code 11.** **ImporterGroupSubjectCON_TXT element props.**
+> 		The `props` section of the generator code in "_ImporterGroupSubjectCON_TXT.gen.m" defines the specific properties of the `ImporterGroupSubjectCON_TXT` element.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -469,7 +496,6 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true)));  ③
 > %%%% ¡default!
 > Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'))  ④
-> 
 > %%%% ¡calculate!  ⑤
 > gr = Group( ...
 >     'SUB_CLASS', 'SubjectCON', ...
@@ -492,7 +518,8 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 >     try
 >         braph2waitbar(wb, .15, 'Loading subjecy group ...')
 > 
->         files = dir(fullfile(directory, '*.txt')); ⑫
+>         % analyzes directory
+>         files = dir(fullfile(directory, '*.txt'));  ⑫
 > 
 >         if ~isempty(files) 
 >             % brain atlas
@@ -505,11 +532,12 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 >                 end
 >             end
 > 
->             
+>             % adds subjects
 >             sub_dict = gr.memorize('SUB_DICT');  ⑰
 >             for i = 1:1:length(files)
 >                 braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...'])  ⑱
 > 
+>         % read file
 >                 [~, sub_id] = fileparts(files(i).name);
 >                 CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '\t'));  ⑲
 >                 if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH')  ⑳
@@ -529,7 +557,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 >                 sub_dict.get('ADD', sub);
 >             end
 >             
->             
+>             % variables of interest
 >             if isfile([directory '.vois.txt'])  ㉒
 >                 vois = textread([directory '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', '');  ㉓
 >                 vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])';  ㉔
@@ -544,7 +572,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 >                                     'ID', voi_id, ...
 >                                     'V', str2num(vois{i, v}) ...
 >                                     ) ...
->                                 ); ㉖
+>                                 );  ㉖
 >                         elseif ~isempty(vois{2, v})  ㉗
 >                             categories = eval(vois{2, v});
 >                             sub.memorize('VOI_DICT').get('ADD', ...
@@ -576,11 +604,11 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > value = gr;
 > ````
 > 
-> ① selects folder firectory that contains txt data.
+> ① selects the directory that contains the TXT data.
 > 
-> ② saves the folder firectory into the `'DIRECTORY'` property of `im`.
+> ② saves the directory into the `'DIRECTORY'` property of `im`.
 > 
-> ③ checks that the class of subjects of the group is the same as `'SubjectCON'`.
+> ③ checks that the class of subjects of the group is `SubjectCON`.
 > 
 > ④ represents a group of subjects whose class is defined in the property `'SUB_CLASS'`. `'SUB_DICT'` manages the subjects as an indexed dictionary of subjects.
 > 
@@ -588,15 +616,15 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ⑥ locks the property `'SUB_CLASS'` irreversibly.
 > 
-> ⑦ returns the data directory from previous saving ②.
+> ⑦ returns the data directory that has been saved at ②.
 > 
-> ⑧ checks that folder exists.
+> ⑧ checks that directory exists.
 > 
 > ⑨ creates the waitbar with an initial progress of `0` displaying `'Reading directory ...'`.
 > 
-> ⑩ returns the folder name from folder directory.
+> ⑩ extracts the directory name from its complete path.
 > 
-> ⑪ sets the properties `'ID'`, `'LABEL'` and `'NOTES'` for Group.
+> ⑪ sets the properties `'ID'`, `'LABEL'` and `'NOTES'` for the group.
 > 
 > ⑫ finds all ".txt" files in the `directory`.
 > 
@@ -608,34 +636,34 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ⑯ adds the `'ID'` of each brain region.
 > 
-> ⑰ adds the subjects.
+> ⑰ adds the subject to the group.
 > 
 > ⑱ updates the waitbar for each file.
 > 
 > ⑲ reads each file with a delimiter specified in `Delimiter`.
 > 
-> ⑳ checks that the number of the nodes in file is equal to the number of nodes in atlas.
+> ⑳ checks that the number of the nodes in the file is equal to the number of nodes in the brain atlas.
 > 
 > ㉑ outputs the error information.
 > 
 > ㉒ adds the variables of interest (`vois`).
 > 
-> ㉓ reads the file `vois.txt`.
+> ㉓ reads the file `*.vois.txt`.
 > 
-> ㉔ reshape the `vois`.
+> ㉔ reshapes the `vois`.
 > 
-> ㉕ checks that the variable is Numeric.
+> ㉕ checks whether the variable is is numeric.
 > 
-> ㉖ adds the variable of interest witt `'ID'` and value `'V'`.
+> ㉖ adds the variable of interest with `'ID'` and value `'V'`.
 > 
-> ㉗ checks that the variable is CATEGORIES.
+> ㉗ checks whether the variable is categorical.
 > 
 > ㉘ closes the waitbar.
 > 
 
 
-> **Code 9.** **ImporterGroupSubjectCON_TXT element tests.**
-> 		The `tests` section from the element generator "_ImporterGroupSubjectCON_TXT.gen.m". In this section, example data are created for testing.
+> **Code 12.** **ImporterGroupSubjectCON_TXT element tests.**
+> 		The `tests` section from the element generator "_ImporterGroupSubjectCON_TXT.gen.m". In this section, some example data are created for testing.
 > ````matlab
 > %% ¡tests!
 > 
@@ -662,7 +690,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 >     % saves RNG
 >     rng_settings_ = rng(); rng('default')  ⑧
-> `rng`
+> 
 >     sex_options = {'Female' 'Male'};
 > 
 >     % Group 1  ⑨
@@ -775,9 +803,9 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ② creates the example files.
 > 
-> ③ assigns the example directory `'Example data CON TXT'`.
+> ③ defines the directory `'Example data CON TXT'` where the example data will be contained.
 > 
-> ④ makes the example directory.
+> ④ creates the directory for the example data.
 > 
 > ⑤ imports the brain atlas.
 > 
@@ -789,7 +817,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ⑨ generates the data for group1.
 > 
-> ⑩ assigns the degree (mean node degree is 2K) for group 1.
+> ⑩ assigns the degree (mean node degree is 2) for group 1.
 > 
 > ⑪ assigns the rewiring probability for group 1.
 > 
@@ -797,7 +825,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ⑬ generates 50 subjects.
 > 
-> ⑭ creates WS graph.
+> ⑭ creates a Watts-Strogatz graph.
 > 
 > ⑮ extracts the adjacency matrix.
 > 
@@ -835,7 +863,7 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 > 
 > ㉝ returns a group of subjects with connectivity data.
 > 
-> ㉞ assigns the panel element and don't confirm close.
+> ㉞ assigns the panel element without requiring close confirmation.
 > 
 
 
@@ -843,11 +871,11 @@ We will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data 
 <a id="Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS"></a>
 ### Importer from XLS/XLSX (ImporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `ImporterGroupSubjectCON_XLS`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.xls' or '.xlsx'.
+You will now see how to implement in detail `ImporterGroupSubjectCON_XLS` modifying `ImporterGroupSubjectCON_TXT`. The data should be stored in the folders "Group1" and "Group2", and the file format is ".xls" or ".xlsx".
 
 
-> **Code 10.** **ImporterGroupSubjectCON_XLS element header.**
-> 		The `header` section of the generator code for "_ImporterGroupSubjectCON_XLS.gen.m" provides the general information about the `Importer` element. This code modifies Code 7.
+> **Code 13.** **ImporterGroupSubjectCON_XLS element header.**
+> 		The `header` section of the generator code in "_ImporterGroupSubjectCON_XLS.gen.m" provides the general information about the `Importer` element. This code modifies Code 9.
 > ````matlab
 > %% ¡header!
 > ImporterGroupSubjectCON_XLS < Importer (im, importer of CON subject group from XLS/XLSX) imports a group of subjects with connectivity data from a series of XLS/XLSX file.
@@ -857,12 +885,15 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 > 
 > %%% ¡seealso!
 > Group, SubjectCON, ExporterGroupSubjectCON_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-> **Code 11.** **ImporterGroupSubjectCON_XLS element prop update.**
-> 		The `props_update` section of the generator code for "_ImporterGroupSubjectCON_XLS.gen.m" updates the properties of the `Importer` element. This code modifies Code {cd:m:ImporterGroupSubjectCON_TXT:prop_update}.
+> **Code 14.** **ImporterGroupSubjectCON_XLS element props update.**
+> 		The `props_update` section of the generator code in "_ImporterGroupSubjectCON_XLS.gen.m" updates the properties of the `Importer` element. This code modifies Code 10.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -895,7 +926,13 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 > NOTES (metadata, string) are some specific notes about the CON subject group importer from XLS/XLSX.
 > %%%% ¡default!
 > 'ImporterGroupSubjectCON_XLS notes'
+> ````
 > 
+
+
+> **Code 15.** **ImporterGroupSubjectCON_XLS element props.**
+> 		The `props` section of the generator code in "_ImporterGroupSubjectCON_XLS.gen.m" defined the properties specific for `ImporterGroupSubjectCON_XLS`. This code modifies Code 10.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -949,14 +986,13 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 >     try
 >         braph2waitbar(wb, .15, 'Loading subject group ...')
 >         
->         % analyzes file
+>         % analyzes directory
 >         files = [dir(fullfile(directory, '*.xlsx')); dir(fullfile(directory, '*.xls'))];
 >         
 >         if ~isempty(files)
 >             % brain atlas
 >             ba = im.get('BA');
 >             if ba.get('BR_DICT').get('LENGTH') == 0
->                 % adds the number of regions of the first file to the brain atlas
 >                 br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
 >                 br_dict = ba.memorize('BR_DICT');
 >                 for j = 1:1:br_number
@@ -1040,17 +1076,17 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 > value = gr;
 > ````
 > 
-> ① Same as in note ③ of \Coderef{cd:m:ImporterGroupSubjectCON_TXT:prop_update}.
+> ① Same as in note ③ of Code 10.
 > 
-> ② Same as in note ④ of \Coderef{cd:m:ImporterGroupSubjectCON_TXT:prop_update}.
+> ② Same as in note ④ of Code 10.
 > 
-> ③ Same as in note ⑤ to ㉘ in \Coderef{cd:m:ImporterGroupSubjectCON_TXT:prop_update}.
+> ③ Same as in note ⑤ to ㉘ in Code 10.
 > 
 
 
 
-> **Code 12.** **ImporterGroupSubjectCON_XLS element tests.**
-> 		The `tests` section from the element generator "_ImporterGroupSubjectCON_XLS.gen.m". This code modifies Code {cd:m:ImporterGroupSubjectCON_TXT:prop_update}.
+> **Code 16.** **ImporterGroupSubjectCON_XLS element tests.**
+> 		The `tests` section from the element generator "_ImporterGroupSubjectCON_XLS.gen.m". This code modifies Code 12.
 > ````matlab
 > %% ¡tests!
 > 
@@ -1192,17 +1228,17 @@ In this section we will show how to implement in detail `ImporterGroupSubjectCON
 > gui.get('CLOSE')
 > ````
 > 
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 
 
 <a id="Exporter-to-TXT-ExporterGroupSubjectCONTXT"></a>
 ### Exporter to TXT (ExporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `ExporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+In this section, you will see how to implement in detail `ExporterGroupSubjectCON_TXT`. The data will be stored in the folders "Group1" and "Group2", and the file format is "*.txt".
 
 
-> **Code 13.** **ExporterGroupSubjectCON_TXT element header.**
-> 		The `header` section of the generator code for "_ExporterGroupSubjectCON_TXT.gen.m" provides the general information about the `Exporter` element.
+> **Code 17.** **ExporterGroupSubjectCON_TXT element header.**
+> 		The `header` section of the generator code in "_ExporterGroupSubjectCON_TXT.gen.m" provides the general information about the `ExporterGroupSubjectCON_TXT` element.
 > ````matlab
 > %% ¡header!
 > ExporterGroupSubjectCON_TXT < Exporter (ex, exporter of CON subject group in TXT) exports a group of subjects with connectivity data to a series of TXT file.  ①
@@ -1212,14 +1248,17 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > 
 > %%% ¡seealso!
 > Group, SunbjectCON, ExporterGroupSubjectCON_TXT
+> 
+> %%% ¡bluid!
+> 1
 > ````
 > 
 > ① The element `ExporterGroupSubjectCON_TXT` is defined as a subclass of `Exporter`. The moniker will be `ex`.
 > 
 
 
-> **Code 14.** **ExporterGroupSubjectCON_TXT element prop update.**
-> 		The `props_update` section of the generator code for "_ExporterGroupSubjectCON_TXT.gen.m" updates the properties of the `Exporter` element.
+> **Code 18.** **ExporterGroupSubjectCON_TXT element props update.**
+> 		The `props_update` section of the generator code in "_ExporterGroupSubjectCON_TXT.gen.m" updates the properties of the `Exporter` element.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1252,7 +1291,13 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > NOTES (metadata, string) are some specific notes about the CON subject group exporter in TXT.
 > %%%% ¡default!
 > 'ExporterGroupSubjectCON_TXT notes'
+> ````
 > 
+
+
+> **Code 19.** **ExporterGroupSubjectCON_TXT element props.**
+> 		The `props` section of the generator code in "_ExporterGroupSubjectCON_TXT.gen.m" defines the properties specific for the `ExporterGroupSubjectCON_TXT` element.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -1356,7 +1401,7 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > 
 > ③ selects the export directory.
 > 
-> ④ checks that the export directory is correct.
+> ④ checks the export directory before setting it.
 > 
 > ⑤ checks the export directory is a folder.
 > 
@@ -1384,8 +1429,7 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > 
 
 
-
-> **Code 15.** **ExporterGroupSubjectCON_TXT element tests.**
+> **Code 20.** **ExporterGroupSubjectCON_TXT element tests.**
 > 		The `tests` section from the element generator "_ExporterGroupSubjectCON_TXT.gen.m".
 > ````matlab
 > %% ¡tests!
@@ -1596,11 +1640,11 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 <a id="Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS"></a>
 ### Exporter to XLS/XLSX (ExporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `ExporterGroupSubjectCON_XLS`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+In this section, you will see how to implement in detail `ExporterGroupSubjectCON_XLS` modifying `ExporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
 
-> **Code 16.** **ExporterGroupSubjectCON_XLS element header.**
-> 		The `header` section of the generator code for "_ExporterGroupSubjectCON_XLS.gen.m" provides the general information about the `Exporter` element. This code modifies Code 13.
+> **Code 21.** **ExporterGroupSubjectCON_XLS element header.**
+> 		The `header` section of the generator code in "_ExporterGroupSubjectCON_XLS.gen.m" provides the general information about the `Exporter` element. This code modifies Code 17.
 > ````matlab
 > %% ¡header!
 > ExporterGroupSubjectCON_XLS < Exporter (ex, exporter of CON subject group in XLSX) exports a group of subjects with connectivity data to a series of XLSX file.
@@ -1610,12 +1654,15 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > 
 > %%% ¡seealso!
 > Group, SunbjectCON, ImporterGroupSubjectCON_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-> **Code 17.** **ExporterGroupSubjectCON_XLS element prop update.**
-> 		The `props_update` section of the generator code for "_ExporterGroupSubjectCON_XLS.gen.m" updates the properties of the `Exporter` element. This code modifies Code {cd:m:ExporterGroupSubjectCON_TXT:update}.
+> **Code 22.** **ExporterGroupSubjectCON_XLS element props update.**
+> 		The `props_update` section of the generator code in "_ExporterGroupSubjectCON_XLS.gen.m" updates the properties of the `Exporter` element. This code modifies Code 18.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1648,7 +1695,13 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > NOTES (metadata, string) are some specific notes about the CON subject group exporter in XLSX.
 > %%%% ¡default!
 > 'ExporterGroupSubjectCON_XLS notes'
+> ````
 > 
+
+
+> **Code 23.** **ExporterGroupSubjectCON_XLS element props.**
+> 		The `props` section of the generator code in "_ExporterGroupSubjectCON_XLS.gen.m" defines the properties specific for the `ExporterGroupSubjectCON_XLS` element. This code modifies Code 19.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -1747,15 +1800,14 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 > value = [];
 > ````
 > 
-> ① Same as in note ① of \Coderef{cd:m:ExporterGroupSubjectCON_TXT:prop_update}.
+> ① Same as in note ① of Code 18.
 > 
-> ② Same as in note ④ to ⑰ in \Coderef{cd:m:ExporterGroupSubjectCON_TXT:prop_update}.
+> ② Same as in note ④ to ⑰ in Code 18.
 > 
 
 
-
-> **Code 18.** **ExporterGroupSubjectCON_XLS element tests.**
-> 		The `tests` section from the element generator "_ExporterGroupSubjectCON_XLS.gen.m". This code modifies Code 15.
+> **Code 24.** **ExporterGroupSubjectCON_XLS element tests.**
+> 		The `tests` section from the element generator "_ExporterGroupSubjectCON_XLS.gen.m". This code modifies Code 20.
 > ````matlab
 > %% ¡tests!
 > 
@@ -1934,11 +1986,11 @@ In this section we will show how to implement in detail `ExporterGroupSubjectCON
 <a id="Subject-with-functional-data-SubjectFUN"></a>
 ### Subject with functional data (SubjectFUN)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `SubjectFUN`. The connectivity matrix can be obtained from fMRI data.
+In this section, you will see how to implement in detail `SubjectFUN`, which holds timeseries data such as those obtained from fMRI.
 
 
-> **Code 19.** **SubjectFUN element header.**
-> 		The `header` section of the generator code for "_SubjectFUN.gen.m" provides the general information about the `SubjectFUN` element.This code modifies Code 1.
+> **Code 25.** **SubjectFUN element header.**
+> 		The `header` section of the generator code in "_SubjectFUN.gen.m" provides the general information about the `SubjectFUN` element.This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > SubjectFUN < Subject (sub, subject with functional matrix) is a subject with functional matrix (e.g. fMRI).
@@ -1948,11 +2000,15 @@ In this section we will show how to implement in detail `SubjectFUN`. The connec
 > 
 > %%% ¡seealso!
 > ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
-> **Code 20.** **SubjectFUN element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectFUN.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON:prop_update}.
+
+> **Code 26.** **SubjectFUN element props update.**
+> 		The `props_update` section of the generator code in "_SubjectFUN.gen.m" updates the properties of the `Subject` element. This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1985,7 +2041,13 @@ In this section we will show how to implement in detail `SubjectFUN`. The connec
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectFUN notes'
+> ````
 > 
+
+
+> **Code 27.** **SubjectFUN element props.**
+> 		The `props` section of the generator code in "_SubjectFUN.gen.m" defines the  properties specific for the `SubjectFUN` element. This code modifies Code 3.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -2012,12 +2074,12 @@ In this section we will show how to implement in detail `SubjectFUN`. The connec
 > 
 > ① checks the size of the column of `value` is equal to the number of brain regions. The rows of `value` represent the time series.
 > 
-> ② Same as in note ④ of \Coderef{cd:m:SubjectCON:prop_update}.
+> ② Same as in note ④ of Code 2.
 > 
 
 
-> **Code 21.** **SubjectFUN element tests.**
-> 		The `tests` section from the element generator "_SubjectFUN.gen.m". This code modifies Code 3.
+> **Code 28.** **SubjectFUN element tests.**
+> 		The `tests` section from the element generator "_SubjectFUN.gen.m". This code modifies Code 4.
 > ````matlab
 > %% ¡tests!
 > 
@@ -2059,11 +2121,11 @@ In this section we will show how to implement in detail `SubjectFUN`. The connec
 <a id="Subject-with-functional-multiplex-data-SubjectFUNMP"></a>
 ### Subject with functional multiplex data (SubjectFUN_MP)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `SubjectFUN_MP`. The functional matrix can be obtained from fMRI data.
+In this section, you will see how to implement in detail `SubjectFUN_MP`, which can hold, for example, multilayer fMRI data.
 
 
-> **Code 22.** **SubjectFUN_MP element header.**
-> 		The `header` section of the generator code for "_SubjectFUN_MP.gen.m" provides the general information about the `SubjectFUN_MP` element. This code modifies Code 4.
+> **Code 29.** **SubjectFUN_MP element header.**
+> 		The `header` section of the generator code in "_SubjectFUN_MP.gen.m" provides the general information about the `SubjectFUN_MP` element. This code modifies Code 5.
 > ````matlab
 > %% ¡header!
 > SubjectFUN_MP < Subject (sub, subject with functional multiplex data) is a subject with functional multiplex data (e.g. multiplex fMRI).
@@ -2073,11 +2135,15 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 > 
 > %%% ¡seealso!
 > ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
-> **Code 23.** **SubjectFUN_MP element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectFUN_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON_MP:prop_update}.
+
+> **Code 30.** **SubjectFUN_MP element props update.**
+> 		The `props_update` section of the generator code in "_SubjectFUN_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code 6.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -2110,7 +2176,13 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectFUN_MP notes'
+> ````
 > 
+
+
+> **Code 31.** **SubjectFUN_MP element props.**
+> 		The `props` section of the generator code in "_SubjectFUN_MP.gen.m" defines the properties specific for the `SubjectFUN_MP` element. This code modifies Code 7.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -2153,20 +2225,20 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 >     varargin{:});
 > ````
 > 
-> ① Same as in note ① of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ① Same as in note ① of Code 6.
 > 
-> ② Same as in note ② of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ② Same as in note ② of Code 6.
 > 
-> ③ Same as in note ③ of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ③ Same as in note ③ of Code 6.
 > 
 > ④ checks the size of each layer are equal to the number of brain regions. The size of each layer is the length of time series by the number of regions.
 > 
-> ⑤ Same as in note ⑧ ⑨ ⑩ ⑪ of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ⑤ Same as in notes ⑧-⑪ of Code 6.
 > 
 
 
-> **Code 24.** **SubjectFUN_MP element tests.**
-> 		The `tests` section from the element generator "_SubjectFUN_MP.gen.m". This code modifies Code 6.
+> **Code 32.** **SubjectFUN_MP element tests.**
+> 		The `tests` section from the element generator "_SubjectFUN_MP.gen.m". This code modifies Code 8.
 > ````matlab
 > %% ¡tests!
 > 
@@ -2202,7 +2274,7 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 > gui.get('CLOSE')
 > ````
 > 
-> ① Same as in note ① ② ③ of Code 6.
+> ① Same as in notes ①-③ of Code 8.
 > 
 
 
@@ -2213,11 +2285,11 @@ In this section we will show how to implement in detail `SubjectFUN_MP`. The fun
 <a id="Subject-with-connectivity-and-functional-multiplex-data-SubjectCONFUNMP"></a>
 ### Subject with connectivity and functional multiplex data (SubjectCON_FUN_MP)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement detail `SubjectCON_FUN_MP`. The connectivity matrix can be obtained from DTI data and the functional matrix can be obtained from fMRI data.
+In this section, you will see how to implement `SubjectCON_FUN_MP`. For example, the connectivity data can be obtained from DTI and the functional data can be obtained from fMRI.
 
 
-> **Code 25.** **SubjectCON_FUN_MP element header.**
-> 		The `header` section of the generator code for "_SubjectCON_FUN_MP.gen.m" provides the general information about the `SubjectCON_FUN_MP` element. This code modifies Code 4.
+> **Code 33.** **SubjectCON_FUN_MP element header.**
+> 		The `header` section of the generator code in "_SubjectCON_FUN_MP.gen.m" provides the general information about the `SubjectCON_FUN_MP` element. This code modifies Code 5.
 > ````matlab
 > %% ¡header!
 > SubjectCON_FUN_MP < Subject (sub, subject with connectivity and functional multiplex data) is a subject with connectivity and functional multiplex data (e.g. DTI and fMRI).
@@ -2228,11 +2300,15 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 > 
 > %%% ¡seealso!
 > CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
-> **Code 26.** **SubjectCON_FUN_MP element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectCON_FUN_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON_MP:prop_update}.
+
+> **Code 34.** **SubjectCON_FUN_MP element props update.**
+> 		The `props_update` section of the generator code in "_SubjectCON_FUN_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code 6.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -2265,7 +2341,13 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectCON_FUN_MP notes'
+> ````
 > 
+
+
+> **Code 35.** **SubjectCON_FUN_MP element props.**
+> 		The `props` section of the generator code in "_SubjectCON_FUN_MP.gen.m" defines the properties specific for the `Subject_FUN_MP` element. This code modifies Code 7.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -2290,14 +2372,14 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 >     varargin{:});
 > ````
 > 
-> ① Same as in note ② of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ① Same as in note ② of Code 6.
 > 
-> ② Same as in note ④ of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ② Same as in note ④ of Code 6.
 > 
 
 
-> **Code 27.** **SubjectCON_FUN_MP element tests.**
-> 		The `tests` section from the element generator "_SubjectCON_FUN_MP.gen.m". This code modifies Code 6.
+> **Code 36.** **SubjectCON_FUN_MP element tests.**
+> 		The `tests` section from the element generator "_SubjectCON_FUN_MP.gen.m". This code modifies Code 8.
 > ````matlab
 > %% ¡tests!
 > 
@@ -2332,7 +2414,7 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 > gui.get('CLOSE')
 > ````
 > 
-> ① Same as in note ⑥ ⑦ of Code 3.
+> ① Same as in note ⑥ ⑦ of Code 4.
 > 
 > ② constructs connectivity matrix.
 > 
@@ -2347,11 +2429,11 @@ In this section we will show how to implement detail `SubjectCON_FUN_MP`. The co
 <a id="Subject-with-structural-data-SubjectST"></a>
 ### Subject with structural data (SubjectST)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `SubjectST`. The structural matrix can be obtained from sMRI data.
+In this section, you will see how to implement `SubjectST`. For example, the structural data can be obtained from sMRI.
 
 
-> **Code 28.** **SubjectST element header.**
-> 		The `header` section of the generator code for "_SubjectST.gen.m" provides the general information about the `SubjectST` element. This code modifies Code 1.
+> **Code 37.** **SubjectST element header.**
+> 		The `header` section of the generator code in "_SubjectST.gen.m" provides the general information about the `SubjectST` element. This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > SubjectST < Subject (sub, subject with structural data) is a subject with structural data (e.g. sMRI).
@@ -2361,12 +2443,15 @@ In this section we will show how to implement in detail `SubjectST`. The structu
 > 
 > %%% ¡seealso!
 > ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
-> **Code 29.** **SubjectST element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectST.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON:prop_update}.
+> **Code 38.** **SubjectST element props update.**
+> 		The `props_update` section of the generator code in "_SubjectST.gen.m" updates the properties of the `Subject` element. This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -2399,7 +2484,13 @@ In this section we will show how to implement in detail `SubjectST`. The structu
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectST notes'
+> ````
 > 
+
+
+> **Code 39.** **SubjectST element props.**
+> 		The `props` section of the generator code in "_SubjectST.gen.m" defines the properties specific for the `SubjectST` element. This code modifies Code 2.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -2426,12 +2517,12 @@ In this section we will show how to implement in detail `SubjectST`. The structu
 > 
 > ① checks the size of the row of `value` is equal to the number of brain regions. The number of column is 1.
 > 
-> ② Same as in note ④ of \Coderef{cd:m:SubjectCON:prop_update}.
+> ② Same as in note ④ of Code 2.
 > 
 
 
-> **Code 30.** **SubjectST element tests.**
-> 		The `tests` section from the element generator "_SubjectST.gen.m". This code modifies Code 3.
+> **Code 40.** **SubjectST element tests.**
+> 		The `tests` section from the element generator "_SubjectST.gen.m". This code modifies Code 4.
 > ````matlab
 > %% ¡tests!
 > 
@@ -2473,11 +2564,11 @@ In this section we will show how to implement in detail `SubjectST`. The structu
 <a id="Subject-with-structural-multiplex-data-SubjectSTMP"></a>
 ### Subject with structural multiplex data (SubjectST_MP)  [⬆](#Table-of-Contents)
 
-In this section we will show how to implement in detail `SubjectST_MP`. The structural matrix can be obtained from sMRI data.
+In this section‚ you will see how to implement in detail `SubjectST_MP`. For example, the structural data can be obtained from multiple sMRI.
 
 
-> **Code 31.** **SubjectST_MP element header.**
-> 		The `header` section of the generator code for "_SubjectST_MP.gen.m" provides the general information about the `SubjectST_MP` element.This code modifies Code 4.
+> **Code 41.** **SubjectST_MP element header.**
+> 		The `header` section of the generator code in "_SubjectST_MP.gen.m" provides the general information about the `SubjectST_MP` element.This code modifies Code 5.
 > ````matlab
 > %% ¡header!
 > SubjectST_MP < Subject (sub, subject with structural multiplex data) is a subject with structural multiplex data (e.g. multiplex sMRI).
@@ -2487,11 +2578,15 @@ In this section we will show how to implement in detail `SubjectST_MP`. The stru
 > 
 > %%% ¡seealso!
 > ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
-> **Code 32.** **SubjectST_MP element prop update.**
-> 		The `props_update` section of the generator code for "_SubjectST_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code {cd:m:SubjectCON_MP:prop_update}.
+
+> **Code 42.** **SubjectST_MP element props update.**
+> 		The `props_update` section of the generator code in "_SubjectST_MP.gen.m" updates the properties of the `Subject` element. This code modifies Code 6.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -2524,7 +2619,13 @@ In this section we will show how to implement in detail `SubjectST_MP`. The stru
 > NOTES (metadata, string) are some specific notes about the subject.
 > %%%% ¡default!
 > 'SubjectST_MP notes'
+> ````
 > 
+
+
+> **Code 43.** **SubjectST_MP element props.**
+> 		The `props` section of the generator code in "_SubjectST_MP.gen.m" defines the properties specific for the `SubjectST_MP` element. This code modifies Code 7.
+> ````matlab
 > %% ¡props!
 > 
 > %%% ¡prop!
@@ -2567,20 +2668,20 @@ In this section we will show how to implement in detail `SubjectST_MP`. The stru
 >     varargin{:});
 > ````
 > 
-> ① Same as in note ① of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ① Same as in note ① of Code 6.
 > 
-> ② Same as in note ② of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ② Same as in note ② of Code 6.
 > 
-> ③ Same as in note ③ of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ③ Same as in note ③ of Code 6.
 > 
 > ④ checks the size of each layer are equal to the number of brain regions. The size of each layer is the number of regions by 1.
 > 
-> ⑤ Same as in note ⑧ ⑨ ⑩ ⑪ of \Coderef{cd:m:SubjectCON_MP:prop_update}.
+> ⑤ Same as in note ⑧ ⑨ ⑩ ⑪ of Code 6.
 > 
 
 
-> **Code 33.** **SubjectST_MP element tests.**
-> 		The `tests` section from the element generator "_SubjectST_MP.gen.m". This code modifies Code 6.
+> **Code 44.** **SubjectST_MP element tests.**
+> 		The `tests` section from the element generator "_SubjectST_MP.gen.m". This code modifies Code 8.
 > ````matlab
 > %% ¡tests!
 > 
@@ -2616,5 +2717,5 @@ In this section we will show how to implement in detail `SubjectST_MP`. The stru
 > gui.get('CLOSE')
 > ````
 > 
-> ① Same as in note ① ② ③ of Code 6.
+> ① Same as in note ① ② ③ of Code 8.
 >

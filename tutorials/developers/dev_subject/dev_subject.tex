@@ -12,11 +12,10 @@
 
 \begin{abstract}
 This is the developer tutorial for implementing, importing, and exporting groups of subjects.
-We will explain how to create generator files \fn{*.gen.m} for new subjects and well as to export and import them. All \fn{*.gen.m} files can then be compiled by \code{braph2genesis}. 
+You will learn how to create generator files \fn{*.gen.m} for new subjects and well as to import and export them. All \fn{*.gen.m} files can then be compiled by \code{braph2genesis}. 
 All types of subjects are extensions of the base element \code{Subject}. 
-We will use as examples the subjects \code{SubjectCON} (subject with connectivity data), \code{SubjectCON\_MP} (subject with connectivity multiplex data), \code{SubjectFUN} (subject with functional data), \code{SubjectFUN\_MP} (subject with functional multiplex data), \code{SubjectST} (subject with structural data), and \code{SubjectST\_MP} (subject with structural multiplex data). 
-Furthermore, all exporters and importers are extensions of the base elements \code{Exporter} and \code{Importer}, respectively. Here, we will use as examples \code{ExporterGroupSubjectCON\_TXT} (exports a group of subjects with connectivity data to a series of TXT file), \code{ExporterGroupSubjectCON\_XLS} (exports a group of subjects with connectivity data to a series of XLSX file), \code{ImporterGroupSubjectCON\_TXT} (imports a group of subjects with connectivity data to a series of TXT file), and \code{ImporterGroupSubjectCON\_XLS} (imports a group of subjects with connectivity data to a series of XLSX file).
-
+You will use as examples the subjects \code{SubjectCON} (subject with connectivity data), \code{SubjectCON\_MP} (subject with connectivity multiplex data), \code{SubjectFUN} (subject with functional data), \code{SubjectFUN\_MP} (subject with functional multiplex data), \code{SubjectST} (subject with structural data), and \code{SubjectST\_MP} (subject with structural multiplex data). 
+Furthermore, all importers and exporters are extensions of the base elements \code{Exporter} and \code{Importer}, respectively. Here, you will use as examples \code{ImporterGroupSubjectCON\_TXT} (importing a group of subjects with connectivity data to a series of TXT file),\code{ImporterGroupSubjectCON\_XLS} (importing a group of subjects with connectivity data to a series of XLSX file), \code{ExporterGroupSubjectCON\_TXT} (exporting a group of subjects with connectivity data to a series of TXT file), and \code{ExporterGroupSubjectCON\_XLS} (exporting a group of subjects with connectivity data to a series of XLSX file).
 \end{abstract}
 
 \tableofcontents
@@ -27,13 +26,13 @@ Furthermore, all exporters and importers are extensions of the base elements \co
 
 \subsection{Subject with connectivity data (SubjectCON)}
 
-We will start by implementing in detail \code{SubjectCON}. The connectivity matrix can be obtained from DTI data.
+You will start by implementing in detail \code{SubjectCON}, which holds a connectivity matrix (for example, obtained from DTI data).
 
 \begin{lstlisting}[
 	label=cd:m:SubjectCON:header,
 	caption={
 		{\bf SubjectCON element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectCON.gen.m} provides the general information about the \code{SubjectCON} element.
+		The \code{header} section of the generator code in \fn{\_SubjectCON.gen.m} provides the general information about the \code{SubjectCON} element.
 		}
 ]
 %% ¡header!
@@ -42,16 +41,18 @@ SubjectCON < Subject (sub, subject with connectivity matrix) is a subject with c
 %%% ¡description!
 Subject with a connectivity matrix (e.g. obtained from DTI).
 
-%%% ¡seealso! ¥\circled{2}\circlednote{2}{ Other related functions.}¥
+%%% ¡seealso! ¥\circled{2}\circlednote{2}{ Other related elements.}¥
 ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+
+%%% ¡build!
+1
 \end{lstlisting}
 
-
 \begin{lstlisting}[
-	label={cd:m:SubjectCON:prop_update},
+	label=cd:m:SubjectCON:prop_update,
 	caption={
-		{\bf SubjectCON element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectCON.gen.m} updates the properties of the \code{Subject} element. This defines the core properties of the subject.
+		{\bf SubjectCON element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectCON.gen.m} updates the properties of the \code{SubjectCON} element. This defines the core properties of the subject.
 	}
 ]
 %% ¡props_update!
@@ -85,27 +86,33 @@ LABEL (metadata, string) is an extended label of the subject.
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
 'SubjectCON notes'
+\end{lstlisting}
 
+\begin{lstlisting}[
+	label=cd:m:SubjectCON:props,
+	caption={
+		{\bf SubjectCON element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectCON.gen.m} defines the properties specific for the \code{SubjectCON} element, including the connectivity matrix.
+	}
+]
 %% ¡props!
 
-%%% ¡prop! 
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the brain atlas used for the connectivity matrix.}¥
 BA (data, item) is a brain atlas.
 %%%% ¡settings!
 'BrainAtlas'
 
-
 %%% ¡prop! 
 CON (data, smatrix) is an adjacency matrix.
 %%%% ¡check_value!
-br_number = sub.get('BA').get('BR_DICT').get('LENGTH'); ¥\circled{1}\circlednote{1}{ defines the number of brain regions from the Brain Atlas.}\circlednote{2}{ The \code{value} is the data matrix. Checking the size of \code{value} is equal to the number of brain regions.}\circlednote{3}{ returns the check information \code{msg} according to the variable \code{check}.}\circlednote{4}{ plots the panel of a property matrix-like with element \code{sub} and the property number \code{SubjectCon.Con}. \code{ROWNAME} and \code{COLUMNNAME} are the name of regions from brain atlas.}¥
-check = isequal(size(value), [br_number, br_number]); ¥ \circled{2}¥
-if check ¥ \circled{3}¥
+br_number = sub.get('BA').get('BR_DICT').get('LENGTH'); ¥\circled{2}\circlednote{2}{ determines the number of brain regions from the Brain Atlas.}¥
+check = isequal(size(value), [br_number, br_number]); ¥ \circled{3}\circlednote{3}{ checks that the size of \code{value} (\code{value} is the connectivity matrix) is equal to the number of brain regions.}¥
+if check ¥ \circled{4}\circlednote{4}{ returns the check information \code{msg} according to the variable \code{check}.}¥
     msg = 'All ok!';
 else   
     msg = ['CON must be a square matrix with the dimension equal to the number of brain regions (' int2str(br_number) ').'];
 end
-
-%%%% ¡gui! ¥\circled{4}¥
+%%%% ¡gui! ¥\circled{5}\circlednote{5}{ plots the panel of a property matrix-like with element \code{sub} and the property number \code{SubjectCON.CON}. \code{ROWNAME} and \code{COLUMNNAME} are the name of the brain regions obtained from brain atlas.}¥
 pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
@@ -126,7 +133,7 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectCON.CON, ...
 
 %%% ¡test!
 %%%% ¡name!
-GUI ¥\circled{1}\circlednote{1}{ checks that GUI is constructing well.}¥
+GUI ¥\circled{1}\circlednote{1}{ This test checks that the GUI is constructing well.}¥
 %%%% ¡probability! ¥\circled{2}\circlednote{2}{ assigns a low test execution probability.}¥
 .01
 %%%% ¡code!
@@ -134,7 +141,7 @@ im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx'); ¥\circled{3}\circl
 ba = im_ba.get('BA');  ¥\circled{4}\circlednote{4}{ returns the brain atlas.}¥
 
 gr = Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON'));  ¥\circled{5}\circlednote{5}{ represents a group of subjects whose class is defined in the property \code{'SUB\_CLASS'}. \code{'SUB\_DICT'} manages the subjects as an indexed dictionary of subjects.}¥
-for i = 1:1:50 ¥\circled{6}\circlednote{6}{ construts 50 subjects.}¥
+for i = 1:1:50 ¥\circled{6}\circlednote{6}{ construts 50 subjects with random connectivity matrices.}¥
     sub = SubjectCON( ... ¥\circled{7}\circlednote{7}{ defines the \code{'ID'}, \code{'LABEL'}, \code{'NOTES'}, \code{'BA'} (Brain Atlas) and \code{'CON'} (a random adjacency matrix) for a subject.}¥
         'ID', ['SUB CON ' int2str(i)], ...
         'LABEL', ['Subejct CON ' int2str(i)], ...
@@ -147,7 +154,7 @@ for i = 1:1:50 ¥\circled{6}\circlednote{6}{ construts 50 subjects.}¥
     gr.get('SUB_DICT').get('ADD', sub) ¥\circled{10}\circlednote{10}{ adds \code{'sub'} into group.}¥
 end
 
-gui = GUIElement('PE', gr, 'CLOSEREQ', false); ¥\circled{11}\circlednote{11}{ constructs the GUI panel from \code{gr}. Setting the \code{'CLOSEREQ'} to \code{false} means doesn't confirm whether the GUI is close.}¥
+gui = GUIElement('PE', gr, 'CLOSEREQ', false); ¥\circled{11}\circlednote{11}{ constructs the GUI panel from \code{gr}. Setting the \code{'CLOSEREQ'} to \code{false} switched off the confirmation panel for closing the GUI.}¥
 gui.get('DRAW') ¥\circled{12}\circlednote{12}{ draws the contents of a GUI before showing it.}¥
 gui.get('SHOW') ¥\circled{13}\circlednote{13}{ shows the figure and its dependent figures.}¥
 
@@ -158,16 +165,19 @@ gui.get('CLOSE') ¥\circled{14}\circlednote{14}{ closes the figure and its depen
 
 \subsection{Subject with connectivity multiplex data (SubjectCON\_MP)}
 
-We can now use \code{SubjectCON} as the basis to implement the \code{SubjectCON\_MP}. The parts of the code that are modified are highlighted.
-The multilayer data allows connections between any nodes across the multiple layers. The \code{SubjectCON\_MP} can also be used on ordinal multilayer data.
+You can now use \code{SubjectCON} as the basis to implement the \code{SubjectCON\_MP}. 
+{%TEX
+The parts of the code that are modified are highlighted.
+}%TEX
+While the multilayer data allows connections between any nodes across the multiple layers, the \code{SubjectCON\_MP} can also be used for ordinal multilayer data.
+
 \begin{lstlisting}[
 	label=cd:m:SubjectCON_MP:header,
 	caption={
 		{\bf SubjectCON\_MP element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectCON\_MP.gen.m} provides the general information about the \code{SubjectCON\_MP} element. \expand{cd:m:SubjectCON:header}
+		The \code{header} section of the generator code in \fn{\_SubjectCON\_MP.gen.m} provides the general information about the \code{SubjectCON\_MP} element. \expand{cd:m:SubjectCON:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤SubjectCON_MP¤ < Subject (sub, ¤subject with connectivity multiplex data) is a subject with connectivity multiplex data¤.
 
@@ -176,13 +186,16 @@ The multilayer data allows connections between any nodes across the multiple lay
 
 %%% ¡seealso!
 ¤ImporterGroupSubjectCON_MP_TXT, ExporterGroupSubjectCON_MP_TXT, ImporterGroupSubjectCON_MP_XLS, ExporterGroupSubjectCON_MP_XLS¤
+
+%%% ¡build!
+¤1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:SubjectCON_MP:prop_update},
+	label=cd:m:SubjectCON_MP:prop_update,
 	caption={
-		{\bf SubjectCON\_MP element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectCON\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+		{\bf SubjectCON\_MP element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectCON\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -215,9 +228,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectCON_MP notes'¤
+¤'SubjectCON_MP notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectCON_MP:props,
+	caption={
+		{\bf SubjectCON\_MP element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectCON\_MP.gen.m} defines the properties specific for the \code{SubjectCON\_MP} element, including the connectivity matrices for each layer. \expand{cd:m:SubjectCON:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -227,7 +248,7 @@ BA (data, item) is a brain atlas.
 ¤%%% ¡prop! 
 L (data, scalar) is the number of layers of subject data. ¥\circled{1}\circlednote{1}{ defines a parameter to determine the number of layers of subject data. This property must be of a scalar parameter.}¥
 %%%% ¡default!
-2¤ ¥\circled{2}\circlednote{2}{ defines the default option, in this case \code{'2'}.}¥
+2¤ ¥\circled{2}\circlednote{2}{ defines the default option, in this case \code{2}.}¥
 
 ¤%%% ¡prop! 
 LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.¤ ¥\circled{3}\circlednote{3}{ defines a parameter to determine the labels for each layer. This property must be of string list parameter.}¥
@@ -241,7 +262,7 @@ value = sub.get('LAYERLABELS'); ¥\circled{5}\circlednote{5}{ defines the \code{
 ¤CON_MP (data, cell) is a cell containing L matrices corresponding connectivity matrices of each layer.¤
 %%%% ¡check_value!
 br_number = sub.get('BA').get('BR_DICT').get('LENGTH');
-¤num_layers = sub.get('L'); ¥\circled{6}\circlednote{6}{ defines the number of layers.}¥
+¤num_layers = sub.get('L'); ¥\circled{6}\circlednote{6}{ gets the number of layers.}¥
 check = (iscell(value) && isequal(length(value), num_layers)  && isequal( cellfun(@(v) size(v, 1), value), ones(1, num_layers) * br_number)  && isequal( cellfun(@(v) size(v, 2), value), ones(1, num_layers) * br_number)) || (isempty(value) && br_number == 0);¤ ¥\circled{7}\circlednote{7}{ checks the size of each layer is equal to the number of brain regions.}¥
 if check
     msg = 'All ok!';
@@ -251,9 +272,9 @@ end
 %%%% ¡gui! 
 pr = PanelPropCell('EL', sub, 'PROP', ¤SubjectCON_MP.CON_M¤P, ...
     ¤'TABLE_HEIGHT', s(40), ... ¥\circled{8}\circlednote{8}{ defines the height of table.}¥
-    'XSLIDERSHOW', true, ... ¥\circled{9}\circlednote{9}{ defines the option of showing in X-axis slider.}¥
-    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ... ¥\circled{10}\circlednote{10}{ defines the X-axis sliders' labels.}¥
-    'YSLIDERSHOW', false, ...¤ ¥\circled{11}\circlednote{11}{ defines the option of not showing in Y-axis slider.}¥
+    'XSLIDERSHOW', true, ... ¥\circled{9}\circlednote{9}{ shows the x-axis slider.}¥
+    'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ... ¥\circled{10}\circlednote{10}{ shows the x-axis slider's labels.}¥
+    'YSLIDERSHOW', false, ...¤ ¥\circled{11}\circlednote{11}{ does not show the y-axis slider.}¥
     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});¤
@@ -288,7 +309,7 @@ for i = 1:1:10
         ¤'L', 3, ... ¥\circled{1}\circlednote{1}{ defines the number of layers.}¥
         'LAYERLABELS', {'L1' 'L2' 'L3'}, ... ¥\circled{2}\circlednote{2}{ defines the label of each layer.}¥
         'CON_MP', {rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH')), rand(ba.get('BR_DICT').get('LENGTH'))} ...¤
-        ); ¥\circled{3}\circlednote{3}{ constructs 3 layers randomly with size of brain regions by brain regions.}¥
+        ); ¥\circled{3}\circlednote{3}{ constructs 3 layers randomly using connectivity matrices with size of brain regions by brain regions.}¥
     sub.memorize('VOI_DICT').get('ADD', VOINumeric('ID', 'Age', 'V', 100 * rand()))
     sub.memorize('VOI_DICT').get('ADD', VOICategoric('ID', 'Sex', 'CATEGORIES', {'Female', 'Male'}, 'V', randi(2, 1)))
     gr.get('SUB_DICT').get('ADD', sub)
@@ -307,16 +328,15 @@ gui.get('CLOSE')
 
 \subsection{Importer from TXT (ImporterGroupSubjectCON\_TXT)}
 
-We will start by implementing in detail \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+You will start by implementing in detail \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folder \fn{Group1} and \fn{Group2}, and the file format is \fn{.txt}.
 
 \begin{lstlisting}[
 	label=cd:m:ImporterGroupSubjectCON_TXT:header,
 	caption={
 		{\bf ImporterGroupSubjectCON\_TXT element header.}
-		The \code{header} section of the generator code for \fn{\_ImporterGroupSubjectCON\_TXT.gen.m} provides the general information about the \code{Importer} element.
+		The \code{header} section of the generator code in \fn{\_ImporterGroupSubjectCON\_TXT.gen.m} provides the general information about the \code{Importer} element.
 		}
 ]
-
 %% ¡header!
 ImporterGroupSubjectCON_TXT < Importer (im, importer of CON subject group from TXT) imports a group of subjects with connectivity data from a series of TXT files. ¥\circled{1}\circlednote{1}{ The element \code{ImporterGroupSubjectCON\_TXT} is defined as a subclass of \code{Importer}. The moniker will be \code{im}.}¥
 
@@ -326,16 +346,17 @@ ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data f
 %%% ¡seealso!
 Group, SunbjectCON, ExporterGroupSubjectCON_TXT
 
+%%% ¡build!
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:ImporterGroupSubjectCON_TXT:prop_update},
+	label=cd:m:ImporterGroupSubjectCON_TXT:prop_update,
 	caption={
-		{\bf ImporterGroupSubjectCON\_TXT element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_ImporterGroupSubjectCON\_TXT.gen.m} updates the properties of the \code{Importer} element.
+		{\bf ImporterGroupSubjectCON\_TXT element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_ImporterGroupSubjectCON\_TXT.gen.m} updates the properties of the \code{Importer} element.
 	}
 ]
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -367,7 +388,15 @@ LABEL (metadata, string) is an extended label of the CON subject group importer 
 NOTES (metadata, string) are some specific notes about the CON subject group importer from TXT.
 %%%% ¡default!
 'ImporterGroupSubjectCON_TXT notes'
+\end{lstlisting}
 
+\begin{lstlisting}[
+	label=cd:m:ImporterGroupSubjectCON_TXT:props,
+	caption={
+		{\bf ImporterGroupSubjectCON\_TXT element props.}
+		The \code{props} section of the generator code in \fn{\_ImporterGroupSubjectCON\_TXT.gen.m} defines the specific properties of the \code{ImporterGroupSubjectCON\_TXT} element.
+	}
+]
 %% ¡props!
 
 %%% ¡prop!
@@ -380,9 +409,9 @@ GET_DIR (query, item) opens a dialog box to set the directory from where to load
 %%%% ¡settings!
 'ImporterGroupSubjectCON_TXT'
 %%%% ¡calculate!
-directory = uigetdir('Select directory'); ¥\circled{1}\circlednote{1}{ selects folder firectory that contains txt data.}¥
+directory = uigetdir('Select directory'); ¥\circled{1}\circlednote{1}{ selects the directory that contains the TXT data.}¥
 if ischar(directory) && isfolder(directory)
-	im.set('DIRECTORY', directory); ¥\circled{2}\circlednote{2}{ saves the folder firectory into the \code{'DIRECTORY'} property of \code{im}.}¥
+	im.set('DIRECTORY', directory); ¥\circled{2}\circlednote{2}{ saves the directory into the \code{'DIRECTORY'} property of \code{im}.}¥
 end
 value = im;
 
@@ -396,10 +425,9 @@ GR (result, item) is a group of subjects with connectivity data.
 %%%% ¡settings!
 'Group'
 %%%% ¡check_value!
-check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true))); ¥\circled{3}\circlednote{3}{ checks that the class of subjects of the group is the same as \code{'SubjectCON'}.}¥
+check = any(strcmp(value.get(Group.SUB_CLASS_TAG), subclasses('SubjectCON', [], [], true))); ¥\circled{3}\circlednote{3}{ checks that the class of subjects of the group is \code{SubjectCON}.}¥
 %%%% ¡default!
 Group('SUB_CLASS', 'SubjectCON', 'SUB_DICT', IndexedDictionary('IT_CLASS', 'SubjectCON')) ¥\circled{4}\circlednote{4}{ represents a group of subjects whose class is defined in the property \code{'SUB\_CLASS'}. \code{'SUB\_DICT'} manages the subjects as an indexed dictionary of subjects.}¥
-
 %%%% ¡calculate! ¥\circled{5}\circlednote{5}{ constructs an empty \code{Group}.}¥
 gr = Group( ...
     'SUB_CLASS', 'SubjectCON', ...
@@ -408,12 +436,12 @@ gr = Group( ...
 
 gr.lock('SUB_CLASS'); ¥\circled{6}\circlednote{6}{ locks the property \code{'SUB\_CLASS'} irreversibly.}¥
 
-directory = im.get('DIRECTORY'); ¥\circled{7}\circlednote{7}{ returns the data directory from previous saving \circled{2}.}¥
-if isfolder(directory) ¥\circled{8}\circlednote{8}{ checks that folder exists.}¥
+directory = im.get('DIRECTORY'); ¥\circled{7}\circlednote{7}{ returns the data directory that has been saved at \circled{2}.}¥
+if isfolder(directory) ¥\circled{8}\circlednote{8}{ checks that directory exists.}¥
     wb = braph2waitbar(im.get('WAITBAR'), 0, 'Reading directory ...'); ¥\circled{9}\circlednote{9}{ creates the waitbar with an initial progress of \code{0} displaying \code{'Reading directory ...'}.}¥
     
-    [~, name] = fileparts(directory); ¥\circled{10}\circlednote{10}{ returns the folder name from folder directory.}¥
-    gr.set( ... ¥\circled{11}\circlednote{11}{ sets the properties \code{'ID'}, \code{'LABEL'} and \code{'NOTES'} for Group.}¥
+    [~, name] = fileparts(directory); ¥\circled{10}\circlednote{10}{ extracts the directory name from its complete path.}¥
+    gr.set( ... ¥\circled{11}\circlednote{11}{ sets the properties \code{'ID'}, \code{'LABEL'} and \code{'NOTES'} for the group.}¥
         'ID', name, ...
         'LABEL', name, ...
         'NOTES', ['Group loaded from ' directory] ...
@@ -422,7 +450,8 @@ if isfolder(directory) ¥\circled{8}\circlednote{8}{ checks that folder exists.}
     try
         braph2waitbar(wb, .15, 'Loading subjecy group ...')
 
-        files = dir(fullfile(directory, '*.txt'));¥\circled{12}\circlednote{12}{ finds all \fn{.txt} files in the \code{directory}.}¥
+        % analyzes directory
+        files = dir(fullfile(directory, '*.txt')); ¥\circled{12}\circlednote{12}{ finds all \fn{.txt} files in the \code{directory}.}¥
 
         if ~isempty(files) 
             % brain atlas
@@ -435,14 +464,15 @@ if isfolder(directory) ¥\circled{8}\circlednote{8}{ checks that folder exists.}
                 end
             end
 
-            
-            sub_dict = gr.memorize('SUB_DICT'); ¥\circled{17}\circlednote{17}{ adds the subjects.}¥
+            % adds subjects
+            sub_dict = gr.memorize('SUB_DICT'); ¥\circled{17}\circlednote{17}{ adds the subject to the group.}¥
             for i = 1:1:length(files)
                 braph2waitbar(wb, .15 + .85 * i / length(files), ['Loading subject ' num2str(i) ' of ' num2str(length(files)) ' ...']) ¥\circled{18}\circlednote{18}{ updates the waitbar for each file.}¥
 
+		% read file
                 [~, sub_id] = fileparts(files(i).name);
                 CON = table2array(readtable(fullfile(directory, files(i).name), 'Delimiter', '\t')); ¥\circled{19}\circlednote{19}{ reads each file with a delimiter specified in \code{Delimiter}.}¥
-                if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH') ¥\circled{20}\circlednote{20}{ checks that the number of the nodes in file is equal to the number of nodes in atlas.}¥
+                if size(CON, 1) ~= ba.get('BR_DICT').get('LENGTH') || size(CON, 2) ~= ba.get('BR_DICT').get('LENGTH') ¥\circled{20}\circlednote{20}{ checks that the number of the nodes in the file is equal to the number of nodes in the brain atlas.}¥
                     error( ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO], ...
                         [BRAPH2.STR ':' class(im) ':' BRAPH2.ERR_IO '\\n' ...
@@ -459,23 +489,23 @@ if isfolder(directory) ¥\circled{8}\circlednote{8}{ checks that folder exists.}
                 sub_dict.get('ADD', sub);
             end
             
-            
+            % variables of interest
             if isfile([directory '.vois.txt']) ¥\circled{22}\circlednote{22}{ adds the variables of interest (\code{vois}).}¥
-                vois = textread([directory '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', ''); ¥\circled{23}\circlednote{23}{ reads the file \code{vois.txt}.}¥
-                vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])'; ¥\circled{24}\circlednote{24}{ reshape the \code{vois}.}¥
+                vois = textread([directory '.vois.txt'], '%s', 'delimiter', '\t', 'whitespace', ''); ¥\circled{23}\circlednote{23}{ reads the file \code{*.vois.txt}.}¥
+                vois = reshape(vois, find(strcmp('', vois), 1) - 1, [])'; ¥\circled{24}\circlednote{24}{ reshapes the \code{vois}.}¥
                 for i = 3:1:size(vois, 1)
                     sub_id = vois{i, 1};
                     sub = sub_dict.get('IT', sub_id);
                     for v = 2:1:size(vois, 2)
                         voi_id = vois{1, v};
-                        if isempty(vois{2, v}) ¥\circled{25}\circlednote{25}{ checks that the variable is Numeric.}¥
+                        if isempty(vois{2, v}) ¥\circled{25}\circlednote{25}{ checks whether the variable is is numeric.}¥
                             sub.memorize('VOI_DICT').get('ADD', ...
                                 VOINumeric( ...
                                     'ID', voi_id, ...
                                     'V', str2num(vois{i, v}) ...
                                     ) ...
-                                );¥\circled{26}\circlednote{26}{ adds the variable of interest witt \code{'ID'} and value \code{'V'}.}¥
-                        elseif ~isempty(vois{2, v}) ¥\circled{27}\circlednote{27}{ checks that the variable is CATEGORIES.}¥
+                                ); ¥\circled{26}\circlednote{26}{ adds the variable of interest with \code{'ID'} and value \code{'V'}.}¥
+                        elseif ~isempty(vois{2, v}) ¥\circled{27}\circlednote{27}{ checks whether the variable is categorical.}¥
                             categories = eval(vois{2, v});
                             sub.memorize('VOI_DICT').get('ADD', ...
                                 VOICategoric( ...
@@ -505,14 +535,13 @@ end
 
 value = gr;
 \end{lstlisting}
-\clearpage
+
 \begin{lstlisting}[	label=cd:m:ImporterGroupSubjectCON_TXT:tests,
 	caption={
 		{\bf ImporterGroupSubjectCON\_TXT element tests.}
-		The \code{tests} section from the element generator \fn{\_ImporterGroupSubjectCON\_TXT.gen.m}. In this section, example data are created for testing.
+		The \code{tests} section from the element generator \fn{\_ImporterGroupSubjectCON\_TXT.gen.m}. In this section, some example data are created for testing.
 	}
 ]
-
 %% ¡tests!
 
 %%% ¡excluded_props! ¥\circled{1}\circlednote{1}{ List of properties that are excluded from testing.}¥
@@ -522,9 +551,9 @@ value = gr;
 %%%% ¡name!
 Create example files ¥\circled{2}\circlednote{2}{ creates the example files.}¥
 %%%% ¡code!
-data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON TXT']; ¥\circled{3}\circlednote{3}{ assigns the example directory \code{'Example data CON TXT'}.}¥
+data_dir = [fileparts(which('SubjectCON')) filesep 'Example data CON TXT']; ¥\circled{3}\circlednote{3}{ defines the directory \code{'Example data CON TXT'} where the example data will be contained.}¥
 if ~isdir(data_dir)
-    mkdir(data_dir); ¥\circled{4}\circlednote{4}{ makes the example directory.}¥
+    mkdir(data_dir); ¥\circled{4}\circlednote{4}{ creates the directory for the example data.}¥
 
     % Brain Atlas
     im_ba = ImporterBrainAtlasTXT('FILE', 'desikan_atlas.txt'); ¥\circled{5}\circlednote{5}{ imports the brain atlas.}¥
@@ -538,11 +567,11 @@ if ~isdir(data_dir)
 
     % saves RNG
     rng_settings_ = rng(); rng('default') ¥\circled{8}\circlednote{8}{ sets the random number generator (\code{rng}) to \code{'default'}.}¥
-\code{rng}
+
     sex_options = {'Female' 'Male'};
 
     % Group 1 ¥\circled{9}\circlednote{9}{ generates the data for group1.}¥
-    K1 = 2; ¥\circled{10}\circlednote{10}{ assigns the degree (mean node degree is 2K) for group 1.}¥
+    K1 = 2; ¥\circled{10}\circlednote{10}{ assigns the degree (mean node degree is 2) for group 1.}¥
     beta1 = 0.3; ¥\circled{11}\circlednote{11}{ assigns the rewiring probability for group 1.}¥
     gr1_name = 'CON_Group_1_TXT';
     gr1_dir = [data_dir filesep() gr1_name];
@@ -554,7 +583,7 @@ if ~isdir(data_dir)
     for i = 1:1:50 % subject number ¥\circled{13}\circlednote{13}{ generates 50 subjects.}¥
         sub_id = ['SubjectCON_MP_' num2str(i)];
 
-        h1 = WattsStrogatz(N, K1, beta1); ¥\circled{14}\circlednote{14}{ creates WS graph.}¥  
+        h1 = WattsStrogatz(N, K1, beta1); ¥\circled{14}\circlednote{14}{ creates a Watts-Strogatz graph.}¥  
 
         A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; ¥\circled{15}\circlednote{15}{ extracts the adjacency matrix.}¥ 
         r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); ¥\circled{16}\circlednote{16}{ makes the adjacency matrix weighted.}¥
@@ -640,7 +669,7 @@ im_gr = ImporterGroupSubjectCON_TXT( ... ¥\circled{32}\circlednote{32}{ imports
     );
 gr = im_gr.get('GR'); ¥\circled{33}\circlednote{33}{ returns a group of subjects with connectivity data.}¥
 
-gui = GUIElement('PE', gr, 'CLOSEREQ', false); ¥\circled{34}\circlednote{34}{ assigns the panel element and don't confirm close.}¥
+gui = GUIElement('PE', gr, 'CLOSEREQ', false); ¥\circled{34}\circlednote{34}{ assigns the panel element without requiring close confirmation.}¥
 gui.get('DRAW')
 gui.get('SHOW')
 
@@ -651,16 +680,15 @@ gui.get('CLOSE')
 
 \subsection{Importer from XLS/XLSX (ImporterGroupSubjectCON\_XLS)}
 
-In this section we will show how to implement in detail \code{ImporterGroupSubjectCON\_XLS}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.xls' or '.xlsx'.
+You will now see how to implement in detail \code{ImporterGroupSubjectCON\_XLS} modifying \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folders \fn{Group1} and \fn{Group2}, and the file format is \fn{.xls} or \fn{.xlsx}.
 
 \begin{lstlisting}[
 	label=cd:m:ImporterGroupSubjectCON_XLS:header,
 	caption={
 		{\bf ImporterGroupSubjectCON\_XLS element header.}
-		The \code{header} section of the generator code for \fn{\_ImporterGroupSubjectCON\_XLS.gen.m} provides the general information about the \code{Importer} element. \expand{cd:m:ImporterGroupSubjectCON_TXT:header}
+		The \code{header} section of the generator code in \fn{\_ImporterGroupSubjectCON\_XLS.gen.m} provides the general information about the \code{Importer} element. \expand{cd:m:ImporterGroupSubjectCON_TXT:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤ImporterGroupSubjectCON_XLS¤ < Importer (im, ¤importer of CON subject group from XLS/XLSX) imports a group of subjects with connectivity data from a series of XLS/XLSX file.¤
 
@@ -668,17 +696,19 @@ In this section we will show how to implement in detail \code{ImporterGroupSubje
 ¤ImporterGroupSubjectCON_XLS imports a group of subjects with connectivity data from a series of XLS/XLSX files contained in a folder named "GROUP_ID". All these files must be in the same folder; also, no other files should be in the folder. Each file contains a table of values corresponding to the adjacency matrix. The variables of interest are from another XLS/XLSX file named "GROUP_ID.vois.xlsx" (if exisitng) consisting of the following columns: Subject ID (column 1), covariates (subsequent columns). The 1st row contains the headers, the 2nd row a string with the categorical variables of interest, and each subsequent row the values for each subject.¤
 
 %%% ¡seealso!
-Group, SubjectCON, ¤ExporterGroupSubjectCON_XLS
+Group, SubjectCON, ¤ExporterGroupSubjectCON_XLS¤
+
+%%% ¡build!
+¤1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:ImporterGroupSubjectCON_XLS:prop_update},
+	label=cd:m:ImporterGroupSubjectCON_XLS:prop_update,
 	caption={
-		{\bf ImporterGroupSubjectCON\_XLS element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_ImporterGroupSubjectCON\_XLS.gen.m} updates the properties of the \code{Importer} element. \expand{cd:m:ImporterGroupSubjectCON_TXT:prop_update}
+		{\bf ImporterGroupSubjectCON\_XLS element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_ImporterGroupSubjectCON\_XLS.gen.m} updates the properties of the \code{Importer} element. \expand{cd:m:ImporterGroupSubjectCON_TXT:prop_update}
 	}
 ]
-
 ¤%% ¡props_update!
 
 %%% ¡prop!
@@ -709,9 +739,17 @@ LABEL (metadata, string) is an extended label of the CON subject group importer 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the CON subject group importer from ¤XLS/XLSX¤.
 %%%% ¡default!
-¤'ImporterGroupSubjectCON_XLS notes'¤
+¤'ImporterGroupSubjectCON_XLS notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:ImporterGroupSubjectCON_XLS:props,
+	caption={
+		{\bf ImporterGroupSubjectCON\_XLS element props.}
+		The \code{props} section of the generator code in \fn{\_ImporterGroupSubjectCON\_XLS.gen.m} defined the properties specific for \code{ImporterGroupSubjectCON\_XLS}. \expand{cd:m:ImporterGroupSubjectCON_TXT:prop_update}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 DIRECTORY (data, string) is the directory containing the CON subject group files from which to load the subject group.
@@ -719,9 +757,9 @@ DIRECTORY (data, string) is the directory containing the CON subject group files
 fileparts(which('test_braph2'))
 
 %%% ¡prop!
-GET_DIR (query, item) opens a dialog box to set the directory from where to load the XLS/XLSX files of the CON subject group.
+GET_DIR (query, item) opens a dialog box to set the directory from where to load the ¤XLS/XLSX¤ files of the CON subject group.
 %%%% ¡settings!
-'ImporterGroupSubjectCON_XLS'
+¤'ImporterGroupSubjectCON_XLS'¤
 %%%% ¡calculate!
 directory = uigetdir('Select directory');
 if ischar(directory) && isfolder(directory)
@@ -764,15 +802,14 @@ if isfolder(directory)
     try
         braph2waitbar(wb, .15, 'Loading subject group ...')
         
-        % analyzes file
+        % analyzes directory
         files = [dir(fullfile(directory, ¤'*.xlsx'¤)); dir(fullfile(directory, ¤'*.xls'¤))];
         
         if ~isempty(files)
             % brain atlas
             ba = im.get('BA');
             if ba.get('BR_DICT').get('LENGTH') == 0
-                % adds the number of regions of the first file to the brain atlas
-                br_number = size(xlsread(fullfile(directory, files(1).name)), 1);
+                br_number = size(¤xlsread(fullfile(directory, files(1).name))¤, 1);
                 br_dict = ba.memorize('BR_DICT');
                 for j = 1:1:br_number
                     br_dict.get('ADD', BrainRegion('ID', ['br' int2str(j)]))
@@ -806,13 +843,13 @@ if isfolder(directory)
             end
             
             % variables of interest
-            vois = [];
+            ¤vois = [];
             if isfile([directory '.vois.xls'])
-                ¤[~, ~, vois] = xlsread([directory '.vois.xls']);¤
+                [~, ~, vois] = xlsread([directory '.vois.xls']);
             elseif isfile([directory '.vois.xlsx'])
-                ¤[~, ~, vois] = xlsread([directory '.vois.xlsx']);¤
+                [~, ~, vois] = xlsread([directory '.vois.xlsx']);
             end
-            if ~isempty(vois)
+            if ~isempty(vois)¤
                 for i = 3:1:size(vois, 1)
                     sub_id = vois{i, 1};
                     sub = sub_dict.get('IT', sub_id);
@@ -846,24 +883,22 @@ if isfolder(directory)
     
     braph2waitbar(wb, 'close')
 else
-    error([BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.ERR_IO], ...
-        [BRAPH2.STR ':ImporterGroupSubjectCON_XLS:' BRAPH2.ERR_IO '\\n' ...
+    error([BRAPH2.STR ':¤ImporterGroupSubjectCON_XLS¤:' BRAPH2.ERR_IO], ...
+        [BRAPH2.STR ':¤ImporterGroupSubjectCON_XLS¤:' BRAPH2.ERR_IO '\\n' ...
         'The prop DIRECTORY must be an existing directory, but it is ''' directory '''.'] ...
         );
 end
 
 value = gr;
-
 \end{lstlisting}
 
 \clearpage
 \begin{lstlisting}[	label=cd:m:ImporterGroupSubjectCON_XLS:tests,
 	caption={
 		{\bf ImporterGroupSubjectCON\_XLS element tests.}
-		The \code{tests} section from the element generator \fn{\_ImporterGroupSubjectCON\_XLS.gen.m}. \expand{cd:m:ImporterGroupSubjectCON_TXT:prop_update}
+		The \code{tests} section from the element generator \fn{\_ImporterGroupSubjectCON\_XLS.gen.m}. \expand{cd:m:ImporterGroupSubjectCON_TXT:tests}
 	}
 ]
-
 ¤%% ¡tests!
 
 %%% ¡excluded_props!
@@ -1004,21 +1039,20 @@ gui.get('SHOW')
 gui.get('CLOSE')
 
 \end{lstlisting}
-%%%%% %%%%% %%%%% %%%%% %%%%%
+
 \clearpage
 
 \subsection{Exporter to TXT (ExporterGroupSubjectCON\_TXT)}
 
-In this section we will show how to implement in detail \code{ExporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+In this section, you will see how to implement in detail \code{ExporterGroupSubjectCON\_TXT}. The data will be stored in the folders \fn{Group1} and \fn{Group2}, and the file format is \fn{*.txt}.
 
 \begin{lstlisting}[
 	label=cd:m:ExporterGroupSubjectCON_TXT:header,
 	caption={
 		{\bf ExporterGroupSubjectCON\_TXT element header.}
-		The \code{header} section of the generator code for \fn{\_ExporterGroupSubjectCON\_TXT.gen.m} provides the general information about the \code{Exporter} element.
+		The \code{header} section of the generator code in \fn{\_ExporterGroupSubjectCON\_TXT.gen.m} provides the general information about the \code{ExporterGroupSubjectCON\_TXT} element.
 		}
 ]
-
 %% ¡header!
 ExporterGroupSubjectCON_TXT < Exporter (ex, exporter of CON subject group in TXT) exports a group of subjects with connectivity data to a series of TXT file. ¥\circled{1}\circlednote{1}{ The element \code{ExporterGroupSubjectCON\_TXT} is defined as a subclass of \code{Exporter}. The moniker will be \code{ex}.}¥
 
@@ -1027,16 +1061,18 @@ ExporterGroupSubjectCON_TXT exports a group of subjects with connectivity data t
 
 %%% ¡seealso!
 Group, SunbjectCON, ExporterGroupSubjectCON_TXT
+
+%%% ¡bluid!
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:ExporterGroupSubjectCON_TXT:prop_update},
+	label=cd:m:ExporterGroupSubjectCON_TXT:prop_update,
 	caption={
-		{\bf ExporterGroupSubjectCON\_TXT element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_ExporterGroupSubjectCON\_TXT.gen.m} updates the properties of the \code{Exporter} element.
+		{\bf ExporterGroupSubjectCON\_TXT element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_ExporterGroupSubjectCON\_TXT.gen.m} updates the properties of the \code{Exporter} element.
 	}
 ]
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -1068,7 +1104,15 @@ LABEL (metadata, string) is an extended label of the CON subject group exporter 
 NOTES (metadata, string) are some specific notes about the CON subject group exporter in TXT.
 %%%% ¡default!
 'ExporterGroupSubjectCON_TXT notes'
+\end{lstlisting}
 
+\begin{lstlisting}[
+	label=cd:m:ExporterGroupSubjectCON_TXT:props,
+	caption={
+		{\bf ExporterGroupSubjectCON\_TXT element props.}
+		The \code{props} section of the generator code in \fn{\_ExporterGroupSubjectCON\_TXT.gen.m} defines the properties specific for the \code{ExporterGroupSubjectCON\_TXT} element.
+	}
+]
 %% ¡props!
 
 %%% ¡prop!
@@ -1091,7 +1135,7 @@ PUT_DIR (query, item) opens a dialog box to set the directory where to save the 
 'ExporterGroupSubjectCON_TXT'
 %%%% ¡calculate!
 directory = uigetdir('Select directory'); ¥\circled{3}\circlednote{3}{ selects the export directory.}¥
-if ischar(directory) && isfolder(directory) ¥\circled{4}\circlednote{4}{ checks that the export directory is correct.}¥
+if ischar(directory) && isfolder(directory) ¥\circled{4}\circlednote{4}{ checks the export directory before setting it.}¥
 	ex.set('DIRECTORY', directory);
 end
 value = ex;
@@ -1167,7 +1211,6 @@ value = [];
 
 \end{lstlisting}
 
-\clearpage
 \begin{lstlisting}[
 	label=cd:m:ExporterGroupSubjectCON_TXT:tests,
 	caption={
@@ -1175,7 +1218,6 @@ value = [];
 		The \code{tests} section from the element generator \fn{\_ExporterGroupSubjectCON\_TXT.gen.m}.
 	}
 ]
-
 %% ¡tests!
 
 %%% ¡excluded_props! ¥\circled{1}\circlednote{1}{ List of properties that are excluded from testing.}¥
@@ -1348,16 +1390,15 @@ rmdir(directory, 's') ¥\circled{17}\circlednote{17}{ deletes the testing data.}
 
 \subsection{Exporter to XLS/XLSX (ExporterGroupSubjectCON\_XLS)}
 
-In this section we will show how to implement in detail \code{ExporterGroupSubjectCON\_XLS}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
+In this section, you will see how to implement in detail \code{ExporterGroupSubjectCON\_XLS} modifying \code{ExporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
 \begin{lstlisting}[
 	label=cd:m:ExporterGroupSubjectCON_XLS:header,
 	caption={
 		{\bf ExporterGroupSubjectCON\_XLS element header.}
-		The \code{header} section of the generator code for \fn{\_ExporterGroupSubjectCON\_XLS.gen.m} provides the general information about the \code{Exporter} element. \expand{cd:m:ExporterGroupSubjectCON_TXT:header}
+		The \code{header} section of the generator code in \fn{\_ExporterGroupSubjectCON\_XLS.gen.m} provides the general information about the \code{Exporter} element. \expand{cd:m:ExporterGroupSubjectCON_TXT:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤ExporterGroupSubjectCON_XLS < Exporter (ex, exporter of CON subject group in XLSX) exports a group of subjects with connectivity data to a series of XLSX file.¤
 
@@ -1365,18 +1406,19 @@ In this section we will show how to implement in detail \code{ExporterGroupSubje
 ¤ExporterGroupSubjectCON_XLS exports a group of subjects with connectivity data to a series of XLSX files contained in a folder named "GROUP_ID". All these files are saved in the same folder. Each file contains a table of values corresponding to the adjacency matrix.The variables of interest (if existing) are saved in another XLSX file  named "GROUP_ID.vois.xlsx" consisting of the following columns: Subject ID (column 1), covariates (subsequent columns). The 1st row contains the headers, the 2nd row a string with the categorical variables of interest, and each subsequent row the values for each subject.¤
 
 %%% ¡seealso!
-Group, SunbjectCON, ¤ImporterGroupSubjectCON_XLS
+Group, SunbjectCON, ¤ImporterGroupSubjectCON_XLS¤
 
+%%% ¡build!
+¤1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:ExporterGroupSubjectCON_XLS:prop_update},
+	label=cd:m:ExporterGroupSubjectCON_XLS:prop_update,
 	caption={
-		{\bf ExporterGroupSubjectCON\_XLS element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_ExporterGroupSubjectCON\_XLS.gen.m} updates the properties of the \code{Exporter} element. \expand{cd:m:ExporterGroupSubjectCON_TXT:update}
+		{\bf ExporterGroupSubjectCON\_XLS element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_ExporterGroupSubjectCON\_XLS.gen.m} updates the properties of the \code{Exporter} element. \expand{cd:m:ExporterGroupSubjectCON_TXT:prop_update}
 	}
 ]
-
 ¤%% ¡props_update!
 
 %%% ¡prop!
@@ -1407,9 +1449,17 @@ LABEL (metadata, string) is an extended label of the CON subject group exporter 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the CON subject group exporter in ¤XLSX¤.
 %%%% ¡default!
-¤'ExporterGroupSubjectCON_XLS notes'¤
+¤'ExporterGroupSubjectCON_XLS notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:ExporterGroupSubjectCON_XLS:props,
+	caption={
+		{\bf ExporterGroupSubjectCON\_XLS element props.}
+		The \code{props} section of the generator code in \fn{\_ExporterGroupSubjectCON\_XLS.gen.m} defines the properties specific for the \code{ExporterGroupSubjectCON\_XLS} element. \expand{cd:m:ExporterGroupSubjectCON_TXT:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 GR (data, item) is a group of subjects with connectivity data.
@@ -1507,7 +1557,6 @@ end
 value = [];
 \end{lstlisting}
 
-\clearpage
 \begin{lstlisting}[
 	label=cd:m:ExporterGroupSubjectCON_XLS:tests,
 	caption={
@@ -1689,16 +1738,15 @@ rmdir(directory, 's')
 
 \subsection{Subject with functional data (SubjectFUN)}
 
-In this section we will show how to implement in detail \code{SubjectFUN}. The connectivity matrix can be obtained from fMRI data.
+In this section, you will see how to implement in detail \code{SubjectFUN}, which holds timeseries data such as those obtained from fMRI.
 
 \begin{lstlisting}[
 	label=cd:m:SubjectFUN:header,
 	caption={
 		{\bf SubjectFUN element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectFUN.gen.m} provides the general information about the \code{SubjectFUN} element.\expand{cd:m:SubjectCON:header}
+		The \code{header} section of the generator code in \fn{\_SubjectFUN.gen.m} provides the general information about the \code{SubjectFUN} element.\expand{cd:m:SubjectCON:header}
 		}
 ]
-
 ¤%% ¡header!¤
 SubjectFUN ¤< Subject (sub, ¤subject with functional matrix) is a subject with functional matrix (e.g. fMRI).¤
 
@@ -1706,13 +1754,17 @@ SubjectFUN ¤< Subject (sub, ¤subject with functional matrix) is a subject with
 ¤Subject with a functional matrix (e.g. obtained from fMRI).¤
 
 %%% ¡seealso!
-¤ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS
+¤ImporterGroupSubjectFUN_TXT, ExporterGroupSubjectFUN_TXT, ImporterGroupSubjectFUN_XLS, ExporterGroupSubjectFUN_XLS¤
+
+%%% ¡build!
+¤1
 \end{lstlisting}
+
 \begin{lstlisting}[
-	label={cd:m:SubjectFUN:prop_update},
+	label=cd:m:SubjectFUN:prop_update,
 	caption={
-		{\bf SubjectFUN element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectFUN.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+		{\bf SubjectFUN element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectFUN.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -1745,9 +1797,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectFUN notes'¤
+¤'SubjectFUN notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN:props,
+	caption={
+		{\bf SubjectFUN element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectFUN.gen.m} defines the  properties specific for the \code{SubjectFUN} element. \expand{cd:m:SubjectCON:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -1770,7 +1830,7 @@ pr = PanelPropMatrix('EL', sub, 'PROP', ¤SubjectFUN.FUN¤, ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});
 \end{lstlisting}
-\clearpage
+
 \begin{lstlisting}[
 	label=cd:m:SubjectFUN:tests,
 	caption={
@@ -1814,16 +1874,15 @@ gui.get('CLOSE')
 
 \subsection{Subject with functional multiplex data (SubjectFUN\_MP)}
 
-In this section we will show how to implement in detail \code{SubjectFUN\_MP}. The functional matrix can be obtained from fMRI data.
+In this section, you will see how to implement in detail \code{SubjectFUN\_MP}, which can hold, for example, multilayer fMRI data.
 
 \begin{lstlisting}[
 	label=cd:m:SubjectFUN_MP:header,
 	caption={
 		{\bf SubjectFUN\_MP element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectFUN\_MP.gen.m} provides the general information about the \code{SubjectFUN\_MP} element. \expand{cd:m:SubjectCON_MP:header}
+		The \code{header} section of the generator code in \fn{\_SubjectFUN\_MP.gen.m} provides the general information about the \code{SubjectFUN\_MP} element. \expand{cd:m:SubjectCON_MP:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤SubjectFUN_MP¤ < Subject (sub, ¤subject with functional multiplex data) is a subject with functional multiplex data (e.g. multiplex fMRI)¤.
 
@@ -1831,13 +1890,17 @@ In this section we will show how to implement in detail \code{SubjectFUN\_MP}. T
 ¤Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).¤
 
 %%% ¡seealso!
-¤ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS
+¤ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS¤
+
+%%% ¡build!
+¤1
 \end{lstlisting}
+
 \begin{lstlisting}[
-	label={cd:m:SubjectFUN_MP:prop_update},
+	label=cd:m:SubjectFUN_MP:prop_update,
 	caption={
-		{\bf SubjectFUN\_MP element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectFUN\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
+		{\bf SubjectFUN\_MP element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectFUN\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -1870,9 +1933,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectFUN_MP notes'¤
+¤'SubjectFUN_MP notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectFUN_MP:props,
+	caption={
+		{\bf SubjectFUN\_MP element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectFUN\_MP.gen.m} defines the properties specific for the \code{SubjectFUN\_MP} element. \expand{cd:m:SubjectCON_MP:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -1903,7 +1974,7 @@ if check
 else   
     ¤msg = ['FUN_MP must be a cell with L matrices with the same number of columns as the number of brain regions (' int2str(br_number) ').'];¤
 end
-%%%% ¡gui! ¥\circled{5}\circlednote{5}{ Same as in note \circled{8} \circled{9} \circled{10} \circled{11} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
+%%%% ¡gui! ¥\circled{5}\circlednote{5}{ Same as in notes \circled{8}---\circled{11} of \Coderef{cd:m:SubjectCON_MP:prop_update}.}¥
 pr = PanelPropCell('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, ...
     'TABLE_HEIGHT', s(40), ...
     'XSLIDERSHOW', true, ...
@@ -1912,7 +1983,6 @@ pr = PanelPropCell('EL', sub, 'PROP', SubjectFUN_MP.FUN_MP, ...
     'ROWNAME', {'numbered'}, ...
     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     varargin{:});¤
-
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -1934,7 +2004,7 @@ im_ba = ImporterBrainAtlasXLS('FILE', ¤'aal90_atlas.xlsx'¤);
 ba = im_ba.get('BA');
 
 gr = Group('SUB_CLASS', ¤'SubjectFUN_MP'¤, 'SUB_DICT', IndexedDictionary('IT_CLASS', ¤'SubjectFUN_MP'¤));
-for i = 1:1:10 ¥\circled{1}\circlednote{1}{ Same as in note \circled{1} \circled{2} \circled{3} of \Coderef{cd:m:SubjectCON_MP:tests}.}¥
+for i = 1:1:10 ¥\circled{1}\circlednote{1}{ Same as in notes \circled{1}---\circled{3} of \Coderef{cd:m:SubjectCON_MP:tests}.}¥
     sub = ¤SubjectFUN_MP¤( ...
         'ID', [¤'SUB FUN_MP '¤ int2str(i)], ...
         'LABEL', [¤'Subejct FUN_MP '¤ int2str(i)], ...
@@ -1962,16 +2032,15 @@ gui.get('CLOSE')¤
 
 \subsection{Subject with connectivity and functional multiplex data (SubjectCON\_FUN\_MP)}
 
-In this section we will show how to implement detail \code{SubjectCON\_FUN\_MP}. The connectivity matrix can be obtained from DTI data and the functional matrix can be obtained from fMRI data.
+In this section, you will see how to implement \code{SubjectCON\_FUN\_MP}. For example, the connectivity data can be obtained from DTI and the functional data can be obtained from fMRI.
 
 \begin{lstlisting}[
 	label=cd:m:SubjectCON_FUN_MP:header,
 	caption={
 		{\bf SubjectCON\_FUN\_MP element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectCON\_FUN\_MP.gen.m} provides the general information about the \code{SubjectCON\_FUN\_MP} element. \expand{cd:m:SubjectCON_MP:header}
+		The \code{header} section of the generator code in \fn{\_SubjectCON\_FUN\_MP.gen.m} provides the general information about the \code{SubjectCON\_FUN\_MP} element. \expand{cd:m:SubjectCON_MP:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤SubjectCON_FUN_MP¤ < Subject (sub, ¤subject with connectivity and functional multiplex data) is a subject with connectivity and functional multiplex data (e.g. DTI and fMRI).¤
 
@@ -1982,12 +2051,15 @@ The first layer contains a connectivity matrix and the second layer contains fun
 %%% ¡seealso!
 ¤CombineGroups_CON_FUN_MP, SeparateGroups_CON_FUN_MP¤
 
+%%% ¡build!
+¤1
 \end{lstlisting}
+
 \begin{lstlisting}[
-	label={cd:m:SubjectCON_FUN_MP:prop_update},
+	label=cd:m:SubjectCON_FUN_MP:prop_update,
 	caption={
-		{\bf SubjectCON\_FUN\_MP element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectCON\_FUN\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
+		{\bf SubjectCON\_FUN\_MP element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectCON\_FUN\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -2020,9 +2092,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectCON_FUN_MP notes'¤
+¤'SubjectCON_FUN_MP notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectCON_FUN_MP:props,
+	caption={
+		{\bf SubjectCON\_FUN\_MP element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectCON\_FUN\_MP.gen.m} defines the properties specific for the \code{Subject\_FUN\_MP} element. \expand{cd:m:SubjectCON_MP:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -2046,7 +2126,7 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectFUN.FUN, ...
     varargin{:});
 
 \end{lstlisting}
-\clearpage
+
 \begin{lstlisting}[
 	label=cd:m:SubjectCON_FUN_MP:tests,
 	caption={
@@ -2093,16 +2173,15 @@ gui.get('CLOSE')¤
 
 \subsection{Subject with structural data (SubjectST)}
 
-In this section we will show how to implement in detail \code{SubjectST}. The structural matrix can be obtained from sMRI data.
+In this section, you will see how to implement \code{SubjectST}. For example, the structural data can be obtained from sMRI.
 
 \begin{lstlisting}[
 	label=cd:m:SubjectST:header,
 	caption={
 		{\bf SubjectST element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectST.gen.m} provides the general information about the \code{SubjectST} element. \expand{cd:m:SubjectCON:header}
+		The \code{header} section of the generator code in \fn{\_SubjectST.gen.m} provides the general information about the \code{SubjectST} element. \expand{cd:m:SubjectCON:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤SubjectST¤ < Subject (sub, ¤subject with structural data) is a subject with structural data (e.g. sMRI).¤
 
@@ -2110,14 +2189,17 @@ In this section we will show how to implement in detail \code{SubjectST}. The st
 ¤Subject with structural data (e.g. cortical thickness obtaibed from strcutural MRI) for each brain region.¤
 
 %%% ¡seealso!
-¤ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS¤
+¤ImporterGroupSubjectST_TXT, ExporterGroupSubjectST_TXT, ImporterGroupSubjectST_XLS, ExporterGroupSubjectST_XLS
+
+%%% ¡build!
+¤1
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:SubjectST:prop_update},
+	label=cd:m:SubjectST:prop_update,
 	caption={
-		{\bf SubjectST element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectST.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
+		{\bf SubjectST element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectST.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -2150,9 +2232,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectST notes'¤
+¤'SubjectST notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectST:props,
+	caption={
+		{\bf SubjectST element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectST.gen.m} defines the properties specific for the \code{SubjectST} element. \expand{cd:m:SubjectCON:prop_update}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -2175,7 +2265,7 @@ pr = PanelPropMatrix('EL', sub, 'PROP', SubjectST.ST, ...
     ¤'COLUMNNAME', {}, ...¤
     varargin{:});
 \end{lstlisting}
-\clearpage
+
 \begin{lstlisting}[
 	label=cd:m:SubjectST:tests,
 	caption={
@@ -2219,16 +2309,15 @@ gui.get('CLOSE')¤
 
 \subsection{Subject with structural multiplex data (SubjectST\_MP)}
 
-In this section we will show how to implement in detail \code{SubjectST\_MP}. The structural matrix can be obtained from sMRI data.
+In this section‚ you will see how to implement in detail \code{SubjectST\_MP}. For example, the structural data can be obtained from multiple sMRI.
 
 \begin{lstlisting}[
 	label=cd:m:SubjectST_MP:header,
 	caption={
 		{\bf SubjectST\_MP element header.}
-		The \code{header} section of the generator code for \fn{\_SubjectST\_MP.gen.m} provides the general information about the \code{SubjectST\_MP} element.\expand{cd:m:SubjectCON_MP:header}
+		The \code{header} section of the generator code in \fn{\_SubjectST\_MP.gen.m} provides the general information about the \code{SubjectST\_MP} element.\expand{cd:m:SubjectCON_MP:header}
 		}
 ]
-
 ¤%% ¡header!
 ¤SubjectST_MP¤ < Subject (sub,¤ subject with structural multiplex data) is a subject with structural multiplex data (e.g. multiplex sMRI)¤.
 
@@ -2237,12 +2326,16 @@ In this section we will show how to implement in detail \code{SubjectST\_MP}. Th
 
 %%% ¡seealso!
 ¤ImporterGroupSubjectST_MP_TXT, ExporterGroupSubjectST_MP_TXT, ImporterGroupSubjectST_MP_XLS, ExporterGroupSubjectST_MP_XLS
+
+%%% ¡build!
+¤1
 \end{lstlisting}
+
 \begin{lstlisting}[
-	label={cd:m:SubjectST_MP:prop_update},
+	label=cd:m:SubjectST_MP:prop_update,
 	caption={
-		{\bf SubjectST\_MP element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_SubjectST\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
+		{\bf SubjectST\_MP element props update.}
+		The \code{props\_update} section of the generator code in \fn{\_SubjectST\_MP.gen.m} updates the properties of the \code{Subject} element. \expand{cd:m:SubjectCON_MP:prop_update}
 	}
 ]
 ¤%% ¡props_update!
@@ -2275,9 +2368,17 @@ LABEL (metadata, string) is an extended label of the subject.
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the subject.
 %%%% ¡default!
-¤'SubjectST_MP notes'¤
+¤'SubjectST_MP notes'
+\end{lstlisting}
 
-%% ¡props!
+\begin{lstlisting}[
+	label=cd:m:SubjectST_MP:props,
+	caption={
+		{\bf SubjectST\_MP element props.}
+		The \code{props} section of the generator code in \fn{\_SubjectST\_MP.gen.m} defines the properties specific for the \code{SubjectST\_MP} element. \expand{cd:m:SubjectCON_MP:props}
+	}
+]
+¤%% ¡props!
 
 %%% ¡prop!
 BA (data, item) is a brain atlas.
@@ -2317,7 +2418,6 @@ pr = PanelPropCell('EL', sub, 'PROP', ¤SubjectST_MP.ST_MP¤, ...
     ¤'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
     'COLUMNNAME', {}, ...¤
     varargin{:});
-
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -2327,7 +2427,6 @@ pr = PanelPropCell('EL', sub, 'PROP', ¤SubjectST_MP.ST_MP¤, ...
 		The \code{tests} section from the element generator \fn{\_SubjectST\_MP.gen.m}. \expand{cd:m:SubjectCON_MP:tests}
 	}
 ]
-
 ¤%% ¡tests!
 
 %%% ¡test!
@@ -2361,4 +2460,5 @@ gui.get('SHOW')
 
 gui.get('CLOSE')
 \end{lstlisting}
+
 \end{document}
