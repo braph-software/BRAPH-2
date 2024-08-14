@@ -13,16 +13,16 @@
 \begin{abstract}
 \noindent
 This is the developer tutorial for implementing a new neural network data point. 
-In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new neural network data point, which can then be compiled by \code{braph2genesis}. All kinds of neural network data point are (direct or indirect) extensions of the base element \code{NNDataPoint}. Here, we will use as examples the neural network data point \code{NNDataPoint\_CON\_REG} (connectivity data for regression), \code{NNDataPoint\_CON\_CLA} (connectivity data for classification), \code{NNDataPoint\_Graph\_REG} (adjacency matrix for regression), \code{NNDataPoint\_Graph\_CLA} (adjacency matrix for classification), \code{NNDataPoint\_Measure\_REG} (graph measure for regression), and \code{NNDataPoint\_Measure\_CLA} (graph measure for classification).
+In this Tutorial, you will learn how to create the generator file \fn{*.gen.m} for a new neural network data point, which can then be compiled by \code{braph2genesis}. All kinds of neural network data point are (direct or indirect) extensions of the base element \code{NNDataPoint}. Here, you will use as examples the neural network data point \code{NNDataPoint\_CON\_REG} (connectivity data for regression), \code{NNDataPoint\_CON\_CLA} (connectivity data for classification), \code{NNDataPoint\_Graph\_REG} (adjacency matrix for regression), \code{NNDataPoint\_Graph\_CLA} (adjacency matrix for classification), \code{NNDataPoint\_Measure\_REG} (graph measure for regression), and \code{NNDataPoint\_Measure\_CLA} (graph measure for classification).
 \end{abstract}
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Data Point with Connectivity Data}
 
-\subsection{Connectivity Data Point for Regression (\code{NNDataPoint\_CON\_REG})}
+\section{Implementation of a data point with connectivity data}
+
+\subsection{Connectivity data point for regression (\code{NNDataPoint\_CON\_REG})}
 
 We will start by implementing in detail \code{NNDataPoint\_CON\_REG}, which is a direct extension of \code{NNDataPoint}.
 A data point for regression with connectivity data \code{NNDataPoint\_CON\_REG} contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON), where the input is the subject's connectivity data and the target is the subject's variables of interest.
@@ -293,9 +293,9 @@ example_NN_CON_REG
 
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\subsection{Connectivity Data Point for Classification (\code{NNDataPoint\_CON\_CLA})}
+
+\subsection{Connectivity data point for classification (\code{NNDataPoint\_CON\_CLA})}
 
 We can now use \code{NNDataPoint\_CON\_REG} as the basis to implement the \code{NNDataPoint\_CON\_CLA}.
 The parts of the code that are modified are highlighted. 
@@ -641,11 +641,11 @@ example_NN_CON_CLA
 
 \end{lstlisting}
 
-
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Data Point with a Graph}
-\subsection{Graph Data Point for Regression (\code{NNDataPoint\_Graph\_REG})}
+
+\section{Implementation of a data point with a graph}
+
+\subsection{Graph data point for regression (\code{NNDataPoint\_Graph\_REG})}
 
 Now we implement \code{NNDataPoint\_Graph\_REG} based on previous codes \code{NNDataPoint\_CON\_REG}.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
@@ -917,9 +917,9 @@ example_NNCV_CON_FUN_MP_BUT_REG
 
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\subsection{Graph Data Point for Classification (\code{NNDataPoint\_Graph\_CLA})}
+
+\subsection{Graph data point for classification (\code{NNDataPoint\_Graph\_CLA})}
 
 Now we implement \code{NNDataPoint\_Graph\_CLA} based on previous codes \code{NNDataPoint\_CON\_CLA}.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
@@ -1212,10 +1212,11 @@ example_NNCV_CON_FUN_MP_WU_CLA
 
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Data Point with Graph Measures}
-\subsection{Graph Measure Data Point for Regression (\code{NNDataPoint\_Measure\_REG})}
+
+\section{Implementation of a data point with graph measures}
+
+\subsection{Graph measure data point for regression (\code{NNDataPoint\_Measure\_REG})}
 
 Now we implement \code{NNDataPoint\_Measure\_REG} based on previous codes \code{NNDataPoint\_Graph\_REG}.
 This neural network data point utilizes graph measures obtrained from the adjacency matrix from the derived graph of the subject. 
@@ -1473,9 +1474,9 @@ example_NNCV_CON_FUN_MP_WU_M_REG
 
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\subsection{Graph Measure Data Point for Classification (\code{NNDataPoint\_Measure\_CLA})}
+
+\subsection{Graph measure data point for classification (\code{NNDataPoint\_Measure\_CLA})}
 
 Now we implement \code{NNDataPoint\_Measure\_CLA} based on previous codes \code{NNDataPoint\_Graph\_CLA}.
 This neural network data point utilizes graph measures obtrained from the adjacency matrix from the derived graph of the subject. 

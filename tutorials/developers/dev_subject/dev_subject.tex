@@ -24,7 +24,7 @@ Furthermore, all importers and exporters are extensions of the base elements \co
 
 \section{Implementation of a subject with connectivity data}
 
-\subsection{Subject with connectivity data (SubjectCON)}
+\subsection{Subject with connectivity data (\code{SubjectCON})}
 
 You will start by implementing in detail \code{SubjectCON}, which holds a connectivity matrix (for example, obtained from DTI data).
 
@@ -163,7 +163,7 @@ gui.get('CLOSE') ¥\circled{14}\circlednote{14}{ closes the figure and its depen
 
 \clearpage
 
-\subsection{Subject with connectivity multiplex data (SubjectCON\_MP)}
+\subsection{Subject with connectivity multiplex data (\code{SubjectCON\_MP})}
 
 You can now use \code{SubjectCON} as the basis to implement the \code{SubjectCON\_MP}. 
 {%TEX
@@ -324,9 +324,9 @@ gui.get('CLOSE')
 
 \clearpage
 
-\section{Implementation of importer and exporter (for SubjectCON)}
+\section{Implementation of importer and exporter (for \code{SubjectCON})}
 
-\subsection{Importer from TXT (ImporterGroupSubjectCON\_TXT)}
+\subsection{Importer from TXT (\code{ImporterGroupSubjectCON\_TXT})}
 
 You will start by implementing in detail \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folder \fn{Group1} and \fn{Group2}, and the file format is \fn{.txt}.
 
@@ -678,7 +678,7 @@ gui.get('CLOSE')
 
 \clearpage
 
-\subsection{Importer from XLS/XLSX (ImporterGroupSubjectCON\_XLS)}
+\subsection{Importer from XLS/XLSX (\code{ImporterGroupSubjectCON\_XLS})}
 
 You will now see how to implement in detail \code{ImporterGroupSubjectCON\_XLS} modifying \code{ImporterGroupSubjectCON\_TXT}. The data should be stored in the folders \fn{Group1} and \fn{Group2}, and the file format is \fn{.xls} or \fn{.xlsx}.
 
@@ -1042,7 +1042,7 @@ gui.get('CLOSE')
 
 \clearpage
 
-\subsection{Exporter to TXT (ExporterGroupSubjectCON\_TXT)}
+\subsection{Exporter to TXT (\code{ExporterGroupSubjectCON\_TXT})}
 
 In this section, you will see how to implement in detail \code{ExporterGroupSubjectCON\_TXT}. The data will be stored in the folders \fn{Group1} and \fn{Group2}, and the file format is \fn{*.txt}.
 
@@ -1388,7 +1388,7 @@ rmdir(directory, 's') ¥\circled{17}\circlednote{17}{ deletes the testing data.}
 
 \clearpage
 
-\subsection{Exporter to XLS/XLSX (ExporterGroupSubjectCON\_XLS)}
+\subsection{Exporter to XLS/XLSX (\code{ExporterGroupSubjectCON\_XLS})}
 
 In this section, you will see how to implement in detail \code{ExporterGroupSubjectCON\_XLS} modifying \code{ExporterGroupSubjectCON\_TXT}. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1736,7 +1736,7 @@ rmdir(directory, 's')
 
 \section{Implementation of a subject with functional data}
 
-\subsection{Subject with functional data (SubjectFUN)}
+\subsection{Subject with functional data (\code{SubjectFUN})}
 
 In this section, you will see how to implement in detail \code{SubjectFUN}, which holds timeseries data such as those obtained from fMRI.
 
@@ -1872,7 +1872,7 @@ gui.get('CLOSE')
 
 \clearpage
 
-\subsection{Subject with functional multiplex data (SubjectFUN\_MP)}
+\subsection{Subject with functional multiplex data (\code{SubjectFUN\_MP})}
 
 In this section, you will see how to implement in detail \code{SubjectFUN\_MP}, which can hold, for example, multilayer fMRI data.
 
@@ -2030,7 +2030,7 @@ gui.get('CLOSE')¤
 
 \section{Implementation of a subject with connectivity and functional data}
 
-\subsection{Subject with connectivity and functional multiplex data (SubjectCON\_FUN\_MP)}
+\subsection{Subject with connectivity and functional multiplex data (\code{SubjectCON\_FUN\_MP})}
 
 In this section, you will see how to implement \code{SubjectCON\_FUN\_MP}. For example, the connectivity data can be obtained from DTI and the functional data can be obtained from fMRI.
 
@@ -2171,7 +2171,7 @@ gui.get('CLOSE')¤
 
 \section{Implementation of a subject with structural data}
 
-\subsection{Subject with structural data (SubjectST)}
+\subsection{Subject with structural data (\code{SubjectST})}
 
 In this section, you will see how to implement \code{SubjectST}. For example, the structural data can be obtained from sMRI.
 
@@ -2307,7 +2307,7 @@ gui.get('CLOSE')¤
 
 \clearpage
 
-\subsection{Subject with structural multiplex data (SubjectST\_MP)}
+\subsection{Subject with structural multiplex data (\code{SubjectST\_MP})}
 
 In this section‚ you will see how to implement in detail \code{SubjectST\_MP}. For example, the structural data can be obtained from multiple sMRI.
 

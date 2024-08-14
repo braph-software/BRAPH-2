@@ -19,7 +19,7 @@ In this tutorial, you will learn how to create the generator file \fn{*.gen.m} f
 \clearpage
 \section{Implementation of unilayer measures}
 
-\subsection{Nodal unilayer measure (Degree)}
+\subsection{Nodal unilayer measure (\code{Degree})}
 
 You will start by implementing in detail the measure \code{Degree}, which applies to most graphs and is a direct extension of the element \code{Measure}.
 
@@ -161,7 +161,7 @@ assert(isequal(m_inside_g.get('M'), known_degree), ... ¥\circled{8}\circlednote
 
 \clearpage
 
-\subsection{Global unilayer measure (DegreeAv)}
+\subsection{Global unilayer measure (\code{DegreeAv})}
 
 You can now use \code{Degree} as the basis to implement the global measure \code{DegreeAv}.
 {%TEX
@@ -306,7 +306,7 @@ assert(isequal(m_inside_g.get('M'), ¤known_degree_av¤), ...
 
 \clearpage
 
-\subsection{Binodal unilayer measure (Distance)}
+\subsection{Binodal unilayer measure (\code{Distance})}
 
 Now you will implement the binodal measure \code{Distance}. 
 {%TEX
@@ -478,7 +478,7 @@ assert(isequal(m_inside_g.get('M'), ¤known_distance¤), ...
 
 \clearpage
 
-\section{Implementation of measure parameters (Triangles)}
+\section{Implementation of measure parameters (\code{Triangles})}
 
 Now, you will implement the (nodal unilayer) measure \code{Triangles}, which depends on a parameter \code{RULE}, which we add as a property of category \code{parameter}.
 {%TEX

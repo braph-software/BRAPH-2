@@ -9,11 +9,11 @@ You will use the figure panels `BrainSurfacePF` and `BrainAtlasPF` as an example
 
 
 ## Table of Contents
-> [Implementation of figure panel (BrainSurfacePF)](#Implementation-of-figure-panel-BrainSurfacePF)
+> [Implementation of figure panel (`BrainSurfacePF`)](#Implementation-of-figure-panel-BrainSurfacePF)
 >
 >> [Addition of toolbar buttons](#Addition-of-toolbar-buttons)
 >>
-> [Extension of figure panel (BrainAtlasPF)](#Extension-of-figure-panel-BrainAtlasPF)
+> [Extension of figure panel (`BrainAtlasPF`)](#Extension-of-figure-panel-BrainAtlasPF)
 >
 >> [Extension of toolbar buttons](#Extension-of-toolbar-buttons)
 >>
@@ -21,7 +21,7 @@ You will use the figure panels `BrainSurfacePF` and `BrainAtlasPF` as an example
 
 
 <a id="Implementation-of-figure-panel-BrainSurfacePF"></a>
-## Implementation of figure panel (BrainSurfacePF)  [⬆](#Table-of-Contents)
+## Implementation of figure panel (`BrainSurfacePF`)  [⬆](#Table-of-Contents)
 
 To understand the general concepts of a figure panel, you will start by implementing in detail the figure panel `BrainSurfacePF`, which is a direct extension of the element `PanelFig`.
 
@@ -662,7 +662,7 @@ You will now see how to add the pushbuttons in the toolbar of the figure, opport
 
 
 <a id="Extension-of-figure-panel-BrainAtlasPF"></a>
-## Extension of figure panel (BrainAtlasPF)  [⬆](#Table-of-Contents)
+## Extension of figure panel (`BrainAtlasPF`)  [⬆](#Table-of-Contents)
 
 You will now learn how to extend `BrainSurfacePF` to plot also brain regions. You will therefore implement `BrainAtlasPF`.
 

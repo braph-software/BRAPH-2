@@ -21,7 +21,7 @@ In this tutorial, you will learn how to create the generator file \fn{*.gen.m} f
 \clearpage
 \section{Implementation of unilayer graphs}
 
-\subsection{Unilayer binary directed graph (GraphBD)}
+\subsection{Unilayer binary directed graph (\code{GraphBD})}
 
 You will start by implementing in detail \code{GraphBD}, which  is a direct extension of  \code{Graph}.
 A unilayer graph is constituted by nodes connected by edges, where the can be either 0 (absence of connection) or 1 (existence of connection).
@@ -386,7 +386,7 @@ assert(isequal(0, h), ... % ¥\circled{23}\circlednote{23}{ tests that new rando
 
 \section{Implementation of multilayer graphs}
 
-\subsection{Weighted directed multilayer graph (MultilayerWD)}
+\subsection{Weighted directed multilayer graph (\code{MultilayerWD})}
 
 You can now use \code{GraphBD} as the basis to implement the \code{MultilayerWD} graph. 
 {%TEX
@@ -748,7 +748,7 @@ end
 
 \clearpage
 
-\subsection{Binary undirected multilayer graph with fixed thresholds (MultiplexBUT)}
+\subsection{Binary undirected multilayer graph with fixed thresholds (\code{MultiplexBUT})}
 
 Now you will implement the \code{MultiplexBUT} graph building on the previous codes \code{GraphBD} and \code{MultilayerWD}. 
 {%TEX
@@ -1084,7 +1084,7 @@ end
 
 \clearpage
 
-\subsection{Binary undirected ordinal multiplex graph with fixed thresholds (OrdMxBUT)}
+\subsection{Binary undirected ordinal multiplex graph with fixed thresholds (\code{OrdMxBUT})}
 
 Finally, you will implement the \code{OrdMxBUT} graph based on the previous codes \code{GraphBD}, \code{MultilayerWD} and \code{MultiplexBUT}.
 {%TEX 

@@ -12,35 +12,35 @@ Furthermore, all importers and exporters are extensions of the base elements `Ex
 ## Table of Contents
 > [Implementation of a subject with connectivity data](#Implementation-of-a-subject-with-connectivity-data)
 >
->> [Subject with connectivity data (SubjectCON)](#Subject-with-connectivity-data-SubjectCON)
+>> [Subject with connectivity data (`SubjectCON`)](#Subject-with-connectivity-data-SubjectCON)
 >>
->> [Subject with connectivity multiplex data (SubjectCON_MP)](#Subject-with-connectivity-multiplex-data-SubjectCONMP)
+>> [Subject with connectivity multiplex data (`SubjectCON_MP`)](#Subject-with-connectivity-multiplex-data-SubjectCONMP)
 >>
-> [Implementation of importer and exporter (for SubjectCON)](#Implementation-of-importer-and-exporter-for-SubjectCON)
+> [Implementation of importer and exporter (for `SubjectCON`)](#Implementation-of-importer-and-exporter-for-SubjectCON)
 >
->> [Importer from TXT (ImporterGroupSubjectCON_TXT)](#Importer-from-TXT-ImporterGroupSubjectCONTXT)
+>> [Importer from TXT (`ImporterGroupSubjectCON_TXT`)](#Importer-from-TXT-ImporterGroupSubjectCONTXT)
 >>
->> [Importer from XLS/XLSX (ImporterGroupSubjectCON_XLS)](#Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS)
+>> [Importer from XLS/XLSX (`ImporterGroupSubjectCON_XLS`)](#Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS)
 >>
->> [Exporter to TXT (ExporterGroupSubjectCON_TXT)](#Exporter-to-TXT-ExporterGroupSubjectCONTXT)
+>> [Exporter to TXT (`ExporterGroupSubjectCON_TXT`)](#Exporter-to-TXT-ExporterGroupSubjectCONTXT)
 >>
->> [Exporter to XLS/XLSX (ExporterGroupSubjectCON_XLS)](#Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS)
+>> [Exporter to XLS/XLSX (`ExporterGroupSubjectCON_XLS`)](#Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS)
 >>
 > [Implementation of a subject with functional data](#Implementation-of-a-subject-with-functional-data)
 >
->> [Subject with functional data (SubjectFUN)](#Subject-with-functional-data-SubjectFUN)
+>> [Subject with functional data (`SubjectFUN`)](#Subject-with-functional-data-SubjectFUN)
 >>
->> [Subject with functional multiplex data (SubjectFUN_MP)](#Subject-with-functional-multiplex-data-SubjectFUNMP)
+>> [Subject with functional multiplex data (`SubjectFUN_MP`)](#Subject-with-functional-multiplex-data-SubjectFUNMP)
 >>
 > [Implementation of a subject with connectivity and functional data](#Implementation-of-a-subject-with-connectivity-and-functional-data)
 >
->> [Subject with connectivity and functional multiplex data (SubjectCON_FUN_MP)](#Subject-with-connectivity-and-functional-multiplex-data-SubjectCONFUNMP)
+>> [Subject with connectivity and functional multiplex data (`SubjectCON_FUN_MP`)](#Subject-with-connectivity-and-functional-multiplex-data-SubjectCONFUNMP)
 >>
 > [Implementation of a subject with structural data](#Implementation-of-a-subject-with-structural-data)
 >
->> [Subject with structural data (SubjectST)](#Subject-with-structural-data-SubjectST)
+>> [Subject with structural data (`SubjectST`)](#Subject-with-structural-data-SubjectST)
 >>
->> [Subject with structural multiplex data (SubjectST_MP)](#Subject-with-structural-multiplex-data-SubjectSTMP)
+>> [Subject with structural multiplex data (`SubjectST_MP`)](#Subject-with-structural-multiplex-data-SubjectSTMP)
 >>
 
 
@@ -49,7 +49,7 @@ Furthermore, all importers and exporters are extensions of the base elements `Ex
 ## Implementation of a subject with connectivity data  [⬆](#Table-of-Contents)
 
 <a id="Subject-with-connectivity-data-SubjectCON"></a>
-### Subject with connectivity data (SubjectCON)  [⬆](#Table-of-Contents)
+### Subject with connectivity data (`SubjectCON`)  [⬆](#Table-of-Contents)
 
 You will start by implementing in detail `SubjectCON`, which holds a connectivity matrix (for example, obtained from DTI data).
 
@@ -219,7 +219,7 @@ You will start by implementing in detail `SubjectCON`, which holds a connectivit
 
 
 <a id="Subject-with-connectivity-multiplex-data-SubjectCONMP"></a>
-### Subject with connectivity multiplex data (SubjectCON_MP)  [⬆](#Table-of-Contents)
+### Subject with connectivity multiplex data (`SubjectCON_MP`)  [⬆](#Table-of-Contents)
 
 You can now use `SubjectCON` as the basis to implement the `SubjectCON_MP`. While the multilayer data allows connections between any nodes across the multiple layers, the `SubjectCON_MP` can also be used for ordinal multilayer data.
 
@@ -396,10 +396,10 @@ You can now use `SubjectCON` as the basis to implement the `SubjectCON_MP`. Whil
 
 
 <a id="Implementation-of-importer-and-exporter-for-SubjectCON"></a>
-## Implementation of importer and exporter (for SubjectCON)  [⬆](#Table-of-Contents)
+## Implementation of importer and exporter (for `SubjectCON`)  [⬆](#Table-of-Contents)
 
 <a id="Importer-from-TXT-ImporterGroupSubjectCONTXT"></a>
-### Importer from TXT (ImporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
+### Importer from TXT (`ImporterGroupSubjectCON_TXT`)  [⬆](#Table-of-Contents)
 
 You will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data should be stored in the folder "Group1" and "Group2", and the file format is ".txt".
 
@@ -869,7 +869,7 @@ You will start by implementing in detail `ImporterGroupSubjectCON_TXT`. The data
 
 
 <a id="Importer-from-XLSXLSX-ImporterGroupSubjectCONXLS"></a>
-### Importer from XLS/XLSX (ImporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
+### Importer from XLS/XLSX (`ImporterGroupSubjectCON_XLS`)  [⬆](#Table-of-Contents)
 
 You will now see how to implement in detail `ImporterGroupSubjectCON_XLS` modifying `ImporterGroupSubjectCON_TXT`. The data should be stored in the folders "Group1" and "Group2", and the file format is ".xls" or ".xlsx".
 
@@ -1232,7 +1232,7 @@ You will now see how to implement in detail `ImporterGroupSubjectCON_XLS` modify
 
 
 <a id="Exporter-to-TXT-ExporterGroupSubjectCONTXT"></a>
-### Exporter to TXT (ExporterGroupSubjectCON_TXT)  [⬆](#Table-of-Contents)
+### Exporter to TXT (`ExporterGroupSubjectCON_TXT`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement in detail `ExporterGroupSubjectCON_TXT`. The data will be stored in the folders "Group1" and "Group2", and the file format is "*.txt".
 
@@ -1638,7 +1638,7 @@ In this section, you will see how to implement in detail `ExporterGroupSubjectCO
 
 
 <a id="Exporter-to-XLSXLSX-ExporterGroupSubjectCONXLS"></a>
-### Exporter to XLS/XLSX (ExporterGroupSubjectCON_XLS)  [⬆](#Table-of-Contents)
+### Exporter to XLS/XLSX (`ExporterGroupSubjectCON_XLS`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement in detail `ExporterGroupSubjectCON_XLS` modifying `ExporterGroupSubjectCON_TXT`. The data should be stored in the folder 'Group1' and 'Group2', and the file format is '.txt'.
 
@@ -1984,7 +1984,7 @@ In this section, you will see how to implement in detail `ExporterGroupSubjectCO
 ## Implementation of a subject with functional data  [⬆](#Table-of-Contents)
 
 <a id="Subject-with-functional-data-SubjectFUN"></a>
-### Subject with functional data (SubjectFUN)  [⬆](#Table-of-Contents)
+### Subject with functional data (`SubjectFUN`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement in detail `SubjectFUN`, which holds timeseries data such as those obtained from fMRI.
 
@@ -2119,7 +2119,7 @@ In this section, you will see how to implement in detail `SubjectFUN`, which hol
 
 
 <a id="Subject-with-functional-multiplex-data-SubjectFUNMP"></a>
-### Subject with functional multiplex data (SubjectFUN_MP)  [⬆](#Table-of-Contents)
+### Subject with functional multiplex data (`SubjectFUN_MP`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement in detail `SubjectFUN_MP`, which can hold, for example, multilayer fMRI data.
 
@@ -2283,7 +2283,7 @@ In this section, you will see how to implement in detail `SubjectFUN_MP`, which 
 ## Implementation of a subject with connectivity and functional data  [⬆](#Table-of-Contents)
 
 <a id="Subject-with-connectivity-and-functional-multiplex-data-SubjectCONFUNMP"></a>
-### Subject with connectivity and functional multiplex data (SubjectCON_FUN_MP)  [⬆](#Table-of-Contents)
+### Subject with connectivity and functional multiplex data (`SubjectCON_FUN_MP`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement `SubjectCON_FUN_MP`. For example, the connectivity data can be obtained from DTI and the functional data can be obtained from fMRI.
 
@@ -2427,7 +2427,7 @@ In this section, you will see how to implement `SubjectCON_FUN_MP`. For example,
 ## Implementation of a subject with structural data  [⬆](#Table-of-Contents)
 
 <a id="Subject-with-structural-data-SubjectST"></a>
-### Subject with structural data (SubjectST)  [⬆](#Table-of-Contents)
+### Subject with structural data (`SubjectST`)  [⬆](#Table-of-Contents)
 
 In this section, you will see how to implement `SubjectST`. For example, the structural data can be obtained from sMRI.
 
@@ -2562,7 +2562,7 @@ In this section, you will see how to implement `SubjectST`. For example, the str
 
 
 <a id="Subject-with-structural-multiplex-data-SubjectSTMP"></a>
-### Subject with structural multiplex data (SubjectST_MP)  [⬆](#Table-of-Contents)
+### Subject with structural multiplex data (`SubjectST_MP`)  [⬆](#Table-of-Contents)
 
 In this section‚ you will see how to implement in detail `SubjectST_MP`. For example, the structural data can be obtained from multiple sMRI.
 

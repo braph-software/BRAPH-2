@@ -9,15 +9,15 @@ In this tutorial, you will learn how to create the generator file "*.gen.m" for 
 ## Table of Contents
 > [Implementation of unilayer graphs](#Implementation-of-unilayer-graphs)
 >
->> [Unilayer binary directed graph (GraphBD)](#Unilayer-binary-directed-graph-GraphBD)
+>> [Unilayer binary directed graph (`GraphBD`)](#Unilayer-binary-directed-graph-GraphBD)
 >>
 > [Implementation of multilayer graphs](#Implementation-of-multilayer-graphs)
 >
->> [Weighted directed multilayer graph (MultilayerWD)](#Weighted-directed-multilayer-graph-MultilayerWD)
+>> [Weighted directed multilayer graph (`MultilayerWD`)](#Weighted-directed-multilayer-graph-MultilayerWD)
 >>
->> [Binary undirected multilayer graph with fixed thresholds (MultiplexBUT)](#Binary-undirected-multilayer-graph-with-fixed-thresholds-MultiplexBUT)
+>> [Binary undirected multilayer graph with fixed thresholds (`MultiplexBUT`)](#Binary-undirected-multilayer-graph-with-fixed-thresholds-MultiplexBUT)
 >>
->> [Binary undirected ordinal multiplex graph with fixed thresholds (OrdMxBUT)](#Binary-undirected-ordinal-multiplex-graph-with-fixed-thresholds-OrdMxBUT)
+>> [Binary undirected ordinal multiplex graph with fixed thresholds (`OrdMxBUT`)](#Binary-undirected-ordinal-multiplex-graph-with-fixed-thresholds-OrdMxBUT)
 >>
 
 
@@ -25,7 +25,7 @@ In this tutorial, you will learn how to create the generator file "*.gen.m" for 
 ## Implementation of unilayer graphs  [⬆](#Table-of-Contents)
 
 <a id="Unilayer-binary-directed-graph-GraphBD"></a>
-### Unilayer binary directed graph (GraphBD)  [⬆](#Table-of-Contents)
+### Unilayer binary directed graph (`GraphBD`)  [⬆](#Table-of-Contents)
 
 You will start by implementing in detail `GraphBD`, which  is a direct extension of  `Graph`.
 A unilayer graph is constituted by nodes connected by edges, where the can be either 0 (absence of connection) or 1 (existence of connection).
@@ -491,7 +491,7 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 ## Implementation of multilayer graphs  [⬆](#Table-of-Contents)
 
 <a id="Weighted-directed-multilayer-graph-MultilayerWD"></a>
-### Weighted directed multilayer graph (MultilayerWD)  [⬆](#Table-of-Contents)
+### Weighted directed multilayer graph (`MultilayerWD`)  [⬆](#Table-of-Contents)
 
 You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. A multilayer graph allows connections between any nodes across the multiple layers, where all layers are interconnected following a categorical fashion.
 
@@ -861,7 +861,7 @@ You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. A 
 
 
 <a id="Binary-undirected-multilayer-graph-with-fixed-thresholds-MultiplexBUT"></a>
-### Binary undirected multilayer graph with fixed thresholds (MultiplexBUT)  [⬆](#Table-of-Contents)
+### Binary undirected multilayer graph with fixed thresholds (`MultiplexBUT`)  [⬆](#Table-of-Contents)
 
 Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. A multiplex graph is a type of multilayer graph where interlayer edges are allowed only between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
@@ -1210,7 +1210,7 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 
 
 <a id="Binary-undirected-ordinal-multiplex-graph-with-fixed-thresholds-OrdMxBUT"></a>
-### Binary undirected ordinal multiplex graph with fixed thresholds (OrdMxBUT)  [⬆](#Table-of-Contents)
+### Binary undirected ordinal multiplex graph with fixed thresholds (`OrdMxBUT`)  [⬆](#Table-of-Contents)
 
 Finally, you will implement the `OrdMxBUT` graph based on the previous codes `GraphBD`, `MultilayerWD` and `MultiplexBUT`.An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with edges between corresponding nodes in subsequent layers.
 

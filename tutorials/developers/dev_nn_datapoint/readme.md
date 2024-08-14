@@ -3,36 +3,36 @@
 [![Tutorial Implement a New Neural Network Data Point](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_datapoint.pdf)
 
 This is the developer tutorial for implementing a new neural network data point. 
-In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new neural network data point, which can then be compiled by `braph2genesis`. All kinds of neural network data point are (direct or indirect) extensions of the base element `NNDataPoint`. Here, we will use as examples the neural network data point `NNDataPoint_CON_REG` (connectivity data for regression), `NNDataPoint_CON_CLA` (connectivity data for classification), `NNDataPoint_Graph_REG` (adjacency matrix for regression), `NNDataPoint_Graph_CLA` (adjacency matrix for classification), `NNDataPoint_Measure_REG` (graph measure for regression), and `NNDataPoint_Measure_CLA` (graph measure for classification).
+In this Tutorial, you will learn how to create the generator file "*.gen.m" for a new neural network data point, which can then be compiled by `braph2genesis`. All kinds of neural network data point are (direct or indirect) extensions of the base element `NNDataPoint`. Here, you will use as examples the neural network data point `NNDataPoint_CON_REG` (connectivity data for regression), `NNDataPoint_CON_CLA` (connectivity data for classification), `NNDataPoint_Graph_REG` (adjacency matrix for regression), `NNDataPoint_Graph_CLA` (adjacency matrix for classification), `NNDataPoint_Measure_REG` (graph measure for regression), and `NNDataPoint_Measure_CLA` (graph measure for classification).
 
 
 ## Table of Contents
-> [Implementation of a Data Point with Connectivity Data](#Implementation-of-a-Data-Point-with-Connectivity-Data)
+> [Implementation of a data point with connectivity data](#Implementation-of-a-data-point-with-connectivity-data)
 >
->> [Connectivity Data Point for Regression (`NNDataPoint_CON_REG`)](#Connectivity-Data-Point-for-Regression-NNDataPointCONREG)
+>> [Connectivity data point for regression (`NNDataPoint_CON_REG`)](#Connectivity-data-point-for-regression-NNDataPointCONREG)
 >>
->> [Connectivity Data Point for Classification (`NNDataPoint_CON_CLA`)](#Connectivity-Data-Point-for-Classification-NNDataPointCONCLA)
+>> [Connectivity data point for classification (`NNDataPoint_CON_CLA`)](#Connectivity-data-point-for-classification-NNDataPointCONCLA)
 >>
-> [Implementation of a Data Point with a Graph](#Implementation-of-a-Data-Point-with-a-Graph)
+> [Implementation of a data point with a graph](#Implementation-of-a-data-point-with-a-graph)
 >
->> [Graph Data Point for Regression (`NNDataPoint_Graph_REG`)](#Graph-Data-Point-for-Regression-NNDataPointGraphREG)
+>> [Graph data point for regression (`NNDataPoint_Graph_REG`)](#Graph-data-point-for-regression-NNDataPointGraphREG)
 >>
->> [Graph Data Point for Classification (`NNDataPoint_Graph_CLA`)](#Graph-Data-Point-for-Classification-NNDataPointGraphCLA)
+>> [Graph data point for classification (`NNDataPoint_Graph_CLA`)](#Graph-data-point-for-classification-NNDataPointGraphCLA)
 >>
-> [Implementation of a Data Point with Graph Measures](#Implementation-of-a-Data-Point-with-Graph-Measures)
+> [Implementation of a data point with graph measures](#Implementation-of-a-data-point-with-graph-measures)
 >
->> [Graph Measure Data Point for Regression (`NNDataPoint_Measure_REG`)](#Graph-Measure-Data-Point-for-Regression-NNDataPointMeasureREG)
+>> [Graph measure data point for regression (`NNDataPoint_Measure_REG`)](#Graph-measure-data-point-for-regression-NNDataPointMeasureREG)
 >>
->> [Graph Measure Data Point for Classification (`NNDataPoint_Measure_CLA`)](#Graph-Measure-Data-Point-for-Classification-NNDataPointMeasureCLA)
+>> [Graph measure data point for classification (`NNDataPoint_Measure_CLA`)](#Graph-measure-data-point-for-classification-NNDataPointMeasureCLA)
 >>
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-a-Data-Point-with-Connectivity-Data"></a>
-## Implementation of a Data Point with Connectivity Data  [⬆](#Table-of-Contents)
 
-<a id="Connectivity-Data-Point-for-Regression-NNDataPointCONREG"></a>
-### Connectivity Data Point for Regression (`NNDataPoint_CON_REG`)  [⬆](#Table-of-Contents)
+<a id="Implementation-of-a-data-point-with-connectivity-data"></a>
+## Implementation of a data point with connectivity data  [⬆](#Table-of-Contents)
+
+<a id="Connectivity-data-point-for-regression-NNDataPointCONREG"></a>
+### Connectivity data point for regression (`NNDataPoint_CON_REG`)  [⬆](#Table-of-Contents)
 
 We will start by implementing in detail `NNDataPoint_CON_REG`, which is a direct extension of `NNDataPoint`.
 A data point for regression with connectivity data `NNDataPoint_CON_REG` contains the input and target for neural network analysis with a subject with connectivity data (SubjectCON), where the input is the subject's connectivity data and the target is the subject's variables of interest.
@@ -332,10 +332,10 @@ A data point for regression with connectivity data `NNDataPoint_CON_REG` contain
 > ⑰ executes the corresponding example scripts to ensure the functionalities.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Connectivity-Data-Point-for-Classification-NNDataPointCONCLA"></a>
-### Connectivity Data Point for Classification (`NNDataPoint_CON_CLA`)  [⬆](#Table-of-Contents)
+
+<a id="Connectivity-data-point-for-classification-NNDataPointCONCLA"></a>
+### Connectivity data point for classification (`NNDataPoint_CON_CLA`)  [⬆](#Table-of-Contents)
 
 We can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint_CON_CLA`.
 The parts of the code that are modified are highlighted. 
@@ -689,12 +689,12 @@ The parts of the code that are modified are highlighted.
 > 
 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-a-Data-Point-with-a-Graph"></a>
-## Implementation of a Data Point with a Graph  [⬆](#Table-of-Contents)
-<a id="Graph-Data-Point-for-Regression-NNDataPointGraphREG"></a>
-### Graph Data Point for Regression (`NNDataPoint_Graph_REG`)  [⬆](#Table-of-Contents)
+<a id="Implementation-of-a-data-point-with-a-graph"></a>
+## Implementation of a data point with a graph  [⬆](#Table-of-Contents)
+
+<a id="Graph-data-point-for-regression-NNDataPointGraphREG"></a>
+### Graph data point for regression (`NNDataPoint_Graph_REG`)  [⬆](#Table-of-Contents)
 
 Now we implement `NNDataPoint_Graph_REG` based on previous codes `NNDataPoint_CON_REG`.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
@@ -975,10 +975,10 @@ The modified parts of the code are highlighted.
 > ⑰ tests with the `MultiplexBUT` element with the simulated connectivity and functional data.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Graph-Data-Point-for-Classification-NNDataPointGraphCLA"></a>
-### Graph Data Point for Classification (`NNDataPoint_Graph_CLA`)  [⬆](#Table-of-Contents)
+
+<a id="Graph-data-point-for-classification-NNDataPointGraphCLA"></a>
+### Graph data point for classification (`NNDataPoint_Graph_CLA`)  [⬆](#Table-of-Contents)
 
 Now we implement `NNDataPoint_Graph_CLA` based on previous codes `NNDataPoint_CON_CLA`.
 This neural network data point with graphs utilizes the adjacency matrix extracted from the derived graph of the subject. 
@@ -1276,12 +1276,13 @@ The modified parts of the code are highlighted.
 > ⑮ tests with the `MultiplexWU` element with simulated data.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-a-Data-Point-with-Graph-Measures"></a>
-## Implementation of a Data Point with Graph Measures  [⬆](#Table-of-Contents)
-<a id="Graph-Measure-Data-Point-for-Regression-NNDataPointMeasureREG"></a>
-### Graph Measure Data Point for Regression (`NNDataPoint_Measure_REG`)  [⬆](#Table-of-Contents)
+
+<a id="Implementation-of-a-data-point-with-graph-measures"></a>
+## Implementation of a data point with graph measures  [⬆](#Table-of-Contents)
+
+<a id="Graph-measure-data-point-for-regression-NNDataPointMeasureREG"></a>
+### Graph measure data point for regression (`NNDataPoint_Measure_REG`)  [⬆](#Table-of-Contents)
 
 Now we implement `NNDataPoint_Measure_REG` based on previous codes `NNDataPoint_Graph_REG`.
 This neural network data point utilizes graph measures obtrained from the adjacency matrix from the derived graph of the subject. 
@@ -1540,10 +1541,10 @@ The modified parts of the code are highlighted.
 > ⑯ tests various kinds of graph measure with the `MultiplexWU` using example data.
 > 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Graph-Measure-Data-Point-for-Classification-NNDataPointMeasureCLA"></a>
-### Graph Measure Data Point for Classification (`NNDataPoint_Measure_CLA`)  [⬆](#Table-of-Contents)
+
+<a id="Graph-measure-data-point-for-classification-NNDataPointMeasureCLA"></a>
+### Graph measure data point for classification (`NNDataPoint_Measure_CLA`)  [⬆](#Table-of-Contents)
 
 Now we implement `NNDataPoint_Measure_CLA` based on previous codes `NNDataPoint_Graph_CLA`.
 This neural network data point utilizes graph measures obtrained from the adjacency matrix from the derived graph of the subject. 

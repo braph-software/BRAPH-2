@@ -10,7 +10,7 @@ Then, you will be provided with an overview of example property panels using a w
 
 
 ## Table of Contents
-> [Implementation of property panel (PanelPropLogical)](#Implementation-of-property-panel-PanelPropLogical)
+> [Implementation of property panel (`PanelPropLogical`)](#Implementation-of-property-panel-PanelPropLogical)
 >
 > [Example property panels for various UI objects](#Example-property-panels-for-various-UI-objects)
 >
@@ -18,7 +18,7 @@ Then, you will be provided with an overview of example property panels using a w
 
 
 <a id="Implementation-of-property-panel-PanelPropLogical"></a>
-## Implementation of property panel (PanelPropLogical)  [⬆](#Table-of-Contents)
+## Implementation of property panel (`PanelPropLogical`)  [⬆](#Table-of-Contents)
 
 To illustrate the general concepts of a property panel, you will start by implementing in detail the property panel `PanelPropLogical`, which is a direct extension of the element `PanelProp`.
 
