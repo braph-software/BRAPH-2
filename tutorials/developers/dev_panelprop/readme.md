@@ -1,6 +1,6 @@
-# Implement a new Property Panel
+# Implement a New Property Panel
 
-[![Tutorial Implement a new Property Panel](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_panelprop.pdf)
+[![Tutorial Implement a New Property Panel](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_panelprop.pdf)
 
 This is the developer tutorial for implementing a new property panel. 
 In this tutorial, you will learn how to create the generator file "*.gen.m" for a new property panel, which can then be compiled by `braph2genesis`. 
