@@ -2,7 +2,7 @@
 \usepackage{../braph2_dev}
 %\geometry{showframe} % display margins for debugging page layout
 
-\title{Implement a new Graph}
+\title{Implement a New Graph}
 
 \author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
 
@@ -13,40 +13,41 @@
 \begin{abstract}
 \noindent
 This is the developer tutorial for implementing a new graph. 
-In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new graph, which can then be compiled by \code{braph2genesis}. All graphs are (direct or indirect) extensions of the base element \code{Graph}. Here, we will use as examples the graphs \code{GraphBD} (Binary Directed graph), \code{MultilayerWU} (Weighted Undirected multilayer graph), \code{MultiplexBUT} (Binary Undirected multiplex at fixed Thresholds), and \code{OrdMxBUT} (Binary Undirected ordinal multiplex with fixed Thresholds).
+In this tutorial, you will learn how to create the generator file \fn{*.gen.m} for a new graph, which can then be compiled by \code{braph2genesis}. All graphs are (direct or indirect) extensions of the base element \code{Graph}. Here, you will use as examples the graphs \code{GraphBD} (Binary Directed graph), \code{MultilayerWU} (Weighted Undirected multilayer graph), \code{MultiplexBUT} (Binary Undirected multiplex at fixed Thresholds), and \code{OrdMxBUT} (Binary Undirected ordinal multiplex with fixed Thresholds).
 \end{abstract}
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
 \section{Implementation of Unilayer Graphs}
 
 \subsection{Unilayer Binary Directed Graph (GraphBD)}
 
-We will start by implementing in detail \code{GraphBD}, which  is a direct extension of  \code{Graph}.
-A unilayer graph is constituted by nodes connected by edges, where the edges are directed and they can be either 0 (absence of connection) or 1 (existence of connection).
+You will start by implementing in detail \code{GraphBD}, which  is a direct extension of  \code{Graph}.
+A unilayer graph is constituted by nodes connected by edges, where the can be either 0 (absence of connection) or 1 (existence of connection).
 
 \begin{lstlisting}[
 	label=cd:m:GraphBD:header,
 	caption={
 		{\bf GraphBD element header.}
-		The \code{header} section of the generator code for \fn{\_GraphBD.gen.m} provides the general information about the \code{GraphBD} element.
+		The \code{header} section of the generator code in \fn{\_GraphBD.gen.m} provides the general information about the \code{GraphBD} element.
 		}
 ]
 %% ¡header!
 GraphBD < Graph (g, binary directed graph) is a binary directed graph. ¥\circled{1}\circlednote{1}{defines \code{GraphBD} as a subclass of \code{Graph}. The moniker will be \code{g}.}¥
 
-%%% ¡description!
+%%% ¡description! ¥\circled{2}\circlednote{2}{provides a description of this graph.}¥
 In a binary directed (BD) graph, the edges are directed and they can be either 0 (absence of connection) or 1 (existence of connection).
+
+%%% ¡build! ¥\circled{3}\circlednote{3}{defines the build number of the graph element.}¥
+1
 \end{lstlisting}
 
-
 \begin{lstlisting}[
-	label={cd:m:GraphBD:prop_update},
+	label=cd:m:GraphBD:prop_update,
 	caption={
 		{\bf GraphBD element prop update.}
-		The \code{props\_update} section of the generator code for \fn{GraphBD.gen.m} updates the properties of the \code{Graph} element. This defines the core properties of the graph.
+		The \code{props\_update} section of the generator code in \fn{\_GraphBD.gen.m} updates the properties of the \code{Graph} element. This defines the core properties of the graph.
 	}
 ]
 %% ¡props_update!
@@ -79,7 +80,7 @@ NOTES (metadata, string) are some specific notes about the binary directed graph
 %%%% ¡default!
 'GraphBD notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}\threecirclednotes{8}{9}{10}{condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}\circlednote{11}{preallocates the adjacency matrix to be calcualted.}\circlednote{12}{randomizes adjacency matrix when \code{'RANDOMIZE'} is \code{true} by calling the function of the graph named \code{RANDOMIZATION}}\circlednote{13}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}\circlednote{14}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}\circlednote{8}{, \circled{9}, and \circled{10} condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}\circlednote{11}{preallocates the adjacency matrix to be calcualted.}\circlednote{12}{randomizes adjacency matrix when \code{'RANDOMIZE'} is \code{true} by calling the function of the graph named \code{RANDOMIZATION}}\circlednote{13}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}\circlednote{14}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}¥
 GRAPH_TYPE (constant, scalar) returns the graph type __Graph.GRAPH__.
 %%%% ¡default!
 Graph.GRAPH
@@ -136,7 +137,7 @@ getCompatibleMeasures('GraphBD')
 \end{lstlisting}
 
 \begin{lstlisting}[
-	label={cd:m:GraphBD:props},
+	label=cd:m:GraphBD:props,
 	caption={
 		{\bf GraphBD element props.}
 		The \code{props} section of generator code for \fn{GraphBD.gen.m} defines the properties to be used in \fn{GraphBD}.
@@ -557,8 +558,8 @@ getCompatibleMeasures¤('MultilayerWD')
 
 
 \begin{lstlisting}[
-label={cd:m:MultilayerWD:props},
-caption={
+	label=cd:m:MultilayerWD:props,
+	caption={
 	{\bf MultilayerWD element props.}
 	The \code{props} section of generator code for \fn{MultilayerWD.gen.m} defines the properties to be used in \fn{MultilayerWD}.
 	\expand{cd:m:GraphBD:props}
@@ -952,7 +953,7 @@ value = A;¤
 \end{lstlisting}
 
 \begin{lstlisting}[
-label={cd:m:MultiplexBUT:props},
+label=cd:m:MultiplexBUT:props,
 caption={
 	{\bf MultiplexBUT element props.}
 	The \code{props} section of generator code for \fn{MultiplexBUT.gen.m} defines the properties to be used in \fn{MultiplexBUT}.
@@ -1292,8 +1293,8 @@ value = A;¤
 
 
 \begin{lstlisting}[
-label={cd:m:OrdMxBUT:props},
-caption={
+	label=cd:m:OrdMxBUT:props,
+	caption={
 	{\bf OrdMxBUT element props.}
 	The \code{props} section of generator code for \fn{OrdMxBUT.gen.m} defines the properties to be used in \fn{MultiplexBUT}.
 	\expand{cd:m:MultiplexBUT:props}
