@@ -13,7 +13,7 @@
 \begin{abstract}
 \noindent
 This is the developer tutorial for implementing a new neural network classifier. 
-In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new neural network classifier, which can then be compiled by \code{braph2genesis}. All kinds of neural network models are (direct or indirect) extensions of the base element \code{NNBase}. Here, we will use as examples the neural network classifier \code{NNClassifierMLP} (multi-layer perceptron classifier).
+In this tutorial, you will learn how to create the generator file \fn{*.gen.m} for a new neural network classifier, which can then be compiled by \code{braph2genesis}. All kinds of neural network models are (direct or indirect) extensions of the base element \code{NNBase}. Here, you will use as example the neural network classifier \code{NNClassifierMLP} (multi-layer perceptron classifier).
 \end{abstract}
 
 \tableofcontents
@@ -22,7 +22,7 @@ In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} 
 
 \section{Implementation of a neural network classifier (\code{NNClassifierMLP})}
 
-We will start by implementing in detail \code{NNClassifierMLP}, which is a direct extension of \code{NNBase}.
+You will start by implementing in detail \code{NNClassifierMLP}, which is a direct extension of \code{NNBase}.
 A multi-layer perceptron classifier \code{NNClassifierMLP} comprises a multi-layer perceptron classifier model and a given dataset.
 
 \begin{lstlisting}[
@@ -37,6 +37,9 @@ NNClassifierMLP < NNBase (nn, multi-layer perceptron classifier) comprises a mul
 
 %%% ¡description!
 A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset. NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+
+%%% ¡build!
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
@@ -380,7 +383,7 @@ d = NNDatasetCombine('D_LIST', {d1, d2}).get('D');
 nn = NNClassifierMLP('D', d, 'LAYERS', [10 10 10]);
 trained_model = nn.get('MODEL');
 
-% Check whether the number of fully-connected layer matches (excluding Dense_output layer)¥\circled{1}\circlednote{1}{ checks whether the number of layers from the trained model is correctly set.}¥
+% Check whether the number of fully-connected layer matches (excluding Dense_output layer) ¥\circled{1}\circlednote{1}{ checks whether the number of layers from the trained model is correctly set.}¥
 assert(length(nn.get('LAYERS')) == sum(contains({trained_model.Layers.Name}, 'Dense')) - 1, ...
     [BRAPH2.STR ':NNClassifierMLP:' BRAPH2.FAIL_TEST], ...
     'NNClassifierMLP does not construct the layers correctly. The number of the inputs should be the same as the length of dense layers the property.' ...

@@ -3,7 +3,7 @@
 [![Tutorial Implement a new Neural Network Classifier](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_clas.pdf)
 
 This is the developer tutorial for implementing a new neural network classifier. 
-In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new neural network classifier, which can then be compiled by `braph2genesis`. All kinds of neural network models are (direct or indirect) extensions of the base element `NNBase`. Here, we will use as examples the neural network classifier `NNClassifierMLP` (multi-layer perceptron classifier).
+In this tutorial, you will learn how to create the generator file "*.gen.m" for a new neural network classifier, which can then be compiled by `braph2genesis`. All kinds of neural network models are (direct or indirect) extensions of the base element `NNBase`. Here, you will use as example the neural network classifier `NNClassifierMLP` (multi-layer perceptron classifier).
 
 
 ## Table of Contents
@@ -15,7 +15,7 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 <a id="Implementation-of-a-neural-network-classifier-NNClassifierMLP"></a>
 ## Implementation of a neural network classifier (`NNClassifierMLP`)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `NNClassifierMLP`, which is a direct extension of `NNBase`.
+You will start by implementing in detail `NNClassifierMLP`, which is a direct extension of `NNBase`.
 A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer perceptron classifier model and a given dataset.
 
 
@@ -27,6 +27,9 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > 
 > %%% ¡description!
 > A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset. NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① defines `NNClassifierMLP` as a subclass of `NNBase`. The moniker will be `nn`.
@@ -390,7 +393,7 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > nn = NNClassifierMLP('D', d, 'LAYERS', [10 10 10]);
 > trained_model = nn.get('MODEL');
 > 
-> % Check whether the number of fully-connected layer matches (excluding Dense_output layer) ①
+> % Check whether the number of fully-connected layer matches (excluding Dense_output layer)  ①
 > assert(length(nn.get('LAYERS')) == sum(contains({trained_model.Layers.Name}, 'Dense')) - 1, ...
 >     [BRAPH2.STR ':NNClassifierMLP:' BRAPH2.FAIL_TEST], ...
 >     'NNClassifierMLP does not construct the layers correctly. The number of the inputs should be the same as the length of dense layers the property.' ...
