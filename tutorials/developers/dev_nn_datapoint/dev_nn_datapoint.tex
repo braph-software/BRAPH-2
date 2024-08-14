@@ -2,7 +2,7 @@
 \usepackage{../braph2_dev}
 %\geometry{showframe} % display margins for debugging page layout
 
-\title{Implement a new Neural Network Data Point}
+\title{Implement a New Neural Network Data Point}
 
 \author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
 
@@ -36,7 +36,7 @@ A data point for regression with connectivity data \code{NNDataPoint\_CON\_REG} 
 ]
 %% ¡header!
 NNDataPoint_CON_REG < NNDataPoint (dp, connectivity regression data point) is a data point for regression with connectivity data.
- ¥\circled{1}\circlednote{1}{defines \code{NNDataPoint\_CON\_REG} as a subclass of \code{NNDataPoint}. The moniker will be \code{dp}.}¥
+ ¥\circled{1}\circlednote{1}{ defines \code{NNDataPoint\_CON\_REG} as a subclass of \code{NNDataPoint}. The moniker will be \code{dp}.}¥
 
 %%% ¡description!
 A data point for regression with connectivity data (NNDataPoint_CON_REG) 
@@ -85,12 +85,12 @@ NOTES (metadata, string) are some specific notes about a data point for regressi
 %%%% ¡default!
 'NNDataPoint_CON_REG notes'
 
-%%% ¡prop!  ¥\circled{1}\circlednote{1}{The property \code{INPUT} is the input value for this data point, which is obtained directly from the connectivity data of \code{Subject\_CON} by the code under \code{¡calculate!}.}¥
+%%% ¡prop!  ¥\circled{1}\circlednote{1}{ The property \code{INPUT} is the input value for this data point, which is obtained directly from the connectivity data of \code{Subject\_CON} by the code under \code{¡calculate!}.}¥
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!
 value = {dp.get('SUB').get('CON')};
     
-%%% ¡prop! ¥\circled{2}\circlednote{2}{The property \code{TARGET} is the target value for this data point, which is obtained directly from the variables of interest of \code{VOI\_DICT} by the code under \code{¡calculate!}.}¥
+%%% ¡prop! ¥\circled{2}\circlednote{2}{ The property \code{TARGET} is the target value for this data point, which is obtained directly from the variables of interest of \code{VOI\_DICT} by the code under \code{¡calculate!}.}¥
 TARGET (result, cell) is the target value for this data point.
 %%%% ¡calculate!
 value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get('TARGET_IDS'), 'UniformOutput', false);
@@ -106,12 +106,12 @@ value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get
 ]
 %% ¡props!
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{The property \code{SUB} is a subject with connectivity data (\code{Subject\_CON}), which is used to calculated the mentioned properties \code{INPUT} and \code{TARGET}.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ The property \code{SUB} is a subject with connectivity data (\code{Subject\_CON}), which is used to calculated the mentioned properties \code{INPUT} and \code{TARGET}.}¥
 SUB (data, item) is a subject with connectivity data.
 %%%% ¡settings!
 'SubjectCON'
 
-%%% ¡prop! ¥\circled{2}\circlednote{2}{The property \code{TARGET\_IDS} defines the IDs of target, where the target IDs should be from the subject's variable-of-interest IDs.}¥
+%%% ¡prop! ¥\circled{2}\circlednote{2}{ The property \code{TARGET\_IDS} defines the IDs of target, where the target IDs should be from the subject's variable-of-interest IDs.}¥
 TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as regression targets.
 
 \end{lstlisting}
@@ -128,18 +128,18 @@ TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be u
 ]			
 %% ¡tests!
 
-%%% ¡excluded_props!  ¥\circled{1}\circlednote{1}{List of properties that are excluded from testing.}¥
+%%% ¡excluded_props!  ¥\circled{1}\circlednote{1}{ List of properties that are excluded from testing.}¥
 [NNDataPoint_CON_REG.SUB]
 
 %%% ¡test!
 %%%% ¡name!
-Create example files for regression  ¥\circled{2}\circlednote{2}{creates the example connectivity data files for regression analysis.}¥
+Create example files for regression  ¥\circled{2}\circlednote{2}{ creates the example connectivity data files for regression analysis.}¥
 %%%% ¡code!
 data_dir = [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS'];
 if ~isdir(data_dir)
     mkdir(data_dir);
 
-    % Brain Atlas  ¥\circled{3}\circlednote{3}{creates and exports the brain atlas file to the example directory.}¥
+    % Brain Atlas  ¥\circled{3}\circlednote{3}{ creates and exports the brain atlas file to the example directory.}¥
     im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
     ba = im_ba.get('BA');
     ex_ba = ExporterBrainAtlasXLS( ...
@@ -154,7 +154,7 @@ if ~isdir(data_dir)
 
     sex_options = {'Female' 'Male'};
 
-    % Group ¥\circled{4}\circlednote{4}{creates one group of subjects with specified degree and rewiring probability configurations.}¥
+    % Group ¥\circled{4}\circlednote{4}{ creates one group of subjects with specified degree and rewiring probability configurations.}¥
     K = 2; % degree (mean node degree is 2K)
     beta = 0.3; % Rewiring probability
     gr_name = 'CON_Group_XLS';
@@ -167,22 +167,22 @@ if ~isdir(data_dir)
     for i = 1:1:100 % subject number
         sub_id = ['SubjectCON_' num2str(i)];
         % create WS graphs with random beta
-        beta(i) = rand(1); ¥\circled{5}\circlednote{5}{generates random rewiring probability settings for each subject.}¥
-        h = WattsStrogatz(N, K, beta(i)); % create WS graph ¥\circled{6} \twocirclednotes{6}{10}{utilize the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs.}¥
+        beta(i) = rand(1); ¥\circled{5}\circlednote{5}{ generates random rewiring probability settings for each subject.}¥
+        h = WattsStrogatz(N, K, beta(i)); % create WS graph ¥\circled{6}\circlednote{6}{utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function \code{WattsStrogatz} \circled{10}.}¥
 
         A = full(adjacency(h)); A(1:length(A)+1:numel(A)) = 0; % extract the adjacency matrix
         r = 0 + (0.5 - 0) * rand(size(A)); diffA = A - r; A(A ~= 0) = diffA(A ~= 0); % make the adjacency matrix weighted
         A = max(A, transpose(A)); % make the adjacency matrix symmetric
 
-        writetable(array2table(A), [gr_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false) ¥\circled{7}\circlednote{7}{exports the adjacency matrix of the graph to an Excel file.}¥
+        writetable(array2table(A), [gr_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false) ¥\circled{7}\circlednote{7}{ exports the adjacency matrix of the graph to an Excel file.}¥
 
         % variables of interest
         age_upperBound = 80;
         age_lowerBound = 50;
-        age = age_lowerBound + beta(i)*(age_upperBound - age_lowerBound); ¥\circled{8}\circlednote{8}{associates the age value with each individual rewiring probability setting.}¥
+        age = age_lowerBound + beta(i)*(age_upperBound - age_lowerBound); ¥\circled{8}\circlednote{8}{ associates the age value with each individual rewiring probability setting.}¥
         vois = [vois; {sub_id, age, sex_options(randi(2))}];
     end
-    writetable(table(vois), [data_dir filesep() gr_name '.vois.xlsx'], 'WriteVariableNames', false) ¥\circled{9}\circlednote{9}{exports the variables of interest to an Excel file.}¥
+    writetable(table(vois), [data_dir filesep() gr_name '.vois.xlsx'], 'WriteVariableNames', false) ¥\circled{9}\circlednote{9}{ exports the variables of interest to an Excel file.}¥
 
     % reset RNG
     rng(rng_settings_)
@@ -217,7 +217,7 @@ function h = WattsStrogatz(N, K, beta) ¥\circled{10}¥
 end
 
 %%% ¡test! 
-%%%% ¡name! ¥\circled{11}\circlednote{11}{validates the data point by using assertions to confirm that the input and target calculated values match the connectivity data and the variables of interest in the example files.}¥
+%%%% ¡name! ¥\circled{11}\circlednote{11}{ validates the data point by using assertions to confirm that the input and target calculated values match the connectivity data and the variables of interest in the example files.}¥
 Create a NNDataset containg NNDataPoint_CON_REG with simulated data
 %%%% ¡code!
 % Load BrainAtlas
@@ -237,7 +237,7 @@ im_gr = ImporterGroupSubjectCON_XLS( ...
 
 gr = im_gr.get('GR');
 
-% create an item list of NNDataPoint_CON_REG ¥\circled{12}\threecirclednotes{12}{13}{14}{creates an item list for the data points, subsequently generates the data point dictionary using the list, and then constructs the neural network dataset containing these data points.}¥
+% create an item list of NNDataPoint_CON_REG ¥\circled{12}\circlednote{12}{---\circled{14} create an item list for the data points, subsequently generates the data point dictionary using the list, and then constructs the neural network dataset containing these data points.}¥
 it_list = cellfun(@(x) NNDataPoint_CON_REG( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
@@ -257,19 +257,19 @@ d = NNDataset( ...
     'DP_DICT', dp_list ...
     );
 
-% Check whether the number of inputs matches ¥\circled{14}\circlednote{14}{tests the number of inputs from the dataset matches the number of subjects in the group.}¥
+% Check whether the number of inputs matches ¥\circled{14}\circlednote{14}{ tests the number of inputs from the dataset matches the number of subjects in the group.}¥
 assert(length(d.get('INPUTS')) == gr.get('SUB_DICT').get('LENGTH'), ...
 		[BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
 		'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the inputs should be the same as the number of imported subjects.' ...
 		)
 
-% Check whether the number of targets matches ¥\circled{15}\circlednote{15}{tests the number of targets from the dataset matches the number of subjects in the group.}¥
+% Check whether the number of targets matches ¥\circled{15}\circlednote{15}{ tests the number of targets from the dataset matches the number of subjects in the group.}¥
 assert(length(d.get('TARGETS')) == gr.get('SUB_DICT').get('LENGTH'), ...
 		[BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
 		'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the targets should be the same as the number of imported subjects.' ...
 		)
 
-% Check whether the content of input for a single data point matches ¥\circled{16}\circlednote{16}{tests the value of each input from the data point matches the subject's connectivity data.}¥
+% Check whether the content of input for a single data point matches ¥\circled{16}\circlednote{16}{ tests the value of each input from the data point matches the subject's connectivity data.}¥
 for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
     individual_input = d.get('DP_DICT').get('IT', index).get('INPUT');
     known_input = {gr.get('SUB_DICT').get('IT', index).get('CON')};
@@ -281,7 +281,7 @@ for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
 end
 
 %%% ¡test! 
-%%%% ¡name!  ¥\circled{17}\circlednote{17}{executes the corresponding example scripts to ensure the functionalities.}¥
+%%%% ¡name!  ¥\circled{17}\circlednote{17}{ executes the corresponding example scripts to ensure the functionalities.}¥
 Example training-test regression
 %%%% ¡code!
 % ensure the example data is generated
@@ -362,7 +362,7 @@ INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!
 value = {dp.get('SUB').get('CON')};¤
     
-¤%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the target value using the data point's label in the form of a string list, e.g., 'Group1'.}¥
+¤%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the target value using the data point's label in the form of a string list, e.g., 'Group1'.}¥
 TARGET (result, stringlist) is the target values for this data point.
 %%%% ¡calculate!¤
 value = dp.get('TARGET_IDS'); 
@@ -413,7 +413,7 @@ data_dir = [fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA
 
     ...¤
 
-    % Group 1  ¥\circled{1}\circlednote{1}{creates the first group of simulated data.}¥
+    % Group 1  ¥\circled{1}\circlednote{1}{ creates the first group of simulated data.}¥
     K1 = 2; % degree (mean node degree is 2K) - group 1
     beta1 = 0.3; % Rewiring probability - group 1
     gr1_name = 'CON_Group_1_XLS';
@@ -445,7 +445,7 @@ data_dir = [fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA
     end
     writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
 
-    % Group 2 ¥\circled{2}\twocirclednotes{2}{3}{create the second group of simulated data with different rewiring probability parameter.}¥
+    % Group 2 ¥\circled{2}\circlednote{2}{ and \circled{3} create the second group of simulated data with different rewiring probability parameter.}¥
     K2 = 2; % degree (mean node degree is 2K) - group 2
     beta2 = 0.85; % Rewiring probability - group 2 ¥\circled{3}¥
     gr2_name = 'CON_Group_2_XLS';
@@ -477,7 +477,7 @@ data_dir = [fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA
     end
     writetable(table(vois2), [data_dir filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
 
-    % Group 3 ¥\circled{4}\twocirclednotes{4}{5}{create the third group of simulated data with different rewiring probability parameter.}¥
+    % Group 3 ¥\circled{4}\circlednote{4}{ and \circled{5} create the third group of simulated data with different rewiring probability parameter.}¥
     K3 = 2; % degree (mean node degree is 2K) - group 3
     beta3 = 0.55; % Rewiring probability - group 3  ¥\circled{5}¥
     gr3_name = 'CON_Group_3_XLS';
@@ -529,7 +529,7 @@ im_ba = ImporterBrainAtlasXLS( ...
 
 ba = im_ba.get('BA');¤
 
-% Load Groups of SubjectCON  ¥\circled{6}\circlednote{6}{imports two groups of simulated data.}¥
+% Load Groups of SubjectCON  ¥\circled{6}\circlednote{6}{ imports two groups of simulated data.}¥
 im_gr1 = ImporterGroupSubjectCON_XLS( ...
     'DIRECTORY', [fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'CON_Group_1_XLS'], ...
     'BA', ba, ...
@@ -546,7 +546,7 @@ im_gr2 = ImporterGroupSubjectCON_XLS( ...
 
 gr2 = im_gr2.get('GR');
 
-% create item lists of NNDataPoint_CON_CLA  ¥\circled{7}\circlednote{7}{creates two datasets for the two groups.}¥
+% create item lists of NNDataPoint_CON_CLA  ¥\circled{7}\circlednote{7}{ creates two datasets for the two groups.}¥
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
 it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
@@ -585,7 +585,7 @@ d2 = NNDataset( ...
     'DP_DICT', dp_list2 ...
     );
 
-% Check whether the number of inputs matches ¥\circled{8}\circlednote{8}{tests the number of inputs from the dataset matches the number of subjects in the group.}¥
+% Check whether the number of inputs matches ¥\circled{8}\circlednote{8}{ tests the number of inputs from the dataset matches the number of subjects in the group.}¥
 assert(length(d1.get('INPUTS')) == gr1.get('SUB_DICT').get('LENGTH'), ...
 		[BRAPH2.STR ':NNDataPoint_CON_CLA:' BRAPH2.FAIL_TEST], ...
 		'NNDataPoint_CON_CLA does not construct the dataset correctly. The number of the inputs should be the same as the number of imported subjects of group 1.' ...
@@ -596,7 +596,7 @@ assert(length(d2.get('INPUTS')) == gr2.get('SUB_DICT').get('LENGTH'), ...
 		'NNDataPoint_CON_CLA does not construct the dataset correctly. The number of the inputs should be the same as the number of imported subjects of group 2.' ...
 		)
 
-% Check whether the number of targets matches ¥\circled{9}\circlednote{9}{tests the number of targets from the dataset matches the number of subjects in the group.}¥
+% Check whether the number of targets matches ¥\circled{9}\circlednote{9}{ tests the number of targets from the dataset matches the number of subjects in the group.}¥
 assert(length(d1.get('TARGETS')) == gr1.get('SUB_DICT').get('LENGTH'), ...
 		[BRAPH2.STR ':NNDataPoint_CON_CLA:' BRAPH2.FAIL_TEST], ...
 		'NNDataPoint_CON_CLA does not construct the dataset correctly. The number of the targets should be the same as the number of imported subjects of group 1.' ...
@@ -607,7 +607,7 @@ assert(length(d2.get('TARGETS')) == gr2.get('SUB_DICT').get('LENGTH'), ...
 		'NNDataPoint_CON_CLA does not construct the dataset correctly. The number of the targets should be the same as the number of imported subjects of group 2.' ...
 		)
 
-% Check whether the content of input for a single data point matches ¥\circled{10}\circlednote{10}{tests the value of each input from the data point matches the subject's connectivity data.}¥
+% Check whether the content of input for a single data point matches ¥\circled{10}\circlednote{10}{ tests the value of each input from the data point matches the subject's connectivity data.}¥
 for index = 1:1:gr1.get('SUB_DICT').get('LENGTH')
     individual_input = d1.get('DP_DICT').get('IT', index).get('INPUT');
     known_input = {gr1.get('SUB_DICT').get('IT', index).get('CON')};
@@ -630,7 +630,7 @@ end
 
 ¤%%% ¡test! 
 %%%% ¡name!
-Example training-test ¤classification¤ ¥\circled{11}\circlednote{11}{executes the corresponding example scripts to ensure the functionalities.}¥
+Example training-test ¤classification¤ ¥\circled{11}\circlednote{11}{ executes the corresponding example scripts to ensure the functionalities.}¥
 %%%% ¡code!
 % ensure the example data is generated¤
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -711,7 +711,7 @@ NOTES (metadata, string) are some specific notes about a data point for regressi
 ¤%%% ¡prop!
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!¤
-value = dp.get('G').get('A');  ¥\circled{1}\circlednote{1}{extracts the adjacency matrix from a \code{Graph} element as the input for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
+value = dp.get('G').get('A');  ¥\circled{1}\circlednote{1}{ extracts the adjacency matrix from a \code{Graph} element as the input for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
     
 ¤%%% ¡prop!
 TARGET (result, cell) is the target value for this data point.
@@ -729,7 +729,7 @@ value = cellfun(@(x) dp.get('SUB').get('VOI_DICT').get('IT', x).get('V'), dp.get
 ]
 ¤%% ¡props!¤
 
-%%% ¡prop!  ¥\circled{1}\circlednote{1}{defines the \code{Graph} element which contains its corresponding adjacency matrix.}¥
+%%% ¡prop!  ¥\circled{1}\circlednote{1}{ defines the \code{Graph} element which contains its corresponding adjacency matrix.}¥
 G (data, item) is a graph.
 %%%% ¡settings!
 'Graph'
@@ -760,7 +760,7 @@ TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be u
 [NNDataPoint_Graph_REG.G NNDataPoint_Graph_REG.SUB]
 
 %%% ¡test!
-%%%% ¡name!¥\circled{1}\circlednote{1}{tests with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
+%%%% ¡name!¥\circled{1}\circlednote{1}{ tests with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
 Construct the data point with the adjacency matrix derived from its weighted undirected graph (GraphWU) 
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -772,14 +772,14 @@ end
 
 ...¤
 
-% Analysis CON WU ¥\circled{2}\twocirclednotes{2}{3}{create the \code{AnalyzeEnsemble\_CON\_WU} element and then memorize its graph dictionary \code{G\_DICT}.}¥
+% Analysis CON WU ¥\circled{2}\circlednote{2}{ and \circled{3} create the \code{AnalyzeEnsemble\_CON\_WU} element and then memorize its graph dictionary \code{G\_DICT}.}¥
 a_WU = AnalyzeEnsemble_CON_WU( ...
     'GR', gr ...
     );
 
 a_WU.memorize('G_DICT'); ¥\circled{3}¥
 
-% create item lists of NNDataPoint_Graph_REG ¥\twocirclednotes{4}{5}{creates the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{G\_DICT}.}¥
+% create item lists of NNDataPoint_Graph_REG ¥\circlednote{4}{ and \circled{5} creates the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{G\_DICT}.}¥
 it_list = cellfun(@(g, sub)  ¥\circled{4}¥NNDataPoint_Graph_REG( ...
     'ID', sub.get('ID'), ...
     'G', g, ...
@@ -800,7 +800,7 @@ d = NNDataset( ...
     'DP_DICT', dp_list ...
     );
 
-% Check whether the content of input for a single data point matches ¥\circled{6}\circlednote{6}{tests whether the value of each input from the data point matches the graph's adjacency matrix.}¥
+% Check whether the content of input for a single data point matches ¥\circled{6}\circlednote{6}{ tests whether the value of each input from the data point matches the graph's adjacency matrix.}¥
 for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
     individual_input = d.get('DP_DICT').get('IT', index).get('INPUT');
     known_input = a_WU.get('G_DICT').get('IT', index).get('A');
@@ -812,7 +812,7 @@ for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
 end
 
 %%% ¡test!
-%%%% ¡name!¥\circled{7}\circlednote{7}{tests with the \code{MultigraphBUD} element which contains the adjacency matrix of binary undirected graph at fixed densities.}¥
+%%%% ¡name!¥\circled{7}\circlednote{7}{ tests with the \code{MultigraphBUD} element which contains the adjacency matrix of binary undirected graph at fixed densities.}¥
 Construct the data point with the adjacency matrix derived from its binary undirected multigraph with fixed densities (MultigraphBUD)
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -834,7 +834,7 @@ a_BUD = ¥\circled{8}¥AnalyzeEnsemble_CON_BUD( ...
 
 a_BUD.memorize('G_DICT');
 
-% create item lists of NNDataPoint_Graph_REG¥\threecirclednotes{8}{9}{10}{creates the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{AnalyzeEnsemble\_CON\_BUD}.}¥
+% create item lists of NNDataPoint_Graph_REG¥\circlednote{8}{---\circled{10} create the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{AnalyzeEnsemble\_CON\_BUD}.}¥
 it_list = cellfun(@(g, sub) ¥\circled{9}¥ NNDataPoint_Graph_REG( ...
     'ID', sub.get('ID'), ...
     'G', g, ...
@@ -852,7 +852,7 @@ dp_list = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{11}\circlednote{11}{tests with the \code{MultiplexWU} element which contains the adjacency matrix of weighted undirected multipex.}¥
+%%%% ¡name! ¥\circled{11}\circlednote{11}{ tests with the \code{MultiplexWU} element which contains the adjacency matrix of weighted undirected multipex.}¥
 Construct the data point with the adjacency matrix derived from its multiplex weighted undirected graph (MultiplexWU)
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -871,7 +871,7 @@ a_WU = ¥\circled{12}¥AnalyzeEnsemble_CON_FUN_MP_WU( ...
 
 a_WU.memorize('G_DICT');
 
-% create item lists of NNDataPoint_Graph_REG¥\threecirclednotes{12}{13}{14}{creates the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{AnalyzeEnsemble\_CON\_BUD}.}¥
+% create item lists of NNDataPoint_Graph_REG¥\circlednote{12}{---\circled{14} creates the \code{NNDataPoint\_Graph\_REG} element and use the \code{Graph} from \code{AnalyzeEnsemble\_CON\_BUD}.}¥
 it_list = cellfun(@(g, sub) ¥\circled{13}¥NNDataPoint_Graph_REG( ...
     'ID', sub.get('ID'), ...
     'G', g, ...
@@ -889,7 +889,7 @@ dp_list = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name!  ¥\circled{15}\circlednote{15}{tests with the \code{MultigraphBUT} element with the simulated connectivity data.}¥
+%%%% ¡name!  ¥\circled{15}\circlednote{15}{ tests with the \code{MultigraphBUT} element with the simulated connectivity data.}¥
 Example script for binary undirected graph (MultigraphBUT) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
@@ -898,7 +898,7 @@ end
 example_NNCV_CON_BUT_REG
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{16}\circlednote{16}{tests with the \code{MultiplexBUD} element with the simulated connectivity and functional data.}¥
+%%%% ¡name! ¥\circled{16}\circlednote{16}{ tests with the \code{MultiplexBUD} element with the simulated connectivity and functional data.}¥
 Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
@@ -907,7 +907,7 @@ end
 example_NNCV_CON_FUN_MP_BUD_REG
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{17}\circlednote{17}{tests with the \code{MultiplexBUT} element with the simulated connectivity and functional data.}¥
+%%%% ¡name! ¥\circled{17}\circlednote{17}{ tests with the \code{MultiplexBUT} element with the simulated connectivity and functional data.}¥
 Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
@@ -985,7 +985,7 @@ NOTES (metadata, string) are some specific notes about a data point for classifi
 ¤%%% ¡prop!
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!¤
-value = dp.get('G').get('A');  ¥\circled{1}\circlednote{1}{extracts the adjacency matrix from a \code{Graph} element as the input for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
+value = dp.get('G').get('A');  ¥\circled{1}\circlednote{1}{ extracts the adjacency matrix from a \code{Graph} element as the input for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
     
 ¤%%% ¡prop!
 TARGET (result, cell) is the target value for this data point.
@@ -1003,7 +1003,7 @@ value = dp.get('TARGET_IDS');¤
 ]
 ¤%% ¡props!¤
 
-%%% ¡prop!  ¥\circled{1}\circlednote{1}{defines the \code{Graph} element which contains its corresponding adjacency matrix.}¥
+%%% ¡prop!  ¥\circled{1}\circlednote{1}{ defines the \code{Graph} element which contains its corresponding adjacency matrix.}¥
 G (data, item) is a graph.
 %%%% ¡settings!
 'Graph'
@@ -1029,7 +1029,7 @@ TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be u
 [NNDataPoint_Graph_CLA.G]
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{1}\circlednote{1}{tests with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
+%%%% ¡name! ¥\circled{1}\circlednote{1}{ tests with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
 Construct the data point with the adjacency matrix derived from its weighted undirected graph (GraphWU) 
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -1054,7 +1054,7 @@ a_WU2 = AnalyzeEnsemble_CON_WU( ...
 a_WU1.memorize('G_DICT');
 a_WU2.memorize('G_DICT');
 
-% create item lists of NNDataPoint_Graph_CLA ¥\threecirclednotes{2}{3}{4}{create \code{Analyzensemble\_CON\_WU} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
+% create item lists of NNDataPoint_Graph_CLA ¥\circlednote{2}{---\circled{4} create \code{Analyzensemble\_CON\_WU} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
 it_list1 = cellfun(@(x) ¥\circled{3}¥NNDataPoint_Graph_CLA( ...
     'ID', x.get('ID'), ...
@@ -1076,7 +1076,7 @@ it_list2 = cellfun(@(x) NNDataPoint_Graph_CLA( ...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{5}\circlednote{5}{tests with the \code{MultigraphBUD} element which contains binary undirected adjacency matrix at fixed densities.}¥
+%%%% ¡name! ¥\circled{5}\circlednote{5}{ tests with the \code{MultigraphBUD} element which contains binary undirected adjacency matrix at fixed densities.}¥
 Construct the data point with the adjacency matrix derived from its binary undirected multigraph with fixed densities (MultigraphBUD)
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -1104,7 +1104,7 @@ a_BUD2 = AnalyzeEnsemble_CON_BUD( ...
 a_BUD1.memorize('G_DICT');
 a_BUD2.memorize('G_DICT');
 
-% create item lists of NNDataPoint_Graph_CLA¥\threecirclednotes{6}{7}{8}{create \code{Analyzensemble\_CON\_BUD} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
+% create item lists of NNDataPoint_Graph_CLA¥\circlednote{6}{---\circled{8} create \code{Analyzensemble\_CON\_BUD} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
 it_list1 = cellfun(@(x) ¥\circled{7}¥NNDataPoint_Graph_CLA( ...
     'ID', x.get('ID'), ...
@@ -1137,7 +1137,7 @@ dp_list2 = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{9}\circlednote{9}{tests with the \code{MultiplexWU} element which contains weighted undirected adjacency matrix from multiplex graph.}¥
+%%%% ¡name! ¥\circled{9}\circlednote{9}{ tests with the \code{MultiplexWU} element which contains weighted undirected adjacency matrix from multiplex graph.}¥
 Construct the data point with the adjacency matrix derived from its multiplex weighted undirected graph (MultiplexWU) 
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -1162,7 +1162,7 @@ a_WU2 = AnalyzeEnsemble_CON_FUN_MP_WU( ...
 a_WU1.memorize('G_DICT');
 a_WU2.memorize('G_DICT');
 
-% create item lists of NNDataPoint_Graph_CLA ¥\threecirclednotes{10}{11}{12}{create \code{Analyzensemble\_CON\_FUN\_MP\_WU} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
+% create item lists of NNDataPoint_Graph_CLA ¥\circlednote{10}{---\circled{12} create \code{Analyzensemble\_CON\_FUN\_MP\_WU} and use its \code{G\_DICT} to initialize \code{NNDataPoint\_Graph\_CLA}.}¥
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
 it_list1 = cellfun(@(x) ¥\circled{11}¥NNDataPoint_Graph_CLA( ...
     'ID', x.get('ID'), ...
@@ -1184,7 +1184,7 @@ it_list2 = cellfun(@(x) NNDataPoint_Graph_CLA( ...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{13}\circlednote{13}{tests with the \code{GraphWU} element with simulated data.}¥
+%%%% ¡name! ¥\circled{13}\circlednote{13}{ tests with the \code{GraphWU} element with simulated data.}¥
 Example script for weighted undirected graph (GraphWU) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -1193,7 +1193,7 @@ end
 example_NNCV_CON_WU_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{14}\circlednote{14}{tests with the \code{MultigraphBUD} element with simulated data.}¥
+%%%% ¡name! ¥\circled{14}\circlednote{14}{ tests with the \code{MultigraphBUD} element with simulated data.}¥
 Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -1202,7 +1202,7 @@ end
 example_NNCV_CON_BUD_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{15}\circlednote{15}{tests with the \code{MultiplexWU} element with simulated data.}¥
+%%%% ¡name! ¥\circled{15}\circlednote{15}{ tests with the \code{MultiplexWU} element with simulated data.}¥
 Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
@@ -1282,7 +1282,7 @@ NOTES (metadata, string) are some specific notes about a data point for regressi
 ¤%%% ¡prop!
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!¤ 
-value = cellfun(@(m_class) dp.get('G').get('MEASURE', m_class).get('M'), dp.get('M_LIST'), 'UniformOutput', false);  ¥\circled{1}\circlednote{1}{calculates the graph measures, specified with \code{M\_LIST}, from a \code{Graph} element for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
+value = cellfun(@(m_class) dp.get('G').get('MEASURE', m_class).get('M'), dp.get('M_LIST'), 'UniformOutput', false);  ¥\circled{1}\circlednote{1}{ calculates the graph measures, specified with \code{M\_LIST}, from a \code{Graph} element for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
     
 ¤%%% ¡prop!
 TARGET (result, cell) is the target value for this data point.
@@ -1305,7 +1305,7 @@ G (data, item) is a graph.
 %%%% ¡settings!
 'Graph'¤
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the graph measure list which will be obtained as \code{INPUT} for this data point.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the graph measure list which will be obtained as \code{INPUT} for this data point.}¥
 M_LIST (parameter, classlist) is a list of graph measure to be used as the input
 
 ¤%%% ¡prop!
@@ -1354,7 +1354,7 @@ a_WU = ¥\circled{1}¥AnalyzeEnsemble_CON_WU( ...
 a_WU.get('MEASUREENSEMBLE', 'Degree').get('M');  ¥\circled{2}¥
 a_WU.get('MEASUREENSEMBLE', 'DegreeAv').get('M'); ¥\circled{3}¥
 a_WU.get('MEASUREENSEMBLE', 'Distance').get('M'); ¥\circled{4}¥
-¥\fourcirclednotes{1}{2}{3}{4}{create a \code{AnalyzeEnsemble\_CON\_WU} and add various kinds of graph measure with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
+¥\circlednote{1}{---\circled{4} create a \code{AnalyzeEnsemble\_CON\_WU} and add various kinds of graph measure with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
 % create item lists of NNDataPoint_Measure_REG
 it_list = cellfun(@(g, sub)  ¥\circled{5}¥NNDataPoint_Measure_REG( ...
     'ID', sub.get('ID'), ...
@@ -1364,7 +1364,7 @@ it_list = cellfun(@(g, sub)  ¥\circled{5}¥NNDataPoint_Measure_REG( ...
     'TARGET_IDS', sub.get('VOI_DICT').get('KEYS')), ...
      ¥\circled{6}¥a_WU.get('G_DICT').get('IT_LIST'), gr.get('SUB_DICT').get('IT_LIST'),...
     'UniformOutput', false);
-¥\twocirclednotes{5}{6}{use \code{AnalyzeEnsemble\_CON\_WU}'s \code{G\_DICT} to set up a \code{NNDataPoint\_Measure\_REG}.}¥
+¥\circlednote{5}{ and \circled{6} use \code{AnalyzeEnsemble\_CON\_WU}'s \code{G\_DICT} to set up a \code{NNDataPoint\_Measure\_REG}.}¥
 ¤% create NNDataPoint_Measure_REG DICT items
 dp_list = IndexedDictionary(...
         'IT_CLASS', 'NNDataPoint_Measure_REG', ...
@@ -1374,7 +1374,7 @@ dp_list = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{7}\fourcirclednotes{7}{8}{9}{10}{tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
+%%%% ¡name! ¥\circled{7}\circlednote{7}{---\circled{10} tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
 Construct the data point with the adjacency matrix derived from its binary undirected multigraph with fixed densities (MultigraphBUD)
 ¤%%%% ¡code!
 % ensure the example data is generated
@@ -1417,7 +1417,7 @@ dp_list = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{11}\fourcirclednotes{11}{12}{13}{14}{tests various kinds of graph measure with the \code{MultiplexWU}.}¥
+%%%% ¡name! ¥\circled{11}\circlednote{11}{---\circled{14} tests various kinds of graph measure with the \code{MultiplexWU}.}¥
 Construct the data point with the adjacency matrix derived from its multiplex weighted undirected graph (MultiplexWU) 
 ¤%%%% ¡code!
 % ensure the example data is generated
@@ -1454,7 +1454,7 @@ it_list = cellfun(@(g, sub) ¥\circled{13}¥NNDataPoint_Measure_REG( ...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{15}\circlednote{15}{tests various kinds of graph measure with the \code{GraphWU} using example data.}¥
+%%%% ¡name! ¥\circled{15}\circlednote{15}{ tests various kinds of graph measure with the \code{GraphWU} using example data.}¥
 Example script for weighted undirected graph (GraphWU) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
@@ -1463,7 +1463,7 @@ end
 example_NNCV_CON_WU_M_REG
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{16}\circlednote{16}{tests various kinds of graph measure with the \code{MultiplexWU} using example data.}¥
+%%%% ¡name! ¥\circled{16}\circlednote{16}{ tests various kinds of graph measure with the \code{MultiplexWU} using example data.}¥
 Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
@@ -1541,7 +1541,7 @@ NOTES (metadata, string) are some specific notes about a data point for classifi
 ¤%%% ¡prop!
 INPUT (result, cell) is the input value for this data point.
 %%%% ¡calculate!¤ 
-value = cellfun(@(m_class) dp.get('G').get('MEASURE', m_class).get('M'), dp.get('M_LIST'), 'UniformOutput', false);  ¥\circled{1}\circlednote{1}{calculates or extract the graph measures, which are specified with \code{M\_LIST} from a \code{Graph} element for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
+value = cellfun(@(m_class) dp.get('G').get('MEASURE', m_class).get('M'), dp.get('M_LIST'), 'UniformOutput', false);  ¥\circled{1}\circlednote{1}{ calculates or extract the graph measures, which are specified with \code{M\_LIST} from a \code{Graph} element for this data point. Note that a \code{Graph} can be any kind of \code{Graph}, including \code{GraphWU}, \code{MultigraphBUD}, and \code{MultiplexBUT}, among others.}¥
     
 ¤%%% ¡prop!
 TARGET (result, cell) is the target value for this data point.
@@ -1564,7 +1564,7 @@ G (data, item) is a graph.
 %%%% ¡settings!
 'Graph'¤
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the graph measure list which will be obtained as \code{INPUT} for this data point.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ defines the graph measure list which will be obtained as \code{INPUT} for this data point.}¥
 M_LIST (parameter, classlist) is a list of graph measure to be used as the input
 
 ¤%%% ¡prop!
@@ -1613,11 +1613,11 @@ a_WU2 = AnalyzeEnsemble_CON_WU( ...
 a_WU1.get('MEASUREENSEMBLE', 'Degree').get('M');  ¥\circled{2}¥
 a_WU1.get('MEASUREENSEMBLE', 'DegreeAv').get('M'); ¥\circled{3}¥ 
 a_WU1.get('MEASUREENSEMBLE', 'Distance').get('M'); ¥\circled{4}¥
-¥\fourcirclednotes{1}{2}{3}{4}{create a \code{AnalyzeEnsemble\_CON\_WU} and add various kinds of graph measure with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
+¥\circlednote{1}{---\circled{4} create a \code{AnalyzeEnsemble\_CON\_WU} and add various kinds of graph measure with the \code{GraphWU} element which contains weighted undirected adjacency matrix.}¥
 a_WU2.get('MEASUREENSEMBLE', 'Degree').get('M');
 a_WU2.get('MEASUREENSEMBLE', 'DegreeAv').get('M');
 a_WU2.get('MEASUREENSEMBLE', 'Distance').get('M');
-¥\twocirclednotes{5}{6}{use \code{AnalyzeEnsemble\_CON\_WU}'s \code{G\_DICT} to set up a \code{NNDataPoint\_Measure\_CLA}.}¥
+¥\circlednote{5}{ and \circled{6} use \code{AnalyzeEnsemble\_CON\_WU}'s \code{G\_DICT} to set up a \code{NNDataPoint\_Measure\_CLA}.}¥
 % create item lists of NNDataPoint_Measure_CLA
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
 it_list1 = cellfun(@(x) ¥\circled{5}¥NNDataPoint_Measure_CLA( ...
@@ -1633,7 +1633,7 @@ it_list1 = cellfun(@(x) ¥\circled{5}¥NNDataPoint_Measure_CLA( ...
 ...¤
 
 %%% ¡test!
-%%%% ¡name!  ¥\circled{7}\fourcirclednotes{7}{8}{9}{10}{tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
+%%%% ¡name!  ¥\circled{7}\circlednote{7}{---\circled{10} tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
 Construct the data point with the graph measures derived from its binary undirected multigraph with fixed densities (MultigraphBUD)
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -1694,7 +1694,7 @@ dp_list1 = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name!  ¥\circled{11}\fourcirclednotes{11}{12}{13}{14}{tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
+%%%% ¡name!  ¥\circled{11}\circlednote{11}{---\circled{14} tests various kinds of graph measure with the \code{MultigraphBUD}.}¥
 Construct the data point with the graph measures derived from its multiplex weighted undirected graph (MultiplexWU) 
 %%%% ¡code!
 ¤% ensure the example data is generated
@@ -1753,7 +1753,7 @@ dp_list1 = IndexedDictionary(...
 ...¤
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{15}\circlednote{15}{tests various kinds of graph measure with the \code{MultigraphBUD} using example connectivity data.}¥
+%%%% ¡name! ¥\circled{15}\circlednote{15}{ tests various kinds of graph measure with the \code{MultigraphBUD} using example connectivity data.}¥
 Example script for binary undirected graph at fixed densities (GraphBUD) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -1762,7 +1762,7 @@ end
 example_NNCV_CON_BUD_M_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{16}\circlednote{16}{tests various kinds of graph measure with the \code{MultigraphBUT} using example data.}¥
+%%%% ¡name! ¥\circled{16}\circlednote{16}{ tests various kinds of graph measure with the \code{MultigraphBUT} using example data.}¥
 Example script for binary undirected graph at fixed thresholds (MultigraphBUT) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -1771,7 +1771,7 @@ end
 example_NNCV_CON_BUT_M_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{17}\circlednote{17}{tests various kinds of graph measure with the \code{MultigraphBUD} using example connectivity data.}¥
+%%%% ¡name! ¥\circled{17}\circlednote{17}{ tests various kinds of graph measure with the \code{MultigraphBUD} using example connectivity data.}¥
 Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
@@ -1780,7 +1780,7 @@ end
 example_NNCV_CON_BUD_M_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{18}\circlednote{18}{tests various kinds of graph measure with the \code{MultiplexBUD} using example functional data.}¥
+%%%% ¡name! ¥\circled{18}\circlednote{18}{ tests various kinds of graph measure with the \code{MultiplexBUD} using example functional data.}¥
 Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
@@ -1789,7 +1789,7 @@ end
 example_NNCV_CON_FUN_MP_BUD_M_CLA
 
 %%% ¡test!
-%%%% ¡name! ¥\circled{19}\circlednote{19}{tests various kinds of graph measure with the \code{MultiplexBUT} using example functional data.}¥
+%%%% ¡name! ¥\circled{19}\circlednote{19}{ tests various kinds of graph measure with the \code{MultiplexBUT} using example functional data.}¥
 Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
