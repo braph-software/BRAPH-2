@@ -78,7 +78,7 @@ The next step is to load the data of the two groups from the folders where the r
 > %% Load Groups of SubjectST_MP
 > im_gr1 = ImporterGroupSubjectST_MP_XLS( ...
 >     'DIRECTORY', [fileparts(which('SubjectST_MP')) filesep 'Example data ST_MP XLS' filesep 'ST_MP_Group_1_XLS'], ...  ①
->     'BA', ba, ...  ①
+>     'BA', ba, ...  ②
 >     'WAITBAR', true ...  ③
 >     );
 > 
@@ -95,7 +95,7 @@ The next step is to load the data of the two groups from the folders where the r
 > 
 > ① imports the first group of subjects with structural data and their (optional) covariates from the files contained in the folder.
 > 
-> ① uses the previously loaded brain atlas.
+> ② uses the previously loaded brain atlas.
 > 
 > ③ shows a waitbar during the loading process.
 > 
@@ -157,7 +157,7 @@ You can now calculate graph measures with the analyses defined in the previous s
 > 
 > ③ calculates the *overlapping strength average* measure for the analysis `a_WU1`.
 > 
-> ④ calcualtes the same measures for the analysis `a_WU2`.
+> ④ calculates the same measures for the analysis `a_WU2`.
 > 
 
 <a id="Group-Comparison"></a>
@@ -198,5 +198,5 @@ Specifically, it contains the one-tailed and two-tailed p-values and the 95\% co
 > 
 > ⑥ memorizes the intermediate results of the comparison. This speeds up the comparison at the cost of estra memory requirements.
 > 
-> ⑦ - ⑪ calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).
+> ⑦-⑪ calculate the difference of group comparison (`'DIFF'`), the one-tailed p-value (`'P1'`), the two-tailed p-value (`'P2'`), the lower value of the 95\% confidence interval (`'CIL'`), and the upper value of the 95\% confidence interval (`'CIU'`) for the overlapping strength measure (`'OverlappingS'`).
 >

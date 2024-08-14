@@ -34,12 +34,12 @@ A unilayer graph is constituted by nodes connected by edges, where the can be ei
 		}
 ]
 %% ¡header!
-GraphBD < Graph (g, binary directed graph) is a binary directed graph. ¥\circled{1}\circlednote{1}{defines \code{GraphBD} as a subclass of \code{Graph}. The moniker will be \code{g}.}¥
+GraphBD < Graph (g, binary directed graph) is a binary directed graph. ¥\circled{1}\circlednote{1}{ defines \code{GraphBD} as a subclass of \code{Graph}. The moniker will be \code{g}.}¥
 
-%%% ¡description! ¥\circled{2}\circlednote{2}{provides a description of this graph.}¥
+%%% ¡description! ¥\circled{2}\circlednote{2}{ provides a description of this graph.}¥
 In a binary directed (BD) graph, the edges are directed and they can be either 0 (absence of connection) or 1 (existence of connection).
 
-%%% ¡build! ¥\circled{3}\circlednote{3}{defines the build number of the graph element.}¥
+%%% ¡build! ¥\circled{3}\circlednote{3}{ defines the build number of the graph element.}¥
 1
 \end{lstlisting}
 
@@ -80,48 +80,48 @@ NOTES (metadata, string) are some specific notes about the binary directed graph
 %%%% ¡default!
 'GraphBD notes'
 
-%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}\circlednote{8}{, \circled{9}, and \circled{10} condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}\circlednote{11}{preallocates the adjacency matrix to be calculated.}\circlednote{12}{randomizes adjacency matrix when \code{'RANDOMIZE'} is \code{true} by calling the function of the graph named \code{RANDOMIZATION}}\circlednote{13}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}\circlednote{14}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{defines the \emph{graph type}: \code{Graph.GRAPH} (single layer), \code{Graph.MULTIGRAPH} (multiple unconnected layers), \code{Graph.MULTILAYER} (multiple layers), \code{Graph.ORDERED\_MULTILAYER} (multiple layers with subsequent layers) \code{Graph.MULTIPLEX} (multilayer with connections between corresponding nodes), and \code{Graph.ORDERED\_MULTIPLEX} (multilayer with connections between corresponding nodes in subsequent layers).}¥
 GRAPH_TYPE (constant, scalar) returns the graph type __Graph.GRAPH__.
 %%%% ¡default!
 Graph.GRAPH
 
-%%% ¡prop! ¥\circled{2}¥
+%%% ¡prop! ¥\circled{2}\circlednote{2}{defines the \emph{graph connectivity}: \code{Graph.BINARY} (0 or 1) or \code{Graph.WEIGHTED}.}¥
 CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type __Graph.BINARY__.
 %%%% ¡default!
 value = Graph.BINARY;
 
-%%% ¡prop! ¥\circled{3}¥
+%%% ¡prop! ¥\circled{3}\circlednote{3}{defines the \emph{edge directionality}: \code{Graph.DIRECTED} or \code{Graph.UNDIRECTED}.}¥
 DIRECTIONALITY_TYPE  (query, smatrix) returns the directionality type __Graph.DIRECTED__.
 %%%% ¡default! 
 value = Graph.DIRECTED;
 
-%%% ¡prop! ¥\circled{4}¥
+%%% ¡prop! ¥\circled{4}\circlednote{4}{defines the \emph{graph self-connectivity}: \code{Graph.NONSELFCONNECTED} or \code{Graph.SELFCONNECTED}.}¥
 SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type __Graph.NONSELFCONNECTED__.
 %%%% ¡default!
 value = Graph.NONSELFCONNECTED;
 
-%%% ¡prop! ¥\circled{5}¥
+%%% ¡prop! ¥\circled{5}\circlednote{5}{defines the \emph{graph negativity}: \code{Graph.NONNEGATIVE} or \code{Graph.NEGATIVE}.}¥
 NEGATIVITY_TYPE (query, smatrix) returns the negativity type __Graph.NONNEGATIVE__.
 %%%% ¡default!
 value = Graph.NONNEGATIVE;
 
-%%% ¡prop! ¥\circled{6}¥
+%%% ¡prop! ¥\circled{6}\circlednote{6}{The property \code{A} contains the supra-adjacency matrix of the graph, which is calculated by the code under \code{¡calculate!}.}¥
 A (result, cell) is the binary adjacency matrix of the binary directed graph.
 %%%% ¡calculate!
-B = g.get('B'); ¥\circled{7}¥
+B = g.get('B'); ¥\circled{7}\circlednote{7}{retrieves the adjacency matrix of the graph \code{B}, defined in the new properties below.}¥
 
-B = dediagonalize(B);  ¥\circled{8}¥
+B = dediagonalize(B);  ¥\circled{8}\circlednote{8}{, \circled{9}, and \circled{10} condition the adjaciency matrix removing the diagonal elements, making it semidefinte positive, and binarizing it. A list of useful functions is: \code{diagonalize} (removes the off-diagonal), \code{dediagonalize} (removes the diagonal), \code{binarize} (binarizes with threshold=0), \code{semipositivize} (removes negative weights), \code{standardize} (normalizes between 0 and 1) or \code{symmetrize} (symmetrizes the matrix). Use the MatLab help to see additional functionalities.}¥
 B = semipositivize(B, 'SemipositivizeRule', g.get('SEMIPOSITIVIZE_RULE')); ¥\circled{9}¥
 B = binarize(B); ¥\circled{10}¥
 
-A = {B}; ¥\circled{11}¥
-if g.get('RANDOMIZE') ¥\circled{12}¥
+A = {B}; ¥\circled{11}\circlednote{11}{preallocates the adjacency matrix to be calculated.}¥
+if g.get('RANDOMIZE') ¥\circled{12}\circlednote{12}{randomizes adjacency matrix when \code{'RANDOMIZE'} is \code{true} by calling the function of the graph named \code{RANDOMIZATION}}¥
 	random_A = g.get('RANDOMIZATION', A);
 	A = {random_A};
 end
-value = A; ¥\circled{13}¥
+value = A; ¥\circled{13}\circlednote{13}{returns the calculated graph \code{A} assigning it to the output variable \code{value}.}¥
 
-%%%% ¡gui! ¥\circled{14}¥
+%%%% ¡gui! ¥\circled{14}\circlednote{14}{employes the property panel \code{PanelPropCell} to be employed to visualize \code{A}, setting also its properties.}¥
 pr = PanelPropCell('EL', g, 'PROP', GraphBD.A, ... 
 	'TABLE_HEIGHT', s(40), ... 
 	'XSLIDERSHOW', false, ... 
@@ -243,7 +243,7 @@ value = random_A;
 	label=cd:m:GraphBD:tests,
 	caption={
 		{\bf GraphBD element tests.}
-		The \code{tests} section from the element generator \fn{\_GraphBD.gen.m}.
+		The \code{tests} section in the element generator \fn{\_GraphBD.gen.m}.
 		A general test should be prepared to test the properties of the graph  when it is empty and full. Furthermore, additional tests should be prepared for the rules defined (one test per rule).
 	}
 ]			

@@ -624,7 +624,7 @@ A list of special instructions is shown in Code 10.
 > 
 > ① substitutes the prop with its default value, when hard-coding the element.
 > 
-> ② keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value. ③ - ⑤ It works similarly also for the other constants of `Category` and `Format`.
+> ② keeps `Category.CONSTANT` even after hard-coding the element, instead of substituting it with its value. ③-⑤ It works similarly also for the other constants of `Category` and `Format`.
 > 
 > ⑥ adds a warning that the specific feature is not implemented yet.
 > 
