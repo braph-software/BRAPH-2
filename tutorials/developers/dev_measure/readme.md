@@ -1,9 +1,9 @@
-# Implement a new Measure
+# Implement a New Measure
 
-[![Tutorial Implement a new Measure](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_measure.pdf)
+[![Tutorial Implement a New Measure](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_measure.pdf)
 
 This is the developer tutorial for implementing a new measure. 
-In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new measure, which can the be compiled by `braph2genesis`. All measures are (direct or indirect) extensions of the element `Measure`. Here, we will use as examples the measures `Degree`, `DegreeAv`, `Distance`, and `Triangles`.
+In this tutorial, you will learn how to create the generator file "*.gen.m" for a new measure, which can the be compiled by `braph2genesis`. All measures are (direct or indirect) extensions of the element `Measure`. Here, you will use as examples the measures `Degree`, `DegreeAv`, `Distance`, and `Triangles`.
 
 
 ## Table of Contents
@@ -18,7 +18,6 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 > [Implementation of Measure Parameters (Triangles)](#Implementation-of-Measure-Parameters-Triangles)
 >
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
 <a id="Implementation-of-Unilayer-Measures"></a>
 ## Implementation of Unilayer Measures  [⬆](#Table-of-Contents)
@@ -26,11 +25,11 @@ In this Tutorial, we will explain how to create the generator file "*.gen.m" for
 <a id="Nodal-Unilayer-Measure-Degree"></a>
 ### Nodal Unilayer Measure (Degree)  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail the measure `Degree`, which applies to most graphs and is a direct extension of the element `Measure`.
+You will start by implementing in detail the measure `Degree`, which applies to most graphs and is a direct extension of the element `Measure`.
 
 
 > **Code 1.** **Degree element header.**
-> 		The `header` section of the generator code for "_Degree.gen.m" provides the general information about the `Degree` element.
+> 		The `header` section of the generator code in "_Degree.gen.m" provides the general information about the `Degree` element.
 > ````matlab
 > %% ¡header!
 > Degree < Measure (m, degree) is the graph degree.  ①
@@ -38,14 +37,17 @@ We will start by implementing in detail the measure `Degree`, which applies to m
 > %%% ¡description!
 > The degree of a node is the number of edges connected to the node within a layer. 
 > Connection weights are ignored in calculations.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
-> ①The element `Degree` is defined as a subclass of `Measure`. The moniker will be `m`.
+> ① The element `Degree` is defined as a subclass of `Measure`. The moniker will be `m`.
 > 
 
 
 > **Code 2.** **Degree element prop update.**
-> 		The `props_update` section of the generator code for "_Degree.gen.m" updates the properties of the `Measure` element. This defines the core properties of the measure.
+> 		The `props_update` section of the generator code in "_Degree.gen.m" updates the properties of the `Measure` element. This defines the core properties of the measure.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -116,24 +118,27 @@ We will start by implementing in detail the measure `Degree`, which applies to m
 > value = degree;  ⑪
 > ````
 > 
-> ①Measures have a *shape*: `Measure.GLOBAL` (a value for the whole brain graph, e.g., average degree), `Measure.NODAL` (a value for each brain region, e.g., degree, or `Measure.BINODAL` (a value for each couple of brain regions, e.g., distance between couples of nodes).}
-> \circlednote{2}{Measures have a *scope*: `Measure.SUPERGLOBAL` (a result for the whole multi-layer graph, e.g., overlapping strength), `Measure.UNILAYER` (a result for each layer, e.g., average strength), or `Measure.BILAYER` (a result for each couple of layers).}
-> \circlednote{3}{Measures are either `Measure.NONPARAMETRIC` (the usual case) or `Measure.PARAMETRIC` (depending on some parameter).}
-> \circlednote{4}{Each measure has a list of compatible graphs for which the measure can be used.
+> ① Measures have a *shape*: `Measure.GLOBAL` (a value for the whole brain graph, e.g., average degree), `Measure.NODAL` (a value for each brain region, e.g., degree), or `Measure.BINODAL` (a value for each couple of brain regions, e.g., distance between couples of nodes).
 > 
-> ⑤The property `M` contains the code to be executed to calculate the measure. Here is where most of the action happens.
+> ② Measures have a *scope*: `Measure.SUPERGLOBAL` (a result for the whole multi-layer graph, e.g., overlapping strength), `Measure.UNILAYER` (a result for each layer, e.g., average strength), or `Measure.BILAYER` (a result for each couple of layers).
 > 
-> ⑥retrieves the graph from the property `G` of the measure `m`.
+> ③ Measures are either `Measure.NONPARAMETRIC` (the usual case) or `Measure.PARAMETRIC` (depending on some parameter).
 > 
-> ⑦retrieves the cell with the adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.).
+> ④ Each measure has a list of compatible graphs for which the measure can be used.
 > 
-> ⑧preallocates the variable to contain the result of the measure calculation.
+> ⑤ The property `M` contains the code to be executed to calculate the measure. Here is where most of the action happens.
 > 
-> ⑨binarizes the adjacency matrix (removing diagonal).
+> ⑥ retrieves the graph from the property `G` of the measure `m`.
 > 
-> ⑩calculates the degree of the node for layer `li`.
+> ⑦ retrieves the cell with the adjacency matrix (for graph) or 2D-cell array (for multigraph, multiplex, etc.).
 > 
-> ⑪returns the calcualted value of the measure `degree` assigning it to the output variable `value`.
+> ⑧ preallocates the variable to contain the result of the measure calculation.
+> 
+> ⑨ binarizes the adjacency matrix (removing diagonal).
+> 
+> ⑩ calculates the degree of the node for layer `li`.
+> 
+> ⑪ returns the calculated value of the measure `degree` assigning it to the output variable `value`.
 > 
 
 
@@ -175,23 +180,23 @@ We will start by implementing in detail the measure `Degree`, which applies to m
 > . . . . .
 > ````
 > 
-> ①List of properties that are excluded from testing.
+> ① List of properties that are excluded from testing.
 > 
-> ②Test for `GraphWU`. Similar tests should be implemented for each graph compatible with the measure.
+> ② Test for `GraphWU`. Similar tests should be implemented for each graph compatible with the measure.
 > 
-> ③assings a low test execution probability.
+> ③ assigns a low test execution probability.
 > 
-> ④is the expected value of the measure calculated by external means.
+> ④ is the expected value of the measure calculated by external means.
 > 
-> ⑤creates the graph.
+> ⑤ creates the graph.
 > 
-> ⑥creates the measure.
+> ⑥ creates the measure.
 > 
-> ⑦tests that the value of the measure coicides with its expected value.
+> ⑦ tests that the value of the measure coicides with its expected value.
 > 
-> ⑧extracts the measure from the graph.
+> ⑧ extracts the measure from the graph.
 > 
-> ⑧tests that the value of the measure extracted from the graph coicides with its expected value.
+> ⑧ tests that the value of the measure extracted from the graph coicides with its expected value.
 > 
 
 %%%%% %%%%% %%%%% %%%%% %%%%%
@@ -199,12 +204,9 @@ We will start by implementing in detail the measure `Degree`, which applies to m
 <a id="Global-Unilayer-Measure-DegreeAv"></a>
 ### Global Unilayer Measure (DegreeAv)  [⬆](#Table-of-Contents)
 
-We can now use `Degree` as the basis to implement the global measure `DegreeAv`.
-The parts of the code that are modified are highlighted.
-
-
+You can now use `Degree` as the basis to implement the global measure `DegreeAv`.
 > **Code 4.** **DegreeAv element header.**
-> 		The `header` section of the generator code for "_DegreeAv.gen.m" provides the general information about the `DegreeAv` element.
+> 		The `header` section of the generator code in "_DegreeAv.gen.m" provides the general information about the `DegreeAv` element.
 > 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
@@ -213,14 +215,17 @@ The parts of the code that are modified are highlighted.
 > %%% ¡description!
 > The average degree of a graph is the average of all number of edges connected to a node within a layer. 
 > Connection weights are ignored in calculations.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
-> ①`DegreeAv` is a child of `Degree`.
+> ① `DegreeAv` is a child of `Degree`.
 > 
 
 
 > **Code 5.** **DegreeAv element prop update.**
-> 		The `props_update` section of the generator code for "_DegreeAv.gen.m" updates the properties of the `Degree` element.
+> 		The `props_update` section of the generator code in "_DegreeAv.gen.m" updates the properties of the `Degree` element.
 > 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
@@ -290,7 +295,7 @@ The parts of the code that are modified are highlighted.
 > value = degree_av;
 > ````
 > 
-> ①calculates the value of the degree calling its parent `Degree`.
+> ① calculates the value of the degree calling its parent `Degree`.
 > 
 
 
@@ -338,11 +343,9 @@ The parts of the code that are modified are highlighted.
 <a id="Binodal-Unilayer-Measure-Distance"></a>
 ### Binodal Unilayer Measure (Distance)  [⬆](#Table-of-Contents)
 
-Now we implement the binodal measure `Distance`, again highlighting the differences.
-
-
+Now you will implement the binodal measure `Distance`. 
 > **Code 7.** **Distance element header.**
-> 		The `header` section of the generator code for "_Distance.gen.m" provides the general information about the `Distance` element.
+> 		The `header` section of the generator code in "_Distance.gen.m" provides the general information about the `Distance` element.
 > 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
@@ -351,12 +354,15 @@ Now we implement the binodal measure `Distance`, again highlighting the differen
 > %%% ¡description!
 > The distance of a graph is the shortest path between all pairs of nodes within a layer of the graph.
 > For weighted graphs, the distance is calculated with the Dijkstra algorithm using the inverse weight as the distance associated to the edge.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
 > **Code 8.** **Distance element prop update.**
-> 		The `props_update` section of the generator code for "_Distance.gen.m" updates the properties of the `Measure` element.
+> 		The `props_update` section of the generator code in "_Distance.gen.m" updates the properties of the `Measure` element.
 > 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
@@ -445,7 +451,9 @@ Now we implement the binodal measure `Distance`, again highlighting the differen
 > end
 > ````
 > 
-> ③This section contains the callback functions for the calculation of the measure.
+> ① and ② call some callback functions that are provided below in ③.
+> 
+> ③ This section contains the callback functions for the calculation of the measure.
 > 
 
 
@@ -501,12 +509,9 @@ Now we implement the binodal measure `Distance`, again highlighting the differen
 <a id="Implementation-of-Measure-Parameters-Triangles"></a>
 ## Implementation of Measure Parameters (Triangles)  [⬆](#Table-of-Contents)
 
-Now, we implement the (nodal unilayer) measure `Triangles`, which depends on a parameter `RULE`, which we add as a property of category `parameter`.
-The parts of the code that are modified are highlighted.
-
-
+Now, you will implement the (nodal unilayer) measure `Triangles`, which depends on a parameter `RULE`, which we add as a property of category `parameter`.
 > **Code 10.** **Triangles element header.**
-> 		The `header` section of the generator code for "_Triangles.gen.m" provides the general information about the `Triangles` element.
+> 		The `header` section of the generator code in "_Triangles.gen.m" provides the general information about the `Triangles` element.
 > 		This code modifies Code 10.
 > ````matlab
 > %% ¡header!
@@ -515,6 +520,9 @@ The parts of the code that are modified are highlighted.
 > %%% ¡description!
 > The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. 
 > In weighted graphs, the triangles are calculated as geometric mean of the weights of the edges forming the triangle.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
@@ -535,7 +543,7 @@ The parts of the code that are modified are highlighted.
 > %%%% ¡default!
 > 'The triangles are calculated as the number of neighbors of a node that are also neighbors of each other within a layer. In weighted graphs, the triangles are calculated as geometric mean of the weights of the edges forming the triangle.'
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > M (result, cell) is the triangles.
@@ -587,13 +595,13 @@ The parts of the code that are modified are highlighted.
 > 'cycle'  ④
 > ````
 > 
-> ①gets the rule to calculate the measure Triangle. See below how this rule is defined in ②, ③, and ④.
+> ① gets the rule to calculate the measure Triangle. See below how this rule is defined in ②, ③, and ④.
 > 
-> ②defines a parameter to determine how the measure is calculated. This property must be of category `parameter`.
+> ② defines a parameter to determine how the measure is calculated. This property must be of category `parameter`.
 > 
-> ③defines the available triangle rule options, which are case sensitive.
+> ③ defines the available triangle rule options, which are case sensitive.
 > 
-> ④defines the default option, in this case `'cycle'`.
+> ④ defines the default option, in this case `'cycle'`.
 > 
 
 %\bibliography{biblio}
