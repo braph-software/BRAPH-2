@@ -863,11 +863,11 @@ You can now use `GraphBD` as the basis to implement the `MultilayerWD` graph. A 
 <a id="Binary-Undirected-Multilayer-Graph-with-fixed-Thresholds-MultiplexBUT"></a>
 ### Binary Undirected Multilayer Graph with fixed Thresholds (MultiplexBUT)  [⬆](#Table-of-Contents)
 
-Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
+Now you will implement the `MultiplexBUT` graph building on the previous codes `GraphBD` and `MultilayerWD`. A multiplex graph is a type of multilayer graph where interlayer edges are allowed only between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
 
 > **Code 9.** **MultiplexBUT element header.**
-> 		The `header` section of generator code for "_MultiplexBUT.gen.m" provides the general information about the `MultiplexBUT` element.
+> 		The `header` section of the generator code in "_MultiplexBUT.gen.m" provides the general information about the `MultiplexBUT` element.
 > 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
@@ -875,6 +875,9 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 >     
 > %%% ¡description!
 > In a binary undirected multiplex with fixed thresholds (BUT), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds.The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① MultiplexBUT is a child of `MultiplexWU`, which in turn derives from `Graph`.
@@ -882,7 +885,7 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 
 
 > **Code 10.** **MultiplexBUT element prop update.**
-> 		The `props_update` section of generator code for "_MultiplexBUT.gen.m" updates the properties of `MultiplexBUT`.
+> 		The `props_update` section of the generator code in "_MultiplexBUT.gen.m" updates the properties of `MultiplexBUT`.
 > 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
@@ -1076,12 +1079,12 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 > 
 > ⑨ sets the labels of the layers considering the thresholds and the number of layers in each multiplex graph for each threshold
 > 
-> ⑩ Same as in  Code 6 but using `GraphBU`
+> ⑩ Same as in  Code 6 but using `GraphBU`.
 > 
 
 
 > **Code 11.** **MultiplexBUT element props.**
-> 	The `props` section of generator code for "_MultiplexBUT.gen.m" defines the properties to be used in `MultiplexBUT`.
+> 	The `props` section of the generator code in "_MultiplexBUT.gen.m" defines the properties to be used in `MultiplexBUT`.
 > 	This code modifies Code 3.
 > ````matlab
 > %% ¡props!
@@ -1201,7 +1204,7 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 > 
 > ② defines the thresholds.
 > 
-> ③ checks symmetry of each layer in the new random graph `random_A` since they are undirected
+> ③ checks symmetry of each layer in the new random graph `random_A` since they are undirected.
 > 
 
 
@@ -1209,12 +1212,11 @@ Now you will implement the `MultiplexBUT` graph building on the previous codes `
 <a id="Binary-Undirected-Ordinal-Multiplex-Graph-with-fixed-Thresholds-OrdMxBUT"></a>
 ### Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)  [⬆](#Table-of-Contents)
 
-Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `MultilayerWD` and `MultiplexBUT`, again highlighting the differences. An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with ordinal edges between corresponding nodes in subsequent layers.
-
+Finally, you will implement the `OrdMxBUT` graph based on the previous codes `GraphBD`, `MultilayerWD` and `MultiplexBUT`.An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with edges between corresponding nodes in subsequent layers.
 
 
 > **Code 13.** **OrdMxBUT element header.**
-> 		The `header` section of generator code for "_OrdMxBUT.gen.m" provides the general information about the `OrdMxBUT` element.
+> 		The `header` section of the generator code in "_OrdMxBUT.gen.m" provides the general information about the `OrdMxBUT` element.
 > 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
@@ -1222,6 +1224,9 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 >     
 > %%% ¡description!
 > In a binary undirected ordinal multiplex with fixed thresholds (BUT), all the layers consist of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① `OrdMxBUT` is a child of `OrdMxWU`, which in turn derives from `Graph`.
@@ -1229,7 +1234,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 
 
 > **Code 14.** **OrdMxBUT element prop update.**
-> 		The `props_update` section of generator code for "_OrdMxBUT.gen.m" updates the properties of `OrdMxBUT`.
+> 		The `props_update` section of the generator code in "_OrdMxBUT.gen.m" updates the properties of `OrdMxBUT`.
 > 		This code modifies Code 10.
 > ````matlab
 > %% ¡props_update!
@@ -1415,7 +1420,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > 
 > ⑦ does NOT connect NON-consecutive layers.
 > 
-> ⑧ same as in Code 10
+> ⑧ same as in Code 10.
 > 
 
 
@@ -1541,7 +1546,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 > end
 > ````
 > 
-> ① same as in Code 12
+> ① same as in Code 12.
 > 
 
 %\bibliography{biblio}

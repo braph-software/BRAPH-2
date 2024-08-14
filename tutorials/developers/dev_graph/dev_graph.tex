@@ -754,13 +754,13 @@ Now you will implement the \code{MultiplexBUT} graph building on the previous co
 {%TEX
 Again, the differences will be highlighted.
 }%TEX
-A multiplex graph is a type of multilayer graph where only interlayer edges are allowed between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
+A multiplex graph is a type of multilayer graph where interlayer edges are allowed only between homologous nodes. In this case, the layers follow a categorical architecture, which means that all layers are interconnected.
 
 \begin{lstlisting}[
 	label=cd:m:MultiplexBUT:header,
 	caption={
 		{\bf MultiplexBUT element header.}
-		The \code{header} section of generator code for \fn{\_MultiplexBUT.gen.m} provides the general information about the \code{MultiplexBUT} element.
+		The \code{header} section of the generator code in \fn{\_MultiplexBUT.gen.m} provides the general information about the \code{MultiplexBUT} element.
 		\expand{cd:m:GraphBD:header}
 	}
 ]
@@ -769,13 +769,16 @@ MultiplexBUT < MultiplexWU (g, binary undirected multiplex with fixed thresholds
 	
 ¤%%% ¡description!¤
 In a binary undirected multiplex with fixed thresholds (BUT), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds.The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
+
+¤%%% ¡build!¤
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label=cd:m:MultiplexBUT:prop_update,
 	caption={
 		{\bf MultiplexBUT element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_MultiplexBUT.gen.m} updates the properties of \code{MultiplexBUT}.
+		The \code{props\_update} section of the generator code in \fn{\_MultiplexBUT.gen.m} updates the properties of \code{MultiplexBUT}.
 		\expand{cd:m:GraphBD:prop_update}
 	}
 ]
@@ -948,7 +951,7 @@ attempts_per_edge = g.get('ATTEMPTSPEREDGE');
 for i = 1:length(A)
 	tmp_a = A{i,i};
 
-	¤random_g = GraphBU();¤  ¥\circled{10}\circlednote{10}{ Same as in  \Coderef{cd:m:MultilayerWD:prop_update} but using \code{GraphBU}}¥
+	¤random_g = GraphBU();¤  ¥\circled{10}\circlednote{10}{ Same as in  \Coderef{cd:m:MultilayerWD:prop_update} but using \code{GraphBU}.}¥
 	random_g.set('ATTEMPTSPEREDGE', g.get('ATTEMPTSPEREDGE'));
 	random_A = random_g.get('RANDOMIZATION', {tmp_a});
 	A{i, i} = random_A;
@@ -961,7 +964,7 @@ value = A;¤
 label=cd:m:MultiplexBUT:props,
 caption={
 	{\bf MultiplexBUT element props.}
-	The \code{props} section of generator code for \fn{\_MultiplexBUT.gen.m} defines the properties to be used in \code{MultiplexBUT}.
+	The \code{props} section of the generator code in \fn{\_MultiplexBUT.gen.m} defines the properties to be used in \code{MultiplexBUT}.
 	\expand{cd:m:GraphBD:props}
 }
 ]
@@ -1071,7 +1074,7 @@ assert(isequal(numel(find(A2{i, i})), numel(find(random_A{i, i}))), ... % check 
 [BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
 'MultilayerBUT Randomize is not functioning well.')¤
 
-assert(issymmetric(random_A{i, i}), ... % check symmetry ¥\circled{3}\circlednote{3}{ checks symmetry of each layer in the new random graph \code{random\_A} since they are undirected}¥
+assert(issymmetric(random_A{i, i}), ... % check symmetry ¥\circled{3}\circlednote{3}{ checks symmetry of each layer in the new random graph \code{random\_A} since they are undirected.}¥
 [BRAPH2.STR ':MultilayerBUT:' BRAPH2.FAIL_TEST], ...
 'MultilayerBUT Randomize is not functioning well.')
 
@@ -1083,14 +1086,17 @@ end
 
 \subsection{Binary Undirected Ordinal Multiplex Graph with fixed Thresholds (OrdMxBUT)}
 
-Finally, we implement the \code{OrdMxBUT} graph based on previous codes \code{GraphBD}, \code{MultilayerWD} and \code{MultiplexBUT}, again highlighting the differences. An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with ordinal edges between corresponding nodes in subsequent layers.
-
+Finally, you will implement the \code{OrdMxBUT} graph based on the previous codes \code{GraphBD}, \code{MultilayerWD} and \code{MultiplexBUT}.
+{%TEX 
+Again the differences will be highlighted.
+}%TEX 
+An ordered multiplex is a type of multiplex graph that consists of a sequence of layers with edges between corresponding nodes in subsequent layers.
 
 \begin{lstlisting}[
 	label=cd:m:OrdMxBUT:header,
 	caption={
 		{\bf OrdMxBUT element header.}
-		The \code{header} section of generator code for \fn{\_OrdMxBUT.gen.m} provides the general information about the \code{OrdMxBUT} element.
+		The \code{header} section of the generator code in \fn{\_OrdMxBUT.gen.m} provides the general information about the \code{OrdMxBUT} element.
 		\expand{cd:m:GraphBD:header}
 	}
 ]
@@ -1099,13 +1105,16 @@ OrdMxBUT < OrdMxWU (g, ordinal multiplex binary undirected with fixed thresholds
 	
 ¤%%% ¡description!¤
 In a binary undirected ordinal multiplex with fixed thresholds (BUT), all the layers consist of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds. The layers are connected in an ordinal fashion, i.e., only consecutive layers are connected.
+
+¤%%% ¡build!¤
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label=cd:m:OrdMxBUT:prop_update,
 	caption={
 		{\bf OrdMxBUT element prop update.}
-		The \code{props\_update} section of generator code for \fn{\_OrdMxBUT.gen.m} updates the properties of \code{OrdMxBUT}.
+		The \code{props\_update} section of the generator code in \fn{\_OrdMxBUT.gen.m} updates the properties of \code{OrdMxBUT}.
 		\expand{cd:m:MultiplexBUT:prop_update}
 	}
 ]
@@ -1271,7 +1280,7 @@ ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.
 5
 
 %%% ¡prop!
-RANDOMIZATION (query, cell) is the attempts to rewire each edge. ¥\circled{8}\circlednote{8}{ same as in \Coderef{cd:m:MultiplexBUT:prop_update}}¥
+RANDOMIZATION (query, cell) is the attempts to rewire each edge. ¥\circled{8}\circlednote{8}{ same as in \Coderef{cd:m:MultiplexBUT:prop_update}.}¥
 %%%% ¡calculate!
 rng(g.get('RANDOM_SEED'), 'twister')
 
@@ -1372,7 +1381,7 @@ end
 
 ¤%%% ¡test!
 %%%% ¡name!
-Randomize Rules  ¥\circled{1}\circlednote{1}{ same as in \Coderef{cd:m:MultiplexBUT:tests}}¥
+Randomize Rules  ¥\circled{1}\circlednote{1}{ same as in \Coderef{cd:m:MultiplexBUT:tests}.}¥
 %%%% ¡probability!
 .01
 %%%% ¡code!
