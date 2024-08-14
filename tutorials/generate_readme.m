@@ -121,6 +121,8 @@ for i = length(figures):-1:1
 end
 
 % codes
+document = regexprep(document, '\\expand{([^{}]*)}', 'This code modifies Code ¡!parentesi graffa aperta!¡$1¡!parentesi graffa chiusa!¡.');  % \epxand{cd:xxx} (1)
+
 codes_start = regexp(document, '\\begin{lstlisting}', 'end', 'all');
 codes_end = regexp(document, '\\end{lstlisting}', 'start', 'all');
 assert(length(codes_start) == length(codes_end), 'The number of start and end codes should be equal!')
@@ -148,8 +150,10 @@ for i = length(codes_start):-1:1
             ], newline(), [newline() '> ']) ...
         document(codes_end(i) + length('\end{lstlisting}'):end)];
 end
+
 for i = 1:1:length(code_labels)
     document = regexprep(document, ['\\Coderef{' code_labels{i} '}'], ['Code ' int2str(i)]);
+    document = regexprep(document, ['Code ¡!parentesi graffa aperta!¡' code_labels{i} '¡!parentesi graffa chiusa!¡'], ['Code ' int2str(i)]);  % \epxand{cd:xxx} (2)
     document = regexprep(document, ['\\Codesref{' code_labels{i} '}'], ['Codes ' int2str(i)]);    
 end
 
