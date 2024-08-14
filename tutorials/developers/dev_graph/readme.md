@@ -477,7 +477,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 > **Code 5.** **MultilayerWD element header.**
 > 		The `header` section of generator code for "_MultilayerWD.gen.m" provides the general information about the `MultilayerWD` element.
-> 		Code cd:m:GraphBD:header
+> 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > MultilayerWD < Graph (g, multilayer weighted directed graph) is a multilayer weighted directed graph.
@@ -490,7 +490,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 > **Code 6.** **MultilayerWD element prop update.**
 > 		The `props_update` section of generator code for "_MultilayerWD.gen.m" updates the properties of `MultilayerWD`.
-> 		Code cd:m:GraphBD:prop_update
+> 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -629,7 +629,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > getCompatibleMeasures('MultilayerWD')
 > ````
 > 
-> ① For each layer in "MultilayerWD" graph, the corresponding functions are applied as in the notes ⑧, ⑨, and  ⑩ of \Coderef{cd:m:GraphBD:prop_update}.
+> ① For each layer in "MultilayerWD" graph, the corresponding functions are applied as in the notes ⑧, ⑨, and  ⑩ of Code 2.
 > 
 > ③ returns the labels of the graph layers provided by the user.
 > 
@@ -641,7 +641,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 > **Code 7.** **MultilayerWD element props.**
 > 	The `props` section of generator code for "MultilayerWD.gen.m" defines the properties to be used in "MultilayerWD".
-> 	Code cd:m:GraphBD:props
+> 	This code modifies Code 3.
 > ````matlab
 > %% ¡props!
 > 
@@ -706,9 +706,9 @@ A multilayer graph allows connections between any nodes across the multiple laye
 > value = A;
 > ````
 > 
-> ① Same as in note ② of \Coderef{cd:m:GraphBD:props}.
+> ① Same as in note ② of Code 3.
 > 
-> ② Same as in  note ③ of \Coderef{cd:m:GraphBD:props}.
+> ② Same as in  note ③ of Code 3.
 > 
 > ③ defines the number of weights that will be sorted at the same time when using `RANDOMIZATION`.
 > 
@@ -720,7 +720,7 @@ A multilayer graph allows connections between any nodes across the multiple laye
 
 > **Code 8.** **MultilayerWD element tests.**
 > 		The `tests` section from the element generator "_MultilayerWD.gen.m".
-> 		Code cd:m:GraphBD:tests
+> 		This code modifies Code 4.
 > ````matlab
 > %% ¡tests!
 > 
@@ -843,7 +843,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 > **Code 9.** **MultiplexBUT element header.**
 > 		The `header` section of generator code for "_MultiplexBUT.gen.m" provides the general information about the `MultiplexBUT` element.
-> 		Code cd:m:GraphBD:header
+> 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > MultiplexBUT < MultiplexWU (g, binary undirected multiplex with fixed thresholds) is a binary undirected multiplex with fixed thresholds.  ①
@@ -858,7 +858,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 > **Code 10.** **MultiplexBUT element prop update.**
 > 		The `props_update` section of generator code for "_MultiplexBUT.gen.m" updates the properties of `MultiplexBUT`.
-> 		Code cd:m:GraphBD:prop_update
+> 		This code modifies Code 2.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1047,7 +1047,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 > 
 > ⑦ binarizes the present layer of the "A_WU" graph according to the present threshold.
 > 
-> ⑧ Same as in note ② of \Coderef{cd:m:GraphBD:prop_update}.
+> ⑧ Same as in note ② of Code 2.
 > 
 > ⑨ sets the labels of the layers considering the thresholds and the number of layers in each multiplex graph for each threshold
 > 
@@ -1057,7 +1057,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 > **Code 11.** **MultiplexBUT element props.**
 > 	The `props` section of generator code for "MultiplexBUT.gen.m" defines the properties to be used in "MultiplexBUT".
-> 	Code cd:m:GraphBD:props
+> 	This code modifies Code 3.
 > ````matlab
 > %% ¡props!
 >     
@@ -1076,7 +1076,7 @@ A multiplex graph is a type of multilayer graph where only interlayer edges are 
 
 > **Code 12.** **MultiplexBUT element tests.**
 > 		The `tests` section from the element generator "_MultiplexBUT.gen.m".
-> 		Code cd:m:GraphBD:tests
+> 		This code modifies Code 4.
 > ````matlab
 > %% ¡tests!
 > 
@@ -1190,7 +1190,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 
 > **Code 13.** **OrdMxBUT element header.**
 > 		The `header` section of generator code for "_OrdMxBUT.gen.m" provides the general information about the `OrdMxBUT` element.
-> 		Code cd:m:GraphBD:header
+> 		This code modifies Code 1.
 > ````matlab
 > %% ¡header!
 > OrdMxBUT < OrdMxWU (g, ordinal multiplex binary undirected with fixed thresholds) is a binary undirected ordinal multiplex with fixed thresholds.  ①
@@ -1205,7 +1205,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 
 > **Code 14.** **OrdMxBUT element prop update.**
 > 		The `props_update` section of generator code for "_OrdMxBUT.gen.m" updates the properties of `OrdMxBUT`.
-> 		Code cd:m:MultiplexBUT:prop_update
+> 		This code modifies Code 10.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -1398,7 +1398,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 
 > **Code 15.** **OrdMxBUT element props.**
 > 	The `props` section of generator code for "OrdMxBUT.gen.m" defines the properties to be used in "MultiplexBUT".
-> 	Code cd:m:MultiplexBUT:props
+> 	This code modifies Code 11.
 > ````matlab
 > %% ¡props!
 > 
@@ -1415,7 +1415,7 @@ Finally, we implement the `OrdMxBUT` graph based on previous codes `GraphBD`, `M
 
 > **Code 16.** **OrdMxBUT element tests.**
 > 		The `tests` section from the element generator "_OrdMxBUT.gen.m".
-> 		Code cd:m:MultiplexBUT:tests
+> 		This code modifies Code 12.
 > ````matlab
 > %% ¡tests!
 > 
