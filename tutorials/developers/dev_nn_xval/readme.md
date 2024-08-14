@@ -1,24 +1,24 @@
-# Implement a new Neural Network Cross Validation
+# Implement Cross Validation for Neural Network
 
-[![Tutorial Implement a new Neural Network Cross Validation](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_xval.pdf)
+[![Tutorial Implement Cross Validation for Neural Network](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_nn_xval.pdf)
 
 This is the developer tutorial for implementing a new neural network cross validation. 
-In this Tutorial, we will explain how to create the generator file "*.gen.m" for a new neural network cross validation, which can then be compiled by `braph2genesis`. All kinds of neural network cross validation are (direct or indirect) extensions of the base element `NNCrossValidation`. Here, we will use as examples `NNRegressorMLP_CrossValidation` (a cross validation for multi-layer perceptron regressors) and `NNClassifierMLP_CrossValidation` (a cross validation for multi-layer perceptron classifiers).
+In this tutorial, you will learn how to create the generator file "*.gen.m" for a new neural network cross validation, which can then be compiled by `braph2genesis`. All kinds of neural network cross validation are (direct or indirect) extensions of the base element `NNCrossValidation`. Here, you will use as examples `NNRegressorMLP_CrossValidation` (a cross validation for multi-layer perceptron regressors) and `NNClassifierMLP_CrossValidation` (a cross validation for multi-layer perceptron classifiers).
 
 
 ## Table of Contents
-> [Implementation of a Cross Validation for Regressors](#Implementation-of-a-Cross-Validation-for-Regressors)
+> [Cross validation for regressors (`NNRegressorMLP_CrossValidation`)](#Cross-validation-for-regressors-NNRegressorMLPCrossValidation)
 >
-> [Implementation of a Cross Validation for Classifiers](#Implementation-of-a-Cross-Validation-for-Classifiers)
+> [Cross validation for classifiers (`NNRegressorMLP_CrossValidation`)](#Cross-validation-for-classifiers-NNRegressorMLPCrossValidation)
 >
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-a-Cross-Validation-for-Regressors"></a>
-## Implementation of a Cross Validation for Regressors  [⬆](#Table-of-Contents)
 
-We will start by implementing in detail `NNRegressorMLP_CrossValidation`, which is a direct extension of `NNCrossValidation`.
-A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossValidation`) is a procedure designed for evaluating multi-layer perceptron regressors using cross-validation. 
+<a id="Cross-validation-for-regressors-NNRegressorMLPCrossValidation"></a>
+## Cross validation for regressors (`NNRegressorMLP_CrossValidation`)  [⬆](#Table-of-Contents)
+
+You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which is a direct extension of `NNCrossValidation`.
+`NNRegressorMLP_CrossValidation` performs a procedure designed for evaluating multi-layer perceptron regressors using cross-validation. 
 
 
 > **Code 1.** **NNRegressorMLP_CrossValidation element header.**
@@ -33,14 +33,17 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 >  This helps in assessing the generalization performance of the model and detecting overfitting.
 > 
 > To train all the neural networks for all folds, use: nncv.get('TRAIN')
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
-> ①defines `NNRegressorMLP_CrossValidation.gen` as a subclass of `NNCrossValidation`. The moniker will be `nncv`.
+> ① defines `NNRegressorMLP_CrossValidation.gen` as a subclass of `NNCrossValidation`. The moniker will be `nncv`.
 > 
 
 
 > **Code 2.** **NNRegressorMLP_CrossValidation element prop update.**
-> 		The `props_update` section of the generator code for "_NNRegressorMLP_CrossValidation.gen.m" updates the properties of the `NNRegressorMLP_CrossValidation` element. This defines the core properties of the data point.
+> 		The `props_update` section of the generator code for "_NNRegressorMLP_CrossValidation.gen.m" updates the properties of the `NNRegressorMLP_CrossValidation` element. This defines the core properties of the cross validation.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -82,7 +85,7 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 > %%% ¡prop!
 > NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
 > %%%% ¡settings!
-> 'NNRegressorMLP_Evaluator'  ②
+> 'NNRegressorMLP_Evaluator'  ②  ¡!0!¡
 > 
 > %%% ¡prop!
 > NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
@@ -127,7 +130,7 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 > nn_list = nncv.get('NN_LIST');
 > 
 > if ~isa(nncv.getr('NNEVALUATOR_TEMPLATE'), 'NoValue')
->     nne_template = nncv.get('NNEVALUATOR_TEMPLATE'); ⑦
+>     nne_template = nncv.get('NNEVALUATOR_TEMPLATE');  ⑦
 > else
 >     nne_template = NNRegressorMLP_Evaluator( ...   ⑧
 >         'P', nncv.get('P'));
@@ -137,15 +140,21 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 >     d_list, nn_list, 'UniformOutput', false);
 > ````
 > 
-> ①defines the neural network template to be `NNRegressorMLP`, which will be used to set the parameters for all the neural network regressors for the cross validation.
+> ① defines the neural network template to be `NNRegressorMLP`, which will be used to set the parameters for all the neural network regressors for the cross validation.
 > 
-> ②defines the neural network evaluator template to be `NNRegressorMLP_Evaluator`, which will be used to set the parameters for all the neural network evaluators for the cross validation.
+> ② defines the neural network evaluator template to be `NNRegressorMLP_Evaluator`, which will be used to set the parameters for all the neural network evaluators for the cross validation.
 > 
-> ③constructs the training sets iteratively by concatenating all of the remaining folds after exlcuding the one as the validation set.
+> ¡!0!¡**should this be explained either here or in another tutorial?**
 > 
-> ⑥initializes all of the `NNRegressorMLP`s.
+> ③ constructs the training sets iteratively by concatenating all of the remaining folds after exlcuding the one as the validation set.
 > 
-> ⑨initializes all of the `NNRegressorMLP_Evaluator`s.
+> ④ and ⑤ set the parameters to all the `NNRegressorMLP`s based on either the `NN_TEMPLATE` or the parameters from this cross validation.
+> 
+> ⑥ initializes all of the `NNRegressorMLP`s.
+> 
+> ⑦ and ⑧ sets the parameters to all the `NNRegressorMLP_Evaluator`s based on either the `NNEVALUATOR_TEMPLATE` or the parameters from this cross validation.
+> 
+> ⑨ initializes all of the `NNRegressorMLP_Evaluator`s.
 > 
 
 
@@ -252,12 +261,12 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 > end
 > ````
 > 
-> ①defines the number for permuation feature importance.
+> ① defines the number for permuation feature importance.
 > 
-> ⑥calculates the average feature importance. The feature importance obtained from each fold is by performing permutation feature importance. For a detailed explanation, please refer to "dev_nn_reg.pdf"
+> ②-⑤ calculate the average metrics, including the correlation of coefficients, the coefficient of determination, the mean absolute error, the mean squared error, and the root mean squared error.
 > 
-
-
+> ⑥ calculates the average feature importance. The feature importance obtained from each fold is by performing permutation feature importance. For a detailed explanation, please refer to "dev_nn_reg.pdf"
+> 
 
 
 > **Code 4.** **NNRegressorMLP_CrossValidation element tests.**
@@ -327,11 +336,13 @@ A cross validation for multi-layer perceptron regressors (`NNRegressorMLP_CrossV
 >     )
 > ````
 > 
+> ① and ② check whether the data, regressors, and evaluators are initialized according to the user-specified number of folds.
+> 
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 
-<a id="Implementation-of-a-Cross-Validation-for-Classifiers"></a>
-## Implementation of a Cross Validation for Classifiers  [⬆](#Table-of-Contents)
+
+<a id="Cross-validation-for-classifiers-NNRegressorMLPCrossValidation"></a>
+## Cross validation for classifiers (`NNRegressorMLP_CrossValidation`)  [⬆](#Table-of-Contents)
 
 We can now use `NNRegressorMLP_CrossValidation` as the basis to implement the`NNClassifierMLP_CrossValidation`. The parts of the code that are modified are highlighted.
 A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_CrossValidation`) is a procedure designed for evaluating multi-layer perceptron classifiers using cross-validation. 
@@ -349,12 +360,15 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 >  This helps in assessing the generalization performance of the model and detecting overfitting.
 > 
 > To train all the neural networks for all folds, use: nncv.get('TRAIN')
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 
 
 > **Code 6.** **NNClassifierMLP_CrossValidation element prop update.**
-> 		The `props_update` section of the generator code for "_NNClassifierMLP_CrossValidation.gen.m" updates the properties of the `NNClassifierMLP_CrossValidation` element. This defines the core properties of the data point.
+> 		The `props_update` section of the generator code for "_NNClassifierMLP_CrossValidation.gen.m" updates the properties of the `NNClassifierMLP_CrossValidation` element. This defines the core properties of the cross validation.
 > ````matlab
 > %% ¡props_update!
 > 
@@ -448,6 +462,8 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 >     d_list, nn_list, 'UniformOutput', false);
 > ````
 > 
+> ① and ② define the `NN_TEMPLATE` as `NNClassifierMLP` and the `NNEVALUATOR_TEMPLATE` as `NNClassifierMLP_Evaluator`.
+> 
 
 
 > **Code 7.** **NNClassifierMLP_CrossValidation element props.**
@@ -522,7 +538,9 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 > end
 > ````
 > 
-> ③aggregates the confusion matrix across k folds.
+> ① and ② calculate the average value of the area under the receiver operating characteristic curve across k folds.
+> 
+> ③ aggregates the confusion matrix across k folds.
 > 
 
 
@@ -625,6 +643,8 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 >     'NNClassifierMLP_CrossValidation does not calculate the evaluator list correctly.' ...
 >     )
 > ````
+> 
+> ① and ② check whether the data, classifiers, and evaluators are initialized according to the user-specified number of folds.
 > 
 
 %\bibliography{biblio}

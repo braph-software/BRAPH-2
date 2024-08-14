@@ -2,7 +2,7 @@
 \usepackage{../braph2_dev}
 %\geometry{showframe} % display margins for debugging page layout
 
-\title{Implement a new Neural Network Cross Validation}
+\title{Implement Cross Validation for Neural Network}
 
 \author[The BRAPH~2 Developers]{The BRAPH~2 Developers}
 
@@ -13,17 +13,17 @@
 \begin{abstract}
 \noindent
 This is the developer tutorial for implementing a new neural network cross validation. 
-In this Tutorial, we will explain how to create the generator file \fn{*.gen.m} for a new neural network cross validation, which can then be compiled by \code{braph2genesis}. All kinds of neural network cross validation are (direct or indirect) extensions of the base element \code{NNCrossValidation}. Here, we will use as examples \code{NNRegressorMLP\_CrossValidation} (a cross validation for multi-layer perceptron regressors) and \code{NNClassifierMLP\_CrossValidation} (a cross validation for multi-layer perceptron classifiers).
+In this tutorial, you will learn how to create the generator file \fn{*.gen.m} for a new neural network cross validation, which can then be compiled by \code{braph2genesis}. All kinds of neural network cross validation are (direct or indirect) extensions of the base element \code{NNCrossValidation}. Here, you will use as examples \code{NNRegressorMLP\_CrossValidation} (a cross validation for multi-layer perceptron regressors) and \code{NNClassifierMLP\_CrossValidation} (a cross validation for multi-layer perceptron classifiers).
 \end{abstract}
 
 \tableofcontents
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Cross Validation for Regressors}
 
-We will start by implementing in detail \code{NNRegressorMLP\_CrossValidation}, which is a direct extension of \code{NNCrossValidation}.
-A cross validation for multi-layer perceptron regressors (\code{NNRegressorMLP\_CrossValidation}) is a procedure designed for evaluating multi-layer perceptron regressors using cross-validation. 
+\section{Cross validation for regressors (\code{NNRegressorMLP\_CrossValidation})}
+
+You will start by implementing in detail \code{NNRegressorMLP\_CrossValidation}, which is a direct extension of \code{NNCrossValidation}.
+\code{NNRegressorMLP\_CrossValidation} performs a procedure designed for evaluating multi-layer perceptron regressors using cross-validation. 
 
 \begin{lstlisting}[
 	label=cd:m:NNRegressorMLP_CrossValidation:header,
@@ -33,7 +33,7 @@ A cross validation for multi-layer perceptron regressors (\code{NNRegressorMLP\_
 		}
 ]
 %% ¡header!
-NNRegressorMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation) is a process for evaluating multi-layer perceptron regressors using cross-validation. ¥\circled{1}\circlednote{1}{defines \code{NNRegressorMLP\_CrossValidation.gen} as a subclass of \code{NNCrossValidation}. The moniker will be \code{nncv}.}¥
+NNRegressorMLP_CrossValidation < NNCrossValidation (nncv, neural network cross-validation) is a process for evaluating multi-layer perceptron regressors using cross-validation. ¥\circled{1}\circlednote{1}{ defines \code{NNRegressorMLP\_CrossValidation.gen} as a subclass of \code{NNCrossValidation}. The moniker will be \code{nncv}.}¥
 
 %%% ¡description!
 A cross validation for multi-layer perceptron regressors (NNRegressorMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron regressors using cross-validation. 
@@ -42,13 +42,15 @@ A cross validation for multi-layer perceptron regressors (NNRegressorMLP_CrossVa
 
 To train all the neural networks for all folds, use: nncv.get('TRAIN')
 
+%%% ¡build!
+1
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNRegressorMLP_CrossValidation:prop_update},
 	caption={
 		{\bf NNRegressorMLP\_CrossValidation element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNRegressorMLP\_CrossValidation.gen.m} updates the properties of the \code{NNRegressorMLP\_CrossValidation} element. This defines the core properties of the data point.
+		The \code{props\_update} section of the generator code for \fn{\_NNRegressorMLP\_CrossValidation.gen.m} updates the properties of the \code{NNRegressorMLP\_CrossValidation} element. This defines the core properties of the cross validation.
 	}
 ]
 %% ¡props_update!
@@ -86,12 +88,12 @@ NOTES (metadata, string) are some specific notes about the cross-validation.
 %%% ¡prop!
 NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
 %%%% ¡settings!
-'NNRegressorMLP' ¥\circled{1}\circlednote{1}{defines the neural network template to be \code{NNRegressorMLP}, which will be used to set the parameters for all the neural network regressors for the cross validation.}¥
+'NNRegressorMLP' ¥\circled{1}\circlednote{1}{ defines the neural network template to be \code{NNRegressorMLP}, which will be used to set the parameters for all the neural network regressors for the cross validation.}¥
 
 %%% ¡prop!
 NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
 %%%% ¡settings!
-'NNRegressorMLP_Evaluator' ¥\circled{2}\circlednote{2}{defines the neural network evaluator template to be \code{NNRegressorMLP\_Evaluator}, which will be used to set the parameters for all the neural network evaluators for the cross validation.}¥
+'NNRegressorMLP_Evaluator' ¥\circled{2}\circlednote{2}{ defines the neural network evaluator template to be \code{NNRegressorMLP\_Evaluator}, which will be used to set the parameters for all the neural network evaluators for the cross validation.}¥ ¥\circled{0}\circlednote{0}{{\bf should this be explained either here or in another tutorial?}}¥
 
 %%% ¡prop!
 NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
@@ -101,7 +103,7 @@ d_list = nncv.get('D_LIST');
 if isempty(d_list)
     value = {};
 else
-    for i = 1:length(d_list) ¥\circled{3}\circlednote{3}{constructs the training sets iteratively by concatenating all of the remaining folds after exlcuding the one as the validation set.}¥
+    for i = 1:length(d_list) ¥\circled{3}\circlednote{3}{ constructs the training sets iteratively by concatenating all of the remaining folds after exlcuding the one as the validation set.}¥
         d_training_set{i} = d_list;
         d_training_set{i}(i) = [];  % Exclude the i-th element
         d_training_set{i} = NNDatasetCombine('D_LIST', d_training_set{i}).get('D');
@@ -110,7 +112,7 @@ else
     d_training_set = d_training_set';
 
     if ~isa(nncv.getr('NN_TEMPLATE'), 'NoValue')
-        nn_template = nncv.get('NN_TEMPLATE'); ¥\circled{4}\twocirclednotes{4}{5}{set the parameters to all the \code{NNRegressorMLP}s based on either the \code{NN\_TEMPLATE} or the parameters from this cross validation.}¥
+        nn_template = nncv.get('NN_TEMPLATE'); ¥\circled{4}\circlednote{4}{ and \circled{5} set the parameters to all the \code{NNRegressorMLP}s based on either the \code{NN\_TEMPLATE} or the parameters from this cross validation.}¥
     else
         nn_template = NNRegressorMLP( ... ¥\circled{5}¥
             'EPOCHS', nncv.get('EPOCHS'), ...
@@ -121,7 +123,7 @@ else
             'PLOT_TRAINING', nncv.get('PLOT_TRAINING'));
     end
     
-    value = cellfun(@(d) NNRegressorMLP( ... ¥\circled{6}\circlednote{6}{initializes all of the \code{NNRegressorMLP}s.}¥
+    value = cellfun(@(d) NNRegressorMLP( ... ¥\circled{6}\circlednote{6}{ initializes all of the \code{NNRegressorMLP}s.}¥
         'TEMPLATE', nn_template, 'D', d), ...
         d_training_set, 'UniformOutput', false);
 end
@@ -136,13 +138,13 @@ d_list = nncv.get('D_LIST');
 nn_list = nncv.get('NN_LIST');
 
 if ~isa(nncv.getr('NNEVALUATOR_TEMPLATE'), 'NoValue')
-    nne_template = nncv.get('NNEVALUATOR_TEMPLATE');¥\circled{7}\twocirclednotes{7}{8}{sets the parameters to all the \code{NNRegressorMLP\_Evaluator}s based on either the \code{NNEVALUATOR\_TEMPLATE} or the parameters from this cross validation.}¥
+    nne_template = nncv.get('NNEVALUATOR_TEMPLATE'); ¥\circled{7}\circlednote{7}{ and \circled{8} sets the parameters to all the \code{NNRegressorMLP\_Evaluator}s based on either the \code{NNEVALUATOR\_TEMPLATE} or the parameters from this cross validation.}¥
 else
     nne_template = NNRegressorMLP_Evaluator( ...  ¥\circled{8}¥
         'P', nncv.get('P'));
 end
 
-value = cellfun(@(d, nn) NNRegressorMLP_Evaluator('TEMPLATE', nne_template, 'D', d, 'NN', nn), ... ¥\circled{9}\circlednote{9}{initializes all of the \code{NNRegressorMLP\_Evaluator}s.}¥
+value = cellfun(@(d, nn) NNRegressorMLP_Evaluator('TEMPLATE', nne_template, 'D', d, 'NN', nn), ... ¥\circled{9}\circlednote{9}{ initializes all of the \code{NNRegressorMLP\_Evaluator}s.}¥
     d_list, nn_list, 'UniformOutput', false);
 
 \end{lstlisting}
@@ -157,14 +159,14 @@ value = cellfun(@(d, nn) NNRegressorMLP_Evaluator('TEMPLATE', nne_template, 'D',
 %% ¡props!
 
 %%% ¡prop!
-P (parameter, scalar) is the permutation number.¥\circled{1}\circlednote{1}{defines the number for permuation feature importance.}¥
+P (parameter, scalar) is the permutation number.¥\circled{1}\circlednote{1}{ defines the number for permuation feature importance.}¥
 %%%% ¡default!
 1e+2
 %%%% ¡check_prop!
 check = value > 0 && value == round(value);
 
 %%% ¡prop!
-AV_CORR (result, rvector) provides the metric of the correlation of coefficients. ¥\circled{2}\fourcirclednotes{2}{3}{4}{5}{calculate the average metrics, including the correlation of coefficients, the coefficient of determination, the mean absolute error, the mean squared error, and the root mean squared error.}¥
+AV_CORR (result, rvector) provides the metric of the correlation of coefficients. ¥\circled{2}\circlednote{2}{---\circled{5} calculate the average metrics, including the correlation of coefficients, the coefficient of determination, the mean absolute error, the mean squared error, and the root mean squared error.}¥
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
 
@@ -234,7 +236,7 @@ else
 end
 
 %%% ¡prop!
-AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds. ¥\circled{6}\circlednote{6}{calculates the average feature importance. The feature importance obtained from each fold is by performing permutation feature importance. For a detailed explanation, please refer to \fn{dev\_nn\_reg.pdf}}¥
+AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds. ¥\circled{6}\circlednote{6}{ calculates the average feature importance. The feature importance obtained from each fold is by performing permutation feature importance. For a detailed explanation, please refer to \fn{dev\_nn\_reg.pdf}}¥
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
 
@@ -253,8 +255,6 @@ else
     value = {average_fi};
 end
 \end{lstlisting}
-
-\clearpage
 
 \begin{lstlisting}[
 	label=cd:m:NNRegressorMLP_CrossValidation:tests,
@@ -316,7 +316,7 @@ kfolds = 3;
 nncv = NNRegressorMLP_CrossValidation('KFOLDS', kfolds, 'D', d);
 
 nn_list = nncv.get('NN_LIST');
-assert(length(nn_list) == kfolds, ... ¥\circled{1}\twocirclednotes{1}{2}{check whether the data, regressors, and evaluators are initialized according to the user-specified number of folds.}¥
+assert(length(nn_list) == kfolds, ... ¥\circled{1}\circlednote{1}{ and \circled{2} check whether the data, regressors, and evaluators are initialized according to the user-specified number of folds.}¥
     [BRAPH2.STR ':NNRegressorMLP_CrossValidation:' BRAPH2.FAIL_TEST], ...
     'NNRegressorMLP_CrossValidation does not calculate the neural network list correctly.' ...
     )
@@ -328,9 +328,9 @@ assert(length(e_list) == kfolds, ... ¥\circled{2}¥
 
 \end{lstlisting}
 
-%%%%% %%%%% %%%%% %%%%% %%%%%
 \clearpage
-\section{Implementation of a Cross Validation for Classifiers}
+
+\section{Cross validation for classifiers (\code{NNRegressorMLP\_CrossValidation})}
 
 We can now use \code{NNRegressorMLP\_CrossValidation} as the basis to implement the\code{NNClassifierMLP\_CrossValidation}. The parts of the code that are modified are highlighted.
 A cross validation for multi-layer perceptron classifier (\code{NNClassifierMLP\_CrossValidation}) is a procedure designed for evaluating multi-layer perceptron classifiers using cross-validation. 
@@ -350,15 +350,17 @@ NNClassifierMLP_CrossValidation ¤< NNCrossValidation¤ (nncv, neural network cr
  It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. 
  This helps in assessing the generalization performance of the model and detecting overfitting.
 
-To train all the neural networks for all folds, use: nncv.get('TRAIN')¤
+To train all the neural networks for all folds, use: nncv.get('TRAIN')
 
+%%% ¡build!
+¤1
 \end{lstlisting}
 
 \begin{lstlisting}[
 	label={cd:m:NNClassifierMLP_CrossValidation:prop_update},
 	caption={
 		{\bf NNClassifierMLP\_CrossValidation element prop update.}
-		The \code{props\_update} section of the generator code for \fn{\_NNClassifierMLP\_CrossValidation.gen.m} updates the properties of the \code{NNClassifierMLP\_CrossValidation} element. This defines the core properties of the data point.
+		The \code{props\_update} section of the generator code for \fn{\_NNClassifierMLP\_CrossValidation.gen.m} updates the properties of the \code{NNClassifierMLP\_CrossValidation} element. This defines the core properties of the cross validation.
 	}
 ]
 ¤%% ¡props_update!¤
@@ -396,7 +398,7 @@ NOTES (metadata, string) are some specific notes about the cross-validation.
 ¤%%% ¡prop!
 NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.
 %%%% ¡settings!¤
-'NNClassifierMLP'¥\circled{1}\twocirclednotes{1}{2}{define the \code{NN\_TEMPLATE} as \code{NNClassifierMLP} and the \code{NNEVALUATOR\_TEMPLATE} as \code{NNClassifierMLP\_Evaluator}.}¥
+'NNClassifierMLP'¥\circled{1}\circlednote{1}{ and \circled{2} define the \code{NN\_TEMPLATE} as \code{NNClassifierMLP} and the \code{NNEVALUATOR\_TEMPLATE} as \code{NNClassifierMLP\_Evaluator}.}¥
 
 ¤%%% ¡prop!
 NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
@@ -470,7 +472,7 @@ P (parameter, scalar) is the permutation number.
 %%%% ¡check_prop!
 check = value > 0 && value == round(value);¤
 
-%%% ¡prop! ¥\circled{1}\twocirclednotes{1}{2}{calculate the average value of the area under the receiver operating characteristic curve across k folds.}¥
+%%% ¡prop! ¥\circled{1}\circlednote{1}{ and \circled{2} calculate the average value of the area under the receiver operating characteristic curve across k folds.}¥
 AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
@@ -498,7 +500,7 @@ else
     value = mean(cell2mat(macro_aucs), 1);
 end
 
-%%% ¡prop! ¥\circled{3}\circlednote{3}{aggregates the confusion matrix across k folds.}¥
+%%% ¡prop! ¥\circled{3}\circlednote{3}{ aggregates the confusion matrix across k folds.}¥
 C_MATRIX (result, matrix) provides the confusion matrix across k folds.
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
@@ -623,7 +625,7 @@ kfolds = 7;
 nncv = NNClassifierMLP_CrossValidation('KFOLDS', kfolds, 'D', d);
 
 nn_list = nncv.get('NN_LIST');
-assert(length(nn_list) == kfolds, ... ¥\circled{1}\twocirclednotes{1}{2}{check whether the data, classifiers, and evaluators are initialized according to the user-specified number of folds.}¥
+assert(length(nn_list) == kfolds, ... ¥\circled{1}\circlednote{1}{ and \circled{2} check whether the data, classifiers, and evaluators are initialized according to the user-specified number of folds.}¥
     [BRAPH2.STR ':NNClassifierMLP_CrossValidation:' BRAPH2.FAIL_TEST], ...
     'NNClassifierMLP_CrossValidation does not calculate the neural network list correctly.' ...
     )
