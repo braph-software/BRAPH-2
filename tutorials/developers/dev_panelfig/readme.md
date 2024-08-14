@@ -1,6 +1,6 @@
-# Implement a new Property Panel
+# Implement a New Figure Panel
 
-[![Tutorial Implement a new Property Panel](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_panelfig.pdf)
+[![Tutorial Implement a New Figure Panel](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](dev_panelfig.pdf)
 
 This is the developer tutorial for implementing a new figure panel. 
 In this tutorial, you will learn how to create the generator file "*.gen.m" for a new figure panel, which can then be compiled by `braph2genesis`. 
@@ -27,7 +27,7 @@ To understand the general concepts of a figure panel, you will start by implemen
 
 
 > **Code 1.** **BrainSurfacePF element header.**
-> 		The `header` section of the generator code for "_BrainSurfacePF.gen.m" provides the general information about the `BrainSurfacePF` element.
+> 		The `header` section of the generator code in "_BrainSurfacePF.gen.m" provides the general information about the `BrainSurfacePF` element.
 > ````matlab
 > %% ¡header!
 > BrainSurfacePF < PanelFig (pf, panel figure brain surface) is a plot of a brain surfce.  ①
@@ -43,6 +43,9 @@ To understand the general concepts of a figure panel, you will start by implemen
 > 
 > %%% ¡seealso!
 > BrainSurface
+> 
+> %%% ¡build!
+> 1
 > ````
 > 
 > ① The element `BrainSurfacePF` is defined as a subclass of `PabelFig`. The moniker will be `pf`.
@@ -50,7 +53,7 @@ To understand the general concepts of a figure panel, you will start by implemen
 
 
 > **Code 2.** **BrainSurfacePF element constants.**
-> 		The `constants` section of the generator code for "_BrainSurfacePF.gen.m" introductes some element constants. These will simplify the management of the visualization of the brain surface.
+> 		The `constants` section of the generator code in "_BrainSurfacePF.gen.m" introductes some element constants. These will simplify the management of the visualization of the brain surface.
 > ````matlab
 > %% ¡constants!
 > 
@@ -113,7 +116,7 @@ To understand the general concepts of a figure panel, you will start by implemen
 
 
 > **Code 3.** **BrainSurfacePF element new props.**
-> 		The `props` section of the generator code for "_BrainSurfacePF.gen.m" defines the necessary user interface objects and their callbacks.
+> 		The `props` section of the generator code in "_BrainSurfacePF.gen.m" defines the necessary user interface objects and their callbacks.
 > ````matlab
 > %% ¡props!
 > 
@@ -207,7 +210,7 @@ To understand the general concepts of a figure panel, you will start by implemen
 > BRAIN (figure, logical) determines whether the brain surface is shown.  ⑬
 > %%%% ¡default!
 > true
-> %%%% ¡postset!
+> %%%% ¡postset!  ⑭
 > if pf.get('DRAWN')
 >     if pf.get('BRAIN')
 >         set(pf.get('H_BRAIN'), 'Visible', 'on')
@@ -217,20 +220,20 @@ To understand the general concepts of a figure panel, you will start by implemen
 > end
 > 
 > %%% ¡prop!
-> ST_SURFACE (figure, item) determines the surface settings.  ⑭
+> ST_SURFACE (figure, item) determines the surface settings.  ⑮
 > %%%% ¡settings!
 > 'SettingsSurface'
 > %%%% ¡gui!
-> pr = SettingsSurfacePP('EL', pf, 'PROP', BrainSurfacePF.ST_SURFACE, varargin{:});  ⑮
+> pr = SettingsSurfacePP('EL', pf, 'PROP', BrainSurfacePF.ST_SURFACE, varargin{:});  ⑯
 > 
 > %%% ¡prop!
-> ST_AMBIENT (figure, item) determines the ambient settings.  ⑯
+> ST_AMBIENT (figure, item) determines the ambient settings.  ⑰
 > %%%% ¡settings!
 > 'SettingsAmbient'
 > %%%% ¡default!
-> SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight (x2)', 'SHADING', 'none', 'COLORMAP', 'none')  ⑰
+> SettingsAmbient('LIGHTING', 'gouraud', 'MATERIAL', 'dull', 'CAMLIGHT', 'headlight (x2)', 'SHADING', 'none', 'COLORMAP', 'none')  ⑱
 > %%%% ¡gui!
-> pr = SettingsAmbientPP('EL', pf, 'PROP', BrainSurfacePF.ST_AMBIENT, varargin{:});  ⑱
+> pr = SettingsAmbientPP('EL', pf, 'PROP', BrainSurfacePF.ST_AMBIENT, varargin{:});  ⑲
 > ````
 > 
 > ① defines the evanescent handle of the axes where the brain surface will be plotted. It also defines its general properties.
@@ -253,27 +256,31 @@ To understand the general concepts of a figure panel, you will start by implemen
 > 
 > ⑩ contains the `BrainSurface` element.
 > 
-> ⑪ is the evanescent handle for the brain surface. This is calcualted by ⑫.
+> ⑪ is the evanescent handle for the brain surface. This is calculated by ⑫.
 > 
 > ⑬ determines whether the brain surface is shown.
 > 
-> ⑭ determines the brain surface settings throught the container property `SettingsSurface`, which derives from `Settings`.
+> ⑭ is executed whenever `BRAIN` is set in order to show or hide the brain surface.
 > 
-> ⑮ employs the property panel `SettingsSurfacePP`, which is specialized for `SettingsSurface` and derives from `SettingsPP`.
+> ⑮ determines the brain surface settings throught the container property `SettingsSurface`, which derives from `Settings`.
 > 
-> ⑯ determines the ambient lighting settings throught the container property `SettingsAmbient`, which is derived from `Settings`.
+> ⑯ employs the property panel `SettingsSurfacePP`, which is specialized for `SettingsSurface` and derives from `SettingsPP`.
 > 
-> ⑰ defines the default values by instantiating a default instance of `SettingsAmbient`.
+> ⑰ determines the ambient lighting settings throught the container property `SettingsAmbient`, which is derived from `Settings`.
 > 
-> ⑱ employs the property panel `SettingsAmbientPP`, which is specialized for `SettingsAmbient` and derives from `SettingsPP`.
+> ⑱ defines the default values by instantiating a default instance of `SettingsAmbient`.
+> 
+> ⑲ employs the property panel `SettingsAmbientPP`, which is specialized for `SettingsAmbient` and derives from `SettingsPP`.
 > 
 
 
 > **Code 4.** **BrainSurfacePF element props update.**
-> 		The `props_update` section of the generator code for "_BrainSurfacePF.gen.m" updates the properties of the `PanelFig` element. This defines the core properties of the property panel.
+> 		The `props_update` section of the generator code in "_BrainSurfacePF.gen.m" updates the properties of the `PanelFig` element. This defines the core properties of the figure panel.
 > ````matlab
 > %% ¡props_update!
-> ...
+> 
+> . . . . .
+> 
 > %%% ¡prop!
 > DRAW (query, logical) draws the figure brain surface.  ①
 > %%%% ¡calculate!
@@ -300,26 +307,26 @@ To understand the general concepts of a figure panel, you will start by implemen
 > end
 > ````
 > 
-> ① initializes the various graphical elements are drawn.
+> ① initializes the figure panel by drawing its graphical elements.
 > 
 > ② calls the constructor of the parent. It returns `value = true` if the panel is drawn correctly. It gives a warning if the panel is not drawn correctly.
 > 
 > ③ ensures that the axes are memorized.
 > 
-> ④ creates, memorizes, and sets up the property `H_AXES`.
+> ④ creates, memorizes, and sets up the property `ST_AXES` containing the axes settings.
 > 
 > ⑤ memorizes the property `H_BRAIN`.
 > 
-> ⑥ creates, memorizes, and sets up the property `ST_SURFACE`.
+> ⑥ creates, memorizes, and sets up the property `ST_SURFACE` containing the brain surface settings.
 > 
-> ⑦ creates, memorizes, and sets up the property `ST_AMBIENT`.
+> ⑦ creates, memorizes, and sets up the property `ST_AMBIENT` containing the lightning settings.
 > 
-> ⑧ deletes all evanescent hnadles when the figure containing the panel is deleted.
+> ⑧ deletes all evanescent handles when the figure containing the panel is deleted.
 > 
 
 
 > **Code 5.** **BrainSurfacePF element tests.**
-> 		The `tests` section of the generator code for "_BrainSurfacePF.gen.m" determines how the unit tests are performed.
+> 		The `tests` section of the generator code in "_BrainSurfacePF.gen.m" determines how the unit tests are performed.
 > ````matlab
 > %% ¡tests!
 > 
@@ -339,7 +346,7 @@ To understand the general concepts of a figure panel, you will start by implemen
 > warning('on', [BRAPH2.STR ':BrainSurfacePF'])
 > ````
 > 
-> ① some properties need to be excluded from the tests, mainly because they are initialized by other proprties and therefore could give some spurious errors.
+> ① some properties need to be excluded from the tests, mainly because they are initialized by other proprties and therefore could give some spurious errors when unit tested.
 > 
 > ② throws an error if there remains a different number of figures than expected.
 > 
@@ -349,15 +356,17 @@ To understand the general concepts of a figure panel, you will start by implemen
 <a id="Addition-of-toolbar-buttons"></a>
 ### Addition of toolbar buttons  [⬆](#Table-of-Contents)
 
-We will now see how to add the pushbuttons in the toolbar of the figure, opportunely altering the code so far implemented.
+You will now see how to add the pushbuttons in the toolbar of the figure, opportunely altering the code so far implemented.
 
 
 > **Code 6.** **BrainSurfacePF element props update.**
-> 		The `props_update` section of the generator code for "_BrainSurfacePF.gen.m" with the additions needed to have the toolbar pushbuttons.
+> 		The `props_update` section of the generator code in "_BrainSurfacePF.gen.m" with the additions needed to have the toolbar pushbuttons.
 > 		This code modifies Code 4.
 > ````matlab
 > %% ¡props_update!
-> ...
+> 
+> . . . . .
+> 
 > %%% ¡prop!
 > H_TOOLS (evanescent, handlelist) is the list of panel-specific tools from the first.  ①
 > %%%% ¡calculate!
@@ -518,7 +527,7 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > 
 > ① provides a list of evanescent handles to toolbar pushbuttons.
 > 
-> ② retrieves the toolbar and ③ checks that it is actually drawn.
+> ② retrieves the toolbar, ensuring that the handle is memorized, and ③ checks that it is actually drawn.
 > 
 > ④ reorders the pushbuttons.
 > 
@@ -526,20 +535,22 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > 
 > ① ensures that the `postset` code is executed by resetting `VIEW` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
 > 
-> ② memorizes also the listener to the changes in `ST_AXIS`. This is neede to ensure that the toolbar pushbuttons are synchronized with the content of `ST_AXIS`.
+> ② memorizes also the listener to the changes in `ST_AXIS`. This is needed to ensure that the toolbar pushbuttons are synchronized with the content of `ST_AXIS`.
 > 
 > ③ ensures that the `postset` code is executed by resetting `BRAIN` to its current value. This is needed to update the toolbar pushbuttons when the figure panel is first drawn.
 > 
-> ④ deletes also the evanescent handle for the `LISTENER_ST_AXIS`.
+> ④ deletes also the evanescent handle for the `LISTENER_ST_AXIS` when the figure panel is deleted.
 > 
 
 
 > **Code 7.** **BrainSurfacePF element new props with toolbar pushbuttons.**
-> 		The `props` section of the generator code for "_BrainSurfacePF.gen.m" with the additions needed to have the toolbar pushbuttons for the brain surface.
+> 		The `props` section of the generator code in "_BrainSurfacePF.gen.m" with the additions needed to have the toolbar pushbuttons for the brain surface.
 > 		This code modifies Code 3.
 > ````matlab
 > %% ¡props!
-> ...
+> 
+> . . . . .
+> 
 > %%% ¡prop!
 > VIEW (figure, rvector) sets the desired view as the line-of-sight azimuth and elevation angles.
 > %%%% ¡check_prop!
@@ -599,7 +610,9 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 >         end
 >     end
 > end
-> ...
+> 
+> . . . . .
+> 
 > %%% ¡prop!
 > BRAIN (figure, logical) determines whether the brain surface is shown.
 > %%%% ¡default!
@@ -612,12 +625,13 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 >         set(pf.get('H_BRAIN'), 'Visible', 'off')
 >     end
 > 
->     toolbar = pf.get('H_TOOLBAR');  ③
+>     toolbar = pf.get('H_TOOLBAR');  ④
 >     if check_graphics(toolbar, 'uitoolbar')
 >         set(findobj(toolbar, 'Tag', 'TOOL.Brain'), 'State', pf.get('BRAIN'))
 >     end
-> end
-> ...
+> . . . . .
+> 
+> . . . . .
 > ````
 > 
 > ① ensures that toolbar pushbuttons are updated with the current view.
@@ -626,19 +640,20 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 > 
 > ③ ensures that the toolbar pushbuttons are updated whenever the `ST_AXIS` property is updated.
 > 
-> ③ ensures that the toolbar pushbuttons are updated whenever the `BRAIN` property is updated.
+> ④ ensures that the toolbar pushbuttons are updated whenever the `BRAIN` property is updated.
 > 
 
 
 > **Code 8.** **BrainSurfacePF element tests with toolbar pushbuttons.**
-> 		The `tests` section of the generator code for "_BrainSurfacePF.gen.m" with the additions needed to have the tool- bar pushbuttons for the brain surface.
+> 		The `tests` section of the generator code in "_BrainSurfacePF.gen.m" with the additions needed to have the tool- bar pushbuttons for the brain surface.
 > 		This code modifies Code 5.
 > ````matlab
 > %% ¡tests!
 > 
 > %%% ¡excluded_props! 
 > [BrainSurfacePF.PARENT BrainSurfacePF.H BrainSurfacePF.ST_POSITION BrainSurfacePF.ST_AXIS BrainSurfacePF.ST_SURFACE BrainSurfacePF.ST_AMBIENT BrainSurfacePF.LISTENER_ST_AXIS]  ①
-> ...
+> 
+> . . . . .
 > ````
 > 
 > ① excludes from testing also `LISTENER_ST_AXIS`.
@@ -649,14 +664,14 @@ We will now see how to add the pushbuttons in the toolbar of the figure, opportu
 <a id="Extension-of-figure-panel-BrainAtlasPF"></a>
 ## Extension of figure panel (BrainAtlasPF)  [⬆](#Table-of-Contents)
 
-We will now explore how to extend `BrainSurfacePF` to plot also brain regions. We will therefore implement `BrainAtlasPF`.
+You will now learn how to extend `BrainSurfacePF` to plot also brain regions. You will therefore implement `BrainAtlasPF`.
 
 
 > **Code 9.** **BrainAtlasPF element header.**
-> 		The `header` section of the generator code for "_BrainAtlasPF.gen.m" provides the general information about the `BrainAtlasPF` element.
+> 		The `header` section of the generator code in "_BrainAtlasPF.gen.m" provides the general information about the `BrainAtlasPF` element.
 > ````matlab
 > %% ¡header!
-> BrainAtlasPF < BrainSurfacePF (pf, panel figure brain atlas) is a plot of a brain atlas.
+> BrainAtlasPF < BrainSurfacePF (pf, panel figure brain atlas) is a plot of a brain atlas.  ①
 > 
 > %%% ¡description!
 > BrainAtlasPF manages the plot of the brain regions symbols,
@@ -665,7 +680,12 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > 
 > %%% ¡seealso!
 > BrainAtlas, BrainSurface
+> 
+> %%% ¡build!
+> 1
 > ````
+> 
+> ① `BrainAtlasPF` is a child of `BrainSurfacePF`.
 > 
 
 
@@ -780,9 +800,11 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > . . . . .
 > ````
 > 
-> ① containes the brain atlas to be visualized.
+> ① contains the brain atlas to be visualized.
 > 
-> ② contains the evanescent handles for the spehres. ③ draws the spheres and creates the handles.
+> ② contains the evanescent handles for the spheres to represent the brain regions.
+> 
+> ③ draws the spheres and creates the handles.
 > 
 > ④ determines whether the shperes are shown. When it is set to `FALSE`, ⑤ sets all spheres already drawn to invisible. When it is set to `TRUE`, ⑥ triggers the update of the sphere dictionary containing the elements corresponding to each sphere.
 > 
@@ -808,7 +830,7 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > ````matlab
 > %% ¡props!
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > H_SYMS (evanescent, handlelist) is the set of handles for the symbols.
@@ -876,8 +898,8 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > 
 > %% ¡props_update!
 > 
-> ...
->     
+> . . . . .
+> 
 > %%% ¡prop!
 > DRAW (query, logical) draws the figure brain atlas.
 > %%%% ¡calculate!
@@ -900,9 +922,9 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > if value
 >     pf.set('H_SPHS', Element.getNoValue())
 >     pf.set('H_SYMS', Element.getNoValue())
-> end
+> . . . . .
 > 
-> ...
+> . . . . .
 > ````
 > 
 
@@ -911,9 +933,7 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > 		This code demonstrates how to add the ids to the `BrainAtlasPF`.
 > 		This code modifies Code 11.
 > ````matlab
-> %% ¡props!
->  
-> ...
+> %% ¡props!. . . . ....
 > 
 > %%% ¡prop!
 > H_IDS (evanescent, handlelist) is the set of handles for the ids.
@@ -982,7 +1002,7 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > 
 > %% ¡props_update!
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > DRAW (query, logical) draws the figure brain atlas.
@@ -1010,9 +1030,9 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 >     pf.set('H_SPHS', Element.getNoValue())
 >     pf.set('H_SYMS', Element.getNoValue())
 >     pf.set('H_IDS', Element.getNoValue())
-> end
+> . . . . .
 > 
-> ...
+> . . . . .
 > ````
 > 
 
@@ -1023,8 +1043,8 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > ````matlab
 > %% ¡props!
 > 
-> ...
->     
+> . . . . .
+> 
 > %%% ¡prop!
 > H_LABS (evanescent, handlelist) is the set of handles for the labels.
 > %%%% ¡calculate!
@@ -1092,7 +1112,7 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 > 
 > %% ¡props_update!
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > DRAW (query, logical) draws the figure brain atlas.
@@ -1124,16 +1144,16 @@ We will now explore how to extend `BrainSurfacePF` to plot also brain regions. W
 >     pf.set('H_SYMS', Element.getNoValue())
 >     pf.set('H_IDS', Element.getNoValue())
 >     pf.set('H_LABS', Element.getNoValue())
-> end
+> . . . . .
 > 
-> ...
+> . . . . .
 > ````
 > 
 
 <a id="Extension-of-toolbar-buttons"></a>
 ### Extension of toolbar buttons  [⬆](#Table-of-Contents)
 
-We will now see how to add toolbar pushbuttons to the previous code.
+You will now see how to add toolbar pushbuttons to the previous code.
 
 
 > **Code 14.** **BrainAtlasPF with toolbar.**
@@ -1142,7 +1162,7 @@ We will now see how to add toolbar pushbuttons to the previous code.
 > ````matlab
 > %% ¡props!
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > SPHS (figure, logical) determines whether the spheres are shown.
@@ -1238,7 +1258,7 @@ We will now see how to add toolbar pushbuttons to the previous code.
 > 
 > %% ¡props_update!
 > 
-> ...
+> . . . . .
 > 
 > %%% ¡prop!
 > DRAW (query, logical) draws the figure brain atlas.
