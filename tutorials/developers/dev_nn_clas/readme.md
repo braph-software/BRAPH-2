@@ -401,7 +401,4 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > ````
 > 
 > ① checks whether the number of layers from the trained model is correctly set.
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>

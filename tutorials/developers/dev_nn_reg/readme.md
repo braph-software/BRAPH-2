@@ -355,7 +355,4 @@ A multi-layer perceptron regressor `NNRegressorMLP` comprises a multi-layer perc
 > ````
 > 
 > ① checks whether the number of layers from the trained model is correctly set.
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>

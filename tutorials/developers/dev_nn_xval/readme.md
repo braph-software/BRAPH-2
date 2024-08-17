@@ -645,7 +645,4 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 > ````
 > 
 > ① and ② check whether the data, classifiers, and evaluators are initialized according to the user-specified number of folds.
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>
