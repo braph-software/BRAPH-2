@@ -1886,7 +1886,4 @@ The modified parts of the code are highlighted.
 > ⑱ tests various kinds of graph measure with the `MultiplexBUD` using example functional data.
 > 
 > ⑲ tests various kinds of graph measure with the `MultiplexBUT` using example functional data.
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>
