@@ -188,7 +188,7 @@ document = regexprep(document, '¡!parentesi graffa aperta!¡', '{');
 document = regexprep(document, '¡!parentesi graffa chiusa!¡', '}');
 
 % includegraphics
-document = regexprep(document, '\\includegraphics\[[^{}]*\]{([^{}]*)} % ', '![$1]($1)');
+document = regexprep(document, '\\includegraphics\[[^{}]*\]{([^{}]*)}', '![$1]($1)');
 
 %% Generate README file
 readme = [

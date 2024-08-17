@@ -225,4 +225,4 @@ To illustrate the general concepts of a property panel, you will start by implem
 ## Example property panels for various UI objects  [⬆](#Table-of-Contents)
 
 The implementation of `PanelPropLogical` shown in the previous section can be extended to all other user interface (UI) objects. There are several examples already available in the core code of BRAPH 2, each coupled with its corresponding property panel as an example, as shown in the table below. These can be used to guide the realization of new property panels.
-\includegraphics[width=6em]{table.png}
+![table.png](table.png)
