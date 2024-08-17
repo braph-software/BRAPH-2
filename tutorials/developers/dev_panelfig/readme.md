@@ -1355,7 +1355,4 @@ You will now see how to add toolbar pushbuttons to the previous code.
 > 
 > . . . . .
 > ````
-> 
-
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+>

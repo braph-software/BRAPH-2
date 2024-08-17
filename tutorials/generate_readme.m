@@ -47,6 +47,9 @@ document = regexprep(document, '\\footnote{([^{}]*)}', ' ($1)');  % \footnote{..
 document = regexprep(document, '\\begin{fullwidth}', '');  % \begin{fullwidth}
 document = regexprep(document, '\\end{fullwidth}', '');  % \end{fullwidth}
 document = regexprep(document, [newline() '{%TEX[^{}]*}%TEX\s*' newline()], '');  % {%TEX ... }%TEX
+document = regexprep(document, [newline() '{%¡TEX[^¡]*}%¡TEX\s*' newline()], '');  % {%¡TEX ... }%¡TEX
+document = regexprep(document, ['\\newcommand{[^' newline() ']*}{[^' newline() ']*}' newline()], '');  % \newcommand{...}{...}
+document = regexprep(document, ['\\newcolumntype{[^' newline() ']*}{[^' newline() ']*}' newline()], '');  % \newcolumntype{...}{...}
 
 % table of contents
 sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');
@@ -183,6 +186,9 @@ end
 % parentesi graffe (1)
 document = regexprep(document, '¡!parentesi graffa aperta!¡', '{');
 document = regexprep(document, '¡!parentesi graffa chiusa!¡', '}');
+
+% includegraphics
+document = regexprep(document, '\\includegraphics\[[^{}]*\]{([^{}]*)} % ', '![$1]($1)');
 
 %% Generate README file
 readme = [

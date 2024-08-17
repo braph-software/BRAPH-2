@@ -197,6 +197,7 @@ end
 
 The implementation of \code{PanelPropLogical} shown in the previous section can be extended to all other user interface (UI) objects. There are several examples already available in the core code of BRAPH~2, each coupled with its corresponding property panel as an example, as shown in the table below. These can be used to guide the realization of new property panels.
 
+{%¡TEX
 \newcommand{\addpicbutton}{\includegraphics[width=6em]{fig01.png}}
 \newcommand{\addpiccheckbox}{\includegraphics[width=6em]{fig02.png}}
 \newcommand{\addpiceditfield}{\includegraphics[width=6em]{fig03.png}}
@@ -214,7 +215,7 @@ The implementation of \code{PanelPropLogical} shown in the previous section can 
 \begin{table}\sffamily
 	\begin{tabular}{l*4{C}@{}}
 		\toprule
-		UI Object & Example & Exemple PanelProp \\ 
+		UI Object & Example & Example PanelProp \\ 
 		\midrule
 		uibutton & \addpicbutton & PanelPropItem \\ 
 		uicheckbox & \addpiccheckbox & PanelPropLogical \\ 
@@ -231,9 +232,9 @@ The implementation of \code{PanelPropLogical} shown in the previous section can 
 		uitogglebutton & \addpictogglebutton & Not yet implemented \\
 		\bottomrule \\
 	\end{tabular}
-\end{table} 
+\end{table}
+}%¡TEX
 
-%\bibliography{biblio}
-%\bibliographystyle{plainnat}
+\includegraphics[width=6em]{table.png}
 
 \end{document}
