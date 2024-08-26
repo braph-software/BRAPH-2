@@ -79,8 +79,8 @@ if isempty(constants)
     % BRAPH2
     constants{end+1, 1} = '€BRAPH2\.NAME€';
     constants{end, 2} = BRAPH2.NAME;
-    constants{end+1, 1} = 'BRAPH2\.NAME';
-    constants{end, 2} = ['''' BRAPH2.NAME ''''];
+    constants{end+1, 1} = ' BRAPH2\.NAME';
+    constants{end, 2} = [' ''' BRAPH2.NAME ''''];
 
     constants{end+1, 1} = '€BRAPH2\.VERSION€';
     constants{end, 2} = BRAPH2.VERSION;
