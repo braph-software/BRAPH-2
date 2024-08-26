@@ -55,7 +55,7 @@ These tutorials guide you through the analysis and comparison steps of multiplex
 
 These tutorials demonstrate the use of neural networks for regression and classification tasks on different types of data:
 - [Pipeline Neural Network Regression ST](tut_nn_reg_st): Tutorial that uses neural networks for regression using structural data (ST).
-- [Pipeline Neural Network Classification Connectivity BUD Graphs](tut_nn_cla_con_bud_g): Tutorial that uses neural networks to classify binary undirected graphs obtained from connectivity at fixed densities (BUD).
+- [Pipeline Neural Network Classification Connectivity BUD Graphs](tut_nn_clas_con_bud_g): Tutorial that uses neural networks to classify binary undirected graphs obtained from connectivity at fixed densities (BUD).
 - [Pipeline Neural Network Classification with Connectivity WU Data](tut_nn_clas_con_wu): Tutorial that uses neural networks for classification using weighted undirected (WU) connectivity data.
 - [Pipeline Neural Network Classification Cross Validation with Functional WU Data](tut_nn_clas_fun_wu_xval): Tutorial that uses neural networks for classification with cross-validation using weighted undirected (WU) functional connectivity data.
 
