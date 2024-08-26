@@ -40,9 +40,9 @@ Here are some of the specific ways you can extend BRAPH 2:
 
 - **Deep-learning Functionalities**: You can ntegrate new functionalities for deep-learning analyses into BRAPH 2 as well. Here are the tutorials for expanding BRAPH 2 with deep-learning features:
   - [Developer Tutorial to Implement a New Neural Network Data Point](dev_nn_datapoint)
-  - [Developer Tutorial to Implement a New Neural Network Classifier](dev_nn_cla)
+  - [Developer Tutorial to Implement a New Neural Network Classifier](dev_nn_clas)
   - [Developer Tutorial to Implement a New Neural Network Regressor](dev_nn_reg)
-  - [Developer Tutorial to Implement a New Neural Network Cross Validation](dev_nn_cross_val)
+  - [Developer Tutorial to Implement a New Neural Network Cross Validation](dev_nn_xval)
 
 - **Analysis Pipelines**: Developers can also contribute to the evolution of BRAPH 2 by introducing new analysis pipelines tailored to specific research requirements. The [Developer Tutorial to Implement a New Analysis Pipeline](dev_new_pipeline) provides a comprehensive guide on creating custom analysis pipelines within the BRAPH 2 framework. This tutorial covers the entire pipeline development process, including data handling, calculation of measures, statistical analysis, and results visualization. By developing new analysis pipelines, users can enhance the capabilities of BRAPH 2 and enable the exploration of novel analytical approaches.
 

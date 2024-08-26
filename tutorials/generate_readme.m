@@ -1,23 +1,18 @@
 function generate_readme(tex_file, readme_file)
 
+[tex_file_dir, tex_file_name] = fileparts(tex_file);
+
 if nargin < 2
-    readme_file = 'readme.md';
+    readme_file = [tex_file_dir filesep 'readme.md'];
 end
 
 tex = fileread(tex_file);
-
+ 
 %% Analysis
 
 % title
-title = regexp(tex, '\\title(?:(.*?))?{([^{}]*)}', 'tokens', 'all'); %
+title = regexp(tex, '\\title(?:(.*?))?{([^{}]*)}', 'tokens', 'once');
 title = strtrim(title{1});
-
-if length(title) == 2
-    title = strtrim(title{2});
-
-else
-    title = strtrim(title{1});
-end
 
 % document
 document = regexp(tex, '\\begin{document}(.*)\\end{document}', 'tokens', 'once');
@@ -28,364 +23,180 @@ document = regexprep(document, '\\clearpage', '');
 document = regexprep(document, '\\begin\{abstract\}', '');
 document = regexprep(document, '\\end\{abstract\}', '');
 
+% parentesi graffe (1)
+document = regexprep(document, '\\{', '¡!parentesi graffa aperta!¡');
+document = regexprep(document, '\\}', '¡!parentesi graffa chiusa!¡');
+
 % basic reformatting
-document = regexprep(document, 'BRAPH~2.0', 'BRAPH 2.0');
-document = regexprep(document, '---', '-');
-document = regexprep(document, '\\\\\n', '\n');
+document = regexprep(document, 'BRAPH~2', 'BRAPH 2');
+document = regexprep(document, '---', '-');  % ---
+document = regexprep(document, '\\\\\n', '\n\n');  % \\
+document = regexprep(document, '\\fn{([^{}]*)}', '"$1"');  % \fn
+document = regexprep(document, '\\code{([^{}]*)}', '`$1`');  % \code
+document = regexprep(document, '\\url{([^{}]*)}', '[$1]($1)');  % \url{link}
+document = regexprep(document, '\\href{([^{}]*)}{([^{}]*)}', '[$2]($1)');  % \href{link}{text}
+document = regexprep(document, '``([^`'']*)''''', '"$1"');  % ``text''
+document = regexprep(document, '\\emph{([^{}]*)}', '*$1*');  % \emph{...}
+document = regexprep(document, '\\&', '&');  % \&
+document = regexprep(document, '\\_', '_');  % \_
+document = regexprep(document, '¥€¥', '€');  % ¥€¥
+document = regexprep(document, '¤...¤', '. . . . .');  % ¤...¤
+document = regexprep(document, '¤', '');  % ¤
+document = regexprep(document, '{\\bf ([^{}]*)}', '**$1**');  % {\bf ...}
+document = regexprep(document, '\\footnote{([^{}]*)}', ' ($1)');  % \footnote{...}
+document = regexprep(document, '\\begin{fullwidth}', '');  % \begin{fullwidth}
+document = regexprep(document, '\\end{fullwidth}', '');  % \end{fullwidth}
+document = regexprep(document, [newline() '{%TEX[^{}]*}%TEX\s*' newline()], '');  % {%TEX ... }%TEX
+document = regexprep(document, [newline() '{%¡TEX[^¡]*}%¡TEX\s*' newline()], '');  % {%¡TEX ... }%¡TEX
+document = regexprep(document, ['\\newcommand{[^' newline() ']*}{[^' newline() ']*}' newline()], '');  % \newcommand{...}{...}
+document = regexprep(document, ['\\newcolumntype{[^' newline() ']*}{[^' newline() ']*}' newline()], '');  % \newcolumntype{...}{...}
+
+% table of contents
+sections = regexp(document, '\\(sub)?(sub)?section\{([^{}]*)\}', 'tokens', 'all');
+toc = '## Table of Contents';
+for i = 1:1:length(sections)
+    section = sections{i};
+    
+    section_title = section{3};
+    
+    if section{2}  % subsubsection
+        level = 3;
+    elseif section{1}  % subsection
+        level = 2;
+    else  % section
+        level = 1;
+    end
+
+    toc = [toc newline() repmat('>', 1, level) ' [' section_title '](#' regexprep(regexprep(section_title, '[^a-zA-Z0-9"\s]', ''), ' ', '-') ')' newline() repmat('>', 1, level)]; %#ok<AGROW> 
+end
+document = regexprep(document, '\\tableofcontents', toc);
 
 % (sub)section
 arrow_up_icon = char(11014);
-document = regexprep(document, '\\section{([^{}]*)}', ['## $1  [' arrow_up_icon '](#table-of-contents)']);
-document = regexprep(document, '\\subsection{([^{}]*)}',  ['### $1  [' arrow_up_icon '](#table-of-contents)']);
-document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['#### $1  [' arrow_up_icon '](#table-of-contents)']);
+document = regexprep(document, '\\section{([^{}]*)}', ['<a id="$1"></a>' newline() '## $1  [' arrow_up_icon '](#Table-of-Contents)']);
+document = regexprep(document, '\\subsection{([^{}]*)}',  ['<a id="$1"></a>' newline() '### $1  [' arrow_up_icon '](#Table-of-Contents)']);
+document = regexprep(document, '\\subsubsection{([^{}]*)}',  ['<a id="$1"></a>' newline() '#### $1  [' arrow_up_icon '](#Table-of-Contents)']);
 
-% table of contents
-% document = regexprep(document, '\\tableofcontents', ''); old way
-document = regexprep(document, '\\tableofcontents', '## Table of contents');
-table_index = regexp(document, '## Table of contents');
-tc_l = length('## Table of contents');
-
-% patternSection = regexp(document, ['##\s(.*?)' char(13) '|###\s(.*?)' char(13) '|####\s(.*?)' char(13)], 'tokens', 'all');
-patternSection = regexp(document, ['##(.*?)' char(13)], 'tokens', 'all');
-
-acum = 0;
-for i = 2:length(patternSection)
-    tmp_section_title = patternSection{i}{1};
-    tmp_section_title_array = split(tmp_section_title, '[');
-    tmp_section_title = tmp_section_title_array{1};
-    occur_tmp = regexp(tmp_section_title, '#');
-    name_string = strtrim(replace(tmp_section_title, '#', ''));
-    link_string = replace(name_string, ' ', '-');
-    new_table_line = ['>' newline() '> [' name_string '](#' link_string ')' char(13) newline()];
-    for j = 1:length(occur_tmp)
-        new_table_line = insertAfter(new_table_line, 3, '>');
-    end
-    document = insertAfter(document, table_index + tc_l  + acum,  new_table_line);
-    acum = acum + length(new_table_line);
-end
-
-% bracket control
-document = regexprep(document, '\\begin\{fullwidth\}', '');
-document = regexprep(document, '\\end\{fullwidth\}', '');
-document = regexprep(document, '\\code\{(.*?)\}', '`$1`');
-document = regexprep(document, ['\`\`([^\`\`]*)\''' '\'''], '"$1"');
-document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
-document = regexprep(document, '\\emph\{([^=\}]*)\}', '_$1_');
-document = regexprep(document, '\\footnote\{(.*?)\}', ' $1');
-
-% code refences
-% document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '`$1`');
-% find all coderefences
-references = regexp(document, '\\Coderef\{..\:([^\:\}]*)\}', 'tokens', 'all');
-document = regexprep(document, '\\Coderef\{..\:([^\:\}]*)\}', '<refgoeshere>**!'); % put mark
-for i = 1:length(references)
-    index_ref = regexp(document, '<refgoeshere>\*\*\!', 'all');
-    tmp_ref = references{i}{1};
-    pattern = ['cd:' tmp_ref ',\s*caption\=\{\s*\{\\bf\s(.*?)\}'];
-    tmp_finding_ref= regexp(document, pattern, 'tokens', 'once');
-    if ~isempty(tmp_finding_ref)
-        tmp_finding_ref = tmp_finding_ref{1}(1:end-1);
-    else
-        tmp_finding_ref = tmp_ref;
-    end
-    section_title = strtrim(tmp_finding_ref);
-    % insert into document
-    document = insertBefore(document, index_ref(i),  section_title);
-end
-document = regexprep(document, '<refgoeshere>\*\*\!', ''); % remove mark
-
-% enumerate
-enumerate_objs = regexp(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', 'tokens', 'all');
-document = regexprep(document, '\\begin\{enumerate\}(.*?)\\end\{enumerate\}', '<enumerategoeshere>**!'); % put mark
-document = regexprep(document, '\\begin\{enumerate\}', '');
-document = regexprep(document, '\\end\{enumerate\}', '');
-patternItem = '\\item\s+([^\\]*)';
-for i = 1:length(enumerate_objs)
-    index_enumerate = regexp(document, '<enumerategoeshere>\*\*\!', 'all');
-    tmp_obj = enumerate_objs{i};
-    % put a 1 at the beginning of each line
-    tmp_obj = regexprep(tmp_obj, char(9), '');
-    tmp_ind = regexp(tmp_obj{1}, '\\item', 'all');
-    acumulated_tmp = 0;
-    for j = 1:length(tmp_ind)
-        infotmp = [num2str(j) '. '];
-        tmp_obj = insertBefore(tmp_obj, tmp_ind(j)  + acumulated_tmp, infotmp);
-        acumulated_tmp = acumulated_tmp + length(infotmp);
-    end
-    % modify the item
-    findItem = regexp(tmp_obj, patternItem, 'tokens', 'all');
-    for k = 1:length(findItem{1})
-        finding = findItem{1}{k};
-        tmp_obj = regexprep(tmp_obj, patternItem, strtrim(finding{1}), 'once');
-    end
-
-    % insert into document
-    document = insertBefore(document, index_enumerate(i) - 1,  tmp_obj{1}(1:end-3));
-end
-document = regexprep(document, '<enumerategoeshere>\*\*\!', ''); % remove mark
-
-% figrefs
-figrefs1 = regexp(document, '\\Figref\{fig:([^:\}]*)\}', 'tokens', 'all');
-for i = 1:length(figrefs1)
-    document = regexprep(document, '\\Figref\{fig:([^:\}]*)\}', ['Figure ' num2str(str2double(figrefs1{i}{1}))], 'once');
-end
-figrefs2 = regexp(document, '\\Figsref\{fig:([^:\}]*)\}', 'tokens', 'all');
-for i = 1:length(figrefs2)
-   document = regexprep(document, '\\Figsref\{fig:([^:\}]*)\}', ['Figures ' num2str(str2double(figrefs2{i}{1}))], 'once');
-end
-
-% change includegraphics
-includegraphpatter = '\\includegraphics(?:\[height=10cm\])?\{([^{}]*)}';
-document = regexprep(document, includegraphpatter, '!*$1!*');
-
-% figures
-document = regexprep(document, '\{\\bf\s(.*?)\}', '**$1**');
-pattern = '\\fig\{[^}]+\}\s*\{([^}]+)\}\s*\{(?:\s*\[h!\]\s*)?(?:\s*\[b!\]\s*)?([^{}]*)\}(?:\s*)?\s*\{([^{}]*)\}\s*\{\s*([^{}]*)\}';
-figPattern = '\#\!FIG(..)(?:s)?(.*?)\n';
-newFigMods =  regexp(document, figPattern, 'tokens', 'all');
-findings = regexp(document, pattern, 'tokens', 'all');
-document = regexprep(document, pattern, '', 'all');
-for i = 1:length(findings)
-    % find marks index and remove them
-    finding = findings{i};
-    newPos = regexp(document, figPattern, 'once');
-    document = regexprep(document, figPattern, '', 'once');
-
-    % replace old info with new way in new position
-    figNameTMP = finding{2};
-    figTitle = finding{3};
-
-    % check if multi figure
-    fig_tokens = regexp(figNameTMP, '\!\*([^\*\!]*)\!\*', 'tokens', 'all');
-    tagSize_tmp = 1;
-    for j = 1:length(fig_tokens)
-        figName = fig_tokens{j}{1};
-        if ~isempty(newFigMods) && length(newFigMods{i}{2}) > 1
-            figSizeMod = strtrim(newFigMods{i}{2});
-            newFormat = [newline() '<img src="' figName '" alt="' figTitle ' " height="' figSizeMod '">'];
-        else
-            newFormat = [newline() '<img src="' figName '" alt="' figTitle '">'];
-        end
-
-        
-        document = insertBefore(document, newPos - 2 + tagSize_tmp,  newFormat);
-
-        % insert fig explanation
-        tagSize = length(newFormat);
-        tagSize_tmp = tagSize_tmp + tagSize;        
-    end  
-
-    document = insertBefore(document, newPos - 2 + tagSize_tmp,  [newline() newline() '> **Figure '  num2str(str2double(newFigMods{i}{1})) '. ' finding{3} '**' newline() '> ' finding{end} newline()]);
+a_start = regexp(document, '<a id="', 'end', 'all');
+a_end = regexp(document, '"></a>', 'start', 'all');
+for i = length(a_start):-1:1
+    section_title = regexprep(document(a_start(i):a_end(i)), '[^a-zA-Z0-9"\s]', '');
+    document = [document(1:a_start(i) - 1) strrep(section_title, ' ', '-') document(a_end(i) + 1:end)];
 end
 
 % itemize
-% document = regexprep(document, '\\begin\{itemize\}', '');
-% document = regexprep(document, '\\end\{itemize\}', '');
-tmp_itemizes = regexp(document, '\\begin{itemize}(.*?)\\end\{itemize\}', 'tokens', 'all'); % hold it
-document = regexprep(document, '\\begin{itemize}(.*?)\\end\{itemize\}', '<itemizegoeshere>**!'); % put mark
-pattern = '\\item\s+([^\\]*)';
-for i = 1:length(tmp_itemizes)
-    % get index
-    index_itemize = regexp(document, '\<itemizegoeshere>\*\*\!', 'all');
-    tmp_itemize = tmp_itemizes{i};
+document = regexprep(document, '\\begin{itemize}', '');
+document = regexprep(document, '\\item ', '- ');
+document = regexprep(document, '\\end{itemize}', '');
 
-    % go through each item
-    tmp_items = regexp(strtrim(tmp_itemize{1}), pattern, 'tokens', 'all');
-    hold_this_paragraph = '';
-    for j = 1:length(tmp_items)
-        tmp_item = tmp_items{j};
-        hold_this_line = ['- ' strtrim(tmp_item{1}) char(13) newline()];
-        hold_this_paragraph = [hold_this_paragraph  hold_this_line]; %#ok<AGROW> 
-    end
-    document = insertBefore(document, index_itemize(i) - 1,  hold_this_paragraph);
+% enumerate
+document = regexprep(document, '\\begin{enumerate}', '');
+document = regexprep(document, '\\item{} ', '1. ');
+document = regexprep(document, '\\end{enumerate}', '');
 
-end
-document = regexprep(document, '<itemizegoeshere>\*\*\!', ''); % remove mark
+% description
+document = regexprep(document, '\\begin{description}', '');
+document = regexprep(document, '\\item\[([^\]]*)\] ', '- **$1** ');
+document = regexprep(document, '\\end{description}', '');
 
-% for non itemize items
-findings = regexp(document, pattern, 'tokens', 'all');
-for j = 1:length(findings)
-    finding = findings{j};
-    document = regexprep(document, pattern, ['- ' strtrim(finding{1}) char(13) newline()], 'once');
-end
+% figures
+figures = regexp(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', 'tokens', 'all');
+document = regexprep(document, '\\fig{(marginfigure|figure|figure\*)}\s*{([^{}]*)}\s*{[^{}]*\\includegraphics{([^{}]*)}[^{}]*}\s*{([^{}]*)}\s*{([^{}]*)}', '');
 
-% item
-document = regexprep(document, '\\item\[\\code\{([^\{\}]*)\}\]\s*(.*?)\n', '> `$1` $2');
-document = regexprep(document, '\\item\[([^\[\]]*)\]', '> $1');
-document = regexprep(document, '\-\s\[\`([^\[\]]*)\`\]', '> - `$1`');
+figs = regexp(document, '(%! ?FIG\d*) ?(\w*) ?!%', 'tokens', 'all');
+assert(length(figures) == length(figs), 'The number of figures and %!FIGxx!% should be equal!')
 
-% tcolorbox
-tmp_tcolorbox = regexp(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', 'tokens', 'all'); % hold it
-document = regexprep(document, '\\begin{tcolorbox}(.*?)\\end\{tcolorbox\}', '<tcolorboxgoeshere>**!'); % put mark
-pattern = '\[\s*title=([^=\]]*)\]([^\]\\]*)(.*)(?:\>*)?(?:\}*)?';
-pattern2 = '\]\s*(?:\>*)?\s*(?:\>*)?\s*([^\]\\]*)(?:\\*)?';
-pattern3= '(.*?)\n';
-pattern4 = '\\begin{description}(.*?)\\end\{description\}';
-pattern5 = 'title=([^=\]]*)';
-nl = 2;
-matlab_lang_tag = ['> ```matlab' newline()];
-mat_length = length(matlab_lang_tag);
-for i = 1:length(tmp_tcolorbox)
-    % get index
-    index_tcolorbox = regexp(document, '\<tcolorboxgoeshere>\*\*\!', 'all');
-    % optional for developer
-    tmp_description = regexp(tmp_tcolorbox{i}, pattern4, 'tokens', 'once');
-  
-    if ~isempty(tmp_description) && ~isempty(tmp_description{1})
-        % get sections
-%         tmp_finding = regexp(tmp_tcolorbox{i}{1}, pattern5, 'tokens', 'once');
-        % remove description
-        section_title = regexp(tmp_tcolorbox{i}{1}, pattern5, 'tokens', 'once');
-        section_title =  ['> **' strtrim(section_title{1}) '**'];
-        section_explanation = [newline() ' ' strtrim(tmp_description{1}{1})];
-        section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
-        section_explanation = regexprep(section_explanation, [newline() '\s*' newline() '\s*'], [newline() '>' newline()]); % remove tabs
-        tmp_finding{1}{1} = section_title;
-        tmp_finding{1}{2} = section_explanation;
+for i = length(figures):-1:1
+    figure = figures{i};
+    figure_file = strtrim(figure{3});
+    figure_title = strtrim(figure{4});
+    figure_caption = strtrim(figure{5});
+
+    if figs{i}{2}
+        fig_img = ['<img src="' figure_file '" alt="' figure_title '" height="' figs{i}{2} '">'];
     else
-        % get sections
-        tmp_finding = regexp(tmp_tcolorbox{i}, pattern, 'tokens', 'once');
-        tmp_finding{1}{2} = regexprep(tmp_finding{1}{2}, '\\begin\{description\}', '> ');
-        tmp_finding{1}{2} = regexprep(tmp_finding{1}{2}, '\\end\{description\}', '> ');
-
-        section_title =  ['> **' strtrim(tmp_finding{1}{1}) '**'];
-        section_explanation = [newline() ' ' strtrim(tmp_finding{1}{2})];
-        section_explanation = regexprep(section_explanation, char(9), ''); % remove tabs
-        section_explanation = regexprep(section_explanation, [newline() '\s*' newline() '\s*'], [newline() '>' newline()]); % remove tabs
+        fig_img = ['<img src="' figure_file '" alt="' figure_title '">'];
     end
+    document = regexprep(document, [figs{i}{1} '[ \w]*!%'], [fig_img newline() strrep([newline() '**Figure ' int2str(i) '. ' figure_title '**' newline() figure_caption], newline(), [newline() '> '])]);
 
-    % insert into document
-    document = insertBefore(document, index_tcolorbox(i) - nl,  section_title);
-    document = insertBefore(document, index_tcolorbox(i) - nl + length(section_title),  [section_explanation ' ' newline()]);
-    % code
-    if length(tmp_finding{1}) >2 && ~isempty(tmp_finding{1}{3})
-        section_code = regexp(tmp_finding{1}{3}, pattern2, 'tokens', 'once');
-        init_position_code = index_tcolorbox(i) - nl + length(section_title) + length(section_explanation) + 2; % +2, because im adding a newline and a ' '
-        % indicate it is matlab language
-        document = insertBefore(document, init_position_code,  matlab_lang_tag);
-        init_position_code = init_position_code + mat_length;
-        code_split = regexp(section_code{1}, pattern3, 'tokens', 'all');
-        accumulated_length = 0;
-        for j = 1:length(code_split)
-            line_of_code = code_split{j};
-            line_of_code_with_modifier = ['> ' line_of_code{1} newline()];
-            line_of_code_position = init_position_code + accumulated_length;
-            document = insertBefore(document, line_of_code_position,  line_of_code_with_modifier);
-            accumulated_length = accumulated_length + length(line_of_code_with_modifier);
-        end
-        document = insertBefore(document, init_position_code+accumulated_length,  ['> ```' newline()]);
-    end
+    figure_ref = strtrim(figure{2});
+    document = regexprep(document, ['\\Figref{' figure_ref '}'], ['Figure ' int2str(i)]);
+    document = regexprep(document, ['\\Figsref{' figure_ref '}'], ['Figures ' int2str(i)]);
 end
-document = regexprep(document, '<tcolorboxgoeshere>\*\*\!', ''); % remove mark
-document = regexprep(document,'\%\:', '>');
 
-% lstlisting
-tmp_lstlisting = regexp(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', 'tokens', 'all'); % hold it
-document = regexprep(document, '\\begin{lstlisting}(.*?)\\end\{lstlisting\}', '<lstlistinggoeshere>**!'); % put mark
-document = regexprep(document, '\%', ''); % put mark
-pattern = 'caption\=\{(.*?)\}(.*?)\](.*)';
-patternOR = '\¥\\circled\{([^{}]*)\}(.*?)\¥';
-patternOR2 = '\\threecirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}|\\twocirclednotes\{([^{}]*)\}\{([^{}]*)\}\{([^{}]*)\}|\\circlednote\{([^{}]*)\}\{([^{}]*)\}';
-unicode_circled = 9311; % utf 16
-for i = 1:length(tmp_lstlisting)
-    %
-    index_lstlisting = regexp(document, '\<lstlistinggoeshere>\*\*\!', 'all');
+% codes
+document = regexprep(document, '\\expand{([^{}]*)}', 'This code modifies Code ¡!parentesi graffa aperta!¡$1¡!parentesi graffa chiusa!¡.');  % \epxand{cd:xxx} (1)
 
-    % find circlenotes and replace them with anotations
-    tmp_circlenotes = regexp(tmp_lstlisting{i}, patternOR, 'tokens', 'all');
-    tmp_circlenotes = tmp_circlenotes{1};
+codes_start = regexp(document, '\\begin{lstlisting}', 'end', 'all');
+codes_end = regexp(document, '\\end{lstlisting}', 'start', 'all');
+assert(length(codes_start) == length(codes_end), 'The number of start and end codes should be equal!')
 
-    tmp_circlexp = regexp(tmp_lstlisting{i}, patternOR2, 'tokens', 'all');
-    tmp_circlexp = tmp_circlexp{1};
+code_labels = {};
+for i = length(codes_start):-1:1
+    code = regexp(document(codes_start(i) + 1:codes_end(i) - 1), '\[\s*label=([^,]*),\s*caption={\s*([^{}]*)\s*}\s*\]\s*(.*)', 'tokens', 'all');
+    code_labels{i} = strtrim(code{1}{1});
+    code_caption = strtrim(code{1}{2});
+    code_code = strtrim(regexprep(code{1}{3}, '\t', '    '));
 
-    % put the markings
-    for j = 1:length(tmp_circlenotes)
-        % get the item
-        tmp_marking = tmp_circlenotes{j};
-        tmp_lstlisting{i} = regexprep(tmp_lstlisting{i}, patternOR, [char(unicode_circled+str2double(tmp_marking{1}))], 'once');
+    code_notes = regexp(code_code, '¥\\circled{\d*}\\circlednote{(\d*)}{([^¥]*)}¥', 'tokens', 'all');
+    code_code = regexprep(code_code, '¥\\circled{(\d*)}[^¥]*¥', ' ¡!$1!¡');
+    code_notes_txt = '';
+    for j = 1:1:length(code_notes)
+        code_notes_txt = [code_notes_txt newline() '¡!' code_notes{j}{1} '!¡' code_notes{j}{2} newline()]; %#ok<AGROW> 
     end
+    code_notes_txt = regexprep(code_notes_txt, '\\circled{(\d*)}', '¡!$1!¡');
 
-    % get sections
-    tmp_finding = regexp(tmp_lstlisting{i}, pattern, 'tokens', 'all');
-    tmp_finding = tmp_finding{1};
-    section_title = [strtrim(tmp_finding{1}{1}) newline()];
-    explanation_length = length(section_title);
-
-    % manage code section
-    codeSection = tmp_finding{1}{3};
-    codeSection = regexprep(codeSection, char(13), '');
-    codeSection = regexprep(codeSection, newline(), [newline() '> ']); % char(10) == newline()
-    codeSection = regexprep(codeSection, [newline() '\>([^\>\%]*)\s*\%'] , [newline() '>' newline() '>$1%' ]);
-    code_with_no_notes = ['> ' codeSection newline()];
-    code_length = length(code_with_no_notes);
-
-    % insert into document
-    document = insertBefore(document, index_lstlisting(i) - nl,  section_title);
-    document = insertBefore(document, index_lstlisting(i) - nl + explanation_length,  matlab_lang_tag);
-    document = insertBefore(document, index_lstlisting(i) - nl + mat_length + explanation_length, code_with_no_notes);
-
-    % insert circlenotes info
-    acumulated = 0;
-    if ~isempty(tmp_circlexp) && ~isempty(tmp_circlexp{1})
-        for j = 1:length(tmp_circlexp)
-            tmp_circlexp_note = tmp_circlexp{j};
-
-            % cases
-            if length(tmp_circlexp_note) == 4 % case 4
-                note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{3})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
-            elseif length(tmp_circlexp_note) == 3  % case 3
-                note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' char(unicode_circled+str2double(tmp_circlexp_note{2})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
-            else % case 2
-                note = ['> ' char(unicode_circled+str2double(tmp_circlexp_note{1})) ' ' tmp_circlexp_note{end} char(13) newline() '>' newline()];
-            end
-            
-            tmp_position = index_lstlisting(i) - nl + explanation_length + mat_length + code_length + acumulated;
-            if j == 1
-                document = insertBefore(document, tmp_position,  newline());
-                tmp_position = tmp_position + 1;
-                acumulated = acumulated + 1;
-            end
-            document = insertBefore(document, tmp_position,  note);
-            acumulated = acumulated + length(note);
-        end
-    end
+    document = [document(1:codes_start(i) - length('\begin{lstlisting}')) ...
+        strrep([ newline() ...
+            '**Code ' int2str(i) '.** ' code_caption newline() ...
+            '````matlab' newline() code_code newline() '````' newline() ...
+            code_notes_txt ...
+            ], newline(), [newline() '> ']) ...
+        document(codes_end(i) + length('\end{lstlisting}'):end)];
 end
-document = regexprep(document, '<lstlistinggoeshere>\*\*\!', ''); % remove mark
-document = regexprep(document, '\¥', '');
-document = regexprep(document, '\€', '');
-document = regexprep(document, '\¤', '');
 
-% txt or xls
-document = regexprep(document, '\(\\fn\{\*\.txt\}\)', '(.txt)');
-document = regexprep(document, '\(\\fn\{\*\.xls\}\)', '(.xls)');
-document = regexprep(document, '\(\\fn\{\*\.xlsx\}\)', '(.xlsx)');
-document = regexprep(document, '\(\\fn\{..xls\} or \\fn\{..xlsx\}\)', '(.xls or .xlsx)');
+for i = 1:1:length(code_labels)
+    document = regexprep(document, ['\\Coderef{' code_labels{i} '}'], ['Code ' int2str(i)]);
+    document = regexprep(document, ['Code ¡!parentesi graffa aperta!¡' code_labels{i} '¡!parentesi graffa chiusa!¡'], ['Code ' int2str(i)]);  % \epxand{cd:xxx} (2)
+    document = regexprep(document, ['\\Codesref{' code_labels{i} '}'], ['Codes ' int2str(i)]);    
+end
 
-% references
-document = regexprep(document,  ['\$([^\$\^]*)\^\{(?:\^\{)?(?:' char(13) char(10) ')?\\rm\s*([^\s*\}]*)\}\$'], '$1 $2');
-document = regexprep(document, '\\fn\{([^\{\}]*)\}', '"$1"');
+for i = 1:1:20
+    document = regexprep(document, ['¡!' int2str(i) '!¡'], char(9311 + i));
+end
+for i = 21:1:50
+    document = regexprep(document, ['¡!' int2str(i) '!¡'], char(12860 + i));
+end
 
-% web
-document = regexprep(document, '\(\\url\{(.*?)\}\)', '');
+% colorboxes
+cb_start = regexp(document, '\\begin{tcolorbox}', 'end', 'all');
+cb_end = regexp(document, '\\end{tcolorbox}', 'start', 'all');
+assert(length(cb_start) == length(cb_end), 'The number of start and end colorboxes should be equal!')
 
-% extra
-document = regexprep(document, '\s*\\', '');
-document = regexprep(document, '\`bf\s*', '\`');
-document = regexprep(document,'bibliography(.*?)\}', '');
-document = regexprep(document,'\$\&\$', '&');
-% document = regexprep(document, [newline() '\s*' newline() '\s*' newline()], newline());
-document = strtrim(document);
+for i = length(cb_start):-1:1
+    cb = regexp(document(cb_start(i) + 1:cb_end(i) - 1), '\[\s*title=([^\[\]]*)\s*\]\s*(.*)', 'tokens', 'all');
+    cb_title = strtrim(cb{1}{1});
+    cb_content = strtrim(cb{1}{2});
+    
+    document = [document(1:cb_start(i) - length('\begin{tcolorbox}')) ...
+        strrep([newline() '**' cb_title '**' newline() cb_content], newline(), [newline() '> ']) ...
+        document(cb_end(i) + length('\end{tcolorbox}'):end)];
+end
+
+% parentesi graffe (1)
+document = regexprep(document, '¡!parentesi graffa aperta!¡', '{');
+document = regexprep(document, '¡!parentesi graffa chiusa!¡', '}');
+
+% includegraphics
+document = regexprep(document, '\\includegraphics\[[^{}]*\]{([^{}]*)}', '![$1]($1)');
 
 %% Generate README file
 readme = [
     '# ' title newline() ...
     newline() ...
-    '[![Tutorial ' title '](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](' tex_file(1:end-4) '.pdf)' newline() ...
-    newline()
-    ];
-
-readme = [readme ...
-    document
+    '[![Tutorial ' title '](https://img.shields.io/badge/PDF-Download-red?style=flat-square&logo=adobe-acrobat-reader)](' tex_file_name '.pdf)' newline() ...
+    newline() ...
+    strtrim(document)
     ];
 
 
