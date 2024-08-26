@@ -46,6 +46,8 @@ test_NNDataPoint_CON_CLA
 
 The general GUI of BRAPH 2.0 can be opened by typing \code{braph2} in MatLab's terminal. This GUI allows you to select a pipeline, in this case, \emph{Pipeline Classification Cross-Validation Connectivity BUD}, as shown in \Figref{fig:02}.
 
+%! FIG1 !%
+
 \fig{figure}
 	{fig:02}
 	{
@@ -95,6 +97,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 
 \Figref{fig:04} shows how to upload and plot the brain atlas that you used to extract the \emph{connectivity data} for your analysis. For more information on where to find different atlases or how to change plotting settings on the brain surface, check the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_ba}{Brain Atlas}.
 
+%! FIG2 !%
+
 \fig{figure*}
 	{fig:04}
 	{
@@ -112,6 +116,8 @@ Once the pipeline is uploaded, you can see a GUI that contains different steps t
 \section{Step 2: Load the Connectivity Group Data}
 
 After you loaded the brain atlas, you can upload the \emph{connectivity data} for each group as shown in \Figref{fig:05}. A new interface will be shown containing the data for the group you just selected. You can open each subject’s connectivity matrices by selecting the subject, right click, and select “Open selection” (for more information check the tutorial \href{https://github.com/braph-software/BRAPH-2/tree/develop/tutorials/general/tut_gr_con_nn/tut_gr_con_nn.pdf}{Group of Subjects with Connectivity Data for NN Classification}).
+
+%! FIG3 !%
 
 \fig{figure*}
 	{fig:05}
@@ -144,6 +150,8 @@ Importantly, the parameters you select at the beginning will remain fixed for th
 In the \fn{Analyze Ensemble} interface (\Figref{fig:06}), you can configure the analysis parameters.
 In the \code{DENSITIES} section, you can define the densities by entering values like \code{1:1:2} (you can also use any other valid mathematical expression, such as \code{1 2}, or \code{1:1:2}).
 
+%! FIG4 !%
+
 \fig{figure}
 	{fig:06}
 	{
@@ -160,6 +168,8 @@ In the \code{DENSITIES} section, you can define the densities by entering values
 To configure the graph parameters, you click on the section \code{GRAPH \& MEASURE PARAMETERS} (\Figref{fig:07}). This will open a new interface for graph template settings. 
 In brain connectivity analysis, densities values dictate the required connection density between different brain regions for them to be considered “connected” in a binary undirected graph. 
 Adjusting these densities allows you to explore varying levels of brain connectivity, providing insights into how regions communicate at different density settings.
+
+%! FIG5 !%
 
 \fig{figure*}
 	{fig:07}
@@ -189,6 +199,8 @@ Since this pipeline uses the graph adjacency matrices as the input to train the 
  
 After configuring the parameters, you can proceed to calculate specific graph adjacency matricees (\Figref{fig:08}). To do this, return to the \fn{Analyze Ensemble} interface (\Figref{fig:08}a) and scroll down to locate the \fn{Individual GRAPHS} panel. By clicking the 'C' button, you will see a table displaying all subjects.
 
+%! FIG6 !%
+
 \fig{figure*}
 	{fig:08}
 	{
@@ -217,6 +229,8 @@ Finally, when you right-click in the \code{Individual GRAPHS} panel, you will fi
 
 After completing the analysis of the first group, you can analyze the second and third group by simply clicking on \code{Analyze Group 2} and \code{Analyze Group 3} (\Figref{fig:09}a). You will notice that in the new GUI (\Figref{fig:09}b-c), the parameters you previously selected for the first group are already preselected and fixed for this analysis. 
 
+%! FIG7 !%
+
 \fig{figure}
 	{fig:09}
 	{
@@ -240,6 +254,8 @@ Before these neural networks are trained, it is important to ensure the followin
 	\item The neural networks parameters are set correctly (e.g., epochs, shuffle rule).
 	\item The evaluator parameters are set correctly (e.g, permutation times).
 \end{enumerate}
+
+%! FIG8 !%
 
 \fig{figure}
 	{fig:10}
@@ -279,6 +295,8 @@ The available parameters are:
 To configure the evaluator parameters, you click on the section \code{Template for Neural Network Evaluator} (\Figref{fig:10}e). This will open a new interface for neural networks evaluator template settings. 
 The available parameter is the permutation times for permuting feature importance (\Figref{fig:10}f).
 
+%! FIG9 !%
+
 \fig{figure}
 	{fig:11}
 	{
@@ -303,6 +321,8 @@ In multiclass classification, the concept of ROC curve can be extended to evalua
 To see the results of area under ROC curves for each class, locate the \code{Average of Area Under ROC Curve} and \code{Average of Macro Area Under ROC Curve} panel and click the \code{C} button (\Figref{fig:12}b).
 To plot the ROC curves, click the \code{ROC Plot} button. This action will open a panel figure plotting all ROC curves from all folds (\Figref{fig:12}c).
 Note that, by clicking on the Settings Panel Figure button in the toolbar of the ROC figure, you can adjust different visualization settings.
+
+%! FIG10 !%
 
 \fig{figure*}
 	{fig:12}
