@@ -128,11 +128,11 @@ DRAW (query, logical) draws the receiver operating characteristic figure.
 %%%% ¡calculate!
 value = calculateValue@PanelFig(pf, PanelFig.DRAW, varargin{:}); % also warning
 if value
-    if isa(pf.get('NNCV').getr('NN_LIST'), 'NoValue')
+    if isa(pf.get('NNCV').getr('NN_LIST'), 'NoValue') & ~isa(pf.get('NNCV').getr('D'), 'NoValue')
         pf.get('NNCV').memorize('D_LIST'); % trigger calculation in order to plot
         pf.get('NNCV').memorize('NN_LIST'); % trigger calculation in order to plot
     end
-    if isa(pf.get('NNCV').getr('EVALUATOR_LIST'), 'NoValue')
+    if isa(pf.get('NNCV').getr('EVALUATOR_LIST'), 'NoValue') & ~isa(pf.get('NNCV').getr('D'), 'NoValue')
         pf.get('NNCV').memorize('EVALUATOR_LIST'); % trigger calculation in order to plot
     end
 
@@ -394,7 +394,6 @@ else
     value = {};
 end
 
-
 %%% ¡prop!
 ROC (figure, logical) determines whether the ROC plots are shown.
 %%%% ¡default!
@@ -466,8 +465,10 @@ if pf.get('ROC') && ~isa(pf.getr('NNCV'), 'NoValue')
         roc_st_lines{1}.set('VISIBLE', true);
         pf.get('ROC_DICT').set('IT_LIST', roc_st_lines)
     end
-    for i = 1:1:length(classNames)*kfolds + 1
-        pf.get('ROC_DICT').get('IT', i).get('SETUP')
+    if ~isempty(classNames)
+        for i = 1:1:length(classNames)*kfolds + 1
+            pf.get('ROC_DICT').get('IT', i).get('SETUP')
+        end
     end
 end
 %%%% ¡gui!
@@ -556,7 +557,7 @@ pr = SettingsTextPP('EL', pf, 'PROP', NNClassifierMLP_CrossValidationPF_ROC.ST_Y
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNClassifierMLP_CrossValidationPF_ROC.PARENT NNClassifierMLP_CrossValidationPF_ROC.H NNClassifierMLP_CrossValidationPF_ROC.ST_POSITION NNClassifierMLP_CrossValidationPF_ROC.ST_AXIS NNClassifierMLP_CrossValidationPF_ROC.H_ROC NNClassifierMLP_CrossValidationPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_CrossValidationPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_CrossValidationPF_ROC.ROC_DICT NNClassifierMLP_CrossValidationPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_CrossValidationPF_ROC.ST_LINE_BASE NNClassifierMLP_CrossValidationPF_ROC.H_LINE_BASE NNClassifierMLP_CrossValidationPF_ROC.ST_TITLE NNClassifierMLP_CrossValidationPF_ROC.ST_XLABEL NNClassifierMLP_CrossValidationPF_ROC.ST_YLABEL] 
+[NNClassifierMLP_CrossValidationPF_ROC.PARENT NNClassifierMLP_CrossValidationPF_ROC.H NNClassifierMLP_CrossValidationPF_ROC.H_ROC NNClassifierMLP_CrossValidationPF_ROC.H_XLABEL  NNClassifierMLP_CrossValidationPF_ROC.H_YLABEL NNClassifierMLP_CrossValidationPF_ROC.ST_POSITION NNClassifierMLP_CrossValidationPF_ROC.ST_AXIS NNClassifierMLP_CrossValidationPF_ROC.H_ROC NNClassifierMLP_CrossValidationPF_ROC.ROC_DICT NNClassifierMLP_CrossValidationPF_ROC.ST_TITLE NNClassifierMLP_CrossValidationPF_ROC.ST_XLABEL NNClassifierMLP_CrossValidationPF_ROC.ST_YLABEL NNClassifierMLP_CrossValidationPF_ROC.H_TITLE NNClassifierMLP_CrossValidationPF_ROC.LISTENER_ST_AXIS NNClassifierMLP_CrossValidationPF_ROC.H_AXES] 
 
 %%% ¡warning_off!
 true
@@ -566,6 +567,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPF_ROC'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 6)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':NNClassifierMLP_CrossValidationPF_ROC'])
