@@ -35,7 +35,7 @@ function [target_dir, source_dir] = genesis(target_dir, source_dir, run_number, 
 fp = filesep();
 
 if nargin < 4
-    rollcall = {'-ds_examples', '-gui_examples', '-sandbox'};
+    rollcall = {'+ds_examples', '+gui_examples', '-sandbox'};
 end
 
 if nargin < 3 || isempty(run_number)
