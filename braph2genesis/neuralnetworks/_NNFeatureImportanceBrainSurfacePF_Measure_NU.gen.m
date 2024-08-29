@@ -208,7 +208,11 @@ NOTES (metadata, string) are some specific notes about the panel figure nodal su
 %%% ¡prop!
 SETUP (query, empty) calculates the diff value and stores it to be implemented in the subelements.
 %%%% ¡calculate!
-g = pf.get('D').get('DP_DICT').get('IT', 1).get('G');
+if pf.get('D').get('DP_DICT').get('LENGTH') > 0
+    g = pf.get('D').get('DP_DICT').get('IT', 1).get('G');
+else
+    g = Graph();
+end
 
 % get brain region related list
 sph_list = pf.get('SPH_DICT').get('IT_LIST');
@@ -404,7 +408,7 @@ pf.get('SETUP');
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePF_Measure_NU.PARENT NNFeatureImportanceBrainSurfacePF_Measure_NU.H NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_POSITION NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_AXIS NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_SURFACE NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_AMBIENT NNFeatureImportanceBrainSurfacePF_Measure_NU.CP]
+[NNFeatureImportanceBrainSurfacePF_Measure_NU.PARENT NNFeatureImportanceBrainSurfacePF_Measure_NU.H NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_POSITION NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_AXIS NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_SURFACE NNFeatureImportanceBrainSurfacePF_Measure_NU.ST_AMBIENT]
 
 %%% ¡warning_off!
 true
