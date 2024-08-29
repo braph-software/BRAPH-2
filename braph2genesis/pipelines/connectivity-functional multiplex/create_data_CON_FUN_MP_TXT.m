@@ -72,7 +72,7 @@ if ~isfolder(data_dir)
         % variables of interest
         vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
     end
-    writetable(table(vois1), [data_dir filesep() gr1_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+    writetable(table(vois1), [data_dir filesep() gr1_name '.CON' '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
     % Group 1 directories
     gr2_name = 'CON_FUN_MP_Group_2_TXT';
@@ -107,7 +107,7 @@ if ~isfolder(data_dir)
         % variables of interest
         vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
     end
-    writetable(table(vois2), [data_dir filesep() gr2_name '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
+    writetable(table(vois2), [data_dir filesep() gr2_name '.CON' '.vois.txt'], 'Delimiter', '\t', 'WriteVariableNames', false)
 
     % Group 1 - FUN - 5 modules of 18 nodes each
     % initialize values for the WS model

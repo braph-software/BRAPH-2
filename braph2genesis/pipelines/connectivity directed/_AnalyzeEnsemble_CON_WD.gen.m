@@ -158,7 +158,7 @@ Template for Graphs and Measures
 .01
 %%%% ¡code!
 if ~isfile([fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'atlas.txt'])
-    test_ImporterGroupSubjectCON_TXT % create example files
+    create_data_COND_TXT % create example files
 end
 
 ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('AnalyzeEnsemble_CON_WD')) filesep 'Example data CON D TXT' filesep 'atlas.txt']).get('BA');
