@@ -51,12 +51,12 @@ NOTES (metadata, string) are some specific notes about the panel property layer.
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNFeatureImportanceBrainSurfacePF_NS()
+NNFeatureImportanceBrainSurfacePF_Measure_NS()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-NNFeatureImportanceBrainSurfacePF_NS.LAYER
+NNFeatureImportanceBrainSurfacePF_Measure_NS.LAYER
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.

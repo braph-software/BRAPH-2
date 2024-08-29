@@ -59,7 +59,7 @@ NNFeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.

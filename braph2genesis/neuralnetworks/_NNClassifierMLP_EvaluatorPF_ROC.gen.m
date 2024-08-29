@@ -511,7 +511,7 @@ pr = SettingsTextPP('EL', pf, 'PROP', NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL,
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_EvaluatorPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.H_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL] 
+[NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL] 
 
 %%% ¡warning_off!
 true
@@ -521,6 +521,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 5)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC'])

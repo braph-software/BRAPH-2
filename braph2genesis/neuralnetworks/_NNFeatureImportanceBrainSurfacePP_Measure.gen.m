@@ -2,7 +2,7 @@
 NNFeatureImportanceBrainSurfacePP_Measure < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with graph measures.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePF_Measure) 
+A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePP_Measure) 
  plots the panel to select a measure, of which the feature importance will be 
  plotted, from a drop-down list.
 It is supposed to be used with the property FEATURE_IMPORTANCE of 
@@ -20,7 +20,7 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_Measure'
+'NNFeatureImportanceBrainSurfacePP_Measure'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
@@ -30,27 +30,27 @@ NAME (constant, string) is the name of the panel for feature importance.
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePF_Measure) plots the panel to select a measure, of which the feature importance will be plotted, from a drop-down list. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePP_Measure) plots the panel to select a measure, of which the feature importance will be plotted, from a drop-down list. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNFeatureImportanceBrainSurfacePF_Measure'
+'NNFeatureImportanceBrainSurfacePP_Measure'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_Measure ID'
+'NNFeatureImportanceBrainSurfacePP_Measure ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_Measure label'
+'NNFeatureImportanceBrainSurfacePP_Measure label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_Measure notes'
+'NNFeatureImportanceBrainSurfacePP_Measure notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
@@ -60,7 +60,7 @@ NNFeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -564,7 +564,7 @@ GUI_FI_DICT (gui, idict) contains the GUIs for the feature measures.
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePF_Measure.PARENT NNFeatureImportanceBrainSurfacePF_Measure.H NNFeatureImportanceBrainSurfacePF_Measure.LISTENER_CB NNFeatureImportanceBrainSurfacePF_Measure.HEIGHT NNFeatureImportanceBrainSurfacePF_Measure.XSLIDER NNFeatureImportanceBrainSurfacePF_Measure.YSLIDER NNFeatureImportanceBrainSurfacePF_Measure.TABLE NNFeatureImportanceBrainSurfacePF_Measure.CONTEXTMENU]
+[NNFeatureImportanceBrainSurfacePP_Measure.PARENT NNFeatureImportanceBrainSurfacePP_Measure.H NNFeatureImportanceBrainSurfacePP_Measure.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Measure.HEIGHT NNFeatureImportanceBrainSurfacePP_Measure.TABLE NNFeatureImportanceBrainSurfacePP_Measure.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -573,7 +573,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_Measure'])
+warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Measure'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_Measure'])
+warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Measure'])

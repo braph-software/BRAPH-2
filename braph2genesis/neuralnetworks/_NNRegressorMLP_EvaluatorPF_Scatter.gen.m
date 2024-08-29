@@ -382,7 +382,11 @@ value = [];
 %%% ¡prop!
 H_PREDICTIONS (evanescent, handlelist) is the set of handles for the prediction plots.
 %%%% ¡calculate!
-targets = pf.memorize('NNE').get('D').get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+if ~isa(pf.memorize('NNE').getr('D'), 'NoValue')
+    targets = pf.memorize('NNE').get('D').get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+else
+    targets = {};
+end
 L = length(targets);
 h_predictions = cell(1, L);
 for i = 1:1:L
@@ -421,8 +425,11 @@ PREDICTION_DICT (figure, idict) contains the prediction plot for each target.
 if pf.get('PREDICTIONS') && ~isa(pf.getr('NNE'), 'NoValue')
     predictions = pf.memorize('PREDICTIONS_VALUE');
     ground_truth = pf.memorize('GROUNDTRUTH_VALUE');
-    targets = pf.memorize('NNE').get('D').get('DP_DICT').get('IT', 1).get('TARGET_IDS');
-    
+    if ~isa(pf.memorize('NNE').getr('D'), 'NoValue')
+        targets = pf.memorize('NNE').get('D').get('DP_DICT').get('IT', 1).get('TARGET_IDS');
+    else
+        targets = {};
+    end
     if pf.get('PREDICTION_DICT').get('LENGTH') == 0 && ~isempty(ground_truth)
         for i = 1:1:length(targets)
             target = targets{i};
@@ -571,6 +578,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 5)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':NNRegressorMLP_EvaluatorPF_Scatter'])

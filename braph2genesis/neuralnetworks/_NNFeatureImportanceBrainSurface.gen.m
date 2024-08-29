@@ -109,7 +109,11 @@ end
 RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.
 %%%% ¡calculate!
 cell1 = nnfib.get('FEATURE_IMPORTANCE');
-cell2 = nnfib.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+if nnfib.get('D').get('DP_DICT').get('LENGTH') > 0
+    cell2 = nnfib.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
+else
+    cell2 = {};
+end
 if ~isequal(numel(cell1), numel(cell2)) 
     cell1 = nnfib.get('MAP_TO_CELL', cell2mat(cell1), cell2);
 end
