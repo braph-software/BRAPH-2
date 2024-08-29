@@ -59,7 +59,7 @@ NNFeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
+NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -90,8 +90,12 @@ if value
     prop = pr.get('PROP');
     
     input_dataset = pr.get('D'); 
-    
-    g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+
+    if input_dataset.get('DP_DICT').get('LENGTH') > 0
+        g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    else
+        g = Graph();
+    end
     if g.get('LAYERNUMBER') == 1
         pr.set('TABLE_HEIGHT', s(40), ...
             'XSLIDERSHOW', false, ...
@@ -492,7 +496,7 @@ value = mappedCellArray;
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePP_Graph.PARENT NNFeatureImportanceBrainSurfacePP_Graph.H NNFeatureImportanceBrainSurfacePP_Graph.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Graph.HEIGHT NNFeatureImportanceBrainSurfacePP_Graph.XSLIDER NNFeatureImportanceBrainSurfacePP_Graph.YSLIDER NNFeatureImportanceBrainSurfacePP_Graph.TABLE NNFeatureImportanceBrainSurfacePP_Graph.CONTEXTMENU]
+[NNFeatureImportanceBrainSurfacePP_Graph.PARENT NNFeatureImportanceBrainSurfacePP_Graph.H NNFeatureImportanceBrainSurfacePP_Graph.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Graph.HEIGHT NNFeatureImportanceBrainSurfacePP_Graph.TABLE NNFeatureImportanceBrainSurfacePP_Graph.CONTEXTMENU NNFeatureImportanceBrainSurfacePP_Graph.XSLIDERSHOW NNFeatureImportanceBrainSurfacePP_Graph.XSLIDERLABELS NNFeatureImportanceBrainSurfacePP_Graph.YSLIDERSHOW NNFeatureImportanceBrainSurfacePP_Graph.YSLIDERLABELS NNFeatureImportanceBrainSurfacePP_Graph.XSLIDER NNFeatureImportanceBrainSurfacePP_Graph.YSLIDER]
 
 %%% ¡warning_off!
 true
