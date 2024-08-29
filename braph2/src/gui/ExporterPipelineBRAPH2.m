@@ -106,6 +106,8 @@ classdef ExporterPipelineBRAPH2 < Exporter
 	%
 	%
 	% See also Exporter, Pipeline, ImporterPipelineBRAPH2.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		PIP = 10; %CET: Computational Efficiency Trick
@@ -160,6 +162,21 @@ classdef ExporterPipelineBRAPH2 < Exporter
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the pipeline exporter in BRAPH2.
+			%
+			% BUILD = ExporterPipelineBRAPH2.GETBUILD() returns the build of 'ExporterPipelineBRAPH2'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = EX.GETBUILD() returns the build of the pipeline exporter in BRAPH2 EX.
+			%  BUILD = Element.GETBUILD(EX) returns the build of 'EX'.
+			%  BUILD = Element.GETBUILD('ExporterPipelineBRAPH2') returns the build of 'ExporterPipelineBRAPH2'.
+			%
+			% Note that the Element.GETBUILD(EX) and Element.GETBUILD('ExporterPipelineBRAPH2')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function ex_class = getClass()
 			%GETCLASS returns the class of the pipeline exporter in BRAPH2.
 			%
@@ -559,7 +576,7 @@ classdef ExporterPipelineBRAPH2 < Exporter
 					prop_default = Format.getFormatDefault(1, ExporterPipelineBRAPH2.getPropSettings(prop));
 				case 1 % ExporterPipelineBRAPH2.ELCLASS
 					prop_default = 'ExporterPipelineBRAPH2';
-				case 2 % ExporterPipeline'BRAPH 2.0'
+				case 2 % ExporterPipelineBRAPH2.NAME
 					prop_default = 'Pipeline Exporter in BRAPH2 File';
 				case 3 % ExporterPipelineBRAPH2.DESCRIPTION
 					prop_default = 'A Pipeline Exporter in BRAPH2 File (ExporterPipelineBRAPH2) exports a pipeline to a BRAPH2 file.';
