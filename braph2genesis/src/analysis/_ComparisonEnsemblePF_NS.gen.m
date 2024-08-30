@@ -211,7 +211,7 @@ pr = ComparisonEnsemblePF_NxPP_Node('EL', pf, 'PROP', ComparisonEnsemblePF_NS.NO
 %% ¡tests!
 
 %%% ¡excluded_props!
-[ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL] 
+[ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.CP ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL] 
 
 %%% ¡warning_off!
 true
@@ -221,6 +221,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':ComparisonEnsemblePF_NS'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 5)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':ComparisonEnsemblePF_NS'])
