@@ -166,7 +166,7 @@ Template for Graphs and Measures
 %%%% ¡probability!
 .01
 %%%% ¡code!
-create_data_ST_XLS() % only creates files if the example folder doesn't already exist
+create_data_ST_TXT() % only creates files if the example folder doesn't already exist
 
 ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt']).get('BA');
 gr1 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_1.txt'], 'BA', ba).get('GR');
