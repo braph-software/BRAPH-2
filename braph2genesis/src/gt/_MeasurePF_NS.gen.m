@@ -173,6 +173,10 @@ value = [];
 
 %%% ¡prop!
 NODE (figure, scalar) is the node number of the nodal measure.
+%%%% ¡default!
+1
+%%%% ¡postset!
+pf.get('SETUP');
 %%%% ¡gui!
 pr = MeasurePF_NxPP_Node('EL', pf, 'PROP', MeasurePF_NS.NODE);
 
@@ -189,6 +193,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':MeasurePF_NS'])
-assert(length(findall(0, 'type', 'figure')) == 1)
+assert(length(findall(0, 'type', 'figure')) == 5)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':MeasurePF_NS'])
