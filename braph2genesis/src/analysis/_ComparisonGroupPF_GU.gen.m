@@ -221,6 +221,6 @@ true
 Remove Figures
 %%%% ¡code!
 warning('off', [BRAPH2.STR ':ComparisonGroupPF_GU'])
-assert(length(findall(0, 'type', 'figure')) == 5)
+assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
 warning('on', [BRAPH2.STR ':ComparisonGroupPF_GU'])

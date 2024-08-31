@@ -14,21 +14,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 			'NNClassifierMLP_EvaluatorPF_ROC().get(''ELCLASS'') should return ''NNClassifierMLP_EvaluatorPF_ROC''.')
 	end
 	 
-	% getBuild()
-	assert(NNClassifierMLP_EvaluatorPF_ROC.getBuild() == 1 && NNClassifierMLP_EvaluatorPF_ROC.getBuild() > 0, ...
-		[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.FAIL_TEST], ...
-		'NNClassifierMLP_EvaluatorPF_ROC.getBuild() should return the NNClassifierMLP_EvaluatorPF_ROC build number.')
-	assert(pf.getBuild() == 1 && pf.getBuild() > 0 , ...
-		[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.FAIL_TEST], ...
-		'pf.getBuild() should return the NNClassifierMLP_EvaluatorPF_ROC build number.')
-	assert(Element.getBuild(pf) == 1 && Element.getBuild(pf) > 0, ...
-		[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(pf) should return the NNClassifierMLP_EvaluatorPF_ROC build number.')
-	assert(Element.getBuild('NNClassifierMLP_EvaluatorPF_ROC') == 1 && Element.getBuild('NNClassifierMLP_EvaluatorPF_ROC') > 0, ...
-		[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(''NNClassifierMLP_EvaluatorPF_ROC'') should return the NNClassifierMLP_EvaluatorPF_ROC build number.')
-	 
-	% getClass()
+	% getClass
 	assert(strcmp(NNClassifierMLP_EvaluatorPF_ROC.getClass(), 'NNClassifierMLP_EvaluatorPF_ROC'), ...
 		[BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC:' BRAPH2.FAIL_TEST], ...
 		'NNClassifierMLP_EvaluatorPF_ROC.getClass() should return ''NNClassifierMLP_EvaluatorPF_ROC''.')
@@ -505,7 +491,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:NNClassifierMLP_EvaluatorPF_ROC.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
+		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_EvaluatorPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.H_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
 			continue
 		end
 	 
@@ -649,7 +635,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:NNClassifierMLP_EvaluatorPF_ROC.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
+		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_EvaluatorPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.H_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
 			continue
 		end
 	 
@@ -752,7 +738,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:NNClassifierMLP_EvaluatorPF_ROC.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
+			if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_EvaluatorPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.H_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
 				continue
 			end
 	 
@@ -1538,7 +1524,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:NNClassifierMLP_EvaluatorPF_ROC.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
+		if any(prop == [NNClassifierMLP_EvaluatorPF_ROC.PARENT NNClassifierMLP_EvaluatorPF_ROC.H NNClassifierMLP_EvaluatorPF_ROC.ST_POSITION NNClassifierMLP_EvaluatorPF_ROC.ST_AXIS NNClassifierMLP_EvaluatorPF_ROC.H_ROC NNClassifierMLP_EvaluatorPF_ROC.PREDICTIONS_VALUE NNClassifierMLP_EvaluatorPF_ROC.GROUNDTRUTH_VALUE NNClassifierMLP_EvaluatorPF_ROC.ROC_DICT NNClassifierMLP_EvaluatorPF_ROC.LISTENER_ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.H_LINE_BASE NNClassifierMLP_EvaluatorPF_ROC.ST_TITLE NNClassifierMLP_EvaluatorPF_ROC.ST_XLABEL NNClassifierMLP_EvaluatorPF_ROC.ST_YLABEL])
 			continue
 		end
 	 
@@ -1721,7 +1707,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	warning('off', [BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC'])
 	
 	warning('off', [BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC'])
-	assert(length(findall(0, 'type', 'figure')) == 5)
+	assert(length(findall(0, 'type', 'figure')) == 1)
 	delete(findall(0, 'type', 'figure'))
 	warning('on', [BRAPH2.STR ':NNClassifierMLP_EvaluatorPF_ROC'])
 	

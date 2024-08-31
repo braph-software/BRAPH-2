@@ -14,21 +14,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 			'ComparisonEnsemblePF_NS().get(''ELCLASS'') should return ''ComparisonEnsemblePF_NS''.')
 	end
 	 
-	% getBuild()
-	assert(ComparisonEnsemblePF_NS.getBuild() == 1 && ComparisonEnsemblePF_NS.getBuild() > 0, ...
-		[BRAPH2.STR ':ComparisonEnsemblePF_NS:' BRAPH2.FAIL_TEST], ...
-		'ComparisonEnsemblePF_NS.getBuild() should return the ComparisonEnsemblePF_NS build number.')
-	assert(pf.getBuild() == 1 && pf.getBuild() > 0 , ...
-		[BRAPH2.STR ':ComparisonEnsemblePF_NS:' BRAPH2.FAIL_TEST], ...
-		'pf.getBuild() should return the ComparisonEnsemblePF_NS build number.')
-	assert(Element.getBuild(pf) == 1 && Element.getBuild(pf) > 0, ...
-		[BRAPH2.STR ':ComparisonEnsemblePF_NS:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(pf) should return the ComparisonEnsemblePF_NS build number.')
-	assert(Element.getBuild('ComparisonEnsemblePF_NS') == 1 && Element.getBuild('ComparisonEnsemblePF_NS') > 0, ...
-		[BRAPH2.STR ':ComparisonEnsemblePF_NS:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(''ComparisonEnsemblePF_NS'') should return the ComparisonEnsemblePF_NS build number.')
-	 
-	% getClass()
+	% getClass
 	assert(strcmp(ComparisonEnsemblePF_NS.getClass(), 'ComparisonEnsemblePF_NS'), ...
 		[BRAPH2.STR ':ComparisonEnsemblePF_NS:' BRAPH2.FAIL_TEST], ...
 		'ComparisonEnsemblePF_NS.getClass() should return ''ComparisonEnsemblePF_NS''.')
@@ -512,7 +498,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsemblePF_NS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.CP ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
+		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
 			continue
 		end
 	 
@@ -663,7 +649,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsemblePF_NS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.CP ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
+		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
 			continue
 		end
 	 
@@ -766,7 +752,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:ComparisonEnsemblePF_NS.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.CP ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
+			if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
 				continue
 			end
 	 
@@ -1601,7 +1587,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonEnsemblePF_NS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.CP ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
+		if any(prop == [ComparisonEnsemblePF_NS.PARENT ComparisonEnsemblePF_NS.H ComparisonEnsemblePF_NS.ST_POSITION ComparisonEnsemblePF_NS.ST_AXIS ComparisonEnsemblePF_NS.ST_AREA ComparisonEnsemblePF_NS.ST_LINE_DIFF ComparisonEnsemblePF_NS.ST_LINE_CIL ComparisonEnsemblePF_NS.ST_LINE_CIU ComparisonEnsemblePF_NS.ST_TITLE ComparisonEnsemblePF_NS.ST_XLABEL ComparisonEnsemblePF_NS.ST_YLABEL])
 			continue
 		end
 	 
@@ -1798,7 +1784,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	warning('off', [BRAPH2.STR ':ComparisonEnsemblePF_NS'])
 	
 	warning('off', [BRAPH2.STR ':ComparisonEnsemblePF_NS'])
-	assert(length(findall(0, 'type', 'figure')) == 5)
+	assert(length(findall(0, 'type', 'figure')) == 1)
 	delete(findall(0, 'type', 'figure'))
 	warning('on', [BRAPH2.STR ':ComparisonEnsemblePF_NS'])
 	

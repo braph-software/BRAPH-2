@@ -14,21 +14,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 			'ComparisonGroupPF_NB().get(''ELCLASS'') should return ''ComparisonGroupPF_NB''.')
 	end
 	 
-	% getBuild()
-	assert(ComparisonGroupPF_NB.getBuild() == 1 && ComparisonGroupPF_NB.getBuild() > 0, ...
-		[BRAPH2.STR ':ComparisonGroupPF_NB:' BRAPH2.FAIL_TEST], ...
-		'ComparisonGroupPF_NB.getBuild() should return the ComparisonGroupPF_NB build number.')
-	assert(pf.getBuild() == 1 && pf.getBuild() > 0 , ...
-		[BRAPH2.STR ':ComparisonGroupPF_NB:' BRAPH2.FAIL_TEST], ...
-		'pf.getBuild() should return the ComparisonGroupPF_NB build number.')
-	assert(Element.getBuild(pf) == 1 && Element.getBuild(pf) > 0, ...
-		[BRAPH2.STR ':ComparisonGroupPF_NB:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(pf) should return the ComparisonGroupPF_NB build number.')
-	assert(Element.getBuild('ComparisonGroupPF_NB') == 1 && Element.getBuild('ComparisonGroupPF_NB') > 0, ...
-		[BRAPH2.STR ':ComparisonGroupPF_NB:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(''ComparisonGroupPF_NB'') should return the ComparisonGroupPF_NB build number.')
-	 
-	% getClass()
+	% getClass
 	assert(strcmp(ComparisonGroupPF_NB.getClass(), 'ComparisonGroupPF_NB'), ...
 		[BRAPH2.STR ':ComparisonGroupPF_NB:' BRAPH2.FAIL_TEST], ...
 		'ComparisonGroupPF_NB.getClass() should return ''ComparisonGroupPF_NB''.')
@@ -512,7 +498,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonGroupPF_NB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.CP ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
+		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
 			continue
 		end
 	 
@@ -663,7 +649,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonGroupPF_NB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.CP ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
+		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
 			continue
 		end
 	 
@@ -766,7 +752,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:ComparisonGroupPF_NB.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.CP ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
+			if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
 				continue
 			end
 	 
@@ -1601,7 +1587,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:ComparisonGroupPF_NB.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.CP ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
+		if any(prop == [ComparisonGroupPF_NB.PARENT ComparisonGroupPF_NB.H ComparisonGroupPF_NB.ST_POSITION ComparisonGroupPF_NB.ST_AXIS ComparisonGroupPF_NB.ST_AREA ComparisonGroupPF_NB.ST_LINE_DIFF ComparisonGroupPF_NB.ST_LINE_CIL ComparisonGroupPF_NB.ST_LINE_CIU ComparisonGroupPF_NB.ST_TITLE ComparisonGroupPF_NB.ST_XLABEL ComparisonGroupPF_NB.ST_YLABEL])
 			continue
 		end
 	 

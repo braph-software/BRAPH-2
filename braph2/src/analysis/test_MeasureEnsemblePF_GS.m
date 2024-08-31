@@ -14,21 +14,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 			'MeasureEnsemblePF_GS().get(''ELCLASS'') should return ''MeasureEnsemblePF_GS''.')
 	end
 	 
-	% getBuild()
-	assert(MeasureEnsemblePF_GS.getBuild() == 1 && MeasureEnsemblePF_GS.getBuild() > 0, ...
-		[BRAPH2.STR ':MeasureEnsemblePF_GS:' BRAPH2.FAIL_TEST], ...
-		'MeasureEnsemblePF_GS.getBuild() should return the MeasureEnsemblePF_GS build number.')
-	assert(pf.getBuild() == 1 && pf.getBuild() > 0 , ...
-		[BRAPH2.STR ':MeasureEnsemblePF_GS:' BRAPH2.FAIL_TEST], ...
-		'pf.getBuild() should return the MeasureEnsemblePF_GS build number.')
-	assert(Element.getBuild(pf) == 1 && Element.getBuild(pf) > 0, ...
-		[BRAPH2.STR ':MeasureEnsemblePF_GS:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(pf) should return the MeasureEnsemblePF_GS build number.')
-	assert(Element.getBuild('MeasureEnsemblePF_GS') == 1 && Element.getBuild('MeasureEnsemblePF_GS') > 0, ...
-		[BRAPH2.STR ':MeasureEnsemblePF_GS:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(''MeasureEnsemblePF_GS'') should return the MeasureEnsemblePF_GS build number.')
-	 
-	% getClass()
+	% getClass
 	assert(strcmp(MeasureEnsemblePF_GS.getClass(), 'MeasureEnsemblePF_GS'), ...
 		[BRAPH2.STR ':MeasureEnsemblePF_GS:' BRAPH2.FAIL_TEST], ...
 		'MeasureEnsemblePF_GS.getClass() should return ''MeasureEnsemblePF_GS''.')
@@ -505,7 +491,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemblePF_GS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ME MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
+		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
 			continue
 		end
 	 
@@ -649,7 +635,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemblePF_GS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ME MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
+		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
 			continue
 		end
 	 
@@ -752,7 +738,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:MeasureEnsemblePF_GS.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ME MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
+			if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
 				continue
 			end
 	 
@@ -1538,7 +1524,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:MeasureEnsemblePF_GS.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ME MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
+		if any(prop == [MeasureEnsemblePF_GS.PARENT MeasureEnsemblePF_GS.H MeasureEnsemblePF_GS.ST_POSITION MeasureEnsemblePF_GS.ST_AXIS MeasureEnsemblePF_GS.ST_AREA MeasureEnsemblePF_GS.ST_LINE_M MeasureEnsemblePF_GS.ST_TITLE MeasureEnsemblePF_GS.ST_XLABEL MeasureEnsemblePF_GS.ST_YLABEL])
 			continue
 		end
 	 

@@ -14,21 +14,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 			'PipelinePP_Notes().get(''ELCLASS'') should return ''PipelinePP_Notes''.')
 	end
 	 
-	% getBuild()
-	assert(PipelinePP_Notes.getBuild() == 1 && PipelinePP_Notes.getBuild() > 0, ...
-		[BRAPH2.STR ':PipelinePP_Notes:' BRAPH2.FAIL_TEST], ...
-		'PipelinePP_Notes.getBuild() should return the PipelinePP_Notes build number.')
-	assert(pr.getBuild() == 1 && pr.getBuild() > 0 , ...
-		[BRAPH2.STR ':PipelinePP_Notes:' BRAPH2.FAIL_TEST], ...
-		'pr.getBuild() should return the PipelinePP_Notes build number.')
-	assert(Element.getBuild(pr) == 1 && Element.getBuild(pr) > 0, ...
-		[BRAPH2.STR ':PipelinePP_Notes:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(pr) should return the PipelinePP_Notes build number.')
-	assert(Element.getBuild('PipelinePP_Notes') == 1 && Element.getBuild('PipelinePP_Notes') > 0, ...
-		[BRAPH2.STR ':PipelinePP_Notes:' BRAPH2.FAIL_TEST], ...
-		'Element.getBuild(''PipelinePP_Notes'') should return the PipelinePP_Notes build number.')
-	 
-	% getClass()
+	% getClass
 	assert(strcmp(PipelinePP_Notes.getClass(), 'PipelinePP_Notes'), ...
 		[BRAPH2.STR ':PipelinePP_Notes:' BRAPH2.FAIL_TEST], ...
 		'PipelinePP_Notes.getClass() should return ''PipelinePP_Notes''.')
@@ -505,7 +491,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:PipelinePP_Notes.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU PipelinePP_Notes.MENUS])
+		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU])
 			continue
 		end
 	 
@@ -649,7 +635,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:PipelinePP_Notes.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU PipelinePP_Notes.MENUS])
+		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU])
 			continue
 		end
 	 
@@ -752,7 +738,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 		for prop = 1:1:PipelinePP_Notes.getPropNumber()
 	 
 			% excluded props
-			if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU PipelinePP_Notes.MENUS])
+			if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU])
 				continue
 			end
 	 
@@ -1538,7 +1524,7 @@ if rand() >= (1 - .01) * BRAPH2TEST.RANDOM
 	for prop = 1:1:PipelinePP_Notes.getPropNumber()
 	 
 		% excluded props
-		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU PipelinePP_Notes.MENUS])
+		if any(prop == [PipelinePP_Notes.PARENT PipelinePP_Notes.H PipelinePP_Notes.LISTENER_CB PipelinePP_Notes.TEXTAREA PipelinePP_Notes.CONTEXTMENU])
 			continue
 		end
 	 
@@ -1721,7 +1707,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	warning('off', [BRAPH2.STR ':PipelinePP_Notes'])
 	
 	warning('off', [BRAPH2.STR ':PipelinePP_Notes'])
-	assert(length(findall(0, 'type', 'figure')) == 2)
+	assert(length(findall(0, 'type', 'figure')) == 1)
 	delete(findall(0, 'type', 'figure'))
 	warning('on', [BRAPH2.STR ':PipelinePP_Notes'])
 	
