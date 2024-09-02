@@ -169,8 +169,8 @@ Template for Graphs and Measures
 create_data_ST_TXT() % only creates files if the example folder doesn't already exist
 
 ba = ImporterBrainAtlasTXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'atlas.txt']).get('BA');
-gr1 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_1.txt'], 'BA', ba).get('GR');
-gr2 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST txt' filesep 'ST_Group_2.txt'], 'BA', ba).get('GR');
+gr1 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'ST_Group_1.txt'], 'BA', ba).get('GR');
+gr2 = ImporterGroupSubjectST_TXT('FILE', [fileparts(which('SubjectST')) filesep 'Example data ST TXT' filesep 'ST_Group_2.txt'], 'BA', ba).get('GR');
 
 % check that analysis parameters are correclty templated between analysis 1 and 2
 negative_weight_rule = Correlation.ABS;
