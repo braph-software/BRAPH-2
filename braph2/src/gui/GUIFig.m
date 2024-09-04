@@ -159,6 +159,8 @@ classdef GUIFig < GUI
 	%
 	%
 	% See also uifigure, PanelFig.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		PF = 30; %CET: Computational Efficiency Trick
@@ -305,6 +307,21 @@ classdef GUIFig < GUI
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the figure GUI.
+			%
+			% BUILD = GUIFig.GETBUILD() returns the build of 'GUIFig'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = GUI.GETBUILD() returns the build of the figure GUI GUI.
+			%  BUILD = Element.GETBUILD(GUI) returns the build of 'GUI'.
+			%  BUILD = Element.GETBUILD('GUIFig') returns the build of 'GUIFig'.
+			%
+			% Note that the Element.GETBUILD(GUI) and Element.GETBUILD('GUIFig')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function gui_class = getClass()
 			%GETCLASS returns the class of the figure GUI.
 			%

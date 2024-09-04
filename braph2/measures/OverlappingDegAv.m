@@ -142,6 +142,21 @@ classdef OverlappingDegAv < OverlappingDeg
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average overlapping-degree.
+			%
+			% BUILD = OverlappingDegAv.GETBUILD() returns the build of 'OverlappingDegAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average overlapping-degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('OverlappingDegAv') returns the build of 'OverlappingDegAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('OverlappingDegAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average overlapping-degree.
 			%

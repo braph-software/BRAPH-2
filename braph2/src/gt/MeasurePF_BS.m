@@ -133,6 +133,8 @@ classdef MeasurePF_BS < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasurePF_BS < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for binodal superglobal measure.
+			%
+			% BUILD = MeasurePF_BS.GETBUILD() returns the build of 'MeasurePF_BS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for binodal superglobal measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_BS') returns the build of 'MeasurePF_BS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_BS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for binodal superglobal measure.
 			%
@@ -587,7 +604,7 @@ classdef MeasurePF_BS < MeasurePF
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 40 % MeasurePF_BS.NODES
-					prop_default = Format.getFormatDefault(12, MeasurePF_BS.getPropSettings(prop));
+					prop_default = [1 1];
 				case 1 % MeasurePF_BS.ELCLASS
 					prop_default = 'MeasurePF_BS';
 				case 2 % MeasurePF_BS.NAME
@@ -687,6 +704,30 @@ classdef MeasurePF_BS < MeasurePF
 			end
 		end
 	end
+	methods (Access=protected) % postset
+		function postset(pf, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 40 % MeasurePF_BS.NODES
+					pf.get('SETUP')
+					
+				otherwise
+					if prop <= 39
+						postset@MeasurePF(pf, prop);
+					end
+			end
+		end
+	end
 	methods (Access=protected) % calculate value
 		function value = calculateValue(pf, prop, varargin)
 			%CALCULATEVALUE calculates the value of a property.
@@ -708,6 +749,7 @@ classdef MeasurePF_BS < MeasurePF
 					x = pf.get('M').get('G').get('APARTITIONTICKS');
 					
 					nodes = pf.get('NODES');
+					
 					y = cellfun(@(x) x(nodes(1), nodes(2)), pf.get('M').get('M'))';
 					
 					pf.memorize('ST_LINE').set('X', x, 'Y', y)

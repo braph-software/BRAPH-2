@@ -147,6 +147,21 @@ classdef MultiplexP < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the mxpart.
+			%
+			% BUILD = MultiplexP.GETBUILD() returns the build of 'MultiplexP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the mxpart M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexP') returns the build of 'MultiplexP'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the mxpart.
 			%
@@ -531,7 +546,7 @@ classdef MultiplexP < Measure
 				case 1 % MultiplexP.ELCLASS
 					prop_default = 'MultiplexP';
 				case 2 % MultiplexP.NAME
-					prop_default = 'MultiplexParticipation';
+					prop_default = 'Multiplex Participation';
 				case 3 % MultiplexP.DESCRIPTION
 					prop_default = 'The Multiplex Participation (MultiplexP) is the nodal homogeneity of the number of neighbors of a node across the layers. It is calculated as: Pi = L/(L - 1) [1 - sum_{l=1}^{L} (ki(l)/oi)^2] where L is the number of layers, ki(l) is the degree in the l-th layer and oi is the overlapping degree of the node. Pi = 1 when the degree is the same in all layers and Pi = 0 when a node has non-zero degree in only one layer.';
 				case 4 % MultiplexP.TEMPLATE

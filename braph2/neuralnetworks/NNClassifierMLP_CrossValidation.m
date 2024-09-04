@@ -9,7 +9,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	% To train all the neural networks for all folds, use: nncv.get('TRAIN')
 	%
 	% The list of NNClassifierMLP_CrossValidation properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cross-validation.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
@@ -63,33 +63,33 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNClassifierMLP_CrossValidation methods (display):
-	%  tostring - string with information about the neural network cross-validation
-	%  disp - displays information about the neural network cross-validation
-	%  tree - displays the tree of the neural network cross-validation
+	%  tostring - string with information about the neural network cross-validation for MLP classifiers
+	%  disp - displays information about the neural network cross-validation for MLP classifiers
+	%  tree - displays the tree of the neural network cross-validation for MLP classifiers
 	%
 	% NNClassifierMLP_CrossValidation methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two neural network cross-validation are equal (values, locked)
+	%  isequal - determines whether two neural network cross-validation for MLP classifiers are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the neural network cross-validation
+	%  copy - copies the neural network cross-validation for MLP classifiers
 	%
 	% NNClassifierMLP_CrossValidation methods (save/load, Static):
-	%  save - saves BRAPH2 neural network cross-validation as b2 file
-	%  load - loads a BRAPH2 neural network cross-validation from a b2 file
+	%  save - saves BRAPH2 neural network cross-validation for MLP classifiers as b2 file
+	%  load - loads a BRAPH2 neural network cross-validation for MLP classifiers from a b2 file
 	%
 	% NNClassifierMLP_CrossValidation method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the neural network cross-validation
+	%  encodeJSON - returns a JSON string encoding the neural network cross-validation for MLP classifiers
 	%
 	% NNClassifierMLP_CrossValidation method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the neural network cross-validation
+	%   decodeJSON - returns a JSON string encoding the neural network cross-validation for MLP classifiers
 	%
 	% NNClassifierMLP_CrossValidation methods (inspection, Static):
-	%  getClass - returns the class of the neural network cross-validation
+	%  getClass - returns the class of the neural network cross-validation for MLP classifiers
 	%  getSubclasses - returns all subclasses of NNClassifierMLP_CrossValidation
-	%  getProps - returns the property list of the neural network cross-validation
-	%  getPropNumber - returns the property number of the neural network cross-validation
+	%  getProps - returns the property list of the neural network cross-validation for MLP classifiers
+	%  getPropNumber - returns the property number of the neural network cross-validation for MLP classifiers
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -132,6 +132,8 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	%
 	%
 	% See also NNDataPoint, NNDataset, NNEvaluator.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		P = 30; %CET: Computational Efficiency Trick
@@ -166,7 +168,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 	end
 	methods % constructor
 		function nncv = NNClassifierMLP_CrossValidation(varargin)
-			%NNClassifierMLP_CrossValidation() creates a neural network cross-validation.
+			%NNClassifierMLP_CrossValidation() creates a neural network cross-validation for MLP classifiers.
 			%
 			% NNClassifierMLP_CrossValidation(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -176,7 +178,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNClassifierMLP_CrossValidation properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the cross-validation.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the cross-validation.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the cross-validation.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the cross-validation.
@@ -218,13 +220,28 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network cross-validation for MLP classifiers.
+			%
+			% BUILD = NNClassifierMLP_CrossValidation.GETBUILD() returns the build of 'NNClassifierMLP_CrossValidation'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NNCV.GETBUILD() returns the build of the neural network cross-validation for MLP classifiers NNCV.
+			%  BUILD = Element.GETBUILD(NNCV) returns the build of 'NNCV'.
+			%  BUILD = Element.GETBUILD('NNClassifierMLP_CrossValidation') returns the build of 'NNClassifierMLP_CrossValidation'.
+			%
+			% Note that the Element.GETBUILD(NNCV) and Element.GETBUILD('NNClassifierMLP_CrossValidation')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nncv_class = getClass()
-			%GETCLASS returns the class of the neural network cross-validation.
+			%GETCLASS returns the class of the neural network cross-validation for MLP classifiers.
 			%
 			% CLASS = NNClassifierMLP_CrossValidation.GETCLASS() returns the class 'NNClassifierMLP_CrossValidation'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = NNCV.GETCLASS() returns the class of the neural network cross-validation NNCV.
+			%  CLASS = NNCV.GETCLASS() returns the class of the neural network cross-validation for MLP classifiers NNCV.
 			%  CLASS = Element.GETCLASS(NNCV) returns the class of 'NNCV'.
 			%  CLASS = Element.GETCLASS('NNClassifierMLP_CrossValidation') returns 'NNClassifierMLP_CrossValidation'.
 			%
@@ -234,12 +251,12 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			nncv_class = 'NNClassifierMLP_CrossValidation';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the neural network cross-validation.
+			%GETSUBCLASSES returns all subclasses of the neural network cross-validation for MLP classifiers.
 			%
 			% LIST = NNClassifierMLP_CrossValidation.GETSUBCLASSES() returns all subclasses of 'NNClassifierMLP_CrossValidation'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = NNCV.GETSUBCLASSES() returns all subclasses of the neural network cross-validation NNCV.
+			%  LIST = NNCV.GETSUBCLASSES() returns all subclasses of the neural network cross-validation for MLP classifiers NNCV.
 			%  LIST = Element.GETSUBCLASSES(NNCV) returns all subclasses of 'NNCV'.
 			%  LIST = Element.GETSUBCLASSES('NNClassifierMLP_CrossValidation') returns all subclasses of 'NNClassifierMLP_CrossValidation'.
 			%
@@ -251,16 +268,16 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			subclass_list = { 'NNClassifierMLP_CrossValidation' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of neural network cross-validation.
+			%GETPROPS returns the property list of neural network cross-validation for MLP classifiers.
 			%
-			% PROPS = NNClassifierMLP_CrossValidation.GETPROPS() returns the property list of neural network cross-validation
+			% PROPS = NNClassifierMLP_CrossValidation.GETPROPS() returns the property list of neural network cross-validation for MLP classifiers
 			%  as a row vector.
 			%
 			% PROPS = NNClassifierMLP_CrossValidation.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = NNCV.GETPROPS([CATEGORY]) returns the property list of the neural network cross-validation NNCV.
+			%  PROPS = NNCV.GETPROPS([CATEGORY]) returns the property list of the neural network cross-validation for MLP classifiers NNCV.
 			%  PROPS = Element.GETPROPS(NNCV[, CATEGORY]) returns the property list of 'NNCV'.
 			%  PROPS = Element.GETPROPS('NNClassifierMLP_CrossValidation'[, CATEGORY]) returns the property list of 'NNClassifierMLP_CrossValidation'.
 			%
@@ -296,15 +313,15 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of neural network cross-validation.
+			%GETPROPNUMBER returns the property number of neural network cross-validation for MLP classifiers.
 			%
-			% N = NNClassifierMLP_CrossValidation.GETPROPNUMBER() returns the property number of neural network cross-validation.
+			% N = NNClassifierMLP_CrossValidation.GETPROPNUMBER() returns the property number of neural network cross-validation for MLP classifiers.
 			%
-			% N = NNClassifierMLP_CrossValidation.GETPROPNUMBER(CATEGORY) returns the property number of neural network cross-validation
+			% N = NNClassifierMLP_CrossValidation.GETPROPNUMBER(CATEGORY) returns the property number of neural network cross-validation for MLP classifiers
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = NNCV.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network cross-validation NNCV.
+			%  N = NNCV.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network cross-validation for MLP classifiers NNCV.
 			%  N = Element.GETPROPNUMBER(NNCV) returns the property number of 'NNCV'.
 			%  N = Element.GETPROPNUMBER('NNClassifierMLP_CrossValidation') returns the property number of 'NNClassifierMLP_CrossValidation'.
 			%
@@ -340,7 +357,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in neural network cross-validation/error.
+			%EXISTSPROP checks whether property exists in neural network cross-validation for MLP classifiers/error.
 			%
 			% CHECK = NNClassifierMLP_CrossValidation.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -378,7 +395,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in neural network cross-validation/error.
+			%EXISTSTAG checks whether tag exists in neural network cross-validation for MLP classifiers/error.
 			%
 			% CHECK = NNClassifierMLP_CrossValidation.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -544,7 +561,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 			prop = NNClassifierMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.'  'C_MATRIX (result, matrix) provides the confusion matrix across k folds.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
+			nnclassifiermlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the cross-validation.'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'P (parameter, scalar) is the permutation number.'  'AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value across k folds.'  'C_MATRIX (result, matrix) provides the confusion matrix across k folds.'  'AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.' };
 			prop_description = nnclassifiermlp_crossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -630,7 +647,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 				case 1 % NNClassifierMLP_CrossValidation.ELCLASS
 					prop_default = 'NNClassifierMLP_CrossValidation';
 				case 2 % NNClassifierMLP_CrossValidation.NAME
-					prop_default = 'NNClassifierMLP_CrossValidation';
+					prop_default = 'Neural Network Cross-Validation for Multi-layer Perceptron Classifiers';
 				case 3 % NNClassifierMLP_CrossValidation.DESCRIPTION
 					prop_default = 'A cross validation for multi-layer perceptron classifiers (NNClassifierMLP_CrossValidation) is a process that facilitates the evaluation of multi-layer perceptron classifiers using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
 				case 4 % NNClassifierMLP_CrossValidation.TEMPLATE

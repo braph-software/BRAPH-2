@@ -142,6 +142,21 @@ classdef LocalEfficiency < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the local efficiency.
+			%
+			% BUILD = LocalEfficiency.GETBUILD() returns the build of 'LocalEfficiency'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the local efficiency M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('LocalEfficiency') returns the build of 'LocalEfficiency'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('LocalEfficiency')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the local efficiency.
 			%

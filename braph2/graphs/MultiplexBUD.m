@@ -2,8 +2,8 @@ classdef MultiplexBUD < MultiplexWU
 	%MultiplexBUD is a binary undirected multiplex with fixed densities.
 	% It is a subclass of <a href="matlab:help MultiplexWU">MultiplexWU</a>.
 	%
-	% In a binary undirected multiplex with fixed densities (BUD), the layers are 
-	%  those of binary undirected (BU) multiplex graphs derived from the same 
+	% In a binary undirected multiplex graph with fixed densities (MultiplexBUD), the layers are 
+	%  those of binary undirected multiplex graphs derived from the same 
 	%  weighted supra-connectivity matrices binarized at different densities.
 	% The supra-connectivity matrix has a number of partitions equal to the number of densities.
 	%
@@ -206,6 +206,21 @@ classdef MultiplexBUD < MultiplexWU
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the binary undirected multiplex with fixed densities.
+			%
+			% BUILD = MultiplexBUD.GETBUILD() returns the build of 'MultiplexBUD'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the binary undirected multiplex with fixed densities G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultiplexBUD') returns the build of 'MultiplexBUD'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultiplexBUD')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the binary undirected multiplex with fixed densities.
 			%
@@ -594,9 +609,9 @@ classdef MultiplexBUD < MultiplexWU
 				case 1 % MultiplexBUD.ELCLASS
 					prop_default = 'MultiplexBUD';
 				case 2 % MultiplexBUD.NAME
-					prop_default = 'MultiplexBUD';
+					prop_default = 'Multiplex Binary Undirected at fixed Densities';
 				case 3 % MultiplexBUD.DESCRIPTION
-					prop_default = 'In a binary undirected multiplex with fixed densities (BUD), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different densities. The supra-connectivity matrix has a number of partitions equal to the number of densities.';
+					prop_default = 'In a binary undirected multiplex graph with fixed densities (MultiplexBUD), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different densities. The supra-connectivity matrix has a number of partitions equal to the number of densities.';
 				case 4 % MultiplexBUD.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexBUD.getPropSettings(prop));
 				case 5 % MultiplexBUD.ID

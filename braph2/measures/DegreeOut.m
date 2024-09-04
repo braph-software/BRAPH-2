@@ -142,6 +142,21 @@ classdef DegreeOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the out-degree.
+			%
+			% BUILD = DegreeOut.GETBUILD() returns the build of 'DegreeOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the out-degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('DegreeOut') returns the build of 'DegreeOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('DegreeOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the out-degree.
 			%

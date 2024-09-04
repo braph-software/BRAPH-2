@@ -132,6 +132,8 @@ classdef MeasurePF_GB < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = MeasurePF_GB(varargin)
@@ -191,6 +193,21 @@ classdef MeasurePF_GB < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for global bilayer measure.
+			%
+			% BUILD = MeasurePF_GB.GETBUILD() returns the build of 'MeasurePF_GB'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for global bilayer measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_GB') returns the build of 'MeasurePF_GB'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_GB')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for global bilayer measure.
 			%

@@ -162,6 +162,8 @@ classdef PanelPropItemList < PanelProp
 	%
 	%
 	% See also uitable, GUI, PanelElement, GUIElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % constants
 		SELECTOR = -1 % code for the selector column.
@@ -305,6 +307,21 @@ classdef PanelPropItemList < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the item-list prop panel.
+			%
+			% BUILD = PanelPropItemList.GETBUILD() returns the build of 'PanelPropItemList'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the item-list prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropItemList') returns the build of 'PanelPropItemList'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropItemList')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the item-list prop panel.
 			%

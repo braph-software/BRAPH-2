@@ -142,6 +142,21 @@ classdef WeightedMxPAv < WeightedMxP
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average weighted multiplex participation.
+			%
+			% BUILD = WeightedMxPAv.GETBUILD() returns the build of 'WeightedMxPAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average weighted multiplex participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('WeightedMxPAv') returns the build of 'WeightedMxPAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('WeightedMxPAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average weighted multiplex participation.
 			%

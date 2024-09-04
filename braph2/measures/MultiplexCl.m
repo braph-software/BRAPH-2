@@ -143,6 +143,21 @@ classdef MultiplexCl < MultiplexT
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex clustering.
+			%
+			% BUILD = MultiplexCl.GETBUILD() returns the build of 'MultiplexCl'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multiplex clustering M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexCl') returns the build of 'MultiplexCl'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexCl')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multiplex clustering.
 			%

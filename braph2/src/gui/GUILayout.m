@@ -151,6 +151,8 @@ classdef GUILayout < GUI
 	%
 	%
 	% See also uifigure, GUI, Element.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		EL_CLASS = 30; %CET: Computational Efficiency Trick
@@ -231,6 +233,21 @@ classdef GUILayout < GUI
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the GUI layout.
+			%
+			% BUILD = GUILayout.GETBUILD() returns the build of 'GUILayout'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = GUI.GETBUILD() returns the build of the GUI layout GUI.
+			%  BUILD = Element.GETBUILD(GUI) returns the build of 'GUI'.
+			%  BUILD = Element.GETBUILD('GUILayout') returns the build of 'GUILayout'.
+			%
+			% Note that the Element.GETBUILD(GUI) and Element.GETBUILD('GUILayout')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function gui_class = getClass()
 			%GETCLASS returns the class of the GUI layout.
 			%

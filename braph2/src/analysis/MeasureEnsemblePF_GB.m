@@ -132,6 +132,8 @@ classdef MeasureEnsemblePF_GB < MeasureEnsemblePF
 	%
 	%
 	% See also MeasureEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = MeasureEnsemblePF_GB(varargin)
@@ -191,6 +193,21 @@ classdef MeasureEnsemblePF_GB < MeasureEnsemblePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global bilayer group comparison figure.
+			%
+			% BUILD = MeasureEnsemblePF_GB.GETBUILD() returns the build of 'MeasureEnsemblePF_GB'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global bilayer group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureEnsemblePF_GB') returns the build of 'MeasureEnsemblePF_GB'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureEnsemblePF_GB')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global bilayer group comparison figure.
 			%

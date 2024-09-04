@@ -133,6 +133,8 @@ classdef MeasurePF_NS < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODE = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasurePF_NS < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for nodal superglobal measure.
+			%
+			% BUILD = MeasurePF_NS.GETBUILD() returns the build of 'MeasurePF_NS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for nodal superglobal measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_NS') returns the build of 'MeasurePF_NS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_NS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for nodal superglobal measure.
 			%
@@ -587,7 +604,7 @@ classdef MeasurePF_NS < MeasurePF
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 40 % MeasurePF_NS.NODE
-					prop_default = Format.getFormatDefault(11, MeasurePF_NS.getPropSettings(prop));
+					prop_default = 1;
 				case 1 % MeasurePF_NS.ELCLASS
 					prop_default = 'MeasurePF_NS';
 				case 2 % MeasurePF_NS.NAME
@@ -684,6 +701,30 @@ classdef MeasurePF_NS < MeasurePF
 					['BRAPH2' ':MeasurePF_NS:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' MeasurePF_NS.getPropTag(prop) ' (' MeasurePF_NS.getFormatTag(MeasurePF_NS.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postset
+		function postset(pf, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 40 % MeasurePF_NS.NODE
+					pf.get('SETUP');
+					
+				otherwise
+					if prop <= 39
+						postset@MeasurePF(pf, prop);
+					end
 			end
 		end
 	end

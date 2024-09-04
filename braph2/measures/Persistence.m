@@ -163,6 +163,21 @@ classdef Persistence < MultilayerCommunity
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the persistence.
+			%
+			% BUILD = Persistence.GETBUILD() returns the build of 'Persistence'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the persistence M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Persistence') returns the build of 'Persistence'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Persistence')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the persistence.
 			%
@@ -549,7 +564,7 @@ classdef Persistence < MultilayerCommunity
 				case 2 % Persistence.NAME
 					prop_default = 'Persistence';
 				case 3 % Persistence.DESCRIPTION
-					prop_default = 'The Persistence (Persistence) of a multilayer network is calculated as the normalized sum of the number of nodes that do not change community assignments. It varies between 0 and 1. In categorical multilayer networks, it is the sum over all pairs of layers of the number of nodes that do not change community assignments, whereas in ordinal multilayer networks (e. g. temporal), it is the number of nodes that do not change community assignments between consecutive layers.';
+					prop_default = 'The Persistence (Persistence) of a multilayer network is calculated as the normalized sum of the number of nodes that do not change community assignments. It varies between 0 and 1. In categorical multilayer networks, it is the sum over all pairs of layers of the number of nodes that do not change community assignments, whereas in ordinal multilayer networks (e.g. temporal), it is the number of nodes that do not change community assignments between consecutive layers.';
 				case 4 % Persistence.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Persistence.getPropSettings(prop));
 				case 5 % Persistence.ID

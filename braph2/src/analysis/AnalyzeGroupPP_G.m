@@ -136,6 +136,8 @@ classdef AnalyzeGroupPP_G < PanelProp
 	%
 	%
 	% See also uitable, AnalyzeGroup, Graph, Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
@@ -234,6 +236,21 @@ classdef AnalyzeGroupPP_G < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph and measure plot.
+			%
+			% BUILD = AnalyzeGroupPP_G.GETBUILD() returns the build of 'AnalyzeGroupPP_G'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the graph and measure plot PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('AnalyzeGroupPP_G') returns the build of 'AnalyzeGroupPP_G'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('AnalyzeGroupPP_G')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the graph and measure plot.
 			%
@@ -1174,15 +1191,13 @@ classdef AnalyzeGroupPP_G < PanelProp
 			    
 			    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
 			
-			    for i = 1:1:length(m_list)
-			        if ismember(i, selected)
-			            measure = m_list{i};
+			    for s = 1:1:length(selected)
+			        measure = m_list{selected(s)};
 			
-			            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+			        braph2waitbar(wb, .1 + s / length(selected), ['Calculating measure ' int2str(s) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 			
-			            if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
-			                g.get('MEASURE', measure).memorize('M');
-			            end
+			        if isa(g.get('MEASURE', measure).getr('M'), 'NoValue')
+			            g.get('MEASURE', measure).memorize('M');
 			        end
 			    end
 			    

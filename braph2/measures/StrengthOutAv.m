@@ -143,6 +143,21 @@ classdef StrengthOutAv < StrengthOut
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average out-strength.
+			%
+			% BUILD = StrengthOutAv.GETBUILD() returns the build of 'StrengthOutAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average out-strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('StrengthOutAv') returns the build of 'StrengthOutAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('StrengthOutAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average out-strength.
 			%

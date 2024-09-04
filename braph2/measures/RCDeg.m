@@ -151,6 +151,21 @@ classdef RCDeg < Degree
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the rich-club degree.
+			%
+			% BUILD = RCDeg.GETBUILD() returns the build of 'RCDeg'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the rich-club degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('RCDeg') returns the build of 'RCDeg'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('RCDeg')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the rich-club degree.
 			%

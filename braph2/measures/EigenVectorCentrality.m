@@ -142,6 +142,21 @@ classdef EigenVectorCentrality < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the eigenvector centrality.
+			%
+			% BUILD = EigenVectorCentrality.GETBUILD() returns the build of 'EigenVectorCentrality'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the eigenvector centrality M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('EigenVectorCentrality') returns the build of 'EigenVectorCentrality'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('EigenVectorCentrality')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the eigenvector centrality.
 			%

@@ -105,6 +105,8 @@ classdef NNDataPoint < ConcreteElement
 	%
 	%
 	% See also NNData.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		INPUT = 9; %CET: Computational Efficiency Trick
@@ -146,6 +148,21 @@ classdef NNDataPoint < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network data point.
+			%
+			% BUILD = NNDataPoint.GETBUILD() returns the build of 'NNDataPoint'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = DP.GETBUILD() returns the build of the neural network data point DP.
+			%  BUILD = Element.GETBUILD(DP) returns the build of 'DP'.
+			%  BUILD = Element.GETBUILD('NNDataPoint') returns the build of 'NNDataPoint'.
+			%
+			% Note that the Element.GETBUILD(DP) and Element.GETBUILD('NNDataPoint')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function dp_class = getClass()
 			%GETCLASS returns the class of the neural network data point.
 			%
@@ -534,7 +551,7 @@ classdef NNDataPoint < ConcreteElement
 				case 1 % NNDataPoint.ELCLASS
 					prop_default = 'NNDataPoint';
 				case 2 % NNDataPoint.NAME
-					prop_default = 'NNDataPoint';
+					prop_default = 'Neural Network Data Point';
 				case 3 % NNDataPoint.DESCRIPTION
 					prop_default = 'A neural network data point (NNDataPoint) contains a data point with its inputs and targets for neural network analysis. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses shall be specifically designed to cater to different use cases such as classification task, regression task, or data generation.';
 				case 4 % NNDataPoint.TEMPLATE

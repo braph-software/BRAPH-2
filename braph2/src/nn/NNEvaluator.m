@@ -105,6 +105,8 @@ classdef NNEvaluator < ConcreteElement
 	%
 	%
 	% See also NNDataPoint, NNDataset, NNBase.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NN = 9; %CET: Computational Efficiency Trick
@@ -146,6 +148,21 @@ classdef NNEvaluator < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network evaluator.
+			%
+			% BUILD = NNEvaluator.GETBUILD() returns the build of 'NNEvaluator'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NNE.GETBUILD() returns the build of the neural network evaluator NNE.
+			%  BUILD = Element.GETBUILD(NNE) returns the build of 'NNE'.
+			%  BUILD = Element.GETBUILD('NNEvaluator') returns the build of 'NNEvaluator'.
+			%
+			% Note that the Element.GETBUILD(NNE) and Element.GETBUILD('NNEvaluator')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nne_class = getClass()
 			%GETCLASS returns the class of the neural network evaluator.
 			%
@@ -530,7 +547,7 @@ classdef NNEvaluator < ConcreteElement
 				case 1 % NNEvaluator.ELCLASS
 					prop_default = 'NNEvaluator';
 				case 2 % NNEvaluator.NAME
-					prop_default = 'NNEvaluator';
+					prop_default = 'Neural Network Evaluator';
 				case 3 % NNEvaluator.DESCRIPTION
 					prop_default = 'A neural network evaluator (NNEvaluator) evaluates the performance of a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses shall be specifically designed to cater to different evaluation cases such as a classification task, a regression task, or a data generation task.';
 				case 4 % NNEvaluator.TEMPLATE

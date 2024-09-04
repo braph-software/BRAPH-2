@@ -107,6 +107,8 @@ classdef BrainRegion < ConcreteElement
 	%
 	%
 	% See also BrainAtlas, BrainSurface.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		X = 9; %CET: Computational Efficiency Trick
@@ -154,6 +156,21 @@ classdef BrainRegion < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain region.
+			%
+			% BUILD = BrainRegion.GETBUILD() returns the build of 'BrainRegion'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = BR.GETBUILD() returns the build of the brain region BR.
+			%  BUILD = Element.GETBUILD(BR) returns the build of 'BR'.
+			%  BUILD = Element.GETBUILD('BrainRegion') returns the build of 'BrainRegion'.
+			%
+			% Note that the Element.GETBUILD(BR) and Element.GETBUILD('BrainRegion')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function br_class = getClass()
 			%GETCLASS returns the class of the brain region.
 			%

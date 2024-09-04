@@ -130,6 +130,8 @@ classdef PanelPropLogical < PanelProp
 	%
 	%
 	% See also uicheckbox, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		CHECKBOX = 36; %CET: Computational Efficiency Trick
@@ -192,6 +194,21 @@ classdef PanelPropLogical < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the logical prop panel.
+			%
+			% BUILD = PanelPropLogical.GETBUILD() returns the build of 'PanelPropLogical'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the logical prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropLogical') returns the build of 'PanelPropLogical'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropLogical')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the logical prop panel.
 			%

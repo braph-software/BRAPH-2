@@ -142,6 +142,21 @@ classdef WeightedMxP < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the weighted multiplex participation.
+			%
+			% BUILD = WeightedMxP.GETBUILD() returns the build of 'WeightedMxP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the weighted multiplex participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('WeightedMxP') returns the build of 'WeightedMxP'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('WeightedMxP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the weighted multiplex participation.
 			%

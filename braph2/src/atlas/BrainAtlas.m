@@ -107,6 +107,8 @@ classdef BrainAtlas < ConcreteElement
 	%
 	%
 	% See also BrainRegion, BrainSurface, ImporterBrainAtlasXLS, ImporterBrainAtlasTXT, ExporterBrainAtlasXLS, ExporterBrainAtlasTXT.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		BR_DICT = 9; %CET: Computational Efficiency Trick
@@ -148,6 +150,21 @@ classdef BrainAtlas < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain atlas.
+			%
+			% BUILD = BrainAtlas.GETBUILD() returns the build of 'BrainAtlas'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = BA.GETBUILD() returns the build of the brain atlas BA.
+			%  BUILD = Element.GETBUILD(BA) returns the build of 'BA'.
+			%  BUILD = Element.GETBUILD('BrainAtlas') returns the build of 'BrainAtlas'.
+			%
+			% Note that the Element.GETBUILD(BA) and Element.GETBUILD('BrainAtlas')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function ba_class = getClass()
 			%GETCLASS returns the class of the brain atlas.
 			%

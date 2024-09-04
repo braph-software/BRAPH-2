@@ -158,6 +158,21 @@ classdef MultilayerM < MultilayerCommunity
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multilayer modularity.
+			%
+			% BUILD = MultilayerM.GETBUILD() returns the build of 'MultilayerM'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multilayer modularity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultilayerM') returns the build of 'MultilayerM'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultilayerM')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multilayer modularity.
 			%

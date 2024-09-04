@@ -130,6 +130,8 @@ classdef SettingsPP < PanelProp
 	%
 	%
 	% See also Settings.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pr = SettingsPP(varargin)
@@ -185,6 +187,21 @@ classdef SettingsPP < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the prop panel for settings.
+			%
+			% BUILD = SettingsPP.GETBUILD() returns the build of 'SettingsPP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the prop panel for settings PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('SettingsPP') returns the build of 'SettingsPP'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('SettingsPP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the prop panel for settings.
 			%

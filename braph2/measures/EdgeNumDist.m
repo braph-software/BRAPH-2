@@ -142,6 +142,21 @@ classdef EdgeNumDist < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the edge number distance.
+			%
+			% BUILD = EdgeNumDist.GETBUILD() returns the build of 'EdgeNumDist'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the edge number distance M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('EdgeNumDist') returns the build of 'EdgeNumDist'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('EdgeNumDist')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the edge number distance.
 			%

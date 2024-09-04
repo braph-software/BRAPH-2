@@ -106,6 +106,8 @@ classdef NNDataset < ConcreteElement
 	%
 	%
 	% See also NNDataPoint, NNDatasetCombine, NNDatasetSplit.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		DP_CLASS = 9; %CET: Computational Efficiency Trick
@@ -159,6 +161,21 @@ classdef NNDataset < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network data.
+			%
+			% BUILD = NNDataset.GETBUILD() returns the build of 'NNDataset'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = D.GETBUILD() returns the build of the neural network data D.
+			%  BUILD = Element.GETBUILD(D) returns the build of 'D'.
+			%  BUILD = Element.GETBUILD('NNDataset') returns the build of 'NNDataset'.
+			%
+			% Note that the Element.GETBUILD(D) and Element.GETBUILD('NNDataset')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function d_class = getClass()
 			%GETCLASS returns the class of the neural network data.
 			%
@@ -555,7 +572,7 @@ classdef NNDataset < ConcreteElement
 				case 1 % NNDataset.ELCLASS
 					prop_default = 'NNDataset';
 				case 2 % NNDataset.NAME
-					prop_default = 'NNDataset';
+					prop_default = 'Neural Network Dataset';
 				case 3 % NNDataset.DESCRIPTION
 					prop_default = 'A neural network dataset (NNDataset) represents a dataset containing datapoints whose class is defined by the DP_CLASS property. NNDataset can contain all the necessary inputs and targets.';
 				case 4 % NNDataset.TEMPLATE

@@ -118,6 +118,8 @@ classdef SettingsSphere < SettingsSurface
 	%
 	%
 	% See also patch, surface, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VISIBLE = 19; %CET: Computational Efficiency Trick
@@ -187,6 +189,21 @@ classdef SettingsSphere < SettingsSurface
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the sphere settings.
+			%
+			% BUILD = SettingsSphere.GETBUILD() returns the build of 'SettingsSphere'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the sphere settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsSphere') returns the build of 'SettingsSphere'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsSphere')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the sphere settings.
 			%

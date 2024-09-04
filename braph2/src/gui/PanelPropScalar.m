@@ -131,6 +131,8 @@ classdef PanelPropScalar < PanelProp
 	%
 	%
 	% See also uieditfield, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		ENABLE = 36; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef PanelPropScalar < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the scalar prop panel.
+			%
+			% BUILD = PanelPropScalar.GETBUILD() returns the build of 'PanelPropScalar'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the scalar prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropScalar') returns the build of 'PanelPropScalar'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropScalar')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the scalar prop panel.
 			%

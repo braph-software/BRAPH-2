@@ -117,6 +117,8 @@ classdef SettingsArea < Settings
 	%
 	%
 	% See also patch, PanelFig, GUIFig.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VISIBLE = 15; %CET: Computational Efficiency Trick
@@ -200,6 +202,21 @@ classdef SettingsArea < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the area settings.
+			%
+			% BUILD = SettingsArea.GETBUILD() returns the build of 'SettingsArea'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the area settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsArea') returns the build of 'SettingsArea'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsArea')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the area settings.
 			%

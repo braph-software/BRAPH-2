@@ -108,6 +108,8 @@ classdef AnalyzeEnsemble < ConcreteElement
 	%
 	%
 	% See also CompareEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -173,6 +175,21 @@ classdef AnalyzeEnsemble < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the ensemble-based graph analysis.
+			%
+			% BUILD = AnalyzeEnsemble.GETBUILD() returns the build of 'AnalyzeEnsemble'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = A.GETBUILD() returns the build of the ensemble-based graph analysis A.
+			%  BUILD = Element.GETBUILD(A) returns the build of 'A'.
+			%  BUILD = Element.GETBUILD('AnalyzeEnsemble') returns the build of 'AnalyzeEnsemble'.
+			%
+			% Note that the Element.GETBUILD(A) and Element.GETBUILD('AnalyzeEnsemble')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function a_class = getClass()
 			%GETCLASS returns the class of the ensemble-based graph analysis.
 			%

@@ -106,6 +106,8 @@ classdef MeasureEnsemble < ConcreteElement
 	%
 	%
 	% See also AnalyzeEnsemble, CompareEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		MEASURE = 9; %CET: Computational Efficiency Trick
@@ -165,6 +167,21 @@ classdef MeasureEnsemble < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph ensemble measure.
+			%
+			% BUILD = MeasureEnsemble.GETBUILD() returns the build of 'MeasureEnsemble'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ME.GETBUILD() returns the build of the graph ensemble measure ME.
+			%  BUILD = Element.GETBUILD(ME) returns the build of 'ME'.
+			%  BUILD = Element.GETBUILD('MeasureEnsemble') returns the build of 'MeasureEnsemble'.
+			%
+			% Note that the Element.GETBUILD(ME) and Element.GETBUILD('MeasureEnsemble')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function me_class = getClass()
 			%GETCLASS returns the class of the graph ensemble measure.
 			%

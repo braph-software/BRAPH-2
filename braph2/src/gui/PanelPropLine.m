@@ -132,6 +132,8 @@ classdef PanelPropLine < PanelProp
 	%
 	%
 	% See also uidropdown, uiaxes, line, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		DROPDOWN = 36; %CET: Computational Efficiency Trick
@@ -206,6 +208,21 @@ classdef PanelPropLine < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the line prop panel.
+			%
+			% BUILD = PanelPropLine.GETBUILD() returns the build of 'PanelPropLine'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the line prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropLine') returns the build of 'PanelPropLine'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropLine')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the line prop panel.
 			%

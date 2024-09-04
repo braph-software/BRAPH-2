@@ -142,6 +142,21 @@ classdef MultiplexPIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex in-participation.
+			%
+			% BUILD = MultiplexPIn.GETBUILD() returns the build of 'MultiplexPIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multiplex in-participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexPIn') returns the build of 'MultiplexPIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexPIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multiplex in-participation.
 			%

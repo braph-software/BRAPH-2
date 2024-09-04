@@ -117,6 +117,8 @@ classdef SettingsSymbol < Settings
 	%
 	%
 	% See also line, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VISIBLE = 15; %CET: Computational Efficiency Trick
@@ -200,6 +202,21 @@ classdef SettingsSymbol < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the symbol settings.
+			%
+			% BUILD = SettingsSymbol.GETBUILD() returns the build of 'SettingsSymbol'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the symbol settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsSymbol') returns the build of 'SettingsSymbol'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsSymbol')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the symbol settings.
 			%

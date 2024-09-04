@@ -115,6 +115,8 @@ classdef SettingsAmbient < Settings
 	%
 	%
 	% See also uiaxes, SettingsAmbientPP, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LIGHTING = 15; %CET: Computational Efficiency Trick
@@ -180,6 +182,21 @@ classdef SettingsAmbient < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the ambient settings.
+			%
+			% BUILD = SettingsAmbient.GETBUILD() returns the build of 'SettingsAmbient'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the ambient settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsAmbient') returns the build of 'SettingsAmbient'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsAmbient')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the ambient settings.
 			%

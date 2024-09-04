@@ -143,6 +143,21 @@ classdef CorePeriphery < Richness
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the core-periphery.
+			%
+			% BUILD = CorePeriphery.GETBUILD() returns the build of 'CorePeriphery'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the core-periphery M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('CorePeriphery') returns the build of 'CorePeriphery'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('CorePeriphery')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the core-periphery.
 			%

@@ -151,6 +151,21 @@ classdef Triangles < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the triangles.
+			%
+			% BUILD = Triangles.GETBUILD() returns the build of 'Triangles'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the triangles M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Triangles') returns the build of 'Triangles'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Triangles')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the triangles.
 			%

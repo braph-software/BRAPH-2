@@ -104,6 +104,8 @@ classdef VOI < ConcreteElement
 	%
 	%
 	% See also VOINumeric, VOICategoric.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		V = 9; %CET: Computational Efficiency Trick
@@ -139,6 +141,21 @@ classdef VOI < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the variable of interest.
+			%
+			% BUILD = VOI.GETBUILD() returns the build of 'VOI'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = VOI.GETBUILD() returns the build of the variable of interest VOI.
+			%  BUILD = Element.GETBUILD(VOI) returns the build of 'VOI'.
+			%  BUILD = Element.GETBUILD('VOI') returns the build of 'VOI'.
+			%
+			% Note that the Element.GETBUILD(VOI) and Element.GETBUILD('VOI')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function voi_class = getClass()
 			%GETCLASS returns the class of the variable of interest.
 			%

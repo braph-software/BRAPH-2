@@ -122,6 +122,8 @@ classdef SettingsText < Settings
 	%
 	%
 	% See also text, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VISIBLE = 15; %CET: Computational Efficiency Trick
@@ -235,6 +237,21 @@ classdef SettingsText < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the text settings.
+			%
+			% BUILD = SettingsText.GETBUILD() returns the build of 'SettingsText'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the text settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsText') returns the build of 'SettingsText'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsText')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the text settings.
 			%

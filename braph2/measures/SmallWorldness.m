@@ -145,6 +145,21 @@ classdef SmallWorldness < PathLengthAv
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the small-worldness.
+			%
+			% BUILD = SmallWorldness.GETBUILD() returns the build of 'SmallWorldness'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the small-worldness M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('SmallWorldness') returns the build of 'SmallWorldness'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('SmallWorldness')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the small-worldness.
 			%

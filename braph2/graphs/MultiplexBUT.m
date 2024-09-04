@@ -2,8 +2,8 @@ classdef MultiplexBUT < MultiplexWU
 	%MultiplexBUT is a binary undirected multiplex with fixed thresholds.
 	% It is a subclass of <a href="matlab:help MultiplexWU">MultiplexWU</a>.
 	%
-	% In a binary undirected multiplex with fixed thresholds (BUT), the layers are 
-	%  those of binary undirected (BU) multiplex graphs derived from the same 
+	% In a binary undirected multiplex graph with fixed thresholds (MultiplexBUT), the layers are 
+	%  those of binary undirected multiplex graphs derived from the same 
 	%  weighted supra-connectivity matrices binarized at different thresholds.
 	% The supra-connectivity matrix has a number of partitions equal to the number of thresholds.
 	%
@@ -206,6 +206,21 @@ classdef MultiplexBUT < MultiplexWU
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the binary undirected multiplex with fixed thresholds.
+			%
+			% BUILD = MultiplexBUT.GETBUILD() returns the build of 'MultiplexBUT'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the binary undirected multiplex with fixed thresholds G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultiplexBUT') returns the build of 'MultiplexBUT'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultiplexBUT')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the binary undirected multiplex with fixed thresholds.
 			%
@@ -594,9 +609,9 @@ classdef MultiplexBUT < MultiplexWU
 				case 1 % MultiplexBUT.ELCLASS
 					prop_default = 'MultiplexBUT';
 				case 2 % MultiplexBUT.NAME
-					prop_default = 'MultiplexBUT';
+					prop_default = 'Multiplex Binary Undirected at fixed Thresholds';
 				case 3 % MultiplexBUT.DESCRIPTION
-					prop_default = 'In a binary undirected multiplex with fixed thresholds (BUT), the layers are those of binary undirected (BU) multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds.';
+					prop_default = 'In a binary undirected multiplex graph with fixed thresholds (MultiplexBUT), the layers are those of binary undirected multiplex graphs derived from the same weighted supra-connectivity matrices binarized at different thresholds. The supra-connectivity matrix has a number of partitions equal to the number of thresholds.';
 				case 4 % MultiplexBUT.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexBUT.getPropSettings(prop));
 				case 5 % MultiplexBUT.ID

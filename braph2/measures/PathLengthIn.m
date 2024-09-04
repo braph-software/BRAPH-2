@@ -149,6 +149,21 @@ classdef PathLengthIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the in-path length.
+			%
+			% BUILD = PathLengthIn.GETBUILD() returns the build of 'PathLengthIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the in-path length M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('PathLengthIn') returns the build of 'PathLengthIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('PathLengthIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the in-path length.
 			%

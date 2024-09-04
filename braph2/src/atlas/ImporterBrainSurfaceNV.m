@@ -105,6 +105,8 @@ classdef ImporterBrainSurfaceNV < Importer
 	%
 	%
 	% See also BrainSurface.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		FILE = 10; %CET: Computational Efficiency Trick
@@ -153,6 +155,21 @@ classdef ImporterBrainSurfaceNV < Importer
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain surface importer from NV.
+			%
+			% BUILD = ImporterBrainSurfaceNV.GETBUILD() returns the build of 'ImporterBrainSurfaceNV'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IM.GETBUILD() returns the build of the brain surface importer from NV IM.
+			%  BUILD = Element.GETBUILD(IM) returns the build of 'IM'.
+			%  BUILD = Element.GETBUILD('ImporterBrainSurfaceNV') returns the build of 'ImporterBrainSurfaceNV'.
+			%
+			% Note that the Element.GETBUILD(IM) and Element.GETBUILD('ImporterBrainSurfaceNV')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function im_class = getClass()
 			%GETCLASS returns the class of the brain surface importer from NV.
 			%

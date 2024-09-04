@@ -138,6 +138,8 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 	%
 	%
 	% See also ComparisonGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = ComparisonGroupPF_GS(varargin)
@@ -203,6 +205,21 @@ classdef ComparisonGroupPF_GS < ComparisonGroupPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global superglobal group comparison figure.
+			%
+			% BUILD = ComparisonGroupPF_GS.GETBUILD() returns the build of 'ComparisonGroupPF_GS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global superglobal group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonGroupPF_GS') returns the build of 'ComparisonGroupPF_GS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonGroupPF_GS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global superglobal group comparison figure.
 			%

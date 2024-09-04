@@ -142,6 +142,21 @@ classdef MultiplexPOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex out-participation.
+			%
+			% BUILD = MultiplexPOut.GETBUILD() returns the build of 'MultiplexPOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multiplex out-participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexPOut') returns the build of 'MultiplexPOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexPOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multiplex out-participation.
 			%

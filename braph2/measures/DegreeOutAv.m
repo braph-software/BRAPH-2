@@ -141,6 +141,21 @@ classdef DegreeOutAv < DegreeOut
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average out-degree.
+			%
+			% BUILD = DegreeOutAv.GETBUILD() returns the build of 'DegreeOutAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average out-degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('DegreeOutAv') returns the build of 'DegreeOutAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('DegreeOutAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average out-degree.
 			%

@@ -152,6 +152,21 @@ classdef MultiRC < Richness
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multirichness.
+			%
+			% BUILD = MultiRC.GETBUILD() returns the build of 'MultiRC'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multirichness M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiRC') returns the build of 'MultiRC'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiRC')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multirichness.
 			%

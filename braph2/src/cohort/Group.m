@@ -108,6 +108,8 @@ classdef Group < ConcreteElement
 	%
 	%
 	% See also Subject, IndexedDictionary.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		SUB_CLASS = 9; %CET: Computational Efficiency Trick
@@ -161,6 +163,21 @@ classdef Group < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the group of subjects.
+			%
+			% BUILD = Group.GETBUILD() returns the build of 'Group'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = GR.GETBUILD() returns the build of the group of subjects GR.
+			%  BUILD = Element.GETBUILD(GR) returns the build of 'GR'.
+			%  BUILD = Element.GETBUILD('Group') returns the build of 'Group'.
+			%
+			% Note that the Element.GETBUILD(GR) and Element.GETBUILD('Group')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function gr_class = getClass()
 			%GETCLASS returns the class of the group of subjects.
 			%

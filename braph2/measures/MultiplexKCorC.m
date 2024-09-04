@@ -142,6 +142,21 @@ classdef MultiplexKCorC < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex k-coreness centrality.
+			%
+			% BUILD = MultiplexKCorC.GETBUILD() returns the build of 'MultiplexKCorC'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multiplex k-coreness centrality M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexKCorC') returns the build of 'MultiplexKCorC'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexKCorC')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multiplex k-coreness centrality.
 			%

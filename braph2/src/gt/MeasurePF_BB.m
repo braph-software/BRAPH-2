@@ -133,6 +133,8 @@ classdef MeasurePF_BB < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasurePF_BB < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for binodal bilayer measure.
+			%
+			% BUILD = MeasurePF_BB.GETBUILD() returns the build of 'MeasurePF_BB'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for binodal bilayer measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_BB') returns the build of 'MeasurePF_BB'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_BB')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for binodal bilayer measure.
 			%

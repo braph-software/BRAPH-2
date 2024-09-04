@@ -134,6 +134,8 @@ classdef MeasurePF_NU < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODE = 40; %CET: Computational Efficiency Trick
@@ -206,6 +208,21 @@ classdef MeasurePF_NU < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for nodal unilayer measure.
+			%
+			% BUILD = MeasurePF_NU.GETBUILD() returns the build of 'MeasurePF_NU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for nodal unilayer measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_NU') returns the build of 'MeasurePF_NU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_NU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for nodal unilayer measure.
 			%

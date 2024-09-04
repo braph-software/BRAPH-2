@@ -142,6 +142,21 @@ classdef WeightedMxPOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the weighted out-participation.
+			%
+			% BUILD = WeightedMxPOut.GETBUILD() returns the build of 'WeightedMxPOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the weighted out-participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('WeightedMxPOut') returns the build of 'WeightedMxPOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('WeightedMxPOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the weighted out-participation.
 			%

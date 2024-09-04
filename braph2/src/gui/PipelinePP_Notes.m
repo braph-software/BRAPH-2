@@ -135,6 +135,8 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 	%
 	%
 	% See also uitextarea, uicontextmenu, Pipeline.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		CONTEXTMENU = 38; %CET: Computational Efficiency Trick
@@ -205,6 +207,21 @@ classdef PipelinePP_Notes < PanelPropStringTextArea
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the prop panel for pipeline notes.
+			%
+			% BUILD = PipelinePP_Notes.GETBUILD() returns the build of 'PipelinePP_Notes'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the prop panel for pipeline notes PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PipelinePP_Notes') returns the build of 'PipelinePP_Notes'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PipelinePP_Notes')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the prop panel for pipeline notes.
 			%

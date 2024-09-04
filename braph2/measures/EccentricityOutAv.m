@@ -144,6 +144,21 @@ classdef EccentricityOutAv < EccentricityOut
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average eccentricity.
+			%
+			% BUILD = EccentricityOutAv.GETBUILD() returns the build of 'EccentricityOutAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average eccentricity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('EccentricityOutAv') returns the build of 'EccentricityOutAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('EccentricityOutAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average eccentricity.
 			%
