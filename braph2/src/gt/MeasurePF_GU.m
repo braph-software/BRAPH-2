@@ -133,6 +133,8 @@ classdef MeasurePF_GU < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LAYER = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasurePF_GU < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for global unilayer measure.
+			%
+			% BUILD = MeasurePF_GU.GETBUILD() returns the build of 'MeasurePF_GU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for global unilayer measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_GU') returns the build of 'MeasurePF_GU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_GU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for global unilayer measure.
 			%

@@ -121,6 +121,8 @@ classdef SettingsLine < Settings
 	%
 	%
 	% See also line, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VISIBLE = 15; %CET: Computational Efficiency Trick
@@ -222,6 +224,21 @@ classdef SettingsLine < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the line settings.
+			%
+			% BUILD = SettingsLine.GETBUILD() returns the build of 'SettingsLine'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the line settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsLine') returns the build of 'SettingsLine'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsLine')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the line settings.
 			%

@@ -150,6 +150,21 @@ classdef SCore < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the score.
+			%
+			% BUILD = SCore.GETBUILD() returns the build of 'SCore'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the score M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('SCore') returns the build of 'SCore'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('SCore')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the score.
 			%

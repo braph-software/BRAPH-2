@@ -132,6 +132,8 @@ classdef MeasurePF_GS < MeasurePF
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = MeasurePF_GS(varargin)
@@ -191,6 +193,21 @@ classdef MeasurePF_GS < MeasurePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for global superglobal measure.
+			%
+			% BUILD = MeasurePF_GS.GETBUILD() returns the build of 'MeasurePF_GS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for global superglobal measure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasurePF_GS') returns the build of 'MeasurePF_GS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasurePF_GS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for global superglobal measure.
 			%

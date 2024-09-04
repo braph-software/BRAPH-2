@@ -154,6 +154,21 @@ classdef MultiplexRCS < RCS
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multi rich-club strength.
+			%
+			% BUILD = MultiplexRCS.GETBUILD() returns the build of 'MultiplexRCS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multi rich-club strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexRCS') returns the build of 'MultiplexRCS'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexRCS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multi rich-club strength.
 			%

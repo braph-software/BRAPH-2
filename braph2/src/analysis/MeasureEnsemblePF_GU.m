@@ -133,6 +133,8 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 	%
 	%
 	% See also MeasureEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LAYER = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasureEnsemblePF_GU < MeasureEnsemblePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global unilayer group comparison figure.
+			%
+			% BUILD = MeasureEnsemblePF_GU.GETBUILD() returns the build of 'MeasureEnsemblePF_GU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global unilayer group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureEnsemblePF_GU') returns the build of 'MeasureEnsemblePF_GU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureEnsemblePF_GU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global unilayer group comparison figure.
 			%

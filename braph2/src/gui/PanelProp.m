@@ -168,6 +168,8 @@ classdef PanelProp < Panel
 	%
 	%
 	% See also uipanel, uilabel, uibutton, GUI, GUIElement, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		X_DRAW = 20; %CET: Computational Efficiency Trick
@@ -304,6 +306,21 @@ classdef PanelProp < Panel
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the prop panel.
+			%
+			% BUILD = PanelProp.GETBUILD() returns the build of 'PanelProp'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelProp') returns the build of 'PanelProp'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelProp')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the prop panel.
 			%
@@ -334,7 +351,7 @@ classdef PanelProp < Panel
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'PanelProp'  'NNxMLP_xPP_FI_Data'  'NNxMLP_xPP_FI_Graph'  'NNxMLP_xPP_FI_Measure'  'AnalyzeEnsemblePP_GDict'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroupPP_G'  'CompareEnsemblePP_CpDict'  'CompareGroupPP_CpDict'  'ComparisonEnsembleBrainPF_xSPP_Layer'  'ComparisonEnsembleBrainPF_xUPP_Layer'  'ComparisonEnsemblePF_BxPP_Nodes'  'ComparisonEnsemblePF_NxPP_Node'  'ComparisonEnsemblePF_xUPP_Layer'  'ComparisonGroupBrainPF_xSPP_Layer'  'ComparisonGroupBrainPF_xUPP_Layer'  'ComparisonGroupPF_BxPP_Nodes'  'ComparisonGroupPF_NxPP_Node'  'ComparisonGroupPF_xUPP_Layer'  'MeasureEnsembleBrainPF_xSPP_Layer'  'MeasureEnsembleBrainPF_xUPP_Layer'  'MeasureEnsemblePF_BxPP_Nodes'  'MeasureEnsemblePF_NxPP_Node'  'MeasureEnsemblePF_xUPP_Layer'  'MeasureGroupBrainPF_xSPP_Layer'  'MeasureGroupBrainPF_xUPP_Layer'  'PanelPropCellFDR'  'SubjectPP_VOIDict'  'GraphPP_MDict'  'LayersPP'  'MeasurePF_BxPP_Nodes'  'MeasurePF_NxPP_Node'  'MeasurePF_xUPP_Layer'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'PipelinePP_Notes'  'PipelinePP_PSDict'  'SettingsAmbientPP'  'SettingsAreaPP'  'SettingsAxisPP'  'SettingsLinePP'  'SettingsPP'  'SettingsPositionPP'  'SettingsSurfacePP'  'SettingsTextPP' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'PanelProp'  'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'  'NNFeatureImportanceBrainSurfacePF_x_xUPP_Layer'  'NNFeatureImportanceBrainSurfacePP_Data'  'NNFeatureImportanceBrainSurfacePP_Graph'  'NNFeatureImportanceBrainSurfacePP_Measure'  'AnalyzeEnsemblePP_GDict'  'AnalyzeEnsemblePP_MeDict'  'AnalyzeGroupPP_G'  'CompareEnsemblePP_CpDict'  'CompareGroupPP_CpDict'  'ComparisonEnsembleBrainPF_xSPP_Layer'  'ComparisonEnsembleBrainPF_xUPP_Layer'  'ComparisonEnsemblePF_BxPP_Nodes'  'ComparisonEnsemblePF_NxPP_Node'  'ComparisonEnsemblePF_xUPP_Layer'  'ComparisonGroupBrainPF_xSPP_Layer'  'ComparisonGroupBrainPF_xUPP_Layer'  'ComparisonGroupPF_BxPP_Nodes'  'ComparisonGroupPF_NxPP_Node'  'ComparisonGroupPF_xUPP_Layer'  'MeasureEnsembleBrainPF_xSPP_Layer'  'MeasureEnsembleBrainPF_xUPP_Layer'  'MeasureEnsemblePF_BxPP_Nodes'  'MeasureEnsemblePF_NxPP_Node'  'MeasureEnsemblePF_xUPP_Layer'  'MeasureGroupBrainPF_xSPP_Layer'  'MeasureGroupBrainPF_xUPP_Layer'  'PanelPropCellFDR'  'SubjectPP_VOIDict'  'GraphPP_MDict'  'LayersPP'  'MeasurePF_BxPP_Nodes'  'MeasurePF_NxPP_Node'  'MeasurePF_xUPP_Layer'  'PanelPropAlpha'  'PanelPropCell'  'PanelPropClass'  'PanelPropClassList'  'PanelPropColor'  'PanelPropIDict'  'PanelPropIDictTable'  'PanelPropItem'  'PanelPropItemList'  'PanelPropLine'  'PanelPropLogical'  'PanelPropMarker'  'PanelPropMatrix'  'PanelPropNet'  'PanelPropOption'  'PanelPropRVectorSmart'  'PanelPropRVectorView'  'PanelPropScalar'  'PanelPropSize'  'PanelPropString'  'PanelPropStringList'  'PanelPropStringTextArea'  'PipelinePP_Notes'  'PipelinePP_PSDict'  'SettingsAmbientPP'  'SettingsAreaPP'  'SettingsAxisPP'  'SettingsLinePP'  'SettingsPP'  'SettingsPositionPP'  'SettingsSurfacePP'  'SettingsTextPP' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of prop panel.

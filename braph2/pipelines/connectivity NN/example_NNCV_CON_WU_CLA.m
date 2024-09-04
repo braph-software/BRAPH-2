@@ -120,4 +120,5 @@ nncv.get('TRAIN');
 confusion_matrix = nncv.get('C_MATRIX');
 av_auc = nncv.get('AV_AUC');
 av_macro_auc = nncv.get('AV_MACRO_AUC');
-av_fi = nncv.get('AV_FEATURE_IMPORTANCE');
+% av_fi = nncv.get('AV_FEATURE_IMPORTANCE'); %% uncomment this when the
+% feature importance element is ready

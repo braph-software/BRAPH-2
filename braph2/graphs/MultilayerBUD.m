@@ -2,11 +2,11 @@ classdef MultilayerBUD < MultilayerWU
 	%MultilayerBUD is a binary undirected multilayer graph with fixed densities.
 	% It is a subclass of <a href="matlab:help MultilayerWU">MultilayerWU</a>.
 	%
-	% In a multilayer binary undirected with fixed densities (BUD) graph, the layers 
-	%  are those of binary undirected (BU) multilayer graphs derived from the same 
+	% In a multilayer binary undirected graph with fixed densities (MultilayerBUD), the layers 
+	%  are those of binary undirected multilayer graphs derived from the same 
 	%  weighted supra-adjacency matrix binarized at different densities. The supra-adjacency 
 	%  matrix has a number of partitions equal to the number of densities. Layers
-	%  within the binary undirected (BU) multilayer graphs could have different number of nodes 
+	%  within the binary undirected multilayer graphs could have different number of nodes 
 	%  with within-layer binary undirected edges. Edges can be either 0 (absence of connection) 
 	%  or 1 (existence of connection).
 	% All node connections are allowed between layers.
@@ -212,6 +212,21 @@ classdef MultilayerBUD < MultilayerWU
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multilayer binary undirected with fixed densities graph.
+			%
+			% BUILD = MultilayerBUD.GETBUILD() returns the build of 'MultilayerBUD'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the multilayer binary undirected with fixed densities graph G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultilayerBUD') returns the build of 'MultilayerBUD'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultilayerBUD')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the multilayer binary undirected with fixed densities graph.
 			%
@@ -600,9 +615,9 @@ classdef MultilayerBUD < MultilayerWU
 				case 1 % MultilayerBUD.ELCLASS
 					prop_default = 'MultilayerBUD';
 				case 2 % MultilayerBUD.NAME
-					prop_default = 'MultilayerBUD';
+					prop_default = 'Multilayer Binary Undirected at fixed Densities';
 				case 3 % MultilayerBUD.DESCRIPTION
-					prop_default = 'In a multilayer binary undirected with fixed densities (BUD) graph, the layers are those of binary undirected (BU) multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities. Layerswithin the binary undirected (BU) multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.';
+					prop_default = 'In a multilayer binary undirected graph with fixed densities (MultilayerBUD), the layers are those of binary undirected multilayer graphs derived from the same weighted supra-adjacency matrix binarized at different densities. The supra-adjacency matrix has a number of partitions equal to the number of densities. Layerswithin the binary undirected multilayer graphs could have different number of nodes with within-layer binary undirected edges. Edges can be either 0 (absence of connection) or 1 (existence of connection). All node connections are allowed between layers. On the diagonal of the supra adjacency matrix, matrices are symmetrized, dediagonalized, semipositivized, and binarized. On the off-diagonal of the supra adjacency matrix, matrices are semipositivized and binarized.';
 				case 4 % MultilayerBUD.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultilayerBUD.getPropSettings(prop));
 				case 5 % MultilayerBUD.ID

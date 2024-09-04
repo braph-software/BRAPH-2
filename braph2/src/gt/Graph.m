@@ -144,6 +144,8 @@ classdef Graph < ConcreteElement
 	%
 	%
 	% See also Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % constants
 		% Graph types
@@ -471,6 +473,21 @@ classdef Graph < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph.
+			%
+			% BUILD = Graph.GETBUILD() returns the build of 'Graph'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the graph G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('Graph') returns the build of 'Graph'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('Graph')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the graph.
 			%

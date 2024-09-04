@@ -142,6 +142,21 @@ classdef OverlappingDeg < Degree
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the ovrlapdeg.
+			%
+			% BUILD = OverlappingDeg.GETBUILD() returns the build of 'OverlappingDeg'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the ovrlapdeg M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('OverlappingDeg') returns the build of 'OverlappingDeg'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('OverlappingDeg')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the ovrlapdeg.
 			%

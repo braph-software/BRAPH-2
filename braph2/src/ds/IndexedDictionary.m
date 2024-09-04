@@ -343,6 +343,21 @@ classdef IndexedDictionary < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the indexed dictionary.
+			%
+			% BUILD = IndexedDictionary.GETBUILD() returns the build of 'IndexedDictionary'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IDICT.GETBUILD() returns the build of the indexed dictionary IDICT.
+			%  BUILD = Element.GETBUILD(IDICT) returns the build of 'IDICT'.
+			%  BUILD = Element.GETBUILD('IndexedDictionary') returns the build of 'IndexedDictionary'.
+			%
+			% Note that the Element.GETBUILD(IDICT) and Element.GETBUILD('IndexedDictionary')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function idict_class = getClass()
 			%GETCLASS returns the class of the indexed dictionary.
 			%

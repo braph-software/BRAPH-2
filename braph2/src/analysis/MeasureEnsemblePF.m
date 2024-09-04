@@ -132,6 +132,8 @@ classdef MeasureEnsemblePF < PanelFig
 	%
 	%
 	% See also MeasureEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		H_AXES = 23; %CET: Computational Efficiency Trick
@@ -277,6 +279,21 @@ classdef MeasureEnsemblePF < PanelFig
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel ensemble-based comparison figure.
+			%
+			% BUILD = MeasureEnsemblePF.GETBUILD() returns the build of 'MeasureEnsemblePF'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel ensemble-based comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureEnsemblePF') returns the build of 'MeasureEnsemblePF'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureEnsemblePF')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel ensemble-based comparison figure.
 			%

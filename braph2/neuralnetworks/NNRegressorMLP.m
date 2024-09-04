@@ -2,11 +2,13 @@ classdef NNRegressorMLP < NNBase
 	%NNRegressorMLP comprises a multi-layer perceptron regressor model and a given dataset.
 	% It is a subclass of <a href="matlab:help NNBase">NNBase</a>.
 	%
-	% A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset.
-	% NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+	% A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises 
+	%  a multi-layer perceptron regressor model and a given dataset.
+	% NNRegressorMLP trains the multi-layer perceptron regressor with a formatted
+	%  inputs ("CB", channel and batch) derived from the given dataset.
 	%
 	% The list of NNRegressorMLP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network multi-layer perceptron regressor.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.
@@ -119,6 +121,8 @@ classdef NNRegressorMLP < NNBase
 	%
 	%
 	% See also NNDataPoint_CON_REG, NNRegressor_Evaluator.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LAYERS = 22; %CET: Computational Efficiency Trick
@@ -153,7 +157,7 @@ classdef NNRegressorMLP < NNBase
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNRegressorMLP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network multi-layer perceptron regressor.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.
@@ -185,6 +189,21 @@ classdef NNRegressorMLP < NNBase
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multi-layer perceptron regressor.
+			%
+			% BUILD = NNRegressorMLP.GETBUILD() returns the build of 'NNRegressorMLP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NN.GETBUILD() returns the build of the multi-layer perceptron regressor NN.
+			%  BUILD = Element.GETBUILD(NN) returns the build of 'NN'.
+			%  BUILD = Element.GETBUILD('NNRegressorMLP') returns the build of 'NNRegressorMLP'.
+			%
+			% Note that the Element.GETBUILD(NN) and Element.GETBUILD('NNRegressorMLP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nn_class = getClass()
 			%GETCLASS returns the class of the multi-layer perceptron regressor.
 			%
@@ -511,7 +530,7 @@ classdef NNRegressorMLP < NNBase
 			prop = NNRegressorMLP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.'  'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.'  'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.'  'ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.'  'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.'  'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model.'  'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.'  'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.'  'LAYERS (data, rvector) defines the number of layers and their neurons.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.' };
+			nnregressormlp_description_list = { 'ELCLASS (constant, string) is the class of the neural network multi-layer perceptron regressor.'  'NAME (constant, string) is the name of the neural network multi-layer perceptron regressor.'  'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron regressor.'  'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron regressor.'  'ID (data, string) is a few-letter code for the neural network multi-layer perceptron regressor.'  'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron regressor.'  'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron regressor.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model.'  'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.'  'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.'  'LAYERS (data, rvector) defines the number of layers and their neurons.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.' };
 			prop_description = nnregressormlp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -587,7 +606,7 @@ classdef NNRegressorMLP < NNBase
 				case 1 % NNRegressorMLP.ELCLASS
 					prop_default = 'NNRegressorMLP';
 				case 2 % NNRegressorMLP.NAME
-					prop_default = 'NNRegressorMLP';
+					prop_default = 'Neural Network Multi-layer Perceptron Regressor';
 				case 3 % NNRegressorMLP.DESCRIPTION
 					prop_default = 'A neural network multi-layer perceptron regressor (NNRegressorMLP) comprises a multi-layer perceptron regressor model and a given dataset. NNRegressorMLP trains the multi-layer perceptron regressor with a formatted inputs ("CB", channel and batch) derived from the given dataset.';
 				case 4 % NNRegressorMLP.TEMPLATE

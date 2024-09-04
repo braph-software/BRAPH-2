@@ -141,6 +141,21 @@ classdef DegreeInAv < DegreeIn
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average in-degree.
+			%
+			% BUILD = DegreeInAv.GETBUILD() returns the build of 'DegreeInAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average in-degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('DegreeInAv') returns the build of 'DegreeInAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('DegreeInAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average in-degree.
 			%

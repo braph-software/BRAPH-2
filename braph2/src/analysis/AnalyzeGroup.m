@@ -105,6 +105,8 @@ classdef AnalyzeGroup < ConcreteElement
 	%
 	%
 	% See also CompareGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -152,6 +154,21 @@ classdef AnalyzeGroup < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the group-based graph analysis.
+			%
+			% BUILD = AnalyzeGroup.GETBUILD() returns the build of 'AnalyzeGroup'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = A.GETBUILD() returns the build of the group-based graph analysis A.
+			%  BUILD = Element.GETBUILD(A) returns the build of 'A'.
+			%  BUILD = Element.GETBUILD('AnalyzeGroup') returns the build of 'AnalyzeGroup'.
+			%
+			% Note that the Element.GETBUILD(A) and Element.GETBUILD('AnalyzeGroup')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function a_class = getClass()
 			%GETCLASS returns the class of the group-based graph analysis.
 			%

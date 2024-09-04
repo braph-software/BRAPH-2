@@ -143,6 +143,21 @@ classdef PathLengthInAv < PathLengthIn
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average in-path length.
+			%
+			% BUILD = PathLengthInAv.GETBUILD() returns the build of 'PathLengthInAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average in-path length M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('PathLengthInAv') returns the build of 'PathLengthInAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('PathLengthInAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average in-path length.
 			%

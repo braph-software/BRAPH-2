@@ -135,6 +135,8 @@ classdef PanelPropStringList < PanelProp
 	%
 	%
 	% See also uitextarea, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		ENABLE = 36; %CET: Computational Efficiency Trick
@@ -209,6 +211,21 @@ classdef PanelPropStringList < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the string-list prop panel.
+			%
+			% BUILD = PanelPropStringList.GETBUILD() returns the build of 'PanelPropStringList'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the string-list prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropStringList') returns the build of 'PanelPropStringList'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropStringList')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the string-list prop panel.
 			%

@@ -143,6 +143,8 @@ classdef MeasureEnsembleBrainPF_GB < MeasureEnsembleBrainPF
 	%
 	%
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = MeasureEnsembleBrainPF_GB(varargin)
@@ -210,6 +212,21 @@ classdef MeasureEnsembleBrainPF_GB < MeasureEnsembleBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for global bilayer measure group brain.
+			%
+			% BUILD = MeasureEnsembleBrainPF_GB.GETBUILD() returns the build of 'MeasureEnsembleBrainPF_GB'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for global bilayer measure group brain PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureEnsembleBrainPF_GB') returns the build of 'MeasureEnsembleBrainPF_GB'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureEnsembleBrainPF_GB')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for global bilayer measure group brain.
 			%

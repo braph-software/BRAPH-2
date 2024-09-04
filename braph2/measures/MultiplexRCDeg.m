@@ -154,6 +154,21 @@ classdef MultiplexRCDeg < RCDeg
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multi rich-club degree.
+			%
+			% BUILD = MultiplexRCDeg.GETBUILD() returns the build of 'MultiplexRCDeg'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multi rich-club degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexRCDeg') returns the build of 'MultiplexRCDeg'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexRCDeg')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multi rich-club degree.
 			%

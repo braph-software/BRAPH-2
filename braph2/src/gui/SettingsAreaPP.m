@@ -138,6 +138,8 @@ classdef SettingsAreaPP < SettingsPP
 	%
 	%
 	% See also SettingsArea, uicheckbox, , uipushbutton, uieditfield, uislider.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		ENABLE = 36; %CET: Computational Efficiency Trick
@@ -242,6 +244,21 @@ classdef SettingsAreaPP < SettingsPP
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the prop panel for area settings.
+			%
+			% BUILD = SettingsAreaPP.GETBUILD() returns the build of 'SettingsAreaPP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the prop panel for area settings PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('SettingsAreaPP') returns the build of 'SettingsAreaPP'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('SettingsAreaPP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the prop panel for area settings.
 			%

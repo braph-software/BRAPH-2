@@ -141,6 +141,8 @@ classdef ComparisonEnsembleBrainPF_GU < ComparisonEnsembleBrainPF
 	%
 	%
 	% See also ComparisonEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 48; %CET: Computational Efficiency Trick
@@ -215,6 +217,21 @@ classdef ComparisonEnsembleBrainPF_GU < ComparisonEnsembleBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global unilayer ensemble-based comparison figure on brain surface figure.
+			%
+			% BUILD = ComparisonEnsembleBrainPF_GU.GETBUILD() returns the build of 'ComparisonEnsembleBrainPF_GU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global unilayer ensemble-based comparison figure on brain surface figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonEnsembleBrainPF_GU') returns the build of 'ComparisonEnsembleBrainPF_GU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonEnsembleBrainPF_GU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global unilayer ensemble-based comparison figure on brain surface figure.
 			%

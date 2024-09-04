@@ -143,6 +143,8 @@ classdef MeasureGroupBrainPF < BrainAtlasPF
 	%
 	%
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		M = 46; %CET: Computational Efficiency Trick
@@ -221,6 +223,21 @@ classdef MeasureGroupBrainPF < BrainAtlasPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for measure group brain.
+			%
+			% BUILD = MeasureGroupBrainPF.GETBUILD() returns the build of 'MeasureGroupBrainPF'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for measure group brain PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureGroupBrainPF') returns the build of 'MeasureGroupBrainPF'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureGroupBrainPF')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for measure group brain.
 			%

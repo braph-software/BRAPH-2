@@ -141,6 +141,8 @@ classdef ComparisonGroupBrainPF_GS < ComparisonGroupBrainPF
 	%
 	%
 	% See also ComparisonGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 48; %CET: Computational Efficiency Trick
@@ -215,6 +217,21 @@ classdef ComparisonGroupBrainPF_GS < ComparisonGroupBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global superglobal group comparison on brain surface figure.
+			%
+			% BUILD = ComparisonGroupBrainPF_GS.GETBUILD() returns the build of 'ComparisonGroupBrainPF_GS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global superglobal group comparison on brain surface figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonGroupBrainPF_GS') returns the build of 'ComparisonGroupBrainPF_GS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonGroupBrainPF_GS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global superglobal group comparison on brain surface figure.
 			%

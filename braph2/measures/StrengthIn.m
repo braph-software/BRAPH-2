@@ -143,6 +143,21 @@ classdef StrengthIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the in-strength.
+			%
+			% BUILD = StrengthIn.GETBUILD() returns the build of 'StrengthIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the in-strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('StrengthIn') returns the build of 'StrengthIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('StrengthIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the in-strength.
 			%

@@ -2,11 +2,13 @@ classdef NNClassifierMLP < NNBase
 	%NNClassifierMLP comprises a multi-layer perceptron classifier model and a given dataset.
 	% It is a subclass of <a href="matlab:help NNBase">NNBase</a>.
 	%
-	% A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset.
-	% NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.
+	% A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises
+	%  a multi-layer perceptron classifier model and a given dataset.
+	% NNClassifierMLP trains the multi-layer perceptron classifier with a formatted 
+	%  inputs ("CB", channel and batch) derived from the given dataset.
 	%
 	% The list of NNClassifierMLP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network multi-layer perceptron classifier.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron classifier.
@@ -120,6 +122,8 @@ classdef NNClassifierMLP < NNBase
 	%
 	%
 	% See also NNDataPoint_CON_CLA, NNClassifier_Evaluator.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		TARGET_IDS = 22; %CET: Computational Efficiency Trick
@@ -159,7 +163,7 @@ classdef NNClassifierMLP < NNBase
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNClassifierMLP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network multi-layer perceptron classifier.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron classifier.
@@ -192,6 +196,21 @@ classdef NNClassifierMLP < NNBase
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multi-layer perceptron classifier.
+			%
+			% BUILD = NNClassifierMLP.GETBUILD() returns the build of 'NNClassifierMLP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NN.GETBUILD() returns the build of the multi-layer perceptron classifier NN.
+			%  BUILD = Element.GETBUILD(NN) returns the build of 'NN'.
+			%  BUILD = Element.GETBUILD('NNClassifierMLP') returns the build of 'NNClassifierMLP'.
+			%
+			% Note that the Element.GETBUILD(NN) and Element.GETBUILD('NNClassifierMLP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nn_class = getClass()
 			%GETCLASS returns the class of the multi-layer perceptron classifier.
 			%
@@ -518,7 +537,7 @@ classdef NNClassifierMLP < NNBase
 			prop = NNClassifierMLP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.'  'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.'  'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron classifier.'  'ID (data, string) is a few-letter code for the neural network multi-layer perceptron classifier.'  'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron classifier.'  'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron classifier.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model.'  'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.'  'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format with one-hot vectors.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.'  'TARGET_IDS (query, stringlist) constructs the target IDs which represent the class of each data point.'  'LAYERS (data, rvector) defines the number of layers and their neurons.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.' };
+			nnclassifiermlp_description_list = { 'ELCLASS (constant, string) is the class of the neural network multi-layer perceptron classifier.'  'NAME (constant, string) is the name of the neural network multi-layer perceptron classifier.'  'DESCRIPTION (constant, string) is the description of the neural network multi-layer perceptron classifier.'  'TEMPLATE (parameter, item) is the template of the neural network multi-layer perceptron classifier.'  'ID (data, string) is a few-letter code for the neural network multi-layer perceptron classifier.'  'LABEL (metadata, string) is an extended label of the neural network multi-layer perceptron classifier.'  'NOTES (metadata, string) are some specific notes about the neural network multi-layer perceptron classifier.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the dataset to train the neural network model, and its data point class DP_CLASS defaults to one of the compatible classes within the set of DP_CLASSES.'  'DP_CLASSES (parameter, classlist) is the list of compatible data points.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'MODEL (result, net) is a trained neural network model.'  'INPUTS (query, cell) constructs the data in the CB (channel-batch) format.'  'TARGETS (query, cell) constructs the targets in the CB (channel-batch) format with one-hot vectors.'  'TRAIN (query, empty) trains the neural network model with the given dataset.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'PREDICT (query, cell) returns the predictions of the trained neural network for a dataset.'  'TARGET_IDS (query, stringlist) constructs the target IDs which represent the class of each data point.'  'LAYERS (data, rvector) defines the number of layers and their neurons.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.'  'FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.' };
 			prop_description = nnclassifiermlp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -598,7 +617,7 @@ classdef NNClassifierMLP < NNBase
 				case 1 % NNClassifierMLP.ELCLASS
 					prop_default = 'NNClassifierMLP';
 				case 2 % NNClassifierMLP.NAME
-					prop_default = 'NNClassifierMLP';
+					prop_default = 'Neural Network Multi-layer Perceptron Classifier';
 				case 3 % NNClassifierMLP.DESCRIPTION
 					prop_default = 'A neural network multi-layer perceptron classifier (NNClassifierMLP) comprises a multi-layer perceptron classifier model and a given dataset. NNClassifierMLP trains the multi-layer perceptron classifier with a formatted inputs ("CB", channel and batch) derived from the given dataset.';
 				case 4 % NNClassifierMLP.TEMPLATE

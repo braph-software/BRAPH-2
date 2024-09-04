@@ -115,6 +115,8 @@ classdef SettingsPosition < Settings
 	%
 	%
 	% See also uipanel, SettingsPositionPP, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		AUTOPOS = 15; %CET: Computational Efficiency Trick
@@ -180,6 +182,21 @@ classdef SettingsPosition < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the position settings.
+			%
+			% BUILD = SettingsPosition.GETBUILD() returns the build of 'SettingsPosition'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the position settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsPosition') returns the build of 'SettingsPosition'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsPosition')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the position settings.
 			%

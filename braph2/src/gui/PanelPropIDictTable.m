@@ -163,6 +163,8 @@ classdef PanelPropIDictTable < PanelProp
 	%
 	%
 	% See also uitable, GUI, PanelPropIDict, PanelElement, GUIElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % constants
 		SELECTOR = -1 % code for the selector column.
@@ -312,6 +314,21 @@ classdef PanelPropIDictTable < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the idict prop panel with table.
+			%
+			% BUILD = PanelPropIDictTable.GETBUILD() returns the build of 'PanelPropIDictTable'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the idict prop panel with table PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropIDictTable') returns the build of 'PanelPropIDictTable'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropIDictTable')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the idict prop panel with table.
 			%

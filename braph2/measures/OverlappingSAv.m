@@ -142,6 +142,21 @@ classdef OverlappingSAv < OverlappingS
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the averge overlapping strength.
+			%
+			% BUILD = OverlappingSAv.GETBUILD() returns the build of 'OverlappingSAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the averge overlapping strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('OverlappingSAv') returns the build of 'OverlappingSAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('OverlappingSAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the averge overlapping strength.
 			%

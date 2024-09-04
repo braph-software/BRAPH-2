@@ -139,6 +139,8 @@ classdef ComparisonGroupPF_GU < ComparisonGroupPF
 	%
 	%
 	% See also ComparisonGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LAYER = 46; %CET: Computational Efficiency Trick
@@ -211,6 +213,21 @@ classdef ComparisonGroupPF_GU < ComparisonGroupPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel global unilayer group comparison figure.
+			%
+			% BUILD = ComparisonGroupPF_GU.GETBUILD() returns the build of 'ComparisonGroupPF_GU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel global unilayer group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonGroupPF_GU') returns the build of 'ComparisonGroupPF_GU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonGroupPF_GU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel global unilayer group comparison figure.
 			%

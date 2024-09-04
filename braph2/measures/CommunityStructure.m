@@ -186,6 +186,21 @@ classdef CommunityStructure < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the community structure.
+			%
+			% BUILD = CommunityStructure.GETBUILD() returns the build of 'CommunityStructure'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the community structure M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('CommunityStructure') returns the build of 'CommunityStructure'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('CommunityStructure')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the community structure.
 			%

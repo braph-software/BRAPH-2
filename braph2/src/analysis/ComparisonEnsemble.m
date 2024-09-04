@@ -114,6 +114,8 @@ classdef ComparisonEnsemble < ConcreteElement
 	%
 	%
 	% See also CompareEnsemble, AnalyzeEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		MEASURE = 9; %CET: Computational Efficiency Trick
@@ -209,6 +211,21 @@ classdef ComparisonEnsemble < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the ensemble-based comparison results.
+			%
+			% BUILD = ComparisonEnsemble.GETBUILD() returns the build of 'ComparisonEnsemble'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = CP.GETBUILD() returns the build of the ensemble-based comparison results CP.
+			%  BUILD = Element.GETBUILD(CP) returns the build of 'CP'.
+			%  BUILD = Element.GETBUILD('ComparisonEnsemble') returns the build of 'ComparisonEnsemble'.
+			%
+			% Note that the Element.GETBUILD(CP) and Element.GETBUILD('ComparisonEnsemble')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function cp_class = getClass()
 			%GETCLASS returns the class of the ensemble-based comparison results.
 			%

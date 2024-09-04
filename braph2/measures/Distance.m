@@ -144,6 +144,21 @@ classdef Distance < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the distance.
+			%
+			% BUILD = Distance.GETBUILD() returns the build of 'Distance'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the distance M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Distance') returns the build of 'Distance'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Distance')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the distance.
 			%

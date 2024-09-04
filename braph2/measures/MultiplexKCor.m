@@ -150,6 +150,21 @@ classdef MultiplexKCor < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex k-core.
+			%
+			% BUILD = MultiplexKCor.GETBUILD() returns the build of 'MultiplexKCor'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the multiplex k-core M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexKCor') returns the build of 'MultiplexKCor'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexKCor')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the multiplex k-core.
 			%

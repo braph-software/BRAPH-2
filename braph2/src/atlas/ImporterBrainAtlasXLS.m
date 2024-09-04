@@ -112,6 +112,8 @@ classdef ImporterBrainAtlasXLS < Importer
 	%
 	%
 	% See also BrainAtlas, ExporterBrainAtlasXLS.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		FILE = 10; %CET: Computational Efficiency Trick
@@ -160,6 +162,21 @@ classdef ImporterBrainAtlasXLS < Importer
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain atlas importer from XLS/XLSX.
+			%
+			% BUILD = ImporterBrainAtlasXLS.GETBUILD() returns the build of 'ImporterBrainAtlasXLS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IM.GETBUILD() returns the build of the brain atlas importer from XLS/XLSX IM.
+			%  BUILD = Element.GETBUILD(IM) returns the build of 'IM'.
+			%  BUILD = Element.GETBUILD('ImporterBrainAtlasXLS') returns the build of 'ImporterBrainAtlasXLS'.
+			%
+			% Note that the Element.GETBUILD(IM) and Element.GETBUILD('ImporterBrainAtlasXLS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function im_class = getClass()
 			%GETCLASS returns the class of the brain atlas importer from XLS/XLSX.
 			%

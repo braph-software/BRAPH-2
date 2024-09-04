@@ -104,6 +104,8 @@ classdef Subject < ConcreteElement
 	%
 	%
 	% See also Group.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VOI_DICT = 9; %CET: Computational Efficiency Trick
@@ -139,6 +141,21 @@ classdef Subject < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the subject.
+			%
+			% BUILD = Subject.GETBUILD() returns the build of 'Subject'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = SUB.GETBUILD() returns the build of the subject SUB.
+			%  BUILD = Element.GETBUILD(SUB) returns the build of 'SUB'.
+			%  BUILD = Element.GETBUILD('Subject') returns the build of 'Subject'.
+			%
+			% Note that the Element.GETBUILD(SUB) and Element.GETBUILD('Subject')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function sub_class = getClass()
 			%GETCLASS returns the class of the subject.
 			%

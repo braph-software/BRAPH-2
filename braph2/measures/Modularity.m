@@ -153,6 +153,21 @@ classdef Modularity < CommunityStructure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the modularity.
+			%
+			% BUILD = Modularity.GETBUILD() returns the build of 'Modularity'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the modularity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Modularity') returns the build of 'Modularity'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Modularity')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the modularity.
 			%

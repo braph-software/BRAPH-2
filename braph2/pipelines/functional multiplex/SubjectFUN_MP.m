@@ -5,7 +5,7 @@ classdef SubjectFUN_MP < Subject
 	% Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).
 	%
 	% The list of SubjectFUN_MP properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
@@ -107,6 +107,8 @@ classdef SubjectFUN_MP < Subject
 	%
 	%
 	% See also ImporterGroupSubjectFUN_MP_TXT, ExporterGroupSubjectFUN_MP_TXT, ImporterGroupSubjectFUN_MP_XLS, ExporterGroupSubjectFUN_MP_XLS.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		BA = 10; %CET: Computational Efficiency Trick
@@ -146,7 +148,7 @@ classdef SubjectFUN_MP < Subject
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of SubjectFUN_MP properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the subject.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the subject.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the subject.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the subject.
@@ -167,6 +169,21 @@ classdef SubjectFUN_MP < Subject
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the subject with functional multiplex data.
+			%
+			% BUILD = SubjectFUN_MP.GETBUILD() returns the build of 'SubjectFUN_MP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = SUB.GETBUILD() returns the build of the subject with functional multiplex data SUB.
+			%  BUILD = Element.GETBUILD(SUB) returns the build of 'SUB'.
+			%  BUILD = Element.GETBUILD('SubjectFUN_MP') returns the build of 'SubjectFUN_MP'.
+			%
+			% Note that the Element.GETBUILD(SUB) and Element.GETBUILD('SubjectFUN_MP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function sub_class = getClass()
 			%GETCLASS returns the class of the subject with functional multiplex data.
 			%
@@ -485,7 +502,7 @@ classdef SubjectFUN_MP < Subject
 			prop = SubjectFUN_MP.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			subjectfun_mp_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'FUN_MP (data, cell) is a cell containing L matrices with each column corresponding to the time series of a brain region.' };
+			subjectfun_mp_description_list = { 'ELCLASS (constant, string) is the class of the subject.'  'NAME (constant, string) is the name of the subject.'  'DESCRIPTION (constant, string) is the description of the subject.'  'TEMPLATE (parameter, item) is the template of the subject.'  'ID (data, string) is a few-letter code for the subject.'  'LABEL (metadata, string) is an extended label of the subject.'  'NOTES (metadata, string) are some specific notes about the subject.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'VOI_DICT (data, idict) contains the variables of interest of the subject.'  'BA (data, item) is a brain atlas.'  'L (data, scalar) is the number of layers of subject data.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the processed layer labels.'  'FUN_MP (data, cell) is a cell containing L matrices with each column corresponding to the time series of a brain region.' };
 			prop_description = subjectfun_mp_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -551,7 +568,7 @@ classdef SubjectFUN_MP < Subject
 				case 10 % SubjectFUN_MP.BA
 					prop_default = Format.getFormatDefault(8, SubjectFUN_MP.getPropSettings(prop));
 				case 11 % SubjectFUN_MP.L
-					prop_default = 2;
+					prop_default = Format.getFormatDefault(11, SubjectFUN_MP.getPropSettings(prop));
 				case 12 % SubjectFUN_MP.LAYERLABELS
 					prop_default = Format.getFormatDefault(3, SubjectFUN_MP.getPropSettings(prop));
 				case 13 % SubjectFUN_MP.ALAYERLABELS
@@ -561,7 +578,7 @@ classdef SubjectFUN_MP < Subject
 				case 1 % SubjectFUN_MP.ELCLASS
 					prop_default = 'SubjectFUN_MP';
 				case 2 % SubjectFUN_MP.NAME
-					prop_default = 'SubjectFUN_MP';
+					prop_default = 'Multiplex Functional Subject';
 				case 3 % SubjectFUN_MP.DESCRIPTION
 					prop_default = 'Subject with data for each brain region corresponding to L functional layers (e.g. activation timeseries obtaiend from fMRI or EEG).';
 				case 5 % SubjectFUN_MP.ID

@@ -142,6 +142,21 @@ classdef KCorenessCentrality < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the k-coreness centrality.
+			%
+			% BUILD = KCorenessCentrality.GETBUILD() returns the build of 'KCorenessCentrality'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the k-coreness centrality M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('KCorenessCentrality') returns the build of 'KCorenessCentrality'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('KCorenessCentrality')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the k-coreness centrality.
 			%

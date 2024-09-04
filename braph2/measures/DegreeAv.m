@@ -143,6 +143,21 @@ classdef DegreeAv < Degree
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average degree.
+			%
+			% BUILD = DegreeAv.GETBUILD() returns the build of 'DegreeAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average degree M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('DegreeAv') returns the build of 'DegreeAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('DegreeAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average degree.
 			%
@@ -527,7 +542,7 @@ classdef DegreeAv < Degree
 				case 1 % DegreeAv.ELCLASS
 					prop_default = 'DegreeAv';
 				case 2 % DegreeAv.NAME
-					prop_default = 'DegreeAv';
+					prop_default = 'Average Degree';
 				case 3 % DegreeAv.DESCRIPTION
 					prop_default = 'The Average Degree (DegreeAv) of a graph is the average of all number of edges connected to a node within a layer. Connection weights are ignored in calculations.';
 				case 4 % DegreeAv.TEMPLATE

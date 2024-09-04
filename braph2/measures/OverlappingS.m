@@ -142,6 +142,21 @@ classdef OverlappingS < Strength
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the overlapping strength.
+			%
+			% BUILD = OverlappingS.GETBUILD() returns the build of 'OverlappingS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the overlapping strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('OverlappingS') returns the build of 'OverlappingS'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('OverlappingS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the overlapping strength.
 			%

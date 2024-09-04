@@ -142,6 +142,21 @@ classdef MultiplexPAv < MultiplexP
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average multiplex participation.
+			%
+			% BUILD = MultiplexPAv.GETBUILD() returns the build of 'MultiplexPAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average multiplex participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexPAv') returns the build of 'MultiplexPAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexPAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average multiplex participation.
 			%

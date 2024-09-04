@@ -142,6 +142,21 @@ classdef DegreeOverlapAv < DegreeOverlap
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average average degree overlap.
+			%
+			% BUILD = DegreeOverlapAv.GETBUILD() returns the build of 'DegreeOverlapAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average average degree overlap M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('DegreeOverlapAv') returns the build of 'DegreeOverlapAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('DegreeOverlapAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average average degree overlap.
 			%

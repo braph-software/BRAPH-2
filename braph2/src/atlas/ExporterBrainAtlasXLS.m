@@ -106,6 +106,8 @@ classdef ExporterBrainAtlasXLS < Exporter
 	%
 	%
 	% See also BrainAtlas, ImporterBrainAtlasXLS.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		BA = 10; %CET: Computational Efficiency Trick
@@ -160,6 +162,21 @@ classdef ExporterBrainAtlasXLS < Exporter
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain atlas exporter in XLS.
+			%
+			% BUILD = ExporterBrainAtlasXLS.GETBUILD() returns the build of 'ExporterBrainAtlasXLS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = EX.GETBUILD() returns the build of the brain atlas exporter in XLS EX.
+			%  BUILD = Element.GETBUILD(EX) returns the build of 'EX'.
+			%  BUILD = Element.GETBUILD('ExporterBrainAtlasXLS') returns the build of 'ExporterBrainAtlasXLS'.
+			%
+			% Note that the Element.GETBUILD(EX) and Element.GETBUILD('ExporterBrainAtlasXLS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function ex_class = getClass()
 			%GETCLASS returns the class of the brain atlas exporter in XLS.
 			%

@@ -121,6 +121,8 @@ classdef NNBase < ConcreteElement
 	%
 	%
 	% See also NNDataPoint, NNDataset, NNEvaluator.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		D = 9; %CET: Computational Efficiency Trick
@@ -228,6 +230,21 @@ classdef NNBase < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network.
+			%
+			% BUILD = NNBase.GETBUILD() returns the build of 'NNBase'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NN.GETBUILD() returns the build of the neural network NN.
+			%  BUILD = Element.GETBUILD(NN) returns the build of 'NN'.
+			%  BUILD = Element.GETBUILD('NNBase') returns the build of 'NNBase'.
+			%
+			% Note that the Element.GETBUILD(NN) and Element.GETBUILD('NNBase')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nn_class = getClass()
 			%GETCLASS returns the class of the neural network.
 			%
@@ -660,7 +677,7 @@ classdef NNBase < ConcreteElement
 				case 1 % NNBase.ELCLASS
 					prop_default = 'NNBase';
 				case 2 % NNBase.NAME
-					prop_default = 'Neural Network Base ';
+					prop_default = 'Neural Network Base';
 				case 3 % NNBase.DESCRIPTION
 					prop_default = 'A Neural Network Base (NNBase) comprises a neural network model with a specific dataset. Instances of this class should not be created. Use one of its subclasses instead. Its subclasses need to implement the props MODEL, INPUTS and TARGETS.';
 				case 4 % NNBase.TEMPLATE

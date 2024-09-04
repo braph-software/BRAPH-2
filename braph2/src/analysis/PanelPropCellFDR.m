@@ -160,6 +160,8 @@ classdef PanelPropCellFDR < PanelProp
 	%
 	%
 	% See also uitable, uislider, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		XSLIDERSHOW = 36; %CET: Computational Efficiency Trick
@@ -324,6 +326,21 @@ classdef PanelPropCellFDR < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the cell prop panel fdr.
+			%
+			% BUILD = PanelPropCellFDR.GETBUILD() returns the build of 'PanelPropCellFDR'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the cell prop panel fdr PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropCellFDR') returns the build of 'PanelPropCellFDR'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropCellFDR')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the cell prop panel fdr.
 			%

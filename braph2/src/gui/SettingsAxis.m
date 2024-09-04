@@ -117,6 +117,8 @@ classdef SettingsAxis < Settings
 	%
 	%
 	% See also uiaxes, SettingsAxisPP, PanelFig, GUIFig, check_graphics.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		AXISCOLOR = 15; %CET: Computational Efficiency Trick
@@ -194,6 +196,21 @@ classdef SettingsAxis < Settings
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the axis settings.
+			%
+			% BUILD = SettingsAxis.GETBUILD() returns the build of 'SettingsAxis'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = ST.GETBUILD() returns the build of the axis settings ST.
+			%  BUILD = Element.GETBUILD(ST) returns the build of 'ST'.
+			%  BUILD = Element.GETBUILD('SettingsAxis') returns the build of 'SettingsAxis'.
+			%
+			% Note that the Element.GETBUILD(ST) and Element.GETBUILD('SettingsAxis')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function st_class = getClass()
 			%GETCLASS returns the class of the axis settings.
 			%

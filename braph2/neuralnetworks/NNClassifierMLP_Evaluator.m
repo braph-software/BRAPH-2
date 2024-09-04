@@ -2,19 +2,19 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	%NNClassifierMLP_Evaluator evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 	% It is a subclass of <a href="matlab:help NNEvaluator">NNEvaluator</a>.
 	%
-	% A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
+	% A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset.
 	% NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).
 	%
 	% The list of NNClassifierMLP_Evaluator properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the classification task.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for a multi-layer perceptron classifier.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for a multi-layer perceptron classifier.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network classifier.
+	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron classifier.
 	%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 	%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
 	%  <strong>12</strong> <strong>AUC</strong> 	AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.
@@ -43,33 +43,33 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNClassifierMLP_Evaluator methods (display):
-	%  tostring - string with information about the neural network evaluator for classification
-	%  disp - displays information about the neural network evaluator for classification
-	%  tree - displays the tree of the neural network evaluator for classification
+	%  tostring - string with information about the neural network evaluator for multi-layer perceptron classifier
+	%  disp - displays information about the neural network evaluator for multi-layer perceptron classifier
+	%  tree - displays the tree of the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two neural network evaluator for classification are equal (values, locked)
+	%  isequal - determines whether two neural network evaluator for multi-layer perceptron classifier are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the neural network evaluator for classification
+	%  copy - copies the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (save/load, Static):
-	%  save - saves BRAPH2 neural network evaluator for classification as b2 file
-	%  load - loads a BRAPH2 neural network evaluator for classification from a b2 file
+	%  save - saves BRAPH2 neural network evaluator for multi-layer perceptron classifier as b2 file
+	%  load - loads a BRAPH2 neural network evaluator for multi-layer perceptron classifier from a b2 file
 	%
 	% NNClassifierMLP_Evaluator method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the neural network evaluator for classification
+	%  encodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the neural network evaluator for classification
+	%   decodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron classifier
 	%
 	% NNClassifierMLP_Evaluator methods (inspection, Static):
-	%  getClass - returns the class of the neural network evaluator for classification
+	%  getClass - returns the class of the neural network evaluator for multi-layer perceptron classifier
 	%  getSubclasses - returns all subclasses of NNClassifierMLP_Evaluator
-	%  getProps - returns the property list of the neural network evaluator for classification
-	%  getPropNumber - returns the property number of the neural network evaluator for classification
+	%  getProps - returns the property list of the neural network evaluator for multi-layer perceptron classifier
+	%  getPropNumber - returns the property number of the neural network evaluator for multi-layer perceptron classifier
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -112,6 +112,8 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	%
 	%
 	% See also NNDataPoint_CON_CLA, NNClassifierMLP.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		GROUND_TRUTH = 11; %CET: Computational Efficiency Trick
@@ -156,7 +158,7 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 	end
 	methods % constructor
 		function nne = NNClassifierMLP_Evaluator(varargin)
-			%NNClassifierMLP_Evaluator() creates a neural network evaluator for classification.
+			%NNClassifierMLP_Evaluator() creates a neural network evaluator for multi-layer perceptron classifier.
 			%
 			% NNClassifierMLP_Evaluator(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -166,15 +168,15 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNClassifierMLP_Evaluator properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the classification task.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the classification task.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for a multi-layer perceptron classifier.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for a multi-layer perceptron classifier.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network classifier.
+			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron classifier.
 			%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 			%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
 			%  <strong>12</strong> <strong>AUC</strong> 	AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.
@@ -191,13 +193,28 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network evaluator for multi-layer perceptron classifier.
+			%
+			% BUILD = NNClassifierMLP_Evaluator.GETBUILD() returns the build of 'NNClassifierMLP_Evaluator'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NNE.GETBUILD() returns the build of the neural network evaluator for multi-layer perceptron classifier NNE.
+			%  BUILD = Element.GETBUILD(NNE) returns the build of 'NNE'.
+			%  BUILD = Element.GETBUILD('NNClassifierMLP_Evaluator') returns the build of 'NNClassifierMLP_Evaluator'.
+			%
+			% Note that the Element.GETBUILD(NNE) and Element.GETBUILD('NNClassifierMLP_Evaluator')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nne_class = getClass()
-			%GETCLASS returns the class of the neural network evaluator for classification.
+			%GETCLASS returns the class of the neural network evaluator for multi-layer perceptron classifier.
 			%
 			% CLASS = NNClassifierMLP_Evaluator.GETCLASS() returns the class 'NNClassifierMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for classification NNE.
+			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  CLASS = Element.GETCLASS(NNE) returns the class of 'NNE'.
 			%  CLASS = Element.GETCLASS('NNClassifierMLP_Evaluator') returns 'NNClassifierMLP_Evaluator'.
 			%
@@ -207,12 +224,12 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			nne_class = 'NNClassifierMLP_Evaluator';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the neural network evaluator for classification.
+			%GETSUBCLASSES returns all subclasses of the neural network evaluator for multi-layer perceptron classifier.
 			%
 			% LIST = NNClassifierMLP_Evaluator.GETSUBCLASSES() returns all subclasses of 'NNClassifierMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for classification NNE.
+			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  LIST = Element.GETSUBCLASSES(NNE) returns all subclasses of 'NNE'.
 			%  LIST = Element.GETSUBCLASSES('NNClassifierMLP_Evaluator') returns all subclasses of 'NNClassifierMLP_Evaluator'.
 			%
@@ -224,16 +241,16 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			subclass_list = { 'NNClassifierMLP_Evaluator' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of neural network evaluator for classification.
+			%GETPROPS returns the property list of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% PROPS = NNClassifierMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for classification
+			% PROPS = NNClassifierMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for multi-layer perceptron classifier
 			%  as a row vector.
 			%
 			% PROPS = NNClassifierMLP_Evaluator.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for classification NNE.
+			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  PROPS = Element.GETPROPS(NNE[, CATEGORY]) returns the property list of 'NNE'.
 			%  PROPS = Element.GETPROPS('NNClassifierMLP_Evaluator'[, CATEGORY]) returns the property list of 'NNClassifierMLP_Evaluator'.
 			%
@@ -269,15 +286,15 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of neural network evaluator for classification.
+			%GETPROPNUMBER returns the property number of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for classification.
+			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for multi-layer perceptron classifier.
 			%
-			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for classification
+			% N = NNClassifierMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for multi-layer perceptron classifier
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for classification NNE.
+			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for multi-layer perceptron classifier NNE.
 			%  N = Element.GETPROPNUMBER(NNE) returns the property number of 'NNE'.
 			%  N = Element.GETPROPNUMBER('NNClassifierMLP_Evaluator') returns the property number of 'NNClassifierMLP_Evaluator'.
 			%
@@ -313,7 +330,7 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in neural network evaluator for classification/error.
+			%EXISTSPROP checks whether property exists in neural network evaluator for multi-layer perceptron classifier/error.
 			%
 			% CHECK = NNClassifierMLP_Evaluator.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -351,7 +368,7 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in neural network evaluator for classification/error.
+			%EXISTSTAG checks whether tag exists in neural network evaluator for multi-layer perceptron classifier/error.
 			%
 			% CHECK = NNClassifierMLP_Evaluator.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -517,7 +534,7 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			prop = NNClassifierMLP_Evaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnclassifiermlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network evaluator for the classification task.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for the classification task.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for the classification task.'  'ID (data, string) is a few-letter code for the neural network evaluator for the classification task.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for the classification task.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for the classification task.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NN (data, item) contains a trained neural network classifier.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.'  'AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'MACRO_AUC (result, scalar) provides the metric of the average AUC value.'  'C_MATRIX (result, matrix) provides the confusion matrix.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.' };
+			nnclassifiermlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron classifier.'  'NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron classifier.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for a multi-layer perceptron classifier.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for a multi-layer perceptron classifier.'  'ID (data, string) is a few-letter code for the neural network evaluator for a multi-layer perceptron classifier.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for a multi-layer perceptron classifier.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for a multi-layer perceptron classifier.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.'  'AUC (result, rvector) provides the value of the area under the receiver operating characteristic curve.'  'PFROC (gui, item) contains the panel figure of the ROC plot for classification model.'  'MACRO_AUC (result, scalar) provides the metric of the average AUC value.'  'C_MATRIX (result, matrix) provides the confusion matrix.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.' };
 			prop_description = nnclassifiermlp_evaluator_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -609,9 +626,9 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 				case 1 % NNClassifierMLP_Evaluator.ELCLASS
 					prop_default = 'NNClassifierMLP_Evaluator';
 				case 2 % NNClassifierMLP_Evaluator.NAME
-					prop_default = 'NNClassifierMLP_Evaluator';
+					prop_default = 'Neural Network Evaluator for a Multi-layer Perceptron Classifier';
 				case 3 % NNClassifierMLP_Evaluator.DESCRIPTION
-					prop_default = 'A neural network evaluator for multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).';
+					prop_default = 'A neural network evaluator for a multi-layer perceptron classifier (NNClassifierMLP_Evaluator) evaluates the performance of a multi-layer perceptron classifier with a given dataset. NNClassifierMLP_Evaluator evaluates the performance of the trained classifier with a given dataset in terms of various classification metrics (e.g., confusion matrix, area under the receiver operating characteristic curve).';
 				case 4 % NNClassifierMLP_Evaluator.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNClassifierMLP_Evaluator.getPropSettings(prop));
 				case 5 % NNClassifierMLP_Evaluator.ID
