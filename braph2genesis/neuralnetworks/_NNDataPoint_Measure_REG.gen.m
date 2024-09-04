@@ -333,6 +333,6 @@ example_NNCV_CON_FUN_MP_WU_M_REG
 Example script for weighted undirected graph (GraphWU) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_REG % create example files
+    create_data_NN_REG_FUN_XLS() % create example files
 end
 example_NNCV_FUN_WU_M_REG

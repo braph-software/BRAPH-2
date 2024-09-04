@@ -509,7 +509,7 @@ example_NNCV_CON_FUN_MP_BUT_M_CLA
 Example script for binary undirected multigraph at fixed densities (MultiplexBUD) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_CLA % create example files
+    create_data_NN_CLA_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUD_M_CLA
 
@@ -518,6 +518,6 @@ example_NNCV_FUN_BUD_M_CLA
 Example script for binary undirected multigraph at fixed thresholds (MultiplexBUT) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_CLA % create example files
+    create_data_NN_CLA_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUT_M_CLA
