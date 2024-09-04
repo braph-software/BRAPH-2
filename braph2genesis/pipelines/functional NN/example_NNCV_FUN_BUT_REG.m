@@ -63,4 +63,4 @@ av_coeff_determination = nncv.get('AV_DET');
 av_mae = nncv.get('AV_MAE');
 av_mse = nncv.get('AV_MSE');
 av_rmse = nncv.get('AV_RMSE');
-av_fi = nncv.get('AV_FEATURE_IMPORTANCE');
+%av_fi = nncv.get('AV_FEATURE_IMPORTANCE'); % % % uncomment this when the feature importance element is ready
