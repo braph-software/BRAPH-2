@@ -142,6 +142,21 @@ classdef WeightedMxPIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the weighted in-participation.
+			%
+			% BUILD = WeightedMxPIn.GETBUILD() returns the build of 'WeightedMxPIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the weighted in-participation M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('WeightedMxPIn') returns the build of 'WeightedMxPIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('WeightedMxPIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the weighted in-participation.
 			%

@@ -102,6 +102,8 @@ classdef VOINumeric < VOI
 	%
 	%
 	% See also VOICategoric.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function voi = VOINumeric(varargin)
@@ -131,6 +133,21 @@ classdef VOINumeric < VOI
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the numerical variable of interest.
+			%
+			% BUILD = VOINumeric.GETBUILD() returns the build of 'VOINumeric'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = VOI.GETBUILD() returns the build of the numerical variable of interest VOI.
+			%  BUILD = Element.GETBUILD(VOI) returns the build of 'VOI'.
+			%  BUILD = Element.GETBUILD('VOINumeric') returns the build of 'VOINumeric'.
+			%
+			% Note that the Element.GETBUILD(VOI) and Element.GETBUILD('VOINumeric')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function voi_class = getClass()
 			%GETCLASS returns the class of the numerical variable of interest.
 			%

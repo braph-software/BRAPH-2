@@ -147,6 +147,8 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 	%
 	%
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LAYER = 48; %CET: Computational Efficiency Trick
@@ -239,6 +241,21 @@ classdef MeasureGroupBrainPF_NU < MeasureGroupBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for nodal unilayer measure group brain.
+			%
+			% BUILD = MeasureGroupBrainPF_NU.GETBUILD() returns the build of 'MeasureGroupBrainPF_NU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for nodal unilayer measure group brain PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureGroupBrainPF_NU') returns the build of 'MeasureGroupBrainPF_NU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureGroupBrainPF_NU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for nodal unilayer measure group brain.
 			%

@@ -143,6 +143,8 @@ classdef MeasureGroupBrainPF_BU < MeasureGroupBrainPF
 	%
 	%
 	% See also BrainAtlas, BrainSurface, BrainAtlasPF.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	methods % constructor
 		function pf = MeasureGroupBrainPF_BU(varargin)
@@ -210,6 +212,21 @@ classdef MeasureGroupBrainPF_BU < MeasureGroupBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel figure for binodal unilayer measure group brain.
+			%
+			% BUILD = MeasureGroupBrainPF_BU.GETBUILD() returns the build of 'MeasureGroupBrainPF_BU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel figure for binodal unilayer measure group brain PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureGroupBrainPF_BU') returns the build of 'MeasureGroupBrainPF_BU'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureGroupBrainPF_BU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel figure for binodal unilayer measure group brain.
 			%

@@ -105,6 +105,8 @@ classdef NNDatasetCombine < ConcreteElement
 	%
 	%
 	% See also NNDataset, NNDatasetSplit.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		D_LIST = 9; %CET: Computational Efficiency Trick
@@ -146,6 +148,21 @@ classdef NNDatasetCombine < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the combiner of a neural network data.
+			%
+			% BUILD = NNDatasetCombine.GETBUILD() returns the build of 'NNDatasetCombine'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = DCO.GETBUILD() returns the build of the combiner of a neural network data DCO.
+			%  BUILD = Element.GETBUILD(DCO) returns the build of 'DCO'.
+			%  BUILD = Element.GETBUILD('NNDatasetCombine') returns the build of 'NNDatasetCombine'.
+			%
+			% Note that the Element.GETBUILD(DCO) and Element.GETBUILD('NNDatasetCombine')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function dco_class = getClass()
 			%GETCLASS returns the class of the combiner of a neural network data.
 			%
@@ -534,7 +551,7 @@ classdef NNDatasetCombine < ConcreteElement
 				case 1 % NNDatasetCombine.ELCLASS
 					prop_default = 'NNDatasetCombine';
 				case 2 % NNDatasetCombine.NAME
-					prop_default = 'NNDatasetCombine';
+					prop_default = 'Neural Network Dataset Combiner';
 				case 3 % NNDatasetCombine.DESCRIPTION
 					prop_default = 'A dataset combiner (NNDatasetCombine) takes a list of neural network datasets and combines them into a single dataset. The resulting combined dataset contains all the unique datapoints from the input datasets, and any overlapping datapoints are excluded to ensure data consistency.';
 				case 4 % NNDatasetCombine.TEMPLATE
@@ -669,7 +686,7 @@ classdef NNDatasetCombine < ConcreteElement
 					dp_list = horzcat(dp_list{:});
 					
 					% inspect whether there are overlapping datapoints
-					if isempty(dp_list) | isempty(dp_classes)
+					if isempty(dp_list)
 					    unique_dp_list = {};
 					    dp_class = 'NNDataPoint';
 					else
@@ -681,7 +698,7 @@ classdef NNDatasetCombine < ConcreteElement
 					
 					% create the combined NNDataset
 					combined_dp_dict = IndexedDictionary(...
-					    'IT_CLASS', 'NNDataPoint', ...
+					    'IT_CLASS', dp_class, ...
 					    'IT_LIST',  unique_dp_list ...
 					    );
 					

@@ -144,6 +144,21 @@ classdef ClusteringAv < Clustering
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average clustering.
+			%
+			% BUILD = ClusteringAv.GETBUILD() returns the build of 'ClusteringAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average clustering M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('ClusteringAv') returns the build of 'ClusteringAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('ClusteringAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average clustering.
 			%

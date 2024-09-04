@@ -108,6 +108,8 @@ classdef BrainSurface < ConcreteElement
 	%
 	%
 	% See also BrainAtlas, BrainRegion, BrainSurfacePF.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		VERTEX_NUMBER = 9; %CET: Computational Efficiency Trick
@@ -161,6 +163,21 @@ classdef BrainSurface < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the brain surface.
+			%
+			% BUILD = BrainSurface.GETBUILD() returns the build of 'BrainSurface'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = BS.GETBUILD() returns the build of the brain surface BS.
+			%  BUILD = Element.GETBUILD(BS) returns the build of 'BS'.
+			%  BUILD = Element.GETBUILD('BrainSurface') returns the build of 'BrainSurface'.
+			%
+			% Note that the Element.GETBUILD(BS) and Element.GETBUILD('BrainSurface')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function bs_class = getClass()
 			%GETCLASS returns the class of the brain surface.
 			%

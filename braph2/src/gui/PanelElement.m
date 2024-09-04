@@ -147,6 +147,8 @@ classdef PanelElement < Panel
 	%
 	%
 	% See also uigridlayout, GUI, GUIElement, PanelProp.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		EL = 20; %CET: Computational Efficiency Trick
@@ -241,6 +243,21 @@ classdef PanelElement < Panel
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the element panel.
+			%
+			% BUILD = PanelElement.GETBUILD() returns the build of 'PanelElement'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PE.GETBUILD() returns the build of the element panel PE.
+			%  BUILD = Element.GETBUILD(PE) returns the build of 'PE'.
+			%  BUILD = Element.GETBUILD('PanelElement') returns the build of 'PanelElement'.
+			%
+			% Note that the Element.GETBUILD(PE) and Element.GETBUILD('PanelElement')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pe_class = getClass()
 			%GETCLASS returns the class of the element panel.
 			%

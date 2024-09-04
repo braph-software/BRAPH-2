@@ -143,6 +143,8 @@ classdef GUI < ConcreteElement
 	%
 	%
 	% See also uifigure, GUIElement, GUIFig.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -298,6 +300,21 @@ classdef GUI < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graphical user interface.
+			%
+			% BUILD = GUI.GETBUILD() returns the build of 'GUI'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = GUI.GETBUILD() returns the build of the graphical user interface GUI.
+			%  BUILD = Element.GETBUILD(GUI) returns the build of 'GUI'.
+			%  BUILD = Element.GETBUILD('GUI') returns the build of 'GUI'.
+			%
+			% Note that the Element.GETBUILD(GUI) and Element.GETBUILD('GUI')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function gui_class = getClass()
 			%GETCLASS returns the class of the graphical user interface.
 			%

@@ -2,7 +2,7 @@ classdef NNCrossValidation < ConcreteElement
 	%NNCrossValidation is a process for evaluating a neural network model using cross-validation.
 	% It is a subclass of <a href="matlab:help ConcreteElement">ConcreteElement</a>.
 	%
-	% A cross validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. 
+	% A cross-validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. 
 	%  It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. 
 	%  This helps in assessing the generalization performance of the model and detecting overfitting.
 	% 
@@ -126,6 +126,8 @@ classdef NNCrossValidation < ConcreteElement
 	%
 	%
 	% See also NNDataset, NNEvaluator, NNBase.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -281,6 +283,21 @@ classdef NNCrossValidation < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network cross-validation.
+			%
+			% BUILD = NNCrossValidation.GETBUILD() returns the build of 'NNCrossValidation'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NNCV.GETBUILD() returns the build of the neural network cross-validation NNCV.
+			%  BUILD = Element.GETBUILD(NNCV) returns the build of 'NNCV'.
+			%  BUILD = Element.GETBUILD('NNCrossValidation') returns the build of 'NNCrossValidation'.
+			%
+			% Note that the Element.GETBUILD(NNCV) and Element.GETBUILD('NNCrossValidation')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nncv_class = getClass()
 			%GETCLASS returns the class of the neural network cross-validation.
 			%
@@ -749,9 +766,9 @@ classdef NNCrossValidation < ConcreteElement
 				case 1 % NNCrossValidation.ELCLASS
 					prop_default = 'NNCrossValidation';
 				case 2 % NNCrossValidation.NAME
-					prop_default = 'NNCrossValidation';
+					prop_default = 'Neural Network Cross-Validation';
 				case 3 % NNCrossValidation.DESCRIPTION
-					prop_default = 'A cross validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
+					prop_default = 'A cross-validation (NNCrossValidation) is a process that facilitates the evaluation of neural network models using cross-validation. It involves splitting a dataset into multiple subsets (folds), training the model on some folds while validating on others, and then repeating the process for all combinations of folds. This helps in assessing the generalization performance of the model and detecting overfitting.';
 				case 4 % NNCrossValidation.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNCrossValidation.getPropSettings(prop));
 				case 5 % NNCrossValidation.ID

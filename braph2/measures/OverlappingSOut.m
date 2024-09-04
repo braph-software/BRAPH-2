@@ -142,6 +142,21 @@ classdef OverlappingSOut < StrengthOut
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the overlapping out-strength.
+			%
+			% BUILD = OverlappingSOut.GETBUILD() returns the build of 'OverlappingSOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the overlapping out-strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('OverlappingSOut') returns the build of 'OverlappingSOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('OverlappingSOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the overlapping out-strength.
 			%

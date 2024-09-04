@@ -106,6 +106,8 @@ classdef ImporterPipelineBRAPH2 < Importer
 	%
 	%
 	% See also Importer, Pipeline, ExporterPipelineBRAPH2.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		FILE = 10; %CET: Computational Efficiency Trick
@@ -154,6 +156,21 @@ classdef ImporterPipelineBRAPH2 < Importer
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the importer of pipeline from BRAPH2.
+			%
+			% BUILD = ImporterPipelineBRAPH2.GETBUILD() returns the build of 'ImporterPipelineBRAPH2'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IM.GETBUILD() returns the build of the importer of pipeline from BRAPH2 IM.
+			%  BUILD = Element.GETBUILD(IM) returns the build of 'IM'.
+			%  BUILD = Element.GETBUILD('ImporterPipelineBRAPH2') returns the build of 'ImporterPipelineBRAPH2'.
+			%
+			% Note that the Element.GETBUILD(IM) and Element.GETBUILD('ImporterPipelineBRAPH2')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function im_class = getClass()
 			%GETCLASS returns the class of the importer of pipeline from BRAPH2.
 			%
@@ -549,7 +566,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 					prop_default = Pipeline();
 				case 1 % ImporterPipelineBRAPH2.ELCLASS
 					prop_default = 'ImporterPipelineBRAPH2';
-				case 2 % ImporterPipeline'BRAPH 2.0'
+				case 2 % ImporterPipelineBRAPH2.NAME
 					prop_default = 'Pipeline Importer from BRAPH2 File';
 				case 3 % ImporterPipelineBRAPH2.DESCRIPTION
 					prop_default = 'A Pipeline Importer from BRAPH2 File (ImporterPipelineBRAPH2) imports a pipeline from a BRAPH2 file. The format of the BRAPH2 file should include the label, description and at least one code section.';
@@ -684,7 +701,7 @@ classdef ImporterPipelineBRAPH2 < Importer
 					% analyzes file
 					file = im.get('FILE');
 					if ~isfile(file)
-					    file = [fileparts(which('braph2')) filesep 'src' filesep 'gui' filesep 'examples' filesep file];
+					    file = [fileparts(which('braph2')) filesep 'src' filesep 'gui' filesep 'gui_examples' filesep file];
 					end
 					
 					if isfile(file)

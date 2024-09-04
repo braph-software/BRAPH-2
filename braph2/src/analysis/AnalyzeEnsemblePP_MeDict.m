@@ -136,6 +136,8 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 	%
 	%
 	% See also uitable, AnalyzeEnsemble, Graph, Measure.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
@@ -234,6 +236,21 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph and measure plot.
+			%
+			% BUILD = AnalyzeEnsemblePP_MeDict.GETBUILD() returns the build of 'AnalyzeEnsemblePP_MeDict'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the graph and measure plot PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('AnalyzeEnsemblePP_MeDict') returns the build of 'AnalyzeEnsemblePP_MeDict'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('AnalyzeEnsemblePP_MeDict')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the graph and measure plot.
 			%
@@ -1071,16 +1088,14 @@ classdef AnalyzeEnsemblePP_MeDict < PanelProp
 			    
 			    wb = braph2waitbar(pr.get('WAITBAR'), 0, ['Calculating ' num2str(length(selected))  ' measures ...']);
 			
-			    for i = 1:1:length(m_list)
-			        if ismember(i, selected)
-			            measure = m_list{i};
-			            me = a.get('MEASUREENSEMBLE', measure);
+			    for s = 1:1:length(selected)
+			        measure = m_list{selected(s)};
+			        me = a.get('MEASUREENSEMBLE', measure);
 			
-			            braph2waitbar(wb, .1 + .9 * i / length(selected), ['Calculating measure ' int2str(i) ' (' measure ') of ' int2str(length(selected)) ' ...'])
+			        braph2waitbar(wb, .1 + s / length(selected), ['Calculating measure ' int2str(s) ' (' measure ') of ' int2str(length(selected)) ' ...'])
 			
-			            if isa(me.getr('M'), 'NoValue')
-			                a.get('MEASUREENSEMBLE', measure).memorize('M');
-			            end
+			        if isa(me.getr('M'), 'NoValue')
+			            a.get('MEASUREENSEMBLE', measure).memorize('M');
 			        end
 			    end
 			    

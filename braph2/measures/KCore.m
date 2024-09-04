@@ -150,6 +150,21 @@ classdef KCore < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the kcore.
+			%
+			% BUILD = KCore.GETBUILD() returns the build of 'KCore'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the kcore M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('KCore') returns the build of 'KCore'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('KCore')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the kcore.
 			%

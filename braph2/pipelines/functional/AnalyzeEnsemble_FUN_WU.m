@@ -6,7 +6,7 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 	% using weighted undirected graphs.
 	%
 	% The list of AnalyzeEnsemble_FUN_WU properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ensemble-based graph analysis with functional data.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.
@@ -113,6 +113,8 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 	%
 	%
 	% See also SubjectFUN, GraphWU.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		REPETITION = 15; %CET: Computational Efficiency Trick
@@ -152,7 +154,7 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of AnalyzeEnsemble_FUN_WU properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the ensemble-based graph analysis with functional data.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.
@@ -178,6 +180,21 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph analysis with functional data.
+			%
+			% BUILD = AnalyzeEnsemble_FUN_WU.GETBUILD() returns the build of 'AnalyzeEnsemble_FUN_WU'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = A.GETBUILD() returns the build of the graph analysis with functional data A.
+			%  BUILD = Element.GETBUILD(A) returns the build of 'A'.
+			%  BUILD = Element.GETBUILD('AnalyzeEnsemble_FUN_WU') returns the build of 'AnalyzeEnsemble_FUN_WU'.
+			%
+			% Note that the Element.GETBUILD(A) and Element.GETBUILD('AnalyzeEnsemble_FUN_WU')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function a_class = getClass()
 			%GETCLASS returns the class of the graph analysis with functional data.
 			%
@@ -504,7 +521,7 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 			prop = AnalyzeEnsemble_FUN_WU.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			analyzeensemble_fun_wu_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectFUN.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'REPETITION (parameter, scalar) is the number of repetitions.'  'F_MIN (parameter, scalar) is the minimum frequency value.'  'F_MAX (parameter, scalar) is the maximum frequency value.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.' };
+			analyzeensemble_fun_wu_description_list = { 'ELCLASS (constant, string) is the class of the ensemble-based graph analysis with functional data.'  'NAME (constant, string) is the name of the ensemble-based graph analysis with functional data.'  'DESCRIPTION (constant, string) is the description of the ensemble-based graph analysis with functional data.'  'TEMPLATE (parameter, item) is the template of the ensemble-based graph analysis with functional data.'  'ID (data, string) is a few-letter code for the ensemble-based graph analysis with functional data.'  'LABEL (metadata, string) is an extended label of the ensemble-based graph analysis with functional data.'  'NOTES (metadata, string) are some specific notes about the ensemble-based graph analysis with functional data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'GR (data, item) is the subject group, which also defines the subject class SubjectFUN.'  'GRAPH_TEMPLATE (parameter, item) is the graph template to set all graph and measure parameters.'  'G_DICT (result, idict) is the graph (GraphWU) ensemble obtained from this analysis.'  'ME_DICT (result, idict) contains the calculated measures of the graph ensemble.'  'MEASUREENSEMBLE (query, item) returns an ensemble-based measure.'  'REPETITION (parameter, scalar) is the number of repetitions.'  'F_MIN (parameter, scalar) is the minimum frequency value.'  'F_MAX (parameter, scalar) is the maximum frequency value.'  'CORRELATION_RULE (parameter, option) is the correlation type.'  'NEGATIVE_WEIGHT_RULE (parameter, option) determines how to deal with negative weights.' };
 			prop_description = analyzeensemble_fun_wu_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -584,7 +601,7 @@ classdef AnalyzeEnsemble_FUN_WU < AnalyzeEnsemble
 				case 1 % AnalyzeEnsemble_FUN_WU.ELCLASS
 					prop_default = 'AnalyzeEnsemble_FUN_WU';
 				case 2 % AnalyzeEnsemble_FUN_WU.NAME
-					prop_default = 'AnalyzeEnsemble_FUN_WU';
+					prop_default = 'Functional Weighted Undirected Analyze Ensemble';
 				case 3 % AnalyzeEnsemble_FUN_WU.DESCRIPTION
 					prop_default = 'This graph analysis (AnalyzeEnsemble_FUN_WU) analyzes functional data using weighted undirected graphs.';
 				case 5 % AnalyzeEnsemble_FUN_WU.ID

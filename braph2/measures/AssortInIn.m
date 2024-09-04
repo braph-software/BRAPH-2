@@ -3,7 +3,7 @@ classdef AssortInIn < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between 
-	%   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+	%   the inward degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 	% The corresponding coefficient for directed and weighted networks is calculated by 
 	%   using the weighted and directed variants of in-degree/in-strength.
 	%
@@ -144,6 +144,21 @@ classdef AssortInIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the in-in-assortativity.
+			%
+			% BUILD = AssortInIn.GETBUILD() returns the build of 'AssortInIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the in-in-assortativity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('AssortInIn') returns the build of 'AssortInIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('AssortInIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the in-in-assortativity.
 			%
@@ -530,7 +545,7 @@ classdef AssortInIn < Measure
 				case 2 % AssortInIn.NAME
 					prop_default = 'In-In-Assortativity';
 				case 3 % AssortInIn.DESCRIPTION
-					prop_default = 'The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.';
+					prop_default = 'The In-In-Assortativity coefficient (AssortInIn) of a graph is the correlation coefficient between the inward degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of in-degree/in-strength.';
 				case 4 % AssortInIn.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AssortInIn.getPropSettings(prop));
 				case 5 % AssortInIn.ID

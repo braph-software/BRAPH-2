@@ -102,6 +102,8 @@ classdef Importer < ConcreteElement
 	%
 	%
 	% See also ConcreteElement, Exporter.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -137,6 +139,21 @@ classdef Importer < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the importer from a file.
+			%
+			% BUILD = Importer.GETBUILD() returns the build of 'Importer'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IM.GETBUILD() returns the build of the importer from a file IM.
+			%  BUILD = Element.GETBUILD(IM) returns the build of 'IM'.
+			%  BUILD = Element.GETBUILD('Importer') returns the build of 'Importer'.
+			%
+			% Note that the Element.GETBUILD(IM) and Element.GETBUILD('Importer')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function im_class = getClass()
 			%GETCLASS returns the class of the importer from a file.
 			%

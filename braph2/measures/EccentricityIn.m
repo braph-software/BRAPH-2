@@ -150,6 +150,21 @@ classdef EccentricityIn < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the in-eccentricity.
+			%
+			% BUILD = EccentricityIn.GETBUILD() returns the build of 'EccentricityIn'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the in-eccentricity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('EccentricityIn') returns the build of 'EccentricityIn'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('EccentricityIn')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the in-eccentricity.
 			%

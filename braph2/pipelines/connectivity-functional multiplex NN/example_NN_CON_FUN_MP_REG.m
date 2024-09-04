@@ -75,4 +75,5 @@ coeff_determination = nne_test.get('DET');
 mae = nne_test.get('MAE');
 mse = nne_test.get('MSE');
 rmse = nne_test.get('RMSE');
-fi = nne_test.get('FEATURE_IMPORTANCE');
+%fi = nne_test.get('FEATURE_IMPORTANCE'); %% uncomment this when the
+% feature importance element is ready

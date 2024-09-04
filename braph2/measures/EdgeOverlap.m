@@ -142,6 +142,21 @@ classdef EdgeOverlap < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the edge overlap.
+			%
+			% BUILD = EdgeOverlap.GETBUILD() returns the build of 'EdgeOverlap'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the edge overlap M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('EdgeOverlap') returns the build of 'EdgeOverlap'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('EdgeOverlap')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the edge overlap.
 			%

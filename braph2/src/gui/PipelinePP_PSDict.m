@@ -140,6 +140,8 @@ classdef PipelinePP_PSDict < PanelProp
 	%
 	%
 	% See also Pipeline.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		HEIGHT_MIN = 36; %CET: Computational Efficiency Trick
@@ -256,6 +258,21 @@ classdef PipelinePP_PSDict < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the pipeline plot.
+			%
+			% BUILD = PipelinePP_PSDict.GETBUILD() returns the build of 'PipelinePP_PSDict'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the pipeline plot PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PipelinePP_PSDict') returns the build of 'PipelinePP_PSDict'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PipelinePP_PSDict')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the pipeline plot.
 			%

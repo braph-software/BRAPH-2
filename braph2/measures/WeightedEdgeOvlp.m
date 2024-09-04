@@ -142,6 +142,21 @@ classdef WeightedEdgeOvlp < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the weighted edge overlap.
+			%
+			% BUILD = WeightedEdgeOvlp.GETBUILD() returns the build of 'WeightedEdgeOvlp'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the weighted edge overlap M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('WeightedEdgeOvlp') returns the build of 'WeightedEdgeOvlp'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('WeightedEdgeOvlp')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the weighted edge overlap.
 			%

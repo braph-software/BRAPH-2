@@ -2,8 +2,8 @@ classdef MultigraphBUT < GraphWU
 	%MultigraphBUT is a binary undirected multigraph with fixed thresholds.
 	% It is a subclass of <a href="matlab:help GraphWU">GraphWU</a>.
 	%
-	% In a binary undirected multigraph with fixed thresholds, all the layers 
-	%  consist of binary undirected (BU) graphs derived from the same 
+	% In a binary undirected multigraph with fixed thresholds (MultigraphBUT), all the layers 
+	%  consist of binary undirected graphs derived from the same 
 	%  weighted connectivity matrix binarized at different thresholds.
 	% There are no connections between layers.
 	%
@@ -206,6 +206,21 @@ classdef MultigraphBUT < GraphWU
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the binary undirected multigraph with fixed thresholds.
+			%
+			% BUILD = MultigraphBUT.GETBUILD() returns the build of 'MultigraphBUT'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the binary undirected multigraph with fixed thresholds G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultigraphBUT') returns the build of 'MultigraphBUT'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultigraphBUT')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the binary undirected multigraph with fixed thresholds.
 			%
@@ -594,9 +609,9 @@ classdef MultigraphBUT < GraphWU
 				case 1 % MultigraphBUT.ELCLASS
 					prop_default = 'MultigraphBUT';
 				case 2 % MultigraphBUT.NAME
-					prop_default = 'MultigraphBUT';
+					prop_default = 'Multigraph Binary Undirected at fixed Thresholds';
 				case 3 % MultigraphBUT.DESCRIPTION
-					prop_default = 'In a binary undirected multigraph with fixed thresholds, all the layers consist of binary undirected (BU) graphs derived from the same weighted connectivity matrix binarized at different thresholds. There are no connections between layers.';
+					prop_default = 'In a binary undirected multigraph with fixed thresholds (MultigraphBUT), all the layers consist of binary undirected graphs derived from the same weighted connectivity matrix binarized at different thresholds. There are no connections between layers.';
 				case 4 % MultigraphBUT.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultigraphBUT.getPropSettings(prop));
 				case 5 % MultigraphBUT.ID

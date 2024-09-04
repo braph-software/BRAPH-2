@@ -149,6 +149,21 @@ classdef PathLengthOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the out-path length.
+			%
+			% BUILD = PathLengthOut.GETBUILD() returns the build of 'PathLengthOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the out-path length M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('PathLengthOut') returns the build of 'PathLengthOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('PathLengthOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the out-path length.
 			%

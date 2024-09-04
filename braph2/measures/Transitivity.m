@@ -4,8 +4,6 @@ classdef Transitivity < Triangles
 	%
 	% The Transitivity (Transitivity) of a graph is the fraction of triangles to the number 
 	%  of (unordered) triplets within a layer.
-	% 
-	%  %% ¡layout!
 	%
 	% The list of Transitivity properties is:
 	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the Transitivity.
@@ -146,6 +144,21 @@ classdef Transitivity < Triangles
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the transitivity.
+			%
+			% BUILD = Transitivity.GETBUILD() returns the build of 'Transitivity'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the transitivity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Transitivity') returns the build of 'Transitivity'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Transitivity')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the transitivity.
 			%

@@ -2,19 +2,19 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	%NNRegressorMLP_Evaluator evaluates the performance of a multi-layer perceptron regressor with a given dataset.
 	% It is a subclass of <a href="matlab:help NNEvaluator">NNEvaluator</a>.
 	%
-	% A neural network evaluator for regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
+	% A neural network evaluator for a multi-layer perceptron regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset.
 	% NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).
 	%
 	% The list of NNRegressorMLP_Evaluator properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron regressor.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron regressor.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for multi-layer perceptron regressor.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for multi-layer perceptron regressor.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for multi-layer perceptron regressor.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for multi-layer perceptron regressor.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for multi-layer perceptron regressor.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
+	%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron regressor.
 	%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 	%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
 	%  <strong>12</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
@@ -45,33 +45,33 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	%  unchecked - sets a property to NOT checked
 	%
 	% NNRegressorMLP_Evaluator methods (display):
-	%  tostring - string with information about the neural network evaluator for regressor
-	%  disp - displays information about the neural network evaluator for regressor
-	%  tree - displays the tree of the neural network evaluator for regressor
+	%  tostring - string with information about the neural network evaluator for multi-layer perceptron regressor
+	%  disp - displays information about the neural network evaluator for multi-layer perceptron regressor
+	%  tree - displays the tree of the neural network evaluator for multi-layer perceptron regressor
 	%
 	% NNRegressorMLP_Evaluator methods (miscellanea):
 	%  getNoValue - returns a pointer to a persistent instance of NoValue
 	%               Use it as Element.getNoValue()
 	%  getCallback - returns the callback to a property
-	%  isequal - determines whether two neural network evaluator for regressor are equal (values, locked)
+	%  isequal - determines whether two neural network evaluator for multi-layer perceptron regressor are equal (values, locked)
 	%  getElementList - returns a list with all subelements
-	%  copy - copies the neural network evaluator for regressor
+	%  copy - copies the neural network evaluator for multi-layer perceptron regressor
 	%
 	% NNRegressorMLP_Evaluator methods (save/load, Static):
-	%  save - saves BRAPH2 neural network evaluator for regressor as b2 file
-	%  load - loads a BRAPH2 neural network evaluator for regressor from a b2 file
+	%  save - saves BRAPH2 neural network evaluator for multi-layer perceptron regressor as b2 file
+	%  load - loads a BRAPH2 neural network evaluator for multi-layer perceptron regressor from a b2 file
 	%
 	% NNRegressorMLP_Evaluator method (JSON encode):
-	%  encodeJSON - returns a JSON string encoding the neural network evaluator for regressor
+	%  encodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron regressor
 	%
 	% NNRegressorMLP_Evaluator method (JSON decode, Static):
-	%   decodeJSON - returns a JSON string encoding the neural network evaluator for regressor
+	%   decodeJSON - returns a JSON string encoding the neural network evaluator for multi-layer perceptron regressor
 	%
 	% NNRegressorMLP_Evaluator methods (inspection, Static):
-	%  getClass - returns the class of the neural network evaluator for regressor
+	%  getClass - returns the class of the neural network evaluator for multi-layer perceptron regressor
 	%  getSubclasses - returns all subclasses of NNRegressorMLP_Evaluator
-	%  getProps - returns the property list of the neural network evaluator for regressor
-	%  getPropNumber - returns the property number of the neural network evaluator for regressor
+	%  getProps - returns the property list of the neural network evaluator for multi-layer perceptron regressor
+	%  getPropNumber - returns the property number of the neural network evaluator for multi-layer perceptron regressor
 	%  existsProp - checks whether property exists/error
 	%  existsTag - checks whether tag exists/error
 	%  getPropProp - returns the property number of a property
@@ -114,6 +114,8 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	%
 	%
 	% See also NNDataPoint_CON_REG, NNRegressorMLP.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		GROUND_TRUTH = 11; %CET: Computational Efficiency Trick
@@ -168,7 +170,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 	end
 	methods % constructor
 		function nne = NNRegressorMLP_Evaluator(varargin)
-			%NNRegressorMLP_Evaluator() creates a neural network evaluator for regressor.
+			%NNRegressorMLP_Evaluator() creates a neural network evaluator for multi-layer perceptron regressor.
 			%
 			% NNRegressorMLP_Evaluator(PROP, VALUE, ...) with property PROP initialized to VALUE.
 			%
@@ -178,15 +180,15 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNRegressorMLP_Evaluator properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for the regression task.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for the regression task.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron regressor.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron regressor.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the neural network evaluator for multi-layer perceptron regressor.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the neural network evaluator for multi-layer perceptron regressor.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the neural network evaluator for multi-layer perceptron regressor.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the neural network evaluator for multi-layer perceptron regressor.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the neural network evaluator for multi-layer perceptron regressor.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
-			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network regressor.
+			%  <strong>9</strong> <strong>NN</strong> 	NN (data, item) contains a trained neural network multi-layer perceptron regressor.
 			%  <strong>10</strong> <strong>D</strong> 	D (data, item) is the dataset to evaluate the neural network model.
 			%  <strong>11</strong> <strong>GROUND_TRUTH</strong> 	GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.
 			%  <strong>12</strong> <strong>CORR</strong> 	CORR (result, rvector) provides the metric of the correlation of coefficients.
@@ -205,13 +207,28 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the neural network evaluator for multi-layer perceptron regressor.
+			%
+			% BUILD = NNRegressorMLP_Evaluator.GETBUILD() returns the build of 'NNRegressorMLP_Evaluator'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = NNE.GETBUILD() returns the build of the neural network evaluator for multi-layer perceptron regressor NNE.
+			%  BUILD = Element.GETBUILD(NNE) returns the build of 'NNE'.
+			%  BUILD = Element.GETBUILD('NNRegressorMLP_Evaluator') returns the build of 'NNRegressorMLP_Evaluator'.
+			%
+			% Note that the Element.GETBUILD(NNE) and Element.GETBUILD('NNRegressorMLP_Evaluator')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function nne_class = getClass()
-			%GETCLASS returns the class of the neural network evaluator for regressor.
+			%GETCLASS returns the class of the neural network evaluator for multi-layer perceptron regressor.
 			%
 			% CLASS = NNRegressorMLP_Evaluator.GETCLASS() returns the class 'NNRegressorMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for regressor NNE.
+			%  CLASS = NNE.GETCLASS() returns the class of the neural network evaluator for multi-layer perceptron regressor NNE.
 			%  CLASS = Element.GETCLASS(NNE) returns the class of 'NNE'.
 			%  CLASS = Element.GETCLASS('NNRegressorMLP_Evaluator') returns 'NNRegressorMLP_Evaluator'.
 			%
@@ -221,12 +238,12 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			nne_class = 'NNRegressorMLP_Evaluator';
 		end
 		function subclass_list = getSubclasses()
-			%GETSUBCLASSES returns all subclasses of the neural network evaluator for regressor.
+			%GETSUBCLASSES returns all subclasses of the neural network evaluator for multi-layer perceptron regressor.
 			%
 			% LIST = NNRegressorMLP_Evaluator.GETSUBCLASSES() returns all subclasses of 'NNRegressorMLP_Evaluator'.
 			%
 			% Alternative forms to call this method are:
-			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for regressor NNE.
+			%  LIST = NNE.GETSUBCLASSES() returns all subclasses of the neural network evaluator for multi-layer perceptron regressor NNE.
 			%  LIST = Element.GETSUBCLASSES(NNE) returns all subclasses of 'NNE'.
 			%  LIST = Element.GETSUBCLASSES('NNRegressorMLP_Evaluator') returns all subclasses of 'NNRegressorMLP_Evaluator'.
 			%
@@ -238,16 +255,16 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			subclass_list = { 'NNRegressorMLP_Evaluator' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
-			%GETPROPS returns the property list of neural network evaluator for regressor.
+			%GETPROPS returns the property list of neural network evaluator for multi-layer perceptron regressor.
 			%
-			% PROPS = NNRegressorMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for regressor
+			% PROPS = NNRegressorMLP_Evaluator.GETPROPS() returns the property list of neural network evaluator for multi-layer perceptron regressor
 			%  as a row vector.
 			%
 			% PROPS = NNRegressorMLP_Evaluator.GETPROPS(CATEGORY) returns the property list 
 			%  of category CATEGORY.
 			%
 			% Alternative forms to call this method are:
-			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for regressor NNE.
+			%  PROPS = NNE.GETPROPS([CATEGORY]) returns the property list of the neural network evaluator for multi-layer perceptron regressor NNE.
 			%  PROPS = Element.GETPROPS(NNE[, CATEGORY]) returns the property list of 'NNE'.
 			%  PROPS = Element.GETPROPS('NNRegressorMLP_Evaluator'[, CATEGORY]) returns the property list of 'NNRegressorMLP_Evaluator'.
 			%
@@ -283,15 +300,15 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			end
 		end
 		function prop_number = getPropNumber(varargin)
-			%GETPROPNUMBER returns the property number of neural network evaluator for regressor.
+			%GETPROPNUMBER returns the property number of neural network evaluator for multi-layer perceptron regressor.
 			%
-			% N = NNRegressorMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for regressor.
+			% N = NNRegressorMLP_Evaluator.GETPROPNUMBER() returns the property number of neural network evaluator for multi-layer perceptron regressor.
 			%
-			% N = NNRegressorMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for regressor
+			% N = NNRegressorMLP_Evaluator.GETPROPNUMBER(CATEGORY) returns the property number of neural network evaluator for multi-layer perceptron regressor
 			%  of category CATEGORY
 			%
 			% Alternative forms to call this method are:
-			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for regressor NNE.
+			%  N = NNE.GETPROPNUMBER([CATEGORY]) returns the property number of the neural network evaluator for multi-layer perceptron regressor NNE.
 			%  N = Element.GETPROPNUMBER(NNE) returns the property number of 'NNE'.
 			%  N = Element.GETPROPNUMBER('NNRegressorMLP_Evaluator') returns the property number of 'NNRegressorMLP_Evaluator'.
 			%
@@ -327,7 +344,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			end
 		end
 		function check_out = existsProp(prop)
-			%EXISTSPROP checks whether property exists in neural network evaluator for regressor/error.
+			%EXISTSPROP checks whether property exists in neural network evaluator for multi-layer perceptron regressor/error.
 			%
 			% CHECK = NNRegressorMLP_Evaluator.EXISTSPROP(PROP) checks whether the property PROP exists.
 			%
@@ -365,7 +382,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			end
 		end
 		function check_out = existsTag(tag)
-			%EXISTSTAG checks whether tag exists in neural network evaluator for regressor/error.
+			%EXISTSTAG checks whether tag exists in neural network evaluator for multi-layer perceptron regressor/error.
 			%
 			% CHECK = NNRegressorMLP_Evaluator.EXISTSTAG(TAG) checks whether a property with tag TAG exists.
 			%
@@ -531,7 +548,7 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 			prop = NNRegressorMLP_Evaluator.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the neural network evaluator for the regression task.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for the regression task.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for the regression task.'  'ID (data, string) is a few-letter code for the neural network evaluator for the regression task.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for the regression task.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for the regression task.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NN (data, item) contains a trained neural network regressor.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.'  'CORR (result, rvector) provides the metric of the correlation of coefficients.'  'DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'MAE (result, rvector) provides the metric of the mean absolute error.'  'MSE (result, rvector) provides the metric of the mean squared error.'  'RMSE (result, rvector) provides the metric of the root mean squared error.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.'  'PFSP (gui, item) contains the panel figure of the scatter plot for regression model.' };
+			nnregressormlp_evaluator_description_list = { 'ELCLASS (constant, string) is the class of the neural network evaluator for a multi-layer perceptron regressor.'  'NAME (constant, string) is the name of the neural network evaluator for a multi-layer perceptron regressor.'  'DESCRIPTION (constant, string) is the description of the neural network evaluator for multi-layer perceptron regressor.'  'TEMPLATE (parameter, item) is the template of the neural network evaluator for multi-layer perceptron regressor.'  'ID (data, string) is a few-letter code for the neural network evaluator for multi-layer perceptron regressor.'  'LABEL (metadata, string) is an extended label of the neural network evaluator for multi-layer perceptron regressor.'  'NOTES (metadata, string) are some specific notes about the neural network evaluator for multi-layer perceptron regressor.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'NN (data, item) contains a trained neural network multi-layer perceptron regressor.'  'D (data, item) is the dataset to evaluate the neural network model.'  'GROUND_TRUTH (query, matrix) returns the matrix of ground truth derived from the targets.'  'CORR (result, rvector) provides the metric of the correlation of coefficients.'  'DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'MAE (result, rvector) provides the metric of the mean absolute error.'  'MSE (result, rvector) provides the metric of the mean squared error.'  'RMSE (result, rvector) provides the metric of the root mean squared error.'  'P (parameter, scalar) is the permutation number.'  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.'  'PFSP (gui, item) contains the panel figure of the scatter plot for regression model.' };
 			prop_description = nnregressormlp_evaluator_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -631,9 +648,9 @@ classdef NNRegressorMLP_Evaluator < NNEvaluator
 				case 1 % NNRegressorMLP_Evaluator.ELCLASS
 					prop_default = 'NNRegressorMLP_Evaluator';
 				case 2 % NNRegressorMLP_Evaluator.NAME
-					prop_default = 'NNRegressorMLP_Evaluator';
+					prop_default = 'Neural Network Evaluator for a Multi-layer Perceptron Regressor';
 				case 3 % NNRegressorMLP_Evaluator.DESCRIPTION
-					prop_default = 'A neural network evaluator for regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset. NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).';
+					prop_default = 'A neural network evaluator for a multi-layer perceptron regressor (NNRegressorMLP_Evaluator) evaluates the performance of a multi-layer perceptron regressor with a given dataset. NNRegressorMLP_Evaluator evaluates the performance of the trained regressor with a given dataset in terms of various regression metrics (e.g., coefficient of determination, mean squared error).';
 				case 4 % NNRegressorMLP_Evaluator.TEMPLATE
 					prop_default = Format.getFormatDefault(8, NNRegressorMLP_Evaluator.getPropSettings(prop));
 				case 5 % NNRegressorMLP_Evaluator.ID

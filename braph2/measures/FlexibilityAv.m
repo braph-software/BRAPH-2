@@ -158,6 +158,21 @@ classdef FlexibilityAv < Flexibility
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average flexibility.
+			%
+			% BUILD = FlexibilityAv.GETBUILD() returns the build of 'FlexibilityAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average flexibility M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('FlexibilityAv') returns the build of 'FlexibilityAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('FlexibilityAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average flexibility.
 			%
@@ -542,7 +557,7 @@ classdef FlexibilityAv < Flexibility
 				case 1 % FlexibilityAv.ELCLASS
 					prop_default = 'FlexibilityAv';
 				case 2 % FlexibilityAv.NAME
-					prop_default = 'FlexibilityAv ';
+					prop_default = 'Average Flexibility';
 				case 3 % FlexibilityAv.DESCRIPTION
 					prop_default = 'The Average Flexibility (FlexibilityAv) of a multilayer graph is the average of the flexibility of all nodes.';
 				case 4 % FlexibilityAv.TEMPLATE

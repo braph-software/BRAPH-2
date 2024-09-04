@@ -142,6 +142,21 @@ classdef MultiplexClAv < MultiplexCl
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average multiplex clustering.
+			%
+			% BUILD = MultiplexClAv.GETBUILD() returns the build of 'MultiplexClAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average multiplex clustering M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('MultiplexClAv') returns the build of 'MultiplexClAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('MultiplexClAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average multiplex clustering.
 			%

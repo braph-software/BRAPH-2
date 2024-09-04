@@ -130,6 +130,8 @@ classdef PanelPropClassList < PanelProp
 	%
 	%
 	% See also uilistbox, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		LISTBOX = 36; %CET: Computational Efficiency Trick
@@ -192,6 +194,21 @@ classdef PanelPropClassList < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the class-list prop panel.
+			%
+			% BUILD = PanelPropClassList.GETBUILD() returns the build of 'PanelPropClassList'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the class-list prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropClassList') returns the build of 'PanelPropClassList'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropClassList')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the class-list prop panel.
 			%

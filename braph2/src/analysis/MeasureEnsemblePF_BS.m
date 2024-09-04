@@ -133,6 +133,8 @@ classdef MeasureEnsemblePF_BS < MeasureEnsemblePF
 	%
 	%
 	% See also MeasureEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 40; %CET: Computational Efficiency Trick
@@ -199,6 +201,21 @@ classdef MeasureEnsemblePF_BS < MeasureEnsemblePF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel binodal superglobal group comparison figure.
+			%
+			% BUILD = MeasureEnsemblePF_BS.GETBUILD() returns the build of 'MeasureEnsemblePF_BS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel binodal superglobal group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('MeasureEnsemblePF_BS') returns the build of 'MeasureEnsemblePF_BS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('MeasureEnsemblePF_BS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel binodal superglobal group comparison figure.
 			%

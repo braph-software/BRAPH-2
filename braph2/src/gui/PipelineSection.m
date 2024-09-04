@@ -102,6 +102,8 @@ classdef PipelineSection < ConcreteElement
 	%
 	%
 	% See also PipelinePP_PSDict, Pipeline, PipelineSection.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		PC_DICT = 9; %CET: Computational Efficiency Trick
@@ -137,6 +139,21 @@ classdef PipelineSection < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the pipeline section.
+			%
+			% BUILD = PipelineSection.GETBUILD() returns the build of 'PipelineSection'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PS.GETBUILD() returns the build of the pipeline section PS.
+			%  BUILD = Element.GETBUILD(PS) returns the build of 'PS'.
+			%  BUILD = Element.GETBUILD('PipelineSection') returns the build of 'PipelineSection'.
+			%
+			% Note that the Element.GETBUILD(PS) and Element.GETBUILD('PipelineSection')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function ps_class = getClass()
 			%GETCLASS returns the class of the pipeline section.
 			%

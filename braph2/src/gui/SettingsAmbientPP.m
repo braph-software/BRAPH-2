@@ -142,6 +142,8 @@ classdef SettingsAmbientPP < SettingsPP
 	%
 	%
 	% See also SettingsAmbient, uidropdown.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		ENABLE = 36; %CET: Computational Efficiency Trick
@@ -264,6 +266,21 @@ classdef SettingsAmbientPP < SettingsPP
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the prop panel for ambient settings.
+			%
+			% BUILD = SettingsAmbientPP.GETBUILD() returns the build of 'SettingsAmbientPP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the prop panel for ambient settings PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('SettingsAmbientPP') returns the build of 'SettingsAmbientPP'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('SettingsAmbientPP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the prop panel for ambient settings.
 			%

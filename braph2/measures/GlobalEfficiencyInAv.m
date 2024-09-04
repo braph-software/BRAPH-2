@@ -141,6 +141,21 @@ classdef GlobalEfficiencyInAv < GlobalEfficiencyIn
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the average in-global efficiency.
+			%
+			% BUILD = GlobalEfficiencyInAv.GETBUILD() returns the build of 'GlobalEfficiencyInAv'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the average in-global efficiency M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('GlobalEfficiencyInAv') returns the build of 'GlobalEfficiencyInAv'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('GlobalEfficiencyInAv')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the average in-global efficiency.
 			%

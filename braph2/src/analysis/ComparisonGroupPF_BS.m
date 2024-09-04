@@ -139,6 +139,8 @@ classdef ComparisonGroupPF_BS < ComparisonGroupPF
 	%
 	%
 	% See also ComparisonGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 46; %CET: Computational Efficiency Trick
@@ -211,6 +213,21 @@ classdef ComparisonGroupPF_BS < ComparisonGroupPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel binodal superglobal group comparison figure.
+			%
+			% BUILD = ComparisonGroupPF_BS.GETBUILD() returns the build of 'ComparisonGroupPF_BS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel binodal superglobal group comparison figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonGroupPF_BS') returns the build of 'ComparisonGroupPF_BS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonGroupPF_BS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel binodal superglobal group comparison figure.
 			%
@@ -599,7 +616,7 @@ classdef ComparisonGroupPF_BS < ComparisonGroupPF
 			
 			switch prop %CET: Computational Efficiency Trick
 				case 46 % ComparisonGroupPF_BS.NODES
-					prop_default = Format.getFormatDefault(12, ComparisonGroupPF_BS.getPropSettings(prop));
+					prop_default = [1 1];
 				case 1 % ComparisonGroupPF_BS.ELCLASS
 					prop_default = 'ComparisonGroupPF_BS';
 				case 2 % ComparisonGroupPF_BS.NAME
@@ -696,6 +713,30 @@ classdef ComparisonGroupPF_BS < ComparisonGroupPF
 					['BRAPH2' ':ComparisonGroupPF_BS:' 'WrongInput' '\n' ...
 					'The value ' tostring(value, 100, ' ...') ' is not a valid property ' ComparisonGroupPF_BS.getPropTag(prop) ' (' ComparisonGroupPF_BS.getFormatTag(ComparisonGroupPF_BS.getPropFormat(prop)) ').'] ...
 					)
+			end
+		end
+	end
+	methods (Access=protected) % postset
+		function postset(pf, prop)
+			%POSTSET postprocessing after a prop has been set.
+			%
+			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
+			%  default, this function does not do anything, so it should be implemented
+			%  in the subclasses of Element when needed.
+			%
+			% This postprocessing occurs only when PROP is set.
+			%
+			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
+			%  checkValue.
+			
+			switch prop
+				case 46 % ComparisonGroupPF_BS.NODES
+					pf.get('SETUP')
+					
+				otherwise
+					if prop <= 45
+						postset@ComparisonGroupPF(pf, prop);
+					end
 			end
 		end
 	end

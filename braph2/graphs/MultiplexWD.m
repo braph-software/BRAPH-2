@@ -2,13 +2,13 @@ classdef MultiplexWD < Graph
 	%MultiplexWD is a multiplex weighted directed graph.
 	% It is a subclass of <a href="matlab:help Graph">Graph</a>.
 	%
-	% In a multiplex weighted directed (WD) graph, all layers have the same number 
+	% In a multiplex weighted directed graph (MultiplexWD) graph, all layers have the same number 
 	%  of nodes with within-layer weighted directed edges, associated with a real 
 	%  number between 0 and 1 and indicating the strength of the connection.
 	% There are connections between layers connecting the corresponding nodes.
 	%
 	% The list of MultiplexWD properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the multiplex weighted directed graph.
 	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex weighted directed graph.
 	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.
 	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.
@@ -179,7 +179,7 @@ classdef MultiplexWD < Graph
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of MultiplexWD properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the multiplex weighted directed graph.
 			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the multiplex weighted directed graph.
 			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.
 			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.
@@ -227,6 +227,21 @@ classdef MultiplexWD < Graph
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the multiplex weighted directed graph.
+			%
+			% BUILD = MultiplexWD.GETBUILD() returns the build of 'MultiplexWD'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the multiplex weighted directed graph G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultiplexWD') returns the build of 'MultiplexWD'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultiplexWD')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the multiplex weighted directed graph.
 			%
@@ -553,7 +568,7 @@ classdef MultiplexWD < Graph
 			prop = MultiplexWD.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			multiplexwd_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of the multiplex weighted directed graph.'  'DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.'  'TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.'  'ID (data, string) is a few-letter code for the multiplex weighted directed graph.'  'LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.'  'NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition tick values.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
+			multiplexwd_description_list = { 'ELCLASS (constant, string) is the class of the multiplex weighted directed graph.'  'NAME (constant, string) is the name of the multiplex weighted directed graph.'  'DESCRIPTION (constant, string) is the description of the multiplex weighted directed graph.'  'TEMPLATE (parameter, item) is the template of the multiplex weighted directed graph.'  'ID (data, string) is a few-letter code for the multiplex weighted directed graph.'  'LABEL (metadata, string) is an extended label of the multiplex weighted directed graph.'  'NOTES (metadata, string) are some specific notes about the multiplex weighted directed graph.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'GRAPH_TYPE (constant, scalar) returns the graph type Graph.MULTIPLEX.'  'CONNECTIVITY_TYPE (query, smatrix) returns the connectivity type Graph.WEIGHTED * ones(layernumber).'  'DIRECTIONALITY_TYPE (query, smatrix) returns the directionality type Graph.DIRECTED * ones(layernumber).'  'SELFCONNECTIVITY_TYPE (query, smatrix) returns the self-connectivity type Graph.NONSELFCONNECTED on the diagonal and Graph.SELFCONNECTED off diagonal.'  'NEGATIVITY_TYPE (query, smatrix) returns the negativity type Graph.NONNEGATIVE * ones(layernumber).'  'LAYERTICKS (metadata, rvector) are the layer tick values.'  'ALAYERTICKS (query, rvector) returns the layer tick values.'  'LAYERLABELS (metadata, stringlist) are the layer labels provided by the user.'  'ALAYERLABELS (query, stringlist) returns the layer labels for A.'  'PARTITIONTICKS (metadata, rvector) are the partition tick values.'  'APARTITIONTICKS (query, rvector) returns the partition tick values.'  'PARTITIONLABELS (metadata, stringlist) are the partition labels provided by the user.'  'APARTITIONLABELS (query, stringlist) returns the partition labels for A.'  'NODELABELS (metadata, stringlist) are the node labels provided by the user.'  'ANODELABELS (query, stringlist) returns the nodel labels for each layer.'  'RANDOMIZE (parameter, logical) determines whether to randomize the graph.'  'RANDOM_SEED (parameter, scalar) is the randomization seed.'  'A (result, cell) is the cell containing the multiplex weighted adjacency matrices of the multiplex weighted directed graph.'  'A_CHECK (query, logical) checks the format of the adjacency matrix.'  'NODENUMBER (result, rvector) returns the number of nodes in the graph; for non single layer graphs it returns an array with the number of nodes in each layer.'  'LAYERNUMBER (result, scalar) returns the number of layers in the graph.'  'PARTITIONS (result, rvector) returns the number of layers in the partitions of the graph.'  'M_DICT (result, idict) contains the calculated measures of the graph.'  'COMPATIBLE_MEASURES (constant, classlist) is the list of compatible measures.'  'MEASURE (query, item) returns a measure.'  'PFGA (gui, item) contains the panel figure of the graph adjacency matrix.'  'PFGH (gui, item) contains the panel figure of the graph histogram.'  'B (data, cell) is the input cell containing the multiplex adjacency matrices on the diagonal.'  'SEMIPOSITIVIZE_RULE (parameter, option) determines how to remove the negative edges.'  'STANDARDIZE_RULE (parameter, option) determines how to normalize the weights between 0 and 1.'  'ATTEMPTSPEREDGE (parameter, scalar) is the attempts to rewire each edge.'  'NUMBEROFWEIGHTS (parameter, scalar) specifies the number of weights sorted at the same time.'  'RANDOMIZATION (query, cell) performs the randomization of a connectivity matrix.' };
 			prop_description = multiplexwd_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -635,9 +650,9 @@ classdef MultiplexWD < Graph
 				case 1 % MultiplexWD.ELCLASS
 					prop_default = 'MultiplexWD';
 				case 2 % MultiplexWD.NAME
-					prop_default = 'MultiplexWD';
+					prop_default = 'Multiplex Weighted Directed';
 				case 3 % MultiplexWD.DESCRIPTION
-					prop_default = 'In a multiplex weighted directed (WD) graph, all layers have the same number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.';
+					prop_default = 'In a multiplex weighted directed graph (MultiplexWD), all layers have the same number of nodes with within-layer weighted directed edges, associated with a real number between 0 and 1 and indicating the strength of the connection. There are connections between layers connecting the corresponding nodes.';
 				case 4 % MultiplexWD.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultiplexWD.getPropSettings(prop));
 				case 5 % MultiplexWD.ID

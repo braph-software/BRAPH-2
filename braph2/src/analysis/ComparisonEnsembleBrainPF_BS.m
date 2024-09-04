@@ -141,6 +141,8 @@ classdef ComparisonEnsembleBrainPF_BS < ComparisonEnsembleBrainPF
 	%
 	%
 	% See also ComparisonEnsemble.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		NODES = 48; %CET: Computational Efficiency Trick
@@ -215,6 +217,21 @@ classdef ComparisonEnsembleBrainPF_BS < ComparisonEnsembleBrainPF
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the panel binodal superglobal ensemble-based comparison figure on brain surface figure.
+			%
+			% BUILD = ComparisonEnsembleBrainPF_BS.GETBUILD() returns the build of 'ComparisonEnsembleBrainPF_BS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PF.GETBUILD() returns the build of the panel binodal superglobal ensemble-based comparison figure on brain surface figure PF.
+			%  BUILD = Element.GETBUILD(PF) returns the build of 'PF'.
+			%  BUILD = Element.GETBUILD('ComparisonEnsembleBrainPF_BS') returns the build of 'ComparisonEnsembleBrainPF_BS'.
+			%
+			% Note that the Element.GETBUILD(PF) and Element.GETBUILD('ComparisonEnsembleBrainPF_BS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pf_class = getClass()
 			%GETCLASS returns the class of the panel binodal superglobal ensemble-based comparison figure on brain surface figure.
 			%

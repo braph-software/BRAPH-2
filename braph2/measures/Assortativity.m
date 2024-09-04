@@ -145,6 +145,21 @@ classdef Assortativity < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the assortativity.
+			%
+			% BUILD = Assortativity.GETBUILD() returns the build of 'Assortativity'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the assortativity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Assortativity') returns the build of 'Assortativity'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Assortativity')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the assortativity.
 			%

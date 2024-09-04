@@ -142,6 +142,21 @@ classdef GlobalEfficiencyOut < Distance
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the out-global efficiency.
+			%
+			% BUILD = GlobalEfficiencyOut.GETBUILD() returns the build of 'GlobalEfficiencyOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the out-global efficiency M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('GlobalEfficiencyOut') returns the build of 'GlobalEfficiencyOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('GlobalEfficiencyOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the out-global efficiency.
 			%

@@ -103,6 +103,8 @@ classdef VOICategoric < VOI
 	%
 	%
 	% See also VOINumeric.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		CATEGORIES = 10; %CET: Computational Efficiency Trick
@@ -139,6 +141,21 @@ classdef VOICategoric < VOI
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the categorical variable of interest.
+			%
+			% BUILD = VOICategoric.GETBUILD() returns the build of 'VOICategoric'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = VOI.GETBUILD() returns the build of the categorical variable of interest VOI.
+			%  BUILD = Element.GETBUILD(VOI) returns the build of 'VOI'.
+			%  BUILD = Element.GETBUILD('VOICategoric') returns the build of 'VOICategoric'.
+			%
+			% Note that the Element.GETBUILD(VOI) and Element.GETBUILD('VOICategoric')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function voi_class = getClass()
 			%GETCLASS returns the class of the categorical variable of interest.
 			%

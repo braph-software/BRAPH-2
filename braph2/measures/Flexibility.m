@@ -162,6 +162,21 @@ classdef Flexibility < MultilayerCommunity
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the flexibility.
+			%
+			% BUILD = Flexibility.GETBUILD() returns the build of 'Flexibility'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the flexibility M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Flexibility') returns the build of 'Flexibility'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Flexibility')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the flexibility.
 			%
@@ -548,7 +563,7 @@ classdef Flexibility < MultilayerCommunity
 				case 2 % Flexibility.NAME
 					prop_default = 'Flexibility';
 				case 3 % Flexibility.DESCRIPTION
-					prop_default = 'The Flexibility (Flexibility) of each node in a multilayer network is calculated as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e. g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
+					prop_default = 'The Flexibility (Flexibility) of each node in a multilayer network is calculated as the number of times that it changes community assignment, normalized by the total possible number of changes. In ordered multilayer networks (e.g. temporal, changes are possible only between adjacent layers, whereas in categorical multilayer networks, community assignment changes are possible between any pairs of layers.';
 				case 4 % Flexibility.TEMPLATE
 					prop_default = Format.getFormatDefault(8, Flexibility.getPropSettings(prop));
 				case 5 % Flexibility.ID

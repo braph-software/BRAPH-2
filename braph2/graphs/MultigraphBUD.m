@@ -2,8 +2,8 @@ classdef MultigraphBUD < GraphWU
 	%MultigraphBUD is a binary undirected multigraph with fixed densities.
 	% It is a subclass of <a href="matlab:help GraphWU">GraphWU</a>.
 	%
-	% In a binary undirected multigraph with fixed densities, all the layers 
-	%  consist of binary undirected (BU) graphs derived from the same weighted 
+	% In a binary undirected multigraph with fixed densities (MultigraphBUD), all the layers 
+	%  consist of binary undirected graphs derived from the same weighted 
 	%  connectivity matrix binarized at different densities.
 	% There are no connections between layers.
 	%
@@ -206,6 +206,21 @@ classdef MultigraphBUD < GraphWU
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the binary undirected multigraph with fixed densities.
+			%
+			% BUILD = MultigraphBUD.GETBUILD() returns the build of 'MultigraphBUD'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = G.GETBUILD() returns the build of the binary undirected multigraph with fixed densities G.
+			%  BUILD = Element.GETBUILD(G) returns the build of 'G'.
+			%  BUILD = Element.GETBUILD('MultigraphBUD') returns the build of 'MultigraphBUD'.
+			%
+			% Note that the Element.GETBUILD(G) and Element.GETBUILD('MultigraphBUD')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function g_class = getClass()
 			%GETCLASS returns the class of the binary undirected multigraph with fixed densities.
 			%
@@ -594,9 +609,9 @@ classdef MultigraphBUD < GraphWU
 				case 1 % MultigraphBUD.ELCLASS
 					prop_default = 'MultigraphBUD';
 				case 2 % MultigraphBUD.NAME
-					prop_default = 'MultigraphBUD';
+					prop_default = 'Multigraph Binary Undirected at fixed Densities';
 				case 3 % MultigraphBUD.DESCRIPTION
-					prop_default = 'In a binary undirected multigraph with fixed densities, all the layers consist of binary undirected (BU) graphs derived from the same weighted connectivity matrix binarized at different densities. There are no connections between layers.';
+					prop_default = 'In a binary undirected multigraph with fixed densities (MultigraphBUD), all the layers consist of binary undirected graphs derived from the same weighted connectivity matrix binarized at different densities. There are no connections between layers.';
 				case 4 % MultigraphBUD.TEMPLATE
 					prop_default = Format.getFormatDefault(8, MultigraphBUD.getPropSettings(prop));
 				case 5 % MultigraphBUD.ID

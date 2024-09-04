@@ -133,6 +133,8 @@ classdef PanelPropSize < PanelProp
 	%
 	%
 	% See also uieditfield, uiaxes, line, GUI, PanelElement.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		ENABLE = 36; %CET: Computational Efficiency Trick
@@ -213,6 +215,21 @@ classdef PanelPropSize < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the size prop panel.
+			%
+			% BUILD = PanelPropSize.GETBUILD() returns the build of 'PanelPropSize'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the size prop panel PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('PanelPropSize') returns the build of 'PanelPropSize'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('PanelPropSize')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the size prop panel.
 			%

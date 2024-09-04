@@ -113,6 +113,8 @@ classdef ComparisonGroup < ConcreteElement
 	%
 	%
 	% See also AnalyzeGroup, CompareGroup.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		MEASURE = 9; %CET: Computational Efficiency Trick
@@ -208,6 +210,21 @@ classdef ComparisonGroup < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the group-based comparison result.
+			%
+			% BUILD = ComparisonGroup.GETBUILD() returns the build of 'ComparisonGroup'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = CP.GETBUILD() returns the build of the group-based comparison result CP.
+			%  BUILD = Element.GETBUILD(CP) returns the build of 'CP'.
+			%  BUILD = Element.GETBUILD('ComparisonGroup') returns the build of 'ComparisonGroup'.
+			%
+			% Note that the Element.GETBUILD(CP) and Element.GETBUILD('ComparisonGroup')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function cp_class = getClass()
 			%GETCLASS returns the class of the group-based comparison result.
 			%

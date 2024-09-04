@@ -109,6 +109,8 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 	%
 	%
 	% See also SubjectCON_FUN_MP, SubjectCON, SubjectFUN, SeparateGroups_CON_FUN.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		WAITBAR = 9; %CET: Computational Efficiency Trick
@@ -162,6 +164,21 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the combiner of CON and FUN subject groups.
+			%
+			% BUILD = CombineGroups_CON_FUN_MP.GETBUILD() returns the build of 'CombineGroups_CON_FUN_MP'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = CO.GETBUILD() returns the build of the combiner of CON and FUN subject groups CO.
+			%  BUILD = Element.GETBUILD(CO) returns the build of 'CO'.
+			%  BUILD = Element.GETBUILD('CombineGroups_CON_FUN_MP') returns the build of 'CombineGroups_CON_FUN_MP'.
+			%
+			% Note that the Element.GETBUILD(CO) and Element.GETBUILD('CombineGroups_CON_FUN_MP')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function co_class = getClass()
 			%GETCLASS returns the class of the combiner of CON and FUN subject groups.
 			%
@@ -556,7 +573,7 @@ classdef CombineGroups_CON_FUN_MP < ConcreteElement
 				case 1 % CombineGroups_CON_FUN_MP.ELCLASS
 					prop_default = 'CombineGroups_CON_FUN_MP';
 				case 2 % CombineGroups_CON_FUN_MP.NAME
-					prop_default = 'CombineGroups_CON_FUN_MP';
+					prop_default = 'Multiplex Connectivity-Functional Group Combiner';
 				case 3 % CombineGroups_CON_FUN_MP.DESCRIPTION
 					prop_default = 'CombineGroups_CON_FUN_MP combines a group of subjects with connectivity data (SubjectCON) with a group of subjects with functional data (SubjectFUN) into a group of subjects with connectivity and functional data (SubjectCON_FUN_MP). The subject ids of the two groups must match. The brain atlas and variables of interest are copied from the SubjectCON group.';
 				case 5 % CombineGroups_CON_FUN_MP.ID

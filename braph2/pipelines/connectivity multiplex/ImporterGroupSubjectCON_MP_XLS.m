@@ -117,6 +117,8 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 	%
 	%
 	% See also Group, SubjectCON_MP, ExporterGroupSubjectCON_MP_XLS.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		DIRECTORY = 10; %CET: Computational Efficiency Trick
@@ -171,6 +173,21 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the importer of CON MP subject group from XLS/XLSX.
+			%
+			% BUILD = ImporterGroupSubjectCON_MP_XLS.GETBUILD() returns the build of 'ImporterGroupSubjectCON_MP_XLS'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = IM.GETBUILD() returns the build of the importer of CON MP subject group from XLS/XLSX IM.
+			%  BUILD = Element.GETBUILD(IM) returns the build of 'IM'.
+			%  BUILD = Element.GETBUILD('ImporterGroupSubjectCON_MP_XLS') returns the build of 'ImporterGroupSubjectCON_MP_XLS'.
+			%
+			% Note that the Element.GETBUILD(IM) and Element.GETBUILD('ImporterGroupSubjectCON_MP_XLS')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function im_class = getClass()
 			%GETCLASS returns the class of the importer of CON MP subject group from XLS/XLSX.
 			%
@@ -571,7 +588,7 @@ classdef ImporterGroupSubjectCON_MP_XLS < Importer
 				case 1 % ImporterGroupSubjectCON_MP_XLS.ELCLASS
 					prop_default = 'ImporterGroupSubjectCON_MP_XLS';
 				case 2 % ImporterGroupSubjectCON_MP_XLS.NAME
-					prop_default = 'ImporterGroupSubjectCON_MP_XLS';
+					prop_default = 'Multiplex Connectivity Subject Group XLS Importer';
 				case 3 % ImporterGroupSubjectCON_MP_XLS.DESCRIPTION
 					prop_default = 'ImporterGroupSubjectCON_MP_XLS imports a group of subjects with connectivity multiplex data from a series of XLS/XLSX files and their covariates (optional) from another XLS/XLSX file.';
 				case 4 % ImporterGroupSubjectCON_MP_XLS.TEMPLATE

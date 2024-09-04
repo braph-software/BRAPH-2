@@ -108,6 +108,8 @@ classdef NNDatasetSplit < ConcreteElement
 	%
 	%
 	% See also NNDataset, NNDatasetCombine.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		D = 9; %CET: Computational Efficiency Trick
@@ -161,6 +163,21 @@ classdef NNDatasetSplit < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the splitter of a neural network dataset.
+			%
+			% BUILD = NNDatasetSplit.GETBUILD() returns the build of 'NNDatasetSplit'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = DSP.GETBUILD() returns the build of the splitter of a neural network dataset DSP.
+			%  BUILD = Element.GETBUILD(DSP) returns the build of 'DSP'.
+			%  BUILD = Element.GETBUILD('NNDatasetSplit') returns the build of 'NNDatasetSplit'.
+			%
+			% Note that the Element.GETBUILD(DSP) and Element.GETBUILD('NNDatasetSplit')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function dsp_class = getClass()
 			%GETCLASS returns the class of the splitter of a neural network dataset.
 			%
@@ -557,7 +574,7 @@ classdef NNDatasetSplit < ConcreteElement
 				case 1 % NNDatasetSplit.ELCLASS
 					prop_default = 'NNDatasetSplit';
 				case 2 % NNDatasetSplit.NAME
-					prop_default = 'NNDatasetSplit';
+					prop_default = 'Neural Network Dataset Splitter';
 				case 3 % NNDatasetSplit.DESCRIPTION
 					prop_default = 'A dataset splitter (NNDatasetSplit) allows users to split a given dataset into multiple smaller datasets, each forming a partition. The splitting can be achieved by providing either specific indices or proportions for the datapoints in each partitioned dataset. For example usage, to split the dataset into two partitions, one containing datapoints 1 and 2, and the other containing datapoints 3, 4, and 5, the SPLIT property should be set as {[1 2], [3 4 5]}. Alternatively, using the SPLIT property as {0.2, 0.8}, NNDatasetSplit will randomly assign datapoints to two datasets, with the first dataset containing approximately 20 percent of the total datapoints (datapoints 1 and 3, for instance), and the second dataset containing the remaining 80 percent of the datapoints (datapoints 2, 4, and 5).';
 				case 4 % NNDatasetSplit.TEMPLATE

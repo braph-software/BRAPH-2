@@ -143,6 +143,21 @@ classdef StrengthOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the out-strength.
+			%
+			% BUILD = StrengthOut.GETBUILD() returns the build of 'StrengthOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the out-strength M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('StrengthOut') returns the build of 'StrengthOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('StrengthOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the out-strength.
 			%

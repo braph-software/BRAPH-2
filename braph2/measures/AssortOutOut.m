@@ -3,7 +3,7 @@ classdef AssortOutOut < Measure
 	% It is a subclass of <a href="matlab:help Measure">Measure</a>.
 	%
 	% The Out-Out-Assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between 
-	%   the degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
+	%   the outward degrees/strengths of all nodes on two opposite ends of an edge within a layer. 
 	% The corresponding coefficient for directed and weighted networks is calculated by using 
 	%   the weighted and directed variants of out-degree/out-strength.
 	%
@@ -144,6 +144,21 @@ classdef AssortOutOut < Measure
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the out-out-assortativity.
+			%
+			% BUILD = AssortOutOut.GETBUILD() returns the build of 'AssortOutOut'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the out-out-assortativity M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('AssortOutOut') returns the build of 'AssortOutOut'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('AssortOutOut')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the out-out-assortativity.
 			%
@@ -530,7 +545,7 @@ classdef AssortOutOut < Measure
 				case 2 % AssortOutOut.NAME
 					prop_default = 'Out-Out-Assortativity';
 				case 3 % AssortOutOut.DESCRIPTION
-					prop_default = 'The Out-Out-Assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between the degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
+					prop_default = 'The Out-Out-Assortativity coefficient (AssortOutOut) of a graph is the correlation coefficient between the outward degrees/strengths of all nodes on two opposite ends of an edge within a layer. The corresponding coefficient for directed and weighted networks is calculated by using the weighted and directed variants of out-degree/out-strength.';
 				case 4 % AssortOutOut.TEMPLATE
 					prop_default = Format.getFormatDefault(8, AssortOutOut.getPropSettings(prop));
 				case 5 % AssortOutOut.ID

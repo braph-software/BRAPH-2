@@ -111,6 +111,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
     %
     % See also Category, Format, NoValue, Callback, ConcreteElement,
     %  IndexedDictionary, handle, matlab.mixin.Copyable.
+    %
+    % BUILD BRAPH2 6 Element 6
    
 	properties (Access=private)
         % props is a private struct containing the element properties whose
@@ -157,6 +159,28 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         PropLocked
     end
     methods (Static) % inspection
+        function build = getBuild(el)
+            %GETBUILD returns the build of the element.
+            %
+            % BUILD = Element.GETBUILD() returns the €6€ = 6.
+            %
+            % Alternative forms to call this method are:
+            %  BUILD = EL.GETBUILD() returns the build of EL.
+            %  BUILD = Element.BUILD(EL) returns the build of EL.
+            %  BUILD = Element.GETBUILD(CLASS) returns the build of CLASS.
+            %
+            % Note that the Element.BUILD(EL) and Element.BUILD(CLASS) 
+            %  are less computationally efficient. 
+
+            % calls from Element
+            if nargin == 0
+                build = 6;
+                return
+            end
+            
+            % calls from subclasses of Element
+            build = eval([Element.getClass(el) '.getBuild()']);
+        end
         function el_class = getClass(el)
             %GETCLASS returns the class of the element.
             %
@@ -1855,7 +1879,8 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 build = 6;
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
-                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details');
+                build_log = load('build_log.mat', '-mat');  % % % double-check
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
                 
                 saved = true;
                 
@@ -1902,11 +1927,12 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 wb = braph2waitbar(waitbar, .5, 'Loading file (this might take a while) ...'); 
                 drawnow()
                 
-                tmp = load(filename, '-mat', 'el', 'build', 'matlab_version', 'matlab_version_details');
+                tmp = load(filename, '-mat', 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
                 el = tmp.el;
                 build  = tmp.build;
                 matlab_version = tmp.matlab_version;
                 matlab_version_details = tmp.matlab_version_details;
+                build_log = tmp.build_log;  % % % double-check
                 
                 braph2waitbar(wb, 'close')                
             else

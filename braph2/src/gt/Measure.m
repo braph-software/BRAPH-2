@@ -126,6 +126,8 @@ classdef Measure < ConcreteElement
 	%
 	%
 	% See also Graph.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % constants
 		% Measure shape
@@ -283,6 +285,21 @@ classdef Measure < ConcreteElement
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph measure.
+			%
+			% BUILD = Measure.GETBUILD() returns the build of 'Measure'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the graph measure M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Measure') returns the build of 'Measure'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Measure')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the graph measure.
 			%

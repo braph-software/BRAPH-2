@@ -135,6 +135,8 @@ classdef GraphPP_MDict < PanelProp
 	%
 	%
 	% See also uitable, Graph.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		TABLE_HEIGHT = 36; %CET: Computational Efficiency Trick
@@ -227,6 +229,21 @@ classdef GraphPP_MDict < PanelProp
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the measure dictionary plot.
+			%
+			% BUILD = GraphPP_MDict.GETBUILD() returns the build of 'GraphPP_MDict'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = PR.GETBUILD() returns the build of the measure dictionary plot PR.
+			%  BUILD = Element.GETBUILD(PR) returns the build of 'PR'.
+			%  BUILD = Element.GETBUILD('GraphPP_MDict') returns the build of 'GraphPP_MDict'.
+			%
+			% Note that the Element.GETBUILD(PR) and Element.GETBUILD('GraphPP_MDict')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function pr_class = getClass()
 			%GETCLASS returns the class of the measure dictionary plot.
 			%

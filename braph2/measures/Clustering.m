@@ -146,6 +146,21 @@ classdef Clustering < Triangles
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the clustering.
+			%
+			% BUILD = Clustering.GETBUILD() returns the build of 'Clustering'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = M.GETBUILD() returns the build of the clustering M.
+			%  BUILD = Element.GETBUILD(M) returns the build of 'M'.
+			%  BUILD = Element.GETBUILD('Clustering') returns the build of 'Clustering'.
+			%
+			% Note that the Element.GETBUILD(M) and Element.GETBUILD('Clustering')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function m_class = getClass()
 			%GETCLASS returns the class of the clustering.
 			%

@@ -9,13 +9,13 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 	% The target is obtained from the variables of interest of the subject.
 	%
 	% The list of NNDataPoint_Measure_CLA properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with graph measures.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with graph measures.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with graph measures.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with graph measures.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with graph measures.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with graph measures.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the data point for classification with graph measures.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for classification with graph measures.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for classification with graph measures.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for classification with graph measures.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for classification with graph measures.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for classification with graph measures.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
@@ -110,6 +110,8 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 	%
 	%
 	% See also NNDataPoint_Measure_REG, NNDataPoint_Graph_REG, NNDataPoint_Graph_CLA.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		G = 11; %CET: Computational Efficiency Trick
@@ -139,13 +141,13 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDataPoint_Measure_CLA properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with graph measures.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with graph measures.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with graph measures.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with graph measures.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with graph measures.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with graph measures.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the data point for classification with graph measures.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for classification with graph measures.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for classification with graph measures.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for classification with graph measures.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for classification with graph measures.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for classification with graph measures.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
@@ -159,6 +161,21 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the measure classification data point.
+			%
+			% BUILD = NNDataPoint_Measure_CLA.GETBUILD() returns the build of 'NNDataPoint_Measure_CLA'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = DP.GETBUILD() returns the build of the measure classification data point DP.
+			%  BUILD = Element.GETBUILD(DP) returns the build of 'DP'.
+			%  BUILD = Element.GETBUILD('NNDataPoint_Measure_CLA') returns the build of 'NNDataPoint_Measure_CLA'.
+			%
+			% Note that the Element.GETBUILD(DP) and Element.GETBUILD('NNDataPoint_Measure_CLA')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function dp_class = getClass()
 			%GETCLASS returns the class of the measure classification data point.
 			%
@@ -481,7 +498,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			prop = NNDataPoint_Measure_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_measure_cla_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of a data point for classification with graph measures.'  'DESCRIPTION (constant, string) is the description of a data point for classification with graph measures.'  'TEMPLATE (parameter, item) is the template of a data point for classification with graph measures.'  'ID (data, string) is a few-letter code for a data point for classification with graph measures.'  'LABEL (metadata, string) is an extended label of a data point for classification with graph measures.'  'NOTES (metadata, string) are some specific notes about a data point for classification with graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'G (data, item) is a graph containing the added graph measures (M_DICT).'  'M_LIST (parameter, classlist) is a list of graph measure to be used as the input.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
+			nndatapoint_measure_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with graph measures.'  'NAME (constant, string) is the name of the data point for classification with graph measures.'  'DESCRIPTION (constant, string) is the description of the data point for classification with graph measures.'  'TEMPLATE (parameter, item) is the template of the data point for classification with graph measures.'  'ID (data, string) is a few-letter code for the data point for classification with graph measures.'  'LABEL (metadata, string) is an extended label of the data point for classification with graph measures.'  'NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'G (data, item) is a graph containing the added graph measures (M_DICT).'  'M_LIST (parameter, classlist) is a list of graph measure to be used as the input.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
 			prop_description = nndatapoint_measure_cla_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -551,7 +568,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 				case 1 % NNDataPoint_Measure_CLA.ELCLASS
 					prop_default = 'NNDataPoint_Measure_CLA';
 				case 2 % NNDataPoint_Measure_CLA.NAME
-					prop_default = 'NNDataPoint_Measure_CLA';
+					prop_default = 'Neural Network Data Point for Classification with Graph Measures';
 				case 3 % NNDataPoint_Measure_CLA.DESCRIPTION
 					prop_default = 'A data point for classification with graph measures (NNDataPoint_Measure_CLA) contains both input and target for neural network analysis. The input is the value of the graph measures (e.g. Degree, DegreeAv, and Distance), calculated from the derived graph of the subject. The target is obtained from the variables of interest of the subject.';
 				case 4 % NNDataPoint_Measure_CLA.TEMPLATE

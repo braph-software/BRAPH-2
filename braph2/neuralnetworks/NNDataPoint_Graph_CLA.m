@@ -8,13 +8,13 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 	% The target is obtained from the variables of interest of the subject.
 	%
 	% The list of NNDataPoint_Graph_CLA properties is:
-	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with a graph.
-	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with a graph.
-	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with a graph.
-	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with a graph.
-	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with a graph.
-	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with a graph.
+	%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the data point for classification with a graph.
+	%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for classification with a graph.
+	%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for classification with a graph.
+	%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for classification with a graph.
+	%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for classification with a graph.
+	%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for classification with a graph.
+	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with a graph.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
@@ -108,6 +108,8 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 	%
 	%
 	% See also NNDataPoint_Graph_REG, NNDataPoint_Measure_REG, NNDataPoint_Measure_CLA.
+	%
+	% BUILD BRAPH2 6 class_name 1
 	
 	properties (Constant) % properties
 		G = 11; %CET: Computational Efficiency Trick
@@ -132,13 +134,13 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 			%  them with either property numbers (PROP) or tags (TAG).
 			%
 			% The list of NNDataPoint_Graph_CLA properties is:
-			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the % % % .
-			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of a data point for classification with a graph.
-			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of a data point for classification with a graph.
-			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of a data point for classification with a graph.
-			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for a data point for classification with a graph.
-			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of a data point for classification with a graph.
-			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with a graph.
+			%  <strong>1</strong> <strong>ELCLASS</strong> 	ELCLASS (constant, string) is the class of the data point for classification with a graph.
+			%  <strong>2</strong> <strong>NAME</strong> 	NAME (constant, string) is the name of the data point for classification with a graph.
+			%  <strong>3</strong> <strong>DESCRIPTION</strong> 	DESCRIPTION (constant, string) is the description of the data point for classification with a graph.
+			%  <strong>4</strong> <strong>TEMPLATE</strong> 	TEMPLATE (parameter, item) is the template of the data point for classification with a graph.
+			%  <strong>5</strong> <strong>ID</strong> 	ID (data, string) is a few-letter code for the data point for classification with a graph.
+			%  <strong>6</strong> <strong>LABEL</strong> 	LABEL (metadata, string) is an extended label of the data point for classification with a graph.
+			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with a graph.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
 			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
@@ -151,6 +153,21 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 		end
 	end
 	methods (Static) % inspection
+		function build = getBuild()
+			%GETBUILD returns the build of the graph classification data point.
+			%
+			% BUILD = NNDataPoint_Graph_CLA.GETBUILD() returns the build of 'NNDataPoint_Graph_CLA'.
+			%
+			% Alternative forms to call this method are:
+			%  BUILD = DP.GETBUILD() returns the build of the graph classification data point DP.
+			%  BUILD = Element.GETBUILD(DP) returns the build of 'DP'.
+			%  BUILD = Element.GETBUILD('NNDataPoint_Graph_CLA') returns the build of 'NNDataPoint_Graph_CLA'.
+			%
+			% Note that the Element.GETBUILD(DP) and Element.GETBUILD('NNDataPoint_Graph_CLA')
+			%  are less computationally efficient.
+			
+			build = 1;
+		end
 		function dp_class = getClass()
 			%GETCLASS returns the class of the graph classification data point.
 			%
@@ -473,7 +490,7 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 			prop = NNDataPoint_Graph_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_graph_cla_description_list = { 'ELCLASS (constant, string) is the class of the % % % .'  'NAME (constant, string) is the name of a data point for classification with a graph.'  'DESCRIPTION (constant, string) is the description of a data point for classification with a graph.'  'TEMPLATE (parameter, item) is the template of a data point for classification with a graph.'  'ID (data, string) is a few-letter code for a data point for classification with a graph.'  'LABEL (metadata, string) is an extended label of a data point for classification with a graph.'  'NOTES (metadata, string) are some specific notes about a data point for classification with a graph.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'G (data, item) is a graph.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
+			nndatapoint_graph_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with a graph.'  'NAME (constant, string) is the name of the data point for classification with a graph.'  'DESCRIPTION (constant, string) is the description of the data point for classification with a graph.'  'TEMPLATE (parameter, item) is the template of the data point for classification with a graph.'  'ID (data, string) is a few-letter code for the data point for classification with a graph.'  'LABEL (metadata, string) is an extended label of the data point for classification with a graph.'  'NOTES (metadata, string) are some specific notes about the data point for classification with a graph.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'G (data, item) is a graph.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
 			prop_description = nndatapoint_graph_cla_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -539,7 +556,7 @@ classdef NNDataPoint_Graph_CLA < NNDataPoint
 				case 1 % NNDataPoint_Graph_CLA.ELCLASS
 					prop_default = 'NNDataPoint_Graph_CLA';
 				case 2 % NNDataPoint_Graph_CLA.NAME
-					prop_default = 'NNDataPoint_Graph_CLA';
+					prop_default = 'Neural Network Data Point for Classification with a Graph';
 				case 3 % NNDataPoint_Graph_CLA.DESCRIPTION
 					prop_default = 'A data point for classification with a graph (NNDataPoint_Graph_CLA) contains both input and target for neural network analysis. The input is the value of the adjacency matrix extracted from the derived graph of the subject. The target is obtained from the variables of interest of the subject.';
 				case 4 % NNDataPoint_Graph_CLA.TEMPLATE
