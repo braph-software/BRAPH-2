@@ -9,7 +9,7 @@ function create_data_NN_REG_CON_XLS(data_dir, random_seed)
 % CREATE_DATA_CON_XLS(DATA_DIR, RANDOM_SEED) cretes connectivity data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
-% See also create_data_con_nn_txt.
+% See also create_data_nn_reg_con_txt.
 
 if nargin < 1
     data_dir = [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS'];
