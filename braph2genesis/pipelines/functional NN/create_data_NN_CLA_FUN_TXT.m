@@ -9,7 +9,7 @@ function create_data_NN_CLA_FUN_TXT(data_dir, random_seed)
 % CREATE_DATA_NN_CLA_FUN_TXT(DATA_DIR, RANDOM_SEED) cretes functional data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
-% See also create_data_nn_cla_con_xsl.
+% See also create_data_nn_cla_fun_xsl.
 
 if nargin < 1
     data_dir = [fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN TXT'];

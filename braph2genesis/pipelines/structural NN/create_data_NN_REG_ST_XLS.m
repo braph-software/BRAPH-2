@@ -33,7 +33,7 @@ if ~isdir(data_dir)
     N = ba.get('BR_DICT').get('LENGTH');
 
     % saves RNG
-    rng_settings_ = rng(); rng('default')
+    rng_settings_ = rng(); rng(random_seed)
     sex_options = {'Female' 'Male'};
 
     % Group 

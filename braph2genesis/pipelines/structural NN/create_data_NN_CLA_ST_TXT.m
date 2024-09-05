@@ -33,7 +33,7 @@ if ~isdir(data_dir)
     N = ba.get('BR_DICT').get('LENGTH');
 
     % saves RNG
-    rng_settings_ = rng(); rng('default')
+    rng_settings_ = rng(); rng(random_seed)
 
     N_subjects = 50;
 

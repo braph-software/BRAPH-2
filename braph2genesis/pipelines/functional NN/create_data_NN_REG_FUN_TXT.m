@@ -1,12 +1,12 @@
 function create_data_NN_REG_FUN_TXT(data_dir, random_seed)
-%CREATE_DATA_FUN_NN_TXT creates functional data for neural network regression analysis
+%CREATE_DATA_NN_REG_FUN_TXT creates functional data for neural network regression analysis
 %
-% CREATE_DATA_FUN_NN_TXT() creates functional data in default folder 'Example
-%  data NN CLA FUN TXT'.
+% CREATE_DATA_NN_REG_FUN_TXT() creates functional data in default folder 'Example
+%  data NN REG FUN TXT'.
 %
-% CREATE_DATA_FUN_TXT(DATA_DIR) creates functional data in DATA_DIR folder.
+% CREATE_DATA_NN_REG_FUN_TXT(DATA_DIR) creates functional data in DATA_DIR folder.
 %
-% CREATE_DATA_FUN_TXT(DATA_DIR, RANDOM_SEED) cretes functional data in
+% CREATE_DATA_NN_REG_FUN_TXT(DATA_DIR, RANDOM_SEED) cretes functional data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
 % See also create_data_nn_reg_fun_xls.
