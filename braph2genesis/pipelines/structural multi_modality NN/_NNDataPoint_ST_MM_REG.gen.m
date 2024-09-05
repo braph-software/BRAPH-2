@@ -89,7 +89,7 @@ Create a NNDataset containg NNDataPoint_ST_MM_REG with simulated data
 %%%% ¡code!
 % Load BrainAtlas
 im_ba = ImporterBrainAtlasTXT( ...
-    'FILE', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM TXT' filesep 'atlas.txt'], ...
+    'FILE', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM TXT' filesep 'atlas.txt'], ...
     'WAITBAR', true ...
     );
 
@@ -97,7 +97,7 @@ ba = im_ba.get('BA');
 
 % Load Group of SubjectST_MP
 im_gr = ImporterGroupSubjectST_MP_TXT( ...
-    'DIRECTORY', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM TXT' filesep 'ST_MM_Group_TXT'], ...
+    'DIRECTORY', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM TXT' filesep 'ST_MM_Group_TXT'], ...
     'BA', ba, ...
     'WAITBAR', true ...
     );
@@ -152,7 +152,7 @@ end
 Example training-test regression
 %%%% ¡code!
 % ensure the example data is generated
-if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM XLS' filesep 'atlas.xlsx'])
+if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM XLS' filesep 'atlas.xlsx'])
     create_data_NN_REG_ST_MM_XLS() % create example files
 end
 
@@ -163,7 +163,7 @@ example_NN_ST_MM_REG
 Example cross-validation regression
 %%%% ¡code!
 % ensure the example data is generated
-if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM XLS' filesep 'atlas.xlsx'])
+if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM XLS' filesep 'atlas.xlsx'])
     create_data_NN_REG_ST_MM_XLS() % create example files
 end
 

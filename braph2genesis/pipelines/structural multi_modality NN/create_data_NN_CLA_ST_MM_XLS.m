@@ -1,18 +1,18 @@
-function create_data_NN_CLA_ST_MM_TXT(data_dir, random_seed)
-%CREATE_DATA_NN_CLA_ST_MM_TXT creates multi-modality structural data for neural network classification analysis
+function create_data_NN_CLA_ST_MM_XLS(data_dir, random_seed)
+%CREATE_DATA_NN_CLA_ST_MM_XLS creates multi-modality structural data for neural network classification analysis
 %
-% CREATE_DATA_NN_CLA_ST_MM_TXT() creates multi-modality structural data in default folder 'Example
-%  data NN CLA FUN TXT'.
+% CREATE_DATA_NN_CLA_ST_MM_XLS() creates multi-modality structural data in default folder 'Example
+%  data NN CLA FUN XLS'.
 %
-% CREATE_DATA_NN_CLA_ST_MM_TXT(DATA_DIR) creates multi-modality structural data in DATA_DIR folder.
+% CREATE_DATA_NN_CLA_ST_MM_XLS(DATA_DIR) creates multi-modality structural data in DATA_DIR folder.
 %
-% CREATE_DATA_NN_CLA_ST_MM_TXT(DATA_DIR, RANDOM_SEED) cretes multi-modality structural data in
+% CREATE_DATA_NN_CLA_ST_MM_XLS(DATA_DIR, RANDOM_SEED) cretes multi-modality structural data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
 % See also create_data_nn_cla_st_mm_txt.
 
 if nargin < 1
-    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST_MM TXT'];
+    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST_MM XLS'];
 end
 
 if nargin < 2
@@ -23,11 +23,11 @@ if ~isdir(data_dir)
     mkdir(data_dir);
     
     % Brain Atlas
-    im_ba = ImporterBrainAtlasTXT('FILE', 'desikan_atlas.txt');
+    im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
     ba = im_ba.get('BA');
-    ex_ba = ExporterBrainAtlasTXT( ...
+    ex_ba = ExporterBrainAtlasXLS( ...
         'BA', ba, ...
-        'FILE', [data_dir filesep() 'atlas.txt'] ...
+        'FILE', [data_dir filesep() 'atlas.xlsx'] ...
         );
     ex_ba.get('SAVE')
     N = ba.get('BR_DICT').get('LENGTH');
@@ -36,9 +36,9 @@ if ~isdir(data_dir)
     rng_settings_ = rng(); rng(random_seed)
 
     N_subjects = 50;
-    gr1_name = 'ST_MM_Group_1_TXT';
-    gr2_name = 'ST_MM_Group_2_TXT';
-    gr3_name = 'ST_MM_Group_3_TXT';
+    gr1_name = 'ST_MM_Group_1_XLS';
+    gr2_name = 'ST_MM_Group_2_XLS';
+    gr3_name = 'ST_MM_Group_3_XLS';
     sex_options = {'Female' 'Male'};
 
     % Group 1
@@ -107,18 +107,18 @@ if ~isdir(data_dir)
     % create the table
     gr1_dir = [data_dir filesep() gr1_name];
     mkdir(gr1_dir)
-    writetable(T_group11, [gr1_dir filesep() gr1_name '.1.txt'], 'Delimiter', '	', 'WriteRowNames', true)
-    writetable(T_group12, [gr1_dir filesep() gr1_name '.2.txt'], 'Delimiter', '	', 'WriteRowNames', true)
+    writetable(T_group11, [gr1_dir filesep() gr1_name '.1.xlsx'], 'WriteRowNames', true)
+    writetable(T_group12, [gr1_dir filesep() gr1_name '.2.xlsx'], 'WriteRowNames', true)
 
     % variables of interest
     vois1 = [
         {{'Subject ID'} {'Age'} {'Sex'}}
-        {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
+        {{} {} cell2str(sex_options)}
         ];
     for i = 1:1:N_subjects
         vois1 = [vois1; {sub_Tags1{i}, randi(90), sex_options(randi(2))}];
     end
-    writetable(table(vois1), [data_dir filesep() gr1_name '.vois.txt'], 'Delimiter', '	', 'WriteVariableNames', false)
+    writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
 
     % Group 2
     K21 = K11; % degree (mean node degree is 2K) - group 2 layer 1
@@ -176,18 +176,18 @@ if ~isdir(data_dir)
     % create the table
     gr2_dir = [data_dir filesep() gr2_name];
     mkdir(gr2_dir)
-    writetable(T_group21, [gr2_dir filesep() gr2_name '.1.txt'], 'Delimiter', '	', 'WriteRowNames', true)
-    writetable(T_group22, [gr2_dir filesep() gr2_name '.2.txt'], 'Delimiter', '	', 'WriteRowNames', true)
+    writetable(T_group21, [gr2_dir filesep() gr2_name '.1.xlsx'], 'WriteRowNames', true)
+    writetable(T_group22, [gr2_dir filesep() gr2_name '.2.xlsx'], 'WriteRowNames', true)
 
     % variables of interest
     vois2 = [
         {{'Subject ID'} {'Age'} {'Sex'}}
-        {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
+        {{} {} cell2str(sex_options)}
         ];
     for i = 1:1:N_subjects
         vois2 = [vois2; {sub_Tags2{i}, randi(90), sex_options(randi(2))}];
     end
-    writetable(table(vois2), [data_dir filesep() gr2_name '.vois.txt'], 'Delimiter', '	', 'WriteVariableNames', false)
+    writetable(table(vois2), [data_dir filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
 
     % Group 3
     K31 = K11; % degree (mean node degree is 2K) - group 3 layer 1
@@ -245,18 +245,18 @@ if ~isdir(data_dir)
     % create the table
     gr3_dir = [data_dir filesep() gr3_name];
     mkdir(gr3_dir)
-    writetable(T_group31, [gr3_dir filesep() gr3_name '.1.txt'], 'Delimiter', '	', 'WriteRowNames', true)
-    writetable(T_group32, [gr3_dir filesep() gr3_name '.2.txt'], 'Delimiter', '	', 'WriteRowNames', true)
+    writetable(T_group31, [gr3_dir filesep() gr3_name '.1.xlsx'], 'WriteRowNames', true)
+    writetable(T_group32, [gr3_dir filesep() gr3_name '.2.xlsx'], 'WriteRowNames', true)
 
     % variables of interest
     vois3 = [
         {{'Subject ID'} {'Age'} {'Sex'}}
-        {{} {} {['{' sprintf(' ''%s'' ', sex_options{:}) '}']}}
+        {{} {} cell2str(sex_options)}
         ];
     for i = 1:1:N_subjects
         vois3 = [vois3; {sub_Tags3{i}, randi(90), sex_options(randi(2))}];
     end
-    writetable(table(vois3), [data_dir filesep() gr3_name '.vois.txt'], 'Delimiter', '	', 'WriteVariableNames', false)
+    writetable(table(vois3), [data_dir filesep() gr3_name '.vois.xlsx'], 'WriteVariableNames', false)
     
     % reset RNG
     rng(rng_settings_)
