@@ -1401,7 +1401,7 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
 	if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-	    test_NNDataPoint_CON_REG % create example files
+	    create_data_NN_REG_CON_XLS() % create example files
 	end
 	
 	% Load BrainAtlas
@@ -1468,7 +1468,7 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
 	if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-	    test_NNDataPoint_CON_REG % create example files
+	    create_data_NN_REG_CON_XLS() % create example files
 	end
 	
 	% Load BrainAtlas
@@ -1538,7 +1538,7 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
 	if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-	    test_SubjectCON_FUN_MP % create example files
+	    create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 	end
 	
 	% Load BrainAtlas
@@ -1623,7 +1623,7 @@ end
 %% Test 15: Example script for weighted undirected graph (GraphWU) using connectivity data
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-	    test_NNDataPoint_CON_REG % create example files
+	    create_data_NN_REG_CON_XLS() % create example files
 	end
 	example_NNCV_CON_WU_M_REG
 end
@@ -1631,7 +1631,7 @@ end
 %% Test 16: Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-	    test_NNDataPoint_CON_FUN_MP_REG % create example files
+	    create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 	end
 	example_NNCV_CON_FUN_MP_WU_M_REG
 end
@@ -1639,7 +1639,7 @@ end
 %% Test 17: Example script for weighted undirected graph (GraphWU) using functional data
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
-	    test_NNDataPoint_FUN_REG % create example files
+	    create_data_NN_REG_FUN_XLS() % create example files
 	end
 	example_NNCV_FUN_WU_M_REG
 end
