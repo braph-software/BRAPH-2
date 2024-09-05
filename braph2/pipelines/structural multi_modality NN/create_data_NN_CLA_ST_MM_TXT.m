@@ -12,7 +12,7 @@ function create_data_NN_CLA_ST_MM_TXT(data_dir, random_seed)
 % See also create_data_nn_cla_st_mm_txt.
 
 if nargin < 1
-    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST MM TXT'];
+    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST_MM TXT'];
 end
 
 if nargin < 2

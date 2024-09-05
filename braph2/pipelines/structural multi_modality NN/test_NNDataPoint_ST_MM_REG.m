@@ -1385,7 +1385,7 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% Load BrainAtlas
 	im_ba = ImporterBrainAtlasTXT( ...
-	    'FILE', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM TXT' filesep 'atlas.txt'], ...
+	    'FILE', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM TXT' filesep 'atlas.txt'], ...
 	    'WAITBAR', true ...
 	    );
 	
@@ -1393,7 +1393,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	
 	% Load Group of SubjectST_MP
 	im_gr = ImporterGroupSubjectST_MP_TXT( ...
-	    'DIRECTORY', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM TXT' filesep 'ST_MM_Group_TXT'], ...
+	    'DIRECTORY', [fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM TXT' filesep 'ST_MM_Group_TXT'], ...
 	    'BA', ba, ...
 	    'WAITBAR', true ...
 	    );
@@ -1447,7 +1447,7 @@ end
 %% Test 14: Example training-test regression
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
-	if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM XLS' filesep 'atlas.xlsx'])
+	if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM XLS' filesep 'atlas.xlsx'])
 	    create_data_NN_REG_ST_MM_XLS() % create example files
 	end
 	
@@ -1457,7 +1457,7 @@ end
 %% Test 15: Example cross-validation regression
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
-	if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST MM XLS' filesep 'atlas.xlsx'])
+	if ~isfile([fileparts(which('NNDataPoint_ST_MM_REG')) filesep 'Example data NN REG ST_MM XLS' filesep 'atlas.xlsx'])
 	    create_data_NN_REG_ST_MM_XLS() % create example files
 	end
 	

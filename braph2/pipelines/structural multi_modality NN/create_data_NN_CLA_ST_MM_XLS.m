@@ -9,10 +9,10 @@ function create_data_NN_CLA_ST_MM_XLS(data_dir, random_seed)
 % CREATE_DATA_NN_CLA_ST_MM_XLS(DATA_DIR, RANDOM_SEED) cretes multi-modality structural data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
-% See also create_data_nn_cla_ST_MM_txt.
+% See also create_data_nn_cla_st_mm_txt.
 
 if nargin < 1
-    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST MM XLS'];
+    data_dir = [fileparts(which('NNDataPoint_ST_MM_CLA')) filesep 'Example data NN CLA ST_MM XLS'];
 end
 
 if nargin < 2
