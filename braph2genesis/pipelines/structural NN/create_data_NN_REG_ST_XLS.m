@@ -1,12 +1,12 @@
 function create_data_NN_REG_ST_XLS(data_dir, random_seed)
-%CREATE_DATA_NN_REG_ST_XLS creates functional data for neural network regression analysis
+%CREATE_DATA_NN_REG_ST_XLS creates strucutural data for neural network regression analysis
 %
-% CREATE_DATA_NN_REG_ST_XLS() creates functional data in default folder 'Example
+% CREATE_DATA_NN_REG_ST_XLS() creates strucutural data in default folder 'Example
 %  data NN REG ST XLS'.
 %
-% CREATE_DATA_NN_REG_ST_XLS(DATA_DIR) creates functional data in DATA_DIR folder.
+% CREATE_DATA_NN_REG_ST_XLS(DATA_DIR) creates strucutural data in DATA_DIR folder.
 %
-% CREATE_DATA_NN_REG_ST_XLS(DATA_DIR, RANDOM_SEED) cretes functional data in
+% CREATE_DATA_NN_REG_ST_XLS(DATA_DIR, RANDOM_SEED) cretes strucutural data in
 %  DATA_DIR folder with a specified RANDOM_SEED.
 %
 % See also create_data_nn_reg_st_txt.
