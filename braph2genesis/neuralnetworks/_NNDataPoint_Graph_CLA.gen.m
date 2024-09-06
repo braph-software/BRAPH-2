@@ -56,7 +56,7 @@ INPUT (result, cell) is the input value for this data point.
 value = dp.get('G').get('A');
     
 %%% ¡prop!
-TARGET (result, stringlist) is the target values for this data point.
+TARGET (result, cell) is the target values for this data point.
 %%%% ¡calculate!
 value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 
