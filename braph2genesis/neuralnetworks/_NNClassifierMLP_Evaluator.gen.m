@@ -108,13 +108,11 @@ NN (data, item) contains a trained neural network multi-layer perceptron classif
 %%% ¡prop!
 GROUND_TRUTH (query, stringlist) returns the matrix of ground truth derived from the targets.
 %%%% ¡calculate!
-targets = nne.get('D').get('TARGETS');
+targets = nne.get('NN').get('TARGET_CLASSES', nne.get('D'));
 if isempty(targets)
     value = {''};
 else
-    for i = 1:length(targets)
-        value(i, :) = targets{i};
-    end
+    value = targets;
 end
 
 %%% ¡prop!
