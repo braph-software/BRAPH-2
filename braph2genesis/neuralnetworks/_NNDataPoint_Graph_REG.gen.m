@@ -86,7 +86,7 @@ Construct the data point with the adjacency matrix derived from its weighted und
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_REG % create example files
+    create_data_NN_REG_CON_XLS() % create example files
 end
 
 % Load BrainAtlas
@@ -151,7 +151,7 @@ Construct the data point with the adjacency matrix derived from its binary undir
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_REG % create example files
+    create_data_NN_REG_CON_XLS() % create example files
 end
 
 % Load BrainAtlas
@@ -219,7 +219,7 @@ Construct the data point with the adjacency matrix derived from its multiplex we
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_SubjectCON_FUN_MP % create example files
+    create_data_NN_REG_CON_FUN_MP_XSL() % create example files
 end
 
 % Load BrainAtlas
@@ -301,7 +301,7 @@ end
 Example script for binary undirected graph (MultigraphBUT) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_REG % create example files
+    create_data_NN_REG_CON_XLS() % create example files
 end
 example_NNCV_CON_BUT_REG
 
@@ -310,7 +310,7 @@ example_NNCV_CON_BUT_REG
 Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_FUN_MP_REG % create example files
+    create_data_NN_REG_CON_FUN_MP_XSL() % create example files
 end
 example_NNCV_CON_FUN_MP_BUD_REG
 
@@ -319,7 +319,7 @@ example_NNCV_CON_FUN_MP_BUD_REG
 Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_FUN_MP_REG % create example files
+    create_data_NN_REG_CON_FUN_MP_XSL % create example files
 end
 example_NNCV_CON_FUN_MP_BUT_REG
 
@@ -328,7 +328,7 @@ example_NNCV_CON_FUN_MP_BUT_REG
 Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_REG % create example files
+    create_data_NN_REG_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUD_REG
 
@@ -337,6 +337,6 @@ example_NNCV_FUN_BUD_REG
 Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_REG')) filesep 'Example data NN REG FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_REG % create example files
+    create_data_NN_REG_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUT_REG

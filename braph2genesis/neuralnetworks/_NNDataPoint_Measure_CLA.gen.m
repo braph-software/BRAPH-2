@@ -85,7 +85,7 @@ Construct the data point with the graph measures derived from its weighted undir
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_CLA % create example files
+    create_data_NN_CLA_CON_XLS() % create example files
 end
 
 % Load BrainAtlas
@@ -199,7 +199,7 @@ Construct the data point with the graph measures derived from its binary undirec
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_CLA % create example files
+    create_data_NN_CLA_CON_XLS() % create example files
 end
 
 % Load BrainAtlas
@@ -316,7 +316,7 @@ Construct the data point with the graph measures derived from its multiplex weig
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_SubjectCON_FUN_MP % create example files
+    create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 end
 
 % Load BrainAtlas
@@ -464,7 +464,7 @@ end
 Example script for binary undirected graph at fixed densities (GraphBUD) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_CLA % create example files
+    create_data_NN_CLA_CON_XLS() % create example files
 end
 example_NNCV_CON_BUD_M_CLA
 
@@ -473,7 +473,7 @@ example_NNCV_CON_BUD_M_CLA
 Example script for binary undirected graph at fixed thresholds (MultigraphBUT) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_CLA % create example files
+    create_data_NN_CLA_CON_XLS() % create example files
 end
 example_NNCV_CON_BUT_M_CLA
 
@@ -482,7 +482,7 @@ example_NNCV_CON_BUT_M_CLA
 Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_CLA % create example files
+    create_data_NN_CLA_CON_XLS() % create example files
 end
 example_NNCV_CON_BUD_M_CLA
 
@@ -491,7 +491,7 @@ example_NNCV_CON_BUD_M_CLA
 Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_FUN_MP_CLA % create example files
+    create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 end
 example_NNCV_CON_FUN_MP_BUD_M_CLA
 
@@ -500,7 +500,7 @@ example_NNCV_CON_FUN_MP_BUD_M_CLA
 Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_CON_FUN_MP_CLA % create example files
+    create_data_NN_CLA_CON_FUN_MP_XLS % create example files
 end
 example_NNCV_CON_FUN_MP_BUT_M_CLA
 
@@ -509,7 +509,7 @@ example_NNCV_CON_FUN_MP_BUT_M_CLA
 Example script for binary undirected multigraph at fixed densities (MultiplexBUD) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_CLA % create example files
+    create_data_NN_CLA_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUD_M_CLA
 
@@ -518,6 +518,6 @@ example_NNCV_FUN_BUD_M_CLA
 Example script for binary undirected multigraph at fixed thresholds (MultiplexBUT) using functional data
 %%%% ¡code!
 if ~isfile([fileparts(which('NNDataPoint_FUN_CLA')) filesep 'Example data NN CLA FUN XLS' filesep 'atlas.xlsx'])
-    test_NNDataPoint_FUN_CLA % create example files
+    create_data_NN_CLA_FUN_XLS() % create example files
 end
 example_NNCV_FUN_BUT_M_CLA
