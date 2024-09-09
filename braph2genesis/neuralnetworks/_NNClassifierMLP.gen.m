@@ -142,7 +142,6 @@ DP_CLASSES (parameter, classlist) is the list of compatible data points.
 %%%% ¡default!
 {'NNDataPoint_CON_CLA' 'NNDataPoint_CON_FUN_MP_CLA' 'NNDataPoint_FUN_CLA' 'NNDataPoint_ST_CLA' 'NNDataPoint_ST_MM_CLA' 'NNDataPoint_Graph_CLA' 'NNDataPoint_Measure_CLA'}
 
-
 %%% ¡prop!
 INPUTS (query, cell) constructs the data in the CB (channel-batch) format.
 %%%% ¡calculate!
@@ -189,14 +188,14 @@ if isempty(varargin)
 end
 d = varargin{1};
 
-target_ids = nn.get('TARGET_IDS', d);
-value = onehotencode(categorical(target_ids), 2);
+targets = d.get('TARGETS');
+value = onehotencode(string(targets), 2);
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network model.
 %%%% ¡calculate!
 inputs = cell2mat(nn.get('INPUTS', nn.get('D')));
-targets = nn.get('TARGET_IDS', nn.get('D'));
+targets = nn.get('TARGET_CLASSES', nn.get('D'));
 if isempty(inputs) || isempty(targets)
     value = network();
 else
@@ -236,22 +235,22 @@ end
 %% ¡props!
 
 %%% ¡prop!
-TARGET_IDS (query, stringlist) constructs the target IDs which represent the class of each data point.
+TARGET_CLASSES (query, stringlist) constructs the target classes which represent the class of each data point.
 %%%% ¡calculate!
-% targets = nn.get('TARGET_IDS', D) returns a cell array with the
-%  targets for all data points in dataset D.
+% target_classes = nn.get('TARGET_CLASSES', D) returns a cell array with the
+%  target classes for all data points in dataset D.
 if isempty(varargin)
     value = {''};
     return
 end
 d = varargin{1};
-targets = d.get('TARGETS');
-if isempty(targets)
+dp_dict = d.get('DP_DICT');
+if dp_dict.get('LENGTH') == 0
     value = {''};
 else
     nn_targets = [];
-    for i = 1:1:length(targets)
-        target = targets{i};
+    for i = 1:1:dp_dict.get('LENGTH')
+        target = dp_dict.get('IT', i).get('TARGET_CLASS');
         nn_targets = [nn_targets; target];
     end
     value = nn_targets;
@@ -373,7 +372,7 @@ gr2 = im_gr2.get('GR');
 it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_IDS', {group_folder_name}), ...
+    'TARGET_CLASS', {group_folder_name}), ...
     gr1.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
@@ -381,7 +380,7 @@ it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_IDS', {group_folder_name}), ...
+    'TARGET_CLASS', {group_folder_name}), ...
     gr2.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
