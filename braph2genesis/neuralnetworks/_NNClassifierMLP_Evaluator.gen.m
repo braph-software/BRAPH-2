@@ -298,10 +298,10 @@ nne = NNClassifierMLP_Evaluator('NN', nn, 'D', d);
 
 % Check whether the ground truth are derived as expected
 ground_truth = nne.get('GROUND_TRUTH');
-targets = d.get('TARGETS');
+targets = nne.get('NN').get('TARGET_CLASSES', d);
 
 for i = 1:size(ground_truth, 1)
-    check(i) = isequal(targets{i}, ground_truth(i, :));
+    check(i) = isequal(targets{i}, ground_truth{i});
 end
 assert(all(check), ...
     [BRAPH2.STR ':NNEvaluator_CLA:' BRAPH2.FAIL_TEST], ...
