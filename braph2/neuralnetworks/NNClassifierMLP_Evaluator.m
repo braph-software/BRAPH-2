@@ -787,13 +787,11 @@ classdef NNClassifierMLP_Evaluator < NNEvaluator
 			
 			switch prop
 				case 11 % NNClassifierMLP_Evaluator.GROUND_TRUTH
-					targets = nne.get('D').get('TARGETS');
+					targets = nne.get('NN').get('TARGET_CLASSES', nne.get('D'));
 					if isempty(targets)
 					    value = {''};
 					else
-					    for i = 1:length(targets)
-					        value(i, :) = targets{i};
-					    end
+					    value = targets;
 					end
 					
 				case 12 % NNClassifierMLP_Evaluator.AUC

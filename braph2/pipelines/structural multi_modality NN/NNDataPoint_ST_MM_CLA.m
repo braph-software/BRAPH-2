@@ -18,9 +18,9 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural multimodality data.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target values for this data point.
 	%  <strong>11</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural multimodality data.
-	%  <strong>12</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+	%  <strong>12</strong> <strong>TARGET_CLASS</strong> 	TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 	%
 	% NNDataPoint_ST_MM_CLA methods (constructor):
 	%  NNDataPoint_ST_MM_CLA - constructor
@@ -118,10 +118,10 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 		SUB_CATEGORY = 4;
 		SUB_FORMAT = 8;
 		
-		TARGET_IDS = 12; %CET: Computational Efficiency Trick
-		TARGET_IDS_TAG = 'TARGET_IDS';
-		TARGET_IDS_CATEGORY = 3;
-		TARGET_IDS_FORMAT = 3;
+		TARGET_CLASS = 12; %CET: Computational Efficiency Trick
+		TARGET_CLASS_TAG = 'TARGET_CLASS';
+		TARGET_CLASS_CATEGORY = 3;
+		TARGET_CLASS_FORMAT = 3;
 	end
 	methods % constructor
 		function dp = NNDataPoint_ST_MM_CLA(varargin)
@@ -144,9 +144,9 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about a data point for classification with structural multimodality data.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target values for this data point.
 			%  <strong>11</strong> <strong>SUB</strong> 	SUB (data, item) is a subject with structural multimodality data.
-			%  <strong>12</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+			%  <strong>12</strong> <strong>TARGET_CLASS</strong> 	TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 			%
 			% See also Category, Format.
 			
@@ -350,7 +350,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_CLASS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -383,7 +383,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_CLASS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -412,7 +412,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatapoint_st_mm_cla_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_IDS' };
+				nndatapoint_st_mm_cla_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'SUB'  'TARGET_CLASS' };
 				tag = nndatapoint_st_mm_cla_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -491,7 +491,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			prop = NNDataPoint_ST_MM_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_st_mm_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with structural multimodality data.'  'NAME (constant, string) is the name of a data point for classification with structural multimodality data.'  'DESCRIPTION (constant, string) is the description of a data point for classification with structural multimodality data.'  'TEMPLATE (parameter, item) is the template of a data point for classification with structural multimodality data.'  'ID (data, string) is a few-letter code for a data point for classification with structural multimodality data.'  'LABEL (metadata, string) is an extended label of a data point for classification with structural multimodality data.'  'NOTES (metadata, string) are some specific notes about a data point for classification with structural multimodality data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'SUB (data, item) is a subject with structural multimodality data.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
+			nndatapoint_st_mm_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with structural multimodality data.'  'NAME (constant, string) is the name of a data point for classification with structural multimodality data.'  'DESCRIPTION (constant, string) is the description of a data point for classification with structural multimodality data.'  'TEMPLATE (parameter, item) is the template of a data point for classification with structural multimodality data.'  'ID (data, string) is a few-letter code for a data point for classification with structural multimodality data.'  'LABEL (metadata, string) is an extended label of a data point for classification with structural multimodality data.'  'NOTES (metadata, string) are some specific notes about a data point for classification with structural multimodality data.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target values for this data point.'  'SUB (data, item) is a subject with structural multimodality data.'  'TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
 			prop_description = nndatapoint_st_mm_cla_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -519,7 +519,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			switch prop %CET: Computational Efficiency Trick
 				case 11 % NNDataPoint_ST_MM_CLA.SUB
 					prop_settings = 'SubjectST_MP';
-				case 12 % NNDataPoint_ST_MM_CLA.TARGET_IDS
+				case NNDataPoint_ST_MM_CLA.TARGET_CLASS % __NNDataPoint_ST_MM_CLA.TARGET_CLASS__
 					prop_settings = Format.getFormatSettings(3);
 				case 4 % NNDataPoint_ST_MM_CLA.TEMPLATE
 					prop_settings = 'NNDataPoint_ST_MM_CLA';
@@ -552,7 +552,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			switch prop %CET: Computational Efficiency Trick
 				case 11 % NNDataPoint_ST_MM_CLA.SUB
 					prop_default = Format.getFormatDefault(8, NNDataPoint_ST_MM_CLA.getPropSettings(prop));
-				case 12 % NNDataPoint_ST_MM_CLA.TARGET_IDS
+				case NNDataPoint_ST_MM_CLA.TARGET_CLASS % __NNDataPoint_ST_MM_CLA.TARGET_CLASS__
 					prop_default = Format.getFormatDefault(3, NNDataPoint_ST_MM_CLA.getPropSettings(prop));
 				case 1 % NNDataPoint_ST_MM_CLA.ELCLASS
 					prop_default = 'NNDataPoint_ST_MM_CLA';
@@ -634,7 +634,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 			switch prop
 				case 11 % NNDataPoint_ST_MM_CLA.SUB
 					check = Format.checkFormat(8, value, NNDataPoint_ST_MM_CLA.getPropSettings(prop));
-				case 12 % NNDataPoint_ST_MM_CLA.TARGET_IDS
+				case NNDataPoint_ST_MM_CLA.TARGET_CLASS % __NNDataPoint_ST_MM_CLA.TARGET_CLASS__
 					check = Format.checkFormat(3, value, NNDataPoint_ST_MM_CLA.getPropSettings(prop));
 				case 4 % NNDataPoint_ST_MM_CLA.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint_ST_MM_CLA.getPropSettings(prop));
@@ -682,7 +682,7 @@ classdef NNDataPoint_ST_MM_CLA < NNDataPoint
 				case 10 % NNDataPoint_ST_MM_CLA.TARGET
 					rng_settings_ = rng(); rng(dp.getPropSeed(10), 'twister')
 					
-					value = dp.get('TARGET_IDS');
+					value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					

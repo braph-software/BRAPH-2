@@ -18,10 +18,10 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 	%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.
 	%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 	%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+	%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target values for this data point.
 	%  <strong>11</strong> <strong>G</strong> 	G (data, item) is a graph containing the added graph measures (M_DICT).
 	%  <strong>12</strong> <strong>M_LIST</strong> 	M_LIST (parameter, classlist) is a list of graph measure to be used as the input.
-	%  <strong>13</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+	%  <strong>13</strong> <strong>TARGET_CLASS</strong> 	TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 	%
 	% NNDataPoint_Measure_CLA methods (constructor):
 	%  NNDataPoint_Measure_CLA - constructor
@@ -124,10 +124,10 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 		M_LIST_CATEGORY = 3;
 		M_LIST_FORMAT = 7;
 		
-		TARGET_IDS = 13; %CET: Computational Efficiency Trick
-		TARGET_IDS_TAG = 'TARGET_IDS';
-		TARGET_IDS_CATEGORY = 3;
-		TARGET_IDS_FORMAT = 3;
+		TARGET_CLASS = 13; %CET: Computational Efficiency Trick
+		TARGET_CLASS_TAG = 'TARGET_CLASS';
+		TARGET_CLASS_CATEGORY = 3;
+		TARGET_CLASS_FORMAT = 3;
 	end
 	methods % constructor
 		function dp = NNDataPoint_Measure_CLA(varargin)
@@ -150,10 +150,10 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			%  <strong>7</strong> <strong>NOTES</strong> 	NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.
 			%  <strong>8</strong> <strong>TOSTRING</strong> 	TOSTRING (query, string) returns a string that represents the concrete element.
 			%  <strong>9</strong> <strong>INPUT</strong> 	INPUT (result, cell) is the input value for this data point.
-			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, stringlist) is the target values for this data point.
+			%  <strong>10</strong> <strong>TARGET</strong> 	TARGET (result, cell) is the target values for this data point.
 			%  <strong>11</strong> <strong>G</strong> 	G (data, item) is a graph containing the added graph measures (M_DICT).
 			%  <strong>12</strong> <strong>M_LIST</strong> 	M_LIST (parameter, classlist) is a list of graph measure to be used as the input.
-			%  <strong>13</strong> <strong>TARGET_IDS</strong> 	TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+			%  <strong>13</strong> <strong>TARGET_CLASS</strong> 	TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 			%
 			% See also Category, Format.
 			
@@ -357,7 +357,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			%
 			% See also getProps, existsTag.
 			
-			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_IDS' })); %CET: Computational Efficiency Trick
+			check = any(strcmp(tag, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_CLASS' })); %CET: Computational Efficiency Trick
 			
 			if nargout == 1
 				check_out = check;
@@ -390,7 +390,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			%  getPropSettings, getPropDefault, checkProp.
 			
 			if ischar(pointer)
-				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_IDS' })); % tag = pointer %CET: Computational Efficiency Trick
+				prop = find(strcmp(pointer, { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_CLASS' })); % tag = pointer %CET: Computational Efficiency Trick
 			else % numeric
 				prop = pointer;
 			end
@@ -419,7 +419,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 				tag = pointer;
 			else % numeric
 				%CET: Computational Efficiency Trick
-				nndatapoint_measure_cla_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_IDS' };
+				nndatapoint_measure_cla_tag_list = { 'ELCLASS'  'NAME'  'DESCRIPTION'  'TEMPLATE'  'ID'  'LABEL'  'NOTES'  'TOSTRING'  'INPUT'  'TARGET'  'G'  'M_LIST'  'TARGET_CLASS' };
 				tag = nndatapoint_measure_cla_tag_list{pointer}; % prop = pointer
 			end
 		end
@@ -498,7 +498,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 			prop = NNDataPoint_Measure_CLA.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nndatapoint_measure_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with graph measures.'  'NAME (constant, string) is the name of the data point for classification with graph measures.'  'DESCRIPTION (constant, string) is the description of the data point for classification with graph measures.'  'TEMPLATE (parameter, item) is the template of the data point for classification with graph measures.'  'ID (data, string) is a few-letter code for the data point for classification with graph measures.'  'LABEL (metadata, string) is an extended label of the data point for classification with graph measures.'  'NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, stringlist) is the target values for this data point.'  'G (data, item) is a graph containing the added graph measures (M_DICT).'  'M_LIST (parameter, classlist) is a list of graph measure to be used as the input.'  'TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
+			nndatapoint_measure_cla_description_list = { 'ELCLASS (constant, string) is the class of the data point for classification with graph measures.'  'NAME (constant, string) is the name of the data point for classification with graph measures.'  'DESCRIPTION (constant, string) is the description of the data point for classification with graph measures.'  'TEMPLATE (parameter, item) is the template of the data point for classification with graph measures.'  'ID (data, string) is a few-letter code for the data point for classification with graph measures.'  'LABEL (metadata, string) is an extended label of the data point for classification with graph measures.'  'NOTES (metadata, string) are some specific notes about the data point for classification with graph measures.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'INPUT (result, cell) is the input value for this data point.'  'TARGET (result, cell) is the target values for this data point.'  'G (data, item) is a graph containing the added graph measures (M_DICT).'  'M_LIST (parameter, classlist) is a list of graph measure to be used as the input.'  'TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.' };
 			prop_description = nndatapoint_measure_cla_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
@@ -528,7 +528,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 					prop_settings = 'Graph';
 				case 12 % NNDataPoint_Measure_CLA.M_LIST
 					prop_settings = Format.getFormatSettings(7);
-				case 13 % NNDataPoint_Measure_CLA.TARGET_IDS
+				case 13 % NNDataPoint_Measure_CLA.TARGET_CLASS
 					prop_settings = Format.getFormatSettings(3);
 				case 4 % NNDataPoint_Measure_CLA.TEMPLATE
 					prop_settings = 'NNDataPoint_Measure_CLA';
@@ -563,7 +563,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 					prop_default = Format.getFormatDefault(8, NNDataPoint_Measure_CLA.getPropSettings(prop));
 				case 12 % NNDataPoint_Measure_CLA.M_LIST
 					prop_default = Format.getFormatDefault(7, NNDataPoint_Measure_CLA.getPropSettings(prop));
-				case 13 % NNDataPoint_Measure_CLA.TARGET_IDS
+				case 13 % NNDataPoint_Measure_CLA.TARGET_CLASS
 					prop_default = Format.getFormatDefault(3, NNDataPoint_Measure_CLA.getPropSettings(prop));
 				case 1 % NNDataPoint_Measure_CLA.ELCLASS
 					prop_default = 'NNDataPoint_Measure_CLA';
@@ -647,7 +647,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 					check = Format.checkFormat(8, value, NNDataPoint_Measure_CLA.getPropSettings(prop));
 				case 12 % NNDataPoint_Measure_CLA.M_LIST
 					check = Format.checkFormat(7, value, NNDataPoint_Measure_CLA.getPropSettings(prop));
-				case 13 % NNDataPoint_Measure_CLA.TARGET_IDS
+				case 13 % NNDataPoint_Measure_CLA.TARGET_CLASS
 					check = Format.checkFormat(3, value, NNDataPoint_Measure_CLA.getPropSettings(prop));
 				case 4 % NNDataPoint_Measure_CLA.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint_Measure_CLA.getPropSettings(prop));
@@ -695,7 +695,7 @@ classdef NNDataPoint_Measure_CLA < NNDataPoint
 				case 10 % NNDataPoint_Measure_CLA.TARGET
 					rng_settings_ = rng(); rng(dp.getPropSeed(10), 'twister')
 					
-					value = dp.get('TARGET_IDS');
+					value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
