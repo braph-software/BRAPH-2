@@ -217,49 +217,6 @@ else
     end
 end
 
-
-%%% ¡prop!
-P (parameter, scalar) is the permutation number.
-%%%% ¡default!
-1e+2
-%%%% ¡check_prop!
-check = value > 0 && value == round(value);
-
-%%% ¡prop!
-PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
-%%%% ¡calculate!
-value = randi(intmax('uint32'), 1, nne.get('P'));
-
-%%% ¡prop!
-FEATURE_IMPORTANCE (result, cell) quantifies the average significance and impact of individual input features within neural network models. Various techniques, such as permutation feature importance for MLPs and gradient-based analysis for CNNs, can be applied to quantify this aspect.
-%%%% ¡calculate!
-all_fi = nne.get('NN').get('FEATURE_IMPORTANCE', nne.get('D'), nne.get('P'), nne.get('PERM_SEEDS'));
-if isempty(cell2mat(all_fi))
-    value = {};
-else
-    average_fi = zeros(size(all_fi{1}));
-    for i = 1:numel(all_fi)
-        % Add the current cell contents to the averageCell
-        average_fi = average_fi + all_fi{i};
-    end
-    average_fi = average_fi / numel(all_fi);
-    value = {average_fi};
-end
-
-%%%% ¡gui!
-input_dataset = nne.get('D');
-dp_class = input_dataset.get('DP_CLASS');
-graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
-measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
-
-if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNxMLP_xPP_FI_Graph('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
-elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNxMLP_xPP_FI_Measure('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
-else % DATA input
-    pr = NNxMLP_xPP_FI_Data('EL', nne, 'D', input_dataset, 'PROP', NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE, varargin{:});
-end
-
 %%% ¡prop!
 PFSP (gui, item) contains the panel figure of the scatter plot for regression model.
 %%%% ¡settings!

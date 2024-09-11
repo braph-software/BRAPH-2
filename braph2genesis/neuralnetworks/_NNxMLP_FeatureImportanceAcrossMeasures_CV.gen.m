@@ -316,8 +316,7 @@ d_training = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.
 d_test = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D');
 
 %% Create a classifier cross-validation
-nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2);
 nncv.get('TRAIN');
 
 % Evaluate the feature importance
