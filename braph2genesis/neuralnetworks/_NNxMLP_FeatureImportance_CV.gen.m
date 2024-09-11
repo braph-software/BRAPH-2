@@ -154,13 +154,14 @@ d_list = nnficv.get('NNCV').get('D_LIST');
 nn_list = nnficv.get('NNCV').get('NN_LIST');
 fi_list = {};
 for i = 1:length(d_list)
-    fi = fi_template.copy();
+    fi = eval(fi_template.get('ELCLASS'));
     d = d_list{i};
     nn = nn_list{i};
     fi.set('TEMPLATE', fi_template, 'D', d, 'NN', nn);
     fi_list{i} = fi;
 end
 value = fi_list;
+
 %%% ¡prop!
 P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
 %%%% ¡default!
@@ -417,6 +418,6 @@ fi_cv_score = fi_cv.get('RESHAPED_AV_FEATURE_IMPORTANCE');
 input_dp = it_list1{1}.get('INPUT');
 
 assert(isequal(size(cell2mat(fi_cv_score)), size(cell2mat(input_dp))), ...
-	        [BRAPH2.STR ':NNxMLP_FeatureImportance:' BRAPH2.FAIL_TEST], ...
+	        [BRAPH2.STR ':NNxMLP_FeatureImportance_CV:' BRAPH2.FAIL_TEST], ...
 	        'NNxMLP_FeatureImportance_CV does not have the feature importance score array of the same feature size as the input data.' ...
 	        )

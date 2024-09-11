@@ -1,13 +1,15 @@
 %% ¡header!
-NNxMLP_FeatureImportanceAcrossMeasures < NNxMLP_FeatureImportance (nnfiam, neural network feature importace for multi-layer perceptron) provides feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV (nnficv, neural network feature importace for multi-layer perceptron) provides feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 
 %%% ¡description!
-Neural Network Feature Importance Across Graph Measures (NNxMLP_FeatureImportanceAcrossMeasures) 
- assesses the importance of graph measures by measuring the increase in model error 
- when specific graph measure values are randomly shuffled.
+Neural Network Feature Importance Across Graph Measures with Cross-Validation (NNxMLP_FeatureImportanceAcrossMeasures_CV) 
+ assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled. 
+The feature importance score for each measure is then averaged across all folds. 
+It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, 
+ such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.
 
 %%% ¡seealso!
-NNxMLP_FeatureImportance, NNDataPoint_Measure_CLA, NNDataPoint_Measure_REG
+NNxMLP_FeatureImportance_CV, NNClassifierMLP_CrossValidation, NNRegressorMLP_CrossValidation
 
 %%% ¡build!
 1
@@ -16,202 +18,116 @@ NNxMLP_FeatureImportance, NNDataPoint_Measure_CLA, NNDataPoint_Measure_REG
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.ID
+NNxMLP_FeatureImportanceAcrossMeasures_CV.ID
 %%%% ¡title!
 Feature Importance MLP ID
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.LABEL
+NNxMLP_FeatureImportanceAcrossMeasures_CV.LABEL
 %%%% ¡title!
 Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.D
+NNxMLP_FeatureImportanceAcrossMeasures_CV.NNCV
 %%%% ¡title!
-Neural Networks Dataset
+Neural Networks Cross Validation
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.NN
+NNxMLP_FeatureImportanceAcrossMeasures_CV.FI_TEMPLATE
 %%%% ¡title!
-Neural Networks
+Template for Feature Importance Analysis
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.P
+NNxMLP_FeatureImportanceAcrossMeasures_CV.P
 %%%% ¡title!
-Permutation Number
+Permutation TIMES
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.APPLY_BONFERRONI
+NNxMLP_FeatureImportanceAcrossMeasures_CV.APPLY_BONFERRONI
 %%%% ¡title!
 Bonferroni Correction ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.APPLY_CONFIDENCE_INTERVALS
+NNxMLP_FeatureImportanceAcrossMeasures_CV.APPLY_CONFIDENCE_INTERVALS
 %%%% ¡title!
 Confidence Intervals ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.SIG_LEVEL
+NNxMLP_FeatureImportanceAcrossMeasures_CV.SIG_LEVEL
 %%%% ¡title!
-Significant level
+Significant Level
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
 Feature Importance Score
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures.VERBOSE
+NNxMLP_FeatureImportanceAcrossMeasures_CV.VERBOSE
 %%%% ¡title!
 VERBOSE ON/OFF
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures'
+'NNxMLP_FeatureImportanceAcrossMeasures_CV'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'Feature Importace for Multi-layer Perceptron Across Graph Measures'
+'Feature Importace for Multi-layer Perceptron'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'Neural Network Feature Importance Across Graph Measures (NNxMLP_FeatureImportanceAcrossMeasures) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled.'
+'Neural Network Feature Importance Across Graph Measures with Cross-Validation (NNxMLP_FeatureImportanceAcrossMeasures_CV) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled. The feature importance score for each measure is then averaged across all folds. It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡settings!
-'NNxMLP_FeatureImportanceAcrossMeasures'
+'NNxMLP_FeatureImportanceAcrossMeasures_CV'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures ID'
+'NNxMLP_FeatureImportanceAcrossMeasures_CV ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures label'
+'NNxMLP_FeatureImportanceAcrossMeasures_CV label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the feature importance analysis for multi-layer perceptron (MLP) across all included graph measures.
+NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures notes'
+'NNxMLP_FeatureImportanceAcrossMeasures_CV notes'
 
 %%% ¡prop!
-FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+AV_FEATURE_IMPORTANCE (result, cell) is determined by applying FDR correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
 %%%% ¡gui!
-input_dataset = nnfiam.get('D');
-m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-pr = PanelPropCell('EL', nnfiam, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures.FEATURE_IMPORTANCE, ...
+fi_list = nnficv.get('FI_LIST');
+m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
+pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
     'TABLE_HEIGHT', s(40), ...
     'ROWNAME', {}, ...
     'COLUMNNAME', m_list, ...
     varargin{:});
 
-%%% ¡prop!
-COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1, 2], [2, 3], [1, 3]}.
-%%%% ¡calculate!
-input_dataset = nnfiam.get('D');
-if isa(input_dataset.getr('DP_DICT'), 'NoValue')
-    value = {};
-    return
-end
-m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
-example_input_cell = input_dataset.get('DP_DICT').get('IT', 1).get('INPUT');
-for i = 1:length(m_list)
-    single_measure_indexes = nnfiam.get('INPUT_MASK', example_input_cell, i, 1);
-    flattened_indexes = nnfiam.get('FLATTEN_CELL', single_measure_indexes);
-    comp_feature_indices{i} = find(flattened_indexes);
-end
-
-value = comp_feature_indices;
-
-%% ¡props!
-
-%%% ¡prop!
-INPUT_MASK (query, empty) creates a mask that covers the top-level index of interest in the input cell array, maintaining the same structure.
-%%%% ¡calculate!
-if isempty(varargin)
-    value = {};
-    return
-end
-cell_array = varargin{1};
-index = varargin{2};
-current_level = varargin{3};
-mask = cell(size(cell_array));
-
-for i = 1:length(cell_array)
-    if iscell(cell_array{i})
-        if ismember(i, index)
-            index_for_cell = 1:1:length(cell_array{i});
-        else
-            index_for_cell = 0;
-        end
-        mask{i} = NNxMLP_FeatureImportanceAcrossMeasures().get('INPUT_MASK' ,cell_array{i}, index_for_cell, current_level + 1);
-    else
-        if ismember(i, index)
-            mask{i} = ones(size(cell_array{i}));
-        else
-            mask{i} = zeros(size(cell_array{i}));
-        end
-    end
-end
-value = mask;
-
 %% ¡tests!
 
-%%% ¡test!
-%%%% ¡name!
-Test INPUT_MASK the query for simple cell array
-%%%% ¡code!
-target_cell = {[1 2], [3 4], [5 6 7]};
-target_index = [1 2 3];
-mask_cell{1} = {[1 1], [0 0], [0 0 0]};
-mask_cell{2} = {[0 0], [1 1], [0 0 0]};
-mask_cell{3} = {[0 0], [0 0], [1 1 1]};
-
-for i = 1:length(target_index)
-    index = target_index(i);
-    generated_mask_cell = NNxMLP_FeatureImportanceAcrossMeasures().get('INPUT_MASK', target_cell, index, 1);
-
-    assert(isequal(generated_mask_cell, mask_cell{i}), ...
-        [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.FAIL_TEST], ...
-        'NNxMLP_FeatureImportanceAcrossMeasures does not create the input mask of interest correctly.' ...
-        )
-end
-
-%%% ¡test!
-%%%% ¡name!
-Test INPUT_MASK the query for multiple nested cell array
-%%%% ¡code!
-target_cell = {{[1 2], [3 4], [5 6 7]}, {[8], [9 10]}};
-target_index = [1 2];
-mask_cell{1} = {{[1 1], [1 1], [1 1 1]}, {[0], [0 0]}};
-mask_cell{2} = {{[0 0], [0 0], [0 0 0]}, {[1], [1 1]}};
-
-for i = 1:length(target_index)
-    index = target_index(i);
-    generated_mask_cell = NNxMLP_FeatureImportanceAcrossMeasures().get('INPUT_MASK', target_cell, index, 1);
-
-    assert(isequal(generated_mask_cell, mask_cell{i}), ...
-        [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures:' BRAPH2.FAIL_TEST], ...
-        'NNxMLP_FeatureImportanceAcrossMeasures does not create the input mask of interest correctly.' ...
-        )
-end
+%%% ¡excluded_props!
+[NNxMLP_FeatureImportanceAcrossMeasures_CV.FI_TEMPLATE]
 
 %%% ¡test!
 %%%% ¡name!
@@ -399,25 +315,27 @@ d_split3 = NNDatasetSplit('D', d3, 'SPLIT', {0.7, 0.3});
 d_training = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D');
 d_test = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D');
 
-% Create a MLP classifier with training set
-nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
-nn.get('TRAIN');
+%% Create a classifier cross-validation
+nne_template = NNClassifierMLP_Evaluator('P', 2);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportanceAcrossMeasures('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
-fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
+fi_template = NNxMLP_FeatureImportanceAcrossMeasures('P', 5, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi_cv = NNxMLP_FeatureImportanceAcrossMeasures_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi_score_cv = fi_cv.get('RESHAPED_AV_FEATURE_IMPORTANCE');
 input_measure = it_list1{1}.get('M_LIST');
 
-assert(isequal(size(cell2mat(fi_score)), size(input_measure)), ...
-	        [BRAPH2.STR ':NNxMLP_FeatureImportance:' BRAPH2.FAIL_TEST], ...
-	        'NNxMLP_FeatureImportance does not have the feature importance score array of the same feature size as the input data.' ...
+assert(isequal(size(cell2mat(fi_score_cv)), size(input_measure)), ...
+	        [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.FAIL_TEST], ...
+	        'NNxMLP_FeatureImportanceAcrossMeasures_CV does not have the feature importance score array of the same feature size as the input data.' ...
 	        )
 
-fi_score = cell2mat(fi_score);
+fi_score_cv = cell2mat(fi_score_cv);
 for i = 1:length(input_measure)
-    check(i) = ~isequal(fi_score(i), 0);
+    check(i) = ~isequal(fi_score_cv(i), 0);
 end
 assert(all(check), ...
-    [BRAPH2.STR ':NNxMLP_FeatureImportance:' BRAPH2.FAIL_TEST], ...
-    'NNxMLP_FeatureImportance does not calculate feature importance score array correctly. Each feature should hold a non-zero number because there is no bonferroni correction.' ...
+    [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.FAIL_TEST], ...
+    'NNxMLP_FeatureImportanceAcrossMeasures_CV does not calculate feature importance score array correctly. Each feature should hold a non-zero number because there is no bonferroni correction.' ...
     )
