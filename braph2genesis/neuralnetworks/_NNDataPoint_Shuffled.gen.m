@@ -1,5 +1,5 @@
 %% ¡header!
-NNDataPoint_Shuffled < NNDataPoint (dp, shuffled neural network data point for multi-layer perceptron) is a data point with shuffled features for for multi-layer perceptron neural network.
+NNDataPoint_Shuffled < NNDataPoint (dp, shuffled neural network data point for multi-layer perceptron) is a data point with shuffled features for multi-layer perceptron neural network.
 
 %%% ¡description!
 A shuffled neural network data point for multi-layer perceptron (NNDataPointMLP_Shuffled) contains a data point with its shuffled inputs and original targets for multi-layer perceptron neural network analysis.
