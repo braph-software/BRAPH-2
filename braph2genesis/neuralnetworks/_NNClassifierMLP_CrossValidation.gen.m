@@ -106,12 +106,6 @@ NNClassifierMLP_CrossValidation.PFROC
 %%%% ¡title!
 Plot ROC Curve
 
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-%%%% ¡title!
-Average of Feature Importance
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -201,21 +195,13 @@ nn_list = nncv.get('NN_LIST');
 if ~isa(nncv.getr('NNEVALUATOR_TEMPLATE'), 'NoValue')
     nne_template = nncv.get('NNEVALUATOR_TEMPLATE');
 else
-    nne_template = NNClassifierMLP_Evaluator( ...
-        'P', nncv.get('P'));
+    nne_template = NNClassifierMLP_Evaluator();
 end
 
 value = cellfun(@(d, nn) NNClassifierMLP_Evaluator('TEMPLATE', nne_template, 'D', d, 'NN', nn), ...
     d_list, nn_list, 'UniformOutput', false);
 
 %% ¡props!
-
-%%% ¡prop!
-P (parameter, scalar) is the permutation number.
-%%%% ¡default!
-1e+2
-%%%% ¡check_prop!
-check = value > 0 && value == round(value);
 
 %%% ¡prop!
 AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
@@ -271,47 +257,13 @@ combined_c_matrix = cellfun(@(x) double(x), c_matrices, 'UniformOutput', false);
 value = sum(cat(3, combined_c_matrix{:}), 3);
 %%%% ¡gui!
 d = NNDatasetCombine('D_LIST', nncv.get('D')).get('D');
-targets = NNClassifierMLP().get('TARGET_CLASS', d);
+targets = NNClassifierMLP().get('TARGET_IDS', d);
 class_names = unique(targets);
 pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRIX, ...
     'TABLE_HEIGHT', s(40), ...
     'ROWNAME', class_names, ...
     'COLUMNNAME', class_names, ...
     varargin{:});
-
-%%% ¡prop!
-AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.
-%%%% ¡calculate!
-e_list = nncv.get('EVALUATOR_LIST');
-wb = braph2waitbar(nncv.get('WAITBAR'), 0, ['Initialize feature importance permutation ...']);
-all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
-    e_list, 'UniformOutput', false);
-braph2waitbar(wb, 'close')
-if isempty(cell2mat(all_fi))
-    value = {};
-else
-    average_fi = zeros(size(all_fi{1}));
-    for i = 1:numel(all_fi)
-        % Add the current cell contents to the averageCell
-        average_fi = average_fi + all_fi{i};
-    end
-    average_fi = average_fi / numel(all_fi);
-    value = {average_fi};
-end
-%%%% ¡gui!
-input_datasets = nncv.get('D');
-input_dataset = input_datasets{1}; % TODO: create a query to get an item from this dataset list
-dp_class = input_dataset.get('DP_CLASS');
-graph_dp_classes = {NNDataPoint_Graph_CLA().get('NAME'), NNDataPoint_Graph_REG().get('NAME')};
-measure_dp_classes = {NNDataPoint_Measure_CLA().get('NAME'), NNDataPoint_Measure_REG().get('NAME')};
-
-if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
-    pr = NNxMLP_xPP_FI_Graph('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
-    pr = NNxMLP_xPP_FI_Measure('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-else % DATA input
-    pr = NNxMLP_xPP_FI_Data('EL', nncv, 'D', input_dataset, 'PROP', NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE, varargin{:});
-end
 
 %% ¡tests!
 
@@ -358,7 +310,7 @@ gr2 = im_gr2.get('GR');
 it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_CLASS', {group_folder_name}), ...
+    'TARGET_IDS', {group_folder_name}), ...
     gr1.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
@@ -366,7 +318,7 @@ it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
     'ID', x.get('ID'), ...
     'SUB', x, ...
-    'TARGET_CLASS', {group_folder_name}), ...
+    'TARGET_IDS', {group_folder_name}), ...
     gr2.get('SUB_DICT').get('IT_LIST'), ...
     'UniformOutput', false);
 
