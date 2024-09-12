@@ -9,7 +9,7 @@ It introduces the permutation method to establish the significance of each featu
  analysis of feature importance using a user-defined confidence interval and adjusting for multiple comparisons with the Bonferroni correction.
 
 %%% ¡seealso!
-NNDataset, NNDataPoint_Shuffled, NNRegressorMLP, NNClassifierMLP, NNxMLP_FeatureImportanceAcrossMeasures
+NNDataset, NNDataPointMLP_Shuffled, NNRegressorMLP, NNClassifierMLP, NNxMLP_FeatureImportanceAcrossMeasures
 
 %%% ¡build!
 1
@@ -192,16 +192,16 @@ end
 for i = 1:length(dp_it_list)
     dp = dp_it_list{i};
     shuffled_input = {shuffled_inputs(i, :)};
-    shuffled_dp_list{i} = NNDataPoint_Shuffled('SHUFFLED_INPUT', shuffled_input);
+    shuffled_dp_list{i} = NNDataPointMLP_Shuffled('SHUFFLED_INPUT', shuffled_input);
 end
 
 shuffled_dp_dict = IndexedDictionary(...
-        'IT_CLASS', 'NNDataPoint_Shuffled', ...
+        'IT_CLASS', 'NNDataPointMLP_Shuffled', ...
         'IT_LIST', shuffled_dp_list ...
         );
 
 value = NNDataset( ...
-    'DP_CLASS', 'NNDataPoint_Shuffled', ...
+    'DP_CLASS', 'NNDataPointMLP_Shuffled', ...
     'DP_DICT', shuffled_dp_dict ...
     );
 
