@@ -421,3 +421,10 @@ assert(all(check), ...
     [BRAPH2.STR ':NNxMLP_FeatureImportance:' BRAPH2.FAIL_TEST], ...
     'NNxMLP_FeatureImportance does not calculate feature importance score array correctly. Each feature should hold a non-zero number because there is no bonferroni correction.' ...
     )
+
+% test gui
+gui = GUIElement('PE', fi, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
