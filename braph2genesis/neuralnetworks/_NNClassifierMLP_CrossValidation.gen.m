@@ -106,12 +106,6 @@ NNClassifierMLP_CrossValidation.PFROC
 %%%% ¡title!
 Plot ROC Curve
 
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-%%%% ¡title!
-Average of Feature Importance
-
 %% ¡props_update!
 
 %%% ¡prop!
@@ -201,8 +195,7 @@ nn_list = nncv.get('NN_LIST');
 if ~isa(nncv.getr('NNEVALUATOR_TEMPLATE'), 'NoValue')
     nne_template = nncv.get('NNEVALUATOR_TEMPLATE');
 else
-    nne_template = NNClassifierMLP_Evaluator( ...
-        'P', nncv.get('P'));
+    nne_template = NNClassifierMLP_Evaluator();
 end
 
 value = cellfun(@(d, nn) NNClassifierMLP_Evaluator('TEMPLATE', nne_template, 'D', d, 'NN', nn), ...

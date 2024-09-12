@@ -116,7 +116,7 @@ NOTES (metadata, string) are some specific notes about the feature importance an
 %% ¡props!
 
 %%% ¡prop!
-D (data, item) is the NN dataset to be tested on feature importance.
+D (data, item) is the neural networks dataset for feature importance analysis.
 %%%% ¡settings!
 'NNDataset'
 
@@ -128,7 +128,7 @@ NN (data, item) contains a trained neural network multi-layer perceptron classif
 check = any(strcmp(value.get('ELCLASS'), {'NNBase', 'NNClassifierMLP', 'NNRegressorMLP'}));
 
 %%% ¡prop!
-P (parameter, scalar) is the permutation number that determines the statistical significance of the features. 
+P (parameter, scalar) is the permutation number that determines the statistical significance of the specific feature. 
 %%%% ¡default!
 1e+2
 %%%% ¡check_prop!
@@ -140,19 +140,9 @@ PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.
 value = randi(intmax('uint32'), 1, nnfi.get('P'));
 
 %%% ¡prop!
-APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.
-%%%% ¡default!
-true
-
-%%% ¡prop!
 APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.
 %%%% ¡default!
 true
-
-%%% ¡prop!
-VERBOSE (metadata, logical) is an indicator to display permutation progress information.
-%%%% ¡default!
-false
 
 %%% ¡prop!
 SIG_LEVEL (parameter, scalar) determines the significant level.
@@ -160,14 +150,9 @@ SIG_LEVEL (parameter, scalar) determines the significant level.
 0.05
 
 %%% ¡prop!
-WAITBAR (gui, logical) determines whether to show the waitbar.
+APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.
 %%%% ¡default!
 true
-
-%%% ¡prop!
-INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
-%%%% ¡default!
-.001
 
 %%% ¡prop!
 BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
@@ -175,7 +160,7 @@ BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.
 value = nnfi.get('NN').get('INPUTS', nnfi.get('D'));
 
 %%% ¡prop!
-COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} or {[1, 2], [2, 3], [1, 3]}.
+COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} by default, or {[1, 2], [2, 3], [1, 3]}.
 %%%% ¡calculate!
 inputs = cell2mat(nnfi.memorize('BASELINE_INPUTS'));
 num_feature = size(inputs, 2);
@@ -460,11 +445,26 @@ while ~isempty(cell_input)
 end
 value = flattened_input;
 
+%%% ¡prop!
+VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+%%%% ¡default!
+false
+
+%%% ¡prop!
+WAITBAR (gui, logical) determines whether to show the waitbar.
+%%%% ¡default!
+true
+
+%%% ¡prop!
+INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
+%%%% ¡default!
+.001
+
 %% ¡tests!
 
 %%% ¡test!
 %%%% ¡name!
-Test map to cell the query for simple cell array
+Map a vector to a simple cell array
 %%%% ¡code!
 target_cell = {[1 2], [3 4], [5 6 7]};
 input_vector = [1; 2; 3; 4; 5; 6; 7];
@@ -485,7 +485,7 @@ assert(isequal(mapped_cell, target_cell), ...
 
 %%% ¡test!
 %%%% ¡name!
-Test map to cell the query for nested cell array
+Map a vector to a nested cell array
 %%%% ¡code!
 target_cell = {[1 2], [3 4], [5 6 7]};
 target_cell = {target_cell};
@@ -507,7 +507,7 @@ assert(isequal(mapped_cell, target_cell), ...
 
 %%% ¡test!
 %%%% ¡name!
-Test map to cell the query for multiple nested cell array
+Map a vector to a multiple nested cell array
 %%%% ¡code!
 target_cell = {{[1 2], [3 4], [5 6 7]}, {[8], [9 10]}};
 input_vector = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10];
@@ -528,7 +528,7 @@ assert(isequal(mapped_cell, target_cell), ...
 
 %%% ¡test!
 %%%% ¡name!
-Test map to cell the query for deep nested cell array
+Map a vector to a deep nested cell array
 %%%% ¡code!
 target_cell = {{{[11 12]}, {[13]}}};
 input_vector = [11; 12; 13];

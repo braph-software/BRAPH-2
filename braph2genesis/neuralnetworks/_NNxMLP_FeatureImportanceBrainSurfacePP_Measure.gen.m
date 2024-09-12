@@ -1,16 +1,12 @@
 %% ¡header!
-NNFeatureImportanceBrainSurfacePP_Measure < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with graph measures.
+NNxMLP_FeatureImportanceBrainSurfacePP_Measure < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with graph measures.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePP_Measure) 
- plots the panel to select a measure, of which the feature importance will be 
- plotted, from a drop-down list.
-It is supposed to be used with the property FEATURE_IMPORTANCE of 
- NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator,
- and NNRegressorMLP_CrossValidation.
+A panel for neural networks feature importance analysis with the graph measures of the subjects (NNxMLP_FeatureImportanceBrainSurfacePP_Measure) 
+ plots the panel to show the feature importance values, matching the layer number and node number of the graph measures.
 
 %%% ¡seealso!
-NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, NNRegressorMLP_CrossValidation.
+NNxMLP_FeatureImportanceBrainSurfacePP, NNxMLP_FeatureImportanceBrainSurfacePP_Graph, NNxMLP_FeatureImportanceBrainSurfacePP_Data
 
 %%% ¡build!
 1
@@ -20,47 +16,47 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Measure'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Measure'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
 %%%% ¡default!
-'A Panel for Feature Importance of a Neural Network Analysis'
+'A Panel for Neural Networks Feature Importance'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with graph measures (NNFeatureImportanceBrainSurfacePP_Measure) plots the panel to select a measure, of which the feature importance will be plotted, from a drop-down list. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for neural networks feature importance analysis with the graph measures of the subjects (NNxMLP_FeatureImportanceBrainSurfacePP_Measure) plots the panel to show the feature importance values, matching the layer number and node number of the graph measures.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNFeatureImportanceBrainSurfacePP_Measure'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Measure'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Measure ID'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Measure ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Measure label'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Measure label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Measure notes'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Measure notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNFeatureImportanceBrainSurface()
+NNxMLP_FeatureImportanceBrainSurface()
 
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -402,7 +398,8 @@ function cb_open_mbrain(~, ~)
 
         measure = m_list{i}; % also key
         el = pr.get('EL');
-        values = el.get('RESHAPED_FEATURE_IMPORTANCE');
+        prop = pr.get('PROP');
+        values = el.get(prop);
         value = values{i};
 
         if ~gui_b_dict.get('CONTAINS_KEY', measure)
@@ -412,29 +409,29 @@ function cb_open_mbrain(~, ~)
                 case Measure.GLOBAL % __Measure.GLOBAL__
                     switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_GS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_GU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_GB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_GB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                     end
                 case Measure.NODAL % __Measure.NODAL__
                     switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_NS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_NU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_NB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_NB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                     end
                 case Measure.BINODAL % __Measure.BINODAL__
                     switch Element.getPropDefault(measure, 'SCOPE')
                         case Measure.SUPERGLOBAL % __Measure.SUPERGLOBAL__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_BS('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.UNILAYER % __Measure.UNILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_BU('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                         case Measure.BILAYER % __Measure.BILAYER__
-                            mbfipf = NNFeatureImportanceBrainSurfacePF_Measure_BB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
+                            mbfipf = NNxMLP_FeatureImportanceBrainSurfacePF_BB('FI', value, 'BA', brain_atlas, 'D', input_dataset);
                     end
             end
 
@@ -564,7 +561,7 @@ GUI_FI_DICT (gui, idict) contains the GUIs for the feature measures.
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePP_Measure.PARENT NNFeatureImportanceBrainSurfacePP_Measure.H NNFeatureImportanceBrainSurfacePP_Measure.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Measure.HEIGHT NNFeatureImportanceBrainSurfacePP_Measure.TABLE NNFeatureImportanceBrainSurfacePP_Measure.CONTEXTMENU]
+[NNxMLP_FeatureImportanceBrainSurfacePP_Measure.PARENT NNxMLP_FeatureImportanceBrainSurfacePP_Measure.H NNxMLP_FeatureImportanceBrainSurfacePP_Measure.LISTENER_CB NNxMLP_FeatureImportanceBrainSurfacePP_Measure.HEIGHT NNxMLP_FeatureImportanceBrainSurfacePP_Measure.XSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Measure.YSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Measure.TABLE NNxMLP_FeatureImportanceBrainSurfacePP_Measure.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -573,7 +570,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Measure'])
+warning('off', [BRAPH2.STR ':NNxMLP_FeatureImportanceBrainSurfacePP_Measure'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Measure'])
+warning('on', [BRAPH2.STR ':NNxMLP_FeatureImportanceBrainSurfacePP_Measure'])

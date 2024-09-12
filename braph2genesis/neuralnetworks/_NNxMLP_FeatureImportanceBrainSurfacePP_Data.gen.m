@@ -1,15 +1,12 @@
 %% ¡header!
-NNFeatureImportanceBrainSurfacePP_Data < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the data of subjects.
+NNxMLP_FeatureImportanceBrainSurfacePP_Data < PanelProp (pr, panel property feature importance) plots the panel to manage the feature importance of a neural network analysis with the data of subjects.
 
 %%% ¡description!
-A panel for feature importance of a neural network analysis with the data of subjects (NNFeatureImportanceBrainSurfacePP_Data) 
- plots the panel to show the feature importance, matching the layer number and node number as of the subject data.
-It is supposed to be used with the property FEATURE_IMPORTANCE of 
- NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator,
- and NNRegressorMLP_CrossValidation.
+A panel for neural networks feature importance analysis with the data of subjects (NNxMLP_FeatureImportanceBrainSurfacePP_Data) 
+ plots the panel to show the feature importance values, matching the layer number and node number of the subject data.
 
 %%% ¡seealso!
-NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, NNRegressorMLP_CrossValidation.
+NNxMLP_FeatureImportanceBrainSurfacePP, NNxMLP_FeatureImportanceBrainSurfacePP_Measure, NNxMLP_FeatureImportanceBrainSurfacePP_Graph
 
 %%% ¡build!
 1
@@ -19,47 +16,47 @@ NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evalu
 %%% ¡prop!
 ELCLASS (constant, string) is the class of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Data'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Data'
 
 %%% ¡prop!
 NAME (constant, string) is the name of the panel for feature importance.
 %%%% ¡default!
-'A Panel for Feature Importance of a Neural Network Analysis'
+'A Panel for Neural Networks Feature Importance'
 
 %%% ¡prop!
 DESCRIPTION (constant, string) is the description of the panel for feature importance.
 %%%% ¡default!
-'A panel for feature importance of a neural network analysis with the data of subjects (NNFeatureImportanceBrainSurfacePP_Data) plots the panel to show the feature importance, matching the layer number and node number as of the subject data. It is supposed to be used with the property FEATURE_IMPORTANCE of NNClassifierMLP_Evaluator, NNClassifierMLP_CrossValidation, NNRegressorMLP_Evaluator, and NNRegressorMLP_CrossValidation.'
+'A panel for neural networks feature importance analysis with the data of subjects (NNxMLP_FeatureImportanceBrainSurfacePP_Data) plots the panel to show the feature importance values, matching the layer number and node number of the subject data.'
 
 %%% ¡prop!
 TEMPLATE (parameter, item) is the template of the panel for feature importance.
 %%%% ¡settings!
-'NNFeatureImportanceBrainSurfacePP_Data'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Data'
 
 %%% ¡prop!
 ID (data, string) is a few-letter code for the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Data ID'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Data ID'
 
 %%% ¡prop!
 LABEL (metadata, string) is an extended label of the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Data label'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Data label'
 
 %%% ¡prop!
 NOTES (metadata, string) are some specific notes about the panel for feature importance.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePP_Data notes'
+'NNxMLP_FeatureImportanceBrainSurfacePP_Data notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNFeatureImportanceBrainSurface()
+NNxMLP_FeatureImportanceBrainSurface()
 
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNFeatureImportanceBrainSurface.FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -85,9 +82,6 @@ if value
     else
         pr.set('HEIGHT', pr.get('TABLE_HEIGHT'))
     end
-    
-    el = pr.get('EL');
-    prop = pr.get('PROP');
     
     input_dataset = pr.get('D');
 
@@ -139,11 +133,8 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()
-    value_vectored = el.get(prop);
-    
-    cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
-    value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
-
+    value = el.get(prop);
+   
     if isempty(value)
         set(pr.get('XSLIDER'), ...
             'Limits', [.6 1.4], ...
@@ -220,7 +211,7 @@ end
 %% ¡props!
 
 %%% ¡prop!
-D (metadata, item) is the input dataset.
+D (metadata, item) is the neural networks dataset.
 %%%% ¡default!
 NNDataset()
 
@@ -314,10 +305,7 @@ function cb_yslider(~, ~)
     if pr.get('XYSLIDERLOCK')
         el = pr.get('EL');
         prop = pr.get('PROP');
-        value_vectored = el.get(prop);
-
-        cell_template = pr.get('D').get('DP_DICT').get('IT', 1).get('INPUT');
-        value = pr.get('MAP_TO_CELL', cell2mat(value_vectored), cell_template);
+        value = el.get(prop);
 
         [R, C] = size(value);
         
@@ -454,37 +442,10 @@ function cb_export_to_xls(~, ~)
     end
 end
 
-%%% ¡prop!
-MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
-%%%% ¡calculate!
-if isempty(varargin)
-    value = {};
-    return
-end
-vector = varargin{1};
-cell_template = varargin{2};
-mappedCellArray = cell_template;
-index = 1;
-for i = 1:numel(cell_template)
-    cellData = cell_template{i};
-    if iscell(cellData)
-        % Map the vector to nested cell arrays recursively
-        nestedVector = pr.get('MAP_TO_CELL', vector(index:end), cellData);
-        mappedCellArray{i} = nestedVector;
-    else
-        % Assign elements from the vector to cells
-        numElements = numel(cellData);
-        mappedCellArray{i} = reshape(vector(index:index+numElements-1), size(cellData));
-        index = index + numElements;
-    end
-end
-
-value = mappedCellArray;
-
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePP_Data.PARENT NNFeatureImportanceBrainSurfacePP_Data.H NNFeatureImportanceBrainSurfacePP_Data.LISTENER_CB NNFeatureImportanceBrainSurfacePP_Data.HEIGHT NNFeatureImportanceBrainSurfacePP_Data.XSLIDER NNFeatureImportanceBrainSurfacePP_Data.YSLIDER NNFeatureImportanceBrainSurfacePP_Data.TABLE NNFeatureImportanceBrainSurfacePP_Data.CONTEXTMENU]
+[NNxMLP_FeatureImportanceBrainSurfacePP_Data.PARENT NNxMLP_FeatureImportanceBrainSurfacePP_Data.H NNxMLP_FeatureImportanceBrainSurfacePP_Data.LISTENER_CB NNxMLP_FeatureImportanceBrainSurfacePP_Data.HEIGHT NNxMLP_FeatureImportanceBrainSurfacePP_Data.XSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Data.YSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Data.TABLE NNxMLP_FeatureImportanceBrainSurfacePP_Data.CONTEXTMENU]
 
 %%% ¡warning_off!
 true
@@ -493,7 +454,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Data'])
+warning('off', [BRAPH2.STR ':NNxMLP_FeatureImportanceBrainSurfacePP_Data'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePP_Data'])
+warning('on', [BRAPH2.STR ':NNxMLP_FeatureImportanceBrainSurfacePP_Data'])

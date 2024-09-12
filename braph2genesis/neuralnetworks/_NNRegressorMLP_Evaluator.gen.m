@@ -63,18 +63,6 @@ Root Mean Squared Error
 
 %%% ¡prop!
 %%%% ¡id!
-NNRegressorMLP_Evaluator.P
-%%%% ¡title!
-Permutation Times for Feature Importance
-
-%%% ¡prop!
-%%%% ¡id!
-NNRegressorMLP_Evaluator.FEATURE_IMPORTANCE
-%%%% ¡title!
-Feature Importance
-
-%%% ¡prop!
-%%%% ¡id!
 NNRegressorMLP_Evaluator.NOTES
 %%%% ¡title!
 Evaluator NOTES

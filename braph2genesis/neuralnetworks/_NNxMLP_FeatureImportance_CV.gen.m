@@ -213,7 +213,7 @@ INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interrup
 .001
 
 %%% ¡prop!
-AV_FEATURE_IMPORTANCE (result, cell) is determined by applying bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.
+AV_FEATURE_IMPORTANCE (result, cell) is determined by obtaining the average value from the feature importance element list.
 %%%% ¡calculate!
 fi_list = nnficv.memorize('FI_LIST');
 fi_value_list = cellfun(@(fi) cell2mat(fi.memorize('FEATURE_IMPORTANCE')'), fi_list, 'UniformOutput', false);

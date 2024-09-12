@@ -49,18 +49,6 @@ NNClassifierMLP_Evaluator.C_MATRIX
 %%%% ¡title!
 Confusion Matrix
 
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_Evaluator.P
-%%%% ¡title!
-Permutation Times for Feature Importance
-
-%%% ¡prop!
-%%%% ¡id!
-NNClassifierMLP_Evaluator.FEATURE_IMPORTANCE
-%%%% ¡title!
-Feature Importance
-
 %% ¡props_update!
 
 %%% ¡prop!

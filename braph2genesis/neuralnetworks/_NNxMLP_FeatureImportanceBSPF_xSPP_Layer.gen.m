@@ -1,12 +1,11 @@
 %% ¡header!
-NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer < PanelProp (pr, panel property layer) plots the panel to select a layer.
+NNxMLP_FeatureImportanceBSPF_xSPP_Layer < PanelProp (pr, panel property layer) plots the panel to select a layer.
 
 %%% ¡description!
-NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer plots the panel to select a layer from a drop-down list.
-It is supposed to be used with the property Layer of NNFeatureImportanceBrainSurfacePF_NS, ComparisonEnsembleBrainPF_BU, or ComparisonEnsembleBrainPF_GU.
+A panel for the neural networks feature importance brain figure (NNxMLP_FeatureImportanceBSPF_xSPP_Layer) manages a drop-down list to select layer.
 
 %%% ¡seealso!
-uidropdown, GUI, NNFeatureImportanceBrainSurfacePF_NS
+uidropdown, GUI, NNxMLP_FeatureImportanceBrainSurfacePF_NU, NNxMLP_FeatureImportanceBrainSurfacePF_xUPP_Layer
 
 %%% ¡build!
 1
@@ -14,49 +13,49 @@ uidropdown, GUI, NNFeatureImportanceBrainSurfacePF_NS
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the % % % .
+ELCLASS (constant, string) is the class of the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the panel property layer.
+NAME (constant, string) is the name of the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the panel property layer.
+DESCRIPTION (constant, string) is the description of the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer plots the panel to select a layer from a drop-down list. It is supposed to be used with the property LAYER of ComparisonGroupPF_NU, ComparisonGroupPF_NS, or ComparisonGroupPF_NB.'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer plots the panel to select a layer from a drop-down list.'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the panel property Layer.
+TEMPLATE (parameter, item) is the template of the panel for the feature importance brain figure.
 %%%% ¡settings!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code for the panel property Layer.
+ID (data, string) is a few-letter code for the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer ID'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the panel property layer.
+LABEL (metadata, string) is an extended label of the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer label'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the panel property layer.
+NOTES (metadata, string) are some specific notes about the panel for the feature importance brain figure.
 %%%% ¡default!
-'NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer notes'
+'NNxMLP_FeatureImportanceBSPF_xSPP_Layer notes'
 
 %%% ¡prop!
 EL (data, item) is the element.
 %%%% ¡default!
-NNFeatureImportanceBrainSurfacePF_Measure_NS()
+NNxMLP_FeatureImportanceBrainSurfacePF_NS()
 
 %%% ¡prop!
 PROP (data, scalar) is the property number.
 %%%% ¡default!
-NNFeatureImportanceBrainSurfacePF_Measure_NS.LAYER
+NNxMLP_FeatureImportanceBrainSurfacePF_NS.LAYER
 
 %%% ¡prop!
 HEIGHT (gui, size) is the pixel height of the property panel.
@@ -141,7 +140,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.DRAW NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.PARENT NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.H NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.UPDATE NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.LISTENER_CB NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer.DROPDOWN]
+[NNxMLP_FeatureImportanceBSPF_xSPP_Layer.DRAW NNxMLP_FeatureImportanceBSPF_xSPP_Layer.PARENT NNxMLP_FeatureImportanceBSPF_xSPP_Layer.H NNxMLP_FeatureImportanceBSPF_xSPP_Layer.UPDATE NNxMLP_FeatureImportanceBSPF_xSPP_Layer.LISTENER_CB NNxMLP_FeatureImportanceBSPF_xSPP_Layer.DROPDOWN]
 
 %%% ¡warning_off!
 true
@@ -150,7 +149,7 @@ true
 %%%% ¡name!
 Remove Figures
 %%%% ¡code!
-warning('off', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'])
+warning('off', [BRAPH2.STR ':NNxMLP_FeatureImportanceBSPF_xSPP_Layer'])
 assert(length(findall(0, 'type', 'figure')) == 1)
 delete(findall(0, 'type', 'figure'))
-warning('on', [BRAPH2.STR ':NNFeatureImportanceBrainSurfacePF_x_xSPP_Layer'])
+warning('on', [BRAPH2.STR ':NNxMLP_FeatureImportanceBSPF_xSPP_Layer'])

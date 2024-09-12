@@ -132,18 +132,6 @@ Average of Root Mean Squared Error
 
 %%% ¡prop!
 %%%% ¡id!
-NNRegressorMLP_CrossValidation.P
-%%%% ¡title!
-Permutation Times for Feature Importance
-
-%%% ¡prop!
-%%%% ¡id!
-NNRegressorMLP_CrossValidation.AV_FEATURE_IMPORTANCE
-%%%% ¡title!
-Average of Feature Importance
-
-%%% ¡prop!
-%%%% ¡id!
 NNRegressorMLP_CrossValidation.NOTES
 %%%% ¡title!
 Cross Validation NOTES
@@ -240,8 +228,7 @@ nn_list = nncv.get('NN_LIST');
 if ~isa(nncv.getr('NNEVALUATOR_TEMPLATE'), 'NoValue')
     nne_template = nncv.get('NNEVALUATOR_TEMPLATE');
 else
-    nne_template = NNRegressorMLP_Evaluator( ...
-        'P', nncv.get('P'));
+    nne_template = NNRegressorMLP_Evaluator();
 end
 
 value = cellfun(@(d, nn) NNRegressorMLP_Evaluator('TEMPLATE', nne_template, 'D', d, 'NN', nn), ...
