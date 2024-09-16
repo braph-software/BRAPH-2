@@ -6,7 +6,7 @@ A panel for neural networks feature importance analysis with the graph measures 
  plots the panel to show the feature importance values, matching the layer number and node number of the graph measures.
 
 %%% ¡seealso!
-NNxMLP_FeatureImportanceBrainSurfacePP, NNxMLP_FeatureImportanceBrainSurfacePP_Graph, NNxMLP_FeatureImportanceBrainSurfacePP_Data
+NNxMLP_FeatureImportanceBrainSurface, NNxMLP_FeatureImportanceBrainSurfacePP_Graph, NNxMLP_FeatureImportanceBrainSurfacePP_Data
 
 %%% ¡build!
 1
@@ -556,7 +556,6 @@ GUI_B_DICT (gui, idict) contains the GUIs for the brain measures.
 GUI_FI_DICT (gui, idict) contains the GUIs for the feature measures.
 %%%% ¡settings!
 'GUIElement'
-
 
 %% ¡tests!
 

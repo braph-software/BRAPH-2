@@ -188,8 +188,8 @@ if isempty(varargin)
 end
 d = varargin{1};
 
-targets = d.get('TARGETS');
-value = onehotencode(string(targets), 2);
+targets = cellfun(@(target) cell2mat(target),  d.get('TARGETS'), 'UniformOutput', false);
+value = onehotencode(categorical(cell2mat(targets))', 2);
 
 %%% ¡prop!
 MODEL (result, net) is a trained neural network model.
