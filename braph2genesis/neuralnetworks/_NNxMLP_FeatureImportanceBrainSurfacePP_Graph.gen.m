@@ -56,7 +56,7 @@ NNxMLP_FeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -144,7 +144,8 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()
-    value = el.get(prop);
+    reshaped_prop = pr.get('RESHAPED_PROP');
+    value = el.get(reshaped_prop);
     
     if isempty(value)
         set(pr.get('XSLIDER'), ...
@@ -225,6 +226,16 @@ end
 D (metadata, item) is the neural networks dataset.
 %%%% ¡default!
 NNDataset()
+
+%%% ¡prop!
+RESHAPED_PROP (data, scalar) is the prop number for the reshaped prop.
+%%%% ¡default!
+NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+
+%%% ¡prop!
+BA (parameter, item) is the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
 
 %%% ¡prop!
 XSLIDERSHOW (gui, logical) determines whether to show the xslider.

@@ -329,7 +329,7 @@ LAYER (figure, scalar) is the layer number of the nodal measure.
 %%%% ¡postset!
 pf.get('SETUP');
 %%%% ¡gui!
-pr = NNFeatureImportanceBSPF_xSPP_Layer('EL', pf, 'PROP', NNxMLP_FeatureImportanceBrainSurfacePF_NS.LAYER);
+pr = NNxMLP_FeatureImportanceBSPF_xSPP_Layer('EL', pf, 'PROP', NNxMLP_FeatureImportanceBrainSurfacePF_NS.LAYER);
 
 %%% ¡prop!
 SIZE_DIFF (figure, option) determines whether the difference is shown with size effect.

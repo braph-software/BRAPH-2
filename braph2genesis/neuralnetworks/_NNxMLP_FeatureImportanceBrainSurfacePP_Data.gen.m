@@ -56,7 +56,7 @@ NNxMLP_FeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -82,33 +82,12 @@ if value
     else
         pr.set('HEIGHT', pr.get('TABLE_HEIGHT'))
     end
-    
-    input_dataset = pr.get('D');
 
-    % % % if input_dataset.get('DP_DICT').get('LENGTH')
-    % % %     sub = input_dataset.get('DP_DICT').get('IT', 1).get('SUB');
-    % % % else
-    % % %     sub = SubjectCON();
-    % % % end
-    % % % pr.set('TABLE_HEIGHT', s(40), ...
-    % % %     'XSLIDERSHOW', true, ...
-    % % %     'XSLIDERLABELS', sub.getCallback('ALAYERLABELS'), ...
-    % % %     'YSLIDERSHOW', false, ...
-    % % %     'ROWNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-    % % %     'COLUMNNAME', sub.get('BA').get('BR_DICT').getCallback('KEYS'), ...
-    % % %     varargin{:});
+    ba = pr.get('BA');
 
-    rowname = pr.get('ROWNAME');
-    if isempty(rowname)
-        rowname = 'numbered';
-    end
-    columnname = pr.get('COLUMNNAME');
-    if isempty(rowname)
-        columnname = 'numbered';
-    end
     set(pr.get('TABLE'), ...
-        'RowName', rowname, ...
-        'ColumnName', columnname ...
+        'RowName', ba.get('BR_DICT').get('KEYS'), ...
+        'ColumnName', 'Data value' ...
         );
 
     if el.isLocked(prop)
@@ -133,7 +112,8 @@ if value
 end
 %%%% ¡calculate_callbacks!
 function value = set_sliders_and_get_value()
-    value = el.get(prop);
+    reshaped_prop = pr.get('RESHAPED_PROP');
+    value = el.get(reshaped_prop);
    
     if isempty(value)
         set(pr.get('XSLIDER'), ...
@@ -214,6 +194,16 @@ end
 D (metadata, item) is the neural networks dataset.
 %%%% ¡default!
 NNDataset()
+
+%%% ¡prop!
+RESHAPED_PROP (data, scalar) is the prop number for the reshaped prop.
+%%%% ¡default!
+NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+
+%%% ¡prop!
+BA (parameter, item) is the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
 
 %%% ¡prop!
 XSLIDERSHOW (gui, logical) determines whether to show the xslider.
@@ -304,8 +294,8 @@ function cb_yslider(~, ~)
     
     if pr.get('XYSLIDERLOCK')
         el = pr.get('EL');
-        prop = pr.get('PROP');
-        value = el.get(prop);
+        reshaped_prop = pr.get('RESHAPED_PROP');
+        value = el.get(reshaped_prop);
 
         [R, C] = size(value);
         
@@ -379,9 +369,9 @@ function cb_table(~, event)
     newdata = event.NewData;
 
     el = pr.get('EL');
-    prop = pr.get('PROP');
+    reshaped_prop = pr.get('RESHAPED_PROP');
     
-    value = el.get(prop);
+    value = el.get(reshaped_prop);
     [R, C] = size(value);
     
     r = R + 1 - get(pr.get('YSLIDER'), 'Value');
@@ -390,7 +380,7 @@ function cb_table(~, event)
     value_rc = value{r, c};
     value_rc(i, j) = newdata;
     value{r, c} = value_rc;
-    el.set(prop, value)
+    el.set(prop, value')
 end
 
 %%% ¡prop!

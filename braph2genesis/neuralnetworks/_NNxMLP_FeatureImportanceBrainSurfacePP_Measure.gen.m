@@ -56,7 +56,7 @@ NNxMLP_FeatureImportanceBrainSurface()
 %%% ¡prop!
 PROP (data, scalar) is the prop number.
 %%%% ¡default!
-NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 
 %%% ¡prop!
 X_DRAW (query, logical) draws the prop panel.
@@ -75,7 +75,7 @@ if value
     el = pr.get('EL');
     prop = pr.get('PROP');
 
-    if isa(el.getr(prop), 'NoValue')
+    if isa(el.getr(prop), 'NoValue') 
         % don't plot anything for a result not yet calculated
         pr.set('HEIGHT', pr.getPropDefault('HEIGHT'))
         set(pr.get('TABLE'), 'Visible', 'off')
@@ -231,6 +231,16 @@ end
 D (metadata, item) is the input dataset.
 %%%% ¡default!
 NNDataset()
+
+%%% ¡prop!
+RESHAPED_PROP (data, scalar) is the prop number for the reshaped prop.
+%%%% ¡default!
+NNxMLP_FeatureImportanceBrainSurface.RESHAPED_FEATURE_IMPORTANCE
+
+%%% ¡prop!
+BA (parameter, item) is the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
 
 %%% ¡prop!
 ENABLE (gui, option) switches table between on and off.
@@ -398,8 +408,8 @@ function cb_open_mbrain(~, ~)
 
         measure = m_list{i}; % also key
         el = pr.get('EL');
-        prop = pr.get('PROP');
-        values = el.get(prop);
+        reshaped_prop = pr.get('RESHAPED_PROP');
+        values = el.get(reshaped_prop);
         value = values{i};
 
         if ~gui_b_dict.get('CONTAINS_KEY', measure)
@@ -497,7 +507,8 @@ function cb_open_elements(~, ~)
         m_template = g.get('M_DICT').get('IT', measure).get('TEMPLATE');
         
         el = pr.get('EL');
-        values = el.get('RESHAPED_FEATURE_IMPORTANCE');
+        reshaped_prop = pr.get('RESHAPED_PROP');
+        values = el.get(reshaped_prop);
         value = values{i};
         
         fim = NNFeatureImportanceMeasure('G', g, 'M', m_template, 'FI', value);
