@@ -88,7 +88,11 @@ if value
     
     input_dataset = pr.get('D'); 
     
-    g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    if input_dataset.get('DP_DICT').get('LENGTH') == 0
+        g = Graph();
+    else
+        g = input_dataset.get('DP_DICT').get('IT', 1).get('G');
+    end
     if g.get('LAYERNUMBER') == 1
         pr.set('TABLE_HEIGHT', s(40), ...
             'XSLIDERSHOW', false, ...
@@ -240,7 +244,7 @@ BA (parameter, item) is the brain atlas.
 %%% ¡prop!
 XSLIDERSHOW (gui, logical) determines whether to show the xslider.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 XSLIDERLABELS (gui, stringlist) determines the xslider labels.
@@ -290,7 +294,7 @@ end
 %%% ¡prop!
 YSLIDERSHOW (gui, logical) determines whether to show the yslider.
 %%%% ¡default!
-true
+false
 
 %%% ¡prop!
 YSLIDERLABELS (gui, stringlist) determines the yslider labels.
@@ -467,7 +471,7 @@ end
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_FeatureImportanceBrainSurfacePP_Graph.PARENT NNxMLP_FeatureImportanceBrainSurfacePP_Graph.H NNxMLP_FeatureImportanceBrainSurfacePP_Graph.LISTENER_CB NNxMLP_FeatureImportanceBrainSurfacePP_Graph.HEIGHT NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Graph.YSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Graph.TABLE NNxMLP_FeatureImportanceBrainSurfacePP_Graph.CONTEXTMENU]
+[NNxMLP_FeatureImportanceBrainSurfacePP_Graph.PARENT NNxMLP_FeatureImportanceBrainSurfacePP_Graph.H NNxMLP_FeatureImportanceBrainSurfacePP_Graph.LISTENER_CB NNxMLP_FeatureImportanceBrainSurfacePP_Graph.HEIGHT NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Graph.YSLIDER NNxMLP_FeatureImportanceBrainSurfacePP_Graph.TABLE NNxMLP_FeatureImportanceBrainSurfacePP_Graph.CONTEXTMENU NNxMLP_FeatureImportanceBrainSurfacePP_Graph.ROWNAME NNxMLP_FeatureImportanceBrainSurfacePP_Graph.COLUMNNAME NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XSLIDERSHOW NNxMLP_FeatureImportanceBrainSurfacePP_Graph.YSLIDERSHOW NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XSLIDERLABELS NNxMLP_FeatureImportanceBrainSurfacePP_Graph.YSLIDERLABELS NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XSLIDERHEIGHT NNxMLP_FeatureImportanceBrainSurfacePP_Graph.YSLIDERWIDTH NNxMLP_FeatureImportanceBrainSurfacePP_Graph.XYSLIDERLOCK NNxMLP_FeatureImportanceBrainSurfacePP_Graph.TABLE_HEIGHT]
 
 %%% ¡warning_off!
 true
