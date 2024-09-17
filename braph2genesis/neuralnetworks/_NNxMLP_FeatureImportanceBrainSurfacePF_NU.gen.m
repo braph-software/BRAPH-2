@@ -199,8 +199,6 @@ NOTES (metadata, string) are some specific notes about the panel figure for the 
 %%% ¡prop!
 SETUP (query, empty) calculates the diff value and stores it to be implemented in the subelements.
 %%%% ¡calculate!
-g = pf.get('D').get('DP_DICT').get('IT', 1).get('G');
-
 % get brain region related list
 sph_list = pf.get('SPH_DICT').get('IT_LIST');
 sym_list = pf.get('SYM_DICT').get('IT_LIST');
@@ -359,7 +357,7 @@ pf.get('SETUP');
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_FeatureImportanceBrainSurfacePF_NU.PARENT NNxMLP_FeatureImportanceBrainSurfacePF_NU.H NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_POSITION NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_AXIS NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_SURFACE NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_AMBIENT NNxMLP_FeatureImportanceBrainSurfacePF_NU.CP]
+[NNxMLP_FeatureImportanceBrainSurfacePF_NU.PARENT NNxMLP_FeatureImportanceBrainSurfacePF_NU.H NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_POSITION NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_AXIS NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_SURFACE NNxMLP_FeatureImportanceBrainSurfacePF_NU.ST_AMBIENT]
 
 %%% ¡warning_off!
 true
