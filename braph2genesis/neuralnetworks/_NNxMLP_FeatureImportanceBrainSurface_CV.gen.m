@@ -1,15 +1,15 @@
 %% ¡header!
-NNxMLP_FeatureImportanceAcrossMeasures_CV < NNxMLP_FeatureImportance_CV (nnficv, neural network feature importace for multi-layer perceptron) provides feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+NNxMLP_FeatureImportanceBrainSurface_CV < NNxMLP_FeatureImportance_CV (nnficv, neural network feature importace for multi-layer perceptron) manages the visuazation of the feature importance on the brain surface within neural network evaluators.
 
 %%% ¡description!
-Neural Network Feature Importance Across Graph Measures with Cross-Validation (NNxMLP_FeatureImportanceAcrossMeasures_CV) 
- assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled. 
-The feature importance score for each measure is then averaged across all folds. 
-It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, 
- such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.
+A neural network feature importace on brain surface (NNFeatureImportanceBrainSurface) 
+ manages the visualization of feature importance within neural network evaluators, particularly on the brain surface.
+It handles different types of neural network inputs, including graph data 
+ (for visualizng the importance of connections between nodes), measures (for visualizing the importance of nodal measures),
+ and the subject data (connectivity data or structural data).
 
 %%% ¡seealso!
-NNxMLP_FeatureImportance_CV, NNClassifierMLP_CrossValidation, NNRegressorMLP_CrossValidation
+NNEvaluator, NNDataPoint_Graph_CLA, NNDataPoint_Measure_REG, NNDataPoint_CON_CLA, NNDataPoint_ST_CLA
 
 %%% ¡build!
 1
@@ -18,116 +18,132 @@ NNxMLP_FeatureImportance_CV, NNClassifierMLP_CrossValidation, NNRegressorMLP_Cro
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.ID
+NNxMLP_FeatureImportanceBrainSurface_CV.ID
 %%%% ¡title!
 Feature Importance MLP ID
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.LABEL
+NNxMLP_FeatureImportanceBrainSurface_CV.LABEL
 %%%% ¡title!
 Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.NNCV
+NNxMLP_FeatureImportanceBrainSurface_CV.NNCV
 %%%% ¡title!
 Neural Networks Cross Validation
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.FI_TEMPLATE
+NNxMLP_FeatureImportanceBrainSurface_CV.FI_TEMPLATE
 %%%% ¡title!
 Template for Feature Importance Analysis
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.P
+NNxMLP_FeatureImportanceBrainSurface_CV.P
 %%%% ¡title!
-Permutation Number
+Permutation TIMES
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.APPLY_BONFERRONI
+NNxMLP_FeatureImportanceBrainSurface_CV.APPLY_BONFERRONI
 %%%% ¡title!
 Bonferroni Correction ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.APPLY_CONFIDENCE_INTERVALS
+NNxMLP_FeatureImportanceBrainSurface_CV.APPLY_CONFIDENCE_INTERVALS
 %%%% ¡title!
-Confidence Intervals ON/OFF
+CONFIDENCE INTERVALS ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.SIG_LEVEL
+NNxMLP_FeatureImportanceBrainSurface_CV.SIG_LEVEL
 %%%% ¡title!
-Significant Level
+SIGNIFICANT LEVEL
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE
+NNxMLP_FeatureImportanceBrainSurface_CV.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
-Feature Importance Score
+FEATURE IMPORTANCE SCORE
 
 %%% ¡prop!
 %%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.VERBOSE
+NNxMLP_FeatureImportanceBrainSurface_CV.VERBOSE
 %%%% ¡title!
 VERBOSE ON/OFF
 
 %% ¡props_update!
 
 %%% ¡prop!
-ELCLASS (constant, string) is the class of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+ELCLASS (constant, string) is the class of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures_CV'
+'NNxMLP_FeatureImportanceBrainSurface_CV'
 
 %%% ¡prop!
-NAME (constant, string) is the name of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+NAME (constant, string) is the name of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
 'Feature Importace for Multi-layer Perceptron'
 
 %%% ¡prop!
-DESCRIPTION (constant, string) is the description of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+DESCRIPTION (constant, string) is the description of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
-'Neural Network Feature Importance Across Graph Measures with Cross-Validation (NNxMLP_FeatureImportanceAcrossMeasures_CV) assesses the importance of graph measures by measuring the increase in model error when specific graph measure values are randomly shuffled. The feature importance score for each measure is then averaged across all folds. It applies a template to all folds of NNxMLP_FeatureImportance for setting up the parameters of the permutation method, such as a user-defined confidence interval, and adjusts for multiple comparisons with the Bonferroni correction.'
+'A neural network feature importace on brain surface (NNFeatureImportanceBrainSurface) manages the visualization of feature importance within neural network evaluators, particularly on the brain surface. It handles different types of neural network inputs, including graph data (for visualizng the importance of connections between nodes), measures (for visualizing the importance of nodal measures), and the subject data (connectivity data or structural data).'
 
 %%% ¡prop!
-TEMPLATE (parameter, item) is the template of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+TEMPLATE (parameter, item) is the template of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡settings!
-'NNxMLP_FeatureImportanceAcrossMeasures_CV'
+'NNxMLP_FeatureImportanceBrainSurface_CV'
 
 %%% ¡prop!
-ID (data, string) is a few-letter code of the the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+ID (data, string) is a few-letter code of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures_CV ID'
+'NNxMLP_FeatureImportanceBrainSurface_CV ID'
 
 %%% ¡prop!
-LABEL (metadata, string) is an extended label of the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+LABEL (metadata, string) is an extended label of the element to manage the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures_CV label'
+'NNxMLP_FeatureImportanceBrainSurface_CV label'
 
 %%% ¡prop!
-NOTES (metadata, string) are some specific notes about the feature importance analysis with cross validation for multi-layer perceptron (MLP) across all included graph measures.
+NOTES (metadata, string) are some specific notes about managing the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
-'NNxMLP_FeatureImportanceAcrossMeasures_CV notes'
-
+'NNxMLP_FeatureImportanceBrainSurface_CV notes'
+    
 %%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) is determined by obtaining the average value from the feature importance element list.
 %%%% ¡gui!
-fi_list = nnficv.get('FI_LIST');
-m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
-pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
-    'TABLE_HEIGHT', s(40), ...
-    'ROWNAME', {}, ...
-    'COLUMNNAME', m_list, ...
-    varargin{:});
+if isempty(nnficv.get('NNCV').get('D_LIST'))
+    input_dataset = NNDataset();
+else
+    input_dataset = nnficv.get('NNCV').get('D_LIST_IT', 1);
+end
+dp_class = input_dataset.get('DP_CLASS');
+graph_dp_classes = {NNDataPoint_Graph_CLA().get('ELCLASS'), NNDataPoint_Graph_REG().get('ELCLASS')};
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('ELCLASS'), NNDataPoint_Measure_REG().get('ELCLASS')};
+
+if any(strcmp(dp_class, graph_dp_classes)) % GRAPH input
+    pr = NNxMLP_FeatureImportanceBrainSurfacePP_Graph('EL', nnficv, 'BA', nnficv.get('BA'), 'D', input_dataset, 'PROP', NNxMLP_FeatureImportanceBrainSurface_CV.AV_FEATURE_IMPORTANCE, 'RESHAPED_PROP', NNxMLP_FeatureImportanceBrainSurface_CV.RESHAPED_AV_FEATURE_IMPORTANCE, varargin{:});
+elseif any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    pr = NNxMLP_FeatureImportanceBrainSurfacePP_Measure('EL', nnficv, 'BA', nnficv.get('BA'), 'D', input_dataset, 'PROP', NNxMLP_FeatureImportanceBrainSurface_CV.AV_FEATURE_IMPORTANCE, 'RESHAPED_PROP', NNxMLP_FeatureImportanceBrainSurface_CV.RESHAPED_AV_FEATURE_IMPORTANCE, varargin{:});
+else % DATA input
+    pr = NNxMLP_FeatureImportanceBrainSurfacePP_Data('EL', nnficv, 'BA', nnficv.get('BA'), 'D', input_dataset, 'PROP', NNxMLP_FeatureImportanceBrainSurface_CV.AV_FEATURE_IMPORTANCE, 'RESHAPED_PROP', NNxMLP_FeatureImportanceBrainSurface_CV.RESHAPED_AV_FEATURE_IMPORTANCE, varargin{:});
+end
+
+%% ¡props!
+
+%%% ¡prop!
+BA (parameter, item) is the brain atlas.
+%%%% ¡settings!
+'BrainAtlas'
 
 %% ¡tests!
 
 %%% ¡excluded_props!
-[NNxMLP_FeatureImportanceAcrossMeasures_CV.FI_TEMPLATE]
+[NNxMLP_FeatureImportanceBrainSurface_CV.FI_TEMPLATE NNxMLP_FeatureImportanceBrainSurface_CV.BA]
 
 %%% ¡test!
 %%%% ¡name!
@@ -237,15 +253,12 @@ a_BUD3 = AnalyzeEnsemble_CON_FUN_MP_BUD( ...
 
 a_BUD1.get('MEASUREENSEMBLE', 'OverlappingDeg').get('M');
 a_BUD1.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
-a_BUD1.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
 a_BUD2.get('MEASUREENSEMBLE', 'OverlappingDeg').get('M');
 a_BUD2.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
-a_BUD2.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
 a_BUD3.get('MEASUREENSEMBLE', 'OverlappingDeg').get('M');
 a_BUD3.get('MEASUREENSEMBLE', 'OverlappingDegAv').get('M');
-a_BUD3.get('MEASUREENSEMBLE', 'EdgeOverlap').get('M');
 
 % Create NNData composed of corresponding NNDataPoints
 [~, group_folder_name] = fileparts(im_gr1.get('DIRECTORY'));
@@ -315,26 +328,26 @@ d_split3 = NNDatasetSplit('D', d3, 'SPLIT', {0.7, 0.3});
 d_training = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 1), d_split2.get('D_LIST_IT', 1), d_split3.get('D_LIST_IT', 1)}).get('D');
 d_test = NNDatasetCombine('D_LIST', {d_split1.get('D_LIST_IT', 2), d_split2.get('D_LIST_IT', 2), d_split3.get('D_LIST_IT', 2)}).get('D');
 
-%% Create a classifier cross-validation
+% Create a classifier cross-validation
 nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2);
 nncv.get('TRAIN');
 
 % Evaluate the feature importance
-fi_template = NNxMLP_FeatureImportanceAcrossMeasures('P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
-fi_cv = NNxMLP_FeatureImportanceAcrossMeasures_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi_template = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi_cv = NNxMLP_FeatureImportanceBrainSurface_CV('BA', ba, 'NNCV', nncv, 'FI_TEMPLATE', fi_template, 'VERBOSE', true);
 fi_score_cv = fi_cv.get('RESHAPED_AV_FEATURE_IMPORTANCE');
 input_measure = it_list1{1}.get('M_LIST');
 
-assert(isequal(size(cell2mat(fi_score_cv)), size(input_measure)), ...
-	        [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.FAIL_TEST], ...
-	        'NNxMLP_FeatureImportanceAcrossMeasures_CV does not have the feature importance score array of the same feature size as the input data.' ...
-	        )
-
-fi_score_cv = cell2mat(fi_score_cv);
-for i = 1:length(input_measure)
-    check(i) = ~isequal(fi_score_cv(i), 0);
-end
-assert(all(check), ...
-    [BRAPH2.STR ':NNxMLP_FeatureImportanceAcrossMeasures_CV:' BRAPH2.FAIL_TEST], ...
-    'NNxMLP_FeatureImportanceAcrossMeasures_CV does not calculate feature importance score array correctly. Each feature should hold a non-zero number because there is no bonferroni correction.' ...
+assert(isequal(length(fi_score_cv), length(input_measure)), ...
+    [BRAPH2.STR ':NNxMLP_FeatureImportanceBrainSurface_CV:' BRAPH2.FAIL_TEST], ...
+    'NNxMLP_FeatureImportanceBrainSurface_CV does not have the feature importance score array of the same feature size as the input data.' ...
     )
+
+% Test GUI
+fi_template = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi_cv = NNxMLP_FeatureImportanceBrainSurface_CV('BA', ba, 'NNCV', nncv, 'FI_TEMPLATE', fi_template, 'VERBOSE', true);
+gui = GUIElement('PE', fi_cv, 'CLOSEREQ', false);
+gui.get('DRAW')
+gui.get('SHOW')
+
+gui.get('CLOSE')
