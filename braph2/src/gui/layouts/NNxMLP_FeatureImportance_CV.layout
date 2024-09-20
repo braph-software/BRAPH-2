@@ -1,0 +1,48 @@
+ELCLASS
+NaN
+NAME
+NaN
+DESCRIPTION
+NaN
+TEMPLATE
+NaN
+Feature Importance MLP Cross Validation ID
+1
+Feature Importance MLP Cross Validation LABEL
+2
+NOTES
+NaN
+TOSTRING
+NaN
+Neural Networks Cros Cross Validations Validation
+3
+Template for Feature Importance Analysis
+4
+Feature Importance List
+10
+Permutation Number
+5
+PERM_SEEDS
+NaN
+Bonferroni Correction ON/OFF
+6
+Confidence Interval ON/OFF
+7
+VERBOSE ON/OFF
+11
+Significant Level
+8
+WAITBAR
+NaN
+INTERRUPTIBLE
+NaN
+AV_FEATURE_IMPORTANCE
+NaN
+Feature Importance Score
+9
+MAP_TO_CELL
+NaN
+COUNT_ELEMENTS
+NaN
+FLATTEN_CELL
+NaN
