@@ -910,7 +910,7 @@ classdef NNClassifierMLP_CrossValidation < NNCrossValidation
 					
 				case 33 % NNClassifierMLP_CrossValidation.C_MATRIX
 					d = NNDatasetCombine('D_LIST', nncv.get('D')).get('D');
-					targets = NNClassifierMLP().get('TARGET_CLASS', d);
+					targets = NNClassifierMLP().get('TARGET_CLASSES', d);
 					class_names = unique(targets);
 					pr = PanelPropMatrix('EL', nncv, 'PROP', 33, ...
 					    'TABLE_HEIGHT', 480, ...
