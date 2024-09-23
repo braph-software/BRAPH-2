@@ -257,7 +257,7 @@ combined_c_matrix = cellfun(@(x) double(x), c_matrices, 'UniformOutput', false);
 value = sum(cat(3, combined_c_matrix{:}), 3);
 %%%% ¡gui!
 d = NNDatasetCombine('D_LIST', nncv.get('D')).get('D');
-targets = NNClassifierMLP().get('TARGET_CLASS', d);
+targets = NNClassifierMLP().get('TARGET_CLASSES', d);
 class_names = unique(targets);
 pr = PanelPropMatrix('EL', nncv, 'PROP', NNClassifierMLP_CrossValidation.C_MATRIX, ...
     'TABLE_HEIGHT', s(40), ...
