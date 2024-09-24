@@ -857,8 +857,8 @@ classdef NNClassifierMLP < NNBase
 					end
 					d = varargin{1};
 					
-					targets = d.get('TARGETS');
-					value = onehotencode(string(targets), 2);
+					targets = cellfun(@(target) cell2mat(target),  d.get('TARGETS'), 'UniformOutput', false);
+					value = onehotencode(categorical(cell2mat(targets))', 2);
 					
 				case 15 % NNClassifierMLP.MODEL
 					rng_settings_ = rng(); rng(nn.getPropSeed(15), 'twister')

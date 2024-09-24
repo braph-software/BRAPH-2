@@ -518,7 +518,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			switch prop %CET: Computational Efficiency Trick
 				case 11 % NNDataPoint_ST_CLA.SUB
 					prop_settings = 'SubjectST';
-				case NNDataPoint_ST_CLA.TARGET_CLASS % __NNDataPoint_ST_CLA.TARGET_CLASS__
+				case 12 % NNDataPoint_ST_CLA.TARGET_CLASS
 					prop_settings = Format.getFormatSettings(3);
 				case 4 % NNDataPoint_ST_CLA.TEMPLATE
 					prop_settings = 'NNDataPoint_ST_CLA';
@@ -551,7 +551,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			switch prop %CET: Computational Efficiency Trick
 				case 11 % NNDataPoint_ST_CLA.SUB
 					prop_default = Format.getFormatDefault(8, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case NNDataPoint_ST_CLA.TARGET_CLASS % __NNDataPoint_ST_CLA.TARGET_CLASS__
+				case 12 % NNDataPoint_ST_CLA.TARGET_CLASS
 					prop_default = Format.getFormatDefault(3, NNDataPoint_ST_CLA.getPropSettings(prop));
 				case 1 % NNDataPoint_ST_CLA.ELCLASS
 					prop_default = 'NNDataPoint_ST_CLA';
@@ -633,7 +633,7 @@ classdef NNDataPoint_ST_CLA < NNDataPoint
 			switch prop
 				case 11 % NNDataPoint_ST_CLA.SUB
 					check = Format.checkFormat(8, value, NNDataPoint_ST_CLA.getPropSettings(prop));
-				case NNDataPoint_ST_CLA.TARGET_CLASS % __NNDataPoint_ST_CLA.TARGET_CLASS__
+				case 12 % NNDataPoint_ST_CLA.TARGET_CLASS
 					check = Format.checkFormat(3, value, NNDataPoint_ST_CLA.getPropSettings(prop));
 				case 4 % NNDataPoint_ST_CLA.TEMPLATE
 					check = Format.checkFormat(8, value, NNDataPoint_ST_CLA.getPropSettings(prop));
