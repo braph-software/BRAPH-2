@@ -114,10 +114,25 @@ NOTES (metadata, string) are some specific notes about the feature importance an
 'NNxMLP_FeatureImportanceAcrossMeasures_CV notes'
 
 %%% ¡prop!
+FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+%%%% ¡settings!
+'NNxMLP_FeatureImportanceAcrossMeasures'
+
+%%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) is determined by obtaining the average value from the feature importance element list.
 %%%% ¡gui!
-fi_list = nnficv.get('FI_LIST');
-m_list = fi_list{1}.get('D').get('DP_DICT').get('IT', 1).get('M_LIST');
+if isempty(nnficv.get('NNCV').getr('D_LIST'))
+    input_dataset = NNDataset();
+else
+    input_dataset = nnficv.get('NNCV').get('D_LIST_IT', 1);
+end
+dp_class = input_dataset.get('DP_CLASS');
+measure_dp_classes = {NNDataPoint_Measure_CLA().get('ELCLASS'), NNDataPoint_Measure_REG().get('ELCLASS')};
+if any(strcmp(dp_class, measure_dp_classes))% MEASURE input
+    m_list = input_dataset.get('DP_DICT').get('IT', 1).get('M_LIST');
+else
+    m_list = {};
+end
 pr = PanelPropCell('EL', nnficv, 'PROP', NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE, ...
     'TABLE_HEIGHT', s(40), ...
     'ROWNAME', {}, ...

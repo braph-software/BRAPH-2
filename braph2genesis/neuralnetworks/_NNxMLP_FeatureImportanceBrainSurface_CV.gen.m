@@ -112,7 +112,12 @@ LABEL (metadata, string) is an extended label of the element to manage the visua
 NOTES (metadata, string) are some specific notes about managing the visuazation of the neural network feature importance on the brain surface.
 %%%% ¡default!
 'NNxMLP_FeatureImportanceBrainSurface_CV notes'
-    
+
+%%% ¡prop!
+FI_TEMPLATE (parameter, item) is the feature importance template to set all feature importance analysis and visualization parameters.
+%%%% ¡settings!
+'NNxMLP_FeatureImportanceBrainSurface'
+
 %%% ¡prop!
 AV_FEATURE_IMPORTANCE (result, cell) is determined by obtaining the average value from the feature importance element list.
 %%%% ¡gui!
