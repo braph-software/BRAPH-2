@@ -374,7 +374,7 @@ if isa(value, 'BrainAtlas')
 end
 
 %%% ¡prop!
-ANODELABELS (query, stringlist) returns the nodel labels for each layer.
+ANODELABELS (query, stringlist) returns the node labels for each layer.
 %%%% ¡calculate!
 value = g.get('NODELABELS');
 
