@@ -51,7 +51,7 @@ nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 %% Evaluate the regressor with the test set
-nne_test = NNRegressorMLP_Evaluator('D', d_test, 'NN');
+nne_test = NNRegressorMLP_Evaluator('D', d_test, 'NN', nn);
 corr_coeff = nne_test.get('CORR');
 coeff_determination = nne_test.get('DET');
 mae = nne_test.get('MAE');

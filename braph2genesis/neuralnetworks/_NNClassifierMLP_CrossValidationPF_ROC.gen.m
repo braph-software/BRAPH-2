@@ -320,7 +320,20 @@ if isequal(pf.getr('X_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoV
         for j = 1:1:length(class_names)
             counter = counter + 1;
             idx_class = strcmp(rocNet.Metrics.ClassName, class_names{j});
-            values(counter, :) = rocNet.Metrics(idx_class,:).FalsePositiveRate;
+            x_val = rocNet.Metrics(idx_class,:).FalsePositiveRate;
+            if counter == 1
+                values(counter, :) = x_val;
+            else
+                x_val_fixed_length = size(values, 2);
+                if length(x_val) == x_val_fixed_length
+                    values(counter, :) = x_val;
+                else % make sure all the x_value have the same length
+                    x_val_ind = linspace(1, length(x_val), length(x_val));
+                    x_val_new_ind = linspace(1, length(x_val), x_val_fixed_length);
+                    x_val_resampled = interp1(x_val_ind, x_val, x_val_new_ind, 'linear');
+                    values(counter, :) = x_val_resampled;
+                end
+            end
         end
     end
     pf.set('X_VALUES', values);
@@ -343,7 +356,22 @@ if isequal(pf.getr('Y_VALUES'), []) && ~isa(pf.get('NNCV').getr('NN_LIST'), 'NoV
         for j = 1:1:length(class_names)
             counter = counter + 1;
             idx_class = strcmp(rocNet.Metrics.ClassName, class_names{j});
-            values(counter, :) = rocNet.Metrics(idx_class,:).TruePositiveRate;
+            %values(counter, :) = rocNet.Metrics(idx_class,:).TruePositiveRate;
+            y_val = rocNet.Metrics(idx_class,:).TruePositiveRate;
+            if counter == 1
+                values(counter, :) = y_val;
+            else
+                y_val_fixed_length = size(values, 2);
+                if length(y_val) == y_val_fixed_length
+                    values(counter, :) = y_val;
+                else % make sure all the y_value have the same length
+                    y_val_ind = linspace(1, length(y_val), length(y_val));
+                    y_val_new_ind = linspace(1, length(y_val), y_val_fixed_length);
+                    y_val_resampled = interp1(y_val_ind, y_val, y_val_new_ind, 'linear');
+                    values(counter, :) = y_val_resampled;
+                end
+            end
+
         end
     end
     pf.set('Y_VALUES', values);
