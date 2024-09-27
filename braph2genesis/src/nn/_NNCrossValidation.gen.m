@@ -97,8 +97,17 @@ DSP (result, itemlist) is a list of dataset splitter that splits the dataset per
 'NNDatasetSplit'
 %%%% ¡calculate!
 d_list = nncv.get('D');
-value = cellfun(@(d) NNDatasetSplit('D', d, 'SPLIT', nncv.get('SPLIT')), d_list, 'UniformOutput', false);
+split = nncv.get('SPLIT');
+if isempty(split)
+    split_per_dataset = {};
+else
+    for i = 1:length(d_list)
+        split_per_dataset{i} = split(i, :);
+    end
+end
 
+value = cellfun(@(d, s) NNDatasetSplit('D', d, 'SPLIT', s), d_list, split_per_dataset, 'UniformOutput', false);
+					
 %%% ¡prop!
 DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.
 %%%% ¡settings!
