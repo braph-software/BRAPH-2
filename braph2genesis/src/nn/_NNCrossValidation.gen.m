@@ -73,7 +73,8 @@ kfolds = nncv.get('KFOLDS');
 split = nncv.get('SPLIT');
 d = nncv.get('D');
 if isempty(split) && length(d) > 0 && d{1}.get('DP_DICT').get('LENGTH') > kfolds
-    nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
+    split = repmat({1 / kfolds}, length(d), kfolds);
+    nncv.set('SPLIT', split);
 end
 
 %%% ¡prop!
