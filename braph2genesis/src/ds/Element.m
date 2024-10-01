@@ -1880,7 +1880,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
                 build_log = load('build_log.mat', '-mat');  % % % double-check
-                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log', '-v7.3');  % % % double-check
                 
                 saved = true;
                 
