@@ -30,6 +30,12 @@ Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
+NNxMLP_FeatureImportance.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
 NNxMLP_FeatureImportance.D
 %%%% ¡title!
 Neural Networks Dataset
@@ -69,12 +75,6 @@ Significant Level
 NNxMLP_FeatureImportance.FEATURE_IMPORTANCE
 %%%% ¡title!
 Feature Importance Score
-
-%%% ¡prop!
-%%%% ¡id!
-NNxMLP_FeatureImportance.VERBOSE
-%%%% ¡title!
-VERBOSE ON/OFF
 
 %% ¡props_update!
 

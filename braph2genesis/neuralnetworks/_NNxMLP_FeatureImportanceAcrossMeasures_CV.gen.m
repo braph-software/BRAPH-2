@@ -30,6 +30,12 @@ Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
+NNxMLP_FeatureImportanceAcrossMeasures_CV.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
 NNxMLP_FeatureImportanceAcrossMeasures_CV.NNCV
 %%%% ¡title!
 Neural Networks Cross Validation
@@ -69,12 +75,6 @@ Significant Level
 NNxMLP_FeatureImportanceAcrossMeasures_CV.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
 Feature Importance Score
-
-%%% ¡prop!
-%%%% ¡id!
-NNxMLP_FeatureImportanceAcrossMeasures_CV.VERBOSE
-%%%% ¡title!
-VERBOSE ON/OFF
 
 %% ¡props_update!
 
