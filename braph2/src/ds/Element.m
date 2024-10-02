@@ -692,7 +692,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  either property numbers (PROP) or tags (TAG).
             % 
             % The random number generator shuffle [rng('shuffle', 'twister')] should be
-            %  done before creating the element to ensure reproducibitlity of the 
+            %  done before creating the element to ensure reproducibility of the 
             %  random numbers.  
             %
             % See also Category, Format, set, check.
@@ -985,7 +985,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % VALUE = GET(EL, POINTER) returns the value of property POINTER of element
             %  EL. POINTER can be either a property number (PROP) or tag (TAG).
             %
-            % If the raw value of the property is a NoValue, it proceed to return the
+            % If the raw value of the property is a NoValue, it proceeds to return the
             %  default property value (for categories METADATA, PARAMETER, DATA,
             %  FIGURE, and GUI).
             %
@@ -1281,7 +1281,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             %  occurs and a warning is thrown. 
             %  Warning id: BRAPH2:<Element Class>
             %
-            % LOCK(EL, POINTER, 'Iterative', false) only locks the property but do not
+            % LOCK(EL, POINTER, 'Iterative', false) only locks the property but does not
             %  iteratively lock the corresponding element(s) (if ITEM, ITEMLIST, or
             %  IDICT) 
             %
@@ -1438,7 +1438,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function value = preset(el, prop, value) %#ok<INUSL>
             %PRESET preprocesses the value of a property before setting it.
             %
-            % VALUE = PRESET(EL, PROP, VALUE) prepropcesses the VALUE of the property
+            % VALUE = PRESET(EL, PROP, VALUE) preprocesses the VALUE of the property
             %  PROP. It works only with properties with category METADATA,
             %  PARAMETER, DATA, FIGURE and GUI. By default, this function does not do 
             %  anything, so it should be implemented in the subclasses of Element when
@@ -1490,7 +1490,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
         function postset(el, prop) %#ok<INUSD>
             %POSTSET postprocessing after a prop has been set.
             %
-            % POSTSET(EL, PROP) postprocessesing after PROP has been set. By default, 
+            % POSTSET(EL, PROP) postprocessing after PROP has been set. By default, 
             %  this function does not do anything, so it should be implemented
             %  in the subclasses of Element when needed.
             %
@@ -1744,7 +1744,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
             % CHECK = ISEQUAL(EL1, EL2) determines whether elements EL1 and EL2 are
             %  equal in terms of values and locked status. It ignores EVANESCENT props.
             %
-            % Note that, instead, EL1 == EL2 detemines whether the two handles 
+            % Note that, instead, EL1 == EL2 determines whether the two handles 
             %  EL1 and EL2 refer to the very same element.
             %
             % See also getElementList.
@@ -1880,7 +1880,7 @@ classdef Element < Category & Format & matlab.mixin.Copyable
                 matlab_version = ver('MATLAB').Version;
                 matlab_version_details = ver();
                 build_log = load('build_log.mat', '-mat');  % % % double-check
-                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log');  % % % double-check
+                save(filename, 'el', 'build', 'matlab_version', 'matlab_version_details', 'build_log', '-v7.3');  % % % double-check
                 
                 saved = true;
                 

@@ -70,7 +70,7 @@ classdef Format < handle
     %
     %  ALPHA        Alpha is a transparency level between 0 and 1.
     %
-    %  SIZE         Size represents the size of a graphical componet.
+    %  SIZE         Size represents the size of a graphical component.
     %               It is a positive number (default = 1).
     %
     %  MARKER       Marker represents the marker style.
@@ -299,7 +299,7 @@ classdef Format < handle
         CELL = 16
         CELL_TAG = 'll'
         CELL_NAME = 'cell'
-        CELL_DESCRIPTION = 'Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.'
+        CELL_DESCRIPTION = 'Cell is a 2D cell array of numeric data, typically used for adjacency matrices and measures.'
         
         NET = 17
         NET_TAG = 'ml'
@@ -616,7 +616,7 @@ classdef Format < handle
                 case 15 % Format.SMATRIX
                     format_description = 'Smatrix is a numerical square matrix.';
                 case 16 % Format.CELL
-                    format_description = 'Cell is a 2D cell array of numeric data, typically used for adjaciency matrices and measures.';
+                    format_description = 'Cell is a 2D cell array of numeric data, typically used for adjacency matrices and measures.';
                 case 17 % Format.NET
                     format_description = 'Net is a MatLab neural network object (network, SeriesNetwork, DAGNetwork, dlnetwork).';
                 case 18 % Format.HANDLE

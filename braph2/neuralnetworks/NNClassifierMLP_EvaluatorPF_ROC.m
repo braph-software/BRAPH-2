@@ -977,7 +977,7 @@ classdef NNClassifierMLP_EvaluatorPF_ROC < PanelFig
 					end
 					
 				case 28 % NNClassifierMLP_EvaluatorPF_ROC.X_VALUES
-					if isa(pf.getr('CLASSNAMES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
+					if isa(pf.getr('X_VALUES'), 'NoValue') && ~isa(pf.get('NNE').get('NN').getr('MODEL'), 'NoValue')
 					    class_names = pf.get('CLASSNAMES');
 					    predictions = cell2mat(pf.get('NNE').get('NN').get('PREDICT', pf.get('NNE').get('D')));
 					    ground_truth = categorical(pf.get('NNE').get('GROUND_TRUTH'));

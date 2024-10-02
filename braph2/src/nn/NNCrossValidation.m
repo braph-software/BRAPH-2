@@ -946,7 +946,8 @@ classdef NNCrossValidation < ConcreteElement
 					split = nncv.get('SPLIT');
 					d = nncv.get('D');
 					if isempty(split) && length(d) > 0 && d{1}.get('DP_DICT').get('LENGTH') > kfolds
-					    nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
+					    split = repmat({1 / kfolds}, length(d), kfolds);
+					    nncv.set('SPLIT', split);
 					end
 					
 				otherwise
@@ -977,7 +978,16 @@ classdef NNCrossValidation < ConcreteElement
 					rng_settings_ = rng(); rng(nncv.getPropSeed(15), 'twister')
 					
 					d_list = nncv.get('D');
-					value = cellfun(@(d) NNDatasetSplit('D', d, 'SPLIT', nncv.get('SPLIT')), d_list, 'UniformOutput', false);
+					split = nncv.get('SPLIT');
+					if isempty(split)
+					    split_per_dataset = {};
+					else
+					    for i = 1:length(d_list)
+					        split_per_dataset{i} = split(i, :);
+					    end
+					end
+					
+					value = cellfun(@(d, s) NNDatasetSplit('D', d, 'SPLIT', s), d_list, split_per_dataset, 'UniformOutput', false);
 					
 					rng(rng_settings_)
 					
