@@ -113,7 +113,7 @@ Measure.NONPARAMETRIC
 %%% ¡prop!
 COMPATIBLE_GRAPHS (constant, classlist) is the list of compatible graphs.
 %%%% ¡default!
-{'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'};
+{'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'};
 
 %%% ¡prop!
 M (result, cell) is the Average Out-Eccentricity.
