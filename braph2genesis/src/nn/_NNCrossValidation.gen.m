@@ -62,9 +62,6 @@ true
 KFOLDS (data, scalar) is the number of folds.
 %%%% ¡default!
 5
-%%%% ¡postset!
-kfolds = nncv.get('KFOLDS');
-nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
 
 %%% ¡prop!
 SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.
@@ -73,7 +70,8 @@ kfolds = nncv.get('KFOLDS');
 split = nncv.get('SPLIT');
 d = nncv.get('D');
 if isempty(split) && length(d) > 0 && d{1}.get('DP_DICT').get('LENGTH') > kfolds
-    nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
+    split = repmat({1 / kfolds}, length(d), kfolds);
+    nncv.set('SPLIT', split);
 end
 
 %%% ¡prop!

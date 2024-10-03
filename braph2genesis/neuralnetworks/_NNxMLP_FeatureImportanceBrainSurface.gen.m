@@ -30,6 +30,12 @@ Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
+NNxMLP_FeatureImportanceBrainSurface.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface.D
 %%%% ¡title!
 Neural Networks Dataset
@@ -56,25 +62,19 @@ Bonferroni Correction ON/OFF
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface.APPLY_CONFIDENCE_INTERVALS
 %%%% ¡title!
-CONFIDENCE INTERVALS ON/OFF
+Confidence Intervals ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface.SIG_LEVEL
 %%%% ¡title!
-SIGNIFICANT LEVEL
+Significant Level
 
 %%% ¡prop!
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface.FEATURE_IMPORTANCE
 %%%% ¡title!
-FEATURE IMPORTANCE SCORE
-
-%%% ¡prop!
-%%%% ¡id!
-NNxMLP_FeatureImportanceBrainSurface.VERBOSE
-%%%% ¡title!
-VERBOSE ON/OFF
+Feature Importance Score
 
 %% ¡props_update!
 

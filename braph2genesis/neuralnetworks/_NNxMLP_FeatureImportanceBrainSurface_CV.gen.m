@@ -30,6 +30,12 @@ Feature Importance MLP LABEL
 
 %%% ¡prop!
 %%%% ¡id!
+NNxMLP_FeatureImportanceBrainSurface_CV.VERBOSE
+%%%% ¡title!
+VERBOSE ON/OFF
+
+%%% ¡prop!
+%%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface_CV.NNCV
 %%%% ¡title!
 Neural Networks Cross Validation
@@ -56,25 +62,19 @@ Bonferroni Correction ON/OFF
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface_CV.APPLY_CONFIDENCE_INTERVALS
 %%%% ¡title!
-CONFIDENCE INTERVALS ON/OFF
+Confidence Intervals ON/OFF
 
 %%% ¡prop!
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface_CV.SIG_LEVEL
 %%%% ¡title!
-SIGNIFICANT LEVEL
+Significant Level
 
 %%% ¡prop!
 %%%% ¡id!
 NNxMLP_FeatureImportanceBrainSurface_CV.AV_FEATURE_IMPORTANCE
 %%%% ¡title!
-FEATURE IMPORTANCE SCORE
-
-%%% ¡prop!
-%%%% ¡id!
-NNxMLP_FeatureImportanceBrainSurface_CV.VERBOSE
-%%%% ¡title!
-VERBOSE ON/OFF
+Feature Importance Score
 
 %% ¡props_update!
 
