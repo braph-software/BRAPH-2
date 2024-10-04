@@ -902,31 +902,6 @@ classdef NNCrossValidation < ConcreteElement
 			end
 		end
 	end
-	methods (Access=protected) % postset
-		function postset(nncv, prop)
-			%POSTSET postprocessing after a prop has been set.
-			%
-			% POSTPROCESSING(EL, PROP) postprocessesing after PROP has been set. By
-			%  default, this function does not do anything, so it should be implemented
-			%  in the subclasses of Element when needed.
-			%
-			% This postprocessing occurs only when PROP is set.
-			%
-			% See also conditioning, preset, checkProp, postprocessing, calculateValue,
-			%  checkValue.
-			
-			switch prop
-				case 10 % NNCrossValidation.KFOLDS
-					kfolds = nncv.get('KFOLDS');
-					nncv.set('SPLIT', repmat({1 / kfolds}, 1, kfolds));
-					
-				otherwise
-					if prop <= 8
-						postset@ConcreteElement(nncv, prop);
-					end
-			end
-		end
-	end
 	methods (Access=protected) % postprocessing
 		function postprocessing(nncv, prop)
 			%POSTPROCESSING postprocessesing after setting.

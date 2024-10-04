@@ -559,7 +559,7 @@ classdef Richness < Degree
 				case 11 % Richness.PARAMETRICITY
 					prop_default = 2;
 				case 12 % Richness.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT'} ;;
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBU' 'GraphBD' 'MultigraphBUD' 'MultigraphBUT' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUD' 'MultiplexBUT' 'OrdMxWU'} ;;
 				otherwise
 					prop_default = getPropDefault@Degree(prop);
 			end

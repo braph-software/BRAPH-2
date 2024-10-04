@@ -678,7 +678,7 @@ classdef OrdMxWU < Graph
 				case 9 % OrdMxWU.GRAPH_TYPE
 					prop_default = 3;
 				case 32 % OrdMxWU.COMPATIBLE_MEASURES
-					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultiRC'  'MultilayerCommunity'  'MultilayerM'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexP'  'MultiplexPAv'  'MultiplexRCDeg'  'MultiplexRCS'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'Persistence'  'RCDeg'  'Radius'  'Strength'  'StrengthAv'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv' };
+					prop_default = { 'Degree'  'DegreeAv'  'DegreeOverlap'  'DegreeOverlapAv'  'Diameter'  'Distance'  'Eccentricity'  'EccentricityAv'  'EdgeOverlap'  'Flexibility'  'FlexibilityAv'  'GlobalEfficiency'  'GlobalEfficiencyAv'  'MultiRC'  'MultilayerCommunity'  'MultilayerM'  'MultiplexCP'  'MultiplexCl'  'MultiplexClAv'  'MultiplexKCor'  'MultiplexKCorC'  'MultiplexP'  'MultiplexPAv'  'MultiplexRCDeg'  'MultiplexRCS'  'MultiplexT'  'OverlappingDeg'  'OverlappingDegAv'  'OverlappingS'  'OverlappingSAv'  'Persistence'  'RCDeg'  'Radius'  'Richness'  'Strength'  'StrengthAv'  'Triangles'  'WeightedEdgeOvlp'  'WeightedMxP'  'WeightedMxPAv' };
 				otherwise
 					prop_default = getPropDefault@Graph(prop);
 			end

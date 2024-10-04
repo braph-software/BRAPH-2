@@ -582,7 +582,7 @@ classdef Participation < Measure
 				case 11 % Participation.PARAMETRICITY
 					prop_default = 2;
 				case 12 % Participation.COMPATIBLE_GRAPHS
-					prop_default = {'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultiplexBU'};;
+					prop_default = {'GraphWU' 'GraphWD' 'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultigraphBUD' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUT' 'MultiplexBUD'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
