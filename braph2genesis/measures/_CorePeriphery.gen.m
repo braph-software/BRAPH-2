@@ -158,7 +158,7 @@ else
         
         [~, rankingInd] = sort(deg, 'descend');
         richness_partition = richness{li};
-        [~, rankOfMaxRichness] = max(richness_partition(rankingInd));  
+        [~, rankOfMaxRichness] = max(richness_partition(rankingInd), [], 'all');  
         core_periphery_partition(rankingInd(1:rankOfMaxRichness)) = 1;
         core_periphery(li) = {core_periphery_partition};
     end
