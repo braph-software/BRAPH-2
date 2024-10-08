@@ -709,7 +709,9 @@ classdef Participation < Measure
 					    connectivity_layer = connectivity_type(li, li);
 					    directionality_layer = directionality_type(li, li);
 					    Aii = A{li, li};
-					    m.set('CI', cell2mat(S));
+					    if ~isequal(m.get('CI'), cell2mat(S))
+					        m.set('CI', cell2mat(S));
+					    end
 					   
 					    if connectivity_layer == 1  % weighted graphs
 					        if directionality_layer == 2  % undirected graphs

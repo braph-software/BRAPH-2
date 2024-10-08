@@ -155,4 +155,3 @@ nne_test = NNClassifierMLP_Evaluator('D', d_test, 'NN', nn);
 confusion_matrix = nne_test.get('C_MATRIX');
 auc = nne_test.get('AUC');
 av_auc = nne_test.get('MACRO_AUC');
-% fi = nne_test.get('FEATURE_IMPORTANCE'); % % % uncomment this when the feature importance element is ready
