@@ -412,7 +412,7 @@ nncv.get('TRAIN');
 
 % Evaluate the feature importance
 fi_template = NNxMLP_FeatureImportance('P', 5, 'APPLY_BONFERRONI', true, 'APPLY_CONFIDENCE_INTERVALS', true);
-fi_cv = NNxMLP_FeatureImportance_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template, 'VERBOSE', true);
+fi_cv = NNxMLP_FeatureImportance_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template);
 fi_cv_score = fi_cv.get('RESHAPED_AV_FEATURE_IMPORTANCE');
 input_dp = it_list1{1}.get('INPUT');
 

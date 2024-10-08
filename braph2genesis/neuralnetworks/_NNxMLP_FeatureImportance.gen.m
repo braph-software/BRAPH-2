@@ -446,7 +446,7 @@ end
 value = flattened_input;
 
 %%% ¡prop!
-VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+VERBOSE (gui, logical) is an indicator to display permutation progress information.
 %%%% ¡default!
 false
 
@@ -654,7 +654,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportance('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', true, 'APPLY_CONFIDENCE_INTERVALS', true, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportance('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', true, 'APPLY_CONFIDENCE_INTERVALS', true);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_dp = it_list1{1}.get('INPUT');
 
@@ -717,7 +717,7 @@ nn = NNRegressorMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportance('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', true, 'APPLY_CONFIDENCE_INTERVALS', true, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportance('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', true, 'APPLY_CONFIDENCE_INTERVALS', true);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_dp = it_list{1}.get('INPUT');
 

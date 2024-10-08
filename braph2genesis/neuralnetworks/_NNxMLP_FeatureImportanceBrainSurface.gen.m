@@ -340,7 +340,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_measure = it_list1{1}.get('INPUT');
 
@@ -352,7 +352,7 @@ for i = 1:length(input_measure)
 end
 
 % Test GUI
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 gui = GUIElement('PE', fi, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
@@ -466,7 +466,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_measure = it_list1{1}.get('INPUT');
 
@@ -478,7 +478,7 @@ for i = 1:length(input_measure)
 end
 
 % Test GUI
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 gui = GUIElement('PE', fi, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')
@@ -660,7 +660,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_graph = it_list1{1}.get('INPUT');
 
@@ -672,7 +672,7 @@ for i = 1:length(input_graph)
 end
 
 % Test GUI
-fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceBrainSurface('BA', ba, 'D', d_test, 'NN', nn, 'P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 gui = GUIElement('PE', fi, 'CLOSEREQ', false);
 gui.get('DRAW')
 gui.get('SHOW')

@@ -209,7 +209,7 @@ SOLVER (parameter, option) is an option for the solver.
 {'adam' 'sgdm' 'rmsprop'}
 
 %%% ¡prop!
-VERBOSE (metadata, logical) is an indicator to display training progress information.
+VERBOSE (gui, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 
