@@ -582,7 +582,7 @@ classdef Participation < Measure
 				case 11 % Participation.PARAMETRICITY
 					prop_default = 2;
 				case 12 % Participation.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWU' 'GraphWD' 'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultigraphBUD' 'MultiplexWU' 'MultiplexWD' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUT' 'MultiplexBUD'};;
+					prop_default = {'GraphBD' 'GraphBU' 'MultigraphBUT' 'MultiplexBU'};;
 				otherwise
 					prop_default = getPropDefault@Measure(prop);
 			end
@@ -709,9 +709,7 @@ classdef Participation < Measure
 					    connectivity_layer = connectivity_type(li, li);
 					    directionality_layer = directionality_type(li, li);
 					    Aii = A{li, li};
-					    if ~isequal(m.get('CI'), cell2mat(S))
-					        m.set('CI', cell2mat(S));
-					    end
+					    m.set('CI', cell2mat(S));
 					   
 					    if connectivity_layer == 1  % weighted graphs
 					        if directionality_layer == 2  % undirected graphs
