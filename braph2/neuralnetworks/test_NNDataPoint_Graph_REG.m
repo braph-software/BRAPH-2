@@ -1521,7 +1521,7 @@ end
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	% ensure the example data is generated
 	if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-	    create_data_NN_REG_CON_FUN_MP_XSL() % create example files
+	    create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 	end
 	
 	% Load BrainAtlas
@@ -1610,7 +1610,7 @@ end
 %% Test 16: Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-	    create_data_NN_REG_CON_FUN_MP_XSL() % create example files
+	    create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 	end
 	example_NNCV_CON_FUN_MP_BUD_REG
 end
@@ -1618,7 +1618,7 @@ end
 %% Test 17: Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-	    create_data_NN_REG_CON_FUN_MP_XSL % create example files
+	    create_data_NN_REG_CON_FUN_MP_XLS % create example files
 	end
 	example_NNCV_CON_FUN_MP_BUT_REG
 end

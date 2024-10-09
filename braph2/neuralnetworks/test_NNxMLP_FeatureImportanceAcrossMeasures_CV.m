@@ -1696,8 +1696,8 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	nncv.get('TRAIN');
 	
 	% Evaluate the feature importance
-	fi_template = NNxMLP_FeatureImportanceAcrossMeasures('P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
-	fi_cv = NNxMLP_FeatureImportanceAcrossMeasures_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+	fi_template = NNxMLP_FeatureImportanceAcrossMeasures('P', 2, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
+	fi_cv = NNxMLP_FeatureImportanceAcrossMeasures_CV('NNCV', nncv, 'FI_TEMPLATE', fi_template, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 	fi_score_cv = fi_cv.get('RESHAPED_AV_FEATURE_IMPORTANCE');
 	input_measure = it_list1{1}.get('M_LIST');
 	

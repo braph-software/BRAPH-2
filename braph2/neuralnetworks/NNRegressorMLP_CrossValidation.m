@@ -35,7 +35,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 	%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
 	%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
 	%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-	%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+	%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) is an indicator to display training progress information.
 	%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
 	%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
 	%  <strong>30</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
@@ -204,7 +204,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			%  <strong>24</strong> <strong>BATCH</strong> 	BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.
 			%  <strong>25</strong> <strong>SHUFFLE</strong> 	SHUFFLE (parameter, option) is an option for data shuffling.
 			%  <strong>26</strong> <strong>SOLVER</strong> 	SOLVER (parameter, option) is an option for the solver.
-			%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display training progress information.
+			%  <strong>27</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) is an indicator to display training progress information.
 			%  <strong>28</strong> <strong>PLOT_TRAINING</strong> 	PLOT_TRAINING (metadata, option) determines whether to plot the training progress.
 			%  <strong>29</strong> <strong>TRAIN</strong> 	TRAIN (query, empty) trains all neural network models for all folds.
 			%  <strong>30</strong> <strong>AV_CORR</strong> 	AV_CORR (result, rvector) provides the metric of the correlation of coefficients.
@@ -297,7 +297,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7 27 28];
+					prop_list = [6 7 28];
 				case 3 % Category.PARAMETER
 					prop_list = [4 13 14 23 24 25 26];
 				case 4 % Category.DATA
@@ -307,7 +307,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 6 % Category.QUERY
 					prop_list = [8 18 20 22 29];
 				case 9 % Category.GUI
-					prop_list = [9 35];
+					prop_list = [9 27 35];
 				otherwise
 					prop_list = [];
 			end
@@ -341,7 +341,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 1 % Category.CONSTANT
 					prop_number = 3;
 				case 2 % Category.METADATA
-					prop_number = 4;
+					prop_number = 3;
 				case 3 % Category.PARAMETER
 					prop_number = 7;
 				case 4 % Category.DATA
@@ -351,7 +351,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 				case 6 % Category.QUERY
 					prop_number = 5;
 				case 9 % Category.GUI
-					prop_number = 2;
+					prop_number = 3;
 				otherwise
 					prop_number = 0;
 			end
@@ -509,7 +509,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  9  4  4  4  3  3  5  5  5  6  5  6  5  6  3  3  3  3  2  2  6  5  5  5  5  5  9 };
+			nnregressormlp_crossvalidation_category_list = { 1  1  1  3  4  2  2  6  9  4  4  4  3  3  5  5  5  6  5  6  5  6  3  3  3  3  9  2  6  5  5  5  5  5  9 };
 			prop_category = nnregressormlp_crossvalidation_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -561,7 +561,7 @@ classdef NNRegressorMLP_CrossValidation < NNCrossValidation
 			prop = NNRegressorMLP_CrossValidation.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnregressormlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the cross-validation.'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the nerual cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (metadata, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'AV_CORR (result, rvector) provides the metric of the correlation of coefficients.'  'AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'AV_MAE (result, rvector) provides the metric of the mean absolute error.'  'AV_MSE (result, rvector) provides the metric of the mean squared error.'  'AV_RMSE (result, rvector) provides the metric of the root mean squared error.'  'PFSP (gui, item) contains the panel figure of the scatter plot for regression model.' };
+			nnregressormlp_crossvalidation_description_list = { 'ELCLASS (constant, string) is the class of the cross-validation.'  'NAME (constant, string) is the name of the cross-validation.'  'DESCRIPTION (constant, string) is the description of the cross-validation.'  'TEMPLATE (parameter, item) is the template of the nerual cross-validation.'  'ID (data, string) is a few-letter code for the cross-validation.'  'LABEL (metadata, string) is an extended label of the cross-validation.'  'NOTES (metadata, string) are some specific notes about the cross-validation.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'WAITBAR (gui, logical) detemines whether to show the waitbar.'  'KFOLDS (data, scalar) is the number of folds.'  'SPLIT (data, cell) is a cell containing the ratio numbers or the vectors stating which datapoints belong to the splitted neural network datasets.'  'D (data, itemlist) is the datasets from groups to be cross-validated.'  'NN_TEMPLATE (parameter, item) is the neural network template to set all neural network parameters.'  'NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.'  'DSP (result, itemlist) is a list of dataset splitter that splits the dataset per group.'  'DCO (result, itemlist) is a list of dataset combiners that combines the datasets per fold.'  'D_LIST (result, itemlist) contains the split datasets corresponding to the k folds.'  'D_LIST_IT (query, item) returns a dataset at a specified index in the itemlist of splitted neural network datasets.'  'NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.'  'NN_LIST_IT (query, item) returns a neural networks model at a specified index in the itemlist of splitted neural network datasets.'  'EVALUATOR_LIST (result, itemlist) contains the evaluators corresponding to k folds.'  'EVALUATOR_LIST_IT (query, item) returns a neural networks evaluator at a specified index in the itemlist of splitted neural network datasets.'  'EPOCHS (parameter, scalar) is the maximum number of epochs.'  'BATCH (parameter, scalar) is the size of the mini-batch used for each training iteration.'  'SHUFFLE (parameter, option) is an option for data shuffling.'  'SOLVER (parameter, option) is an option for the solver.'  'VERBOSE (gui, logical) is an indicator to display training progress information.'  'PLOT_TRAINING (metadata, option) determines whether to plot the training progress.'  'TRAIN (query, empty) trains all neural network models for all folds.'  'AV_CORR (result, rvector) provides the metric of the correlation of coefficients.'  'AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.'  'AV_MAE (result, rvector) provides the metric of the mean absolute error.'  'AV_MSE (result, rvector) provides the metric of the mean squared error.'  'AV_RMSE (result, rvector) provides the metric of the root mean squared error.'  'PFSP (gui, item) contains the panel figure of the scatter plot for regression model.' };
 			prop_description = nnregressormlp_crossvalidation_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)

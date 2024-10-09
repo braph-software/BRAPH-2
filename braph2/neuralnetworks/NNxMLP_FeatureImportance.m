@@ -37,7 +37,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 	%  <strong>26</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
 	%  <strong>27</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
 	%  <strong>28</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
-	%  <strong>29</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+	%  <strong>29</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) is an indicator to display permutation progress information.
 	%  <strong>30</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
 	%  <strong>31</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
 	%
@@ -234,7 +234,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 		
 		VERBOSE = 29; %CET: Computational Efficiency Trick
 		VERBOSE_TAG = 'VERBOSE';
-		VERBOSE_CATEGORY = 2;
+		VERBOSE_CATEGORY = 9;
 		VERBOSE_FORMAT = 4;
 		
 		WAITBAR = 30; %CET: Computational Efficiency Trick
@@ -287,7 +287,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			%  <strong>26</strong> <strong>MAP_TO_CELL</strong> 	MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.
 			%  <strong>27</strong> <strong>COUNT_ELEMENTS</strong> 	COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.
 			%  <strong>28</strong> <strong>FLATTEN_CELL</strong> 	FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.
-			%  <strong>29</strong> <strong>VERBOSE</strong> 	VERBOSE (metadata, logical) is an indicator to display permutation progress information.
+			%  <strong>29</strong> <strong>VERBOSE</strong> 	VERBOSE (gui, logical) is an indicator to display permutation progress information.
 			%  <strong>30</strong> <strong>WAITBAR</strong> 	WAITBAR (gui, logical) determines whether to show the waitbar.
 			%  <strong>31</strong> <strong>INTERRUPTIBLE</strong> 	INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.
 			%
@@ -374,7 +374,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_list = [1 2 3];
 				case 2 % Category.METADATA
-					prop_list = [6 7 29];
+					prop_list = [6 7];
 				case 3 % Category.PARAMETER
 					prop_list = [4 11 13 14 15];
 				case 4 % Category.DATA
@@ -384,7 +384,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 				case 6 % Category.QUERY
 					prop_list = [8 18 20 22 25 26 27 28];
 				case 9 % Category.GUI
-					prop_list = [30 31];
+					prop_list = [29 30 31];
 				otherwise
 					prop_list = [];
 			end
@@ -418,7 +418,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 				case 1 % Category.CONSTANT
 					prop_number = 3;
 				case 2 % Category.METADATA
-					prop_number = 3;
+					prop_number = 2;
 				case 3 % Category.PARAMETER
 					prop_number = 5;
 				case 4 % Category.DATA
@@ -428,7 +428,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 				case 6 % Category.QUERY
 					prop_number = 8;
 				case 9 % Category.GUI
-					prop_number = 2;
+					prop_number = 3;
 				otherwise
 					prop_number = 0;
 			end
@@ -586,7 +586,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			prop = NNxMLP_FeatureImportance.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnxmlp_featureimportance_category_list = { 1  1  1  3  4  2  2  6  4  4  3  5  3  3  3  5  5  6  5  6  5  6  5  5  6  6  6  6  2  9  9 };
+			nnxmlp_featureimportance_category_list = { 1  1  1  3  4  2  2  6  4  4  3  5  3  3  3  5  5  6  5  6  5  6  5  5  6  6  6  6  9  9  9 };
 			prop_category = nnxmlp_featureimportance_category_list{prop};
 		end
 		function prop_format = getPropFormat(pointer)
@@ -638,7 +638,7 @@ classdef NNxMLP_FeatureImportance < ConcreteElement
 			prop = NNxMLP_FeatureImportance.getPropProp(pointer);
 			
 			%CET: Computational Efficiency Trick
-			nnxmlp_featureimportance_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis.'  'NAME (constant, string) is the name of the feature importance analysis.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis.'  'ID (data, string) is a few-letter code of the feature importance analysis.'  'LABEL (metadata, string) is an extended label of the feature importance analysis.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the neural networks dataset for feature importance analysis.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the specific feature. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.'  'BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.'  'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} by default, or {[1, 2], [2, 3], [1, 3]}.'  'D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.'  'BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.'  'SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.'  'PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.'  'CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.'  'STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.'  'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.'  'VERBOSE (metadata, logical) is an indicator to display permutation progress information.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.' };
+			nnxmlp_featureimportance_description_list = { 'ELCLASS (constant, string) is the class of the feature importance analysis.'  'NAME (constant, string) is the name of the feature importance analysis.'  'DESCRIPTION (constant, string) is the description of the feature importance analysis.'  'TEMPLATE (parameter, item) is the template of the feature importance analysis.'  'ID (data, string) is a few-letter code of the feature importance analysis.'  'LABEL (metadata, string) is an extended label of the feature importance analysis.'  'NOTES (metadata, string) are some specific notes about the feature importance analysis.'  'TOSTRING (query, string) returns a string that represents the concrete element.'  'D (data, item) is the neural networks dataset for feature importance analysis.'  'NN (data, item) contains a trained neural network multi-layer perceptron classifier or regressor.'  'P (parameter, scalar) is the permutation number that determines the statistical significance of the specific feature. '  'PERM_SEEDS (result, rvector) is the list of seeds for the random permutations.'  'APPLY_CONFIDENCE_INTERVALS (parameter, logical) determines whether to apply user-defined percent confidence interval.'  'SIG_LEVEL (parameter, scalar) determines the significant level.'  'APPLY_BONFERRONI (parameter, logical) determines whether to apply Bonferroni correction.'  'BASELINE_INPUTS (result, cell) retrieves the input data to be shuffled.'  'COMP_FEATURE_INDICES (result, cell) provides the indices of combined features, represented as a cell array containing sets of feature indices, such as {[1], [2], [3]} by default, or {[1, 2], [2, 3], [1, 3]}.'  'D_SHUFFLED (query, item) generates a shuffled version of the dataset where the features of given indexes are replaced with random values drawn from a distribution with the same mean and standard deviation as the orginal ones.'  'BASELINE_LOSS (result, scalar) is the loss value obtained from original dataset, acting as a baseline loss value for evaluating the feature importance.'  'SHUFFLED_LOSS (query, rvector) is the loss value obtained from shuffled datasets.'  'PERM_SHUFFLED_LOSS (result, cell) is the permutation test for obtaining shuffled loss for a number of times in order to establish confidence interval.'  'CONFIDENCE_INTERVALS (query, rvector) derives the 95 percent of confidence interval for the permuation of shuffled loss values.'  'STAT_SIG_MASK (result, rvector) provides the statistical significance mask for composite features indicating which composite features has significant contribution.'  'FEATURE_IMPORTANCE (result, cell) is determined by applying Bonferroni correction for the permutation and obtaining the value by the average of the permutation number times of shuffled loss, which then in trun are divided by base loss for normalizaiton.'  'RESHAPED_FEATURE_IMPORTANCE (query, empty) reshapes the cell of feature importances with the input data.'  'MAP_TO_CELL (query, empty) maps a single vector back to the original cell array structure.'  'COUNT_ELEMENTS (query, empty) counts the total number of elements within a nested cell array.'  'FLATTEN_CELL (query, empty) flattens a cell array into to a single vector.'  'VERBOSE (gui, logical) is an indicator to display permutation progress information.'  'WAITBAR (gui, logical) determines whether to show the waitbar.'  'INTERRUPTIBLE (gui, scalar) sets whether the permutation computation is interruptible for multitasking.' };
 			prop_description = nnxmlp_featureimportance_description_list{prop};
 		end
 		function prop_settings = getPropSettings(pointer)
