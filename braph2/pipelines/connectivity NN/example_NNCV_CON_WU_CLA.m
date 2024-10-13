@@ -112,12 +112,10 @@ d3 = NNDataset( ...
     );
 
 %% Create a classifier cross-validation
-nne_template = NNClassifierMLP_Evaluator('P', 2);
-nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2, 'NNEVALUATOR_TEMPLATE', nne_template);
+nncv = NNClassifierMLP_CrossValidation('D', {d1, d2, d3}, 'KFOLDS', 2);
 nncv.get('TRAIN');
 
 %% Evaluate the performance
 confusion_matrix = nncv.get('C_MATRIX');
 av_auc = nncv.get('AV_AUC');
 av_macro_auc = nncv.get('AV_MACRO_AUC');
-% av_fi = nncv.get('AV_FEATURE_IMPORTANCE'); % % % uncomment this when the feature importance element is ready

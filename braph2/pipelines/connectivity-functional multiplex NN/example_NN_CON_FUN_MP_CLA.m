@@ -151,8 +151,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 %% Evaluate the classifier with the test set
-nne_test = NNClassifierMLP_Evaluator('D', d_test, 'NN', nn, 'P', 2);
+nne_test = NNClassifierMLP_Evaluator('D', d_test, 'NN', nn);
 confusion_matrix = nne_test.get('C_MATRIX');
 auc = nne_test.get('AUC');
 av_auc = nne_test.get('MACRO_AUC');
-% fi = nne_test.get('FEATURE_IMPORTANCE'); % % % uncomment this when the feature importance element is ready

@@ -734,7 +734,7 @@ classdef MultiplexCP < MultiRC
 					        end
 					        [~, rankingInd] = sort(overlapping_coefficients, 'descend');
 					        multirichness_partition = multirichness{i};
-					        [~, rankOfMaxMultiRCness] = max(multirichness_partition(rankingInd));  
+					        [~, rankOfMaxMultiRCness] = max(multirichness_partition(rankingInd), [], 'all');  
 					        multiplex_core_periphery_partition(rankingInd(1:rankOfMaxMultiRCness)) = 1;
 					        count = count + ls(i);
 					        multiplex_core_periphery(i) = {multiplex_core_periphery_partition};

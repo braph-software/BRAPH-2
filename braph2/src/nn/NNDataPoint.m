@@ -193,7 +193,7 @@ classdef NNDataPoint < ConcreteElement
 			%
 			% See also subclasses.
 			
-			subclass_list = { 'NNDataPoint'  'NNDataPoint_Graph_CLA'  'NNDataPoint_Graph_REG'  'NNDataPoint_Measure_CLA'  'NNDataPoint_Measure_REG'  'NNDataPoint_CON_CLA'  'NNDataPoint_CON_REG'  'NNDataPoint_CON_FUN_MP_CLA'  'NNDataPoint_CON_FUN_MP_REG'  'NNDataPoint_FUN_CLA'  'NNDataPoint_FUN_REG'  'NNDataPoint_ST_CLA'  'NNDataPoint_ST_REG'  'NNDataPoint_ST_MM_CLA'  'NNDataPoint_ST_MM_REG' }; %CET: Computational Efficiency Trick
+			subclass_list = { 'NNDataPoint'  'NNDataPointMLP_Shuffled'  'NNDataPoint_Graph_CLA'  'NNDataPoint_Graph_REG'  'NNDataPoint_Measure_CLA'  'NNDataPoint_Measure_REG'  'NNDataPoint_CON_CLA'  'NNDataPoint_CON_REG'  'NNDataPoint_CON_FUN_MP_CLA'  'NNDataPoint_CON_FUN_MP_REG'  'NNDataPoint_FUN_CLA'  'NNDataPoint_FUN_REG'  'NNDataPoint_ST_CLA'  'NNDataPoint_ST_REG'  'NNDataPoint_ST_MM_CLA'  'NNDataPoint_ST_MM_REG' }; %CET: Computational Efficiency Trick
 		end
 		function prop_list = getProps(category)
 			%GETPROPS returns the property list of neural network data point.

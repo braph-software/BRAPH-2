@@ -575,7 +575,7 @@ classdef FlexibilityAv < Flexibility
 				case 11 % FlexibilityAv.PARAMETRICITY
 					prop_default = 2;
 				case 12 % FlexibilityAv.COMPATIBLE_GRAPHS
-					prop_default = {'MultiplexWU' 'OrdMxWU' 'MultiplexBU' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
+					prop_default = {'MultiplexWU' 'MultiplexWD' 'OrdMxWU' 'MultiplexBU' 'MultiplexBD' 'MultiplexBUT' 'MultiplexBUD' 'MultilayerBU' 'MultilayerWU' 'OrdMlWU'};;
 				otherwise
 					prop_default = getPropDefault@Flexibility(prop);
 			end

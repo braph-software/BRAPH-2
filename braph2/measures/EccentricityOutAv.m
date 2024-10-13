@@ -561,7 +561,7 @@ classdef EccentricityOutAv < EccentricityOut
 				case 11 % EccentricityOutAv.PARAMETRICITY
 					prop_default = 2;
 				case 12 % EccentricityOutAv.COMPATIBLE_GRAPHS
-					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD'};;
+					prop_default = {'GraphWD' 'GraphBD' 'MultiplexWD' 'MultiplexBD' 'OrdMxWD'};;
 				otherwise
 					prop_default = getPropDefault@EccentricityOut(prop);
 			end
