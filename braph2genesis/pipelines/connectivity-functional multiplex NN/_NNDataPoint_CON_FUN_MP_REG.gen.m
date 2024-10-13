@@ -177,7 +177,7 @@ Example training-test regression
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    create_data_NN_REG_CON_FUN_XSL() % create example files
+    create_data_NN_REG_CON_FUN_XLS() % create example files
 end
 
 example_NN_CON_FUN_MP_REG
@@ -188,7 +188,7 @@ Example cross-validation regression WU
 %%%% ¡code!
 % ensure the example data is generated
 if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
-    create_data_NN_REG_CON_FUN_XSL() % create example files
+    create_data_NN_REG_CON_FUN_XLS() % create example files
 end
 
 example_NNCV_CON_FUN_MP_WU_M_REG

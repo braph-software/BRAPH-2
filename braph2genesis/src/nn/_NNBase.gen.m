@@ -116,7 +116,7 @@ nn.memorize('MODEL');
 value = [];
 
 %%% ¡prop!
-VERBOSE (metadata, logical) is an indicator to display training progress information.
+VERBOSE (gui, logical) is an indicator to display training progress information.
 %%%% ¡default!
 false
 

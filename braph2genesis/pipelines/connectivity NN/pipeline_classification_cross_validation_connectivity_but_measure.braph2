@@ -1,4 +1,4 @@
-%% Pipeline Classification Cross-Validation Connectivity BUD Measure  
+%% Pipeline Classification Cross-Validation Connectivity BUT Measure  
 
 % This is the pipeline script to execute cross-validation with multi-layer perceptron classifier using the graph measures with binary undirected graph at fix thresholds obtained from connectivity data.
 % The connectivity data can be derived from imaging modalities like diffusion weighted imaging (DWI).

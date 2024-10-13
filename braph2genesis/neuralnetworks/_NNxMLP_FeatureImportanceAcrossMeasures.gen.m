@@ -407,7 +407,7 @@ nn = NNClassifierMLP('D', d_training, 'LAYERS', [20 20]);
 nn.get('TRAIN');
 
 % Evaluate the feature importance
-fi = NNxMLP_FeatureImportanceAcrossMeasures('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false, 'VERBOSE', true);
+fi = NNxMLP_FeatureImportanceAcrossMeasures('D', d_test, 'NN', nn, 'P', 5, 'APPLY_BONFERRONI', false, 'APPLY_CONFIDENCE_INTERVALS', false);
 fi_score = fi.get('RESHAPED_FEATURE_IMPORTANCE');
 input_measure = it_list1{1}.get('M_LIST');
 
