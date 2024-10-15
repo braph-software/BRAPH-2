@@ -128,23 +128,24 @@ path_length_rule = m.get('RULE');
 distance = Distance('G', g).get('M');
 
 parfor li = 1:1:L
-    out_path_length_layer = zeros(N(1), 1);
+    node_number_layer = N(li);
+    out_path_length_layer = zeros(node_number_layer, 1);
     distance_layer = distance{li};
 
     switch lower(path_length_rule)
         case {'subgraphs'}
-            for u = 1:1:N
+            for u = 1:1:node_number_layer
                 Du = distance_layer(u, :);
                 out_path_length_layer(u) = mean(Du(Du~=Inf & Du~=0));
             end
             out_path_length_layer(isnan(out_path_length_layer)) = 0;  % node Nan corresponds to isolated nodes, pathlength is 0
         case {'mean'}
-            for u = 1:1:N
+            for u = 1:1:node_number_layer
                 Du = distance_layer(u, :);
                 out_path_length_layer(u) = mean(Du(Du~=0));
             end
         otherwise  % 'harmonic' 'default'
-            for u = 1:1:N
+            for u = 1:1:node_number_layer
                 Du = distance_layer(u, :);
                 out_path_length_layer(u) = harmmean(Du(Du~=0));
             end
