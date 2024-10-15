@@ -144,91 +144,13 @@ A `NNDataPoint_CON_REG` contains the input and target for neural network analysi
 > 
 > %%% ¡test!
 > %%%% ¡name!
-> Create example files for regression   ②
+> Example   ②
 > %%%% ¡code!
-> data_dir = [fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS'];
-> if ~isdir(data_dir)
->     mkdir(data_dir);
-> 
->     % Brain Atlas   ③
->     im_ba = ImporterBrainAtlasXLS('FILE', 'desikan_atlas.xlsx');
->     ba = im_ba.get('BA');
->     ex_ba = ExporterBrainAtlasXLS( ...
->         'BA', ba, ...
->         'FILE', [data_dir filesep() 'atlas.xlsx'] ...
->         );
->     ex_ba.get('SAVE')
->     N = ba.get('BR_DICT').get('LENGTH');
-> 
->     % saves RNG
->     rng_settings_ = rng(); rng('default')
-> 
->     sex_options = {'Female' 'Male'};
-> 
->     % Group  ④
->     K = 2; % degree (mean node degree is 2K)
->     beta = 0.3; % Rewiring probability
->     gr_name = 'CON_Group_XLS';
->     gr_dir = [data_dir filesep() gr_name];
->     mkdir(gr_dir);
->     vois = [
->         {{'Subject ID'} {'Age'} {'Sex'}}
->         {{} {} cell2str(sex_options)}
->         ];
->     for i = 1:1:100 % subject number
->         sub_id = ['SubjectCON_' num2str(i)];
->         % create WS graphs with random beta
->         beta(i) = rand(1);  ⑤
->         h = WattsStrogatz(N, K, beta(i)); % create WS graph  ⑥
-> 
->         A = full(adjacency(h)); A(1:length(A)+1:numel(A)) = 0; % extract the adjacency matrix
->         r = 0 + (0.5 - 0) * rand(size(A)); diffA = A - r; A(A ~= 0) = diffA(A ~= 0); % make the adjacency matrix weighted
->         A = max(A, transpose(A)); % make the adjacency matrix symmetric
-> 
->         writetable(array2table(A), [gr_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)  ⑦
-> 
->         % variables of interest
->         age_upperBound = 80;
->         age_lowerBound = 50;
->         age = age_lowerBound + beta(i)*(age_upperBound - age_lowerBound);  ⑧
->         vois = [vois; {sub_id, age, sex_options(randi(2))}];
->     end
->     writetable(table(vois), [data_dir filesep() gr_name '.vois.xlsx'], 'WriteVariableNames', false)  ⑨
-> 
->     % reset RNG
->     rng(rng_settings_)
-> end
-> %%% ¡test_functions!
-> function h = WattsStrogatz(N, K, beta)  ⑩
-> % H = WattsStrogatz(N,K,beta) returns a Watts-Strogatz model graph with N
-> % nodes, N*K edges, mean node degree 2*K, and rewiring probability beta.
-> %
-> % beta = 0 is a ring lattice, and beta = 1 is a random graph.
-> 
-> % Connect each node to its K next and previous neighbors. This constructs
-> % indices for a ring lattice.
->     s = repelem((1:N)', 1, K);
->     t = s + repmat(1:K, N, 1);
->     t = mod(t - 1, N) + 1;
->     
->     % Rewire the target node of each edge with probability beta
->     for source = 1:N
->         switchEdge = rand(K, 1) < beta;
->         
->         newTargets = rand(N, 1);
->         newTargets(source) = 0;
->         newTargets(s(t == source)) = 0;
->         newTargets(t(source, ~switchEdge)) = 0;
->         
->         [~, ind] = sort(newTargets, 'descend');
->         t(source, switchEdge) = ind(1:nnz(switchEdge));
->     end
->     
->     h = graph(s,t);
-> end
+> create_data_NN_REG_CON_TXT() % only creates files if the example folder doesn't already exist
+> create_data_NN_REG_CON_XLS() % only creates files if the example folder doesn't already exist
 > 
 > %%% ¡test! 
-> %%%% ¡name!  ⑪
+> %%%% ¡name!  ③
 > Create a NNDataset containg NNDataPoint_CON_REG with simulated data
 > %%%% ¡code!
 > % Load BrainAtlas
@@ -248,7 +170,7 @@ A `NNDataPoint_CON_REG` contains the input and target for neural network analysi
 > 
 > gr = im_gr.get('GR');
 > 
-> % create an item list of NNDataPoint_CON_REG  ⑫
+> % create an item list of NNDataPoint_CON_REG  ④
 > it_list = cellfun(@(x) NNDataPoint_CON_REG( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
@@ -256,31 +178,31 @@ A `NNDataPoint_CON_REG` contains the input and target for neural network analysi
 >     gr.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
-> % create a NNDataPoint_CON_REG DICT  ⑬
+> % create a NNDataPoint_CON_REG DICT  ⑤
 > dp_list = IndexedDictionary(...
 >         'IT_CLASS', 'NNDataPoint_CON_REG', ...
 >         'IT_LIST', it_list ...
 >         );
 > 
-> % create a NNDataset containing the NNDataPoint_CON_REG DICT  ⑭
+> % create a NNDataset containing the NNDataPoint_CON_REG DICT  ⑥
 > d = NNDataset( ...
 >     'DP_CLASS', 'NNDataPoint_CON_REG', ...
 >     'DP_DICT', dp_list ...
 >     );
 > 
-> % Check whether the number of inputs matches  ⑭
+> % Check whether the number of inputs matches  ⑦
 > assert(length(d.get('INPUTS')) == gr.get('SUB_DICT').get('LENGTH'), ...
 >         [BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
 >         'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the inputs should be the same as the number of imported subjects.' ...
 >         )
 > 
-> % Check whether the number of targets matches  ⑮
+> % Check whether the number of targets matches  ⑧
 > assert(length(d.get('TARGETS')) == gr.get('SUB_DICT').get('LENGTH'), ...
 >         [BRAPH2.STR ':NNDataPoint_CON_REG:' BRAPH2.FAIL_TEST], ...
 >         'NNDataPoint_CON_REG does not construct the dataset correctly. The number of the targets should be the same as the number of imported subjects.' ...
 >         )
 > 
-> % Check whether the content of input for a single data point matches  ⑯
+> % Check whether the content of input for a single data point matches  ⑨
 > for index = 1:1:gr.get('SUB_DICT').get('LENGTH')
 >     individual_input = d.get('DP_DICT').get('IT', index).get('INPUT');
 >     known_input = {gr.get('SUB_DICT').get('IT', index).get('CON')};
@@ -292,12 +214,12 @@ A `NNDataPoint_CON_REG` contains the input and target for neural network analysi
 > end
 > 
 > %%% ¡test! 
-> %%%% ¡name!   ⑰
+> %%%% ¡name!   ⑩
 > Example training-test regression
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > example_NN_CON_REG
@@ -307,31 +229,17 @@ A `NNDataPoint_CON_REG` contains the input and target for neural network analysi
 > 
 > ② creates the example connectivity data files for regression analysis.
 > 
-> ③ creates and exports the brain atlas file to the example directory.
+> ③ validates the data point by using assertions to confirm that the input and target calculated values match the connectivity data and the variables of interest in the example files.
 > 
-> ④ creates one group of subjects with specified degree and rewiring probability configurations.
+> ④-⑥ create an item list for the data points, subsequently generates the data point dictionary using the list, and then constructs the neural network dataset containing these data points.
 > 
-> ⑤ generates random rewiring probability settings for each subject.
+> ⑦ tests the number of inputs from the dataset matches the number of subjects in the group.
 > 
-> ⑥ utilizes the provided degree and rewiring probability settings to generate corresponding Watts-Strogatz model graphs using the function `WattsStrogatz` ⑩.
+> ⑧ tests the number of targets from the dataset matches the number of subjects in the group.
 > 
-> ⑦ exports the adjacency matrix of the graph to an Excel file.
+> ⑨ tests the value of each input from the data point matches the subject's connectivity data.
 > 
-> ⑧ associates the age value with each individual rewiring probability setting.
-> 
-> ⑨ exports the variables of interest to an Excel file.
-> 
-> ⑪ validates the data point by using assertions to confirm that the input and target calculated values match the connectivity data and the variables of interest in the example files.
-> 
-> ⑫-⑭ create an item list for the data points, subsequently generates the data point dictionary using the list, and then constructs the neural network dataset containing these data points.
-> 
-> ⑭ tests the number of inputs from the dataset matches the number of subjects in the group.
-> 
-> ⑮ tests the number of targets from the dataset matches the number of subjects in the group.
-> 
-> ⑯ tests the value of each input from the data point matches the subject's connectivity data.
-> 
-> ⑰ executes the corresponding example scripts to ensure the functionalities.
+> ⑩ executes the corresponding example scripts to ensure the functionalities.
 > 
 
 
@@ -397,16 +305,12 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > value = {dp.get('SUB').get('CON')};
 >     
 > %%% ¡prop!  ①
-> TARGET (result, cell) is the target values for this data point.  ¡!0!¡
+> TARGET (result, cell) is the target values for this data point.
 > %%%% ¡calculate!
-> value = {dp.get('TARGET_CLASS')};  ¡!0!¡
+> value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 > ````
 > 
 > ① defines the target value using the data point's label in the form of a string, e.g., `'Group1'`, contained in a cell array and representing the class of the data point.
-> 
-> ¡!0!¡**changed stringlist to cell.**
-> 
-> ¡!0!¡**changed prop name.**
 > 
 
 
@@ -420,11 +324,9 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > %%%% ¡settings!
 > 'SubjectCON'
 > 
-> %%% ¡prop!  ¡!0!¡
-> TARGET_CLASS (parameter, string) is the name of the class of the data point.
+> %%% ¡prop!
+> TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 > ````
-> 
-> ¡!0!¡**changed. revise also the tests.**
 > 
 
 
@@ -439,117 +341,11 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > 
 > %%% ¡test!
 > %%%% ¡name!
-> Create example files
+> Example
 > %%%% ¡code!
-> data_dir = [fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS'];
-> if ~isdir(data_dir)
->     mkdir(data_dir);
+> create_data_NN_CLA_CON_XLS() % only creates files if the example folder doesn't already exist
+> create_data_NN_CLA_CON_TXT() % only creates files if the example folder doesn't already exist
 > 
->     ...
-> 
->     % Group 1   ①
->     K1 = 2; % degree (mean node degree is 2K) - group 1
->     beta1 = 0.3; % Rewiring probability - group 1
->     gr1_name = 'CON_Group_1_XLS';
->     gr1_dir = [data_dir filesep() gr1_name];
->     mkdir(gr1_dir);
->     vois1 = [
->         {{'Subject ID'} {'Age'} {'Sex'}}
->         {{} {} cell2str(sex_options)}
->         ];
->     for i = 1:1:50 % subject number
->         sub_id = ['SubjectCON_' num2str(i)];
-> 
->         h1 = WattsStrogatz(N, K1, beta1); % create two WS graph
->         % figure(1) % Plot the two graphs to double-check
->         % plot(h1, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
->         % title(['Group 1: Graph with $N = $ ' num2str(N_nodes) ...
->         %     ' nodes, $K = $ ' num2str(K1) ', and $\beta = $ ' num2str(beta1)], ...
->         %     'Interpreter','latex')
->         % axis equal
-> 
->         A1 = full(adjacency(h1)); A1(1:length(A1)+1:numel(A1)) = 0; % extract the adjacency matrix
->         r = 0 + (0.5 - 0)*rand(size(A1)); diffA = A1 - r; A1(A1 ~= 0) = diffA(A1 ~= 0); % make the adjacency matrix weighted
->         A1 = max(A1, transpose(A1)); % make the adjacency matrix symmetric
-> 
->         writetable(array2table(A1), [gr1_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
-> 
->         % variables of interest
->         vois1 = [vois1; {sub_id, randi(90), sex_options(randi(2))}];
->     end
->     writetable(table(vois1), [data_dir filesep() gr1_name '.vois.xlsx'], 'WriteVariableNames', false)
-> 
->     % Group 2  ②
->     K2 = 2; % degree (mean node degree is 2K) - group 2
->     beta2 = 0.85; % Rewiring probability - group 2  ③
->     gr2_name = 'CON_Group_2_XLS';
->     gr2_dir = [data_dir filesep() gr2_name];
->     mkdir(gr2_dir);
->     vois2 = [
->         {{'Subject ID'} {'Age'} {'Sex'}}
->         {{} {} cell2str(sex_options)}
->         ];
->     for i = 51:1:100
->         sub_id = ['SubjectCON_' num2str(i)];
-> 
->         h2 = WattsStrogatz(N, K2, beta2);
->         % figure(2)
->         % plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
->         % title(['Group 2: Graph with $N = $ ' num2str(N_nodes) ...
->         %     ' nodes, $K = $ ' num2str(K2) ', and $\beta = $ ' num2str(beta2)], ...
->         %     'Interpreter','latex')
->         % axis equal
-> 
->         A2 = full(adjacency(h2)); A2(1:length(A2)+1:numel(A2)) = 0;
->         r = 0 + (0.5 - 0)*rand(size(A2)); diffA = A2 - r; A2(A2 ~= 0) = diffA(A2 ~= 0);
->         A2 = max(A2, transpose(A2));
-> 
->         writetable(array2table(A2), [gr2_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
-> 
->         % variables of interest
->         vois2 = [vois2; {sub_id, randi(90), sex_options(randi(2))}];
->     end
->     writetable(table(vois2), [data_dir filesep() gr2_name '.vois.xlsx'], 'WriteVariableNames', false)
-> 
->     % Group 3  ④
->     K3 = 2; % degree (mean node degree is 2K) - group 3
->     beta3 = 0.55; % Rewiring probability - group 3   ⑤
->     gr3_name = 'CON_Group_3_XLS';
->     gr3_dir = [data_dir filesep() gr3_name];
->     mkdir(gr3_dir);
->     vois3 = [
->         {{'Subject ID'} {'Age'} {'Sex'}}
->         {{} {} cell2str(sex_options)}
->         ];
->     for i = 101:1:150
->         sub_id = ['SubjectCON_' num2str(i)];
-> 
->         h3 = WattsStrogatz(N, K3, beta3);
->         % figure(2)
->         % plot(h2, 'NodeColor',[1 0 0], 'EdgeColor',[0 0 0], 'EdgeAlpha',0.1, 'Layout','circle');
->         % title(['Group 2: Graph with $N = $ ' num2str(N_nodes) ...
->         %     ' nodes, $K = $ ' num2str(K2) ', and $\beta = $ ' num2str(beta2)], ...
->         %     'Interpreter','latex')
->         % axis equal
-> 
->         A3 = full(adjacency(h3)); A3(1:length(A3)+1:numel(A3)) = 0;
->         r = 0 + (0.5 - 0)*rand(size(A3)); diffA = A3 - r; A3(A3 ~= 0) = diffA(A3 ~= 0);
->         A3 = max(A3, transpose(A3));
-> 
->         writetable(array2table(A3), [gr3_dir filesep() sub_id '.xlsx'], 'WriteVariableNames', false)
-> 
->         % variables of interest
->         vois3 = [vois3; {sub_id, randi(90), sex_options(randi(2))}];
->     end
->     writetable(table(vois3), [data_dir filesep() gr3_name '.vois.xlsx'], 'WriteVariableNames', false)
-> 
->     % reset RNG
->     rng(rng_settings_)
-> end
-> 
-> %%% ¡test_functions!
-> function h = WattsStrogatz(N,K,beta)
-> ...
 > 
 > %%% ¡test! 
 > %%%% ¡name!
@@ -585,7 +381,7 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_CLASS', group_folder_name), ...  ¡!0!¡
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     gr1.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -593,7 +389,7 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_CLASS', group_folder_name), ...  ¡!0!¡
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     gr2.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -668,25 +464,15 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > . . . . .
 > 
-> example_NN_CON_CLA  ¡!0!¡
+> example_NN_CON_CLA
 > ````
-> 
-> ① creates the first group of simulated data.
-> 
-> ② and ③ create the second group of simulated data with different rewiring probability parameter.
-> 
-> ④ and ⑤ create the third group of simulated data with different rewiring probability parameter.
 > 
 > ⑥ imports two groups of simulated data.
 > 
 > ⑦ creates two datasets for the two groups.
-> 
-> ¡!0!¡**changed.**
-> 
-> ¡!0!¡**changed.**
 > 
 > ⑧ tests the number of inputs from the dataset matches the number of subjects in the group.
 > 
@@ -695,8 +481,6 @@ You can now use `NNDataPoint_CON_REG` as the basis to implement the `NNDataPoint
 > ⑩ tests the value of each input from the data point matches the subject's connectivity data.
 > 
 > ⑪ executes the corresponding example scripts to ensure the functionalities.
-> 
-> ¡!0!¡**revise next ones to take into account the changes.**
 > 
 
 
@@ -820,7 +604,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -872,7 +656,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -912,7 +696,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_SubjectCON_FUN_MP % create example files
+>     create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -948,7 +732,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected graph (MultigraphBUT) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > example_NNCV_CON_BUT_REG
 > 
@@ -957,7 +741,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_REG % create example files
+>     create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 > end
 > example_NNCV_CON_FUN_MP_BUD_REG
 > 
@@ -966,7 +750,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_REG % create example files
+>     create_data_NN_REG_CON_FUN_MP_XLS % create example files
 > end
 > example_NNCV_CON_FUN_MP_BUT_REG
 > ````
@@ -1057,7 +841,7 @@ The modified parts of the code are highlighted.
 > %%% ¡prop!
 > TARGET (result, cell) is the target value for this data point.
 > %%%% ¡calculate!
-> value = dp.get('TARGET_IDS');
+> value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 > ````
 > 
 > ① extracts the adjacency matrix from a `Graph` element as the input for this data point. Note that a `Graph` can be any kind of `Graph`, including `GraphWU`, `MultigraphBUD`, and `MultiplexBUT`, among others.
@@ -1075,7 +859,7 @@ The modified parts of the code are highlighted.
 > 'Graph'
 > 
 > %%% ¡prop!
-> TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+> TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 > ````
 > 
 > ① defines the `Graph` element which contains its corresponding adjacency matrix.
@@ -1099,7 +883,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1124,7 +908,7 @@ The modified parts of the code are highlighted.
 > it_list1 = cellfun(@(x)  ③NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >      ④a_WU1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1132,7 +916,7 @@ The modified parts of the code are highlighted.
 > it_list2 = cellfun(@(x) NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_WU2.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1146,7 +930,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1174,7 +958,7 @@ The modified parts of the code are highlighted.
 > it_list1 = cellfun(@(x)  ⑦NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >      ⑧a_BUD1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1182,7 +966,7 @@ The modified parts of the code are highlighted.
 > it_list2 = cellfun(@(x) NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_BUD2.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1207,7 +991,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_SubjectCON_FUN_MP % create example files
+>     create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1232,7 +1016,7 @@ The modified parts of the code are highlighted.
 > it_list1 = cellfun(@(x)  ⑪NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >      ⑫a_WU1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1240,7 +1024,7 @@ The modified parts of the code are highlighted.
 > it_list2 = cellfun(@(x) NNDataPoint_Graph_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_WU2.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1253,7 +1037,7 @@ The modified parts of the code are highlighted.
 > Example script for weighted undirected graph (GraphWU) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > example_NNCV_CON_WU_CLA
 > 
@@ -1262,7 +1046,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > example_NNCV_CON_BUD_CLA
 > 
@@ -1271,7 +1055,7 @@ The modified parts of the code are highlighted.
 > Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_CLA % create example files
+>     create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 > end
 > example_NNCV_CON_FUN_MP_WU_CLA
 > ````
@@ -1412,7 +1196,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1452,7 +1236,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1495,7 +1279,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_SubjectCON_FUN_MP % create example files
+>     create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1531,7 +1315,7 @@ The modified parts of the code are highlighted.
 > Example script for weighted undirected graph (GraphWU) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > example_NNCV_CON_WU_M_REG
 > 
@@ -1540,7 +1324,7 @@ The modified parts of the code are highlighted.
 > Example script for weighted undirected multiplex (MultiplexWU) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_REG')) filesep 'Example data NN REG CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_REG % create example files
+>     create_data_NN_REG_CON_FUN_MP_XLS() % create example files
 > end
 > example_NNCV_CON_FUN_MP_WU_M_REG
 > ````
@@ -1623,7 +1407,7 @@ The modified parts of the code are highlighted.
 > %%% ¡prop!
 > TARGET (result, cell) is the target value for this data point.
 > %%%% ¡calculate!
-> value = dp.get('TARGET_IDS');
+> value = cellfun(@(c) sum(double(c)), dp.get('TARGET_CLASS'), 'UniformOutput', false);
 > ````
 > 
 > ① calculates or extract the graph measures, which are specified with `M_LIST` from a `Graph` element for this data point. Note that a `Graph` can be any kind of `Graph`, including `GraphWU`, `MultigraphBUD`, and `MultiplexBUT`, among others.
@@ -1644,7 +1428,7 @@ The modified parts of the code are highlighted.
 > M_LIST (parameter, classlist) is a list of graph measure to be used as the input
 > 
 > %%% ¡prop!
-> TARGET_IDS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
+> TARGET_CLASS (parameter, stringlist) is a list of variable-of-interest IDs to be used as the class targets.
 > ````
 > 
 > ① defines the graph measure list which will be obtained as `INPUT` for this data point.
@@ -1668,7 +1452,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1699,7 +1483,7 @@ The modified parts of the code are highlighted.
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
 >     'M_LIST', {'Degree' 'DegreeAv' 'Distance'}, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >      ⑥a_WU1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1713,7 +1497,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1747,7 +1531,7 @@ The modified parts of the code are highlighted.
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
 >     'M_LIST', {'Degree' 'DegreeAv' 'Distance'}, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_BUD1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1756,7 +1540,7 @@ The modified parts of the code are highlighted.
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
 >     'M_LIST', {'Degree' 'DegreeAv' 'Distance'}, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_BUD2.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1774,7 +1558,7 @@ The modified parts of the code are highlighted.
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('SubjectCON_FUN_MP')) filesep 'Example data CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_SubjectCON_FUN_MP % create example files
+>     create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -1806,7 +1590,7 @@ The modified parts of the code are highlighted.
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
 >     'M_LIST', {'Degree' 'DegreeAv' 'Distance'}, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_WU1.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1815,7 +1599,7 @@ The modified parts of the code are highlighted.
 >     'ID', x.get('ID'), ...
 >     'G', x, ...
 >     'M_LIST', {'Degree' 'DegreeAv' 'Distance'}, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     a_WU2.get('G_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -1832,7 +1616,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected graph at fixed densities (GraphBUD) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > example_NNCV_CON_BUD_M_CLA
 > 
@@ -1841,7 +1625,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected graph at fixed thresholds (MultigraphBUT) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > example_NNCV_CON_BUT_M_CLA
 > 
@@ -1850,7 +1634,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected graph at fixed densities (MultigraphBUD) using connectivity data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > example_NNCV_CON_BUD_M_CLA
 > 
@@ -1859,7 +1643,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected multiplex at fixed densities (MultiplexBUD) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_CLA % create example files
+>     create_data_NN_CLA_CON_FUN_MP_XLS() % create example files
 > end
 > example_NNCV_CON_FUN_MP_BUD_M_CLA
 > 
@@ -1868,7 +1652,7 @@ The modified parts of the code are highlighted.
 > Example script for binary undirected multiplex at fixed thresholds (MultiplexBUT) using connectivity data and functional data
 > %%%% ¡code!
 > if ~isfile([fileparts(which('NNDataPoint_CON_FUN_MP_CLA')) filesep 'Example data NN CLA CON_FUN_MP XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_FUN_MP_CLA % create example files
+>     create_data_NN_CLA_CON_FUN_MP_XLS % create example files
 > end
 > example_NNCV_CON_FUN_MP_BUT_M_CLA
 > ````
