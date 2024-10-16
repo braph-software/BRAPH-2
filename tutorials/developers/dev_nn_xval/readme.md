@@ -9,7 +9,7 @@ In this tutorial, you will learn how to create the generator file "*.gen.m" for 
 ## Table of Contents
 > [Cross validation for regressors (`NNRegressorMLP_CrossValidation`)](#Cross-validation-for-regressors-NNRegressorMLPCrossValidation)
 >
-> [Cross validation for classifiers (`NNRegressorMLP_CrossValidation`)](#Cross-validation-for-classifiers-NNRegressorMLPCrossValidation)
+> [Cross validation for classifiers (`NNClassifierMLP_CrossValidation`)](#Cross-validation-for-classifiers-NNClassifierMLPCrossValidation)
 >
 
 
@@ -85,7 +85,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > %%% ¡prop!
 > NNEVALUATOR_TEMPLATE (parameter, item) is the neural network evaluator template to set all evalutor parameters.
 > %%%% ¡settings!
-> 'NNRegressorMLP_Evaluator'  ②  ¡!0!¡
+> 'NNRegressorMLP_Evaluator'  ② 
 > 
 > %%% ¡prop!
 > NN_LIST (result, itemlist) contains the neural network models corresponding to k folds.
@@ -140,11 +140,9 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 >     d_list, nn_list, 'UniformOutput', false);
 > ````
 > 
-> ① defines the neural network template to be `NNRegressorMLP`, which will be used to set the parameters for all the neural network regressors for the cross validation.
+> ① defines the neural network template to be `NNRegressorMLP`, , which will be used in ⑥ to set the relevant parameters.
 > 
-> ② defines the neural network evaluator template to be `NNRegressorMLP_Evaluator`, which will be used to set the parameters for all the neural network evaluators for the cross validation.
-> 
-> ¡!0!¡**should this be explained either here or in another tutorial?**
+> ② defines the neural network evaluator template to be `NNRegressorMLP_Evaluator`, which will be used in ⑦ to set the relevant parameters.
 > 
 > ③ constructs the training sets iteratively by concatenating all of the remaining folds after exlcuding the one as the validation set.
 > 
@@ -164,14 +162,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > %% ¡props!
 > 
 > %%% ¡prop!
-> P (parameter, scalar) is the permutation number. ①
-> %%%% ¡default!
-> 1e+2
-> %%%% ¡check_prop!
-> check = value > 0 && value == round(value);
-> 
-> %%% ¡prop!
-> AV_CORR (result, rvector) provides the metric of the correlation of coefficients.  ②
+> AV_CORR (result, rvector) provides the metric of the correlation of coefficients.  ①
 > %%%% ¡calculate!
 > e_list = nncv.get('EVALUATOR_LIST');
 > 
@@ -185,7 +176,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > end
 > 
 > %%% ¡prop!
-> AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.  ③
+> AV_DET (result, rvector) provides the coefficient of determination, a measure showing how well the predictions are replicated by the model.  ②
 > %%%% ¡calculate!
 > e_list = nncv.get('EVALUATOR_LIST');
 > 
@@ -199,7 +190,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > end
 > 
 > %%% ¡prop!
-> AV_MAE (result, rvector) provides the metric of the mean absolute error.  ④
+> AV_MAE (result, rvector) provides the metric of the mean absolute error.  ③
 > %%%% ¡calculate!
 > e_list = nncv.get('EVALUATOR_LIST');
 > 
@@ -213,7 +204,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > end
 > 
 > %%% ¡prop!
-> AV_MSE (result, rvector) provides the metric of the mean squared error.  ⑤
+> AV_MSE (result, rvector) provides the metric of the mean squared error.  ④
 > %%%% ¡calculate!
 > e_list = nncv.get('EVALUATOR_LIST');
 > 
@@ -239,33 +230,9 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > else
 >     value = mean(cell2mat(value), 1);
 > end
-> 
-> %%% ¡prop!
-> AV_FEATURE_IMPORTANCE (result, cell) averages the feature importances across k folds.  ⑥
-> %%%% ¡calculate!
-> e_list = nncv.get('EVALUATOR_LIST');
-> 
-> all_fi = cellfun(@(e) cell2mat(e.get('FEATURE_IMPORTANCE')), ...
->     e_list, 'UniformOutput', false);
-> 
-> if isempty(cell2mat(all_fi))
->     value = {};
-> else
->     average_fi = zeros(size(all_fi{1}));
->     for i = 1:numel(all_fi)
->         % Add the current cell contents to the averageCell
->         average_fi = average_fi + all_fi{i};
->     end
->     average_fi = average_fi / numel(all_fi);
->     value = {average_fi};
-> end
 > ````
 > 
-> ① defines the number for permuation feature importance.
-> 
-> ②-⑤ calculate the average metrics, including the correlation of coefficients, the coefficient of determination, the mean absolute error, the mean squared error, and the root mean squared error.
-> 
-> ⑥ calculates the average feature importance. The feature importance obtained from each fold is by performing permutation feature importance. For a detailed explanation, please refer to "dev_nn_reg.pdf"
+> ①-④ calculate the average metrics, including the correlation of coefficients, the coefficient of determination, the mean absolute error, the mean squared error, and the root mean squared error.
 > 
 
 
@@ -281,7 +248,7 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 > %%%% ¡code!
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_REG')) filesep 'Example data NN REG CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_REG % create example files
+>     create_data_NN_REG_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -341,8 +308,8 @@ You will start by implementing in detail `NNRegressorMLP_CrossValidation`, which
 
 
 
-<a id="Cross-validation-for-classifiers-NNRegressorMLPCrossValidation"></a>
-## Cross validation for classifiers (`NNRegressorMLP_CrossValidation`)  [⬆](#Table-of-Contents)
+<a id="Cross-validation-for-classifiers-NNClassifierMLPCrossValidation"></a>
+## Cross validation for classifiers (`NNClassifierMLP_CrossValidation`)  [⬆](#Table-of-Contents)
 
 We can now use `NNRegressorMLP_CrossValidation` as the basis to implement the`NNClassifierMLP_CrossValidation`. The parts of the code that are modified are highlighted.
 A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_CrossValidation`) is a procedure designed for evaluating multi-layer perceptron classifiers using cross-validation. 
@@ -470,14 +437,6 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 > 		The `props` section of generator code for "_NNClassifierMLP_CrossValidation.gen.m" defines the properties to be used in "NNClassifierMLP_CrossValidation".
 > ````matlab
 > %% ¡props!
-> 
-> %%% ¡prop!
-> P (parameter, scalar) is the permutation number.
-> %%%% ¡default!
-> 1e+2
-> %%%% ¡check_prop!
-> check = value > 0 && value == round(value);
-> 
 > %%% ¡prop!  ①
 > AV_AUC (result, rvector) provides the average value of the area under the receiver operating characteristic curve across k folds.
 > %%%% ¡calculate!
@@ -559,7 +518,7 @@ A cross validation for multi-layer perceptron classifier (`NNClassifierMLP_Cross
 > 
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
