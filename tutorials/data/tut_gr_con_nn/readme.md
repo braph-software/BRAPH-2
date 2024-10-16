@@ -18,7 +18,7 @@ This tutorial explains how to prepare and work with this kind of data.
 >
 > [Visualize the Group Data](#Visualize-the-Group-Data)
 >
-> [Visualize Each Subject's Data](#Visualize-Each-Subject's-Data)
+> [Visualize Each Subject's Data](#Visualize-Each-Subjects-Data)
 >
 > [Preparation of the Data to Be Imported](#Preparation-of-the-Data-to-Be-Imported)
 >
@@ -33,14 +33,15 @@ This tutorial explains how to prepare and work with this kind of data.
 
 If you do not have the "Example data NN CLA CON XLS" folder inside "connectivity NN", then you can generate it by running the commands in Code 1.
 
-**Code 1.** **Code to generate the example data folder.**
-		This code can be used in the MatLab command line to generate the "Example data NN CLA CON XLS" folder to the "connectivity NN" pipeline folder.
-````matlab
-test_NNDataPoint_CON_CLA  % [1]
-````
 
-[1] generates the example connectivity NN XLS data folder.
-
+> **Code 1.** **Code to generate the example data folder.**
+> 		This code can be used in the MatLab command line to generate the "Example data NN CLA CON XLS" folder to the "connectivity NN" pipeline folder.
+> ````matlab
+> create_data_NN_CLA_CON_XLS  ①
+> ````
+> 
+> ① generates the example connectivity NN XLS data folder for classification.
+> 
 
 <a id="Open-the-GUI"></a>
 ## Open the GUI  [⬆](#Table-of-Contents)
@@ -64,15 +65,17 @@ In most analyses, the group GUI is the second step after you have selected a bra
 > **GUI launch from command line**
 > You can also open the GUI and upload the brain connectivity data using the command line (i.e., without opening an analysis pipeline) by typing the commands in Code 2. In this case, you can upload the data as shown in Figure 2a-f.
 > 
-> **Code 2.** **Code to launch the GUI to upload a group of subjects with connectivity data.**
-> 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with connectivity data without having to open a pipeline.
-> ````matlab
-> gr = Group('SUB_CLASS', 'SubjectCON');
 > 
-> gui = GUIElement('PE', gr);
-> gui.get('DRAW')
-> gui.get('SHOW')
-> ````
+> > **Code 2.** **Code to launch the GUI to upload a group of subjects with connectivity data.**
+> > 		This code can be used in the MatLab command line to launch the GUI to upload a group of subjects with connectivity data without having to open a pipeline.
+> > ````matlab
+> > gr = Group('SUB_CLASS', 'SubjectCON');
+> > 
+> > gui = GUIElement('PE', gr);
+> > gui.get('DRAW')
+> > gui.get('SHOW')
+> > ````
+> >
 
 <a id="Visualize-the-Group-Data"></a>
 ## Visualize the Group Data  [⬆](#Table-of-Contents)
@@ -87,7 +90,7 @@ After completing the steps described in Figure 2, you can see the data (Figure 3
 > **a** The GUI of the group's connectivity data. 
 > 	**b** The information you see on this GUI that can be changed. In this example, we have edited the ID, name, and notes of the group but can also change the subject's specific information.
 
-<a id="Visualize-Each-Subject's-Data"></a>
+<a id="Visualize-Each-Subjects-Data"></a>
 ## Visualize Each Subject's Data  [⬆](#Table-of-Contents)
 
 Finally, you can open each subject's connectivity matrix by selecting the subject, right click, and select "Open selection" (Figure 4a), which shows the matrix values (Figure 4b). Here, you can also change the subject's metadata (ID, label, notes), its variables of interest, and the values of its connectivity matrix.
