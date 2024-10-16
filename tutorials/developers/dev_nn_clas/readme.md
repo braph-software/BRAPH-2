@@ -129,14 +129,16 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > end
 > d = varargin{1};
 > 
-> target_ids = nn.get('TARGET_IDS', d);
-> value = onehotencode(categorical(target_ids), 2);
+> targets = cellfun(@(target) cell2mat(target),  d.get('TARGETS'), 'UniformOutput', false);
+> targets = categorical(cell2mat(targets))';
+> value = onehotencode(targets, 2, "ClassNames", flip(string(unique(targets))));
+> 
 > 
 > %%% ¡prop!
 > MODEL (result, net) is a trained neural network model.
 > %%%% ¡calculate!  ⑤
 > inputs = cell2mat(nn.get('INPUTS', nn.get('D')));  ⑥
-> targets = nn.get('TARGET_IDS', nn.get('D'));  ⑦
+> targets = nn.get('TARGET_CLASSES', nn.get('D'));  ⑦
 > if isempty(inputs) || isempty(targets)
 >     value = network();
 > else
@@ -199,23 +201,23 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > ````matlab
 > %% ¡props!
 > 
-> %%% ¡prop! 
-> TARGET_IDS (query, stringlist) constructs the target IDs which represent the class of each data point.
-> %%%% ¡calculate!   ①
-> % targets = nn.get('TARGET_IDS', D) returns a cell array with the
-> %  targets for all data points in dataset D.
+> %%% ¡prop!
+> TARGET_CLASSES (query, stringlist) constructs the target classes which represent the class of each data point.
+> %%%% ¡calculate!  ①
+> % target_classes = nn.get('TARGET_CLASSES', D) returns a cell array with the
+> %  target classes for all data points in dataset D.
 > if isempty(varargin)
 >     value = {''};
 >     return
 > end
 > d = varargin{1};
-> targets = d.get('TARGETS');
-> if isempty(targets)
+> dp_dict = d.get('DP_DICT');
+> if dp_dict.get('LENGTH') == 0
 >     value = {''};
 > else
 >     nn_targets = [];
->     for i = 1:1:length(targets)
->         target = targets{i};
+>     for i = 1:1:dp_dict.get('LENGTH')
+>         target = dp_dict.get('IT', i).get('TARGET_CLASS');
 >         nn_targets = [nn_targets; target];
 >     end
 >     value = nn_targets;
@@ -235,73 +237,11 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > WAITBAR (gui, logical) detemines whether to show the waitbar.
 > %%%% ¡default!
 > true
-> 
-> %%% ¡prop!
-> INTERRUPTIBLE (gui, scalar) sets whether the comparison computation is interruptible for multitasking.
-> %%%% ¡default!
-> .001
-> 
-> %%% ¡prop!  ③
-> FEATURE_IMPORTANCE (query, cell) evaluates the average significance of each feature by iteratively shuffling its values P times and measuring the resulting average decrease in model performance.
-> %%%% ¡calculate!
-> % fi = nn.get('FEATURE_IMPORTANCE', D, P, SEED) retrieves a cell array containing
-> %  the feature importance values for the trained model, as assessed by
-> %  evaluating it on the input dataset D.
-> if isempty(varargin)
->     value = {};
->     return
-> end
-> d = varargin{1};
-> P = varargin{2};
-> seeds = varargin{3};
-> 
-> inputs = cell2mat(nn.get('INPUTS', d));
-> if isempty(inputs)
->     value = {};
->     return
-> end
-> targets = nn.get('TARGETS', d);
-> net = nn.get('MODEL');
-> 
-> number_features = size(inputs, 2);
-> original_loss = crossentropy(net.predict(inputs), targets);
-> 
-> wb = braph2waitbar(nn.get('WAITBAR'), 0, ['Feature importance permutation ...']);
-> 
-> start = tic;
-> for i = 1:1:P  ④
->     rng(seeds(i), 'twister')
->     parfor j = 1:1:number_features  ⑤
->         scrambled_inputs = inputs;
->         permuted_value = squeeze(normrnd(mean(inputs(:, j)), std(inputs(:, j)), squeeze(size(inputs(:, j))))) + squeeze(randn(size(inputs(:, j)))) + mean(inputs(:, j));
->         scrambled_inputs(:, j) = permuted_value;
->         scrambled_loss = crossentropy(net.predict(scrambled_inputs), targets);
->         feature_importance(j) = scrambled_loss;
->     end
-> 
->     feature_importance_all_permutations{i} = feature_importance / original_loss;
-> 
->     braph2waitbar(wb, i / P, ['Feature importance permutation ' num2str(i) ' of ' num2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's ...'])
->     if nn.get('VERBOSE')
->         disp(['** PERMUTATION FEATURE IMPORTANCE - sampling #' int2str(i) '/' int2str(P) ' - ' int2str(toc(start)) '.' int2str(mod(toc(start), 1) * 10) 's'])
->     end
->     if nn.get('INTERRUPTIBLE')
->         pause(nn.get('INTERRUPTIBLE'))
->     end
-> end
-> 
-> braph2waitbar(wb, 'close')
-> 
-> value = feature_importance_all_permutations;
 > ````
 > 
 > ① is a query that collects all the target class for all data points.
 > 
 > ② defines the number of neuron per layer. For example, `[32 32]` represents two layers, each containing 32 neurons.
-> 
-> ③ is a query that calculates the permuation feature importance. Note that, other neural network architectures, such as convolutional neural network, have other techniques to obtain feature importance.
-> 
-> ④ and ⑤iteratively shuffle the feature values from any given dataset P times and measuring the resulting average decrease in model performance.
 > 
 
 
@@ -320,7 +260,7 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > 
 > % ensure the example data is generated
 > if ~isfile([fileparts(which('NNDataPoint_CON_CLA')) filesep 'Example data NN CLA CON XLS' filesep 'atlas.xlsx'])
->     test_NNDataPoint_CON_CLA % create example files
+>     create_data_NN_CLA_CON_XLS() % create example files
 > end
 > 
 > % Load BrainAtlas
@@ -353,7 +293,7 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > it_list1 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     gr1.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
@@ -361,7 +301,7 @@ A multi-layer perceptron classifier `NNClassifierMLP` comprises a multi-layer pe
 > it_list2 = cellfun(@(x) NNDataPoint_CON_CLA( ...
 >     'ID', x.get('ID'), ...
 >     'SUB', x, ...
->     'TARGET_IDS', {group_folder_name}), ...
+>     'TARGET_CLASS', {group_folder_name}), ...
 >     gr2.get('SUB_DICT').get('IT_LIST'), ...
 >     'UniformOutput', false);
 > 
