@@ -208,7 +208,7 @@ AV_AUC (result, rvector) provides the average value of the area under the receiv
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
 
-aucs = cellfun(@(e) e.get('AUC'), ...
+aucs = cellfun(@(e) e.memorize('AUC'), ...
     e_list, 'UniformOutput', false);
 
 if isempty(aucs)
@@ -236,7 +236,7 @@ AV_MACRO_AUC (result, scalar) provides the metric of the average macro AUC value
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
 
-macro_aucs = cellfun(@(e) e.get('MACRO_AUC'), ...
+macro_aucs = cellfun(@(e) e.memorize('MACRO_AUC'), ...
     e_list, 'UniformOutput', false);
 
 if isempty(macro_aucs)
@@ -250,7 +250,7 @@ C_MATRIX (result, matrix) provides the confusion matrix across k folds.
 %%%% ¡calculate!
 e_list = nncv.get('EVALUATOR_LIST');
 
-c_matrices = cellfun(@(e) e.get('C_MATRIX'), ...
+c_matrices = cellfun(@(e) e.memorize('C_MATRIX'), ...
     e_list, 'UniformOutput', false);
 
 combined_c_matrix = cellfun(@(x) double(x), c_matrices, 'UniformOutput', false);
