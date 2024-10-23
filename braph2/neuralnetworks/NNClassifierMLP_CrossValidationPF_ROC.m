@@ -1191,7 +1191,9 @@ classdef NNClassifierMLP_CrossValidationPF_ROC < PanelFig
 					
 					    pf.memorize('H_AXES')
 					    pf.memorize('H_ROC');
+					
 					    pf.memorize('ROC_DICT');
+					    pf.set('ROC', pf.get('ROC')); 
 					    
 					    pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', 23).get('SETUP')
 					    pf.memorize('LISTENER_ST_AXIS');

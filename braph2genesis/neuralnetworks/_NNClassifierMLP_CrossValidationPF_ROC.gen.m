@@ -142,7 +142,9 @@ if value
 
     pf.memorize('H_AXES')
     pf.memorize('H_ROC');
+
     pf.memorize('ROC_DICT');
+    pf.set('ROC', pf.get('ROC')); 
     
     pf.memorize('ST_AXIS').set('PANEL', pf, 'PROP', NNClassifierMLP_CrossValidationPF_ROC.H_AXES).get('SETUP')
     pf.memorize('LISTENER_ST_AXIS');
