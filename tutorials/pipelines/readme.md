@@ -42,14 +42,14 @@ These tutorials guide you through the analysis and comparison steps of multiplex
   - [Pipeline Connectivity Multiplex Comparison BUT](tut_a_mp_con_but): Tutorial to compare two groups of subjects with connectivity multiplex data (CON MP) using binary undirected graphs at fixed thresholds (BUT).
 
 - **Pipelines analyzing functional multiplex data (FUN).** Functional multiplex data encompasses time series representing brain function over time for each brain region of each subject. This data type includes brain activation signals obtained from fMRI or electrophysiological signals from techniques such as electroencephalography (EEG) or magnetoencephalography (MEG). These time series capture the dynamics of brain activity and facilitate the investigation of functional connectivity patterns across multiple layers.
-  - [Pipeline Functional Comparison WU](tut_a_mp_fun_wu): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using weighted undirected (WU) graphs.
-  - [Pipeline Functional Comparison BUD](tut_a_mp_fun_bud): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed densities (BUD).
-  - [Pipeline Functional Comparison BUT](tut_a_mp_fun_but): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed thresholds (BUT).
+  - [Pipeline Functional Multiplex Comparison WU](tut_a_mp_fun_wu): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using weighted undirected (WU) graphs.
+  - [Pipeline Functional Multiplex Comparison BUD](tut_a_mp_fun_bud): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Functional Multiplex Comparison BUT](tut_a_mp_fun_but): Tutorial to compare two groups of subjects with functional multiplex data (FUN MP) using binary undirected graphs at fixed thresholds (BUT).
 
 - **Pipelines analyzing structural multiplex data (ST).** Structural multiplex data provides a scalar value for each brain region of each subject, offering insights into the anatomical characteristics of the brain. This data type includes measurements such as gray matter volume or thickness obtained from T1-weighted MRI, brain perfusion from arterial spin labeling (ASL) imaging, or abnormal protein deposition from static positron emission tomography (PET) data. Structural multiplex data enables the exploration of anatomical variations across multiple layers and their potential correlations with brain function.
-  - [Pipeline Structural Comparison WU](tut_a_mp_st_wu): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using weighted undirected (WU) graphs.
-  - [Pipeline Structural Comparison BUD](tut_a_mp_st_bud): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed densities (BUD).
-  - [Pipeline Structural Comparison BUT](tut_a_mp_st_but): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed thresholds (BUT).
+  - [Pipeline Structural Multiplex Comparison WU](tut_a_mp_st_wu): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using weighted undirected (WU) graphs.
+  - [Pipeline Structural Multiplex Comparison BUD](tut_a_mp_st_bud): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed densities (BUD).
+  - [Pipeline Structural Multiplex Comparison BUT](tut_a_mp_st_but): Tutorial to compare two groups of subjects with structural multiplex data (ST MP) using binary undirected graphs at fixed thresholds (BUT).
 
 ## Deep Learning Pipelines
 
