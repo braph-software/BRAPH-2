@@ -118,9 +118,10 @@ Join discussions on the [BRAPH 2 Discussion Forum](https://github.com/braph-soft
 
 If you use BRAPH 2 in your research work, please cite the following publication:
 
+https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
+
 ```
-Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe (2017).
-BRAPH: A graph theory software for the analysis of brain connectivity.
-PLOS ONE 12, e0178798.
-https://doi.org/10.1371/journal.pone.0178798
+"BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences"
+Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-García, Hang Zhao, Mite Mijalkov, Joana B. Pereira, Giovanni Volpe.
+bioRxiv (2025).
 ```
