@@ -121,7 +121,7 @@ If you use BRAPH 2 in your research work, please cite the following publication:
 https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
 
 ```
-"BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences"
+"BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences."
 Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira, Giovanni Volpe.
 bioRxiv (2025).
 ```
