@@ -119,10 +119,9 @@ Join discussions on the [BRAPH 2 Discussion Forum](https://github.com/braph-soft
 If you use BRAPH 2 in your research work, please cite the following publication:
 
 https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
-
 ```
 "BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences."
-Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira, Giovanni Volpe.
+Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira & Giovanni Volpe.
 bioRxiv (2025).
 ```
 
@@ -131,8 +130,20 @@ See also:
 https://doi.org/10.1371/journal.pone.0178798
 ```
 "BRAPH: A graph theory software for the analysis of brain connectivity."
-Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman, Giovanni Volpe.
-PLoS ONE, 12(8), e0178798 (2025).
+Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe.
+PLoS ONE, 12(8), e0178798 (2017).
 ```
 
+https://doi.org/10.1038/s41467-024-55611-1
+```
+"Connecting genomic results for psychiatric disorders to human brain cell types and regions reveals convergence with functional connectivity."
+Shuyang Yao, Arvid Harder, Fahimeh Darki, Yu-Wei Chang, Ang Li, Kasra Nikouei, Giovanni Volpe, Johan N. Lundström, Jian Zeng, Naomi R. Wray, Yi Lu, Patrick F. Sullivan &  Jens Hjerling-Leffler.
+Nature Communications 16, 395 (2025).
+```
 
+https://doi.org/10.1038/s41467-024-55611-1
+```
+"Computational memory capacity predicts aging and cognitive decline."
+Mite Mijalkov, Ludvig Storm, Blanca Zufiria-Gerbolés, Dániel Veréb, Zhilei Xu, Anna Canal-Garcia, Jiawei Sun, Yu-Wei Chang, Hang Zhao, Emiliano Gómez-Ruiz, Massimiliano Passaretti, Sara Garcia-Ptacek, Miia Kivipelto, Per Svenningsson, Henrik Zetterberg, Heidi Jacobs, Kathy Lüdge, Daniel Brunner, Bernhard Mehlig, Giovanni Volpe & Joana B. Pereira.
+Nature Communications 16, 2748 (2025).
+```
