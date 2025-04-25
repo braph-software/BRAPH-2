@@ -125,3 +125,14 @@ https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
 Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira, Giovanni Volpe.
 bioRxiv (2025).
 ```
+
+See also:
+
+https://doi.org/10.1371/journal.pone.0178798
+```
+"BRAPH: A graph theory software for the analysis of brain connectivity."
+Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman, Giovanni Volpe.
+PLoS ONE, 12(8), e0178798 (2025).
+```
+
+
