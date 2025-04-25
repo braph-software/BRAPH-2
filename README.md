@@ -137,7 +137,7 @@ PLoS ONE, 12(8), e0178798 (2017).
 https://doi.org/10.1038/s41467-024-55611-1
 ```
 "Connecting genomic results for psychiatric disorders to human brain cell types and regions reveals convergence with functional connectivity."
-Shuyang Yao, Arvid Harder, Fahimeh Darki, Yu-Wei Chang, Ang Li, Kasra Nikouei, Giovanni Volpe, Johan N. Lundström, Jian Zeng, Naomi R. Wray, Yi Lu, Patrick F. Sullivan &  Jens Hjerling-Leffler.
+Shuyang Yao, Arvid Harder, Fahimeh Darki, Yu-Wei Chang, Ang Li, Kasra Nikouei, Giovanni Volpe, Johan N. Lundström, Jian Zeng, Naomi R. Wray, Yi Lu, Patrick F. Sullivan & Jens Hjerling-Leffler.
 Nature Communications 16, 395 (2025).
 ```
 
