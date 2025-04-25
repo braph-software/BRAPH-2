@@ -3,6 +3,7 @@
 # BRAPH 2 — **F**lexible, **O**pen-source, **R**eproducible, **C**ommunity-Oriented, **E**asy-to-use Framework for Network Analysis in Neurosciences
 
 [![BRAPH 2](https://img.shields.io/badge/Bluesky-BRAPH%202-blue?style=social&logo=bluesky&url=https%3A%2F%2Fbraph2software.bsky.social)](https://braph2software.bsky.social)
+[![cite us](https://img.shields.io/badge/DOI-10.1101/2025.04.11.648455-blue)](https://doi.org/10.1101/2025.04.11.648455)
 [![cite us](https://img.shields.io/badge/DOI-10.1371%2Fjournal.pone.0178798-blue)](https://doi.org/10.1371/journal.pone.0178798)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/braph-software/BRAPH-2)](https://github.com/braph-software/BRAPH-2/releases)
 [![Zenodo](https://img.shields.io/badge/Zenodo-BRAPH%202%20releases-blue?logo=zenodo)](https://zenodo.org/account/settings/github/repository/braph-software/BRAPH-2)
@@ -118,9 +119,32 @@ Join discussions on the [BRAPH 2 Discussion Forum](https://github.com/braph-soft
 
 If you use BRAPH 2 in your research work, please cite the following publication:
 
+https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
 ```
-Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe (2017).
-BRAPH: A graph theory software for the analysis of brain connectivity.
-PLOS ONE 12, e0178798.
+"BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences."
+Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira & Giovanni Volpe.
+bioRxiv (2025).
+```
+
+See also:
+
 https://doi.org/10.1371/journal.pone.0178798
+```
+"BRAPH: A graph theory software for the analysis of brain connectivity."
+Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe.
+PLoS ONE, 12(8), e0178798 (2017).
+```
+
+https://doi.org/10.1038/s41467-024-55611-1
+```
+"Connecting genomic results for psychiatric disorders to human brain cell types and regions reveals convergence with functional connectivity."
+Shuyang Yao, Arvid Harder, Fahimeh Darki, Yu-Wei Chang, Ang Li, Kasra Nikouei, Giovanni Volpe, Johan N. Lundström, Jian Zeng, Naomi R. Wray, Yi Lu, Patrick F. Sullivan & Jens Hjerling-Leffler.
+Nature Communications 16, 395 (2025).
+```
+
+https://doi.org/10.1038/s41467-024-55611-1
+```
+"Computational memory capacity predicts aging and cognitive decline."
+Mite Mijalkov, Ludvig Storm, Blanca Zufiria-Gerbolés, Dániel Veréb, Zhilei Xu, Anna Canal-Garcia, Jiawei Sun, Yu-Wei Chang, Hang Zhao, Emiliano Gómez-Ruiz, Massimiliano Passaretti, Sara Garcia-Ptacek, Miia Kivipelto, Per Svenningsson, Henrik Zetterberg, Heidi Jacobs, Kathy Lüdge, Daniel Brunner, Bernhard Mehlig, Giovanni Volpe & Joana B. Pereira.
+Nature Communications 16, 2748 (2025).
 ```
