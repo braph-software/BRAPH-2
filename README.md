@@ -17,7 +17,7 @@ The hallmark of BRAPH 2 is **Genesis**, a compiler that lets you create **tailor
 > 
 > **Genesis advantages to compile a new custom BRAPH 2 distribution** To create a custom BRAPH 2 distribution with new methods or specialized analysis pipelines, users prepare a configuration file (genesis_config.txt) along with custom elements, pipeline scripts, and optional tutorial files. The Genesis module then integrates these with BRAPH 2’s core components through a structured compilation process, including directory setup, file integration, element compilation, GUI layout generation, and unit test creation. The final output is a customized, no-code GUI distribution, offering a flexible, open-source, reproducible, community-driven, and user-friendly framework for network analysis in neuroscience. A practical example can be found in the [BRAPH 2 Genesis Tutorials](tutorials/developers/dev_distribution) for creating a BRAPH 2 Hello, World! Distribution.
 
-**Watch the introduction video:**
+**Watch the introductory video:**
 
 https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29
 
