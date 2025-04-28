@@ -21,6 +21,8 @@ The hallmark of BRAPH 2 is **Genesis**, a compiler that lets you create **tailor
 
 https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29
 
+_Video credit:_ Aykut Argun, Blanca Zufiria-Gerbolés.
+
 **Learn more about how to step by step create your own BRPAH 2 distribution in [the full tutorial video](https://gunet-my.sharepoint.com/:v:/g/personal/yu-wei_chang_gu_se/EVaqeYE8nM1KnfEvx_jMZAoBMXa4t2Xw6nJqcxnGjAGJQg?e=eD5SL1).**
 
 ## Standard BRAPH 2 Distribution
