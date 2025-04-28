@@ -13,11 +13,7 @@
 BRAPH 2 is a MATLAB-based framework for network analysis in neurosciences. Its **standard distribution** offers advanced multilayer graph analysis, deep learning, and statistical tools.
 The hallmark of BRAPH 2 is **Genesis**, a compiler that lets you create **tailored distributions** by integrating your own methods or specialized pipelines alongside these built-in capabilities. This flexible architecture fosters community-driven innovation, scalability, and reproducibility across diverse research fields. 
 
-<video autoplay loop muted playsinline>
-   <source src="https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29" type="video/mp4">
-</video>
-
-https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29
+<video loop src="https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29">  intro video </video> 
 
 **Learn more about how to step by step create your own BRPAH 2 distribution in [the full tutorial video](https://gunet-my.sharepoint.com/:v:/g/personal/yu-wei_chang_gu_se/EVaqeYE8nM1KnfEvx_jMZAoBMXa4t2Xw6nJqcxnGjAGJQg?e=eD5SL1).**
 
