@@ -1,4 +1,4 @@
-![BRAPH 2](braph2banner.png)
+![BRAPH 2](media/braph2banner.png)
 
 # BRAPH 2 — **F**lexible, **O**pen-source, **R**eproducible, **C**ommunity-Oriented, **E**asy-to-use Framework for Network Analysis in Neurosciences
 
@@ -11,17 +11,25 @@
 <br />
 
 BRAPH 2 is a MATLAB-based framework for network analysis in neurosciences. Its **standard distribution** offers advanced multilayer graph analysis, deep learning, and statistical tools.
-The hallmark of BRAPH 2 is **Genesis**, a compiler that lets you create **tailored distributions** by integrating your own methods or specialized pipelines alongside these built-in capabilities. This flexible architecture fosters community-driven innovation, scalability, and reproducibility across diverse research fields.
+The hallmark of BRAPH 2 is **Genesis**, a compiler that lets you create **tailored distributions** by integrating your own methods or specialized pipelines alongside these built-in capabilities. This flexible architecture fosters community-driven innovation, scalability, and reproducibility across diverse research fields. 
 
-![fig1_FORCE_bz](https://github.com/user-attachments/assets/e27d8ef3-6759-4d7d-9116-2973df77e1d1)
+![fig1_FORCE_bz](media/braph2force.png)
 > 
 > **Genesis advantages to compile a new custom BRAPH 2 distribution** To create a custom BRAPH 2 distribution with new methods or specialized analysis pipelines, users prepare a configuration file (genesis_config.txt) along with custom elements, pipeline scripts, and optional tutorial files. The Genesis module then integrates these with BRAPH 2’s core components through a structured compilation process, including directory setup, file integration, element compilation, GUI layout generation, and unit test creation. The final output is a customized, no-code GUI distribution, offering a flexible, open-source, reproducible, community-driven, and user-friendly framework for network analysis in neuroscience. A practical example can be found in the [BRAPH 2 Genesis Tutorials](tutorials/developers/dev_distribution) for creating a BRAPH 2 Hello, World! Distribution.
+
+**Watch the introductory video:**
+
+https://github.com/user-attachments/assets/21248bde-f3e1-4b07-b833-3c714e584d29
+
+_Video credit:_ Aykut Argun, Blanca Zufiria-Gerbolés.
+
+**Learn more about how to step by step create your own BRPAH 2 distribution in [the full tutorial video](https://figshare.com/ndownloader/files/54019856).**
 
 ## Standard BRAPH 2 Distribution
 
 BRAPH 2 ships with the **standard distribution**—provided in this very repository—which offers advanced tools for multilayer brain connectivity analysis and deep learning across various neuroimaging modalities. With its user-friendly interface and extensive analysis pipelines, researchers can explore the complex organization of the human brain using multimodal neuroimaging data, going beyond the limitations of traditional approaches. It provides an extensive set of analysis pipelines accessible through a graphical user interface (GUI) and through sample scripts, allowing users to perform ready-to-use analyses or develop customized pipelines for their specific needs. Detailed installation steps and tutorials follow below.
 
-![Advances in brain connectivity analysis](braph2overview.png)
+![Advances in brain connectivity analysis](media/braph2overview.png)
 > 
 > **Advances in brain connectivity analysis.** Brain connectivity analysis is rapidly evolving thanks to the widespread availability of increasing computational power and large-scale, high-resolution, multimodal neuroimaging datasets. The Standard BRAPH 2 Distribution provides a complete set of tools to analyze these data with conventional graph theory (single-layer graphs), multiplex and multilayer graphs, and deep learning (from dense neural networks to graph convolutional neural networks), as well as a flexible, easily expandable software architecture. BRAPH 2 uses parallel computing to allow users to run scripts on servers or clusters with both central processing units (CPUs) and graphical processing units (GPUs).
 
