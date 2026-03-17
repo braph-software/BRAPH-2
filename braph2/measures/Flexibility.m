@@ -706,7 +706,7 @@ classdef Flexibility < MultilayerCommunity
 					elseif g.get('GRAPH_TYPE') == 3 || g.get('GRAPH_TYPE') ==5
 					    % ordinal 
 					    for i=1:L-1
-					        flexibility = flexibility + S(:, i) ~= S(:, i+1);
+					        flexibility = flexibility + (S(:, i) ~= S(:, i+1));
 					    end
 					    flexibility = flexibility/(L-1);
 					end

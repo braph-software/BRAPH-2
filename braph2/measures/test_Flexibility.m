@@ -1596,7 +1596,40 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	    [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
 end
 
-%% Test 15: No Figures Left
+%% Test 15: Sanity check for flexibility behaviour of controlled active and inactive nodes
+if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
+	num_node = 500;
+	num_inactive = 50;
+	inactive_node = randperm(num_node, num_inactive);  % randomly choose 20 nodes
+	active_node = setdiff(1:num_node, inactive_node);
+	degree = [200 100 150 50 150 100 200];   % one degree per connectivity matrix / layer
+	rewire_prob = 0.1;
+	
+	num_layers = numel(degree);
+	B = cell(1, num_layers);
+	
+	for i = 1:num_layers
+	    B{i} = generate_watts_strogatz(num_node, degree(i), rewire_prob, inactive_node);
+	end
+	
+	g = OrdMxWU('B', B);
+	m_outside_g = Flexibility('G', g);
+	m = cell2mat(m_outside_g.get('M'));
+	
+	% Assert inactive nodes have zero flexibility
+	assert(all(m(inactive_node) == 0), ...
+	    [BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
+	    ['Inactive nodes should have zero flexibility for ' class(g) '.'])
+	
+	% Assert most active nodes have flexibility > 0
+	fraction_positive = sum(m(active_node) > 0) / numel(active_node);
+	assert(fraction_positive > 0.7, ...
+	    [BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
+	    ['Most active nodes should have flexibility > 0 for ' class(g) ...
+	     ', but only ' num2str(fraction_positive * 100, '%.2f') '% do.'])
+end
+
+%% Test 16: No Figures Left
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	assert(isempty(findall(0, 'type', 'figure')), ...
 		[BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
@@ -1605,7 +1638,7 @@ if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 		)
 end
 
-%% Test 16: Delete Figures
+%% Test 17: Delete Figures
 if rand() >= (1 - 1) * BRAPH2TEST.RANDOM
 	delete(findall(0, 'type', 'figure'))
 end
