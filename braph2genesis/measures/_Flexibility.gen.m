@@ -255,3 +255,38 @@ m_inside_g = g.get('MEASURE', 'Flexibility');
 assert(isequal(m_inside_g.get('M'), known_flexibility), ...
     [BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
     [class(m_outside_g) ' is not being calculated correctly for ' class(g) '.'])
+
+
+%%% ¡test!
+%%%% ¡name!
+Sanity check for flexibility behaviour of controlled active and inactive nodes
+%%%% ¡code! 
+num_node = 500;
+num_inactive = 50;
+inactive_node = randperm(num_node, num_inactive);  % randomly choose 20 nodes
+active_node = setdiff(1:num_node, inactive_node);
+degree = [200 100 150 50 150 100 200];   % one degree per connectivity matrix / layer
+rewire_prob = 0.1;
+
+num_layers = numel(degree);
+B = cell(1, num_layers);
+
+for i = 1:num_layers
+    B{i} = generate_watts_strogatz(num_node, degree(i), rewire_prob, inactive_node);
+end
+
+g = OrdMxWU('B', B);
+m_outside_g = Flexibility('G', g);
+m = cell2mat(m_outside_g.get('M'));
+
+% Assert inactive nodes have zero flexibility
+assert(all(m(inactive_node) == 0), ...
+    [BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
+    ['Inactive nodes should have zero flexibility for ' class(g) '.'])
+
+% Assert most active nodes have flexibility > 0
+fraction_positive = sum(m(active_node) > 0) / numel(active_node);
+assert(fraction_positive > 0.7, ...
+    [BRAPH2.STR ':Flexibility:' BRAPH2.FAIL_TEST], ...
+    ['Most active nodes should have flexibility > 0 for ' class(g) ...
+     ', but only ' num2str(fraction_positive * 100, '%.2f') '% do.'])
