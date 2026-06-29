@@ -125,7 +125,7 @@ Join discussions on the [BRAPH 2 Discussion Forum](https://github.com/braph-soft
 
 ## Cite BRAPH 2
 
-If you use **BRAPH 2** in your research, please cite:
+If you use BRAPH 2 in your research, please cite:
 
 > Tiunn et al., *BRAPH 2: A flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences*.  
 > [SoftwareX 35, 102791 (2026).](https://doi.org/10.1016/j.softx.2026.102791)
@@ -170,7 +170,7 @@ The computational memory capacity distribution uses reservoir computing on brain
 > [Nature Communications 16, 2748 (2025).](https://doi.org/10.1038/s41467-025-57995-0)
 
 ### BRAPH
-BRAPH is the original graph-theory software package on which BRAPH 2 stems from, providing tools for brain connectivity analysis.
+BRAPH is the original graph-theory software package from which BRAPH 2 evolved, providing tools for brain connectivity analysis.
 
 > Mijalkov et al., *BRAPH: A graph theory software for the analysis of brain connectivity*.  
 > [PLoS ONE 12, e0178798 (2017).](https://doi.org/10.1371/journal.pone.0178798)
