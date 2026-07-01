@@ -125,34 +125,52 @@ Join discussions on the [BRAPH 2 Discussion Forum](https://github.com/braph-soft
 
 ## Cite BRAPH 2
 
-If you use BRAPH 2 in your research work, please cite the following publication:
+If you use BRAPH 2 in your research, please cite:
 
-https://www.biorxiv.org/content/10.1101/2025.04.11.648455v1
-```
-"BRAPH 2: a flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences."
-Yu-Wei Chang, Blanca Zufiria-Gerbolés, Emiliano Gómez-Ruiz, Anna Canal-Garcia, Hang Zhao, Mite Mijalkov, Joana B. Pereira & Giovanni Volpe.
-bioRxiv (2025).
-```
+> Tiunn et al., *BRAPH 2: A flexible, open-source, reproducible, community-oriented, easy-to-use framework for network analyses in neurosciences*.  
+> [SoftwareX 35, 102791 (2026).](https://doi.org/10.1016/j.softx.2026.102791)
 
 See also:
 
-https://doi.org/10.1371/journal.pone.0178798
-```
-"BRAPH: A graph theory software for the analysis of brain connectivity."
-Mite Mijalkov, Ehsan Kakaei, Joana B Pereira, Eric Westman & Giovanni Volpe.
-PLoS ONE, 12(8), e0178798 (2017).
-```
+### Variational autoencoders (VAEs)
 
-https://doi.org/10.1038/s41467-024-55611-1
-```
-"Connecting genomic results for psychiatric disorders to human brain cell types and regions reveals convergence with functional connectivity."
-Shuyang Yao, Arvid Harder, Fahimeh Darki, Yu-Wei Chang, Ang Li, Kasra Nikouei, Giovanni Volpe, Johan N. Lundström, Jian Zeng, Naomi R. Wray, Yi Lu, Patrick F. Sullivan & Jens Hjerling-Leffler.
-Nature Communications 16, 395 (2025).
-```
+BRAPH 2 also support pipelines based on VAEs: generative neural-network models that learn a compact latent representation of the data, enabling reconstruction, generation, and exploration of underlying data structure.
 
-https://doi.org/10.1038/s41467-024-55611-1
-```
-"Computational memory capacity predicts aging and cognitive decline."
-Mite Mijalkov, Ludvig Storm, Blanca Zufiria-Gerbolés, Dániel Veréb, Zhilei Xu, Anna Canal-Garcia, Jiawei Sun, Yu-Wei Chang, Hang Zhao, Emiliano Gómez-Ruiz, Massimiliano Passaretti, Sara Garcia-Ptacek, Miia Kivipelto, Per Svenningsson, Henrik Zetterberg, Heidi Jacobs, Kathy Lüdge, Daniel Brunner, Bernhard Mehlig, Giovanni Volpe & Joana B. Pereira.
-Nature Communications 16, 2748 (2025).
-```
+> Passaretti et al., *Clinical progression and genetic pathways in body-first and brain-first Parkinson’s disease*.  
+> [Molecular Neurodegeneration (2025).](https://doi.org/10.1186/s13024-025-00866-5)
+
+> Chu et al., *Three-dimensional quantitative tissue clearing reveals differences in osteovascular niche of aged and young human mesenchymal stromal cells*.  
+> [Nature Biomedical Engineering (2026).](https://doi.org/10.1038/s41551-026-01645-3)
+
+> Patil et al., *Raman spectra for plant-stress analysis using deep learning* (preprint).  
+> [arXiv:2507.15772.](https://arxiv.org/abs/2507.15772)
+
+### Individual connectome
+The individual connecotme pipelines construct subject-specific networks by quantifying similarity or relationships between brain regions within an individual. This enables network-level analyses of individual variation, ageing, cognitive decline, and disease-related changes.
+
+> Sun et al., *Tracking early cognitive decline in preclinical AD with brain MRI similarity*.  
+> [Alzheimer’s & Dementia 22, e71170 (2026).](https://doi.org/10.1002/alz.71170)
+
+> Zufiria-Gerbolés et al., *Similar minds age alike: an MRI similarity approach for predicting age-related cognitive decline*.  
+> [npj Aging 12, 39 (2026).](https://doi.org/10.1038/s41514-026-00345-1)
+
+> Xu et al., *Mapping individual molecular connectomes in Alzheimer’s disease*.  
+> [Alzheimer’s & Dementia 22, e71310 (2026).](https://doi.org/10.1002/alz.71310)
+
+### Recursive feature elimination (RFE)
+The RFE pipeline iteratively trains a predictive model, ranks features by importance, removes the least informative features, and retrains the model to identify a stable and interpretable subset of relevant features.
+
+> Yao et al., *Connecting genomic results for psychiatric disorders to human brain cell types and regions reveals convergence with functional connectivity*.  
+> [Nature Communications 16, 395 (2025).](https://doi.org/10.1038/s41467-024-55611-1)
+
+### Computational memory capacity
+The computational memory capacity distribution uses reservoir computing on brain networks to quantify how effectively a network retains past input signals. It can be used to study ageing, cognitive decline, and associations between brain structure and function.
+
+> Mijalkov et al., *Computational memory capacity predicts aging and cognitive decline*.  
+> [Nature Communications 16, 2748 (2025).](https://doi.org/10.1038/s41467-025-57995-0)
+
+### BRAPH
+BRAPH is the original graph-theory software package from which BRAPH 2 evolved, providing tools for brain connectivity analysis.
+
+> Mijalkov et al., *BRAPH: A graph theory software for the analysis of brain connectivity*.  
+> [PLoS ONE 12, e0178798 (2017).](https://doi.org/10.1371/journal.pone.0178798)
